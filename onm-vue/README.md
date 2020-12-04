@@ -26,3 +26,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### GiGAeyes ONM 개발 절차 
 ### 0. @vue/cli 4.5.7 사용 
 ### 1. vue create onm-vue 로 프로젝트 생성
+
+### 2. Base UI 컴포넌트 구성 만들기 

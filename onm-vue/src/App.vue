@@ -1,28 +1,96 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template> 
+    
+  <div id='app'>
+    <div id='navContainer'>
+      <app-sidebar></app-sidebar>
+    </div>
+    <div id='mainContainer'>
+      <app-header></app-header>    
+      <router-view></router-view>     
+      <app-footer></app-footer>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+// import PlatformMain from './components/dashboard/platformMain.vue'
+// import ServiceMain from './components/dashboard/serviceMain.vue'
+// import VocMain from './components/dashboard/vocMain.vue'
+// import BizMain from './components/dashboard/bizMain.vue'
+//import Header from './components/layout/header.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  // components: {
+  //   // 'platform-main': PlatformMain,
+  //   // 'service-main': ServiceMain,
+  //   // 'voc-main': VocMain,
+  //   // 'biz-main': BizMain,
+  //   'app-header' : Header,
+  // },
+  data(){
+    return {
+      title : 'Root components'
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  min-height: 100%;
 }
+
+#navContainer {
+  width: 230px;
+  height: 100%;
+  background: #404040;
+}
+
+#mainContainer {
+  flex: 1;
+  padding: 0 3px;
+  background: #f5f5f5;
+}
+
+.flex-grid {
+  display: flex;
+}
+
+.flex-grid > div {
+  flex: 1;
+  margin: 0 20px 20px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.flex-grid > div:last-child {
+  margin-right: 0;
+}
+
+.flex-grid h2 {
+  margin: -15px -15px 15px -15px;
+  padding: 12px 15px;
+  font-size: 14px;
+  font-weight: 400;
+  border-bottom: 1px solid #ddd;
+}
+
+.flex-grid li {
+  position: relative;
+  margin: 0 0 10px;
+  padding: 0 0 0 25px;
+}
+
+.flex-grid li:before {
+  content: '\f00c';
+  font: normal 16px fontawesome;
+  top: 0;
+  left: 0;
+  color: #999;
+}
+
 </style>
