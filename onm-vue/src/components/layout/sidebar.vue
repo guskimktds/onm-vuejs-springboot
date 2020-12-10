@@ -7,70 +7,42 @@
     </header>
     <ul>
       <li><span>Navigation</span></li>
-      <!-- <li><a class="active">Dashboard</a></li>
-      <li><a>Statistics</a></li>
-      <li><a>Roadmap</a></li>
-      <li><a>Milestones</a></li>
-      <li><a>Tickets</a></li>
-      <li><a>GitHub</a></li>
-      <li><a>FAQ</a></li>
-      <li><span>Other</span></li>
-      <li><a>Search</a></li>
-      <li><a>Settings</a></li>
-      <li><a>Logout</a></li> -->
-      <li><router-link to="/">VSaaS플랫폼현황</router-link></li>
-      <li><router-link to="/service">서비스관리</router-link></li>
-      <li><router-link to="/voc">VOC 관리</router-link></li>
-      <li><router-link to="/biz">사업부서SR처리</router-link></li>
+      <li v-for="subMenu in newMenus" :key="subMenu.name">
+        <router-link v-bind:to="subMenu.path">{{ subMenu.name }}</router-link>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
 
-// import ProcessStatus from '../dashboard/platform/processStatus'
-// import CameraStatus from '../dashboard/platform/cameraStatus'
-// import VaSettingStatus from '../dashboard/platform/vaSettingStatus'
-// import StreamerStatus from '../dashboard/platform/streamerStatus'
-
-// const menus = [
-//         { 
-//             path: "/", 
-//             name: 'processStatusPage',
-//             component: ProcessStatus
-//         },
-//         { 
-//             path: "/platform/camera", 
-//             name: 'ServiceMainPage',
-//             component: CameraStatus
-//         },
-//         { 
-//             path: "/platform/va", 
-//             name: 'ServiceMainPage',
-//             component: VaSettingStatus
-//         },
-//         { 
-//             path: "/platform/streamer", 
-//             name: 'ServiceMainPage',
-//             component: StreamerStatus
-//         }
-// ]
+import EventBus from '../../EventBus';
 
 export default {
+  props:['subMenus'],
   data () {
     return {
-      menu: 'GiGAeyes O&M'
+      menu: 'GiGAeyes O&M',
+      //topPath: '' ,
+      newMenus: [] //this.props.keys(this.topPath)
     }
+  },
+  created(){
+      EventBus.$on('top-path', (payload)=>{          
+        //console.log(payload)
+        this.newMenus = payload
+        //console.log(this.newMenus)
+      });
   }
 }
 </script>
 
 <style scoped>
 
-/* #sidebar {
+#sidebar {
   background: #222;
   padding: 6px;
-} */
+}
 
 
 *, *:before, *:after {

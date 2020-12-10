@@ -11,7 +11,21 @@
 export default {
   data () {
     return {
-      title: 'VSaaS 플랫폼 현황 메인'
+      title: 'VSaaS 플랫폼 현황 메인',
+      // menus:[
+      //   {
+      //     name:'프로세스 현황', path: '/'
+      //   },
+      //   {
+      //     name:'카메라상태 현황', path: 'camera'
+      //   },
+      //   {
+      //     name:'VA 설정 현황', path: 'va'
+      //   },
+      //   {
+      //     name:'스트리머 관리 현황', path: 'streamer'
+      //   }
+      // ]
     }
   }
 }
