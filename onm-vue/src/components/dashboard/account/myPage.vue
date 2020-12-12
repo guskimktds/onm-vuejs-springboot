@@ -1,6 +1,6 @@
 <template>
   <div>
-      <p>{{ title }}</p>
+      <p>{{ title }}</p>      
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
     data(){
         return{
-            title: 'My page'
+            title: '마이페이지 뷰'
         }
     }
 }

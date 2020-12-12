@@ -9,7 +9,7 @@ export default {
     data(){
         
         return {
-            title: 'logout page'
+            title: '로그아웃(Sign Out) page'
         }
     }
 }

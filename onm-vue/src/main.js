@@ -14,6 +14,10 @@ import router from './router'
 // import NotFound from './components/exceptions/NotFound.vue'
 // import Login from './components/dashboard/account/logIn.vue'
 // import MyPage from './components/dashboard/account/myPage.vue'
+//import 'expose-loader?$!expose-loader?jQuery!jquery'
+
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 Vue.config.productionTip = false
 // Vue.component('app-topHeader', TopMenu)

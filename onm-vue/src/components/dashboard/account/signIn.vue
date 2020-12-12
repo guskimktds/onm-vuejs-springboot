@@ -8,7 +8,7 @@
 export default {
     data(){        
         return {
-            title: 'login page'
+            title: '로그인(signIn) page'
         }
     }
 }

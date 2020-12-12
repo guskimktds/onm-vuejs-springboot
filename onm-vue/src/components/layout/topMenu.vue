@@ -1,8 +1,9 @@
 <template>
   <nav>
       <ul>
-        <li><router-link to="/mypage">마이페이지</router-link></li>
-        <li><router-link to="/login">로그인</router-link></li>
+        <li><router-link to="/account">마이페이지</router-link></li>
+        <li><router-link to="/signin">로그인</router-link></li>
+        <li><router-link to="/signup">계정생성</router-link></li>
       </ul>
   </nav>
 </template>
