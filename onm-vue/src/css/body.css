@@ -1,0 +1,43 @@
+/* search */
+table.search {
+    border:1px solid black; 
+    width:100%;
+    background:#999999;
+  }
+  
+  table.search td.buttons{
+    text-align: right;
+  }
+  
+  /* content */
+table.contents {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+    margin-top:10px; 
+    margin-bottom:10px;
+}
+
+table.contents th{
+    border-bottom: 1px solid #444444;
+    background : #888888;
+    color: whitesmoke;
+    padding: 10px;
+    text-align: center;
+}
+
+table.contents tr, table.contents td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+    text-align: center;
+}
+
+/* pagination */
+ul.pagination li{
+    margin-top:10px;
+    margin-bottom:20px;
+}
+
+ul.pagination li a{
+    color: black;
+}
