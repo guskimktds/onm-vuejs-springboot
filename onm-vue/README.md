@@ -51,3 +51,5 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 ### 4-2-1 계정생성 폼 뷰는 접속ID(사번), 접속지정보(IP) 로 생성(OTP 처리는 ldap 연동으로 기 연락처를 조회해서 처리함)
 입력 : 사번, ip, otp 수신코드
 버튼 : otp 요청, 계정생성요청, 이전화면으로, 로그인 뷰 이동
+
+동해물과 백두산이
