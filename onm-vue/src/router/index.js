@@ -11,6 +11,8 @@ import ProcessStatus from '../components/dashboard/platform/processStatus'
 import CameraStatus from '../components/dashboard/platform/cameraDeviceStatus'
 import VaSettingStatus from '../components/dashboard/platform/vaSettingStatus'
 import StreamerStatus from '../components/dashboard/platform/streamerStatus'
+import StreamerStatusPopup from '../components/dashboard/platform/iotGwStatus'
+import IotGwStatus from '../components/dashboard/platform/iotGwStatus'
 
 // 계정관리 메뉴(SingIn/SignOut/SingUp/MyPage)
 import AccountView from '../components/dashboard/account/accountView'
@@ -49,9 +51,20 @@ export default new Router({
                     path: "streamer", 
                     name: 'StreamerStatus',
                     component: StreamerStatus
+                },
+                { 
+                    path: "streamerPopup", 
+                    name: 'StreamerStatusPopup',
+                    component: StreamerStatusPopup
+                },
+                { 
+                    path: "iotgw", 
+                    name: 'IotGwStatus',
+                    component: IotGwStatus
                 }
             ]
         },
+
         { 
             path: "/service", 
             name: 'ServiceMain',
