@@ -15,13 +15,12 @@ import EventBus from '../../EventBus';
 export default {
   data () {
     return {
-       platform: [
-        {name: 'process 현황', path: 'process'},
-        {name: '카메라상태 현황', path: 'camera'},
-        {name: 'IoT GW 상태현황', path: 'iotgw'},
-        {name: 'va 설정 현황', path: 'va'},
-        {name: '스트리머 관리 현황', path: 'streamer'},
-
+      platform: [
+        {name: 'process 현황', path: '/platform/process'},
+        {name: '카메라상태 현황', path: '/platform/camera'},
+        {name: 'IoT GW 상태현황', path: '/platform/iotgw'},
+        {name: 'va 설정 현황', path: '/platform/va'},
+        {name: '스트리머 관리 현황', path: '/platform/streamer'},
       ],
       service: [
         {name: '계정조회', path: 'account-inquiry'},

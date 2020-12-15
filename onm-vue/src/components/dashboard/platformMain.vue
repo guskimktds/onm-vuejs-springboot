@@ -4,6 +4,7 @@
     <div>
       <span>Sub component 화면을 추가한다.</span>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 

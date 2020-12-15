@@ -1,13 +1,20 @@
+/* title */
+.title {
+    font-size:30px;
+    font-weight:bold;
+}
+
 /* search */
 table.search {
     border:1px solid black; 
     width:100%;
     background:#999999;
-  }
-  
-  table.search td.buttons{
+}
+
+table.search td.buttons{
     text-align: right;
-  }
+    /* align:right; */
+}
   
   /* content */
 table.contents {
@@ -24,6 +31,7 @@ table.contents th{
     color: whitesmoke;
     padding: 10px;
     text-align: center;
+    max-width: 100px;
 }
 
 table.contents tr, table.contents td {
