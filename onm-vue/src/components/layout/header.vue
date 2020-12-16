@@ -23,7 +23,7 @@ export default {
         {name: '스트리머 관리 현황', path: '/platform/streamer'},
       ],
       service: [
-        {name: '계정조회', path: 'account-inquiry'},
+        {name: '계정조회', path: '/service/account-inquiry'},
         {name: '처리이력관리', path: 'processinglog'},
         {name: '관리자등록이력', path: 'admin-registlog'},
         {name: '관리자접속이력', path: 'admin-accesslog'},

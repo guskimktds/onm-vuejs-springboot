@@ -14,6 +14,9 @@ import StreamerStatus from '../components/dashboard/platform/streamerStatus'
 import StreamerStatusPopup from '../components/dashboard/platform/iotGwStatus'
 import IotGwStatus from '../components/dashboard/platform/iotGwStatus'
 
+// 하위 메뉴 - 서비스관리
+import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
+
 // 계정관리 메뉴(SingIn/SignOut/SingUp/MyPage)
 import AccountView from '../components/dashboard/account/accountView'
 import SignIn from '../components/dashboard/account/signIn'
@@ -69,7 +72,14 @@ export default new Router({
         { 
             path: "/service", 
             name: 'ServiceMain',
-            component: ServiceMain            
+            component: ServiceMain,
+            children: [
+                { 
+                    path: "account-inquiry", 
+                    name: 'AccountInquiry',
+                    component: AccountInquiry
+                }
+            ]
         },
         { 
             path: "/voc", 
