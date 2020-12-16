@@ -2,8 +2,8 @@
 
 <template>
   <div>
-    <p class="title">{{ title }}</p>
-    <process-query v-bind:search="search"></process-query>
+    <p>{{ title }}</p>
+    <process-query v-on:search="searchToProcess"></process-query>
     <process-list v-bind:pList=pList></process-list>
   </div>
 
@@ -33,8 +33,8 @@ export default {
     }
   },
   methods: {
-    search: function(){
-      console.log("부모 메소드 search 호출");
+    searchToProcess: function(param){
+      console.log("부모 메소드 searchToProcess 호출: "+JSON.stringify(param));
     }
   }
 }
