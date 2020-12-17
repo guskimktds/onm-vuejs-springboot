@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import LoginHistoryInfoList from './loginHistoryInfo/loginHistoryInfoList'
-import LoginHistoryInfoQuery from './loginHistoryInfo/loginHistoryInfoQuery'
+import LoginHistoryInfoList from './sms-history/smsHistoryInfoList'
+import LoginHistoryInfoQuery from './sms-history/smsHistoryInfoQuery'
 
 export default {
   components: {
@@ -20,7 +20,7 @@ export default {
   },
   data () {
     return {
-      title: '로그인 이력 조회',
+      title: 'SMS 발송 이력 조회 작성중',
       pList: [
         {loginKey:"3e206166-0886-4485-8432-1af9fb545e28", loginId:"0012484661", loginType:2, expireDate:"2020-11-03 02:00:04.173138", loginDate:"2020-11-03 02:00:04.173138", logoutDate:"2020-11-03 02:00:04.173138", osType: "PC"},
         {loginKey:"3e206166-0886-4485-8432-1af9fb545e28", loginId:"0012484661", loginType:2, expireDate:"2020-11-03 02:00:04.173138", loginDate:"2020-11-03 02:00:04.173138", logoutDate:"2020-11-03 02:00:04.173138", osType: "PC"},

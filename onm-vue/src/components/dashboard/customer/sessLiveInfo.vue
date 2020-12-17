@@ -3,20 +3,20 @@
 <template>
   <div>
     <p class="title">{{ title }}</p>
-    <rtime-access-session-query v-on:search="searchToRAS"></rtime-access-session-query>
-    <rtime-access-session-list v-bind:pList=pList></rtime-access-session-list>
+    <sessLiveInfoQuery-query v-on:search="searchToSessLiveInfo"></sessLiveInfoQuery-query>
+    <sessLiveInfoQuery-list v-bind:pList=pList></sessLiveInfoQuery-list>
   </div>
 
 </template>
 
 <script>
-import RASList from './rtime-access-session/rtime-access-sessionList'
-import RASQuery from './rtime-access-session/rtime-access-sessionQuery'
+import SessLiveInfoList from './rtime-access-session/sessLiveInfoList'
+import SessLiveInfoQuery from './rtime-access-session/sessLiveInfoQuery'
 
 export default {
   components: {
-    'rtime-access-session-list': RASList,
-    'rtime-access-session-query': RASQuery
+    'sessLiveInfoQuery-list': SessLiveInfoList,
+    'sessLiveInfoQuery-query': SessLiveInfoQuery
   },
   data () {
     return {
@@ -31,8 +31,8 @@ export default {
     }
   },
   methods: {
-    searchToRAS: function(param){
-      console.log("부모 메소드 searchToRAS 호출: "+JSON.stringify(param));
+    searchToSessLiveInfo: function(param){
+      console.log("부모 메소드 searchToSessLiveInfo 호출: "+JSON.stringify(param));
     }
   }
 }

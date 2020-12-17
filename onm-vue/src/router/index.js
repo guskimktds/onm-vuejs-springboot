@@ -19,10 +19,10 @@ import IotGwStatus from '../components/dashboard/platform/iotGwStatus'
 import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
 
 // 사용자 정보 조회 메뉴
-import Phone from '../components/dashboard/customer/phone'
-import RtimeAccessSession from '../components/dashboard/customer/rtime-access-session'
-import SigninHistoryInfo from '../components/dashboard/customer/signin-history'
-// import SmsHistoryInfo from '../components/dashboard/usr/smsHistoryInfo'
+import UsrInfo from '../components/dashboard/customer/usrInfo'
+import SessLiveInfo from '../components/dashboard/customer/sessLiveInfo'
+import LoginHistoryInfo from '../components/dashboard/customer/loginHistoryInfo'
+import SmsHistoryInfo from '../components/dashboard/customer/smsHistoryInfo'
 
 // 계정관리 메뉴(SingIn/SignOut/SingUp/MyPage)
 import AccountView from '../components/dashboard/account/accountView'
@@ -137,23 +137,23 @@ export default new Router({
             children: [{
                     path: "phone",
                     name: 'phone',
-                    component: Phone
+                    component: UsrInfo
                 },
                 {
                     path: "rtime-access-session",
                     name: 'rtime-access-session',
-                    component: RtimeAccessSession
+                    component: SessLiveInfo
                 },
                 {
                     path: "signin-history",
                     name: 'signin-history',
-                    component: SigninHistoryInfo
+                    component: LoginHistoryInfo
                 },
-                // {
-                //     path: "smsHistoryInfo",
-                //     name: 'smsHistoryInfo',
-                //     component: SmsHistoryInfo
-                // }
+                {
+                    path: "sms-history",
+                    name: 'sms-history',
+                    component: SmsHistoryInfo
+                }
             ]
         },
 

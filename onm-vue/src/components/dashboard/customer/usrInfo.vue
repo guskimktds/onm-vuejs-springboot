@@ -3,20 +3,20 @@
 <template>
   <div>
     <p class="title">{{ title }}</p>
-    <phone-query v-on:search="searchToPhone"></phone-query>
-    <phone-list v-bind:pList=pList></phone-list>
+    <usrInfo-query v-on:search="searchToUsrInfo"></usrInfo-query>
+    <usrInfo-list v-bind:pList=pList></usrInfo-list>
   </div>
 
 </template>
 
 <script>
-import PhoneList from './phone/phoneList'
-import PhoneQuery from './phone/phoneQuery'
+import UsrInfoList from './phone/usrInfoList'
+import UsrInfoQuery from './phone/usrInfoQuery'
 
 export default {
   components: {
-    'phone-list': PhoneList,
-    'phone-query': PhoneQuery
+    'usrInfo-list': UsrInfoList,
+    'usrInfo-query': UsrInfoQuery
   },
   data () {
     return {
@@ -29,8 +29,8 @@ export default {
     }
   },
   methods: {
-    searchToPhone: function(param){
-      console.log("부모 메소드 searchToPhone 호출: "+JSON.stringify(param));
+    searchToUsrInfo: function(param){
+      console.log("부모 메소드 searchToUsrInfo 호출: "+JSON.stringify(param));
     }
   }
 }
