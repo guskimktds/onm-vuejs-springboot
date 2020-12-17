@@ -6,9 +6,14 @@
       <a></a>
     </header>
     <ul>
-      <li><span>Navigation</span></li>
+      <!-- <li><span>Navigation</span></li> -->
       <li v-for="subMenu in newMenus" :key="subMenu.name">
-        <router-link v-bind:to="subMenu.path">{{ subMenu.name }}</router-link>
+        <router-link v-bind:to="subMenu.path">
+          {{ subMenu.name }}
+          
+        </router-link>
+        <sub-menu :menus="subMenu.children"></sub-menu>
+
       </li>
     </ul>
   </div>
@@ -17,22 +22,29 @@
 <script>
 
 import EventBus from '../../EventBus';
+import subMenu from './subMenu.vue';
 
 export default {
-  props:['subMenus'],
+  //props:['subMenus'],
+  components: {
+    'sub-menu': subMenu
+  },
   data () {
     return {
       menu: 'GiGAeyes O&M',
-      //topPath: '' ,
-      newMenus: [] //this.props.keys(this.topPath)
+      newMenus: [] 
     }
   },
   created(){
       EventBus.$on('top-path', (payload)=>{          
         //console.log(payload)
         this.newMenus = payload
-        //console.log(this.newMenus)
       });
+  },
+  methods: {
+    openSubMenu: function(){
+      console.log("open sub");
+    }
   }
 }
 </script>
@@ -42,6 +54,7 @@ export default {
 #sidebar {
   background: #222;
   padding: 6px;
+  height: 100%;
 }
 
 

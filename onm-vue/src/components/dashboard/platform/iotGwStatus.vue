@@ -1,5 +1,3 @@
-<style src="../../../css/body.css"></style>
-
 <template>
   <div>
     <p class="title">{{ title }}</p>
@@ -39,5 +37,5 @@ export default {
 </script>
 
 <style scoped>
-
+@import '~@/assets/body.css';
 </style>

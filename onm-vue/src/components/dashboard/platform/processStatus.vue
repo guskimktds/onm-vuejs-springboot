@@ -1,5 +1,3 @@
-<style src="../../../css/body.css"></style>
-
 <template>
   <div>
     <p>{{ title }}</p>
@@ -12,6 +10,9 @@
 <script>
 import ProcessList from './process/processList'
 import ProcessQuery from './process/processQuery'
+//로그인 시 서버에서 불러오면 수정해야함
+import processMock from '../../../mock/processMock.json';
+
 
 export default {
   components: {
@@ -21,15 +22,7 @@ export default {
   data () {
     return {
       title: '프로세스 현황 화면',
-      pList: [
-        { code: '1', type: 'STM01', name: "STREAMER", status: 'U', lastDate:'2020-12-14 10:20:11'},
-        { code: '2', type: 'INT', name: "LV_SAAS_INT", status: 'U', lastDate:'2019-12-14 10:20:11'},
-        { code: '3', type: 'CTRL', name: "LV_SAAS_CTRL", status: 'U', lastDate:'2020-12-14 10:20:11'},
-        { code: '4', type: 'VA', name: "VMS", status: 'U', lastDate:'2020-11-14 10:20:11'},
-        { code: '5', type: 'STM02', name: "STREAMER", status: 'U', lastDate:'2018-12-14 10:20:11'},
-        { code: '6', type: 'STM03', name: "STREAMER", status: 'U', lastDate:'2019-09-14 10:20:11'},
-        { code: '7', type: 'STM04', name: "STREAMER", status: 'U', lastDate:'2020-10-14 10:20:11'},
-      ]
+      pList: processMock
     }
   },
   methods: {
@@ -41,5 +34,5 @@ export default {
 </script>
 
 <style scoped>
-
+@import '~@/assets/body.css';
 </style>

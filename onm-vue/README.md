@@ -53,3 +53,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 버튼 : otp 요청, 계정생성요청, 이전화면으로, 로그인 뷰 이동
 
 ### 개별 구현 소스를 develop 에 1차 머지한다. 매주 화, 목 퇴근전에 commit 후 merge 진행
+
+### GNB 및 Sideba Sub Menu 구조에 대한 메뉴 및 권한 처리 ###
+권한 그룹

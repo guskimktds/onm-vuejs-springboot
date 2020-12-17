@@ -83,8 +83,8 @@ export default {
 }
 
 #navContainer {
-  width: 230px;
-  height: 100%;
+  width: 250px;
+  height: 700px;
   background: #404040;
 }
 

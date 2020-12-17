@@ -24,6 +24,11 @@ import SignOut from '../components/dashboard/account/signOut'
 import SignUp from '../components/dashboard/account/signUp'
 import MyPage from '../components/dashboard/account/myPage'
 
+//청약정보관리
+import OrderMain from '../components/dashboard/order/orderMain'
+import UserOrderInfo from '../components/dashboard/order/userOrderInfo'
+import UserOrderDetail from '../components/dashboard/order/userOrderDetail'
+
 Vue.use(Router)
 
 export default new Router({
@@ -67,8 +72,26 @@ export default new Router({
                 }
             ]
         },
-
-
+        { 
+            path: "/order", 
+            name: 'OrderMain',
+            component: OrderMain,
+            children: [
+                { 
+                    path: "user/order-info", 
+                    name: 'UserOrderInfo',
+                    component: UserOrderInfo,
+                    children: [
+                        { 
+                            path: "user/order-detail", 
+                            name: 'UserOrderDetail',
+                            component: UserOrderDetail
+                            
+                        }
+                    ]
+                }
+            ]
+        },
         { 
             path: "/service", 
             name: 'ServiceMain',
