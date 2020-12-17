@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import LoginHistoryInfoList from './loginHistoryInfo/loginHistoryInfoList'
-import LoginHistoryInfoQuery from './loginHistoryInfo/loginHistoryInfoQuery'
+import LoginHistoryInfoList from './signin-history/loginHistoryInfoList'
+import LoginHistoryInfoQuery from './signin-history/loginHistoryInfoQuery'
 
 export default {
   components: {

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import PlatformMain from '../components/dashboard/platformMain'
 import ServiceMain from '../components/dashboard/serviceMain'
 import VocMain from '../components/dashboard/vocMain'
+import CustomerMain from '../components/dashboard/customerMain'
 import BizMain from '../components/dashboard/bizMain'
 import NotFound from '../components/exceptions/NotFound'
 
@@ -16,6 +17,12 @@ import IotGwStatus from '../components/dashboard/platform/iotGwStatus'
 
 // 하위 메뉴 - 서비스관리
 import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
+
+// 사용자 정보 조회 메뉴
+import Phone from '../components/dashboard/customer/phone'
+import RtimeAccessSession from '../components/dashboard/customer/rtime-access-session'
+import SigninHistoryInfo from '../components/dashboard/customer/signin-history'
+// import SmsHistoryInfo from '../components/dashboard/usr/smsHistoryInfo'
 
 // 계정관리 메뉴(SingIn/SignOut/SingUp/MyPage)
 import AccountView from '../components/dashboard/account/accountView'
@@ -34,115 +41,135 @@ Vue.use(Router)
 export default new Router({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes: [
-        { 
-            path: "/platform", 
+    routes: [{
+            path: "/platform",
             name: 'PlatformMain',
             component: PlatformMain,
-            children: [
-                { 
-                    path: "process", 
+            children: [{
+                    path: "process",
                     name: 'ProcessStatus',
                     component: ProcessStatus
                 },
-                { 
-                    path: "camera", 
+                {
+                    path: "camera",
                     name: 'CameraStatus',
                     component: CameraStatus
                 },
-                { 
-                    path: "va", 
+                {
+                    path: "va",
                     name: 'VaSettingStatus',
                     component: VaSettingStatus
                 },
-                { 
-                    path: "streamer", 
+                {
+                    path: "streamer",
                     name: 'StreamerStatus',
                     component: StreamerStatus
                 },
-                { 
-                    path: "streamerPopup", 
+                {
+                    path: "streamerPopup",
                     name: 'StreamerStatusPopup',
                     component: StreamerStatusPopup
                 },
-                { 
-                    path: "iotgw", 
+                {
+                    path: "iotgw",
                     name: 'IotGwStatus',
                     component: IotGwStatus
                 }
             ]
         },
-        { 
-            path: "/order", 
+        {
+            path: "/order",
             name: 'OrderMain',
             component: OrderMain,
-            children: [
-                { 
-                    path: "user/order-info", 
-                    name: 'UserOrderInfo',
-                    component: UserOrderInfo,
-                    children: [
-                        { 
-                            path: "user/order-detail", 
-                            name: 'UserOrderDetail',
-                            component: UserOrderDetail
-                            
-                        }
-                    ]
-                }
-            ]
+            children: [{
+                path: "user/order-info",
+                name: 'UserOrderInfo',
+                component: UserOrderInfo,
+                children: [{
+                    path: "user/order-detail",
+                    name: 'UserOrderDetail',
+                    component: UserOrderDetail
+
+                }]
+            }]
         },
-        { 
-            path: "/service", 
+        {
+            path: "/service",
             name: 'ServiceMain',
             component: ServiceMain,
-            children: [
-                { 
-                    path: "account-inquiry", 
-                    name: 'AccountInquiry',
-                    component: AccountInquiry
-                }
-            ]
+            children: [{
+                path: "account-inquiry",
+                name: 'AccountInquiry',
+                component: AccountInquiry
+            }]
         },
-        { 
-            path: "/voc", 
+        {
+            path: "/voc",
             name: 'VocMain',
             component: VocMain
         },
-        { 
-            path: "/biz", 
+        {
+            path: "/biz",
             name: 'BizMain',
             component: BizMain
         },
-        { 
-            path: "/account", 
+        {
+            path: "/account",
             name: 'AccountView',
             component: AccountView,
-            children: [
-                {
-                    path: "mypage", 
+            children: [{
+                    path: "mypage",
                     name: 'MyPage',
                     component: MyPage
                 },
                 {
-                    path: "signout", 
+                    path: "signout",
                     name: 'SignOut',
                     component: SignOut
                 }
-            ]                
+            ]
         },
+
         {
-            path: "/signup", 
+            path: "/customer",
+            name: 'CustomerMain',
+            component: CustomerMain,
+            children: [{
+                    path: "phone",
+                    name: 'phone',
+                    component: Phone
+                },
+                {
+                    path: "rtime-access-session",
+                    name: 'rtime-access-session',
+                    component: RtimeAccessSession
+                },
+                {
+                    path: "signin-history",
+                    name: 'signin-history',
+                    component: SigninHistoryInfo
+                },
+                // {
+                //     path: "smsHistoryInfo",
+                //     name: 'smsHistoryInfo',
+                //     component: SmsHistoryInfo
+                // }
+            ]
+        },
+
+
+        {
+            path: "/signup",
             name: 'SignUp',
             component: SignUp
         },
         {
-            path: "/signin", 
+            path: "/signin",
             name: 'SignIn',
             component: SignIn
         },
-        { 
-            path: "*", 
+        {
+            path: "*",
             name: 'NotFound',
             component: NotFound
         }
