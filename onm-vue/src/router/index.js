@@ -31,10 +31,27 @@ import UserOrderDetail from '../components/dashboard/order/userOrderDetail'
 
 Vue.use(Router)
 
+const requireAuth = () => (from, to, next) => {
+    const isAuthenticated = false
+   
+    //console.log('isAuthenticated : '+this.$store.state.getAuthenticated)
+
+    if (isAuthenticated) return next()
+    //next('/login?returnPath=me')
+    
+    next('/signin?returnPath=platform')
+  }
+
 export default new Router({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
+        {
+            path: "/", 
+            name: 'Home',
+            component: PlatformMain,
+            beforeEnter: requireAuth()
+        },
         { 
             path: "/platform", 
             name: 'PlatformMain',
@@ -140,7 +157,7 @@ export default new Router({
             path: "/signin", 
             name: 'SignIn',
             component: SignIn
-        },
+        },        
         { 
             path: "*", 
             name: 'NotFound',

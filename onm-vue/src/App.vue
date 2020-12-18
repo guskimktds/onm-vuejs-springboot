@@ -2,12 +2,13 @@
     
   <div id='app'>
     <div id='navContainer'>
-      <app-sidebar v-bind:subMenus="subMenus"></app-sidebar>
+      <app-sidebar></app-sidebar>
     </div>  
     <div id='mainContainer'>
-      <app-topHeader></app-topHeader>
-      <app-header></app-header>    
-      <router-view></router-view>     
+      <app-topMenu></app-topMenu>
+      <app-header></app-header>   
+      <app-contents></app-contents> 
+      <!-- <router-view></router-view>      -->
       <app-footer></app-footer>
     </div>
   </div>
@@ -17,7 +18,7 @@
 
 import TopMenu from './components/layout/topMenu.vue'
 import Header from './components/layout/header.vue'
-//import Contents from './components/layout/contents.vue'
+import Contents from './components/layout/contents.vue'
 import Sidebar from './components/layout/sidebar.vue'
 import Footer from './components/layout/footer.vue'
 
@@ -50,27 +51,28 @@ export default {
     // 'voc-main': VocMain,
     // 'biz-main': BizMain,
     'app-sidebar': Sidebar,
-    'app-topHeader': TopMenu,
+    'app-topMenu': TopMenu,
     'app-header': Header,
+    'app-contents':Contents,
     'app-footer': Footer
   },
   data(){
     return {
-      title : 'Root components',
-      subMenus: {
-        platform: [
-          {name: 'process 현황', path: 'process'},
-          {name: '카메라상태 현황', path: 'camera'},
-          {name: 'va 설정 현황', path: 'va'},
-          {name: '스트리머 관리 현황', path: 'streamer'},
-        ],
-        service: [
-          {name: '사용자정보', path: 'userinfo'},
-          {name: '사용자 상품정보', path: 'user-productinfo'},
-          {name: '사용자 요약정보', path: 'user-summary'},
-          {name: 'VA 상품 및 카메라 대수 확인', path: 'va-product-camera-count'},
-        ]
-      }
+      title : 'Root components'
+      // subMenus: {
+      //   platform: [
+      //     {name: 'process 현황', path: 'process'},
+      //     {name: '카메라상태 현황', path: 'camera'},
+      //     {name: 'va 설정 현황', path: 'va'},
+      //     {name: '스트리머 관리 현황', path: 'streamer'},
+      //   ],
+      //   service: [
+      //     {name: '사용자정보', path: 'userinfo'},
+      //     {name: '사용자 상품정보', path: 'user-productinfo'},
+      //     {name: '사용자 요약정보', path: 'user-summary'},
+      //     {name: 'VA 상품 및 카메라 대수 확인', path: 'va-product-camera-count'},
+      //   ]
+      // }
     }
   }
 }

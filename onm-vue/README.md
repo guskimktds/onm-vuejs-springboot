@@ -56,3 +56,15 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 ### GNB 및 Sideba Sub Menu 구조에 대한 메뉴 및 권한 처리 ###
 권한 그룹
+
+### 캡차 적용 ###
+
+### CORS 방지를 위한 axios 호출 시 아래와 같이 처리 ### 
+
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:8001';
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+

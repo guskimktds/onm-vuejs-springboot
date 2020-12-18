@@ -1,6 +1,7 @@
 <template>
   <content>
     <p>{{ contents }}</p>
+     <router-view></router-view>     
   </content>
 </template>
 
