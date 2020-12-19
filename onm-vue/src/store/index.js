@@ -9,7 +9,7 @@ const resourceHost = "http://localhost:3000"
 export default new Vuex.Store({
   state: {
     accessToken: null,  //cookie 로 대체
-    //isAuthenticated: false
+    isAuthenticated: false
   },
   getters: {
     // getAuthenticated: function (state) {
@@ -18,13 +18,13 @@ export default new Vuex.Store({
   },
   mutations: {
     LOGIN(state, { data }) {
-      console.log(data)
+      //console.log(data)
       state.accessToken = data
-      //state.isAuthenticated = true
+      state.isAuthenticated = true
     },
     LOGOUT(state) {
       state.accessToken = null
-      //state.isAuthenticated = false
+      state.isAuthenticated = false
     },
   },
   actions: {

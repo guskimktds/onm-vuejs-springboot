@@ -3,14 +3,14 @@
         <div class="row justify-content-center">
             <div class="register-form">
                 <form>
-                    <h3>{{ title }}</h3>
+                    <!-- <h3>{{ title }}</h3> -->
                     <div class="form-group">
-                            <label>ID</label>
+                            <!-- <label>ID</label> -->
                             <input type="text" class="form-control form-control-lg" 
                             v-model="id" placeholder="사번을 입력하세요">
                     </div>
                     <div class="form-group">
-                            <label>Password</label>
+                            <!-- <label>Password</label> -->
                             <input type="password" class="form-control form-control-lg"
                             v-model="password" placeholder="비밀번호를 입력하세요"> 
                     </div>
@@ -18,6 +18,7 @@
                     v-on:click="onSubmit(id, password)">Sign In</button>
                 </form>     
       <!-- <app-capcha></app-capcha> -->
+            <!-- <p><i>{{msg}}</i></p> -->
             </div>            
         </div>
         <footer class="footer">
@@ -32,31 +33,43 @@
 // import axios from "axios"
 // const resourceHost = "http://localhost:3000"
 
+// const AppWidth = window.innerWidth
+// const AppHeight = window.innerHeight
+
 export default {
     components: {
         // "app-capcha":Capcha
     },
     data(){        
-        return {
-            title: 'Sign In',
-            //userData: {
-                id: '',
-                password: ''
-            //}
-        }
+      return {
+        id: '',
+        password: '',
+        msg: {}
+      }
     },
     methods:{
       onSubmit(id, password) {     
-        // return axios
-        // .post(`${resourceHost}/login`, { id, password })
-        // .then(res => {console.log(res)})
+        //alert("onSubmit"+id+password);
+        //this.$router.push({name:'AccountView'})
+        // return axios.post(`${resourceHost}/login`, { id, password })
+        // //.then(res => {alert(res)})
+        // // .then(() => {
+        // //   // alert('push sign up')
+        // //   // this.$router.push({name:'AccountView'})
+        // // })
+        // .then(this.$router.replace('/account'))
+        // //.then(() => this.redirect())
+        // .catch(({ data }) => (this.msg = data))
         this.$store
           .dispatch("LOGIN", { id, password })
           //.then( res => { console.log(res.status)})
-          .then(() => this.redirect())
-          //.catch(({ message }) => (this.msg = message))
+          .then(this.$router.replace('/platform'))
+          .catch(({ message }) => (this.msg = message))
+          //alert('push sign up')
+          //this.$router.push({name:'AccountView'})
       },
-      redirect() {
+      // redirect() {
+        // this.$router.replace('/account')
         // const { search } = window.location
   
         // const tokens = search.replace(/^\?/, "").split("&")
@@ -70,10 +83,10 @@ export default {
 
         // 리다이렉트 처리
         //alert('returnPath : '+returnPath)
-        this.$router.go('/signup')
+        //this.$router.push('/signup')
 
         //this.$router.push({path: "/platform/process", addToHistory: true});
-      }
+      // }
     }
 }
 </script>
@@ -86,17 +99,20 @@ export default {
 .footer { width: 100%; line-height:  40px; margin-top: 50px;} */
 
 .container {
-  max-width: 900px;
+  max-width: 100vw;
+  max-height: 100vh;
 }
 .register-form {
-  margin-top: 50px;
+  margin-top: 250px;
   max-width: 320px;
+  max-height: 100vh;
+  margin-bottom: 250px;
 }
 .logo-wrapper {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 1px;
   .tagline {
-    line-height: 180%;
+    line-height: 10%;
     color: #666;
   }
  .logo {
@@ -117,9 +133,9 @@ export default {
   width: 100%;
   font-size: 13px;
   color: #666;
-  line-height: 40px;
+  line-height: 140px;
   border-top: 1px solid #ddd;
-  margin-top: 50px;
+  margin-top: 150px;
   .list-inline-item {
     margin-right: 10px;
   }

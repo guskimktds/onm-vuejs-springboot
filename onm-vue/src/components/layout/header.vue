@@ -31,7 +31,19 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+nav {
+  background: #666;
+  padding: 14px 0;
+  /* margin-bottom: 40px; */
+}
+a {
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 0;
+  margin-bottom: 40px;
+  cursor: pointer;
+}
 ul {
   list-style-type: none;
   text-align: center;
@@ -39,17 +51,18 @@ ul {
 }
 li {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 15px;
 }
-nav {
-  background: #444;
-  padding: 14px 0;
-  margin-bottom: 40px;
+
+ul a:hover,
+ul a.active {
+  background: lighten(#404040, 7.5%);
 }
-a {
-  color: #fff;
-  text-decoration: none;
-  padding: 14px 0;
-  margin-bottom: 40px;
+
+ul a:before {
+  font: normal 14px fontawesome;
+  top: 15px;
+  left: 18px;
 }
+
 </style>

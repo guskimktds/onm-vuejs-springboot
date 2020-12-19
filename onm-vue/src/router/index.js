@@ -29,17 +29,28 @@ import OrderMain from '../components/dashboard/order/orderMain'
 import UserOrderInfo from '../components/dashboard/order/userOrderInfo'
 import UserOrderDetail from '../components/dashboard/order/userOrderDetail'
 
+// store 에 로그인 여부 체크
+import store from '../store'
+
 Vue.use(Router)
 
+// 네비게이션 가드 
+// 라우터 매칭을 결정하고, 컴포넌트가 생성하기 전에 호출되는 함수
+// 로그인 인증 여부를 여기서 판단하고 next() 컴포넌트 렌더링할지, 로그인 페이지로 갈지 결정됨
 const requireAuth = () => (from, to, next) => {
-    const isAuthenticated = false
+    //const isAuthenticated = false
    
     //console.log('isAuthenticated : '+this.$store.state.getAuthenticated)
-
-    if (isAuthenticated) return next()
+    //alert('isAuthenticated '+isAuthenticated)
+    //if (isAuthenticated) return next()
     //next('/login?returnPath=me')
+    if (store.state.isAuthenticated) return next()
+    next({
+        path: "/signin",
+        query: { redirect: to.fullPath },
+    })
     
-    next('/signin?returnPath=platform')
+    //next('/signin?returnPath=platform')
   }
 
 export default new Router({
@@ -50,6 +61,8 @@ export default new Router({
             path: "/", 
             name: 'Home',
             component: PlatformMain,
+            //beforeEnter: requireAuth()
+            // 인증 여부를 체크하는 requreAuth를 beforeEnter 속성에 추가했다
             beforeEnter: requireAuth()
         },
         { 

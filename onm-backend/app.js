@@ -1,15 +1,3 @@
-// const express = require('express');
-// const app = express();
-// const port = 3000;
-
-// app.get('/', (req, res, next) => {
-//     res.send('hello world!');
-// });
-
-// app.listen(port, () => {
-//     console.log(`Server is running at ${port}`);
-// });
-
 var express = require('express');
 var http = require('http');
 var serveStatic = require('serve-static');      //특정 폴더의 파일들을 특정 패스로 접근할 수 있도록 열어주는 역할
@@ -20,10 +8,9 @@ const fs = require('fs');
 const cors = require('cors');
 
 let corsOption = {
-    origin: 'http://localhost:8080', // 허락하는 요청 주소
+    origin: 'http://localhost:8081', // 허락하는 요청 주소
     credentials: true // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
 } 
-
 
 
 const jsonMenuFile = fs.readFileSync('./public/menuMock.json', 'utf8');
@@ -32,8 +19,7 @@ var app = express();      //express 서버 객체
  
 var bodyParser_post = require('body-parser');       //post 방식 파서
 
-app.use(cors(corsOption)); // CORS 미들웨어 추가
- 
+app.use(cors(corsOption)); // CORS 미들웨어 추가 
 app.set('port', 3000);
  
  
@@ -41,15 +27,13 @@ app.set('port', 3000);
  
 //join은 __dirname : 현재 .js 파일의 path 와 public 을 합친다
 //이렇게 경로를 세팅하면 public 폴더 안에 있는것을 곧바로 쓸 수 있게된다
-app.use(serveStatic(path.join(__dirname, 'public')));
- 
+app.use(serveStatic(path.join(__dirname, 'public'))); 
  
 //post 방식 일경우 begin
 //post 의 방식은 url 에 추가하는 방식이 아니고 body 라는 곳에 추가하여 전송하는 방식
 app.use(bodyParser_post.urlencoded({ extended: false }));            // post 방식 세팅
 app.use(bodyParser_post.json());                                     // json 사용 하는 경우의 세팅
 //post 방식 일경우 end
- 
  
  
 //쿠키와 세션을 미들웨어로 등록한다
@@ -62,8 +46,7 @@ app.use(expressSession({
                                 //아니면 미리 만들어 놓을꺼냐 등에 대한 옵션들임
     resave: true,
     saveUninitialized:true
-}));
- 
+})); 
  
  
 //라우트를 미들웨어에 등록하기 전에 라우터에 설정할 경로와 함수를 등록한다
@@ -146,13 +129,15 @@ router.route('/login').post(                      //설정된 쿠키정보를 �
             expired : '60min'
         }
         //res.redirect('/platform');
-        res.status(statusOk).json({ statusOk, data: data })
+        res.status(statusOk).json({ statusOk, data: data });
+
+        res.end();
     }
 );
 
 router.route('/menu').post(                      //설정된 쿠키정보를 본다
     function (req, res) {
-        //console.log('/login 라우팅 함수호출 됨');
+        console.log('/menu ');
  
         const { id, password } = req.body
         //const userID = isAuthenticated({ id, password });
