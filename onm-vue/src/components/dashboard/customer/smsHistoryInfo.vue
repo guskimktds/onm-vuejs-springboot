@@ -3,37 +3,35 @@
 <template>
   <div>
     <p class="title">{{ title }}</p>
-    <loginHistoryInfo-query v-on:search="searchToSessLiveInfo"></loginHistoryInfo-query>
-    <loginHistoryInfo-list v-bind:pList=pList></loginHistoryInfo-list>
+    <smsHistoryInfo-query v-on:search="searchToSmsHistoryInfo"></smsHistoryInfo-query>
+    <smsHistoryInfo-list v-bind:pList=pList></smsHistoryInfo-list>
   </div>
 
 </template>
 
 <script>
-import LoginHistoryInfoList from './sms-history/smsHistoryInfoList'
-import LoginHistoryInfoQuery from './sms-history/smsHistoryInfoQuery'
+import SmsHistoryInfoList from './sms-history/smsHistoryInfoList'
+import SmsHistoryInfoQuery from './sms-history/smsHistoryInfoQuery'
 
 export default {
   components: {
-    'loginHistoryInfo-list': LoginHistoryInfoList,
-    'loginHistoryInfo-query': LoginHistoryInfoQuery
+    'smsHistoryInfo-list': SmsHistoryInfoList,
+    'smsHistoryInfo-query': SmsHistoryInfoQuery
   },
   data () {
     return {
-      title: 'SMS 발송 이력 조회 작성중',
+      title: 'SMS 발송 이력 조회',
       pList: [
-        {loginKey:"3e206166-0886-4485-8432-1af9fb545e28", loginId:"0012484661", loginType:2, expireDate:"2020-11-03 02:00:04.173138", loginDate:"2020-11-03 02:00:04.173138", logoutDate:"2020-11-03 02:00:04.173138", osType: "PC"},
-        {loginKey:"3e206166-0886-4485-8432-1af9fb545e28", loginId:"0012484661", loginType:2, expireDate:"2020-11-03 02:00:04.173138", loginDate:"2020-11-03 02:00:04.173138", logoutDate:"2020-11-03 02:00:04.173138", osType: "PC"},
-        {loginKey:"3e206166-0886-4485-8432-1af9fb545e28", loginId:"0012484661", loginType:2, expireDate:"2020-11-03 02:00:04.173138", loginDate:"2020-11-03 02:00:04.173138", logoutDate:"2020-11-03 02:00:04.173138", osType: "PC"},
-        {loginKey:"3e206166-0886-4485-8432-1af9fb545e28", loginId:"0012484661", loginType:2, expireDate:"2020-11-03 02:00:04.173138", loginDate:"2020-11-03 02:00:04.173138", logoutDate:"2020-11-03 02:00:04.173138", osType: "PC"},
-        {loginKey:"3e206166-0886-4485-8432-1af9fb545e28", loginId:"0012484661", loginType:2, expireDate:"2020-11-03 02:00:04.173138", loginDate:"2020-11-03 02:00:04.173138", logoutDate:"2020-11-03 02:00:04.173138", osType: "PC"},
-
+        {seqID:"5813329", phoneNum:"0012484661", otpNum:341263, message:"", sendCode:"OK", sendTime:"2020-11-03 02:00:04.173138", modifiedDate: "2020-11-03 02:00:04.173138", sendServerInfo: "CVSAAS_DDNS02"},
+        {seqID:"2813329", phoneNum:"0012484661", otpNum:341263, message:"", sendCode:"OK", sendTime:"2020-11-03 02:00:04.173138", modifiedDate: "2020-11-03 02:00:04.173138", sendServerInfo: "CVSAAS_DDNS02"},
+        {seqID:"1013329", phoneNum:"0012484661", otpNum:341263, message:"", sendCode:"OK", sendTime:"2020-11-03 02:00:04.173138", modifiedDate: "2020-11-03 02:00:04.173138", sendServerInfo: "CVSAAS_DDNS02"},
+        {seqID:"1812329", phoneNum:"0012484661", otpNum:341263, message:"", sendCode:"OK", sendTime:"2020-11-03 02:00:04.173138", modifiedDate: "2020-11-03 02:00:04.173138", sendServerInfo: "CVSAAS_DDNS02"},
       ]
     }
   },
   methods: {
-    searchToSessLiveInfo: function(param){
-      console.log("부모 메소드 searchToSessLiveInfo 호출: "+JSON.stringify(param));
+    searchToSmsHistoryInfo: function(param){
+      console.log("부모 메소드 searchToSmsHistoryInfo 호출: "+JSON.stringify(param));
     }
   }
 }

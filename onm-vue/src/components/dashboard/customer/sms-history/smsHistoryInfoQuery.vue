@@ -4,25 +4,16 @@
     <!-- search -->
     <table class="search">
       <tr>
-        <th>로그인 일시 : </th>
-        <td><input type="date" v-model="param.expireDateStart" placeholder="로그인 일시"></td>
+        <th>요청시간 : </th>
+        <td><input type="date" v-model="param.requestTimeStart" placeholder="요청시간"></td>
         <th> ~ </th>
-        <td><input type="date" v-model="param.expireDateEnd" placeholder="로그인 일시"></td>
-        <th>로그인 ID : </th>
-        <td><input type="text" v-model="param.phoneNum" placeholder="로그인 ID"></td>
+        <td><input type="date" v-model="param.requestTimeEnd" placeholder="요청시간"></td>
+        <th>발송 전화번호 : </th>
+        <td><input type="text" v-model="param.phoneNum" placeholder="전화번호"></td>
       </tr> 
       <tr> 
-        <th>로그아웃 일시 : </th>
-        <td><input type="date" v-model="param.expireDateStart" placeholder="로그아웃 일시"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.expireDateEnd" placeholder="로그아웃 일시"></td>
-        <th>OS타입 : </th>
-        <select v-model="param.deviceType">
-            <option disabled value="">선택해주세요</option>
-            <option>PC</option>
-            <option>iOS</option>
-            <option>Android</option>
-        </select>
+        <th>OTP 번호 : </th>
+        <td><input type="text" v-model="param.otpNum" placeholder="OTP 번호"></td>
       </tr>
       <button v-on:click="searchMethod">검색</button>
     </table>
@@ -35,12 +26,10 @@ export default {
     data() {
         return{
             param: {
-                loginDateStart: '',
-                loginDateEnd: '',
-                loginID: '',
-                logoutDateStart: '',
-                logoutDateEnd: '',
-                osType: ''
+                requestTimeStart: '',
+                requestTimeEnd: '',
+                phoneNum: '',
+                otpNum: ''
             }
         }
     },

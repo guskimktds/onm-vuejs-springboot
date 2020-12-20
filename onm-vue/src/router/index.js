@@ -23,6 +23,9 @@ import UsrInfo from '../components/dashboard/customer/usrInfo'
 import SessLiveInfo from '../components/dashboard/customer/sessLiveInfo'
 import LoginHistoryInfo from '../components/dashboard/customer/loginHistoryInfo'
 import SmsHistoryInfo from '../components/dashboard/customer/smsHistoryInfo'
+import OtpExpress from '../components/dashboard/customer/otpExpress'
+import MobileListInfo from '../components/dashboard/customer/mobileListInfo'
+import PushHistory from '../components/dashboard/customer/pushHistory'
 
 // 계정관리 메뉴(SingIn/SignOut/SingUp/MyPage)
 import AccountView from '../components/dashboard/account/accountView'
@@ -153,6 +156,21 @@ export default new Router({
                     path: "sms-history",
                     name: 'sms-history',
                     component: SmsHistoryInfo
+                },
+                {
+                    path: "otp-express",
+                    name: 'otp-express',
+                    component: OtpExpress
+                },
+                {
+                    path: "mobile-list",
+                    name: 'mobile-list',
+                    component: MobileListInfo
+                },
+                {
+                    path: "push-history",
+                    name: 'push-history',
+                    component: PushHistory
                 }
             ]
         },

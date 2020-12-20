@@ -3,8 +3,8 @@
 <template>
   <div>
     <p class="title">{{ title }}</p>
-    <sessLiveInfoQuery-query v-on:search="searchToSessLiveInfo"></sessLiveInfoQuery-query>
-    <sessLiveInfoQuery-list v-bind:pList=pList></sessLiveInfoQuery-list>
+    <sessLiveInfo-query v-on:search="searchToSessLiveInfo"></sessLiveInfo-query>
+    <sessLiveInfo-list v-bind:pList=pList></sessLiveInfo-list>
   </div>
 
 </template>
@@ -15,8 +15,8 @@ import SessLiveInfoQuery from './rtime-access-session/sessLiveInfoQuery'
 
 export default {
   components: {
-    'sessLiveInfoQuery-list': SessLiveInfoList,
-    'sessLiveInfoQuery-query': SessLiveInfoQuery
+    'sessLiveInfo-list': SessLiveInfoList,
+    'sessLiveInfo-query': SessLiveInfoQuery
   },
   data () {
     return {

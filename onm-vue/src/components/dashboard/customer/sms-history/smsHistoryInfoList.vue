@@ -3,25 +3,26 @@
         <table class="contents">
             <thead>
                 <tr>
-                    
-                    <th>로그인 키</th>
-                    <th>로그인 ID</th>
-                    <th>로그인 타입</th>
-                    <th>만료일시</th>
-                    <th>로그인일시</th>
-                    <th>로그아웃일시</th>
-                    <th>OS타입</th>
+                    <th>시퀀스 ID</th>
+                    <th>발송 전화번호</th>
+                    <th>OTP 번호</th>
+                    <th>발송 메세지 내용</th>
+                    <th>발송 결과 코드</th>
+                    <th>발송 요청 시간</th>
+                    <th>수정일</th>
+                    <th>SMS 발송서버명</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in pList" :key="item.loginKey">
-                    <td>{{item.loginKey}}</td>
-                    <td>{{item.loginId}}</td>
-                    <td>{{item.loginType}}</td>
-                    <td>{{item.expireDate}}</td>
-                    <td>{{item.loginDate}}</td>
-                    <td>{{item.logoutDate}}</td>
-                    <td>{{item.osType}}</td>
+                <tr v-for="item in pList" :key="item.seqID">
+                    <td>{{item.seqID}}</td>
+                    <td>{{item.phoneNum}}</td>
+                    <td>{{item.otpNum}}</td>
+                    <td>{{item.message}}</td>
+                    <td>{{item.sendCode}}</td>
+                    <td>{{item.sendTime}}</td>
+                    <td>{{item.modifiedDate}}</td>
+                    <td>{{item.sendServerInfo}}</td>
                 </tr>
             </tbody>
         </table>
