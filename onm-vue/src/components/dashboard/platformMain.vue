@@ -28,6 +28,9 @@ export default {
       //   }
       // ]
     }
+  },
+  created(){
+    console.log(this.$store.state);
   }
   // beforeRouteEnter(to, from, next){
   //   console.log('beforeRouteEnter : '+ 'to : '+to+' from: '+from);

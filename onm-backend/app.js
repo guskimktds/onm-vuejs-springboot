@@ -8,12 +8,14 @@ const fs = require('fs');
 const cors = require('cors');
 
 let corsOption = {
-    origin: 'http://localhost:8081', // 허락하는 요청 주소
+    origin: 'http://localhost:8080', // 허락하는 요청 주소
     credentials: true // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
 } 
 
 
-const jsonMenuFile = fs.readFileSync('./public/menuMock.json', 'utf8');
+const jsonAdminMenuFile = fs.readFileSync('./public/adminMenuMock.json', 'utf8');
+const jsonUserMenuFile = fs.readFileSync('./public/userMenuMock.json', 'utf8');
+const jsonOperatorMenuFile = fs.readFileSync('./public/operatorMenuMock.json', 'utf8');
  
 var app = express();      //express 서버 객체
  
@@ -114,24 +116,52 @@ router.route('/login').post(                      //설정된 쿠키정보를 �
         const { id, password } = req.body
         //const userID = isAuthenticated({ id, password });
         const userID = 1
-        if (userID === 0)
+        const data = {
+            expired : '60min'
+        }
+
+        if (id === 'admin')
         {
+            const status = 200
+            const menu = jsonAdminMenuFile
+            
+            //console.log(menu)
+            return res.status(status).json({ status, menu, data })
+
+        }else if(id === 'oper'){
+            const status = 200
+            const menu = jsonOperatorMenuFile
+            //console.log(menu)
+            return res.status(status).json({ status, menu, data })
+
+        }else if(id === 'user'){
+            const status = 200
+            const menu = jsonUserMenuFile
+            //console.log(menu)
+            return res.status(status).json({ status, menu, data })
+
+        }else if(id === 'nouser'){
             const status = 401
+            const data = 'User not exists'
+            res.status(status).json({ status, data })
+            return
+        }else{
+            const status = 402
             const data = 'Incorrect username or password'
             res.status(status).json({ status, data })
             return
         }
         //const accessToken = createToken({ id: userID })
         //res.cookie('sessionCookieName', accessToken, {httpOnly: true})
-        console.log("success 200 ok ")
-        const statusOk = 200
-        const data = {
-            expired : '60min'
-        }
+        // console.log("success 200 ok ")
+        // const statusOk = 200
+        // const data = {
+        //     expired : '60min'
+        // }
         //res.redirect('/platform');
-        res.status(statusOk).json({ statusOk, data: data });
+        // res.status(statusOk).json({ statusOk, data: data });
 
-        res.end();
+        // res.end();
     }
 );
 
