@@ -21,6 +21,25 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+a {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+ul a {
+  position: relative;
+  display: block;
+  /* padding: 15px 15px 17px 50px; */
+  padding: 10px 10px 10px 18px;
+  color: #fff;
+  border-bottom: 1px solid darken(#404040, 5%);
+  font-size: 13px;
+}
+
 
 </style>

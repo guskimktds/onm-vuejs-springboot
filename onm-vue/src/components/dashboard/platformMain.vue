@@ -29,6 +29,10 @@ export default {
       // ]
     }
   }
+  // beforeRouteEnter(to, from, next){
+  //   console.log('beforeRouteEnter : '+ 'to : '+to+' from: '+from);
+  //   next('/signin');
+  // }
 }
 </script>
 

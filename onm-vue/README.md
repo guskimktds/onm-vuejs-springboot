@@ -56,3 +56,25 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 ### GNB 및 Sideba Sub Menu 구조에 대한 메뉴 및 권한 처리 ###
 권한 그룹
+
+### 캡차 적용 ###
+
+### CORS 방지를 위한 axios 호출 시 아래와 같이 처리 ### 
+
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:8001';
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+### material 디자인 적용 시 index.html 에 링크 추가 ###
+
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+
+### 주석 처리함 -> 나중에 처리
+
+### 로그인 후 router 처리 시 
+this.$router.push 시 서버로 axios 통신 후 .then() 처리 시 동작안함
+
+해결 : this.$router.replace() 로 처리가능 
+
