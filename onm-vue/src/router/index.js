@@ -12,7 +12,7 @@ import CameraStatus from '../components/dashboard/platform/cameraDeviceStatus'
 import VaSettingStatus from '../components/dashboard/platform/vaSettingStatus'
 import StreamerStatus from '../components/dashboard/platform/streamerStatus'
 import IotGwStatus from '../components/dashboard/platform/iotGwStatus'
-import CamRegStat from '../components/dashboard/platform/camRegStat/camRegStat'
+import CamRegStat from '@/components/dashboard/platform/camRegStat/camRegStat'
 
 // 하위 메뉴 - 서비스관리
 import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
