@@ -21,6 +21,7 @@ export default {
         {name: 'IoT GW 상태현황', path: '/platform/iotgw'},
         {name: 'va 설정 현황', path: '/platform/va'},
         {name: '스트리머 관리 현황', path: '/platform/streamer'},
+        {name: '개통/해지 추이', path: '/platform/cam_reg_stat'},
       ],
       service: [
         {name: '계정조회', path: '/service/account-inquiry'},
