@@ -6,9 +6,14 @@
       <a></a>
     </header>
     <ul>
-      <li><span>Navigation</span></li>
+      <!-- <li><span>Navigation</span></li> -->
       <li v-for="subMenu in newMenus" :key="subMenu.name">
-        <router-link v-bind:to="subMenu.path">{{ subMenu.name }}</router-link>
+        <router-link v-bind:to="subMenu.path">
+          {{ subMenu.name }}
+          
+        </router-link>
+        <sub-menu :menus="subMenu.children"></sub-menu>
+
       </li>
     </ul>
   </div>
@@ -17,22 +22,29 @@
 <script>
 
 import EventBus from '../../EventBus';
+import subMenu from './subMenu.vue';
 
 export default {
-  props:['subMenus'],
+  //props:['subMenus'],
+  components: {
+    'sub-menu': subMenu
+  },
   data () {
     return {
       menu: 'GiGAeyes O&M',
-      //topPath: '' ,
-      newMenus: [] //this.props.keys(this.topPath)
+      newMenus: [] 
     }
   },
   created(){
       EventBus.$on('top-path', (payload)=>{          
         //console.log(payload)
         this.newMenus = payload
-        //console.log(this.newMenus)
       });
+  },
+  methods: {
+    openSubMenu: function(){
+      console.log("open sub");
+    }
   }
 }
 </script>
@@ -42,6 +54,7 @@ export default {
 #sidebar {
   background: #222;
   padding: 6px;
+  height: 100%;
 }
 
 
@@ -79,7 +92,7 @@ header {
   position: relative;
   height: 80px;
   padding: 20px 0 0 15px;
-  font-size: 16px;
+  font-size: 14px;
   color: #fff;
   background: darken(#404040, 5%);
 }
@@ -118,9 +131,11 @@ ul span {
 ul a {
   position: relative;
   display: block;
-  padding: 15px 15px 17px 50px;
+  /* padding: 15px 15px 17px 50px; */
+  padding: 15px 15px 15px 50px;
   color: #fff;
-  border-bottom: 1px solid darken(#404040, 5%);;
+  border-bottom: 1px solid darken(#404040, 5%);
+  font-size: 13px;
 }
 
 ul a:hover,
@@ -129,21 +144,22 @@ ul a.active {
 }
 
 ul a:before {
-  font: normal 16px fontawesome;
+  font: normal 14px fontawesome;
   top: 15px;
   left: 18px;
 }
 
-ul li:nth-child(2) a:before { content: '\f00a'; }
-ul li:nth-child(3) a:before { content: '\f012'; }
-ul li:nth-child(4) a:before { content: '\f018'; }
-ul li:nth-child(5) a:before { content: '\f024'; }
-ul li:nth-child(6) a:before { content: '\f0c3'; }
-ul li:nth-child(7) a:before { content: '\f09b'; }
-ul li:nth-child(8) a:before { content: '\f0fa'; }
-ul li:nth-child(10) a:before { content: '\f002'; }
-ul li:nth-child(11) a:before { content: '\f085'; }
-ul li:nth-child(12) a:before { content: '\f08b'; }
+/* ul li:nth-child(1) a:before { content: '\f08b'; } */
+ul li:nth-child(1) a:before { content: '\f00a'; }
+ul li:nth-child(2) a:before { content: '\f012'; }
+ul li:nth-child(3) a:before { content: '\f018'; }
+ul li:nth-child(4) a:before { content: '\f024'; }
+ul li:nth-child(5) a:before { content: '\f0c3'; }
+ul li:nth-child(6) a:before { content: '\f09b'; }
+ul li:nth-child(7) a:before { content: '\f0fa'; }
+ul li:nth-child(8) a:before { content: '\f002'; }
+ul li:nth-child(9) a:before { content: '\f085'; }
+ul li:nth-child(10) a:before { content: '\f08b'; }
 
 
 </style>
