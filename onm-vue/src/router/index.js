@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import PlatformMain from '../components/dashboard/platformMain'
 import ServiceMain from '../components/dashboard/serviceMain'
 import VocMain from '../components/dashboard/vocMain'
+import StoreMain from '../components/dashboard/storeMain'
 import CustomerMain from '../components/dashboard/customerMain'
 import BizMain from '../components/dashboard/bizMain'
 import NotFound from '../components/exceptions/NotFound'
@@ -17,6 +18,18 @@ import CamRegStat from '@/components/dashboard/platform/camRegStat/camRegStat'
 
 // 하위 메뉴 - 서비스관리
 import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
+
+// 매장 정보 조회 메뉴
+import StoreInfo from '../components/dashboard/store/storeInfo'
+import StoreDetailInfo from '../components/dashboard/store/storeDetailInfo'
+import StoreProductInfo from '../components/dashboard/store/storeProductInfo'
+import StoreProductSummaryInfo from '../components/dashboard/store/storeProductSummaryInfo'
+import VaCamCount from '../components/dashboard/store/vaCamCount'
+import SensorOrderInfo from '../components/dashboard/store/sensorOrderInfo'
+import KTTInfo from '../components/dashboard/store/kttInfo'
+import CameraInfo from '../components/dashboard/store/cameraInfo'
+import IotGWInfo from '../components/dashboard/store/iotgwInfo'
+import SensorInfo from '../components/dashboard/store/sensorInfo'
 
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/usrInfo'
@@ -49,7 +62,7 @@ Vue.use(Router)
 // 로그인 인증 여부를 여기서 판단하고 next() 컴포넌트 렌더링할지, 로그인 페이지로 갈지 결정됨
 const requireAuth = () => (from, to, next) => {
     //const isAuthenticated = false
-   
+
     //console.log('isAuthenticated : '+this.$store.state.getAuthenticated)
     //alert('isAuthenticated '+isAuthenticated)
     //if (isAuthenticated) return next()
@@ -59,25 +72,24 @@ const requireAuth = () => (from, to, next) => {
         path: "/signin",
         query: { redirect: to.fullPath },
     })
-    
+
     //next('/signin?returnPath=platform')
-  }
+}
 
 export default new Router({
     mode: 'history',
     base: process.env.BASE_URL,
 
-    routes: [
-        {
-            path: "/", 
+    routes: [{
+            path: "/",
             name: 'Home',
             component: PlatformMain,
             //beforeEnter: requireAuth()
             // 인증 여부를 체크하는 requreAuth를 beforeEnter 속성에 추가했다
             beforeEnter: requireAuth()
         },
-        { 
-            path: "/platform", 
+        {
+            path: "/platform",
             name: 'PlatformMain',
             component: PlatformMain,
             children: [{
@@ -103,15 +115,15 @@ export default new Router({
                 {
                     path: "streamerPopup",
                     name: 'StreamerStatusPopup',
-                    component: StreamerStatusPopup
+                    //component: StreamerStatusPopup
                 },
                 {
                     path: "iotgw",
                     name: 'IotGwStatus',
                     component: IotGwStatus
                 },
-                { 
-                    path: "cam_reg_stat", 
+                {
+                    path: "cam_reg_stat",
                     name: 'CamRegStat',
                     component: CamRegStat
                 }
@@ -171,6 +183,63 @@ export default new Router({
         },
 
         {
+            path: "/store",
+            name: 'StoreMain',
+            component: StoreMain,
+            children: [{
+                    path: "info",
+                    name: 'info',
+                    component: StoreInfo
+                },
+                {
+                    path: "store-detail",
+                    name: 'store-detail',
+                    component: StoreDetailInfo
+                },
+                {
+                    path: "store-product",
+                    name: 'store-product',
+                    component: StoreProductInfo
+                },
+                {
+                    path: "product-summary",
+                    name: 'product-summary',
+                    component: StoreProductSummaryInfo
+                },
+                {
+                    path: "va-cam-count",
+                    name: 'va-cam-count',
+                    component: VaCamCount
+                },
+                {
+                    path: "sensor-order",
+                    name: "sensor-order",
+                    component: SensorOrderInfo
+                },
+                {
+                    path: "ktt",
+                    name: "ktt",
+                    component: KTTInfo
+                },
+                {
+                    path: "device-camera",
+                    name: "device-camera",
+                    component: CameraInfo
+                },
+                {
+                    path: "device-iotgw",
+                    name: "device-iotgw",
+                    component: IotGWInfo
+                },
+                {
+                    path: "device-sensor",
+                    name: "device-sensor",
+                    component: SensorInfo
+                }
+            ]
+        },
+
+        {
             path: "/customer",
             name: 'CustomerMain',
             component: CustomerMain,
@@ -223,9 +292,9 @@ export default new Router({
             name: 'SignIn',
             component: SignIn
 
-        },        
-        { 
-            path: "*", 
+        },
+        {
+            path: "*",
             name: 'NotFound',
             component: NotFound
         }
