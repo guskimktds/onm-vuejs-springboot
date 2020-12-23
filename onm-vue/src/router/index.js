@@ -326,12 +326,7 @@ export default new Router({
             path: "/signin",
             name: 'SignIn',
             component: SignIn
-<<<<<<< HEAD
 
-        },
-        {
-            path: "*",
-=======
         }, 
         {
             path: "/signout",
@@ -340,7 +335,6 @@ export default new Router({
         },         
         { 
             path: "*", 
->>>>>>> feature_guskim/operation_03
             name: 'NotFound',
             component: NotFound
         }
