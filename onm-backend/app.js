@@ -165,6 +165,30 @@ router.route('/login').post(                      //설정된 쿠키정보를 �
     }
 );
 
+router.route('/logout').post(                      //설정된 쿠키정보를 본다
+    function (req, res) {
+        console.log('/logout 호출 됨');
+ 
+        const { id } = req.body
+        //const userID = isAuthenticated({ id, password });
+        var status = 200  
+        var data = 'Success logout'
+
+        if(id === 'nouser'){
+            status = 401
+            data = 'User not exists'
+            return res.status(status).json({ status, data })
+        }else if(id === 'incorrect'){
+            status = 402
+            data = 'Incorrect username or password' 
+            return res.status(status).json({ status, data })          
+        }
+
+        return res.status(status).json({ status, data })
+
+    }
+);
+
 router.route('/menu').post(                      //설정된 쿠키정보를 본다
     function (req, res) {
         console.log('/menu ');
@@ -187,6 +211,32 @@ router.route('/menu').post(                      //설정된 쿠키정보를 본
         //const accessToken = createToken({ id: userID })
         //res.cookie('sessionCookieName', accessToken, {httpOnly: true})
         //res.status(200).json({ success: true })
+    }
+);
+
+router.route('/signup').post(                      //설정된 쿠키정보를 본다
+    function (req, res) {
+        console.log('/signup call ');
+ 
+        const { id, ip, auth } = req.body
+        //const userID = isAuthenticated({ id, password });
+
+        console.log('/signup param ==> id :'+id, 'ip:'+ip, 'auth:'+auth);
+        var status = 200  
+        var data = 'Success Signup'
+
+        // if(id === 'nouser'){
+        //     status = 401
+        //     data = 'User not exists'
+        //     return res.status(status).json({ status, data })
+        // }else if(id === 'incorrect'){
+        //     status = 402
+        //     data = 'Incorrect username or password' 
+        //     return res.status(status).json({ status, data })          
+        // }
+
+        return res.status(status).json({ status, data })
+
     }
 );
 

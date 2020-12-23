@@ -2,7 +2,7 @@
   <nav>
       <ul> 
         <li v-for="menu in menuArray" :key="menu.name" v-on:click="changeTap(menu.children)">
-          <router-link to="menu.path">{{menu.name}}</router-link>
+          <router-link :to="menu.path">{{menu.name}}</router-link>
         </li>
       </ul>
   </nav>
@@ -14,12 +14,13 @@
 import EventBus from '../../EventBus';
 
 //로그인 시 서버에서 불러오면 수정해야함
-import menuArray from '../../mock/menuMock.json';
+//import menuArray from '../../mock/menuMock.json';
 
 export default {
   data () {
     return {
-      menuArray: menuArray      
+      //menuArray: menuArray   
+      menuArray: []
     }
   },
   methods: {
@@ -27,7 +28,16 @@ export default {
       console.log(childern);
       EventBus.$emit('top-path', childern);
     }
+  },
+  created(){
+    console.log("header.vue created load");
+    //console.log(this.$store.state.menu);
+    this.menuArray = this.$store.state.menu;
   }
+  // beforeRouteEnter(to,from,next){
+  //   console.log('beforeRouteEnter : '+'to : ',to,'from: ', from );
+  //   next();
+  // }
 }
 </script>
 

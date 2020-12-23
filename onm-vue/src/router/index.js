@@ -12,8 +12,8 @@ import ProcessStatus from '../components/dashboard/platform/processStatus'
 import CameraStatus from '../components/dashboard/platform/cameraDeviceStatus'
 import VaSettingStatus from '../components/dashboard/platform/vaSettingStatus'
 import StreamerStatus from '../components/dashboard/platform/streamerStatus'
-import StreamerStatusPopup from '../components/dashboard/platform/iotGwStatus'
 import IotGwStatus from '../components/dashboard/platform/iotGwStatus'
+import CamRegStat from '@/components/dashboard/platform/camRegStat/camRegStat'
 
 // 하위 메뉴 - 서비스관리
 import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
@@ -38,6 +38,13 @@ import MyPage from '../components/dashboard/account/myPage'
 import OrderMain from '../components/dashboard/order/orderMain'
 import UserOrderInfo from '../components/dashboard/order/userOrderInfo'
 import UserOrderDetail from '../components/dashboard/order/userOrderDetail'
+
+//운영관리
+import AccountMain from '../components/dashboard/account/accountMain'
+import OperationMain from '../components/dashboard/operationMain'
+import OperationHistory from '../components/dashboard/operation/operationHistory'
+import AdminHistory from '../components/dashboard/operation/adminHistory'
+import ChangeHistory from '../components/dashboard/operation/changeHistory'
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -101,15 +108,20 @@ export default new Router({
                     name: 'StreamerStatus',
                     component: StreamerStatus
                 },
-                {
-                    path: "streamerPopup",
-                    name: 'StreamerStatusPopup',
-                    component: StreamerStatusPopup
-                },
+                // {
+                //     path: "streamerPopup",
+                //     name: 'StreamerStatusPopup',
+                //     component: StreamerStatusPopup
+                // },
                 {
                     path: "iotgw",
                     name: 'IotGwStatus',
                     component: IotGwStatus
+                },
+                { 
+                    path: "cam_reg_stat", 
+                    name: 'CamRegStat',
+                    component: CamRegStat
                 }
             ]
         },
@@ -153,11 +165,12 @@ export default new Router({
             path: "/account",
             name: 'AccountView',
             component: AccountView,
-            children: [{
+            children: [
+                {
                     path: "mypage",
                     name: 'MyPage',
                     component: MyPage
-                },
+                },                
                 {
                     path: "signout",
                     name: 'SignOut',
@@ -165,7 +178,6 @@ export default new Router({
                 }
             ]
         },
-
         {
             path: "/customer",
             name: 'CustomerMain',
@@ -207,7 +219,34 @@ export default new Router({
                 }
             ]
         },
+        {
+            path: "/operation",
+            name: 'OperationMain',
+            component: OperationMain,
+            children: [
+                {
+                    path: "process-history",
+                    name: 'OperationHistory',
+                    component: OperationHistory
+                },
+                {
+                    path: "account",
+                    name: 'AccountMain',
+                    component: AccountMain
+                },  
+                {
+                    path: "admin-history",
+                    name: 'AdminHistory',
+                    component: AdminHistory
+                },   
+                {
+                    path: "change-history",
+                    name: 'ChangeHistory',
+                    component: ChangeHistory
+                }
 
+            ]
+        },
 
         {
             path: "/signup",
@@ -218,8 +257,12 @@ export default new Router({
             path: "/signin",
             name: 'SignIn',
             component: SignIn
-
-        },        
+        }, 
+        {
+            path: "/signout",
+            name: 'SignOut',
+            component: SignOut
+        },         
         { 
             path: "*", 
             name: 'NotFound',

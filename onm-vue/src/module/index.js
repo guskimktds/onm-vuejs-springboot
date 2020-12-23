@@ -11,7 +11,8 @@ const state = {
     //  id: 1,
     accessToken: null,  //cookie 로 대체
     isAuthenticated: false,
-    menu: []
+    menu: [],
+    
 }
 
 const getters = {
@@ -48,7 +49,7 @@ const actions = {
             })
     },
     LOGOUT({ commit }) {
-    commit("LOGOUT")
+        commit("LOGOUT")
     },
 }
 
