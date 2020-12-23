@@ -3,7 +3,6 @@
 <template>
   <div>
     <p class="title">{{ title }}</p>
-    <va-chart></va-chart>
     <va-query :search="search"></va-query>
     <va-list :pList=pList></va-list>
   </div>
@@ -14,13 +13,11 @@
 
 import List from './va/vaList'
 import Query from './va/vaQuery'
-import Chart from './va/vaChart'
 
 export default {
   components: {
     'va-list': List,
-    'va-query': Query,
-    'va-chart': Chart
+    'va-query': Query
   },
   data () {
     return {

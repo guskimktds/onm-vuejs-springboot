@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{ title }}</p>
+    <p class="title">{{ title }}</p>
     <process-query v-on:search="searchToProcess"></process-query>
     <process-list v-bind:pList=pList></process-list>
   </div>
