@@ -23,7 +23,6 @@ export default {
       title: '매장 정보 조회',
       pList: [
         {contractId:"S0034710650", usrId:"001248660", usrName: "정난순", usrNumber: "01011101110", statusCode:'S', localGWId:"B", resolution:"FHD", camAllCount:2, camSuccessCount: 2},
-      //Legacy octal literals are not allowed in strict mode 로 문자열처리
       ]
     }
   },
