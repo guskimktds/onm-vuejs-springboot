@@ -8,12 +8,14 @@ const fs = require('fs');
 const cors = require('cors');
 
 let corsOption = {
-    origin: 'http://localhost:8081', // 허락하는 요청 주소
+    origin: 'http://localhost:8080', // 허락하는 요청 주소
     credentials: true // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
 } 
 
 
-const jsonMenuFile = fs.readFileSync('./public/menuMock.json', 'utf8');
+const jsonAdminMenuFile = fs.readFileSync('./public/adminMenuMock.json', 'utf8');
+const jsonUserMenuFile = fs.readFileSync('./public/userMenuMock.json', 'utf8');
+const jsonOperatorMenuFile = fs.readFileSync('./public/operatorMenuMock.json', 'utf8');
  
 var app = express();      //express 서버 객체
  
@@ -114,24 +116,76 @@ router.route('/login').post(                      //설정된 쿠키정보를 �
         const { id, password } = req.body
         //const userID = isAuthenticated({ id, password });
         const userID = 1
-        if (userID === 0)
+        const data = {
+            expired : '60min'
+        }
+
+        if (id === 'admin')
         {
+            const status = 200
+            const menu = jsonAdminMenuFile
+            
+            //console.log(menu)
+            return res.status(status).json({ status, menu, data })
+
+        }else if(id === 'oper'){
+            const status = 200
+            const menu = jsonOperatorMenuFile
+            //console.log(menu)
+            return res.status(status).json({ status, menu, data })
+
+        }else if(id === 'user'){
+            const status = 200
+            const menu = jsonUserMenuFile
+            //console.log(menu)
+            return res.status(status).json({ status, menu, data })
+
+        }else if(id === 'nouser'){
             const status = 401
+            const data = 'User not exists'
+            res.status(status).json({ status, data })
+            return
+        }else{
+            const status = 402
             const data = 'Incorrect username or password'
             res.status(status).json({ status, data })
             return
         }
         //const accessToken = createToken({ id: userID })
         //res.cookie('sessionCookieName', accessToken, {httpOnly: true})
-        console.log("success 200 ok ")
-        const statusOk = 200
-        const data = {
-            expired : '60min'
-        }
+        // console.log("success 200 ok ")
+        // const statusOk = 200
+        // const data = {
+        //     expired : '60min'
+        // }
         //res.redirect('/platform');
-        res.status(statusOk).json({ statusOk, data: data });
+        // res.status(statusOk).json({ statusOk, data: data });
 
-        res.end();
+        // res.end();
+    }
+);
+
+router.route('/logout').post(                      //설정된 쿠키정보를 본다
+    function (req, res) {
+        console.log('/logout 호출 됨');
+ 
+        const { id } = req.body
+        //const userID = isAuthenticated({ id, password });
+        var status = 200  
+        var data = 'Success logout'
+
+        if(id === 'nouser'){
+            status = 401
+            data = 'User not exists'
+            return res.status(status).json({ status, data })
+        }else if(id === 'incorrect'){
+            status = 402
+            data = 'Incorrect username or password' 
+            return res.status(status).json({ status, data })          
+        }
+
+        return res.status(status).json({ status, data })
+
     }
 );
 
@@ -157,6 +211,32 @@ router.route('/menu').post(                      //설정된 쿠키정보를 본
         //const accessToken = createToken({ id: userID })
         //res.cookie('sessionCookieName', accessToken, {httpOnly: true})
         //res.status(200).json({ success: true })
+    }
+);
+
+router.route('/signup').post(                      //설정된 쿠키정보를 본다
+    function (req, res) {
+        console.log('/signup call ');
+ 
+        const { id, ip, auth } = req.body
+        //const userID = isAuthenticated({ id, password });
+
+        console.log('/signup param ==> id :'+id, 'ip:'+ip, 'auth:'+auth);
+        var status = 200  
+        var data = 'Success Signup'
+
+        // if(id === 'nouser'){
+        //     status = 401
+        //     data = 'User not exists'
+        //     return res.status(status).json({ status, data })
+        // }else if(id === 'incorrect'){
+        //     status = 402
+        //     data = 'Incorrect username or password' 
+        //     return res.status(status).json({ status, data })          
+        // }
+
+        return res.status(status).json({ status, data })
+
     }
 );
 
