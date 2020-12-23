@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import PlatformMain from '../components/dashboard/platformMain'
 import ServiceMain from '../components/dashboard/serviceMain'
 import VocMain from '../components/dashboard/vocMain'
+import OrderMain from '../components/dashboard/orderMain'
 import StoreMain from '../components/dashboard/storeMain'
 import CustomerMain from '../components/dashboard/customerMain'
 import BizMain from '../components/dashboard/bizMain'
@@ -48,9 +49,16 @@ import SignUp from '../components/dashboard/account/signUp'
 import MyPage from '../components/dashboard/account/myPage'
 
 //청약정보관리
-import OrderMain from '../components/dashboard/order/orderMain'
 import UserOrderInfo from '../components/dashboard/order/userOrderInfo'
 import UserOrderDetail from '../components/dashboard/order/userOrderDetail'
+import UserOrderResult from '../components/dashboard/order/userOrderResult'
+import UserOrderPhone from '../components/dashboard/order/userOrderPhone'
+import KTTOrderInfo from '../components/dashboard/order/kttOrderInfo'
+import DeviceOrderInfo from '../components/dashboard/order/deviceOrderInfo'
+import DeviceOrderResult from '../components/dashboard/order/deviceOrderResult'
+import AuthTargetDevice from '../components/dashboard/order/authTargetDevice'
+import SnapshotUser from '../components/dashboard/order/snapshotUser'
+import SnapshotDevice from '../components/dashboard/order/snapshotDevice'
 
 //운영관리
 import AccountMain from '../components/dashboard/account/accountMain'
@@ -142,16 +150,57 @@ export default new Router({
             name: 'OrderMain',
             component: OrderMain,
             children: [{
-                path: "user/order-info",
-                name: 'UserOrderInfo',
-                component: UserOrderInfo,
-                children: [{
+                    path: "user/order-info",
+                    name: 'UserOrderInfo',
+                    component: UserOrderInfo
+
+                },
+                {
                     path: "user/order-detail",
                     name: 'UserOrderDetail',
                     component: UserOrderDetail
-
-                }]
-            }]
+                },
+                {
+                    path: "user-order-result",
+                    name: 'UserOrderResult',
+                    component: UserOrderResult
+                },
+                {
+                    path: "user-order-phone",
+                    name: 'UserOrderPhone',
+                    component: UserOrderPhone
+                },
+                {
+                    path: "ktt-order",
+                    name: 'KTTOrderInfo',
+                    component: KTTOrderInfo
+                },
+                {
+                    path: "device-order-info",
+                    name: 'DeviceOrderInfo',
+                    component: DeviceOrderInfo
+                },
+                {
+                    path: "device-order-result",
+                    name: 'DeviceOrderResult',
+                    component: DeviceOrderResult
+                },
+                {
+                    path: "auth-target-device",
+                    name: 'AuthTargetDevice',
+                    component: AuthTargetDevice
+                },
+                {
+                    path: "snapshot-user",
+                    name: 'SnapshotUser',
+                    component: SnapshotUser
+                },
+                {
+                    path: "snapshot-device",
+                    name: 'SnapshotDevice',
+                    component: SnapshotDevice
+                }
+            ]
         },
         {
             path: "/service",

@@ -1,6 +1,7 @@
 <template>
   <div>
       <p>{{ title }}</p>
+      <router-view></router-view>
   </div>  
 </template>
 
