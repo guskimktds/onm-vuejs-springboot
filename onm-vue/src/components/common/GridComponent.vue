@@ -7,10 +7,10 @@
     <div class="table-header-wrapper">
       <table class="table-header">
         <thead>
-          <th v-for="key in columns"
+          <th v-for="(key, idx) in columns"
             @click="sortBy(key)"
             :class="{ active: sortKey == key }"
-            :key="key"
+            :key="idx"
           >
             {{ key | capitalize }}
             <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
@@ -21,8 +21,8 @@
     <div class="table-body-wrapper">
       <table class="table-body">
         <tbody>
-          <tr v-for="entry in filteredData" :key="entry">
-            <td v-for="key in columns" :key="key"> {{entry[key]}}</td>
+          <tr v-for="(entry, idx) in filteredData" :key="idx">
+            <td v-for="(key, idx) in columns" :key="idx"> {{entry[key]}}</td>
           </tr>
         </tbody>
       </table>

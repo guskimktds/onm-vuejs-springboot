@@ -101,11 +101,6 @@ export default new Router({
                     component: StreamerStatus
                 },
                 {
-                    path: "streamerPopup",
-                    name: 'StreamerStatusPopup',
-                    component: StreamerStatusPopup
-                },
-                {
                     path: "iotgw",
                     name: 'IotGwStatus',
                     component: IotGwStatus
