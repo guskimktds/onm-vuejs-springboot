@@ -43,10 +43,14 @@ export default {
       isShowMenu : true 
     }
   },
-  // created() {
-  //   console.log(store.state.isAuthenticated);
-  //   this.isShowMenu = store.state.isAuthenticated
-  // },
+  created() {
+    console.log("App.vue store 에서 state 읽기");
+    //console.log(store.state.isAuthenticated);
+    //console.log(store.state.menu);
+    //this.isShowMenu = store.state.isAuthenticated
+    console.log(this.$store.state.menu)
+    console.log(this.$store.state.isAuthenticated)
+  },
 }
 </script>
 

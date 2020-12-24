@@ -78,3 +78,16 @@ this.$router.push 시 서버로 axios 통신 후 .then() 처리 시 동작안함
 
 해결 : this.$router.replace() 로 처리가능 
 
+
+### 웹브라우저 리프레시 상태관리 값 초기화 방지 처리 vuex-persistedstate 처리
+npm install --save vuex-persistedstate
+
+store/index.js 에서 아래와 같이 처리
+
+import createPersistedState from "vuex-persistedstate"
+
+...
+plugins: [createPersistedState()],  // 선택적 처리 가능 
+...
+
+### 선택적으로 특정 모듈만 vuex-persistedstate 처리 가능

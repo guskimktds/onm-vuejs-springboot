@@ -1,3 +1,11 @@
+### Express 서버 기동 및 설정 ###
+npm init onm_backend 으로 package.json 프로젝트를 생성한다.
+npm install --save express 등 필요한 라이브러리를 설치한다.
+app.js 파일을 생성하고 미들웨어를 구현한다.
+
+app.js 디렉토리로 이동하여 아래와 같이 미들웨어 서버를 띄운다. 포트 3000 
+node app.js
+
 ### CORS 방지를 위한 axios 호출 시 처리 ### 
 
 이 문제를 해결하기 위해서는 API 요청을 받는 쪽. 즉, API서버의 응답 헤더를 변경해주는 것으로 

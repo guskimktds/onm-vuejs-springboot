@@ -3,7 +3,8 @@
     <nav class="teal">
         <router-link to="/account">마이페이지</router-link> |
         <router-link to="/signin">로그인</router-link> |
-        <router-link to="/signout">로그아웃</router-link>
+        <router-link @click.native="signOutClicked" to="/signout">로그아웃</router-link>
+        <!-- <router-link to="/signout">로그아웃</router-link> -->
         <!-- <router-link to="/signup">계정생성</router-link> -->
     </nav>
   </div>
@@ -14,6 +15,17 @@ export default {
   data () {
     return {
       //title: 'onm-header'
+    }
+  },
+  methods: {
+    signOutClicked: function() {
+      console.log("signOutClicked :"+this.$store.state.id)
+      console.log(this.$store.state)
+      this.$store
+          .dispatch("LOGOUT", this.$store.state.id)
+          .then( res => { console.log(res.status)})
+          //.then(this.$router.replace('/signout'))
+          .catch(({ message }) => (this.msg = message))
     }
   }
 }

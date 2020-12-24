@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import PlatformMain from '../components/dashboard/platformMain'
 import ServiceMain from '../components/dashboard/serviceMain'
 import VocMain from '../components/dashboard/vocMain'
+import OrderMain from '../components/dashboard/orderMain'
+import StoreMain from '../components/dashboard/storeMain'
 import CustomerMain from '../components/dashboard/customerMain'
 import BizMain from '../components/dashboard/bizMain'
 import NotFound from '../components/exceptions/NotFound'
@@ -17,6 +19,18 @@ import CamRegStat from '@/components/dashboard/platform/camRegStat/camRegStat'
 
 // 하위 메뉴 - 서비스관리
 import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
+
+// 매장 정보 조회 메뉴
+import StoreInfo from '../components/dashboard/store/storeInfo'
+import StoreDetailInfo from '../components/dashboard/store/storeDetailInfo'
+import StoreProductInfo from '../components/dashboard/store/storeProductInfo'
+import StoreProductSummaryInfo from '../components/dashboard/store/storeProductSummaryInfo'
+import VaCamCount from '../components/dashboard/store/vaCamCount'
+import SensorOrderInfo from '../components/dashboard/store/sensorOrderInfo'
+import KTTInfo from '../components/dashboard/store/kttInfo'
+import CameraInfo from '../components/dashboard/store/cameraInfo'
+import IotGWInfo from '../components/dashboard/store/iotgwInfo'
+import SensorInfo from '../components/dashboard/store/sensorInfo'
 
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/usrInfo'
@@ -35,9 +49,23 @@ import SignUp from '../components/dashboard/account/signUp'
 import MyPage from '../components/dashboard/account/myPage'
 
 //청약정보관리
-import OrderMain from '../components/dashboard/order/orderMain'
 import UserOrderInfo from '../components/dashboard/order/userOrderInfo'
 import UserOrderDetail from '../components/dashboard/order/userOrderDetail'
+import UserOrderResult from '../components/dashboard/order/userOrderResult'
+import UserOrderPhone from '../components/dashboard/order/userOrderPhone'
+import KTTOrderInfo from '../components/dashboard/order/kttOrderInfo'
+import DeviceOrderInfo from '../components/dashboard/order/deviceOrderInfo'
+import DeviceOrderResult from '../components/dashboard/order/deviceOrderResult'
+import AuthTargetDevice from '../components/dashboard/order/authTargetDevice'
+import SnapshotUser from '../components/dashboard/order/snapshotUser'
+import SnapshotDevice from '../components/dashboard/order/snapshotDevice'
+
+//운영관리
+import AccountMain from '../components/dashboard/account/accountMain'
+import OperationMain from '../components/dashboard/operationMain'
+import OperationHistory from '../components/dashboard/operation/operationHistory'
+import AdminHistory from '../components/dashboard/operation/adminHistory'
+import ChangeHistory from '../components/dashboard/operation/changeHistory'
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -49,35 +77,35 @@ Vue.use(Router)
 // 로그인 인증 여부를 여기서 판단하고 next() 컴포넌트 렌더링할지, 로그인 페이지로 갈지 결정됨
 const requireAuth = () => (from, to, next) => {
     //const isAuthenticated = false
-   
+
     //console.log('isAuthenticated : '+this.$store.state.getAuthenticated)
     //alert('isAuthenticated '+isAuthenticated)
     //if (isAuthenticated) return next()
     //next('/login?returnPath=me')
+    console.log(store.state.isAuthenticated)
     if (store.state.isAuthenticated) return next()
     next({
         path: "/signin",
         query: { redirect: to.fullPath },
     })
-    
+
     //next('/signin?returnPath=platform')
-  }
+}
 
 export default new Router({
     mode: 'history',
     base: process.env.BASE_URL,
 
-    routes: [
-        {
-            path: "/", 
+    routes: [{
+            path: "/",
             name: 'Home',
             component: PlatformMain,
             //beforeEnter: requireAuth()
             // 인증 여부를 체크하는 requreAuth를 beforeEnter 속성에 추가했다
             beforeEnter: requireAuth()
         },
-        { 
-            path: "/platform", 
+        {
+            path: "/platform",
             name: 'PlatformMain',
             component: PlatformMain,
             children: [{
@@ -100,13 +128,18 @@ export default new Router({
                     name: 'StreamerStatus',
                     component: StreamerStatus
                 },
+                // {
+                //     path: "streamerPopup",
+                //     name: 'StreamerStatusPopup',
+                //     component: StreamerStatusPopup
+                // },
                 {
                     path: "iotgw",
                     name: 'IotGwStatus',
                     component: IotGwStatus
                 },
-                { 
-                    path: "cam_reg_stat", 
+                {
+                    path: "cam_reg_stat",
                     name: 'CamRegStat',
                     component: CamRegStat
                 }
@@ -117,16 +150,57 @@ export default new Router({
             name: 'OrderMain',
             component: OrderMain,
             children: [{
-                path: "user/order-info",
-                name: 'UserOrderInfo',
-                component: UserOrderInfo,
-                children: [{
+                    path: "user/order-info",
+                    name: 'UserOrderInfo',
+                    component: UserOrderInfo
+
+                },
+                {
                     path: "user/order-detail",
                     name: 'UserOrderDetail',
                     component: UserOrderDetail
-
-                }]
-            }]
+                },
+                {
+                    path: "user-order-result",
+                    name: 'UserOrderResult',
+                    component: UserOrderResult
+                },
+                {
+                    path: "user-order-phone",
+                    name: 'UserOrderPhone',
+                    component: UserOrderPhone
+                },
+                {
+                    path: "ktt-order",
+                    name: 'KTTOrderInfo',
+                    component: KTTOrderInfo
+                },
+                {
+                    path: "device-order-info",
+                    name: 'DeviceOrderInfo',
+                    component: DeviceOrderInfo
+                },
+                {
+                    path: "device-order-result",
+                    name: 'DeviceOrderResult',
+                    component: DeviceOrderResult
+                },
+                {
+                    path: "auth-target-device",
+                    name: 'AuthTargetDevice',
+                    component: AuthTargetDevice
+                },
+                {
+                    path: "snapshot-user",
+                    name: 'SnapshotUser',
+                    component: SnapshotUser
+                },
+                {
+                    path: "snapshot-device",
+                    name: 'SnapshotDevice',
+                    component: SnapshotDevice
+                }
+            ]
         },
         {
             path: "/service",
@@ -152,15 +226,72 @@ export default new Router({
             path: "/account",
             name: 'AccountView',
             component: AccountView,
-            children: [{
+            children: [
+                {
                     path: "mypage",
                     name: 'MyPage',
                     component: MyPage
-                },
+                },                
                 {
                     path: "signout",
                     name: 'SignOut',
                     component: SignOut
+                }
+            ]
+        },
+        {
+            path: "/store",
+            name: 'StoreMain',
+            component: StoreMain,
+            children: [{
+                    path: "info",
+                    name: 'info',
+                    component: StoreInfo
+                },
+                {
+                    path: "store-detail",
+                    name: 'store-detail',
+                    component: StoreDetailInfo
+                },
+                {
+                    path: "store-product",
+                    name: 'store-product',
+                    component: StoreProductInfo
+                },
+                {
+                    path: "product-summary",
+                    name: 'product-summary',
+                    component: StoreProductSummaryInfo
+                },
+                {
+                    path: "va-cam-count",
+                    name: 'va-cam-count',
+                    component: VaCamCount
+                },
+                {
+                    path: "sensor-order",
+                    name: "sensor-order",
+                    component: SensorOrderInfo
+                },
+                {
+                    path: "ktt",
+                    name: "ktt",
+                    component: KTTInfo
+                },
+                {
+                    path: "device-camera",
+                    name: "device-camera",
+                    component: CameraInfo
+                },
+                {
+                    path: "device-iotgw",
+                    name: "device-iotgw",
+                    component: IotGWInfo
+                },
+                {
+                    path: "device-sensor",
+                    name: "device-sensor",
+                    component: SensorInfo
                 }
             ]
         },
@@ -206,7 +337,34 @@ export default new Router({
                 }
             ]
         },
+        {
+            path: "/operation",
+            name: 'OperationMain',
+            component: OperationMain,
+            children: [
+                {
+                    path: "process-history",
+                    name: 'OperationHistory',
+                    component: OperationHistory
+                },
+                {
+                    path: "account",
+                    name: 'AccountMain',
+                    component: AccountMain
+                },  
+                {
+                    path: "admin-history",
+                    name: 'AdminHistory',
+                    component: AdminHistory
+                },   
+                {
+                    path: "change-history",
+                    name: 'ChangeHistory',
+                    component: ChangeHistory
+                }
 
+            ]
+        },
 
         {
             path: "/signup",
@@ -218,7 +376,12 @@ export default new Router({
             name: 'SignIn',
             component: SignIn
 
-        },        
+        }, 
+        {
+            path: "/signout",
+            name: 'SignOut',
+            component: SignOut
+        },         
         { 
             path: "*", 
             name: 'NotFound',
