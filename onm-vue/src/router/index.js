@@ -67,6 +67,17 @@ import OperationHistory from '../components/dashboard/operation/operationHistory
 import AdminHistory from '../components/dashboard/operation/adminHistory'
 import ChangeHistory from '../components/dashboard/operation/changeHistory'
 
+//운영관리 / 관리자 이력 조회
+
+//운영관리 / 코드 설정 관리 
+import CodeConfigList from '../components/dashboard/operation/codeSet/codeConfigList'
+import LocalCodeList from '../components/dashboard/operation/codeSet/localCodeList'
+import ClientDeviceList from '../components/dashboard/operation/codeSet/clientDeviceList'
+
+//운영관리 / 고객이전
+import CustomerTransferList from '../components/dashboard/operation/transfer/customerTransferList'
+import DeviceStatusList from '../components/dashboard/operation/transfer/deviceStatusList'
+
 // store 에 로그인 여부 체크
 import store from '../store'
 
@@ -107,7 +118,7 @@ export default new Router({
         {
             path: "/platform",
             name: 'PlatformMain',
-            component: PlatformMain,
+            component: ProcessStatus,
             children: [{
                     path: "process",
                     name: 'ProcessStatus',
@@ -361,8 +372,32 @@ export default new Router({
                     path: "change-history",
                     name: 'ChangeHistory',
                     component: ChangeHistory
+                },
+                {
+                    path: "code",
+                    name: 'CodeConfig',
+                    component: CodeConfigList
+                },                    
+                {
+                    path: "lv",
+                    name: 'LocalCodeList',
+                    component: LocalCodeList
+                },                    
+                {
+                    path: "client-device",
+                    name: 'ClientDeviceList',
+                    component: ClientDeviceList
+                },
+                {
+                    path: "customer-transfer",
+                    name: 'CustomerTransferList',
+                    component: CustomerTransferList
+                },
+                {
+                    path: "device-status",
+                    name: 'DeviceStatusList',
+                    component: DeviceStatusList
                 }
-
             ]
         },
 

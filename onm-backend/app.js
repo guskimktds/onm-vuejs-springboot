@@ -8,7 +8,7 @@ const fs = require('fs');
 const cors = require('cors');
 
 let corsOption = {
-    origin: 'http://localhost:8080', // 허락하는 요청 주소
+    origin: ['http://localhost:8080', 'http://localhost:8081'], // 허락하는 요청 주소
     credentials: true // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
 } 
 

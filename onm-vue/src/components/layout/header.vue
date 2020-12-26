@@ -15,12 +15,13 @@ import EventBus from '../../EventBus';
 
 //로그인 시 서버에서 불러오면 수정해야함
 //import menuArray from '../../mock/menuMock.json';
+import {mapState} from 'vuex'
 
 export default {
   data () {
     return {
       //menuArray: menuArray   
-      menuArray: []
+      //menuArray: []
     }
   },
   methods: {
@@ -29,15 +30,29 @@ export default {
       EventBus.$emit('top-path', childern);
     }
   },
+  computed: {
+    ...mapState({ 
+        menuArray: 'menu', 
+      }),
+  },
   created(){
     console.log("header.vue created load");
-    //console.log(this.$store.state.menu);
-    this.menuArray = this.$store.state.menu;
+    console.log(this.$store.getters.getMenus);
+    //this.menuArray = this.$store.state.menu;
+    //this.menuArray = this.$store.getters.getMenus;
   }
   // beforeRouteEnter(to,from,next){
   //   console.log('beforeRouteEnter : '+'to : ',to,'from: ', from );
   //   next();
   // }
+  ,
+  updated() {
+    console.log('header.vue updated')
+  },
+  mounted() {
+    //let res = this.menuArray.filters(it => it.name.includes('/platform'))
+    console.log('header.vue mounted : ')
+  },
 }
 </script>
 

@@ -29,6 +29,9 @@ export default new Vuex.Store({
   getters: {
     getAuthenticated: function (state) {
       return state.isAuthenticated;
+    },
+    getMenus: function(state){
+      return state.menu
     }
   },
   mutations: {

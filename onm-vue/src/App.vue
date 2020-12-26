@@ -51,6 +51,13 @@ export default {
     console.log(this.$store.state.menu)
     console.log(this.$store.state.isAuthenticated)
   },
+  updated() {
+    console.log('App.vue updated');
+    console.log(this.$store.getters.getMenus);
+  },
+  mounted() {
+    console.log('App.vue mounted')
+  },
 }
 </script>
 
