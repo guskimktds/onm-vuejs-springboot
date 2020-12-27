@@ -1,9 +1,20 @@
 <template>
   <div>
-    <p>{{ title }}</p>
+    <!-- <p>{{ title }}</p>-->
+    <v-container>
+      <v-card>
+        <v-toolbar primary dense>
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
+        </v-toolbar>
+        <operation-history-query></operation-history-query>
+        <operation-history-list v-bind:operationHistoryList=list></operation-history-list>
+      </v-card>
+
+    </v-container>
+    
     <!-- <router-view></router-view> -->
-    <operation-history-query></operation-history-query>
-    <operation-history-list v-bind:operationHistoryList=list></operation-history-list>
+    <!-- <operation-history-query></operation-history-query>
+    <operation-history-list v-bind:operationHistoryList=list></operation-history-list> -->
   </div>
 </template>
 

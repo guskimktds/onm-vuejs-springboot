@@ -16,11 +16,12 @@ export default {
 </script>
 
 <style scoped>
-/* content {
-  background: #222;
+content {
+  /* background: #222; */
   padding: 6px;
+  /* margin-left: 10px; */
 }
-p{
+/* p{
   color: lightgreen;
   text-align: center;
 } */

@@ -1,20 +1,12 @@
 <template>
-  <!-- <nav>
+  <nav>
       <ul> 
         <li v-for="menu in menuArray" :key="menu.name" v-on:click="changeTap(menu.children)">
+          <!-- <v-btn color="blue"><router-link :to="menu.path">{{menu.name}}</router-link></v-btn> -->
           <router-link :to="menu.path">{{menu.name}}</router-link>
         </li>
       </ul>
-  </nav> -->
-  <div>
-    <v-toolbar dense>
-      <v-toolbar-items>
-        <v-btn text v-for="menu in menuArray" :key="menu.name" v-on:click="changeTap(menu.children)" :to="menu.path">
-          {{ menu.name }}
-        </v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
-  </div>
+  </nav>
 </template>
 
 <script>
@@ -66,9 +58,10 @@ export default {
 </script>
 
 <style scoped>
-/* nav {
+nav {
   background: #666;
   padding: 14px 0;
+  /* margin-bottom: 40px; */
 }
 a {
   color: #fff;
@@ -96,6 +89,6 @@ ul a:before {
   font: normal 14px fontawesome;
   top: 15px;
   left: 18px;
-} */
+}
 
 </style>

@@ -8,7 +8,7 @@
 export default {
   data () {
     return {
-      copyright: 'Copyright 2020 GiGAeyes ONM Footer'
+      copyright: 'Copyright 2020 GiGAeyes O&M Admin page'
     }
   }
 }
@@ -17,7 +17,7 @@ export default {
 <style scoped>
 footer{
   background: #222;
-  padding: 6px;
+  padding: 8px 2px 2px 2px;
 }
 p{
   color: lightgreen;

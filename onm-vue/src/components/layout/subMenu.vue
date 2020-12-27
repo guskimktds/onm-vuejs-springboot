@@ -39,6 +39,7 @@ ul a {
   color: #fff;
   border-bottom: 1px solid darken(#404040, 5%);
   font-size: 13px;
+  margin-left: 40px;
 }
 
 

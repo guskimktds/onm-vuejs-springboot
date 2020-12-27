@@ -5,14 +5,18 @@
       <app-sidebar></app-sidebar>
     </div>  
     <div id='mainContainer'>
-      <app-topMenu></app-topMenu>
-      <div v-show="isShowMenu">
-        <app-header></app-header> 
-      </div> 
-      <!-- <app-contents></app-contents>  -->
-      <router-view></router-view>     
-      <div v-show="isShowMenu">
-        <app-footer></app-footer>
+      <div id='contentBody'>
+        <app-topMenu></app-topMenu>
+        <div v-show="isShowMenu">
+          <app-header></app-header> 
+        </div> 
+        <!-- <app-contents></app-contents>  -->
+        <router-view></router-view> 
+      </div>
+      <div id='contentFooter'>    
+        <div v-show="isShowMenu">
+          <app-footer></app-footer>
+        </div>
       </div>
     </div>
   </div>
@@ -77,6 +81,14 @@ export default {
   flex: 1;
   padding: 0 3px;
   background: #f5f5f5;
+}
+
+#contentFooter {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  /* height:50px;    */
+    /* background:#ccc; */
 }
 
 /* .flex-grid {
