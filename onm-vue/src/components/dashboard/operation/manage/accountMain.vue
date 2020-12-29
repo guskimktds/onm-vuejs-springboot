@@ -15,13 +15,14 @@
 </template>
 
 <script>
-import AccountList from './manage/accountList'
-import AccountQuery from './manage/accountQuery'
+import AccountList from './accountList'
+import AccountQuery from './accountQuery'
 //로그인 시 서버에서 불러오면 수정해야함
 // import accountListMock from '../../../mock/accountListMock.json';
 import axios from "axios"
 
-const resourceHost = "http://localhost:3000"
+// const resourceHost = "http://localhost:3000"
+
 
 export default {
   components: {
@@ -38,8 +39,9 @@ export default {
   methods: {
     searchToButton: function(param){
       console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(param));
+      console.log(process.env);
             axios
-                .get(`${resourceHost}/accountlist`)
+                .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/accountlist`)
                 .then((result) => {
                   console.log(result)
                   this.list = JSON.parse(result.data.menu)
@@ -51,7 +53,7 @@ export default {
   },
   created: function() {
     axios
-        .get(`${resourceHost}/accountlist`)
+        .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/accountlist`)
         .then((result) => {
           console.log(result)
           console.log(JSON.parse(result.data.menu))

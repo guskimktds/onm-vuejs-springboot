@@ -18,6 +18,8 @@ const jsonUserMenuFile = fs.readFileSync('./public/userMenuMock.json', 'utf8');
 const jsonOperatorMenuFile = fs.readFileSync('./public/operatorMenuMock.json', 'utf8');
 
 const jsonAccountListFile = fs.readFileSync('./public/accountListMock.json', 'utf8');
+
+const jsonOperatorListFile = fs.readFileSync('./public/operationListMock.json', 'utf8');
  
 var app = express();      //express 서버 객체
  
@@ -225,6 +227,20 @@ router.route('/accountlist').get(                      //설정된 쿠키정보�
 
         const status = 200
         const menu = jsonAccountListFile
+        console.log(menu)
+        return res.status(status).json({ status, menu })
+    }
+);
+
+router.route('/operation-history').get(                      //설정된 쿠키정보를 본다
+    function (req, res) {
+        console.log('/operation-history ');
+ 
+        const { id, password } = req.body
+        //const userID = isAuthenticated({ id, password });
+
+        const status = 200
+        const menu = jsonOperatorListFile
         console.log(menu)
         return res.status(status).json({ status, menu })
     }

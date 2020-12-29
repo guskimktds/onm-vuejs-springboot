@@ -61,11 +61,11 @@ import SnapshotUser from '../components/dashboard/order/snapshotUser'
 import SnapshotDevice from '../components/dashboard/order/snapshotDevice'
 
 //운영관리
-import AccountMain from '../components/dashboard/account/accountMain'
+import AccountMain from '../components/dashboard/operation/manage/accountMain'
 import OperationMain from '../components/dashboard/operationMain'
-import OperationHistory from '../components/dashboard/operation/operationHistory'
-import AdminHistory from '../components/dashboard/operation/adminHistory'
-import ChangeHistory from '../components/dashboard/operation/changeHistory'
+import OperationHistory from '../components/dashboard/operation/history/operationHistory'
+import AdminHistory from '../components/dashboard/operation/admin/adminHistory'
+import ChangeHistory from '../components/dashboard/operation/change/changeHistory'
 
 //운영관리 / 관리자 이력 조회
 

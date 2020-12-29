@@ -13,7 +13,7 @@
         </app-my-modal> -->
         <v-form>
             <v-container>
-                <v-row>
+                <v-row >
                     <v-col cols="12" sm="6" md="3">
                         <v-text-field dense label="사번" v-model="param.id" placeholder="Placeholder" solo>                        
                         </v-text-field>
@@ -26,15 +26,15 @@
                         <v-text-field dense label="권한" v-model="param.auth" placeholder="Placeholder" solo>                        
                         </v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="3">
-                        <v-btn elevation="2" medium
+                    <v-col cols="auto" >
+                        <v-btn 
                             v-on:click="searchMethod"
                             >
                             검색
                         </v-btn>
                     </v-col>  
-                    <v-col cols="12" sm="6" md="3">
-                        <v-btn elevation="2" medium
+                    <v-col cols="auto">
+                        <v-btn 
                          id="show-modal" @click="showModal = true"
                          >
                             등록
@@ -87,5 +87,7 @@ export default {
 }
 </script>
 <style>
-
+v-btn {
+    margin: auto;
+}
 </style>
