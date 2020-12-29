@@ -91,3 +91,32 @@ plugins: [createPersistedState()],  // 선택적 처리 가능
 ...
 
 ### 선택적으로 특정 모듈만 vuex-persistedstate 처리 가능
+
+### Axios HTTP 처리 시 고려사항
+
+axios 는 promise 기반으로 Vue mehods 에서 작성시 아래와 같은 규칙을 확인해야한다.
+
+성공시 응답객체
+  data : 
+  status : 서버로부터 받는 http 상태 코드, 성공 시 200
+  statusText : 서버로부터 받는 http 상태 메시지
+  headers : 
+  config : 
+  request :
+실패시 응답객체
+  message : 서버로부터 받은 에러코드를 포함한 에러메시지
+  response :
+  request :
+  config : 
+
+예시) 아래와 같이 성공 시 => then , 실패 시 => catch 에서 처리해야함
+axios
+    .get(`${resourceHost}/accountlist`)
+    .then((result) => {  // 성공 시
+        console.log(result)
+        this.list = JSON.stringify(result.data.menu)  // data 에 선언된 list 에 바인딩
+    })
+    .catch((ex) => {  // 실패 시
+        console.log('조회 실패',ex)
+    })
+
