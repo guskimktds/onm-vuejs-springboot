@@ -118,7 +118,7 @@ export default new Router({
         {
             path: "/platform",
             name: 'PlatformMain',
-            component: ProcessStatus,
+            component: PlatformMain,
             children: [{
                     path: "process",
                     name: 'ProcessStatus',
