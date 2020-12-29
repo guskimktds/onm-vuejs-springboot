@@ -23,7 +23,30 @@
             </tbody>
         </table>      
   </div>
+
+  <!-- <div id="app">
+  <v-app id="inspire">
+    <v-card>
+      <v-card-title>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :items="desserts"
+        :search="search"
+      ></v-data-table>
+    </v-card>
+  </v-app>
+</div> -->
+
 </template>
+
 
 <script>
 export default {
