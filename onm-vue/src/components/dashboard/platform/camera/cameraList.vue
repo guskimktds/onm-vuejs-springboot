@@ -13,25 +13,29 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in pList" :key="item.code">
-                    <td>{{item.code}}</td>
-                    <td>{{item.totalCnt}}</td>
-                    <td>{{item.normalCnt}}</td>
-                    <td>{{item.waitCnt}}</td>
-                    <td>{{item.procCnt}}</td>
-                    <td>{{item.failCnt}}</td>
-                    <td>{{item.networkFailCnt}}</td>
+                <tr v-for="(item, idx) in pList" :key="idx">
+                    <td>{{item.local_gw_id}}</td>
+                    <td>{{item.cam_cnt}}</td>
+                    <td>{{item.status_code}}</td>
+                    <!-- <td>{{item.local_gw_id}}</td> -->
+                    <!-- <td>{{item.total_cam_cnt}}</td> -->
+                    <!-- <td>{{item.normal_cam_cnt}}</td> -->
+                    <td>{{item.waiting_cam_cnt}}</td>
+                    <td>{{item.proc_cam_cnt}}</td>
+                    <td>{{item.open_fail_cam_cnt}}</td>
+                    <td>{{item.networkfail_cam_cnt}}</td>
+                    <!-- <td>{{item.pause_cam_cnt}}</td> -->
                 </tr>
             </tbody>
         </table>
     </div>
 </template>
+
 <script>
 export default {
     props: ['pList'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
     created() {
-        console.log(this.props)
+        //console.log(this.props)
     }
 }
 </script>

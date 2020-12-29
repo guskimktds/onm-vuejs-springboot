@@ -1,29 +1,4 @@
 <template>
-    <!-- <div> -->
-
-
-    <!-- search -->
-    <!--
-    <table class="search">
-        <colgroup>
-            <col width="10%"><col width="40%"><col width="10%"><col width="40%">
-        </colgroup>
-      <tr>
-        <th>국사코드 : </th>
-        <td><input type="text" v-model="param.local_gw_id" placeholder="국사코드"></td>
-        <th>프로세스 : </th>
-        <td><input type="text" v-model="param.process" placeholder="프로세스"></td>   
-      </tr> 
-      <tr> 
-
-        <th>상태 : </th>
-        <td colspan="3"><input type="text" v-model="param.process_status" placeholder="상태"></td>   
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table>
-
-   </div>
-    -->
     <v-form>
         <v-container>
             <v-row>
@@ -47,7 +22,6 @@
             </v-row>
         </v-container>
     </v-form>
-
 </template>
 <script>
 export default {

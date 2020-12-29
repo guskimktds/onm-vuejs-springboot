@@ -1,11 +1,5 @@
 <template>
   <div>
-    <!-- 
-    <p class="title">{{ title }}</p>
-    <process-query v-on:search="searchToProcess"></process-query>
-    <process-list v-bind:pList=pList></process-list>
-    -->
-
     <v-container>
       <v-card>
         <v-toolbar primary dense>
@@ -15,7 +9,6 @@
         <process-list v-bind:pList=pList></process-list>
       </v-card>
     </v-container>
-
   </div>
 
 </template>
@@ -35,7 +28,7 @@ export default {
   data () {
     return {
       title: '프로세스 현황 화면',
-      pList: []
+      pList: [],
     }
   },
   methods: {
@@ -53,6 +46,7 @@ export default {
         var resMsg = response.data.res_msg;
         if(resCode == 200){
           this.pList = response.data.data.process_list;
+
         }else{
           this.pList = [];
           alert(resCode + " / " + resMsg);
@@ -72,9 +66,7 @@ export default {
 
   created: function() {
     this.searchToProcess({"page_no":"1", "view_cnt":"10"});
-  },
-
-  
+  }
 }
 </script>
 
