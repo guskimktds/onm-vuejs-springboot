@@ -42,7 +42,7 @@ export default {
                 .get(`${resourceHost}/accountlist`)
                 .then((result) => {
                   console.log(result)
-                  this.list = JSON.stringify(result.data.menu)
+                  this.list = JSON.parse(result.data.menu)
                 })
                 .catch((ex) => {
                   console.log('조회 실패',ex)
@@ -54,10 +54,10 @@ export default {
         .get(`${resourceHost}/accountlist`)
         .then((result) => {
           console.log(result)
-          console.log(JSON.stringify(result.data.menu))
+          console.log(JSON.parse(result.data.menu))
           console.log(result.data.status)
           if(result.data.status === 200){
-            this.list = JSON.stringify(result.data.menu)
+            this.list = JSON.parse(result.data.menu)
           }
           else this.list = []
         })

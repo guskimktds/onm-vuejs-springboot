@@ -114,7 +114,7 @@ axios
     .get(`${resourceHost}/accountlist`)
     .then((result) => {  // 성공 시
         console.log(result)
-        this.list = JSON.stringify(result.data.menu)  // data 에 선언된 list 에 바인딩
+        this.list = JSON.parse(result.data.menu)  // data 에 선언된 list 에 바인딩
     })
     .catch((ex) => {  // 실패 시
         console.log('조회 실패',ex)
