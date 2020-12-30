@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <!-- <div>
         <table class="contents">
             <thead>
                 <tr>
@@ -32,17 +32,57 @@
                 </tr>
             </tbody>
         </table>
+    </div> -->
+
+    <div id="app">
+        <v-app id="inspire">
+            <v-data-table
+                :headers="headers"
+                :items="List"
+                :items-per-page="5"
+                 item-key="usrId"
+                class="elevation-1"
+                :style="`background-color: #d6f5e5`"
+            >
+        <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
+          <td :colspan="headers.length">
+            <List></List>
+          </td>
+        </template>       -->
+            </v-data-table>
+        </v-app>
     </div>
 </template>
+
 <script>
 export default {
-    props: ['pList'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
-    created() {
-        console.log(this.props)
+    props: ['List'],
+    data() {
+      return {
+        headers: [
+          {
+            text: '사용자ID',
+            align: 'start',
+            sortable: false,
+            value: 'usrId',
+          },
+          { text: '전화번호', value: 'phoneNumber'},
+          { text: '전화번호 타입', value: 'numberType' },
+          { text: '사용자 이름', value: 'usrName' },
+          { text: 'Sub ID(전화번호 ID)', value: 'subId' },
+          { text: '알람설정권한(Y/N)', value: 'alarmAuth' },
+          { text: '승인여부', value: 'approve' },
+          { text: '승인날짜', value: 'approveDate' },
+          { text: '상태 코드', value: 'statusCode' },
+          { text: 'mgt 상태코드', value: 'mgtCode' },
+          { text: '비고', value: 'etc' },
+        ]
+      }
     }
 }
+     
 </script>
-<style>
+
+<style scoped>
     
 </style>

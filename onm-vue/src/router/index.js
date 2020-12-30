@@ -33,7 +33,7 @@ import IotGWInfo from '../components/dashboard/store/iotgwInfo'
 import SensorInfo from '../components/dashboard/store/sensorInfo'
 
 // 사용자 정보 조회 메뉴
-import UsrInfo from '../components/dashboard/customer/usrInfo'
+import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
 import SessLiveInfo from '../components/dashboard/customer/sessLiveInfo'
 import LoginHistoryInfo from '../components/dashboard/customer/loginHistoryInfo'
 import SmsHistoryInfo from '../components/dashboard/customer/smsHistoryInfo'
@@ -237,12 +237,11 @@ export default new Router({
             path: "/account",
             name: 'AccountView',
             component: AccountView,
-            children: [
-                {
+            children: [{
                     path: "mypage",
                     name: 'MyPage',
                     component: MyPage
-                },                
+                },
                 {
                     path: "signout",
                     name: 'SignOut',
@@ -352,8 +351,7 @@ export default new Router({
             path: "/operation",
             name: 'OperationMain',
             component: OperationMain,
-            children: [
-                {
+            children: [{
                     path: "process-history",
                     name: 'OperationHistory',
                     component: OperationHistory
@@ -362,12 +360,12 @@ export default new Router({
                     path: "account",
                     name: 'AccountMain',
                     component: AccountMain
-                },  
+                },
                 {
                     path: "admin-history",
                     name: 'AdminHistory',
                     component: AdminHistory
-                },   
+                },
                 {
                     path: "change-history",
                     name: 'ChangeHistory',
@@ -377,12 +375,12 @@ export default new Router({
                     path: "code",
                     name: 'CodeConfig',
                     component: CodeConfigList
-                },                    
+                },
                 {
                     path: "lv",
                     name: 'LocalCodeList',
                     component: LocalCodeList
-                },                    
+                },
                 {
                     path: "client-device",
                     name: 'ClientDeviceList',
@@ -411,14 +409,14 @@ export default new Router({
             name: 'SignIn',
             component: SignIn
 
-        }, 
+        },
         {
             path: "/signout",
             name: 'SignOut',
             component: SignOut
-        },         
-        { 
-            path: "*", 
+        },
+        {
+            path: "*",
             name: 'NotFound',
             component: NotFound
         }
