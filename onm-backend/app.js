@@ -1,6 +1,9 @@
+require('dotenv').config();
 var express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 var http = require('http');
-var serveStatic = require('serve-static'); //특정 폴더의 파일들을 특정 패스로 접근할 수 있도록 열어주는 역할
+// var serveStatic = require('serve-static'); //특정 폴더의 파일들을 특정 패스로 접근할 수 있도록 열어주는 역할
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
@@ -18,13 +21,14 @@ const jsonAdminMenuFile = fs.readFileSync('./public/adminMenuMock.json', 'utf8')
 const jsonUserMenuFile = fs.readFileSync('./public/userMenuMock.json', 'utf8');
 const jsonOperatorMenuFile = fs.readFileSync('./public/operatorMenuMock.json', 'utf8');
 
-const jsonAccountListFile = fs.readFileSync('./public/accountListMock.json', 'utf8');
+// const jsonAccountListFile = fs.readFileSync('./public/accountListMock.json', 'utf8');
 
 const jsonOperatorListFile = fs.readFileSync('./public/operationListMock.json', 'utf8');
 
+const port = process.env.PORT || 3000;
 var app = express(); //express 서버 객체
 
-var bodyParser_post = require('body-parser'); //post 방식 파서
+// var bodyParser_post = require('body-parser'); //post 방식 파서
 
 app.use(cors(corsOption)); // CORS 미들웨어 추가 
 app.set('port', 3000);
@@ -34,12 +38,15 @@ app.set('port', 3000);
 
 //join은 __dirname : 현재 .js 파일의 path 와 public 을 합친다
 //이렇게 경로를 세팅하면 public 폴더 안에 있는것을 곧바로 쓸 수 있게된다
-app.use(serveStatic(path.join(__dirname, 'public')));
+//app.use(serveStatic(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 //post 방식 일경우 begin
 //post 의 방식은 url 에 추가하는 방식이 아니고 body 라는 곳에 추가하여 전송하는 방식
-app.use(bodyParser_post.urlencoded({ extended: false })); // post 방식 세팅
-app.use(bodyParser_post.json()); // json 사용 하는 경우의 세팅
+// app.use(bodyParser_post.urlencoded({ extended: false })); // post 방식 세팅
+// app.use(bodyParser_post.json()); // json 사용 하는 경우의 세팅
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 //post 방식 일경우 end
 
 
@@ -60,6 +67,15 @@ app.use(expressSession({
 //
 //라우터를 사용 (특정 경로로 들어오는 요청에 대하여 함수를 수행 시킬 수가 있는 기능을 express 가 제공해 주는것)
 var router = express.Router();
+
+// Node.js의 native Promise 사용
+mongoose.Promise = global.Promise;
+// CONNECT TO MONGODB SERVER
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Successfully connected to mongodb'))
+  .catch(e => {
+      console.error("MongoDB 연결 실패 : ",e)
+    });
 
 
 //http://localhost:3000/process/product 이 주소로 치면 라우터를 통해 바로 여기로 올 수 있다
@@ -217,19 +233,44 @@ router.route('/menu').post( //설정된 쿠키정보를 본다
     }
 );
 
-router.route('/accountlist').get( //설정된 쿠키정보를 본다
-    function(req, res) {
-        console.log('/accountlist ');
+// router.route('/accounts').get( //설정된 쿠키정보를 본다
+//     function(req, res) {
+//         console.log('/accountlist ');
 
-        const { id, password } = req.body
-            //const userID = isAuthenticated({ id, password });
+//         const { id, password } = req.body
+//             //const userID = isAuthenticated({ id, password });
 
-        const status = 200
-        const menu = jsonAccountListFile
-        console.log(menu)
-        return res.status(status).json({ status, menu })
-    }
-);
+//         const status = 200
+//         const menu = jsonAccountListFile
+//         console.log(menu)
+//         return res.status(status).json({ status, menu })
+//     }
+// );
+
+// ROUTERS
+app.use('/accounts', require('./routes/accounts'));
+// const Account = require('./models/account');
+
+// // Find All
+// router.get('/accounts', (req, res) => {
+//   console.log("/accounts/ 호출 : ")
+//   Account.findAll()
+//     .then((accounts) => {
+//       if (!accounts.length) return res.status(404).send({ err: 'Account not found' });
+//     //   res.send(`values: ${accounts}`);
+//         res.send(accounts);
+//         // res.status(status).json({ status, accounts })
+//     })
+//     .catch(err => res.status(500).send(err));
+// });
+
+// router.post('/accounts', (req, res) => {
+//     console.log("/accounts/ 호출 : ")
+//     Account.create(req.body)
+//     .then(account => res.send(account))
+//     .catch(err => res.status(500).send(err));
+// });
+
 
 router.route('/operation-history').get( //설정된 쿠키정보를 본다
     function(req, res) {
@@ -245,20 +286,42 @@ router.route('/operation-history').get( //설정된 쿠키정보를 본다
     }
 );
 
-router.route('/customer-phone').get( //설정된 쿠키정보를 본다
-    function(req, res) {
-        console.log('/customer-phone');
+// router.route('/customer-phone').get( //설정된 쿠키정보를 본다
+//     function(req, res) {
+//         console.log('/customer-phone',req.query, req.params );
 
-        const { id, password } = req.body
-            //const userID = isAuthenticated({ id, password });
-            // const { approveDate, userName, userID, phoneNum } = req.body
+//         const { id, password } = req.body
+//         // const { id, password } = req.params
+//             //const userID = isAuthenticated({ id, password });
+//             // const { approveDate, userName, userID, phoneNum } = req.body
 
-        const status = 200
-        const menu = jsonCustomerPhoneListFile
-        console.log(menu)
-        return res.status(status).json({ status, menu })
-    }
-);
+//         const status = 200
+//         const menu = jsonCustomerPhoneListFile
+//         console.log(menu)
+//         return res.status(status).json({ status, menu })
+//     }
+// );
+
+
+// ROUTERS
+app.use('/customer-phone', require('./routes/customerPhones'));
+
+// router.route('/customer-phone').post( //설정된 쿠키정보를 본다
+//     function(req, res) {
+//         // console.log('/customer-phone',req.query, req.params );
+//         console.log('/customer-phone',req.body );
+
+//         const { id, password } = req.body
+//         // const { id, password } = req.params
+//             //const userID = isAuthenticated({ id, password });
+//             // const { approveDate, userName, userID, phoneNum } = req.body
+
+//         const status = 200
+//         const menu = jsonCustomerPhoneListFile
+//         console.log(menu)
+//         return res.status(status).json({ status, menu })
+//     }
+// );
 
 
 router.route('/signup').post( //설정된 쿠키정보를 본다
@@ -349,10 +412,12 @@ app.all('*',
     }
 );
 
+
 //웹서버를 app 기반으로 생성
-var appServer = http.createServer(app);
-appServer.listen(app.get('port'),
-    function() {
-        console.log('express 웹서버 실행' + app.get('port'));
-    }
-);
+//var appServer = http.createServer(app);
+// appServer.listen(app.get('port'),
+//     function() {
+//         console.log('express 웹서버 실행' + app.get('port'));
+//     }
+// );
+app.listen(port, () => console.log(`Server listening on port ${port}`));

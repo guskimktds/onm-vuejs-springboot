@@ -83,7 +83,7 @@
             <v-text-field
               dense
               label="사용자 ID"
-              v-model="param.userID"
+              v-model="param.userId"
               placeholder=" "
               outlined
             >
@@ -116,7 +116,7 @@ export default {
       param: {
         approveDate: ["", ""],
         userName: "",
-        userID: "",
+        userId: "",
         phoneNum: "",
       },
       date: false,

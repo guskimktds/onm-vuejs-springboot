@@ -41,10 +41,11 @@ export default {
       console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(param));
       console.log(process.env);
             axios
-                .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/accountlist`)
+                .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/accounts`)
                 .then((result) => {
                   console.log(result)
-                  this.list = JSON.parse(result.data.menu)
+                  // this.list = JSON.parse(result.data)
+                  this.list = result.data
                 })
                 .catch((ex) => {
                   console.log('조회 실패',ex)
@@ -53,13 +54,14 @@ export default {
   },
   created: function() {
     axios
-        .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/accountlist`)
+        .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/accounts`)
         .then((result) => {
           console.log(result)
-          console.log(JSON.parse(result.data.menu))
-          console.log(result.data.status)
-          if(result.data.status === 200){
-            this.list = JSON.parse(result.data.menu)
+          // console.log(JSON.parse(result.data))
+          console.log(result.status)
+          if(result.status === 200){
+            // this.list = JSON.parse(result.data)
+            this.list = result.data
           }
           else this.list = []
         })

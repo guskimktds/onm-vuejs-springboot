@@ -39,21 +39,25 @@ export default {
       .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-phone`)
       .then((result) => {
         console.log(result)
-        this.list = JSON.parse(result.data.menu)
+        // this.list = JSON.parse(result.data.menu)
+        this.list = result.data
       })
       .catch((ex) => {
         console.log('조회 실패',ex)
       })
   },
   methods: {
-    searchToUsrInfo: function(param){
-      console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(param));
+    searchToUsrInfo: function(params){
+      console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
       console.log(process.env);
       axios
-            .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-phone`)
+            .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-phone/query`, {       
+                  params
+            })
             .then((result) => {
               console.log(result)
-              this.list = JSON.parse(result.data.menu)
+              // this.list = JSON.parse(result.data.menu)
+              this.list = result.data
             })
             .catch((ex) => {
               console.log('조회 실패',ex)
