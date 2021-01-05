@@ -1,17 +1,17 @@
 <template>
     <!--Line Chart-->
 
-    <div class="row">
-      <div class="col-4">
+    <v-row>
+      <v-col cols='4'>
         <line-chart :chart-data="fillData()" class="chart"></line-chart>
-      </div>
-      <div class="col-4">
+      </v-col>
+      <v-col cols='4'>
         <line-chart :chart-data="fillData()" class="chart"></line-chart>
-      </div>
-      <div class="col-4">
+      </v-col>
+      <v-col cols='4'>
         <line-chart :chart-data="fillData()" class="chart"></line-chart>
-      </div>
-    </div>
+      </v-col>
+    </v-row>
 
 </template>
 

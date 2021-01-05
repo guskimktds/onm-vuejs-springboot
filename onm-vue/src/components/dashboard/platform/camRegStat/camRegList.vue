@@ -1,50 +1,3 @@
-
-<!--
-<template>
-    <div>
-        <table class="contents">
-            <thead>
-                <tr>
-                    <th rowspan="2">일자</th>
-                    <th colspan="2">매장</th>                    
-                    <th colspan="2">개통대기</th>                    
-                    <th colspan="2">개통실패</th>
-                </tr>
-                <tr>
-                    <th>가입</th>
-                    <th>해지</th>
-                    <th>개통</th>
-                    <th>해지</th>
-                    <th>개통</th>
-                    <th>해지</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in pList" :key="item">
-                    <td>{{item.date}}</td>
-                    <td>{{item.storeReg}}</td>
-                    <td>{{item.storeUnreg}}</td>
-                    <td>{{item.camReg}}</td>
-                    <td>{{item.camUnreg}}</td>
-                    <td>{{item.iotReg}}</td>
-                    <td>{{item.iotUnreg}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</template>
-<script>
-export default {
-    props: ['pList'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
-    created() {
-        console.log(this.props)
-    }
-}
-</script>
--->
-
-
 <template>
   <div id="app">
     <v-app id="inspire">
@@ -68,41 +21,58 @@ export default {
     data() {
       return {
         headers: [
-          { text: '일자', value: 'date' },
-          { text: '가입', value: 'storeReg' },
-          { text: '해지', value: 'storeUnreg' },
-          { text: '개통', value: 'camReg' },
-          { text: '해지', value: 'camUnreg' },
-          { text: '개통', value: 'iotReg' },
-          { text: '해지', value: 'iotUnreg' },
+          { text: '일자', value: 'date', align:'center' },
+          // 매장
+          { text: '가입', value: 'storeReg', align:'center'},
+          { text: '해지', value: 'storeUnreg', align:'center' },
+
+          // 카메라 
+          { text: '개통', value: 'camReg', align:'center' },
+          { text: '해지', value: 'camUnreg', align:'center' },
+
+          // IOT
+          { text: '개통', value: 'iotReg', align:'center' },
+          { text: '해지', value: 'iotUnreg', align:'center' },
         ]
       }
     },
+    
+    mounted() {
+      var table = document.getElementsByClassName("v-data-table-header");
+      var row = document.createElement('tr');
 
-    methods: {
-        mounted() {
-            var table = document.getElementsByClassName("v-data-table-header");
-            
-            // 일자
-            var element1 = document.createElement('<th>');
-            element1.value('일자');
-            
-            // 매장
-            var element2 = document.createElement('<th>');
-            element2.setAttribute('','')
+      // 공백
+      var space = document.createElement('th');
 
-            // 개통대기
-            // var element3 = document.createElement('<th>');
+      // 매장 
+      var m = document.createElement('th');
+      m.setAttribute('colspan', '2');
+      m.style.textAlign = "center";
+      var mText = document.createTextNode('매장');
+      m.appendChild(mText);
 
-            // 개통실패
-            // var element4 = document.createElement('<th>');
+      // 카메라
+      var c = document.createElement('th');
+      c.setAttribute('colspan', '2');
+      c.style.textAlign = "center";
+      var cText = document.createTextNode('카메라');
+      c.appendChild(cText);
 
-            table.prepend("<tr><th></th></tr>");
+      // IoT
+      var i = document.createElement('th');
+      i.setAttribute('colspan', '2');
+      i.style.textAlign = "center";
+      var iText = document.createTextNode('IoT');
+      i.appendChild(iText);
 
+      row.append(space)
+      row.append(m);
+      row.append(c);
+      row.append(i);
 
+      table[0].prepend(row);
 
-        },
-    },
+  },
 }
 </script>
 
