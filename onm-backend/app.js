@@ -217,13 +217,13 @@ router.route('/menu').post( //설정된 쿠키정보를 본다
             //const userID = isAuthenticated({ id, password });
         if (id === 'admin') {
             const status = 200
-            const menu = jsonMenuFile
+            const menu = jsonAdminMenuFile
             console.log(menu)
             return res.status(status).json({ status, menu })
 
         } else {
             const status = 200
-            const menu = jsonMenuFile
+            const menu = jsonAdminMenuFile
             console.log(menu)
             return res.status(status).json({ status, menu })
         }

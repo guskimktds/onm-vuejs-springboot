@@ -5,13 +5,13 @@
         {
             "name": "플랫폼현황", "path": "/platform", "component": "platform",
             "children":[
-                {"name": "대시보드", "path": "/platform/process"},
-                {"name": "process 현황", "path": "/platform/process"},
-                {"name": "카메라상태 현황", "path": "/platform/camera"},
-                {"name": "IoT GW 상태현황", "path": "/platform/iotgw"},
-                {"name": "va 설정 현황", "path": "/platform/va"},
-                {"name": "스트리머 관리 현황", "path": "/platform/streamer"},
-                {"name": "개통해지 추이", "path": "/platform/cam_reg_stat"}
+                {"name": "대시보드", "path": "/platform/process", "component": "process"},
+                {"name": "process 현황", "path": "/platform/process", "component":"process"},
+                {"name": "카메라상태 현황", "path": "/platform/camera", "component": "camera"},
+                {"name": "IoT GW 상태현황", "path": "/platform/iotgw", "component": "iotgw"} ,
+                {"name": "va 설정 현황", "path": "/platform/va", "component": "va"},
+                {"name": "스트리머 관리 현황", "path": "/platform/streamer", "component": "streamer"},
+                {"name": "개통해지 추이", "path": "/platform/cam_reg_stat", "component": "cam_reg_stat"}
             ]
         }
         ]

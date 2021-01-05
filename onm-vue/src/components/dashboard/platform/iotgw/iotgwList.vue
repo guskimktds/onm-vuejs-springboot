@@ -1,40 +1,39 @@
 <template>
-    <div>
-        <table class="contents">
-            <thead>
-                <tr>
-                    <th>국사코드</th>
-                    <th>전체</th>
-                    <th>정상</th>
-                    <th>개통대기</th>
-                    <th>개통진행</th>
-                    <th>개통실패</th>
-                    <th>네트워크장애</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in pList" :key="item.code">
-                    <td>{{item.code}}</td>
-                    <td>{{item.totalCnt}}</td>
-                    <td>{{item.normalCnt}}</td>
-                    <td>{{item.waitCnt}}</td>
-                    <td>{{item.procCnt}}</td>
-                    <td>{{item.failCnt}}</td>
-                    <td>{{item.networkFailCnt}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <div id="app">
+    <v-app id="inspire">
+      <v-data-table
+        :headers="headers"
+        :items="pList"
+        :items-per-page="5"
+        item-key="id"
+        class="elevation-1"
+        :style="`background-color: #d6f5e5`"
+      >
+      </v-data-table>
+    </v-app>
+  </div>
 </template>
+
+
 <script>
 export default {
     props: ['pList'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
-    created() {
-        console.log(this.props)
+    data() {
+      return {
+        headers: [
+          { text: '국사코드', value: 'local_gw_id' },
+          { text: '전체', value: 'cam_cnt' },
+          { text: '정상', value: 'status_code' },
+          { text: '개통대기', value: 'waiting_cam_cnt' },
+          { text: '개통진행', value: 'proc_cam_cnt' },
+          { text: '개통실패', value: 'open_fail_cam_cnt' },
+          { text: '네트워크장애', value: 'networkfail_cam_cnt' },
+        ]
+      }
     }
 }
 </script>
+
 <style>
     
 </style>

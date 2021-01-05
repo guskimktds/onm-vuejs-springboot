@@ -2,9 +2,17 @@
 
 <template>
   <div>
-    <p class="title">{{ title }}</p>
-    <process-query v-bind:search="search"></process-query>
-    <process-list v-bind:pList=pList></process-list>
+    <v-container>
+      <v-card>
+        <v-toolbar primary dense>
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
+        </v-toolbar>
+    
+        <process-query v-on:search="searchToProcess"></process-query>
+        <process-list v-bind:pList=pList></process-list>
+
+      </v-card>
+    </v-container>
   </div>
 
 </template>
@@ -12,6 +20,8 @@
 <script>
 import List from './camera/cameraList'
 import Query from './camera/cameraQuery'
+
+import axios from "axios"
 
 export default {
   components: {
@@ -21,20 +31,43 @@ export default {
   data () {
     return {
       title: '카메라 상태 현황',
-      pList: [
-        { code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
-        { code: 2, totalCnt: 56, normalCnt: 98, waitCnt: 223, procCnt:66, failCnt:54, networkFailCnt:76},
-        { code: 3, totalCnt: 756, normalCnt: 235, waitCnt: 35, procCnt:13, failCnt:999, networkFailCnt:67},
-        { code: 4, totalCnt: 21, normalCnt: 33, waitCnt: 59, procCnt:76, failCnt:456, networkFailCnt:45},
-        { code: 5, totalCnt: 77, normalCnt: 54, waitCnt: 63, procCnt:52, failCnt:11, networkFailCnt:45},
-      ]
+      pList: [],
     }
   },
   methods: {
-    search: function(){
-      console.log("부모 메소드 search 호출");
+    searchToProcess: function(params){
+      var url = "https://test-onm.ktvsaas.co.kr/V110/ONM_11002/get_cam_status";
+      var headers = {
+        'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+        'Content-Type': 'application/json'
+      }
+
+      axios.post(url, params, headers)
+      .then( (response) => {
+        console.log(response);
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.pList = response.data.data.list;
+        }else{
+          this.pList = [];
+          alert(resCode + " / " + resMsg);
+        }
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert("Error")
+      })
+      .finally(function () {
+        // always executed
+      });
     }
-  }
+    
+  },
+  created: function() {
+    this.searchToProcess({"page_no":"1", "view_cnt":"10"});
+  }  
 }
 </script>
 
