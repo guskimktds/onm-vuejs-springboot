@@ -1,11 +1,18 @@
 <template>
     <!--Line Chart-->
-    <table><tr>
-      <td><div class="chart-wrapper"><line-chart :chart-data="fillData()" class="chart"></line-chart></div></td>
-      <td><div class="chart-wrapper"><line-chart :chart-data="fillData()" class="chart"></line-chart></div></td>
-      <td><div class="chart-wrapper"><line-chart :chart-data="fillData()" class="chart"></line-chart></div></td>
-    </tr></table>
-    <!-- <button @click="fillData()">Randomize</button> -->
+
+    <div class="row">
+      <div class="col-4">
+        <line-chart :chart-data="fillData()" class="chart"></line-chart>
+      </div>
+      <div class="col-4">
+        <line-chart :chart-data="fillData()" class="chart"></line-chart>
+      </div>
+      <div class="col-4">
+        <line-chart :chart-data="fillData()" class="chart"></line-chart>
+      </div>
+    </div>
+
 </template>
 
 <script>
@@ -55,16 +62,3 @@
     }
   }
 </script>
-
-<style scoped>
-
-.chart-wrapper{
-  border:1px solid #888888;
-  margin: 10px auto;
-  width: 350px;
-}
-
-table {
-  width: 100%;
-}
-</style>
