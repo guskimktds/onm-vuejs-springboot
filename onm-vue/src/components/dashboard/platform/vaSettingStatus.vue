@@ -1,12 +1,15 @@
-<style src="../../../css/body.css"></style>
-
 <template>
   <div>
-    <p class="title">{{ title }}</p>
-    <va-query :search="search"></va-query>
-    <va-list :pList=pList></va-list>
+    <v-container>
+      <v-card>
+        <v-toolbar primary dense>
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
+        </v-toolbar>
+        <va-query v-on:search="searchToProcess"></va-query>
+        <va-list v-bind:pList=pList></va-list>
+      </v-card>
+    </v-container>
   </div>
-
 </template>
 
 <script>
@@ -16,8 +19,8 @@ import Query from './va/vaQuery'
 
 export default {
   components: {
-    'va-list': List,
-    'va-query': Query
+    vaList : List,
+    vaQuery : Query
   },
   data () {
     return {

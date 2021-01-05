@@ -1,10 +1,14 @@
-<style src="@/css/body.css"></style>
-
 <template>
   <div>
-    <p class="title">{{ title }}</p>
-    <cam-reg-chart></cam-reg-chart>
-    <cam-reg-list :pList="pList"></cam-reg-list>
+    <v-container>
+      <v-card>
+        <v-toolbar primary dense>
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
+        </v-toolbar>
+        <cam-reg-chart></cam-reg-chart>
+        <cam-reg-list :pList="pList"></cam-reg-list>
+      </v-card>
+    </v-container>
   </div>
 
 </template>
@@ -16,8 +20,8 @@ import Chart from './camRegChart'
 export default {
   
   components: {
-    'cam-reg-list': List,
-    'cam-reg-chart': Chart
+    CamRegList: List,
+    CamRegChart: Chart
   },
   data () {
     return {

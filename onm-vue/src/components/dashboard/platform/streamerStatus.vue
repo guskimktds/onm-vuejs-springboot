@@ -1,10 +1,14 @@
-<style src="../../../css/body.css"></style>
-
 <template>
   <div>
-    <p class="title">{{ title }}</p>
-    <process-query v-bind:search="search"></process-query>
-    <process-list v-bind:pList=pList></process-list>
+    <v-container>
+      <v-card>
+        <v-toolbar primary dense>
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
+        </v-toolbar>
+        <streamer-query v-on:search="searchToProcess"></streamer-query>
+        <streamer-list v-bind:pList=pList></streamer-list>
+      </v-card>
+    </v-container>
   </div>
 
 </template>
@@ -15,8 +19,8 @@ import Query from './streamer/streamerQuery'
 
 export default {
   components: {
-    'process-list': List,
-    'process-query': Query
+    streamerList : List,
+    streamerQuery : Query
   },
   data () {
     return {
