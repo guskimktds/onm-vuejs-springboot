@@ -1,5 +1,3 @@
-<style src="../../../css/body.css"></style>
-
 <template>
   <div>
     <v-container>
@@ -30,7 +28,7 @@ export default {
   },
   data () {
     return {
-      title: '카메라 상태 현황',
+      title: 'IoT GW 상태현황',
       pList: [],
     }
   },

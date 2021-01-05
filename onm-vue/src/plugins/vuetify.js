@@ -7,9 +7,9 @@ Vue.use(Vuetify);
 // export default new Vuetify({
 // });
 
-export default new Vuetify({      // option을 지정한 Vuetify instance 생성해서 export
+export default new Vuetify({ // option을 지정한 Vuetify instance 생성해서 export
     icons: {
-            iconfont: 'md', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
+        iconfont: 'md', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
     },
     theme: {
         dark: false,

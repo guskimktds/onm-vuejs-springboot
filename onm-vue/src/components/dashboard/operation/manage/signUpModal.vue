@@ -76,6 +76,9 @@ export default {
                 { name: '운영자', auth: 'gigaeyes-engineer' },
                 { name: '관리자', auth: 'gigaeyes-admin' }
             ],
+            id: '',
+            ip: '',
+            auth: ''
 
         }   
     },
