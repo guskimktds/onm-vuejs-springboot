@@ -92,10 +92,10 @@ export default {
             element2.setAttribute('','')
 
             // 개통대기
-            var element3 = document.createElement('<th>');
+            // var element3 = document.createElement('<th>');
 
             // 개통실패
-            var element4 = document.createElement('<th>');
+            // var element4 = document.createElement('<th>');
 
             table.prepend("<tr><th></th></tr>");
 
