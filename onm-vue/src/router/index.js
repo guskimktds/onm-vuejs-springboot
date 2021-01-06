@@ -34,7 +34,7 @@ import SensorInfo from '../components/dashboard/store/sensorInfo'
 
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
-import SessLiveInfo from '../components/dashboard/customer/sessLiveInfo'
+import SessLiveInfo from '../components/dashboard/customer/rtime-access-session/sessLiveInfo'
 import LoginHistoryInfo from '../components/dashboard/customer/loginHistoryInfo'
 import SmsHistoryInfo from '../components/dashboard/customer/smsHistoryInfo'
 import OtpExpress from '../components/dashboard/customer/otpExpress'
