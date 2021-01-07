@@ -1,50 +1,51 @@
 <template>
-    <div>
-        <table class="contents">
-            <thead>
-                <tr>
-                    <th>로그인키</th>
-                    <th>전화번호ID</th>
-                    <th>사용자 ID</th>
-                    <th>계약자구분</th>
-                    <th>알림수신여부</th>
-                    <th>클라이언트 IP</th>
-                    <th>OS 타입</th>
-                    <th>OS 버전</th>
-                    <th>앱버전</th>
-                    <th>장치타입</th>
-                    <th>장치모델명</th>
-                    <th>로그인 일시</th>
-                </tr>
-            </thead>
-            <tbody> 
-                <tr v-for="item in pList" :key="item.loginKey">
-                    <td>{{item.loginKey}}</td>
-                    <td>{{item.phoneNumId}}</td>
-                    <td>{{item.usrID}}</td>
-                    <td>{{item.contractType}}</td>
-                    <td>{{item.alarmAuth}}</td>
-                    <td>{{item.clientIp}}</td>
-                    <td>{{item.osType}}</td>
-                    <td>{{item.osVersion}}</td>
-                    <td>{{item.appVersion}}</td>
-                    <td>{{item.deviceType}}</td>
-                    <td>{{item.deviceModelInfo}}</td>
-                    <td>{{item.loginDate}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <div id="app">
+    <v-app id="inspire">
+      <v-data-table
+        :headers="headers"
+        :items="List"
+        :items-per-page="5"
+        item-key="seqID"
+        class="elevation-1"
+        :style="`background-color: #d6f5e5`"
+      >
+        <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
+          <td :colspan="headers.length">
+            <List></List>
+          </td>
+        </template>       -->
+      </v-data-table>
+    </v-app>
+  </div>
 </template>
 <script>
 export default {
-    props: ['pList'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
-    created() {
-        console.log(this.props)
-    }
-}
+  props: ["List"],
+  //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
+  data() {
+    return {
+      headers: [
+        {
+          text: "로그인키",
+          align: "start",
+          sortable: false,
+          value: "loginKey",
+        },
+        { text: "전화번호ID", value: "phoneNumId" },
+        { text: "사용자 ID", value: "usrID" },
+        { text: "계약자구분", value: "contractType" },
+        { text: "알림수신여부", value: "alarmAuth" },
+        { text: "클라이언트 IP", value: "clientIp" },
+        { text: "OS 타입", value: "osType" },
+        { text: "OS 버전", value: "osVersion" },
+        { text: "앱버전", value: "appVersion" },
+        { text: "장치타입", value: "deviceType" },
+        { text: "장치모델명", value: "deviceModelInfo" },
+        { text: "로그인 일시", value: "loginDate" },
+      ],
+    };
+  },
+};
 </script>
 <style>
-    
 </style>

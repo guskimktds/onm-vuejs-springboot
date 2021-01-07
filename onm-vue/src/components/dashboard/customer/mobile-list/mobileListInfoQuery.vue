@@ -1,53 +1,111 @@
 <template>
-    <div>
+  <div>
+    <v-form>
+      <v-container>
+        <v-row>
+          <v-col cols="12" sm="6" md="3">
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="date"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+              attach
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="dateRangeText"
+                  label="로그인 일시"
+                  prepend-icon="mdi-calendar"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="param.loginDate"
+                no-title
+                scrollable
+                range
+              >
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="menu = false">
+                  Cancel
+                </v-btn>
+                <v-btn text color="primary" @click="$refs.menu.save(date)">
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
+          </v-col>
+          <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              dense
+              label="전화번호 ID"
+              v-model="param.phoneNumId"
+              placeholder=" "
+              outlined
+            >
+            </v-text-field>
+          </v-col>
+          <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              dense
+              label="사용자 ID"
+              v-model="param.usrId"
+              placeholder=" "
+              outlined
+            >
+            </v-text-field>
+          </v-col>
 
-    <!-- search -->
-    <table class="search">
-      <tr>
-        <th>로그인 일시 : </th>
-        <td><input type="date" v-model="param.loginDateStart" placeholder="로그인"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.loginDateEnd" placeholder="로그인"></td>
-        <th>전화번호 ID : </th>
-        <td><input type="text" v-model="param.phoneNumId" placeholder="전화번호 ID"></td>
-      </tr> 
-      <tr> 
-        <th>사용자 ID : </th>
-        <td><input type="text" v-model="param.usrId" placeholder="사용자 ID"></td>
-        <th>OS 타입 : </th>
-        <select v-model="param.osType">
-            <option disabled value="">선택해주세요</option>
-            <option>PC</option>
-            <option>iOS</option>
-            <option>Android</option>
-        </select>   
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table>
+          <v-col cols="12" sm="6" md="3">
+            <v-select
+              v-model="param.osType"
+              :items="items"
+              label="OS타입"
+              attach
+            ></v-select>
+          </v-col>
 
-
-    </div>
+          <v-col cols="auto">
+            <v-btn v-on:click="searchMethod">검색</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+  </div>
 </template>
 <script>
 export default {
-    data() {
-        return{
-            param: {
-                loginDateStart: '',
-                loginDateEnd: '',
-                phoneNumId: '',
-                usrId: '',
-                osType: ''
-            }
-        }
+  data() {
+    return {
+      param: {
+        loginDate: ["", ""],
+        phoneNumId: "",
+        usrId: "",
+        osType: "",
+      },
+      items: ["PC", "iOS", "Android"],
+      date: false,
+      menu: false,
+    };
+  },
+  computed: {
+    dateRangeText() {
+      if (this.param.loginDate[0].length == 0) {
+        return "";
+      } else return this.param.loginDate.join(" ~ ");
     },
-    methods: {
-        searchMethod: function() {
-            this.$emit('search', this.param)
-        }
-    }, 
-}
+  },
+  methods: {
+    searchMethod: function () {
+      this.$emit("search", this.param);
+    },
+  },
+};
 </script>
 <style>
-    
 </style>

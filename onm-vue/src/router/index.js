@@ -35,11 +35,11 @@ import SensorInfo from '../components/dashboard/store/sensorInfo'
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
 import SessLiveInfo from '../components/dashboard/customer/rtime-access-session/sessLiveInfo'
-import LoginHistoryInfo from '../components/dashboard/customer/loginHistoryInfo'
-import SmsHistoryInfo from '../components/dashboard/customer/smsHistoryInfo'
+import LoginHistoryInfo from '../components/dashboard/customer/signin-history/loginHistoryInfo'
+import SmsHistoryInfo from '../components/dashboard/customer/sms-history/smsHistoryInfo'
 import OtpExpress from '../components/dashboard/customer/otpExpress'
-import MobileListInfo from '../components/dashboard/customer/mobileListInfo'
-import PushHistory from '../components/dashboard/customer/pushHistory'
+import MobileListInfo from '../components/dashboard/customer/mobile-list/mobileListInfo'
+import PushHistory from '../components/dashboard/customer/push-history/pushHistory'
 
 // 계정관리 메뉴(SingIn/SignOut/SingUp/MyPage)
 import AccountView from '../components/dashboard/account/accountView'

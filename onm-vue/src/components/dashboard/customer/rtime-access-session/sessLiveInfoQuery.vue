@@ -62,7 +62,7 @@
             >
             </v-text-field>
           </v-col>
-         <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="3">
             <v-select
               v-model="param.deviceType"
               :items="items"
@@ -74,7 +74,6 @@
           <v-col cols="auto">
             <v-btn v-on:click="searchMethod">검색</v-btn>
           </v-col>
-         
         </v-row>
       </v-container>
     </v-form>
@@ -99,11 +98,15 @@ export default {
 
   computed: {
     dateRangeText() {
-      return this.param.expireDate.join(" ~ ");
+      if (this.param.expireDate[0].length == 0) {
+        return "";
+      } else return this.param.expireDate.join(" ~ ");
     },
   },
   methods: {
     searchMethod: function () {
+      this.param.expireDate[0] += " 00:00:00.000000";
+      this.param.expireDate[1] += " 00:00:00.000000";
       this.$emit("search", this.param);
     },
   },
