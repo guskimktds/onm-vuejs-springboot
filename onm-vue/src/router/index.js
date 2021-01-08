@@ -70,13 +70,13 @@ import ChangeHistory from '../components/dashboard/operation/change/changeHistor
 //운영관리 / 관리자 이력 조회
 
 //운영관리 / 코드 설정 관리 
-import CodeConfigList from '../components/dashboard/operation/codeSet/codeConfigList'
-import LocalCodeList from '../components/dashboard/operation/codeSet/localCodeList'
-import ClientDeviceList from '../components/dashboard/operation/codeSet/clientDeviceList'
+import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
+import LocalCode from '../components/dashboard/operation/code/local/codeMain'
+import ClientDevice from '../components/dashboard/operation/code/client/deviceMain'
 
 //운영관리 / 고객이전
-import CustomerTransferList from '../components/dashboard/operation/transfer/customerTransferList'
-import DeviceStatusList from '../components/dashboard/operation/transfer/deviceStatusList'
+import CustomerTransfer from '../components/dashboard/operation/transfer/customerTransfer'
+import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatus'
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -374,27 +374,27 @@ export default new Router({
                 {
                     path: "code",
                     name: 'CodeConfig',
-                    component: CodeConfigList
+                    component: CodeConfig
                 },
                 {
                     path: "lv",
-                    name: 'LocalCodeList',
-                    component: LocalCodeList
+                    name: 'LocalCode',
+                    component: LocalCode
                 },
                 {
                     path: "client-device",
-                    name: 'ClientDeviceList',
-                    component: ClientDeviceList
+                    name: 'ClientDevice',
+                    component: ClientDevice
                 },
                 {
                     path: "customer-transfer",
-                    name: 'CustomerTransferList',
-                    component: CustomerTransferList
+                    name: 'CustomerTransfer',
+                    component: CustomerTransfer
                 },
                 {
                     path: "device-status",
-                    name: 'DeviceStatusList',
-                    component: DeviceStatusList
+                    name: 'DeviceStatus',
+                    component: DeviceStatus
                 }
             ]
         },

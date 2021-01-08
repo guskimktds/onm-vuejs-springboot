@@ -71,7 +71,7 @@ var router = express.Router();
 // Node.js의 native Promise 사용
 mongoose.Promise = global.Promise;
 // CONNECT TO MONGODB SERVER
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
   .then(() => console.log('Successfully connected to mongodb'))
   .catch(e => {
       console.error("MongoDB 연결 실패 : ",e)
@@ -305,6 +305,12 @@ router.route('/operation-history').get( //설정된 쿠키정보를 본다
 
 // ROUTERS
 app.use('/customer-phone', require('./routes/customerPhones'));
+
+// ROUTERS
+app.use('/code', require('./routes/codes'));
+
+// ROUTERS
+app.use('/localcode', require('./routes/localCodes'));
 
 // router.route('/customer-phone').post( //설정된 쿠키정보를 본다
 //     function(req, res) {

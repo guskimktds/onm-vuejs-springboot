@@ -10,14 +10,14 @@
         <div v-show="isShowMenu">
           <app-header></app-header> 
         </div> 
-        <!-- <app-contents></app-contents>  -->
-        <router-view></router-view> 
+        <app-contents></app-contents> 
+        <!-- <router-view></router-view>  -->
       </div>
-      <div id='contentFooter'>    
+      <!-- <div id='contentFooter'>    
         <div v-show="isShowMenu">
           <app-footer></app-footer>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -27,8 +27,8 @@
 import TopMenu from './components/layout/topMenu.vue'
 import Sidebar from './components/layout/sidebar.vue'
 import Header from './components/layout/header.vue'
-// import Contents from './components/layout/contents.vue'
-import Footer from './components/layout/footer.vue'
+import Contents from './components/layout/contents.vue'
+// import Footer from './components/layout/footer.vue'
 
 //import store from './store'
 
@@ -38,8 +38,8 @@ export default {
     'app-sidebar': Sidebar,
     'app-topMenu': TopMenu,
     'app-header': Header,
-    // 'app-contents':Contents,
-    'app-footer': Footer
+    'app-contents':Contents
+    // 'app-footer': Footer
   },
   data(){
     return {
@@ -69,12 +69,14 @@ export default {
 #app {
   display: flex;
   min-height: 100%;
+  min-width: 100%;
 }
 
 #navContainer {
   width: 250px;
   height: 100vh;
   background: #404040;
+  /* position:absolute; */
 }
 
 #mainContainer {
@@ -84,7 +86,7 @@ export default {
 }
 
 #contentFooter {
-  position:absolute;
+  /* position:absolute; */
   bottom:0;
   width:100%;
   /* height:50px;    */
