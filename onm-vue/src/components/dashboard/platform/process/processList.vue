@@ -4,7 +4,7 @@
       <v-data-table
         :headers="headers"
         :items="pList"
-        :items-per-page="5"
+        :items-per-page=5
         item-key="id"
         class="elevation-1"
         :style="`background-color: #d6f5e5`"
@@ -28,7 +28,9 @@ export default {
           { text: '보고일시(Last)', value: 'last_upd_date' },
         ]
       }
-    }
+    },
+
+    
 }
 </script>
 
