@@ -5,8 +5,7 @@
             <div class="col-4">
                 <div class="chart-board">
                     <div class="chart-area">
-                        Chart Area
-                        <!-- <line-chart :chart-data="fillData()"></line-chart> -->
+                        <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
                     </div>
                     <div class="text-area">고객 개통/해지 추이(일간/월간)</div>
                     <div class="board-footer">updated 10 minutes ago</div>
@@ -15,8 +14,7 @@
             <div class="col-4">
                 <div class="chart-board">
                     <div class="chart-area">
-                        Chart Area
-                        <!-- <line-chart :chart-data="fillData()"></line-chart> -->
+                        <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
                     </div>
                     <div class="text-area">카메라 개통/해지 추이(일간/월간)</div>
                     <div class="board-footer">updated 4 minutes ago</div>
@@ -25,8 +23,7 @@
             <div class="col-4">
                 <div class="chart-board">
                     <div class="chart-area">
-                        <!-- Chart Area -->
-                        <line-chart :chart-data="fillData()"></line-chart>
+                        <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
                     </div>
                     <div class="text-area">IoT 개통/해지 추이(일간/월간)</div>
                     <div class="board-footer">campaign sent 26 minutes ago</div>
@@ -163,7 +160,12 @@ export default {
             {id:'1', name:'Dakota rice', salary:'$35.738', country:'Niger', city:'Oud-Tunrhout'},
             {id:'2', name:'Minerva Hooper', salary:'$23.738', country:'Curacao', city:'Sinaaal-Waas'},
             {id:'3', name:'Sage Rodriguez', salary:'$56.142', country:'Netherlands', city:'Overland Park'},
-        ]
+        ],
+
+        // Chart Option
+         chartOptions : {
+            maintainAspectRatio:false
+        },
 
       }
     },
@@ -212,7 +214,7 @@ div {
 
 .chart-area {
     /* border: 1px solid red; */
-    height: 300px;
+    height: 251px;
 }
 
 .count-board, .chart-board, .grid-board {

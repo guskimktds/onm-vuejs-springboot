@@ -3,13 +3,13 @@
 
     <v-row>
       <v-col cols='4'>
-        <line-chart :chart-data="fillData()" class="chart"></line-chart>
+        <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
       </v-col>
       <v-col cols='4'>
-        <line-chart :chart-data="fillData()" class="chart"></line-chart>
+        <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
       </v-col>
       <v-col cols='4'>
-        <line-chart :chart-data="fillData()" class="chart"></line-chart>
+        <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
       </v-col>
     </v-row>
 
@@ -24,7 +24,10 @@
     },
     data () {
       return {
-        // datacollection: null
+        // Chart Option
+         chartOptions : {
+            maintainAspectRatio:false
+        },
       }
     },
     mounted () {
