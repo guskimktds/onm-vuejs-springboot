@@ -1,28 +1,67 @@
 <template>
-    <div>
-
-    <!-- search -->
-    <table class="search">
-      <tr>
-        <th>처리희망일자 : </th>
-        <td><input type="date" v-model="param.hopeDateStart" placeholder="승인날자"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.hopeDateEnd" placeholder="승인날자"></td>
-        <th>계약 ID : </th>
-        <td><input type="text" v-model="param.contractId" placeholder="계약 ID"></td>
-      </tr> 
-      <tr> 
-        <th>거래고유번호 : </th>
-        <td><input type="text" v-model="param.tranId" placeholder="거래고유번호"></td>
-        <th>오더번호 : </th>
-        <td><input type="text" v-model="param.orderNumber" placeholder="오더번호"></td>      
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table>
-
-
-    </div>
+    <v-form>
+        <v-container>
+            <v-row>
+                <v-col cols="12" sm="6" md="2">
+                    <v-text-field 
+                        dense 
+                        label="검색기간" 
+                        v-model="param.startdate"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>                    
+                </v-col> 
+                ~        
+                <v-col cols="12" sm="6" md="2">
+                    <v-text-field 
+                        dense 
+                        label="검색기간" 
+                        v-model="param.enddate"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                <v-col cols="12" sm="6" md="2">
+                    <v-text-field 
+                        dense 
+                        label="계약 ID" 
+                        v-model="param.said"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="2">
+                    <v-text-field 
+                        dense 
+                        label="거래고유번호" 
+                        v-model="param.guid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="2">
+                    <v-text-field 
+                        dense 
+                        label="오더번호" 
+                        v-model="param.order_no"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="2">
+                    <v-btn 
+                        elevation="2" 
+                        medium
+                        v-on:click="searchMethod"
+                    >
+                        검색
+                    </v-btn>
+                </v-col>
+            </v-row>            
+        </v-container>
+    </v-form>
 </template>
+
 <script>
 export default {
     data() {
@@ -30,9 +69,11 @@ export default {
             param: {
                 hopeDateStart: '',
                 hopeDateEnd: '',
-                contractId: '',
-                tranId: '',
-                orderNumber: '',
+                said: '',
+                guid: '',
+                order_no: '',
+                page_no: 1,
+                view_cnt: 5
             }
         }
     },
