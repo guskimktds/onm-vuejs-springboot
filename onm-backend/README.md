@@ -30,3 +30,13 @@ let corsOption = {
 } 
 
 app.use(cors(corsOption)); // CORS 미들웨어 추가
+
+
+### MongoDB 실행 
+1. 터미널을 열어서 아래와 같이 command line 입력
+C:\MongoDB\bin>mongod --dbpath C:\MongoDB\data\db
+
+2. 새로 터미널 하나 더 열어서 아래와 같이 command line 입력
+C:\MongoDB\bin>mongo
+
+

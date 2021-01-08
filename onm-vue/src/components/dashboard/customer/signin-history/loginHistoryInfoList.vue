@@ -1,41 +1,45 @@
 <template>
-    <div>
-        <table class="contents">
-            <thead>
-                <tr>
-                    
-                    <th>로그인 키</th>
-                    <th>로그인 ID</th>
-                    <th>로그인 타입</th>
-                    <th>만료일시</th>
-                    <th>로그인일시</th>
-                    <th>로그아웃일시</th>
-                    <th>OS타입</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in pList" :key="item.loginKey">
-                    <td>{{item.loginKey}}</td>
-                    <td>{{item.loginId}}</td>
-                    <td>{{item.loginType}}</td>
-                    <td>{{item.expireDate}}</td>
-                    <td>{{item.loginDate}}</td>
-                    <td>{{item.logoutDate}}</td>
-                    <td>{{item.osType}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <div id="app">
+    <v-app id="inspire">
+      <v-data-table
+        :headers="headers"
+        :items="List"
+        :items-per-page="5"
+        item-key="loginKey"
+        class="elevation-1"
+        :style="`background-color: #d6f5e5`"
+      >
+        <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
+          <td :colspan="headers.length">
+            <List></List>
+          </td>
+        </template>       -->
+      </v-data-table>
+    </v-app>
+  </div>
 </template>
 <script>
 export default {
-    props: ['pList'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
-    created() {
-        console.log(this.props)
-    }
-}
+  props: ["List"],
+  data() {
+    return {
+      headers: [
+        {
+          text: "로그인 키",
+          align: "start",
+          sortable: false,
+          value: "loginKey",
+        },
+        { text: "로그인 ID", value: "loginId" },
+        { text: "로그인 타입", value: "loginType" },
+        { text: "만료일시", value: "expireDate" },
+        { text: "로그인일시", value: "loginDate" },
+        { text: "로그아웃일시", value: "logoutDate" },
+        { text: "OS타입", value: "osType" },
+      ],
+    };
+  },
+};
 </script>
 <style>
-    
 </style>

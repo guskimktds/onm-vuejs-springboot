@@ -45,11 +45,12 @@
               transition="scale-transition"
               offset-y
               min-width="290px"
+              attach
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="dateRangeText"
-                  label="Date range"
+                  label="승인날짜"
                   prepend-icon="mdi-calendar"
                   readonly
                   v-bind="attrs"

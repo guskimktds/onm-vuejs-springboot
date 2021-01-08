@@ -1,42 +1,47 @@
 <template>
-    <div>
-        <table class="contents">
-            <thead>
-                <tr>
-                    <th>시퀀스 ID</th>
-                    <th>발송 전화번호</th>
-                    <th>OTP 번호</th>
-                    <th>발송 메세지 내용</th>
-                    <th>발송 결과 코드</th>
-                    <th>발송 요청 시간</th>
-                    <th>수정일</th>
-                    <th>SMS 발송서버명</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in pList" :key="item.seqID">
-                    <td>{{item.seqID}}</td>
-                    <td>{{item.phoneNum}}</td>
-                    <td>{{item.otpNum}}</td>
-                    <td>{{item.message}}</td>
-                    <td>{{item.sendCode}}</td>
-                    <td>{{item.sendTime}}</td>
-                    <td>{{item.modifiedDate}}</td>
-                    <td>{{item.sendServerInfo}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <div id="app">
+    <v-app id="inspire">
+      <v-data-table
+        :headers="headers"
+        :items="List"
+        :items-per-page="5"
+        item-key="seqID"
+        class="elevation-1"
+        :style="`background-color: #d6f5e5`"
+      >
+        <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
+          <td :colspan="headers.length">
+            <List></List>
+          </td>
+        </template>       -->
+      </v-data-table>
+    </v-app>
+  </div>
+ 
 </template>
 <script>
 export default {
-    props: ['pList'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
-    created() {
-        console.log(this.props)
-    }
-}
+  props: ["List"],
+  data() {
+    return {
+      headers: [
+        {
+          text: "시퀀스 ID",
+          align: "start",
+          sortable: false,
+          value: "seqID",
+        },
+        { text: "발송 전화번호", value: "phoneNum" },
+        { text: "OTP 번호", value: "otpNum" },
+        { text: "발송 메세지 내용", value: "message" },
+        { text: "발송 결과 코드", value: "sendCode" },
+        { text: "발송 요청 시간", value: "sendTime" },
+        { text: "수정일", value: "modifiedDate" },
+        { text: "SMS 발송서버명", value: "sendServerInfo" },
+      ],
+    };
+  },
+};
 </script>
 <style>
-    
 </style>

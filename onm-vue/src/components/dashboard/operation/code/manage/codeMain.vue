@@ -6,8 +6,8 @@
         <v-toolbar primary dense>
           <v-toolbar-title>{{ title }}</v-toolbar-title>
         </v-toolbar>
-        <customer-transfer-query v-on:search="searchToButton"></customer-transfer-query>
-        <customer-transfer-list v-bind:customerList=list></customer-transfer-list>
+        <code-query v-on:search="searchToButton"></code-query>
+        <code-list v-bind:codeList=list></code-list>
       </v-card>
 
     </v-container>
@@ -19,23 +19,23 @@
 </template>
 
 <script>
-import customerTransferQuery from './customerTransferQuery'
-import customerTransferList from './customerTransferList'
+import CodeQuery from './codeQuery'
+import CodeList from './codeList'
 
 //로그인 시 서버에서 불러오면 수정해야함
 //import AdminMenuMock from '../../../mock/AdminListMock.json';
 import axios from "axios"
 // import { eventBus } from '../../../../main'
-import EventBus from '../../../../EventBus';
+import EventBus from '../../../../../EventBus';
 
 export default {
   components:{
-    customerTransferQuery,
-    customerTransferList
+    CodeQuery,
+    CodeList
   },
   data () {
     return {
-      title: '고객이전 조회',
+      title: '코드관리',
       list: []
     }
   },
@@ -50,6 +50,17 @@ export default {
         .catch((ex) => {
           console.log('조회 실패',ex)
         })
+
+    // EventBus.$on('createItem', parameter => {
+    //     axios
+    //         .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code`, parameter)
+    //         .then((result) => {
+    //           console.log(result)
+    //         })
+    //         .catch((ex) => {
+    //           console.log('조회 실패',ex)
+    //         })
+    // })
   },
   mounted: function() {
      EventBus.$on('createItem', parameter => {
@@ -80,8 +91,25 @@ export default {
             .catch((ex) => {
               console.log('조회 실패',ex)
             })
-    }
-  }
+    },
+    // saveToData: function(){
+    //   console.log('saveToData Method call : ',process.env);
+    //   axios
+    //         .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-phone/query`, {       
+    //               params
+    //         })
+    //         .then((result) => {
+    //           console.log(result)
+    //           // this.list = JSON.parse(result.data.menu)
+    //           this.list = result.data
+    //         })
+    //         .catch((ex) => {
+    //           console.log('조회 실패',ex)
+    //         })
+    // }
+
+    
+  },
 }
 </script>
 

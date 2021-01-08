@@ -30,7 +30,7 @@
                     v-bind="attrs"
                     v-on="on"
                   >
-                    고객이전 실행
+                    등록
                   </v-btn>
                 </template>
                 <v-card>
@@ -46,7 +46,7 @@
                           sm="6"
                           md="6"
                         >
-                          <v-text-field                            
+                          <v-text-field
                             v-model="editedItem.codeClass"
                             label="코드구분"
                           ></v-text-field>
@@ -61,7 +61,56 @@
                             label="코드"
                           ></v-text-field>
                         </v-col>
-                        
+                        <v-col
+                          cols="12"
+                          sm="6"
+                          md="6"
+                        >
+                          <v-text-field
+                            v-model="editedItem.name"
+                            label="코드명"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                          cols="12"
+                          sm="6"
+                          md="6"
+                        >
+                          <v-text-field
+                            v-model="editedItem.type"
+                            label="코드타입"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                          cols="12"
+                          sm="6"
+                          md="6"
+                        >
+                          <v-text-field
+                            v-model="editedItem.useYn"
+                            label="사용여부"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                          cols="12"
+                          sm="6"
+                          md="6"
+                        >
+                          <v-text-field
+                            v-model="editedItem.orderby"
+                            label="정렬순서"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                          cols="12"
+                          sm="6"
+                          md="12"
+                        >
+                          <v-text-field
+                            v-model="editedItem.desc"
+                            label="설명"
+                          ></v-text-field>
+                        </v-col>
                       </v-row>
                     </v-container>
                   </v-card-text>
@@ -99,6 +148,21 @@
               </v-dialog>
             </v-toolbar>
           </template>
+          <template v-slot:item.actions="{ item }">
+            <v-icon
+              small
+              class="mr-2"
+              @click="editItem(item)"
+            >
+              mdi-pencil
+            </v-icon>
+            <v-icon
+              small
+              @click="deleteItem(item)"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
         </v-data-table>
 
       </div>
@@ -109,7 +173,9 @@
 
 <script>
 
-import EventBus from '../../../../EventBus';
+import axios from "axios"
+// import { eventBus } from '../../../../../main'
+import EventBus from '../../../../../EventBus';
 
 export default {
     props: ['codeList'],
@@ -166,18 +232,27 @@ export default {
     },
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? '고객이전' : '수정'
+        return this.editedIndex === -1 ? '등록' : '수정'
       },
     },
     methods: {
-      
+      editItem (item) {
+        console.log('editItem method call : ',item)
+        this.editedIndex = this.codeList.indexOf(item)
+        console.log('editItem method call : ',this.editedIndex)
+        this.editedItem = Object.assign({}, item)
 
-      // deleteItem (item) {
-      //   console.log('deleteItem method call : ',item)
-      //   this.editedIndex = this.codeList.indexOf(item)
-      //   this.editedItem = Object.assign({}, item)
-      //   this.dialogDelete = true
-      // },
+        console.log('editItem method call : ',this.editedItem)
+
+        this.dialog = true
+      },
+
+      deleteItem (item) {
+        console.log('deleteItem method call : ',item)
+        this.editedIndex = this.codeList.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+        this.dialogDelete = true
+      },
 
       deleteItemConfirm () {
         this.codeList.splice(this.editedIndex, 1)
@@ -202,14 +277,59 @@ export default {
 
       save () {
         console.log('save method call : ',this.editedIndex)
-        
+        if (this.editedIndex > -1) {
+          // Object.assign(this.desserts[this.editedIndex], this.editedItem)
+          const editedItem = this.editedItem
+          console.log("111111111")
+          // update 
+            axios
+            .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/update`, {       
+                  editedItem
+            })
+            .then((result) => {
+              console.log(result)
+              // this.list = JSON.parse(result.data.menu)
+              // this.list = result.data
+            })
+            .catch((ex) => {
+              console.log('조회 실패',ex)
+            })
+        } else {
+          // this.desserts.push(this.editedItem)
           // create
           const createItem = this.editedItem
           console.log("2222222222222")
           EventBus.$emit('createItem', createItem)
-          this.close()
+
+          // axios
+          //   .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code`, createItem)
+          //   .then((result) => {
+          //     console.log(result)
+          //     // this.list = JSON.parse(result.data.menu)
+          //     // this.list = result.data
+          //   })
+          //   .catch((ex) => {
+          //     console.log('조회 실패',ex)
+          //   })
+
+        }
+        this.close()
       }
 
+          // saveToData: function(){
+    //   console.log('saveToData Method call : ',process.env);
+    //   axios
+    //         .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-phone/query`, {       
+    //               params
+    //         })
+    //         .then((result) => {
+    //           console.log(result)
+    //           // this.list = JSON.parse(result.data.menu)
+    //           this.list = result.data
+    //         })
+    //         .catch((ex) => {
+    //           console.log('조회 실패',ex)
+    //         })
     }
 
 }

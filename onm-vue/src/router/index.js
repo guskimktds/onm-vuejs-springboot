@@ -10,12 +10,13 @@ import BizMain from '../components/dashboard/bizMain'
 import NotFound from '../components/exceptions/NotFound'
 
 // 하위 메뉴
+import PlatformDashboard from '../components/dashboard/platform/platformDashboard'
 import ProcessStatus from '../components/dashboard/platform/processStatus'
 import CameraStatus from '../components/dashboard/platform/cameraDeviceStatus'
 import VaSettingStatus from '../components/dashboard/platform/vaSettingStatus'
 import StreamerStatus from '../components/dashboard/platform/streamerStatus'
 import IotGwStatus from '../components/dashboard/platform/iotGwStatus'
-import CamRegStat from '@/components/dashboard/platform/camRegStat/camRegStat'
+import CamregStat from '@/components/dashboard/platform/camRegStat/camRegStat'
 
 // 하위 메뉴 - 서비스관리
 import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
@@ -34,12 +35,12 @@ import SensorInfo from '../components/dashboard/store/sensorInfo'
 
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
-import SessLiveInfo from '../components/dashboard/customer/sessLiveInfo'
-import LoginHistoryInfo from '../components/dashboard/customer/loginHistoryInfo'
-import SmsHistoryInfo from '../components/dashboard/customer/smsHistoryInfo'
+import SessLiveInfo from '../components/dashboard/customer/rtime-access-session/sessLiveInfo'
+import LoginHistoryInfo from '../components/dashboard/customer/signin-history/loginHistoryInfo'
+import SmsHistoryInfo from '../components/dashboard/customer/sms-history/smsHistoryInfo'
 import OtpExpress from '../components/dashboard/customer/otpExpress'
-import MobileListInfo from '../components/dashboard/customer/mobileListInfo'
-import PushHistory from '../components/dashboard/customer/pushHistory'
+import MobileListInfo from '../components/dashboard/customer/mobile-list/mobileListInfo'
+import PushHistory from '../components/dashboard/customer/push-history/pushHistory'
 
 // 계정관리 메뉴(SingIn/SignOut/SingUp/MyPage)
 import AccountView from '../components/dashboard/account/accountView'
@@ -70,13 +71,13 @@ import ChangeHistory from '../components/dashboard/operation/change/changeHistor
 //운영관리 / 관리자 이력 조회
 
 //운영관리 / 코드 설정 관리 
-import CodeConfigList from '../components/dashboard/operation/codeSet/codeConfigList'
-import LocalCodeList from '../components/dashboard/operation/codeSet/localCodeList'
-import ClientDeviceList from '../components/dashboard/operation/codeSet/clientDeviceList'
+import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
+import LocalCode from '../components/dashboard/operation/code/local/codeMain'
+import ClientDevice from '../components/dashboard/operation/code/client/deviceMain'
 
 //운영관리 / 고객이전
-import CustomerTransferList from '../components/dashboard/operation/transfer/customerTransferList'
-import DeviceStatusList from '../components/dashboard/operation/transfer/deviceStatusList'
+import CustomerTransfer from '../components/dashboard/operation/transfer/customerTransfer'
+import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatus'
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -120,6 +121,11 @@ export default new Router({
             name: 'PlatformMain',
             component: PlatformMain,
             children: [{
+                path: "dashboard",
+                name: 'PlatformDashboard',
+                component: PlatformDashboard
+                },
+                {
                     path: "process",
                     name: 'ProcessStatus',
                     component: ProcessStatus
@@ -139,20 +145,15 @@ export default new Router({
                     name: 'StreamerStatus',
                     component: StreamerStatus
                 },
-                // {
-                //     path: "streamerPopup",
-                //     name: 'StreamerStatusPopup',
-                //     component: StreamerStatusPopup
-                // },
                 {
                     path: "iotgw",
                     name: 'IotGwStatus',
                     component: IotGwStatus
                 },
                 {
-                    path: "cam_reg_stat",
-                    name: 'CamRegStat',
-                    component: CamRegStat
+                    path: "camreg-stat",
+                    name: 'CamregStat',
+                    component: CamregStat
                 }
             ]
         },
@@ -374,27 +375,27 @@ export default new Router({
                 {
                     path: "code",
                     name: 'CodeConfig',
-                    component: CodeConfigList
+                    component: CodeConfig
                 },
                 {
                     path: "lv",
-                    name: 'LocalCodeList',
-                    component: LocalCodeList
+                    name: 'LocalCode',
+                    component: LocalCode
                 },
                 {
                     path: "client-device",
-                    name: 'ClientDeviceList',
-                    component: ClientDeviceList
+                    name: 'ClientDevice',
+                    component: ClientDevice
                 },
                 {
                     path: "customer-transfer",
-                    name: 'CustomerTransferList',
-                    component: CustomerTransferList
+                    name: 'CustomerTransfer',
+                    component: CustomerTransfer
                 },
                 {
                     path: "device-status",
-                    name: 'DeviceStatusList',
-                    component: DeviceStatusList
+                    name: 'DeviceStatus',
+                    component: DeviceStatus
                 }
             ]
         },

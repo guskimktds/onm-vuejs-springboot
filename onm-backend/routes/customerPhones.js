@@ -38,6 +38,7 @@ router.post('/username', (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
+//query to condition
 router.post('/query', (req, res) => {
   console.log("/customer-phone/query 호출 : ", req.body)
   const userid = req.body.params.userId

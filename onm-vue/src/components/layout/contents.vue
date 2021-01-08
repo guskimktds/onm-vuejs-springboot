@@ -1,17 +1,17 @@
 <template>
-  <content>
-    <p>{{ contents }}</p>
+  <v-content>
+    <!-- <p>{{ contents }}</p> -->
      <router-view></router-view>     
-  </content>
+  </v-content>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      contents: 'ONM contents'
-    }
-  }
+  // data () {
+  //   return {
+  //     contents: 'ONM contents'
+  //   }
+  // }
 }
 </script>
 
