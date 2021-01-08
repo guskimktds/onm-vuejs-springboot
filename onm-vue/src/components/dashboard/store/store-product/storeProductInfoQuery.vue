@@ -1,45 +1,106 @@
 <template>
-    <div>
+  <div>
+   
+    <v-form>
+      <v-container>
+        <v-row>
+          <v-col cols="12" sm="6" md="3">
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="date"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+              attach
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="dateRangeText"
+                  label="수정일시"
+                  prepend-icon="mdi-calendar"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="param.modifiedDate"
+                no-title
+                scrollable
+                range
+              >
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="menu = false">
+                  Cancel
+                </v-btn>
+                <v-btn
+                  text
+                  color="primary"
+                  @click="$refs.menu.save(date)"
+                >
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
+          </v-col>
 
-    <!-- search -->
-    <table class="search">
-      <tr>
-        <th>수정일시 : </th>
-        <td><input type="date" v-model="param.modifiedDateStart" placeholder="승인날자"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.modifiedDateEnd" placeholder="승인날자"></td>
-        <th>상품번호 : </th>
-        <td><input type="text" v-model="param.productCode" placeholder="상품번호"></td>
-      </tr> 
-      <tr> 
-        <th>사용자 ID : </th>
-        <td><input type="text" v-model="param.usrID" placeholder="사용자 ID"></td>  
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table>
+          <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              dense
+              label="상품번호"
+              v-model="param.productCode"
+              placeholder=" "
+              outlined
+            >
+            </v-text-field>
+          </v-col>
 
-
-    </div>
+          <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              dense
+              label="사용자 ID"
+              v-model="param.usrID"
+              placeholder=" "
+              outlined
+            >
+            </v-text-field>
+          </v-col>
+          <v-col cols="auto">
+            <v-btn v-on:click="searchMethod">검색</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+  </div>
 </template>
 <script>
 export default {
-    data() {
-        return{
-            param: {
-                modifiedDateStart: '',
-                modifiedDateEnd: '',
-                productCode: '',
-                usrID: '',
-            }
-        }
+  data() {
+    return {
+      param: {
+        modifiedDate: ["", ""],
+        productCode: "",
+        usrID: "",
+      },
+      date: false,
+      menu: false,
+    };
+  },
+  computed: {
+    dateRangeText() {
+      if (this.param.modifiedDate[0].length == 0) {
+        return "";
+      } else return this.param.modifiedDate.join(" ~ ");
     },
-    methods: {
-        searchMethod: function() {
-            this.$emit('search', this.param)
-        }
-    }, 
-}
+  },
+  methods: {
+    searchMethod: function () {
+      this.$emit("search", this.param);
+    },
+  },
+};
 </script>
 <style>
-    
 </style>
