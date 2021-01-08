@@ -3,18 +3,8 @@
         <v-container>
             <v-row>
                 <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="VA IP" placeholder="Placeholder" outlined v-model="param.va_ip">                        
-                    </v-text-field>
+                    <v-select item-text="text" item-value="value" :items="localGwOptions" outlined v-model="param.local_gw_id" v-on:change="searchMethod">></v-select>
                 </v-col>         
-                <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="VA 상태" placeholder="Placeholder" outlined v-model="param.va_status">                        
-                    </v-text-field>
-                </v-col> 
-                <v-col cols="12" sm="6" md="3">
-                    <v-btn elevation="2" medium v-on:click="searchMethod">
-                        검색
-                    </v-btn>
-                </v-col>                
             </v-row>
         </v-container>
     </v-form>
@@ -24,9 +14,22 @@ export default {
     data() {
         return{
             param: {
-                va_ip: '',
-                va_status: ''
-            }
+                local_gw_id: '1',
+            },
+
+            localGwOptions:[
+                {text:'혜화',   value:'1'},
+                {text:'헤화-2', value:'2'},
+                {text:'혜화-3', value:'5'},
+                {text:'혜화-4', value:'6'},
+                {text:'헤화-5', value:'9'},
+                {text:'헤화-6', value:'A'},
+                {text:'헤화-7', value:'B'},
+                {text:'구로-1', value:'3'},
+                {text:'구로-2', value:'4'},
+                {text:'구로-3', value:'7'},
+                {text:'구로-4', value:'8'}
+            ]
         }
     },
     methods: {
