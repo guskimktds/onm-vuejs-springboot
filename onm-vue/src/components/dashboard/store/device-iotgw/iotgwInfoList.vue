@@ -1,48 +1,50 @@
 <template>
-    <div>
-        <table class="contents">
-            <thead>
-                <tr>
-                    <th>단만 GW ID</th>
-                    <th>단말GWID</th>
-                    <th>단말GW명</th>
-                    <th>단말모델코드</th>
-                    <th>mac_id</th>
-                    <th>IOT장치seq</th>
-                    <th>서비스 상태코드</th>
-                    <th>등록일시</th>
-                    <th>개통일시</th>
-                    <th>관리자상태코드</th>
-                    <th>해지일시</th>
-                </tr>
-            </thead>
-            <tbody>
-               <tr v-for="item in pList" :key="item.gwKey">
-                    <td>{{item.gwKey}}</td>
-                    <td>{{item.gwId}}</td>
-                    <td>{{item.gwName}}</td>
-                    <td>{{item.modelCode}}</td>
-                    <td>{{item.mac_id}}</td>
-                    <td>{{item.iotDeviceSeq}}</td>
-                    <td>{{item.serviceCode}}</td>
-                    <td>{{item.addDate}}</td>
-                    <td>{{item.openDate}}</td>
-                    <td>{{item.manageCode}}</td>
-                    <td>{{item.closeDate}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <div id="app">
+    <v-app id="inspire">
+      <v-data-table
+        :headers="headers"
+        :items="List"
+        :items-per-page="5"
+        item-key="gwKey"
+        class="elevation-1"
+        :style="`background-color: #d6f5e5`"
+      >
+        <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
+          <td :colspan="headers.length">
+            <List></List>
+          </td>
+        </template>       -->
+      </v-data-table>
+    </v-app>
+  </div>
 </template>
 <script>
 export default {
-    props: ['pList'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
-    created() {
-        console.log(this.props)
-    }
-}
+  props: ["List"],
+  //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
+  data() {
+    return {
+      headers: [
+        {
+          text: "단말 GW ID",
+          align: "start",
+          sortable: false,
+          value: "gwKey",
+        },
+        { text: "단말GWID", value: "gwId" },
+        { text: "단말GW명", value: "gwName" },
+        { text: "단말모델코드", value: "modelCode" },
+        { text: "mac_id", value: "mac_id" },
+        { text: "IOT장치seq", value: "iotDeviceSeq" },
+        { text: "서비스 상태코드", value: "serviceCode" },
+        { text: "등록일시", value: "addDate" },
+        { text: "개통일시", value: "openDate" },
+        { text: "관리자상태코드", value: "manageCode" },
+        { text: "해지일시", value: "closeDate" },
+      ],
+    };
+  },
+};
 </script>
 <style>
-    
 </style>

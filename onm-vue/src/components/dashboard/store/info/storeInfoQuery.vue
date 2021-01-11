@@ -1,8 +1,6 @@
 <template>
-    <div>
-
-    <!-- search -->
-    <table class="search">
+  <div>
+    <!-- <table class="search">
       <tr>
         <th>계약 ID : </th>
         <td><input type="text" v-model="param.contractId" placeholder="계약 ID"></td>
@@ -16,30 +14,80 @@
         <td><input type="text" v-model="param.usrNumber" placeholder="전화번호"></td>      
       </tr>
       <button v-on:click="searchMethod">검색</button>
-    </table>
+    </table> -->
+    <v-form>
+      <v-container>
+        <v-row>
+          <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              dense
+              label="계약 ID"
+              v-model="param.contractId"
+              placeholder=" "
+              outlined
+            >
+            </v-text-field>
+          </v-col>
 
+          <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              dense
+              label="사용자명"
+              v-model="param.usrName"
+              placeholder=" "
+              outlined
+            >
+            </v-text-field>
+          </v-col>
 
-    </div>
+          <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              dense
+              label="사용자 ID"
+              v-model="param.usrID"
+              placeholder=" "
+              outlined
+            >
+            </v-text-field>
+          </v-col>
+
+          <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              dense
+              label="사용자 전화번호"
+              v-model="param.usrNumber"
+              placeholder=" "
+              outlined
+            >
+            </v-text-field>
+          </v-col>
+
+          <v-col cols="auto">
+            <v-btn v-on:click="searchMethod">검색</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+  </div>
 </template>
 <script>
 export default {
-    data() {
-        return{
-            param: {
-                contractId: '',
-                usrName: '',
-                usrID: '',
-                usrNumber: '',
-            }
-        }
+  data() {
+    return {
+      param: {
+        contractId: "",
+        usrName: "",
+        usrID: "",
+        usrNumber: "",
+      },
+    };
+  },
+  methods: {
+    searchMethod: function () {
+      this.$emit("search", this.param);
     },
-    methods: {
-        searchMethod: function() {
-            this.$emit('search', this.param)
-        }
-    }, 
-}
+  },
+};
 </script>
 <style>
-    
 </style>
