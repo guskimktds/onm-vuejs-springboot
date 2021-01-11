@@ -35,7 +35,7 @@ export default {
   },
   created: function () {
     axios
-      .post(`${process.env.VUE_APP_TB_API_BACKEND_SERVER_URL}/V110/ONM_13006/get_user_va_list`,{
+      .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13006/get_user_va_list`,{
         
         "page_no": 1,
         "view_cnt": 5

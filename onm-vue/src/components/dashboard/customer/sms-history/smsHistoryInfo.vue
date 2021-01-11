@@ -40,7 +40,7 @@ export default {
   created: function () {
     console.log(process.env);
     axios
-      .post(`${process.env.VUE_APP_TB_API_BACKEND_SERVER_URL}/V110/ONM_14004/get_sms_sending_history`,{
+      .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_14004/get_sms_sending_history`,{
         
         "page_no": 1,
         "view_cnt": 5

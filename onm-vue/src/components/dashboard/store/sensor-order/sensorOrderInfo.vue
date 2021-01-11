@@ -38,7 +38,7 @@ export default {
   },
   created: function () {
     axios
-      .post(`${process.env.VUE_APP_TB_API_BACKEND_SERVER_URL}/V110/ONM_13007/get_sensor_status_list`,{
+      .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13007/get_sensor_status_list`,{
         
         "page_no": 1,
         "view_cnt": 5
