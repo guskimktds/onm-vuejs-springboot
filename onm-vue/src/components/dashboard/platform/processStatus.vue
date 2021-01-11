@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container fluid>
       <v-card>
         <v-toolbar primary dense>
           <v-toolbar-title>{{ title }}</v-toolbar-title>

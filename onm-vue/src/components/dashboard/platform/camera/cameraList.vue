@@ -4,10 +4,8 @@
       <v-data-table
         :headers="headers"
         :items="pList"
-        :items-per-page="5"
         item-key="id"
         class="elevation-1"
-        :style="`background-color: #d6f5e5`"
       >
       </v-data-table>
     </v-app>

@@ -3,8 +3,9 @@
         <v-container>
             <v-row>
                 <v-col cols=auto>
-                    <v-select item-text="text" item-value="value" :items="localGwOptions" outlined v-model="param.localGwId">></v-select>
+                    <v-select item-text="text" item-value="value" :items="localGwOptions" v-model="param.localGwId">></v-select>
                 </v-col>
+                <!--
                 <v-col cols="auto">
                     <v-btn 
                         id="show-modal" @click="showModal = true"
@@ -23,7 +24,8 @@
                         삭제
                     </v-btn>
                 </v-col>
-                
+                -->
+
             </v-row>
 
             <app-my-modal
@@ -44,9 +46,7 @@ export default {
     data() {
         return{
             param: {
-                local_gw_id: '',
-                process_status: '',
-                process: ''
+                localGwId: '1',
             },
             showModal: false,
             modalTitle: '스트리머 등록',

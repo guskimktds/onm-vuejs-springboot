@@ -1,15 +1,14 @@
 <template>
-  <div id="app">
+   <div id="app">
     <v-app id="inspire">
-      <v-data-table
-        :headers="headers"
-        :items="pList"
-        :items-per-page=5
-        item-key="id"
-        class="elevation-1"
-        :style="`background-color: #d6f5e5`"
-      >
-      </v-data-table>
+      <div>
+        <v-data-table
+          :headers="headers"
+          :items="pList"
+          class="elevation-1"
+        >        
+        </v-data-table>
+      </div>
     </v-app>
   </div>
 </template>
