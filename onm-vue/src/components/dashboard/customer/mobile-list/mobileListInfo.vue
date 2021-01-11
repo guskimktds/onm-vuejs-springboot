@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      title: "모바일 단말 목록",
+      title: "모바일 단말 목록 - ##SMS 발송이력으로 api가 연결 되 있음",
       list: [],
       // pList: [
       //   {loginKey:"3e206166-0886-4485-8432-1af9fb545e28", phoneNumId:"100088412484661", usrID:"01011101112", contractType: "M", alarmAuth: "Y", clientIp:"232.62.190.213", osType: "Android", osVersion: "10", appVersion: "1.3.4", deviceType: "Android", deviceModelInfo: "SM-A405S", loginDate: "2020-11-03 02:00:04.173138"},
@@ -39,12 +39,18 @@ export default {
     };
   },
   created: function () {
+    console.log(process.env);
     axios
-      .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-moblie-list`)
+      .post(`${process.env.VUE_APP_TB_API_BACKEND_SERVER_URL}/V110/ONM_14005/get_mobile_device_list`,{
+        
+        "page_no": 1,
+        "view_cnt": 5
+
+      })
       .then((result) => {
         console.log(result);
         // this.list = JSON.parse(result.data.menu)
-        this.list = result.data;
+        this.list = result.data.data.mobile_device_list;
       })
       .catch((ex) => {
         console.log("조회 실패", ex);
