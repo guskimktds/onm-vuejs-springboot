@@ -81,11 +81,16 @@ export default {
   },
   created: function () {
     axios
-      .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-signin-history`)
+      .post(`${process.env.VUE_APP_TB_API_BACKEND_SERVER_URL}/V110/ONM_14003/get_login_history`,{
+        
+        "page_no": 1,
+        "view_cnt": 5
+
+      })
       .then((result) => {
         console.log(result);
         // this.list = JSON.parse(result.data.menu)
-        this.list = result.data;
+        this.list = result.data.data.login_history_list;
       })
       .catch((ex) => {
         console.log("조회 실패", ex);
