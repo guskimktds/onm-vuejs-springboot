@@ -10,12 +10,13 @@ import BizMain from '../components/dashboard/bizMain'
 import NotFound from '../components/exceptions/NotFound'
 
 // 하위 메뉴
+import PlatformDashboard from '../components/dashboard/platform/platformDashboard'
 import ProcessStatus from '../components/dashboard/platform/processStatus'
 import CameraStatus from '../components/dashboard/platform/cameraDeviceStatus'
 import VaSettingStatus from '../components/dashboard/platform/vaSettingStatus'
 import StreamerStatus from '../components/dashboard/platform/streamerStatus'
 import IotGwStatus from '../components/dashboard/platform/iotGwStatus'
-import CamRegStat from '@/components/dashboard/platform/camRegStat/camRegStat'
+import CamregStat from '@/components/dashboard/platform/camRegStat/camRegStat'
 
 // 하위 메뉴 - 서비스관리
 import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
@@ -120,6 +121,11 @@ export default new Router({
             name: 'PlatformMain',
             component: PlatformMain,
             children: [{
+                path: "dashboard",
+                name: 'PlatformDashboard',
+                component: PlatformDashboard
+                },
+                {
                     path: "process",
                     name: 'ProcessStatus',
                     component: ProcessStatus
@@ -139,20 +145,15 @@ export default new Router({
                     name: 'StreamerStatus',
                     component: StreamerStatus
                 },
-                // {
-                //     path: "streamerPopup",
-                //     name: 'StreamerStatusPopup',
-                //     component: StreamerStatusPopup
-                // },
                 {
                     path: "iotgw",
                     name: 'IotGwStatus',
                     component: IotGwStatus
                 },
                 {
-                    path: "cam_reg_stat",
-                    name: 'CamRegStat',
-                    component: CamRegStat
+                    path: "camreg-stat",
+                    name: 'CamregStat',
+                    component: CamregStat
                 }
             ]
         },
