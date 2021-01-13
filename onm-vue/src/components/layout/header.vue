@@ -47,6 +47,8 @@ export default {
   created(){
     console.log("header.vue created load");
     console.log(this.$store.getters.getMenus);
+    console.log("env : ",process.env);
+    console.log(process.env);
     //this.menuArray = this.$store.state.menu;
     //this.menuArray = this.$store.getters.getMenus;
   }

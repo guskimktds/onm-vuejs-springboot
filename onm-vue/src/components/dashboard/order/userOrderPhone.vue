@@ -1,10 +1,19 @@
-<style src="../../../css/body.css"></style>
-
 <template>
-  <div>
+  <!-- <div>
     <p class="title">{{ title }}</p>
     <userOrderPhone-query v-on:search="searchToUserOrderPhone"></userOrderPhone-query>
     <userOrderPhone-list v-bind:pList=pList></userOrderPhone-list>
+  </div> -->
+  <div>
+    <v-container fluid>
+      <v-card>
+        <v-toolbar primary dense>
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
+        </v-toolbar>
+        <user-order-phone-query v-on:search="searchToUserOrderPhone"></user-order-phone-query>
+        <user-order-phone-list v-bind:pList=pList></user-order-phone-list>
+      </v-card>
+    </v-container>
   </div>
 
 </template>
@@ -13,25 +22,84 @@
 import UserOrderPhoneList from './user-order-phone/userOrderPhoneList'
 import UserOrderPhoneQuery from './user-order-phone/userOrderPhoneQuery'
 
+import axios from "axios"
+
 export default {
   components: {
-    'userOrderPhone-list': UserOrderPhoneList,
-    'userOrderPhone-query': UserOrderPhoneQuery
+    UserOrderPhoneList,
+    UserOrderPhoneQuery
   },
   data () {
     return {
       title: '사용자 청약 전화번호',
       pList: [
-        {tranId:"GPNA_20201029133825838_LVSPWS0001", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
-        {tranId:"GPNA_20201029133825838_LVSPWS0002", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
-        {tranId:"GPNA_20201029133825838_LVSPWS0003", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
-        {tranId:"GPNA_20201029133825838_LVSPWS0004", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
+        // {tranId:"GPNA_20201029133825838_LVSPWS0001", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
+        // {tranId:"GPNA_20201029133825838_LVSPWS0002", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
+        // {tranId:"GPNA_20201029133825838_LVSPWS0003", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
+        // {tranId:"GPNA_20201029133825838_LVSPWS0004", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
       ]
     }
   },
+  created: function() {
+
+    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12011/get_user_subs_result'
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12011/get_user_subs_telno`
+    var params = {
+      page_no: 1,
+      view_cnt: 5
+    }
+    var headers = {
+      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+      'Content-Type': 'application/json'
+    }
+
+    console.log('VUE_APP_BACKEND_SERVER_URL_TB:', url)
+    console.log(process.env)
+
+    axios
+        .post(url, params, headers)
+        .then((response) => {
+          console.log(response.data)
+          //this.list = JSON.parse(result.data.menu)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.pList = response.data.data.list;
+
+          }else{
+            this.pList = [];
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패',ex)
+        })
+  },
   methods: {
-    searchToUserOrderPhone: function(param){
-      console.log("부모 메소드 searchToUserOrderPhone 호출: "+JSON.stringify(param));
+    searchToUserOrderPhone: function(params){
+      console.log("부모 메소드 searchToUserOrderPhone 호출: "+JSON.stringify(params));
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12011/get_user_subs_telno`
+      // var params = {
+      //   page_no: 1,
+      //   view_cnt: 5
+      // }
+      var headers = {
+        'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+        'Content-Type': 'application/json'
+      }
+
+      axios.post(url, params, headers)
+      // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
+      //   params
+      // })
+      .then((result) => {
+        console.log(result)
+        //this.list = JSON.parse(result.data.menu)
+        this.list = result.data
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
     }
   }
 }

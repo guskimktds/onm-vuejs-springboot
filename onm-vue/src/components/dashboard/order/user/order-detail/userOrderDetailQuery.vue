@@ -1,38 +1,35 @@
 <template>
-    <div>
-
-    <!-- search -->
-    <table class="search">
-      <tr>
-        <th>처리희망일자 : </th>
-        <td><input type="date" v-model="param.hopeDateStart" placeholder="승인날자"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.hopeDateEnd" placeholder="승인날자"></td>
-        <th>오더번호 : </th>
-        <td><input type="text" v-model="param.orderNumber" placeholder="오더번호"></td>   
-      </tr> 
-      <tr> 
-        <th>거래고유번호 : </th>
-        <td><input type="text" v-model="param.tranId" placeholder="거래고유번호"></td>
-        <th>사업장명 : </th>
-        <td><input type="text" v-model="param.storeName" placeholder="사업장명"></td>      
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table>
-
-
-    </div>
+    <v-form>
+        <v-container>
+            <v-row>            
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="거래고유번호" 
+                        v-model="param.guid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>                
+                <v-col cols="12" sm="6" md="2">
+                    <v-btn 
+                        elevation="2" 
+                        medium
+                        v-on:click="searchMethod"
+                    >
+                        검색
+                    </v-btn>
+                </v-col>
+            </v-row>            
+        </v-container>
+    </v-form>
 </template>
 <script>
 export default {
     data() {
         return{
             param: {
-                hopeDateStart: '',
-                hopeDateEnd: '',
-                orderNumber: '',
-                tranId: '',
-                storeName: '',
+                guid: ''
             }
         }
     },

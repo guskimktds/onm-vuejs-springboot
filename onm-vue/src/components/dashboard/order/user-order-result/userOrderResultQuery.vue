@@ -1,35 +1,65 @@
 <template>
-    <div>
-
-    <!-- search -->
-    <table class="search">
-      <tr>
-        <th>등록일시 : </th>
-        <td><input type="date" v-model="param.registerDateStart" placeholder="등록일시"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.registerDateEnd" placeholder="등록일시"></td>
-        <th>계약 ID : </th>
-        <td><input type="text" v-model="param.contractId" placeholder="계약 ID"></td>
-      </tr> 
-      <tr> 
-        <th>거래고유번호 : </th>
-        <td><input type="text" v-model="param.tranId" placeholder="거래고유번호"></td>   
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table>
-
-
-    </div>
+    <v-form>
+        <v-container>
+            <v-row>            
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="등록일시" 
+                        v-model="param.guid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="등록일시 끝" 
+                        v-model="param.guid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="계약ID" 
+                        v-model="param.said"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>  
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="거래고유번호" 
+                        v-model="param.guid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>                
+                <v-col cols="12" sm="6" md="2">
+                    <v-btn 
+                        elevation="2" 
+                        medium
+                        v-on:click="searchMethod"
+                    >
+                        검색
+                    </v-btn>
+                </v-col>
+            </v-row>            
+        </v-container>
+    </v-form>
 </template>
 <script>
 export default {
     data() {
         return{
             param: {
-                registerDateStart: '',
-                registerDateEnd: '',
-                contractId: '',
-                tranId: '',
+                start_date: '',
+                end_date: '',
+                said: '',
+                guid: ''
             }
         }
     },

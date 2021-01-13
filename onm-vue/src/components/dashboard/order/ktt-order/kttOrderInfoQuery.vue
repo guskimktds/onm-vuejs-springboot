@@ -1,35 +1,84 @@
 <template>
-    <div>
-
-    <!-- search -->
-    <table class="search">
-      <tr>
-        <th>계약ID : </th>
-        <td><input type="text" v-model="param.contractId" placeholder="계약ID"></td>   
-        <th>거래고유번호 : </th>
-        <td><input type="text" v-model="param.tranId" placeholder="거래고유번호"></td>   
-      </tr> 
-      <tr> 
-        <th>서비스번호 : </th>
-        <td><input type="text" v-model="param.servicNum" placeholder="서비스번호"></td>   
-        <th>KTT계약ID : </th>
-        <td><input type="text" v-model="param.kttContractId" placeholder="KTT계약ID"></td> 
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table>
-
-
-    </div>
+    <v-form>
+        <v-container>
+            <v-row>            
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="등록일시" 
+                        v-model="param.guid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="등록일시 끝" 
+                        v-model="param.guid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="계약ID" 
+                        v-model="param.said"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>  
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="거래고유번호" 
+                        v-model="param.guid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>    
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="서비스번호" 
+                        v-model="param.service_no"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="KTT계약ID" 
+                        v-model="param.ktt_cont_id"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>             
+                <v-col cols="12" sm="6" md="2">
+                    <v-btn 
+                        elevation="2" 
+                        medium
+                        v-on:click="searchMethod"
+                    >
+                        검색
+                    </v-btn>
+                </v-col>
+            </v-row>            
+        </v-container>
+    </v-form>
 </template>
+
 <script>
 export default {
     data() {
         return{
             param: {
-                contractId: '',
-                tranId: '',
-                servicNum: '',
-                kttContractId: '',
+                said: '',
+                guid: '',
+                service_no: '',
+                ktt_cont_id: ''
             }
         }
     },

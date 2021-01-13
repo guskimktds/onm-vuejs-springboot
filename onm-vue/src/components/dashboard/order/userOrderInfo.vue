@@ -39,7 +39,8 @@ export default {
   },
   created: function() {
 
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12001/get_user_subs_order_info'
+    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12001/get_user_subs_order_info'
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12001/get_user_subs_order_info`
     var params = {
       page_no: 1,
       view_cnt: 5
@@ -50,6 +51,7 @@ export default {
     }
 
     console.log('VUE_APP_BACKEND_SERVER_URL_TB:', url)
+    console.log(process.env)
 
     axios
         .post(url, params, headers)
@@ -71,18 +73,32 @@ export default {
         })
   },
   mounted: function() {
-     EventBus.$on('createItem', parameter => {
+     EventBus.$on('createItem', params => {
         //console.log('codeMain.vue eventbus : param : ',parameter)
+        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12001/get_user_subs_order_info`
+        var headers = {
+          'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+          'Content-Type': 'application/json'
+        }
+
         axios
-            .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code`, parameter)
-            .then((result) => {
-              console.log(result)
-              // this.list = JSON.parse(result.data.menu)
-              // this.list = result.data
-            })
-            .catch((ex) => {
-              console.log('조회 실패',ex)
-            })
+        .post(url, params, headers)
+        .then((response) => {
+          // console.log(response.data)
+          //this.list = JSON.parse(result.data.menu)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.pList = response.data.data.list;
+
+          }else{
+            this.pList = [];
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패',ex)
+        })
     })
   },
   methods: {
