@@ -43,7 +43,7 @@ import MobileListInfo from '../components/dashboard/customer/mobile-list/mobileL
 import PushHistory from '../components/dashboard/customer/push-history/pushHistory'
 
 // 계정관리 메뉴(SingIn/SignOut/SingUp/MyPage)
-import AccountView from '../components/dashboard/account/accountView'
+// import AccountView from '../components/dashboard/account/accountView'
 import SignIn from '../components/dashboard/account/signIn'
 import SignOut from '../components/dashboard/account/signOut'
 import SignUp from '../components/dashboard/account/signUp'
@@ -236,19 +236,19 @@ export default new Router({
         },
         {
             path: "/account",
-            name: 'AccountView',
-            component: AccountView,
-            children: [{
-                    path: "mypage",
-                    name: 'MyPage',
-                    component: MyPage
-                },
-                {
-                    path: "signout",
-                    name: 'SignOut',
-                    component: SignOut
-                }
-            ]
+            name: 'MyPage',
+            component: MyPage,
+            // children: [{
+            //         path: "mypage",
+            //         name: 'MyPage',
+            //         component: MyPage
+            //     },
+            //     {
+            //         path: "signout",
+            //         name: 'SignOut',
+            //         component: SignOut
+            //     }
+            // ]
         },
         {
             path: "/store",

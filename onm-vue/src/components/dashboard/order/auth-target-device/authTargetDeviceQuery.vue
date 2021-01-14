@@ -1,38 +1,100 @@
 <template>
-    <div>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
 
-    <!-- search -->
-    <table class="search">
-      <tr>
-        <th>등록일시 : </th>
-        <td><input type="date" v-model="param.registerDateStart" placeholder="등록일시"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.registerDateEnd" placeholder="등록일시"></td>
-        <th>오더번호 : </th>
-        <td><input type="text" v-model="param.orderNumber" placeholder="오더번호"></td>
-      </tr> 
-      <tr> 
-        <th>MAC ID : </th>
-        <td><input type="text" v-model="param.macId" placeholder="MAC ID"></td>
-        <th>개통 오더번호 : </th>
-        <td><input type="text" v-model="param.openOrderNum" placeholder="개통 오더번호"></td>     
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table>
+        <base-material-card
+        icon="mdi-magnify"
+        title="인증 대상 단말 조회"
+        class="px-5 py-3"
+        >
+            <v-row>
+                <v-col cols="12" sm="6" md="3">
+                    <v-menu
+                    ref="menu"
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :return-value.sync="date"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="290px"
+                    attach
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="dateRangeText"
+                        label="승인날짜"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.approveDate" no-title scrollable range>
+                        <v-spacer></v-spacer>
+                        <v-btn text color="primary" @click="menu = false">
+                        Cancel
+                        </v-btn>
+                        <v-btn text color="primary" @click="$refs.menu.save(date)">
+                        OK
+                        </v-btn>
+                    </v-date-picker>
+                    </v-menu>
+                </v-col>
+                <v-col cols="12" sm="6" md="2">
+                    <v-text-field 
+                        dense 
+                        label="오더번호" 
+                        v-model="param.order_no"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="2">
+                    <v-text-field 
+                        dense 
+                        label="계약 ID" 
+                        v-model="param.said"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="2">
+                    <v-text-field 
+                        dense 
+                        label="MAC ID" 
+                        v-model="param.macid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                
+                <v-col cols="12" sm="6" md="2">
+                    <v-btn 
+                        elevation="2" 
+                        medium
+                        v-on:click="searchMethod"
+                    >
+                        검색
+                    </v-btn>
+                </v-col>
+            </v-row>     
 
-
-    </div>
+        </base-material-card>       
+    </v-container>
 </template>
 <script>
 export default {
     data() {
         return{
             param: {
-                registerDateStart: '',
-                registerDateEnd: '',
-                orderNumber: '',
-                macId: '',
-                openOrderNum: ''
+                start_date: '',
+                end_date: '',
+                order_no: '',
+                said: '',
+                macid: ''
             }
         }
     },

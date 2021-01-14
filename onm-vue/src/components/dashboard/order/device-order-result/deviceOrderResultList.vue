@@ -1,37 +1,49 @@
 <template>
-    <div>
-        <table class="contents">
-            <thead>
-                <tr>
-                    <th>거래고유번호</th>
-                    <th>오더유형</th>
-                    <th>오더번호</th>
-                    <th>청약처리결과코드</th>
-                    <th>청약처리결과메세지</th>
-                    <th>청약상태 통보여부</th>
-                    <th>오더처리 통보일시</th>
-                    <th>청약결과 통보결과</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in pList" :key="item.tranId">
-                    <td>{{item.tranId}}</td>
-                    <td>{{item.orderType}}</td>
-                    <td>{{item.orderNumber}}</td>
-                    <td>{{item.responseCode}}</td>
-                    <td>{{item.responseMessage}}</td>
-                    <td>{{item.orderStatusAlarm}}</td>
-                    <td>{{item.orderStatusAlarmDate}}</td>
-                    <td>{{item.orderStatusAlarmResult}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+        <base-material-card
+            color="orange"
+            dark
+            icon="mdi-keyboard"
+            title="단말 오더 정보 LIST"
+            class="px-5 py-3"
+            >
+            <v-data-table
+                :headers="headers"
+                :items="pList"
+                class="elevation-1"
+            >          
+            </v-data-table>
+        </base-material-card>
+    </v-container>
 </template>
 <script>
 export default {
     props: ['pList'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
+    data() {
+      return {
+        dialog: false,
+        dialogDelete: false,
+        editedIndex: -1,
+        headers: [
+          {
+            text: '거래고유번호', align: 'start',
+            sortable: false, value: 'guid',
+          },
+          { text: '오더유형', value: 'type' },   
+          { text: '오더번호', value: 'oderno' },
+          { text: '청약처리결과코드', value: 'resultcode' },
+          { text: '청약처리결과메시지', value: 'resultmsg' },
+          { text: '청약상태 통보여부', value: 'notice_yn' },
+          { text: '오더처리 통보일시', value: 'notice_date' },
+          { text: '청약결과 통보결과', value: 'notice_result' }
+          
+        ]
+      }
+    },
     created() {
         console.log(this.props)
     }

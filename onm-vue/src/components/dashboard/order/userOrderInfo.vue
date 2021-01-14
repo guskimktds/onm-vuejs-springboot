@@ -1,15 +1,13 @@
 <template>
-  <div>
     <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
+        <!-- <v-toolbar primary dense>
           <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
-        <userOrderInfo-query v-on:search="searchToUserOrderInfo"></userOrderInfo-query>
-        <userOrderInfo-list v-bind:pList=pList></userOrderInfo-list>
+        </v-toolbar> -->
+        <user-order-info-query v-on:search="searchToUserOrderInfo"></user-order-info-query>
+        <user-order-info-list v-bind:pList=pList></user-order-info-list>
       </v-card>
     </v-container>
-  </div>
 </template>
 
 <script>
@@ -20,11 +18,10 @@ import axios from "axios"
 
 import EventBus from '../../../EventBus';
 
-
 export default {
   components: {
-    'userOrderInfo-list': UserOrderInfoList,
-    'userOrderInfo-query': UserOrderInfoQuery
+    UserOrderInfoList,
+    UserOrderInfoQuery
   },
   data () {
     return {
@@ -39,19 +36,25 @@ export default {
   },
   created: function() {
 
-    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12001/get_user_subs_order_info'
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12001/get_user_subs_order_info`
+    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12001/get_user_subs_order_info'
+    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12001/get_user_subs_order_info`
     var params = {
       page_no: 1,
       view_cnt: 5
     }
     var headers = {
       'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/json'
     }
 
     console.log('VUE_APP_BACKEND_SERVER_URL_TB:', url)
     console.log(process.env)
+
+    // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
+
+    // axios.defaults.baseURL = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}`;
+    // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+    // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
     axios
         .post(url, params, headers)
@@ -75,7 +78,8 @@ export default {
   mounted: function() {
      EventBus.$on('createItem', params => {
         //console.log('codeMain.vue eventbus : param : ',parameter)
-        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12001/get_user_subs_order_info`
+        var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12001/get_user_subs_order_info'
+        // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12001/get_user_subs_order_info`
         var headers = {
           'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
           'Content-Type': 'application/json'

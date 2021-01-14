@@ -1,5 +1,5 @@
 <template>
-   <div id="app">
+   <!-- <div id="app">
     <v-app id="inspire">
       <div>
         <v-data-table
@@ -10,7 +10,33 @@
         </v-data-table>
       </div>      
     </v-app>
-  </div>
+  </div> -->
+  <v-container
+    id="regular-tables"
+    fluid
+    tag="section"
+  >
+  <!-- <base-material-card
+      icon="mdi-clipboard-text"
+      title="Simple Table"
+      class="px-5 py-3"
+    > -->
+    <base-material-card
+      color="orange"
+      dark
+      icon="mdi-keyboard"
+      title="사용자 청약 오더 정보 LIST"
+      class="px-5 py-3"
+    >
+      <v-data-table
+        :headers="headers"
+        :items="pList"
+        class="elevation-1"
+      >          
+      </v-data-table>
+  </base-material-card>
+
+  </v-container>
 </template>
 
 <script>
