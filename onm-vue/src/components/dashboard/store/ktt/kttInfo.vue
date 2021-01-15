@@ -72,12 +72,16 @@ export default {
     };
   },
   created: function () {
-    axios
-      .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/store-ktt`)
+   axios
+      .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13003/get_user_ktt_info_list`,{
+        "page_no": 1,
+        "view_cnt": 5
+
+      })
       .then((result) => {
         console.log(result);
         // this.list = JSON.parse(result.data.menu)
-        this.list = result.data;
+        this.list = result.data.data.kt_info_list;
       })
       .catch((ex) => {
         console.log("조회 실패", ex);

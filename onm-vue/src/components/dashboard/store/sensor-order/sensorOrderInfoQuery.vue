@@ -23,7 +23,7 @@
               label="센서 ID"
               v-model="param.sensorId"
               placeholder=" "
-              outlined
+             
             >
             </v-text-field>
           </v-col>
@@ -33,7 +33,7 @@
               label="상태 코드"
               v-model="param.statusCode"
               placeholder=" "
-              outlined
+              
             >
             </v-text-field>
           </v-col>
@@ -43,12 +43,19 @@
               label="센서 제품명"
               v-model="param.sensorName"
               placeholder=" "
-              outlined
+              
             >
             </v-text-field>
           </v-col>
-          <v-col cols="auto">
-            <v-btn v-on:click="searchMethod">검색</v-btn>
+         
+          <v-col cols="12" sm="6" md="2">
+                    <v-btn 
+                        elevation="2" 
+                        medium
+                        v-on:click="searchMethod"
+                    >
+                        검색
+                    </v-btn>
           </v-col>
         </v-row>
       </v-container>

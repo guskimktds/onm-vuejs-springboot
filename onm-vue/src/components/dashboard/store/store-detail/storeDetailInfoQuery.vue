@@ -51,7 +51,7 @@
               label="사용자명"
               v-model="param.usrName"
               placeholder=" "
-              outlined
+          
             >
             </v-text-field>
           </v-col>
@@ -62,7 +62,7 @@
               label="사용자 ID"
               v-model="param.usrID"
               placeholder=" "
-              outlined
+          
             >
             </v-text-field>
           </v-col>
@@ -73,12 +73,18 @@
               label="상태"
               v-model="param.status"
               placeholder=" "
-              outlined
+           
             >
             </v-text-field>
           </v-col>
-          <v-col cols="auto">
-            <v-btn v-on:click="searchMethod">검색</v-btn>
+
+          <v-col cols="12" sm="6" md="2">
+                    <v-btn 
+                        elevation="2" 
+                        medium
+                        v-on:click="searchMethod">
+                        검색
+                    </v-btn>
           </v-col>
         </v-row>
       </v-container>

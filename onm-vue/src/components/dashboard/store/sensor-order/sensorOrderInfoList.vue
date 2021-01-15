@@ -7,7 +7,6 @@
         :items-per-page="5"
         item-key="sensorId"
         class="elevation-1"
-        :style="`background-color: #d6f5e5`"
       >
         <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
           <td :colspan="headers.length">
