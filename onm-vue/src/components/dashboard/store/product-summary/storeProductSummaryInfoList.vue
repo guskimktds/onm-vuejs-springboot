@@ -7,7 +7,6 @@
         :items-per-page="5"
         item-key="usrId"
         class="elevation-1"
-        :style="`background-color: #d6f5e5`"
       >
         <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
           <td :colspan="headers.length">
@@ -30,14 +29,14 @@ export default {
           text: "사용자ID",
           align: "start",
           sortable: false,
-          value: "usrId",
+          value: "user_id",
         },
-        { text: "상품코드", value: "productCode" },
-        { text: "상품이름", value: "productName" },
-        { text: "상품유형", value: "productType" },
-        { text: "상품개수", value: "productCnt" },
-        { text: "등록일시", value: "addDate" },
-        { text: "수정일시", value: "modifiedDate" },
+        { text: "상품코드", value: "prodcd" },
+        { text: "상품이름", value: "prodnm" },
+        { text: "상품유형", value: "prodtype" },
+        { text: "상품개수", value: "prodcnt" },
+        { text: "등록일시", value: "reg_date" },
+        { text: "수정일시", value: "mod_date" },
       ],
     };
   },

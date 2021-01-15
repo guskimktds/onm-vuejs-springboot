@@ -7,7 +7,6 @@
         :items-per-page="5"
         item-key="camId"
         class="elevation-1"
-        :style="`background-color: #d6f5e5`"
       >
         <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
           <td :colspan="headers.length">
@@ -67,20 +66,20 @@ export default {
           text: "카메라 ID",
           align: "start",
           sortable: false,
-          value: "camId",
+          value: "cam_id",
         },
-        { text: "카메라 IP", value: "camIp" },
-        { text: "카메라명", value: "camName" },
+        { text: "카메라 IP", value: "cam_ip" },
+        { text: "카메라명", value: "cam_name" },
         { text: "mac_id", value: "macId" },
-        { text: "모델명", value: "modelName" },
-        { text: "펌웨어 버전 정보", value: "firmwareVer" },
-        { text: "제조사", value: "manufacturer" },
-        { text: "서비스 상태코드", value: "serviceCode" },
-        { text: "관리상태코드", value: "manageCode" },
+        { text: "모델명", value: "model_name" },
+        { text: "펌웨어 버전 정보", value: "firmware" },
+        { text: "제조사", value: "vendor" },
+        { text: "서비스 상태코드", value: "status_code" },
+        { text: "관리상태코드", value: "mgt_status" },
         { text: "해상도", value: "resolution" },
-        { text: "카메라 수정일자", value: "modifiedDate" },
-        { text: "개통일시", value: "openDate" },
-        { text: "해지일시", value: "closeDate" },
+        { text: "카메라 수정일자", value: "mod_date" },
+        { text: "개통일시", value: "opendate" },
+        { text: "해지일시", value: "close_date" },
       ],
     };
   },

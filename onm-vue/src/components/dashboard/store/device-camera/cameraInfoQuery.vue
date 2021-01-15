@@ -42,7 +42,7 @@
               label="카메라 ID"
               v-model="param.camId"
               placeholder=" "
-              outlined
+              
             >
             </v-text-field>
           </v-col>
@@ -52,7 +52,7 @@
               label="카메라명 "
               v-model="param.camName"
               placeholder=" "
-              outlined
+              
             >
             </v-text-field>
           </v-col>
@@ -62,13 +62,20 @@
               label="MAC ID"
               v-model="param.macId"
               placeholder=" "
-              outlined
+              
             >
             </v-text-field>
           </v-col>
-          <v-col cols="auto">
-            <v-btn v-on:click="searchMethod">검색</v-btn>
-          </v-col>
+          
+          <v-col cols="12" sm="6" md="2">
+                    <v-btn 
+                        elevation="2" 
+                        medium
+                        v-on:click="searchMethod"
+                    >
+                        검색
+                    </v-btn>
+                </v-col>
         </v-row>
       </v-container>
     </v-form>
