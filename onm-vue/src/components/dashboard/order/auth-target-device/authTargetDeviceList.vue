@@ -1,43 +1,54 @@
 <template>
-    <div>
-        <table class="contents">
-            <thead>
-                <tr>
-                    <th>단말ID</th>
-                    <th>오더번호</th>
-                    <th>mac_id</th>
-                    <th>관리 상태코드</th>
-                    <th>제품코드</th>
-                    <th>모델명</th>
-                    <th>단말인증결과코드</th>
-                    <th>개통오더번호</th>
-                    <th>인증일시</th>
-                    <th>삭제일시</th>
-                    <th>등록일시</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in pList" :key="item.deviceId">
-                    <td>{{item.deviceId}}</td>
-                    <td>{{item.orderNumber}}</td>
-                    <td>{{item.mac_id}}</td>
-                    <td>{{item.manageStatusCode}}</td>
-                    <td>{{item.deviceCode}}</td>
-                    <td>{{item.modelName}}</td>
-                    <td>{{item.responseCode}}</td>
-                    <td>{{item.openOrderNum}}</td>
-                    <td>{{item.authDate}}</td>
-                    <td>{{item.deleteDate}}</td>
-                    <td>{{item.registDate}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+        <base-material-card
+            color="orange"
+            dark
+            icon="mdi-keyboard"
+            title="단말 오더 정보 LIST"
+            class="px-5 py-3"
+            >
+            <v-data-table
+                :headers="headers"
+                :items="pList"
+                class="elevation-1"
+            >          
+            </v-data-table>
+        </base-material-card>
+    </v-container>
 </template>
 <script>
 export default {
     props: ['pList'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
+    data() {
+      return {
+        dialog: false,
+        dialogDelete: false,
+        editedIndex: -1,
+        headers: [
+          { text: '오더번호', align: 'start',
+            sortable: false, value: 'oderno' },
+          { text: '단말ID', value: 'terminal_id' },
+          { text: '계약ID', value: 'said'},
+          { text: 'MAC ID', value: 'mac_id' },
+          { text: '관리상태코드', value: 'oderno' },
+          { text: '제품코드', value: 'oderno' },
+          { text: '모델명', value: 'oderno' },
+          
+          { text: '단말인증결과코드', value: 'appointdate' },
+          { text: '개통오더번호', value: 'oderdivcd' },
+          { text: '인증일시', value: 'oderno' },
+          { text: '오더순번', value: 'oderseq' },
+          { text: '계약ID', value: 'said'},
+          { text: '오더유형', value: 'type' },       
+          { text: '등록일시', value: 'cdate' },
+          { text: '청약처리통보여부', value: 'notice_yn' },
+        ]
+      }
+    },
     created() {
         console.log(this.props)
     }
