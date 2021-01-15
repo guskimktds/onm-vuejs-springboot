@@ -1,6 +1,20 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
+  <!-- <div id="app">
+    <v-app id="inspire"> -->
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+    >
+
+    <base-material-card
+        color="orange"
+        dark
+        icon="mdi-keyboard"
+        title="사용자 청약 오더 정보 LIST"
+        class="px-5 py-3"
+      >
+
       <v-data-table
         :headers="headers"
         :items="pList"
@@ -10,8 +24,11 @@
         :style="`background-color: #d6f5e5`"
       >
       </v-data-table>
-    </v-app>
-  </div>
+
+    </base-material-card>
+  </v-container>
+    <!-- </v-app>
+  </div> -->
 </template>
 
 

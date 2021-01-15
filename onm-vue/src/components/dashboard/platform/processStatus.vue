@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <v-container>
+  <!-- <div> -->
+    <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
+        <!-- <v-toolbar primary dense>
           <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
+        </v-toolbar> -->
         <process-query v-on:search="searchToProcess"></process-query>
         <process-list v-bind:pList=pList></process-list>
       </v-card>
     </v-container>
-  </div>
+  <!-- </div> -->
 
 </template>
 

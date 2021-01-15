@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p>{{ title }}</p>
+    <!-- <p>{{ title }}</p>
     <div>
       <span>Sub component 화면을 추가한다.</span>
-    </div>
+    </div> -->
     <router-view></router-view>
   </div>
 </template>
