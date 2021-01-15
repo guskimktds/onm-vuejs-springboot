@@ -1,26 +1,15 @@
 <template>
-  <!-- <div>
-    <table class="search">
-      <tr>
-        <th>승인날짜 : </th>
-        <td><input type="date" v-model="param.approveDateStart" placeholder="승인날자"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.approveDateEnd" placeholder="승인날자"></td>
-        <th>사용자명 : </th>
-        <td><input type="text" v-model="param.userName" placeholder="사용자명"></td>
-      </tr> 
-      <tr> 
-        <th>사용자 ID : </th>
-        <td><input type="text" v-model="param.userID" placeholder="사용자 ID"></td>
-        <th>전화번호 : </th>
-        <td><input type="text" v-model="param.phoneNum" placeholder="전화번호"></td>      
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table>
-    </div> -->
-  <div>
-    <v-form>
-      <v-container>
+  <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+
+        <base-material-card
+        icon="mdi-magnify"
+        title="사용자 전화번호 조회(기능삭제 - 매장정보 조회 > 사용자 전화번호)"
+        class="px-5 py-3"
+        >
         <v-row>
           <!-- <v-col cols="12" sm="6">
             <v-date-picker v-model="dates" range></v-date-picker>
@@ -70,7 +59,7 @@
           </v-col>
 
 
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
               label="사용자명"
@@ -80,7 +69,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
               label="사용자 ID"
@@ -90,7 +79,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
               label="전화번호"
@@ -105,9 +94,8 @@
             <v-btn v-on:click="searchMethod">검색</v-btn>
           </v-col>
         </v-row>
-      </v-container>
-    </v-form>
-  </div>
+      </base-material-card>       
+    </v-container>
 </template>
 
 <script>

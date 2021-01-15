@@ -1,15 +1,7 @@
 <template>
-  <!-- <div>
-    <p class="title">{{ title }}</p>
-    <userOrderDetail-query v-on:search="searchToUserOrderDetail"></userOrderDetail-query>
-    <userOrderDetail-list v-bind:pList=pList></userOrderDetail-list>
-  </div> -->
   <div>
     <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <user-order-detail-query v-on:search="searchToUserOrderDetail"></user-order-detail-query>
         <!-- <user-order-detail-list v-bind:pList=pList></user-order-detail-list> -->
         <user-order-detail-object v-bind:pObject=pObject></user-order-detail-object>
@@ -36,13 +28,7 @@ export default {
   data () {
     return {
       title: '사용자 청약 오더 상세',
-      pList: [
-        // {tranId:"GPNA_20201029133825838_LVSPWS0001", orderNumber:"20303DO9519190", orderSeq:1, usageType:"T", hopeDate:"2020110315", orderType:"4201", storeName:'홍길동', productCode: "B162", paramTypeCode:"VASTGRM", paramTypeName:"저장기간", paramValue: 10},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0002", orderNumber:"20303DO9519190", orderSeq:1, usageType:"T", hopeDate:"2020110315", orderType:"4201", storeName:'홍길동', productCode: "B162", paramTypeCode:"VASTGRM", paramTypeName:"저장기간", paramValue: 10},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0003", orderNumber:"20303DO9519190", orderSeq:1, usageType:"T", hopeDate:"2020110315", orderType:"4201", storeName:'홍길동', productCode: "B162", paramTypeCode:"VASTGRM", paramTypeName:"저장기간", paramValue: 10},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0004", orderNumber:"20303DO9519190", orderSeq:1, usageType:"T", hopeDate:"2020110315", orderType:"4201", storeName:'홍길동', productCode: "B162", paramTypeCode:"VASTGRM", paramTypeName:"저장기간", paramValue: 10},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0005", orderNumber:"20303DO9519190", orderSeq:1, usageType:"T", hopeDate:"2020110315", orderType:"4201", storeName:'홍길동', productCode: "B162", paramTypeCode:"VASTGRM", paramTypeName:"저장기간", paramValue: 10},
-      ],
+      pList: [],
       pObject: {},
       isArrayed : true
     }

@@ -1,26 +1,29 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
-      <v-data-table
-        :headers="headers"
-        :items="List"
-        :items-per-page="5"
-        item-key="seqID"
-        class="elevation-1"
-        :style="`background-color: #d6f5e5`"
-      >
-        <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
-          <td :colspan="headers.length">
-            <List></List>
-          </td>
-        </template>       -->
-      </v-data-table>
-    </v-app>
-  </div>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+        <base-material-card
+            color="orange"
+            dark
+            icon="mdi-keyboard"
+            title="모바일 단말 LIST"
+            class="px-5 py-3"
+            >
+            <v-data-table
+                :headers="headers"
+                :items="pList"
+                class="elevation-1"
+            >          
+            </v-data-table>
+        </base-material-card>
+    </v-container>
 </template>
+
 <script>
 export default {
-  props: ["List"],
+  props: ["pList"],
   //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
   data() {
     return {

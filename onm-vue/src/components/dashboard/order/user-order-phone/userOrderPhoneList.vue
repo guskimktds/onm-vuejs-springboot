@@ -1,16 +1,24 @@
 <template>
-   <div id="app">
-    <v-app id="inspire">
-      <div>
-        <v-data-table
-          :headers="headers"
-          :items="pList"
-          class="elevation-1"
-        >          
-        </v-data-table>
-      </div>      
-    </v-app>
-  </div>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+        <base-material-card
+            color="orange"
+            dark
+            icon="mdi-keyboard"
+            title="사용자 청약 전화번호 LIST"
+            class="px-5 py-3"
+            >
+            <v-data-table
+                :headers="headers"
+                :items="pList"
+                class="elevation-1"
+            >          
+            </v-data-table>
+        </base-material-card>
+    </v-container>
 </template>
 
 <script>

@@ -1,6 +1,15 @@
 <template>   
-    <v-form>
-        <v-container>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+
+        <base-material-card
+            icon="mdi-magnify"
+            title="고객이전 단말 상태 조회"
+            class="px-5 py-3"
+        >
             <v-row>
                 <v-col cols="12" sm="6" md="4">
                     <v-text-field 
@@ -57,25 +66,8 @@
                     </v-btn>
                 </v-col>
             </v-row>
-            <!-- <v-row>
-                <v-col cols="12" sm="6" md="3">
-                    <v-btn elevation="2" medium
-                    v-on:click="searchMethod"
-                    >
-                        검색
-                    </v-btn>
-                </v-col>   
-                <v-col cols="12" sm="6" md="3">
-                    <v-btn elevation="2" medium
-                    v-on:click="searchMethod"
-                    >
-                        등록
-                    </v-btn>
-                </v-col> 
-                              
-            </v-row> -->
-        </v-container>
-    </v-form>
+       </base-material-card>       
+    </v-container>
 </template>
 <script>
 

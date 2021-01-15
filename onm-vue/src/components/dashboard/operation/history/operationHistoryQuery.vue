@@ -1,33 +1,43 @@
 <template>
-    <v-form>
-        <v-container>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+
+        <base-material-card
+        icon="mdi-magnify"
+        title="처리 이력 조회"
+        class="px-5 py-3"
+        >
             <v-row>
                 <!-- <v-col cols="12" sm="6" md="3">
                     <v-text-field label="사번">
                     </v-text-field>
                 </v-col> -->
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="12" sm="6" md="2">
                     <v-text-field dense label="사번" placeholder="Placeholder" outlined>                        
                     </v-text-field>
                 </v-col>         
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="12" sm="6" md="2">
                     <v-text-field dense label="이름" placeholder="Placeholder" outlined>                        
                     </v-text-field>
                 </v-col> 
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="12" sm="6" md="2">
                     <v-text-field dense label="권한" placeholder="Placeholder" outlined>                        
                     </v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="3">
                     <v-btn elevation="2" medium
                     v-on:click="searchMethod"
+                    color="green"
                     >
                         검색
                     </v-btn>
                 </v-col>                
             </v-row>
-        </v-container>
-    </v-form>
+        </base-material-card>       
+    </v-container>
 </template>
 <script>
 

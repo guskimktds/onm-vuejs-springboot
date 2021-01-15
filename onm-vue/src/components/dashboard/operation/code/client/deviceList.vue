@@ -1,21 +1,30 @@
 <template>
-   <div id="app">
-    <v-app id="inspire">
-      <div>
+   <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+  >
+    <base-material-card
+      color="orange"
+      dark
+      icon="mdi-keyboard"
+      title="client 단말 정보 LIST"
+      class="px-5 py-3"
+    >
         <v-data-table
           :headers="headers"
-          :items="localCodeList"
+          :items="pList"
           class="elevation-1"
         >
           <template v-slot:top>
-            <v-toolbar
+            <!-- <v-toolbar
               flat
-            >
+            > -->
               <v-dialog
                 v-model="dialog"
                 max-width="500px"
               >
-                <template v-slot:activator="{ on, attrs }">
+                <!-- <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     color="primary"
                     dark
@@ -25,7 +34,7 @@
                   >
                     등록
                   </v-btn>
-                </template>
+                </template> -->
                 <v-card>
                   <v-card-title>
                     <span class="headline">{{ formTitle }}</span>
@@ -150,7 +159,7 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog>
-            </v-toolbar>
+            <!-- </v-toolbar> -->
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon
@@ -169,10 +178,8 @@
           </template>
         </v-data-table>
 
-      </div>
-      
-    </v-app>
-  </div>
+    </base-material-card>
+  </v-container>
 </template>
 
 <script>
@@ -182,7 +189,7 @@ import axios from "axios"
 import EventBus from '../../../../../EventBus';
 
 export default {
-    props: ['localCodeList'],
+    props: ['pList'],
     data() {
       return {
         dialog: false,
@@ -190,14 +197,14 @@ export default {
         editedIndex: -1,
         headers: [
           { text: '앱버전ID', align: 'start',
-            sortable: false, value: 'appversion' },
-          { text: 'OS타입', value: 'ostype'},
-          { text: '업데이트버전', value: 'updateversion'},
-          { text: '버전코드', value: 'versioncode'},
-          { text: '다운로드URL', value: 'downloadurl' },
-          { text: '필수업데이트여부', value: 'updateyn' },
-          { text: '등록일시', value: 'createdate' },
-          { text: '수정일시', value: 'updatedate' },
+            sortable: false, value: 'app_version_id' },
+          { text: 'OS타입', value: 'os_type'},
+          { text: '업데이트버전', value: 'update_version'},
+          { text: '버전코드', value: 'version_code'},
+          { text: '다운로드URL', value: 'download_url' },
+          { text: '필수업데이트', value: 'required_yn' },
+          { text: '등록일시', value: 'reg_date' },
+          { text: '수정일시', value: 'mod_date' },
           { text: '타이틀', value: 'title' },
           { text: '내용', value: 'content' },
           { text: '변경', value: 'actions', sortable: false }
@@ -216,17 +223,20 @@ export default {
           editor: '82095586',
           editDate: '2021-01-06 10:20:30'
         },
-        // defaultItem: {
-        //   codeClass: '',
-        //   code: '',
-        //   name: '',
-        //   type: '',
-        //   useYn: '',
-        //   orderby: '',
-        //   desc: '',
-        //   editor: '',
-        //   editDate: '2021-01-06 10:20:30'
-        // },
+        defaultItem: {
+          appversion: '',
+          ostype: '',
+          updateversion: '',
+          versioncode: '',
+          downloadurl: '',
+          updateyn: '',
+          createDate: '',
+          updateDate: '',
+          title: '',
+          content: '',
+          editor: '82095586',
+          editDate: '2021-01-06 10:20:30'
+        },
       }
     },
     computed: {
@@ -237,7 +247,7 @@ export default {
     methods: {
       editItem (item) {
         console.log('editItem method call : ',item)
-        this.editedIndex = this.localCodeList.indexOf(item)
+        this.editedIndex = this.pList.indexOf(item)
         console.log('editItem method call : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
 
@@ -248,7 +258,7 @@ export default {
 
       deleteItem (item) {
         console.log('deleteItem method call : ',item)
-        this.editedIndex = this.localCodeList.indexOf(item)
+        this.editedIndex = this.pList.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
       },
@@ -262,13 +272,13 @@ export default {
               console.log(result)
               // this.list = JSON.parse(result.data.menu)
               // this.list = result.data
-              this.localCodeList.splice(this.editedIndex, 1)
+              this.pList.splice(this.editedIndex, 1)
             })
             .catch((ex) => {
               console.log('조회 실패',ex)
             })
 
-        // this.localCodeList.splice(this.editedIndex, 1)
+        // this.pList.splice(this.editedIndex, 1)
         this.closeDelete()
       },
 
@@ -302,7 +312,7 @@ export default {
             //   console.log(result)
             //   // this.list = JSON.parse(result.data.menu)
             //   // this.list = result.data
-            //   // Object.assign(this.localCodeList[this.editedIndex], this.editedItem)
+            //   // Object.assign(this.pList[this.editedIndex], this.editedItem)
             // })
             // .catch((ex) => {
             //   console.log('조회 실패',ex)

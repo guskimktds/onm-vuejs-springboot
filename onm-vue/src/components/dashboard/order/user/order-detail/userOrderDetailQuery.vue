@@ -1,6 +1,15 @@
 <template>
-    <v-form>
-        <v-container>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+
+        <base-material-card
+        icon="mdi-magnify"
+        title="사용자 청약 오더 상세 검색"
+        class="px-5 py-3"
+        >
             <v-row>            
                 <v-col cols="12" sm="6" md="4">
                     <v-text-field 
@@ -21,8 +30,8 @@
                     </v-btn>
                 </v-col>
             </v-row>            
-        </v-container>
-    </v-form>
+   </base-material-card>       
+    </v-container>
 </template>
 <script>
 export default {

@@ -1,21 +1,12 @@
 <template>
-  <div>
-    <!-- <p>{{ title }}</p>-->
-    <v-container>
+    <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <change-history-query v-on:search="searchToButton"></change-history-query>
-        <change-history-list v-bind:changeHistoryList=list></change-history-list>
+        <change-history-list v-bind:pList=pList></change-history-list>
       </v-card>
 
     </v-container>
-    
-    <!-- <router-view></router-view> -->
-    <!-- <operation-history-query></operation-history-query>
-    <operation-history-list v-bind:operationHistoryList=list></operation-history-list> -->
-  </div>
+
 </template>
 
 <script>
@@ -33,28 +24,59 @@ export default {
   },
   data () {
     return {
-      title: '관리자 변경 이력',
-      list: []
+      title: '관리자 등록 이력',
+      pList: []
     }
   },
   created: function() {
+    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15004/get_mng_regi_history'
+    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
+    var params = {
+      page_no: 1,
+      view_cnt: 5
+    }
+    var headers = {
+      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+      'Content-Type': 'application/json'
+    }
+
     axios
-        .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/operation-history`)
-        .then((result) => {
-          console.log(result)
-          this.list = JSON.parse(result.data.menu)
+        .post(url, params, headers)
+        .then((response) => {
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.pList = response.data.data.mng_regi_history_list;
+
+          }else{
+            this.pList = [];
+            alert(resCode + " / " + resMsg);
+          }
         })
         .catch((ex) => {
           console.log('조회 실패',ex)
         })
   },
   methods: {
-    searchToButton: function(){
-        axios
-            .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/operation-history`)
+    searchToButton: function(params){
+    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15004/get_mng_regi_history'
+    // var params = {
+    //   page_no: 1,
+    //   view_cnt: 5
+    // }
+    var headers = {
+      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+      'Content-Type': 'application/json'
+    }
+
+        axios.post(url, params, headers)
+            // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
+            //   params
+            // })
             .then((result) => {
               console.log(result)
-              this.list = JSON.parse(result.data.menu)
+              //this.list = JSON.parse(result.data.menu)
+              this.pList = result.data.data.mng_regi_history_list
             })
             .catch((ex) => {
               console.log('조회 실패',ex)

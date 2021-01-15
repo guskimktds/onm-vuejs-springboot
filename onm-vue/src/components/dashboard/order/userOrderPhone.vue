@@ -1,15 +1,7 @@
 <template>
-  <!-- <div>
-    <p class="title">{{ title }}</p>
-    <userOrderPhone-query v-on:search="searchToUserOrderPhone"></userOrderPhone-query>
-    <userOrderPhone-list v-bind:pList=pList></userOrderPhone-list>
-  </div> -->
   <div>
     <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <user-order-phone-query v-on:search="searchToUserOrderPhone"></user-order-phone-query>
         <user-order-phone-list v-bind:pList=pList></user-order-phone-list>
       </v-card>
@@ -32,12 +24,7 @@ export default {
   data () {
     return {
       title: '사용자 청약 전화번호',
-      pList: [
-        // {tranId:"GPNA_20201029133825838_LVSPWS0001", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0002", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0003", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0004", contractType:"M", phoneNumber:"01021203500", createDate: "2020-10-29 13:38:04.427517"},
-      ]
+      pList: []
     }
   },
   created: function() {
