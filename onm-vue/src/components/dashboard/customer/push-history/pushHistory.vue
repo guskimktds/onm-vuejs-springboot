@@ -1,18 +1,12 @@
 <template>
-  
-<div>
-    <v-container>
+  <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <pushHistory-query
           v-on:search="searchToPushHistory"
         ></pushHistory-query>
-        <pushHistory-list v-bind:List="list"></pushHistory-list>
+        <pushHistory-list v-bind:pList="pList"></pushHistory-list>
       </v-card>
     </v-container>
-  </div>
 </template>
 
 <script>
@@ -29,26 +23,37 @@ export default {
   data () {
     return {
       title: '푸시 발송 이력',
-      list: [],
-      // pList: [
-      //   {pushHistoryId:"0000122668", usrId:"0012484661", alarmId:"4441275", alarmInfo: "카메라1에서 카메라 훼손이 감지되었습니다.", alarmTagName: "카메라 회손 감지", alarmStartTime:"2020-11-03 02:00:04.173138", alarmEndTime: "2020-11-03 02:00:04.173138", camId:"1000001226681001", storeName:"홍길동"},
-      //   {pushHistoryId:"000012268", usrId:"0012484661", alarmId:"4441275", alarmInfo: "카메라1에서 카메라 훼손이 감지되었습니다.", alarmTagName: "카메라 회손 감지", alarmStartTime:"2020-11-03 02:00:04.173138", alarmEndTime: "2020-11-03 02:00:04.173138", camId: "1000001226681001", storeName :"홍길동"},
-      //   {pushHistoryId:"00001268", usrId:"0012484661", alarmId:"4441275", alarmInfo: "카메라1에서 카메라 훼손이 감지되었습니다.", alarmTagName: "카메라 회손 감지", alarmStartTime:"2020-11-03 02:00:04.173138", alarmEndTime: "2020-11-03 02:00:04.173138", camId: "1000001226681001", storeName:"홍길동"},
-      //   {pushHistoryId:"0002668", usrId:"0012484661", alarmId:"4441275", alarmInfo: "카메라1에서 카메라 훼손이 감지되었습니다.", alarmTagName: "카메라 회손 감지", alarmStartTime:"2020-11-03 02:00:04.173138", alarmEndTime: "2020-11-03 02:00:04.173138", camId:"1000001226681001", storeName:"홍길동"},
-      // ]
+      pList: []
     }
   },
   created: function () {
+    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_14006/get_push_sending_history'
+    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
+    var params = {
+      page_no: 1,
+      view_cnt: 5
+    }
+    var headers = {
+      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+      'Content-Type': 'application/json'
+    }
+
     axios
-      .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-push-history`)
-      .then((result) => {
-        console.log(result);
-        // this.list = JSON.parse(result.data.menu)
-        this.list = result.data;
-      })
-      .catch((ex) => {
-        console.log("조회 실패", ex);
-      });
+        .post(url, params, headers)
+        .then((response) => {
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.pList = response.data.data.list;
+
+          }else{
+            this.pList = [];
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패',ex)
+        })
   },
   methods: {
     searchToPushHistory: function(params){
@@ -56,15 +61,15 @@ export default {
     console.log(process.env);
       axios
         .post(
-          `${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-push-history/query`,
+          `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_14006/get_push_sending_history`,
           {
             params,
           }
         )
-        .then((result) => {
-          console.log(result);
+        .then((response) => {
+          console.log(response);
           // this.list = JSON.parse(result.data.menu)
-          this.list = result.data;
+          this.pList = response.data.data.list;
         })
         .catch((ex) => {
           console.log("조회 실패", ex);

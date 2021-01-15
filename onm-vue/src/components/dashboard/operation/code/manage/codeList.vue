@@ -1,28 +1,30 @@
 <template>
-   <div id="app">
-    <v-app id="inspire">
-      <div>
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+  >
+    <base-material-card
+      color="orange"
+      dark
+      icon="mdi-keyboard"
+      title="코드 정보 LIST"
+      class="px-5 py-3"
+    >
         <v-data-table
           :headers="headers"
-          :items="codeList"
+          :items="pList"
           class="elevation-1"
         >
           <template v-slot:top>
             <v-toolbar
               flat
             >
-              <!-- <v-toolbar-title>My CRUD</v-toolbar-title> -->
-              <!-- <v-divider
-                class="mx-4"
-                inset
-                vertical
-              ></v-divider> -->
-              <!-- <v-spacer></v-spacer> -->
               <v-dialog
                 v-model="dialog"
                 max-width="500px"
               >
-                <template v-slot:activator="{ on, attrs }">
+                <!-- <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     color="primary"
                     dark
@@ -30,9 +32,9 @@
                     v-bind="attrs"
                     v-on="on"
                   >
-                    등록
+                    등록2
                   </v-btn>
-                </template>
+                </template> -->
                 <v-card>
                   <v-card-title>
                     <span class="headline">{{ formTitle }}</span>
@@ -148,6 +150,7 @@
               </v-dialog>
             </v-toolbar>
           </template>
+
           <template v-slot:item.actions="{ item }">
             <v-icon
               small
@@ -165,10 +168,8 @@
           </template>
         </v-data-table>
 
-      </div>
-      
-    </v-app>
-  </div>
+    </base-material-card>
+  </v-container>
 </template>
 
 <script>
@@ -178,7 +179,7 @@ import axios from "axios"
 import EventBus from '../../../../../EventBus';
 
 export default {
-    props: ['codeList'],
+    props: ['pList'],
     data() {
       return {
         dialog: false,
@@ -217,17 +218,17 @@ export default {
           editor: '82095586',
           editDate: '2021-01-06 10:20:30'
         },
-        // defaultItem: {
-        //   codeClass: '',
-        //   code: '',
-        //   name: '',
-        //   type: '',
-        //   useYn: '',
-        //   orderby: '',
-        //   desc: '',
-        //   editor: '',
-        //   editDate: '2021-01-06 10:20:30'
-        // },
+        defaultItem: {
+          codeClass: '',
+          code: '',
+          name: '',
+          type: '',
+          useYn: '',
+          orderby: '',
+          desc: '',
+          editor: '82095586',
+          editDate: '2021-01-06 10:20:30'
+        },
       }
     },
     computed: {
@@ -238,7 +239,7 @@ export default {
     methods: {
       editItem (item) {
         console.log('editItem method call : ',item)
-        this.editedIndex = this.codeList.indexOf(item)
+        this.editedIndex = this.pList.indexOf(item)
         console.log('editItem method call : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
 
@@ -249,13 +250,13 @@ export default {
 
       deleteItem (item) {
         console.log('deleteItem method call : ',item)
-        this.editedIndex = this.codeList.indexOf(item)
+        this.editedIndex = this.pList.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
       },
 
       deleteItemConfirm () {
-        this.codeList.splice(this.editedIndex, 1)
+        this.pList.splice(this.editedIndex, 1)
         this.closeDelete()
       },
 

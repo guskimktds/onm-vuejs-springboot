@@ -1,26 +1,28 @@
 <template>
-    <div id="app">
-        <v-app id="inspire">
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+        <base-material-card
+            color="orange"
+            dark
+            icon="mdi-keyboard"
+            title="실시간 접속 세션 정보 LIST"
+            class="px-5 py-3"
+            >
             <v-data-table
                 :headers="headers"
-                :items="List"
-                :items-per-page="5"
-                 item-key="loginKey"
+                :items="pList"
                 class="elevation-1"
-                :style="`background-color: #d6f5e5`"
-            >
-        <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
-          <td :colspan="headers.length">
-            <List></List>
-          </td>
-        </template>       -->
+            >          
             </v-data-table>
-        </v-app>
-    </div>
+        </base-material-card>
+    </v-container>
 </template>
 <script>
 export default {
-    props: ['List'],
+    props: ['pList'],
     data() {
       return {
         headers: [
@@ -28,14 +30,14 @@ export default {
             text: '로그인 키',
             align: 'start',
             sortable: false,
-            value: 'loginKey',
+            value: 'login_key',
           },
-          { text: '사용자 ID', value: 'usrId'},
-          { text: '전화번호', value: 'phoneNumber' },
-          { text: '전화번호 타입', value: 'numberType' },
+          { text: '사용자 ID', value: 'user_id'},
+          { text: '전화번호', value: 'tel_no' },
+          // { text: '전화번호 타입', value: 'numberType' },
           { text: 'ip', value: 'ip' },
-          { text: '만료일', value: 'expireDate' },
-          { text: '장치타입', value: 'deviceType' }
+          { text: '만료일', value: 'expired_date' },
+          { text: '장치타입', value: 'device_type' }
         ]
       }
     }

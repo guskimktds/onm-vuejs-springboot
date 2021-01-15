@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <v-container>
+
+    <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
+        <!-- <v-toolbar primary dense>
           <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
-        <usrInfo-query v-on:search="searchToUsrInfo"></usrInfo-query>
-        <usrInfo-list v-bind:List=list></usrInfo-list>
+        </v-toolbar> -->
+        <usrInfo-query v-on:search="searchToUsrInfo" title></usrInfo-query>
+        <usrInfo-list v-bind:List=list title></usrInfo-list>
       </v-card> 
     </v-container>
-  </div>
+
 </template>
 
 <script>
@@ -36,7 +36,7 @@ export default {
   },
   created: function(){
     axios
-      .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-phone`)
+      .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/get_user_tel_list`)
       .then((result) => {
         console.log(result)
         // this.list = JSON.parse(result.data.menu)

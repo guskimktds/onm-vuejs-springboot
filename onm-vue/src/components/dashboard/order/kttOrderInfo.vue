@@ -1,15 +1,7 @@
 <template>
-  <!-- <div>
-    <p class="title">{{ title }}</p>
-    <ktt-order-info-query v-on:search="searchToKTTOrderInfo"></ktt-order-info-query>
-    <ktt-order-info-list v-bind:pList=pList></ktt-order-info-list>
-  </div> -->
   <div>
     <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <ktt-order-info-query v-on:search="searchToKTTOrderInfo"></ktt-order-info-query>
         <ktt-order-info-list v-bind:pList=pList></ktt-order-info-list>
       </v-card>

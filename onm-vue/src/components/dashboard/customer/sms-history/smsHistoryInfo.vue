@@ -1,17 +1,12 @@
 <template>
-  <div>
-    <v-container>
+  <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <smsHistoryInfo-query
           v-on:search="searchToSmsHistoryInfo"
         ></smsHistoryInfo-query>
-        <smsHistoryInfo-list v-bind:List="list"></smsHistoryInfo-list>
+        <smsHistoryInfo-list v-bind:pList="pList"></smsHistoryInfo-list>
       </v-card>
     </v-container>
-  </div>
 </template>
 
 <script>
@@ -28,13 +23,7 @@ export default {
   data() {
     return {
       title: "SMS 발송 이력 조회",
-      list: [],
-      // pList: [
-      //   {seqID:"5813329", phoneNum:"0012484661", otpNum:341263, message:"", sendCode:"OK", sendTime:"2020-11-03 02:00:04.173138", modifiedDate: "2020-11-03 02:00:04.173138", sendServerInfo: "CVSAAS_DDNS02"},
-      //   {seqID:"2813329", phoneNum:"0012484661", otpNum:341263, message:"", sendCode:"OK", sendTime:"2020-11-03 02:00:04.173138", modifiedDate: "2020-11-03 02:00:04.173138", sendServerInfo: "CVSAAS_DDNS02"},
-      //   {seqID:"1013329", phoneNum:"0012484661", otpNum:341263, message:"", sendCode:"OK", sendTime:"2020-11-03 02:00:04.173138", modifiedDate: "2020-11-03 02:00:04.173138", sendServerInfo: "CVSAAS_DDNS02"},
-      //   {seqID:"1812329", phoneNum:"0012484661", otpNum:341263, message:"", sendCode:"OK", sendTime:"2020-11-03 02:00:04.173138", modifiedDate: "2020-11-03 02:00:04.173138", sendServerInfo: "CVSAAS_DDNS02"},
-      // ]
+      pList: []
     };
   },
   created: function () {
@@ -49,7 +38,7 @@ export default {
       .then((result) => {
         console.log(result);
         // this.list = JSON.parse(result.data.menu)
-        this.list = result.data.data.sms_history_list;
+        this.pList = result.data.data.sms_history_list;
       })
       .catch((ex) => {
         console.log("조회 실패", ex);
@@ -64,7 +53,7 @@ export default {
       console.log(process.env);
       axios
         .post(
-          `${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-sms-history/query`,
+          `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_14004/get_sms_sending_history`,
           {
             params,
           }
@@ -72,7 +61,7 @@ export default {
         .then((result) => {
           console.log(result);
           // this.list = JSON.parse(result.data.menu)
-          this.list = result.data;
+          this.pList = result.data.data.sms_history_list;
         })
         .catch((ex) => {
           console.log("조회 실패", ex);
