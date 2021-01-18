@@ -1,18 +1,31 @@
 <template>
-    <!--Line Chart-->
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+        <base-material-card
+          color="orange"
+          dark
+          icon="mdi-keyboard"
+          title="개통/해지 추이(대시보드)"
+          class="px-5 py-3"
+        >
 
-    <v-row>
-      <v-col cols='4'>
-        <line-chart :chart-data="fillData()" class="chart"></line-chart>
-      </v-col>
-      <v-col cols='4'>
-        <line-chart :chart-data="fillData()" class="chart"></line-chart>
-      </v-col>
-      <v-col cols='4'>
-        <line-chart :chart-data="fillData()" class="chart"></line-chart>
-      </v-col>
-    </v-row>
+          <v-row>
+            <v-col cols='4'>
+              <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
+            </v-col>
+            <v-col cols='4'>
+              <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
+            </v-col>
+            <v-col cols='4'>
+              <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
+            </v-col>
+          </v-row>
 
+        </base-material-card>
+    </v-container>
 </template>
 
 <script>
@@ -24,7 +37,10 @@
     },
     data () {
       return {
-        // datacollection: null
+        // Chart Option
+         chartOptions : {
+            maintainAspectRatio:false
+        },
       }
     },
     mounted () {

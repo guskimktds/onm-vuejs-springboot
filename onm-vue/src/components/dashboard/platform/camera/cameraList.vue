@@ -1,17 +1,27 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+    >
+
+    <base-material-card
+        color="orange"
+        dark
+        icon="mdi-keyboard"
+        title="카메라상태 현황 LIST"
+        class="px-5 py-3"
+      >
+
       <v-data-table
         :headers="headers"
         :items="pList"
-        :items-per-page="5"
-        item-key="id"
         class="elevation-1"
-        :style="`background-color: #d6f5e5`"
       >
       </v-data-table>
-    </v-app>
-  </div>
+
+    </base-material-card>
+  </v-container>
 </template>
 
 
@@ -22,15 +32,26 @@ export default {
       return {
         headers: [
           { text: '국사코드', value: 'local_gw_id' },
-          { text: '전체', value: 'cam_cnt' },
-          { text: '정상', value: 'status_code' },
-          { text: '개통대기', value: 'waiting_cam_cnt' },
-          { text: '개통진행', value: 'proc_cam_cnt' },
-          { text: '개통실패', value: 'open_fail_cam_cnt' },
-          { text: '네트워크장애', value: 'networkfail_cam_cnt' },
+          { text: '전체', value: 'total_cnt' },
+          { text: '정상', value: 'normal_cnt' },
+          { text: '개통대기', value: 'waiting_cnt' },
+          { text: '개통진행', value: 'proc_cnt' },
+          { text: '개통실패', value: 'fail_cnt' },
+          { text: '네트워크장애', value: 'disconn_cnt' },
         ]
       }
     }
+
+    /*
+    disconn_cnt: "7"
+    fail_cnt: "0"
+    local_gw_id: "1"
+    normal_cnt: "5"
+    pause_cnt: "0"
+    proc_cnt: "0"
+    total_cnt: "12"
+    waiting_cnt: "0"
+    */
 }
 </script>
 

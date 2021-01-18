@@ -1,6 +1,4 @@
 <template>
-  <!-- <div id="app">
-    <v-app id="inspire"> -->
   <v-container
       id="regular-tables"
       fluid
@@ -11,24 +9,19 @@
         color="orange"
         dark
         icon="mdi-keyboard"
-        title="사용자 청약 오더 정보 LIST"
+        title="프로세스 현황 LIST"
         class="px-5 py-3"
       >
 
       <v-data-table
         :headers="headers"
         :items="pList"
-        :items-per-page="5"
-        item-key="id"
         class="elevation-1"
-        :style="`background-color: #d6f5e5`"
       >
       </v-data-table>
 
     </base-material-card>
   </v-container>
-    <!-- </v-app>
-  </div> -->
 </template>
 
 
@@ -45,7 +38,9 @@ export default {
           { text: '보고일시(Last)', value: 'last_upd_date' },
         ]
       }
-    }
+    },
+
+    
 }
 </script>
 

@@ -1,19 +1,28 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+    >
+
+    <base-material-card
+        color="orange"
+        dark
+        icon="mdi-keyboard"
+        title="스트리머 설정현황 LIST"
+        class="px-5 py-3"
+      >
+
       <v-data-table
         :headers="headers"
         :items="pList"
-        :items-per-page="5"
-        item-key="id"
         class="elevation-1"
-        :style="`background-color: #d6f5e5`"
       >
       </v-data-table>
-    </v-app>
-  </div>
-</template>
 
+    </base-material-card>
+  </v-container>
+</template>
 
 <script>
 export default {
