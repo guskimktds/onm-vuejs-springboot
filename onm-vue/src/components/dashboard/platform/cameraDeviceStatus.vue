@@ -1,21 +1,13 @@
-<style src="../../../css/body.css"></style>
 
 <template>
-  <div>
-    <v-container>
+    <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
-    
         <process-query v-on:search="searchToProcess"></process-query>
         <process-list v-bind:pList=pList></process-list>
-
       </v-card>
     </v-container>
-  </div>
-
 </template>
+
 
 <script>
 import List from './camera/cameraList'

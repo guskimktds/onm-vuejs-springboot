@@ -1,48 +1,29 @@
 <template>
-    <v-form>
-        <v-container>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+        <base-material-card
+            icon="mdi-magnify"
+            title="스트리머 설정현황 조회"
+            class="px-5 py-3"
+        >
+
             <v-row>
                 <v-col cols=auto>
                     <v-select item-text="text" item-value="value" :items="localGwOptions" v-model="param.localGwId">></v-select>
                 </v-col>
-                <!--
-                <v-col cols="auto">
-                    <v-btn 
-                        id="show-modal" @click="showModal = true"
-                        >
-                        추가
-                    </v-btn>
-                </v-col>
-                
-                <v-col cols="12" sm="6" md="3">
-                    <v-btn elevation="2" medium v-on:click="searchMethod">
-                        수정
-                    </v-btn>
-                </v-col>
-                <v-col cols="12" sm="6" md="3">
-                    <v-btn elevation="2" medium v-on:click="searchMethod">
-                        삭제
-                    </v-btn>
-                </v-col>
-                -->
-
             </v-row>
 
-            <app-my-modal
-                v-if="showModal" @close="showModal = false">            
-                <h3 slot="header">{{ modalTitle }}</h3>
-            </app-my-modal>
-        </v-container>
-    </v-form>
+        </base-material-card>
+    </v-container>
 </template>
+
 <script>
 
-import modalTemplate from './streamerModal'
-
 export default {
-    components:{
-        appMyModal: modalTemplate
-    },
+    
     data() {
         return{
             param: {

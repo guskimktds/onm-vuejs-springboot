@@ -1,16 +1,10 @@
 <template>
-  <div>
-    <v-container>
+    <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <streamer-query v-on:search="searchToProcess"></streamer-query>
         <streamer-list v-bind:pList=pList></streamer-list>
       </v-card>
     </v-container>
-  </div>
-
 </template>
 
 <script>

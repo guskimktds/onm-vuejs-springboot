@@ -1,17 +1,28 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+    >
+
+    <base-material-card
+        color="orange"
+        dark
+        icon="mdi-keyboard"
+        title="개통/해지 추이 LIST"
+        class="px-5 py-3"
+      >
+
       <v-data-table
         :headers="headers"
         :items="pList"
-        item-key="id"
         class="elevation-1"
       >
       </v-data-table>
-    </v-app>
-  </div>
-</template>
 
+    </base-material-card>
+  </v-container>
+</template>
 
 <script>
 export default {

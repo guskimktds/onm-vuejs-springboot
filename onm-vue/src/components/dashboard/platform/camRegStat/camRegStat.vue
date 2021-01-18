@@ -1,16 +1,10 @@
 <template>
-  <div>
-    <v-container>
+    <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <cam-reg-chart></cam-reg-chart>
         <cam-reg-list :pList="pList"></cam-reg-list>
       </v-card>
     </v-container>
-  </div>
-
 </template>
 
 <script>

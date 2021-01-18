@@ -1,15 +1,28 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
-      <v-data-table
-        :headers="headers"
-        :items="pList"
-        item-key="id"
-        class="elevation-1"
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+    >
+
+    <base-material-card
+        color="orange"
+        dark
+        icon="mdi-keyboard"
+        title="VA설정 현황 LIST"
+        class="px-5 py-3"
       >
+
+      <v-data-table
+          :headers="headers"
+          :items="pList"
+          item-key="id"
+          class="elevation-1"
+        >
       </v-data-table>
-    </v-app>
-  </div>
+
+    </base-material-card>
+  </v-container>
 </template>
 
 
