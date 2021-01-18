@@ -1,5 +1,5 @@
 <template>
-    <div>
+
         <!-- <div>
             <input type="text" v-model="param.id" placeholder="사번">
             <input type="text" v-model="param.name" placeholder="이름">
@@ -11,30 +11,45 @@
             v-if="showModal" @close="showModal = false">            
             <h3 slot="header">{{ modalTitle }}</h3>
         </app-my-modal> -->
-        <v-form>
-            <v-container>
+    <v-container
+    id="regular-tables"
+    fluid
+    tag="section"
+    >
+
+        <base-material-card
+        icon="mdi-magnify"
+        title="단말 오더 정보 조회"
+        class="px-5 py-3"
+        >
                 <v-row >
-                    <v-col cols="12" sm="6" md="3">
-                        <v-text-field dense label="사번" v-model="param.id" placeholder="Placeholder" solo>                        
+                    <v-col cols="12" sm="6" md="2">
+                        <v-text-field dense label="사번" 
+                        v-model="param.id" 
+                        placeholder="Placeholder" >                        
                         </v-text-field>
                     </v-col>         
-                    <v-col cols="12" sm="6" md="3">
-                        <v-text-field dense label="이름" v-model="param.name" placeholder="Placeholder" solo>                        
+                    <v-col cols="12" sm="6" md="2">
+                        <v-text-field dense label="이름" 
+                        v-model="param.name" 
+                        placeholder="Placeholder" >                        
                         </v-text-field>
                     </v-col> 
-                    <v-col cols="12" sm="6" md="3">
-                        <v-text-field dense label="권한" v-model="param.auth" placeholder="Placeholder" solo>                        
+                    <v-col cols="12" sm="6" md="2">
+                        <v-text-field dense label="권한" 
+                        v-model="param.auth" 
+                        placeholder="Placeholder" >                        
                         </v-text-field>
                     </v-col>
                     <v-col cols="auto" >
-                        <v-btn 
+                        <v-btn color="primary"
                             v-on:click="searchMethod"
                             >
                             검색
                         </v-btn>
                     </v-col>  
                     <v-col cols="auto">
-                        <v-btn 
+                        <v-btn color="red"
                          id="show-modal" @click="showModal = true"
                          >
                             등록
@@ -45,9 +60,8 @@
                     v-if="showModal" @close="showModal = false">            
                     <h3 slot="header">{{ modalTitle }}</h3>
                 </app-my-modal>
-            </v-container>
-        </v-form>
-    </div>
+        </base-material-card>       
+    </v-container>
 </template>
 <script>
 

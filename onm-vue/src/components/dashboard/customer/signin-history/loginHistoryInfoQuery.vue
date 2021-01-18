@@ -1,36 +1,15 @@
-<template>
-  <!-- <div>
+<template>  
+  <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
 
-    <table class="search">
-      <tr>
-        <th>로그인 일시 : </th>
-        <td><input type="date" v-model="param.expireDateStart" placeholder="로그인 일시"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.expireDateEnd" placeholder="로그인 일시"></td>
-        <th>로그인 ID : </th>
-        <td><input type="text" v-model="param.loginID" placeholder="로그인 ID"></td>
-      </tr> 
-      <tr> 
-        <th>로그아웃 일시 : </th>
-        <td><input type="date" v-model="param.logoutDateStart" placeholder="로그아웃 일시"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.logoutDateEnd" placeholder="로그아웃 일시"></td>
-        <th>OS타입 : </th>
-        <select v-model="param.osType">
-            <option disabled value="">선택해주세요</option>
-            <option>PC</option>
-            <option>iOS</option>
-            <option>Android</option>
-        </select>
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table>
-
-
-    </div> -->
-  <div>
-    <v-form>
-      <v-container>
+        <base-material-card
+        icon="mdi-magnify"
+        title="로그인 이력 조회"
+        class="px-5 py-3"
+        >
         <v-row>
           <v-col cols="12" sm="6" md="3">
             <v-menu
@@ -74,7 +53,7 @@
             </v-menu>
           </v-col>
 
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
               label="로그인 ID"
@@ -127,7 +106,7 @@
             </v-menu>
           </v-col>
 
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="2">
             <v-select
               v-model="param.osType"
               :items="items"
@@ -140,9 +119,8 @@
             <v-btn v-on:click="searchMethod">검색</v-btn>
           </v-col>
         </v-row>
-      </v-container>
-    </v-form>
-  </div>
+        </base-material-card>       
+    </v-container>
 </template>
 <script>
 export default {

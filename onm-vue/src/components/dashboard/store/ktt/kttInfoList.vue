@@ -7,7 +7,6 @@
         :items-per-page="5"
         item-key="usrId"
         class="elevation-1"
-        :style="`background-color: #d6f5e5`"
       >
         <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
           <td :colspan="headers.length">
@@ -29,13 +28,13 @@ export default {
           text: "사용자 ID",
           align: "start",
           sortable: false,
-          value: "usrId",
+          value: "user_id",
         },
-        { text: "서비스번호", value: "serviceNum" },
-        { text: "시스템ID", value: "systemId" },
-        { text: "단말설치여부", value: "installStatus" },
-        { text: "상태 코드", value: "statusCode" },
-        { text: "등록일시", value: "addDate" },
+        { text: "서비스번호", value: "service_no" },
+        { text: "시스템ID", value: "system_id" },
+        { text: "단말설치여부", value: "device_yn" },
+        { text: "상태 코드", value: "status_code" },
+        { text: "등록일시", value: "reg_date" },
       ],
     };
   },

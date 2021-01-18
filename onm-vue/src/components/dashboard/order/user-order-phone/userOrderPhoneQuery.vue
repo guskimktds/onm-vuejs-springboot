@@ -1,35 +1,74 @@
 <template>
-    <div>
+     <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
 
-    <!-- search -->
-    <table class="search">
-      <tr>
-        <th>생성일시 : </th>
-        <td><input type="date" v-model="param.createDateStart" placeholder="생성일시"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.createDateEnd" placeholder="생성일시"></td>
-        <th>전화번호 : </th>
-        <td><input type="text" v-model="param.phoneNumber" placeholder="전화번호"></td>
-      </tr> 
-      <tr> 
-        <th>거래고유번호 : </th>
-        <td><input type="text" v-model="param.tranId" placeholder="거래고유번호"></td>   
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table>
-
-
-    </div>
+        <base-material-card
+        icon="mdi-magnify"
+        title="사용자 청약 전화번호 조회"
+        class="px-5 py-3"
+        >
+            <v-row>            
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="등록일시" 
+                        v-model="param.guid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="등록일시 끝" 
+                        v-model="param.guid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="전화번호" 
+                        v-model="param.said"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>  
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field 
+                        dense 
+                        label="거래고유번호" 
+                        v-model="param.guid"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>                
+                <v-col cols="12" sm="6" md="2">
+                    <v-btn 
+                        elevation="2" 
+                        medium
+                        v-on:click="searchMethod"
+                    >
+                        검색
+                    </v-btn>
+                </v-col>
+            </v-row>            
+         </base-material-card>       
+    </v-container>
 </template>
 <script>
 export default {
     data() {
         return{
             param: {
-                createDateStart: '',
-                createDateEnd: '',
-                phoneNumber: '',
-                tranId: '',
+                start_date: '',
+                end_date: '',
+                telno: '',
+                guid: ''
             }
         }
     },

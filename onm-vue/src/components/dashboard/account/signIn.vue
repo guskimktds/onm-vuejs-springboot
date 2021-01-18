@@ -1,31 +1,70 @@
 <template>
-  <div class="container">
+  <!-- <div class="container">
         <div class="row justify-content-center">
             <div class="register-form">
                 <form>
-                    <!-- <h3>{{ title }}</h3> -->
+                    
                     <div class="form-group">
-                            <!-- <label>ID</label> -->
+                            
                             <input type="text" class="form-control form-control-lg" 
                             v-model="id" placeholder="사번을 입력하세요">
                     </div>
                     <div class="form-group">
-                            <!-- <label>Password</label> -->
+                            
                             <input type="password" class="form-control form-control-lg"
                             v-model="password" placeholder="비밀번호를 입력하세요"> 
                     </div>
                     <button type="submit" class="btn btn-dark btn-lg btn-block" 
                     v-on:click="onSubmit(id, password)">Sign In</button>
                 </form>     
-      <!-- <app-capcha></app-capcha> -->
-            <!-- <p><i>{{msg}}</i></p> -->
             </div>            
         </div>
         <footer class="footer">
             <span class="copyright"></span>
             <ul class="footer-link list-inline float-right"></ul>
         </footer>
-    </div>
+    </div> -->
+    <v-container
+      id="user-profile"
+      fluid
+      tag="section"
+    >
+      <v-card>
+        <v-form justify="center">
+          <v-container class="py-0">
+            <v-row>
+              <v-col>
+                <v-text-field
+                  v-model="id" 
+                  placeholder="사번을 입력하세요"
+                >
+                </v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  v-model="password" 
+                  placeholder="비밀번호를 입력하세요"
+                >                
+                </v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col>
+                <v-btn                 
+                  @click="onSubmit(id, password)"                  
+                >
+                  Login
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        
+      </v-card>
+    </v-container>
 </template>
 
 <script>

@@ -1,7 +1,16 @@
 <template>
-   <div id="app">
-    <v-app id="inspire">
-      <div>
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+  >
+    <base-material-card
+      color="orange"
+      dark
+      icon="mdi-keyboard"
+      title="로컬 국사 정보 LIST"
+      class="px-5 py-3"
+    >
         <v-data-table
           :headers="headers"
           :items="localCodeList"
@@ -22,7 +31,7 @@
                 v-model="dialog"
                 max-width="500px"
               >
-                <template v-slot:activator="{ on, attrs }">
+                <!-- <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     color="primary"
                     dark
@@ -32,7 +41,7 @@
                   >
                     등록
                   </v-btn>
-                </template>
+                </template> -->
                 <v-card>
                   <v-card-title>
                     <span class="headline">{{ formTitle }}</span>
@@ -187,6 +196,7 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog>
+
             </v-toolbar>
           </template>
           <template v-slot:item.actions="{ item }">
@@ -205,11 +215,8 @@
             </v-icon>
           </template>
         </v-data-table>
-
-      </div>
-      
-    </v-app>
-  </div>
+    </base-material-card>
+  </v-container>
 </template>
 
 <script>
@@ -268,17 +275,21 @@ export default {
           editor: '82095586',
           editDate: '2021-01-06 10:20:30'
         },
-        // defaultItem: {
-        //   codeClass: '',
-        //   code: '',
-        //   name: '',
-        //   type: '',
-        //   useYn: '',
-        //   orderby: '',
-        //   desc: '',
-        //   editor: '',
-        //   editDate: '2021-01-06 10:20:30'
-        // },
+        defaultItem: {
+          localgwid: '',
+          name: '',
+          serverurl: '',
+          socketurl: '',
+          pattern: '',
+          ecurl: '',
+          ldms: '',
+          stmcnt: 0,
+          vacnt: 0,
+          intcode: '',
+          mqurl: '',
+          editor: '82095586',
+          editDate: '2021-01-06 10:20:30'
+        },
       }
     },
     computed: {

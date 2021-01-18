@@ -8,6 +8,11 @@
         </li>
     </ul>
   </div>
+  <!-- <v-list-item>
+    <router-link v-bind:to="menu.path">
+    {{ menu.name }}            
+    </router-link>
+  </v-list-item> -->
 </template>
 
 <script>

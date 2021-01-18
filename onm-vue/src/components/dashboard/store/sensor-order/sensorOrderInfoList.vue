@@ -7,7 +7,6 @@
         :items-per-page="5"
         item-key="sensorId"
         class="elevation-1"
-        :style="`background-color: #d6f5e5`"
       >
         <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
           <td :colspan="headers.length">
@@ -29,12 +28,13 @@ export default {
           text: "센서 ID",
           align: "start",
           sortable: false,
-          value: "sensorId",
+          value: "sensor_prod_id",
         },
-        { text: "센서제품명", value: "sensorName" },
-        { text: "센서태그코드", value: "sensorTag" },
-        { text: "상태 코드", value: "statusCode" },
-        { text: "센서 개수", value: "sensorCnt" },
+        { text: "사용자 id", value: "user_id" },
+        { text: "센서제품명", value: "sensor_prod_name" },
+        { text: "센서태그코드", value: "sensor_tag_cd" },
+        { text: "상태 코드", value: "status_code" },
+        { text: "센서 개수", value: "sensor_count" },
       ],
     };
   },

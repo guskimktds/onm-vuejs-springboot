@@ -67,13 +67,17 @@ export default {
       // ],
     };
   },
-  created: function () {
-    axios
-      .get(`${process.env.VUE_APP_BACKEND_SERVER_URL}/store-device-sensor`)
+   created: function () {
+   axios
+      .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13010/get_sensor_list`,{
+        "page_no": 1,
+        "view_cnt": 5
+
+      })
       .then((result) => {
         console.log(result);
         // this.list = JSON.parse(result.data.menu)
-        this.list = result.data;
+        this.list = result.data.data.seonsor_list;
       })
       .catch((ex) => {
         console.log("조회 실패", ex);

@@ -1,6 +1,6 @@
 <template> 
     
-  <div id='app'>
+  <!-- <div id='app'>
     <div v-show="isShowMenu" id='navContainer'>
       <app-sidebar></app-sidebar>
     </div>  
@@ -11,20 +11,27 @@
           <app-header></app-header> 
         </div> 
         <app-contents></app-contents> 
-        <!-- <router-view></router-view>  -->
+        <router-view></router-view> 
       </div>
-      <!-- <div id='contentFooter'>    
+      <div id='contentFooter'>    
         <div v-show="isShowMenu">
           <app-footer></app-footer>
         </div>
-      </div> -->
+      </div>
     </div>
-  </div>
+  </div> -->
+  <v-app>
+    <!-- <app-topMenu></app-topMenu> -->
+    <app-header></app-header> 
+    <app-sidebar></app-sidebar>
+    <app-contents></app-contents> 
+
+  </v-app>
 </template>
 
 <script>
 
-import TopMenu from './components/layout/topMenu.vue'
+// import TopMenu from './components/layout/topMenu.vue'
 import Sidebar from './components/layout/sidebar.vue'
 import Header from './components/layout/header.vue'
 import Contents from './components/layout/contents.vue'
@@ -36,7 +43,7 @@ export default {
   name: 'App',
   components: {
     'app-sidebar': Sidebar,
-    'app-topMenu': TopMenu,
+    // 'app-topMenu': TopMenu,
     'app-header': Header,
     'app-contents':Contents
     // 'app-footer': Footer
@@ -44,7 +51,8 @@ export default {
   data(){
     return {
       //title : 'Root components',
-      isShowMenu : true 
+      isShowMenu : true, 
+      expandOnHover: false
     }
   },
   created() {
@@ -66,7 +74,7 @@ export default {
 </script>
 
 <style scoped>
-#app {
+/* #app {
   display: flex;
   min-height: 100%;
   min-width: 100%;
@@ -76,7 +84,6 @@ export default {
   width: 250px;
   height: 100vh;
   background: #404040;
-  /* position:absolute; */
 }
 
 #mainContainer {
@@ -86,12 +93,12 @@ export default {
 }
 
 #contentFooter {
-  /* position:absolute; */
+  position:absolute;
   bottom:0;
   width:100%;
-  /* height:50px;    */
-    /* background:#ccc; */
-}
+  height:50px;   
+    background:#ccc;
+} */
 
 /* .flex-grid {
   display: flex;
