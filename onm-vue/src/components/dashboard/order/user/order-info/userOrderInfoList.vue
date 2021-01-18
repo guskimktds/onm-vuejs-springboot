@@ -32,6 +32,7 @@
         :headers="headers"
         :items="pList"
         class="elevation-1"
+        @click:row="handleClick"
       >          
       </v-data-table>
   </base-material-card>
@@ -67,6 +68,12 @@ export default {
           { text: '사용여부', value: 'use_yn' },
           { text: '생성일시', value: 'cdate' }
         ]
+      }
+    },
+    methods: {
+      handleClick: function(value){
+        console.log(value)
+        this.$emit("child", value.guid);
       }
     }
 
