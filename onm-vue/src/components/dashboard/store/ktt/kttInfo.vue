@@ -1,15 +1,10 @@
 <template>
-  <div>
-    <v-container>
+    <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <kttInfo-query v-on:search="searchKTTInfo"></kttInfo-query>
         <kttInfo-list v-bind:List="list"></kttInfo-list>
       </v-card>
     </v-container>
-  </div>
 </template>
 
 <script>

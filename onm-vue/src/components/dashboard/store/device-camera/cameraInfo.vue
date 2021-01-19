@@ -1,15 +1,10 @@
 <template>
-  <div>
     <v-container>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <cameraInfo-query v-on:search="searchToCameraInfo"></cameraInfo-query>
         <cameraInfo-list v-bind:List="list"></cameraInfo-list>
       </v-card>
     </v-container>
-  </div>
 </template>
 
 <script>

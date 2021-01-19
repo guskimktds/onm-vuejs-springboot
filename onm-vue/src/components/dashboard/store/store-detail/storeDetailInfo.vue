@@ -1,17 +1,12 @@
 <template>
-  <div>
-    <v-container>
+    <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <storeDetailInfo-query
           v-on:search="searchToStoreDetailInfo"
         ></storeDetailInfo-query>
         <storeDetailInfo-list v-bind:List="list"></storeDetailInfo-list>
       </v-card>
     </v-container>
-  </div>
 </template>
 
 <script>
@@ -27,7 +22,7 @@ export default {
   },
   data() {
     return {
-      title: "매장 상세 정보 조회",
+      title: "매장정보 상세 조회",
       list: [],
       // pList: [
       //   {usrId:"001248660", usrName:"정난순", productCode: "B162", statusCode:'S', orderNumber:'20303DO9519190', iotTargetSeq:"9200002600", iotMemberSeq:"2595", modifiedDate:"2020-11-12 11:46:06.365159", localGWId: "B", tbd_01: '', tbd_02: "4201", approveHopeDate: "2020110314"},

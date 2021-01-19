@@ -1,16 +1,10 @@
 <template>
- 
-<div>
     <v-container>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <iotgwInfo-query v-on:search="searchToIotGWInfo"></iotgwInfo-query>
         <iotgwInfo-list v-bind:List="list"></iotgwInfo-list>
       </v-card>
     </v-container>
-  </div>
 </template>
 
 <script>

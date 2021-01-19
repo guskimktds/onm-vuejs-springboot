@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{ title }}</p>
+    <!-- <p>{{ title }}</p> -->
     <router-view></router-view>
   </div>
 </template>

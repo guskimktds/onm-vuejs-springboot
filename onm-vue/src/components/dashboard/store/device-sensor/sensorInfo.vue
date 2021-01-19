@@ -1,15 +1,10 @@
 <template>
-  <div>
     <v-container>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <sensorInfo-query v-on:search="searchToSensorInfo"></sensorInfo-query>
         <sensorInfo-list v-bind:List="list"></sensorInfo-list>
       </v-card>
     </v-container>
-  </div>
 </template>
 
 <script>
