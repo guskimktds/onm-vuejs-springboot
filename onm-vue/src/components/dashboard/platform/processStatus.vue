@@ -43,7 +43,7 @@ export default {
       console.log("2 params = ");
       console.log(params);
 
-      var url = "https://test-onm.ktvsaas.co.kr/V110/ONM_11001/get_process_status";
+      var url = "https://test-onm.ktvsaas.co.kr:8443/V110/ONM_11001/get_process_status";
       var headers = {
         'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
         'Content-Type': 'application/json'

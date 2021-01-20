@@ -32,8 +32,8 @@ export default {
   },
   created: function() {
 
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12006/get_device_order'
-    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
+    // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12006/get_device_order'
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12006/get_device_order`
     var params = {
       page_no: 1,
       view_cnt: 5
@@ -49,7 +49,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.pList = response.data.data.list;
+            this.pList = response.data.data.device_order_list;
 
           }else{
             this.pList = [];
@@ -63,7 +63,8 @@ export default {
   methods: {
     searchToDeviceOrderInfo: function(params){
       console.log("부모 메소드 searchToDeviceOrderInfo 호출: "+JSON.stringify(params));
-      var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12006/get_device_order'
+      // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12006/get_device_order'
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12006/get_device_order`
     // var params = {
     //   page_no: 1,
     //   view_cnt: 5

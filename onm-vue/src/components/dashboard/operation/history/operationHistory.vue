@@ -1,9 +1,6 @@
 <template>
  <v-container fluid>
       <v-card>
-        <!-- <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar> -->
         <operation-history-query v-on:search="searchToButton"></operation-history-query>
         <operation-history-list v-bind:pList=pList></operation-history-list>
       </v-card>
@@ -31,8 +28,8 @@ export default {
     }
   },
   created: function() {
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15003/get_proc_history'
-    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
+    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15003/get_proc_history'
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15003/get_proc_history`
     var params = {
       page_no: 1,
       view_cnt: 5
@@ -61,7 +58,9 @@ export default {
   },
   methods: {
     searchToButton: function(params){
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15003/get_proc_history'
+    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15003/get_proc_history'
+    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_15003/get_proc_history`
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15003/get_proc_history`
     // var params = {
     //   page_no: 1,
     //   view_cnt: 5

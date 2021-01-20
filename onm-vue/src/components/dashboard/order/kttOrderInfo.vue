@@ -23,19 +23,13 @@ export default {
   data () {
     return {
       title: 'KTT 청약 정보',
-      pList: [
-        // {tranId:"GPNA_20201029133825838_LVSPWS0001", serviceNum: "61365079", systemId: "13831700", contractId:"M", kttContractId: "51132203"},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0002", serviceNum: "61365079", systemId: "13831700", contractId:"M", kttContractId: "51132203"},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0003", serviceNum: "61365079", systemId: "", contractId:"M", kttContractId: "51132203"},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0004", serviceNum: "61365079", systemId: "", contractId:"M", kttContractId: "51132203"},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0005", serviceNum: "61365079", systemId: "", contractId:"M", kttContractId: "51132203"},
-      ]
+      pList: []
     }
   },
   created: function() {
 
-    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12011/get_user_subs_result'
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12005/get_user_ktt_subs`
+    // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12005/get_user_ktt_subs'
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12005/get_user_ktt_subs`
     var params = {
       page_no: 1,
       view_cnt: 5
@@ -56,7 +50,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.pList = response.data.data.list;
+            this.pList = response.data.data.tel_no_list;
 
           }else{
             this.pList = [];
@@ -70,8 +64,8 @@ export default {
   methods: {
     searchToKTTOrderInfo: function(params){
       console.log("부모 메소드 searchToKTTOrderInfo 호출: "+JSON.stringify(params));
-      // console.log("부모 메소드 searchToUserOrderPhone 호출: "+JSON.stringify(params));
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12005/get_user_ktt_subs`
+      // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12005/get_user_ktt_subs'
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12005/get_user_ktt_subs`
       // var params = {
       //   page_no: 1,
       //   view_cnt: 5
@@ -85,10 +79,17 @@ export default {
       // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
       //   params
       // })
-      .then((result) => {
-        console.log(result)
-        //this.list = JSON.parse(result.data.menu)
-        this.list = result.data
+      .then((response) => {
+        console.log(response)
+        var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.pList = response.data.data.tel_no_list;
+
+          }else{
+            this.pList = [];
+            alert(resCode + " / " + resMsg);
+          }
       })
       .catch((ex) => {
         console.log('조회 실패',ex)

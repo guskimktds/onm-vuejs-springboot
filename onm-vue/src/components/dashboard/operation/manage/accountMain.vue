@@ -17,6 +17,7 @@ import axios from "axios"
 
 // const resourceHost = "http://localhost:3000"
 
+const API_URL = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}`
 
 export default {
   components: {
@@ -34,7 +35,8 @@ export default {
     searchToButton: function(params){
       console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
       console.log(process.env);
-      var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15001/get_account'
+      // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15001/get_account'
+      var url = API_URL+'/ONM_15001/get_account'
     // var params = {
     //   page_no: 1,
     //   view_cnt: 5
@@ -60,7 +62,8 @@ export default {
   },
   created: function() {
 
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15001/get_account'
+    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15001/get_account'
+    var url = API_URL+'/ONM_12002/get_user_subs_detail'
     // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
     var params = {
       page_no: 1,

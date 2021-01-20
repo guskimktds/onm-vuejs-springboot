@@ -1,20 +1,10 @@
 <template>
-  <!-- <div>
-    <p class="title">{{ title }}</p>
-    <deviceOrderResult-query v-on:search="searchToDeviceOrderResult"></deviceOrderResult-query>
-    <deviceOrderResult-list v-bind:pList=pList></deviceOrderResult-list>
-  </div> -->
-
-  <v-container fluid>
+   <v-container fluid>
       <v-card>
-        <!-- <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar> -->
         <device-order-result-query v-on:search="searchToDeviceOrderResult"></device-order-result-query>
         <device-order-result-list v-bind:pList=pList></device-order-result-list>
       </v-card>
     </v-container>
-
 </template>
 
 <script>
@@ -38,8 +28,8 @@ export default {
   },
   created: function() {
 
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12012/get_device_order_result_list'
-    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
+    // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12012/get_device_order_result_list'
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12012/get_device_order_result_list`
     var params = {
       page_no: 1,
       view_cnt: 5
@@ -69,8 +59,8 @@ export default {
   },
   methods: {
     searchToDeviceOrderResult: function(params){
-      console.log("부모 메소드 searchToDeviceOrderInfo 호출: "+JSON.stringify(params));
-      var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12012/get_device_order_result_list'
+    // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12012/get_device_order_result_list'
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12012/get_device_order_result_list`
     // var params = {
     //   page_no: 1,
     //   view_cnt: 5

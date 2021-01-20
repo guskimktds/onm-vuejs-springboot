@@ -1,10 +1,9 @@
 <template>
     <v-container fluid>
       <v-card>
-        <!-- <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar> -->
-        <user-order-info-query v-on:search="searchToUserOrderInfo"></user-order-info-query>
+        <user-order-info-query 
+          v-on:search="searchToUserOrderInfo"
+        ></user-order-info-query>
         <user-order-info-list 
           v-bind:pList=pList 
           v-bind:resPagingInfo=resPagingInfo 
@@ -33,7 +32,12 @@ import UserOrderDetailObject from './user/order-detail/userOrderDetailObject'
 
 import axios from "axios"
 
-import EventBus from '../../../EventBus';
+// import EventBus from '../../../EventBus';
+
+const headers = {
+  'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+  'Content-Type': 'application/json'
+}
 
 export default {
   components: {
@@ -44,12 +48,7 @@ export default {
   data () {
     return {
       title: '사용자 청약 오더 정보',
-      pList: [
-        // {tranId:"GPNA_20201029133825838_LVSPWS0001", contractId:"S00347106", productCode: "B162", moProductName: "GiGAeyes i-slim(2)", storeName:'홍길동', orderType:"4201", orderNumber:"20303DO9519190", orderSeq:1, changeTypeCode: "", hopeDate:"2020110315",usageType:"T", createDate: "20-10-29 13:38"},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0002", contractId:"S00347106", productCode: "B162", moProductName: "GiGAeyes i-slim(2)", storeName:'홍길동', orderType:"4201", orderNumber:"20303DO9519190", orderSeq:1, changeTypeCode: "55", hopeDate:"2020110315",usageType:"T", createDate: "20-10-29 13:38"},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0003", contractId:"S00347106", productCode: "B162", moProductName: "GiGAeyes i-slim(2)", storeName:'홍길동', orderType:"4201", orderNumber:"20303DO9519190", orderSeq:1, changeTypeCode: "55", hopeDate:"2020110315",usageType:"T", createDate: "20-10-29 13:38"},
-        // {tranId:"GPNA_20201029133825838_LVSPWS0004", contractId:"S00347106", productCode: "B162", moProductName: "GiGAeyes i-slim(2)", storeName:'홍길동', orderType:"4201", orderNumber:"20303DO9519190", orderSeq:1, changeTypeCode: "5560", hopeDate:"2020110315",usageType:"T", createDate: "20-10-29 13:38"},
-      ],
+      pList: [],
       pObject: {        
       },
       showDetailObject: false,
@@ -64,16 +63,16 @@ export default {
   },
   created: function() {
 
-    var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12001/get_user_subs_order_info'
-    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12001/get_user_subs_order_info`
+    // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12001/get_user_subs_order_info'
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12001/get_user_subs_order_info`
     // var params = {
     //   page_no: 1,
     //   view_cnt: 5
     // }
-    var headers = {
-      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-      // 'Content-Type': 'application/json'
-    }
+    // var headers = {
+    //   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+    //   // 'Content-Type': 'application/json'
+    // }
 
     console.log('VUE_APP_BACKEND_SERVER_URL_TB:', url)
     console.log(process.env)
@@ -107,57 +106,68 @@ export default {
           console.log('조회 실패',ex)
         })
   },
-  mounted: function() {
-     EventBus.$on('createItem', params => {
-        //console.log('codeMain.vue eventbus : param : ',parameter)
-        var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12001/get_user_subs_order_info'
-        // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12001/get_user_subs_order_info`
-        var headers = {
-          'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-          'Content-Type': 'application/json'
-        }
+  // mounted: function() {
+  //    EventBus.$on('createItem', params => {
+  //       //console.log('codeMain.vue eventbus : param : ',parameter)
+  //       var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12001/get_user_subs_order_info'
+  //       // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12001/get_user_subs_order_info`
+  //       var headers = {
+  //         'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+  //         'Content-Type': 'application/json'
+  //       }
 
-        axios
-        .post(url, params, headers)
-        .then((response) => {
-          // console.log(response.data)
-          //this.list = JSON.parse(result.data.menu)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.list;
+  //       axios
+  //       .post(url, params, headers)
+  //       .then((response) => {
+  //         // console.log(response.data)
+  //         //this.list = JSON.parse(result.data.menu)
+  //         var resCode = response.data.res_code;
+  //         var resMsg = response.data.res_msg;
+  //         if(resCode == 200){
+  //           this.pList = response.data.data.list;
 
-          }else{
-            this.pList = [];
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-    })
-  },
+  //         }else{
+  //           this.pList = [];
+  //           alert(resCode + " / " + resMsg);
+  //         }
+  //       })
+  //       .catch((ex) => {
+  //         console.log('조회 실패',ex)
+  //       })
+  //   })
+  // },
   methods: {
     searchToUserOrderInfo: function(params){
 
-    var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12001/get_user_subs_order_info'
+    // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12001/get_user_subs_order_info'
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12001/get_user_subs_order_info`
     // var params = {
     //   page_no: 1,
     //   view_cnt: 5
     // }
-    var headers = {
-      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-      'Content-Type': 'application/json'
-    }
+    // var headers = {
+    //   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+    //   'Content-Type': 'application/json'
+    // }
 
         axios.post(url, params, headers)
             // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
             //   params
             // })
-            .then((result) => {
-              console.log(result)
+            .then((response) => {
+              console.log(response)
               //this.list = JSON.parse(result.data.menu)
-              this.list = result.data
+              var resCode = response.data.res_code;
+              var resMsg = response.data.res_msg;
+              if(resCode == 200){
+                this.pList = response.data.data.list;
+                this.resPagingInfo = response.data.data.paging_info
+
+              }else{
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert(resCode + " / " + resMsg);
+              }
             })
             .catch((ex) => {
               console.log('조회 실패',ex)
@@ -170,16 +180,17 @@ export default {
         this.showDetailObject = true
         this.isReloadDetailObject = true
 
-        var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12002/get_user_subs_detail'
+        // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12002/get_user_subs_detail'
+        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12002/get_user_subs_detail`
         var params = {
           guid: values
         }
 
         console.log(params)
-        var headers = {
-          'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-          'Content-Type': 'application/json'
-        }
+        // var headers = {
+        //   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+        //   'Content-Type': 'application/json'
+        // }
 
         axios.post(url, params, headers)
             // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {

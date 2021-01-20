@@ -17,6 +17,8 @@ import ChangeHistoryList from './changeHistoryList'
 //import AdminMenuMock from '../../../mock/AdminListMock.json';
 import axios from "axios"
 
+const API_URL = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}`
+
 export default {
   components:{
     ChangeHistoryQuery,
@@ -29,8 +31,8 @@ export default {
     }
   },
   created: function() {
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15004/get_mng_regi_history'
-    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
+    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15004/get_mng_regi_history'
+    var url = API_URL+'/ONM_15004/get_mng_regi_history'
     var params = {
       page_no: 1,
       view_cnt: 5
@@ -59,7 +61,9 @@ export default {
   },
   methods: {
     searchToButton: function(params){
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15004/get_mng_regi_history'
+    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15004/get_mng_regi_history'
+    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}`/process.env.VUE_APP_API_VERSION}/ONM_15004/get_mng_regi_history`
+    var url = API_URL+'/ONM_15004/get_mng_regi_history'
     // var params = {
     //   page_no: 1,
     //   view_cnt: 5

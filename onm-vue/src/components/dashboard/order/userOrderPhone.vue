@@ -29,8 +29,8 @@ export default {
   },
   created: function() {
 
-    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12011/get_user_subs_result'
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12011/get_user_subs_telno`
+    // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12004/get_user_subs_telno'
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12004/get_user_subs_telno`
     var params = {
       page_no: 1,
       view_cnt: 5
@@ -51,7 +51,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.pList = response.data.data.list;
+            this.pList = response.data.data.tel_no_list;
 
           }else{
             this.pList = [];
@@ -64,8 +64,8 @@ export default {
   },
   methods: {
     searchToUserOrderPhone: function(params){
-      console.log("부모 메소드 searchToUserOrderPhone 호출: "+JSON.stringify(params));
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12011/get_user_subs_telno`
+      // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12004/get_user_subs_telno'
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12004/get_user_subs_telno`
       // var params = {
       //   page_no: 1,
       //   view_cnt: 5

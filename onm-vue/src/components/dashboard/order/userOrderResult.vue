@@ -31,7 +31,7 @@ export default {
   created: function() {
 
     // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12011/get_user_subs_result'
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12011/get_user_subs_result`
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12011/get_user_subs_result`
     var params = {
       page_no: 1,
       view_cnt: 5
@@ -66,7 +66,7 @@ export default {
   methods: {
     searchToUserOrderResult: function(params){
       console.log("부모 메소드 searchToUserOrderResult 호출: "+JSON.stringify(params));
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/ONM_12011/get_user_subs_result`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12011/get_user_subs_result`
       // var params = {
       //   page_no: 1,
       //   view_cnt: 5
