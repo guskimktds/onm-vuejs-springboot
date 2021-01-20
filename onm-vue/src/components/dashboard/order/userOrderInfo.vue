@@ -157,7 +157,8 @@ export default {
             .then((result) => {
               console.log(result)
               //this.list = JSON.parse(result.data.menu)
-              this.list = result.data
+              this.pList = result.data.data.list;
+              this.resPagingInfo = result.data.data.paging_info
             })
             .catch((ex) => {
               console.log('조회 실패',ex)
