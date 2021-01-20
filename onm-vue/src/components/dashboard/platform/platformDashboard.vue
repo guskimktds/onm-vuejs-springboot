@@ -17,7 +17,7 @@
                     <div class="col-4">
                         <div class="chart-board">
                             <div class="chart-area">
-                                <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
+                                <line-chart :chart-data="fillData()" :options="chartOptions" :styles="myStyles" ></line-chart>
                             </div>
                             <div class="text-area">고객 개통/해지 추이(일간/월간)</div>
                             <div class="board-footer">updated 10 minutes ago</div>
@@ -26,7 +26,7 @@
                     <div class="col-4">
                         <div class="chart-board">
                             <div class="chart-area">
-                                <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
+                                <line-chart :chart-data="fillData()" :options="chartOptions" :styles="myStyles"></line-chart>
                             </div>
                             <div class="text-area">카메라 개통/해지 추이(일간/월간)</div>
                             <div class="board-footer">updated 4 minutes ago</div>
@@ -35,7 +35,7 @@
                     <div class="col-4">
                         <div class="chart-board">
                             <div class="chart-area">
-                                <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
+                                <line-chart :chart-data="fillData()" :options="chartOptions" :styles="myStyles"></line-chart>
                             </div>
                             <div class="text-area">IoT 개통/해지 추이(일간/월간)</div>
                             <div class="board-footer">campaign sent 26 minutes ago</div>
@@ -184,6 +184,8 @@ export default {
             maintainAspectRatio:false
         },
 
+        height: 250
+
       }
     },
 
@@ -218,6 +220,14 @@ export default {
         return Math.floor(Math.random() * 100000)
       }
     },
+    computed: {
+        myStyles () {
+            return {
+                height: `${this.height}px`,
+                // position: 'relative'
+            }
+        }
+    }
 
 }
 </script>
