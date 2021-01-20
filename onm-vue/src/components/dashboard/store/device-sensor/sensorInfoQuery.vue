@@ -1,27 +1,13 @@
 <template>
-  <div>
-    <!-- search -->
-    <!-- <table class="search">
-      <tr>
-        <th>등록일시 : </th>
-        <td><input type="date" v-model="param.addDateStart" placeholder="승인날자"></td>
-        <th> ~ </th>
-        <td><input type="date" v-model="param.addDateEnd" placeholder="승인날자"></td>
-        <th>단말 GWID : </th>
-        <td><input type="text" v-model="param.deviceGWID" placeholder="단말 GWID"></td>
-      </tr> 
-      <tr> 
-        <th>사용자 ID : </th>
-        <td><input type="text" v-model="param.usrId" placeholder="사용자 ID"></td>
-        <th>센서 이름 : </th>
-        <td><input type="text" v-model="param.sensorName" placeholder="센서 이름"></td>      
-      </tr>
-      <button v-on:click="searchMethod">검색</button>
-    </table> -->
     <v-form>
       <v-container>
+        <base-material-card
+        icon="mdi-magnify"
+        title="센서 정보 조회"
+        class="px-5 py-3"
+        >
         <v-row>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="2">
             <v-menu
               ref="menu"
               v-model="menu"
@@ -53,7 +39,7 @@
               </v-date-picker>
             </v-menu>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
               label="단말 GWID"
@@ -63,7 +49,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
               label="사용자 ID"
@@ -73,7 +59,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
               label="센서 이름"
@@ -84,20 +70,19 @@
             </v-text-field>
           </v-col>
         
-          <v-col cols="12" sm="6" md="2">
-                    <v-btn 
-                        elevation="2" 
-                        medium
-                        v-on:click="searchMethod"
-                    >
-                        검색
-                    </v-btn>
-                </v-col>
+          <v-col cols="auto">
+            <v-btn color="primary"
+               v-on:click="searchMethod"
+               >
+               검색
+            </v-btn>
+          </v-col>
         </v-row>
+        </base-material-card>
       </v-container>
     </v-form>
-  </div>
 </template>
+
 <script>
 export default {
   data() {

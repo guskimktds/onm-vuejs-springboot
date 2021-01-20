@@ -1,11 +1,21 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+    >
+    <base-material-card
+        color="orange"
+        dark
+        icon="mdi-keyboard"
+        title="IoT GW 정보 조회 LIST"
+        class="px-5 py-3"
+      >
       <v-data-table
         :headers="headers"
         :items="List"
         :items-per-page="5"
-        item-key="gwKey"
+        item-key="contractId"
         class="elevation-1"
       >
         <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
@@ -14,9 +24,10 @@
           </td>
         </template>       -->
       </v-data-table>
-    </v-app>
-  </div>
+    </base-material-card>
+  </v-container> 
 </template>
+
 <script>
 export default {
   props: ["List"],

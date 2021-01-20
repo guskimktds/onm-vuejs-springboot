@@ -19,11 +19,6 @@
         item-key="contractId"
         class="elevation-1"
       >
-        <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
-          <td :colspan="headers.length">
-            <List></List>
-          </td>
-        </template>       -->
     </v-data-table>
 
     </base-material-card>

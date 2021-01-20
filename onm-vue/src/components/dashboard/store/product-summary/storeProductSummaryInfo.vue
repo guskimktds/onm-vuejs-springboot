@@ -1,11 +1,7 @@
 
 <template>
-  <div>
-    <v-container>
+    <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <storeProductSummaryInfo-query
           v-on:search="searchToStoreProductSummaryInfo"
         ></storeProductSummaryInfo-query>
@@ -14,7 +10,6 @@
         ></storeProductSummaryInfo-list>
       </v-card>
     </v-container>
-  </div>
 </template>
 
 <script>

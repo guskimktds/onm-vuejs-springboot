@@ -1,17 +1,12 @@
 <template>
-  <div>
-    <v-container>
+    <v-container fluid>
       <v-card>
-        <v-toolbar primary dense>
-          <v-toolbar-title>{{ title }}</v-toolbar-title>
-        </v-toolbar>
         <sensorOrderInfo-query
           v-on:search="searchSensorOrderInfo"
         ></sensorOrderInfo-query>
         <sensorOrderInfo-list v-bind:List="list"></sensorOrderInfo-list>
       </v-card>
     </v-container>
-  </div>
 </template>
 
 <script>
