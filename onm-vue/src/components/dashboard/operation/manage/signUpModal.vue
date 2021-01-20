@@ -1,6 +1,6 @@
 <template>
 
-    <div class="modal-mask">
+    <!-- <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
 
@@ -14,26 +14,26 @@
             <slot name="body">
                 <div class="register-form">
                     <form>
-                        <!-- <h3>{{ title }}</h3> -->
+  
                         <div class="form-group">
-                                <!-- <label>ID</label> -->
+                               
                                 <input type="text" class="form-control form-control-lg" 
                                 v-model="id" placeholder="사번을 입력하세요">
                         </div>
                         <div class="form-group">
-                                <!-- <label>Password</label> -->
+                              
                                 <input type="text" class="form-control form-control-lg"
                                 v-model="ip" placeholder="접속할 IP를 입력하세요"> 
                         </div>
                         <div class="form-group">
-                                <!-- <label>Password</label> -->
+
                                 <span>권한 : </span>
                                 <select v-model="selected">
                                 <option v-for="option in options" v-bind:value="option.auth" :key="option.auth">
                                     {{ option.name }}
                                 </option>
                                 </select>
-                                <!-- <span>권한 : {{ selected }}</span> -->
+                                
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-lg btn-block" 
@@ -57,9 +57,75 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+<v-row justify="center">
+  <v-dialog
+            max-width="500px"
+        >
+            <v-card>
+            <v-card-title>
+                <span class="headline" >계정등록</span>
+            </v-card-title>
 
-  <!-- </div> -->
+            <v-card-text>
+                <v-container>
+                <v-row>
+                    <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                    >
+                    <v-text-field
+                        v-model="id"
+                        label="사번"
+                    ></v-text-field>
+                    </v-col>
+                    <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                    >
+                    <v-text-field
+                        v-model="ip"
+                        label="IP"
+                    ></v-text-field>
+                    </v-col>
+                    <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                    >
+                    <v-text-field
+                        v-model="auth"
+                        label="권한"
+                    ></v-text-field>
+                    </v-col>
+
+                </v-row>
+                </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                
+                <v-btn
+                color="blue darken-1"
+                text
+                @click="save"
+                >
+                저장
+                </v-btn>
+                <v-btn
+                color="blue darken-1"
+                text
+                @click="$emit('close')"
+                >
+                취소
+                </v-btn>
+            </v-card-actions>
+            </v-card>
+        </v-dialog>
+  </v-row>
 </template>
 
 <script>
@@ -83,7 +149,7 @@ export default {
         }   
     },
     methods:{
-      onSubmit(id, ip, auth) {     
+      save(id, ip, auth) {     
         alert("onSubmit : "+id+ ", ip : "+ip+", auth : "+ auth);
         //this.$router.push({name:'AccountView'})
         return axios.post(`${resourceHost}/signup`, { id, ip, auth })

@@ -5,7 +5,13 @@
           <v-toolbar-title>{{ title }}</v-toolbar-title>
         </v-toolbar> -->
         <user-order-info-query v-on:search="searchToUserOrderInfo"></user-order-info-query>
-        <user-order-info-list v-bind:pList=pList @child="clickToSearchDetailObject"></user-order-info-list>
+        <user-order-info-list 
+          v-bind:pList=pList 
+          v-bind:resPagingInfo=resPagingInfo 
+          @child="clickToSearchDetailObject" 
+          @pagination="setToSearchParams"
+        >
+        </user-order-info-list>
         <v-container
             id="regular-tables"
             fluid
@@ -48,17 +54,22 @@ export default {
       },
       showDetailObject: false,
       isReloadDetailObject: false,
-      btnTitle: '청약오더상세open'
+      btnTitle: '청약오더상세open',
+      reqPagingInfo: {
+        page_no: 1,
+        view_cnt: 10
+      },
+      resPagingInfo: {}
     }
   },
   created: function() {
 
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12001/get_user_subs_order_info'
+    var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12001/get_user_subs_order_info'
     // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12001/get_user_subs_order_info`
-    var params = {
-      page_no: 1,
-      view_cnt: 5
-    }
+    // var params = {
+    //   page_no: 1,
+    //   view_cnt: 5
+    // }
     var headers = {
       'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
       // 'Content-Type': 'application/json'
@@ -66,7 +77,9 @@ export default {
 
     console.log('VUE_APP_BACKEND_SERVER_URL_TB:', url)
     console.log(process.env)
-
+    console.log(this.reqPagingInfo)
+    var params = this.reqPagingInfo
+    console.log(params)
     // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
 
     // axios.defaults.baseURL = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}`;
@@ -76,15 +89,17 @@ export default {
     axios
         .post(url, params, headers)
         .then((response) => {
-          // console.log(response.data)
+          console.log(response.data)
           //this.list = JSON.parse(result.data.menu)
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.pList = response.data.data.list;
+            this.resPagingInfo = response.data.data.paging_info
 
           }else{
             this.pList = [];
+            this.resPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -125,7 +140,7 @@ export default {
   methods: {
     searchToUserOrderInfo: function(params){
 
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12001/get_user_subs_order_info'
+    var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12001/get_user_subs_order_info'
     // var params = {
     //   page_no: 1,
     //   view_cnt: 5
@@ -155,7 +170,7 @@ export default {
         this.showDetailObject = true
         this.isReloadDetailObject = true
 
-        var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12002/get_user_subs_detail'
+        var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12002/get_user_subs_detail'
         var params = {
           guid: values
         }
@@ -187,6 +202,22 @@ export default {
             })
 
       }
+    },
+
+    setToSearchParams: function(values){
+      console.log(values)
+      // this.reqPagingInfo.page_no = values.page
+      // this.reqPagingInfo.view_cnt = values.itemsPerPage
+      // console.log(this.reqPagingInfo)
+
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      console.log(params)
+
+      this.searchToUserOrderInfo(params)
     }
   }
 }

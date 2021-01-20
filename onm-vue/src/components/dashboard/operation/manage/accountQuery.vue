@@ -1,16 +1,5 @@
 <template>
 
-        <!-- <div>
-            <input type="text" v-model="param.id" placeholder="사번">
-            <input type="text" v-model="param.name" placeholder="이름">
-            <input type="text" v-model="param.auth" placeholder="권한">
-            <button v-on:click="searchMethod">검색</button>
-        </div>
-        <button id="show-modal" @click="showModal = true">등록</button>
-        <app-my-modal
-            v-if="showModal" @close="showModal = false">            
-            <h3 slot="header">{{ modalTitle }}</h3>
-        </app-my-modal> -->
     <v-container
     id="regular-tables"
     fluid
@@ -19,7 +8,7 @@
 
         <base-material-card
         icon="mdi-magnify"
-        title="단말 오더 정보 조회"
+        title="계정 정보 조회"
         class="px-5 py-3"
         >
                 <v-row >
@@ -48,32 +37,107 @@
                             검색
                         </v-btn>
                     </v-col>  
-                    <v-col cols="auto">
-                        <v-btn color="red"
-                         id="show-modal" @click="showModal = true"
-                         >
-                            등록
-                        </v-btn>
-                    </v-col>                                    
+                    <v-col cols="12" sm="6" md="2">
+                        <v-dialog
+                            v-model="dialog"
+                            max-width="400px"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                                color="indigo"
+                                dark
+                                class="mb-2"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                등록
+                            </v-btn>
+                            </template>
+                            <v-card>
+                            <v-card-title>
+                                <span class="headline" >{{ formTitle }}</span>
+                            </v-card-title>
+
+                            <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                        <!-- <v-col
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                        > -->
+                                        <v-text-field
+                                            v-model="editedItem.id"
+                                            label="사번"
+                                        ></v-text-field>
+                                        <!-- </v-col> -->
+                                    </v-row>
+                                    <v-row>
+                                        <!-- <v-col
+                                        cols="12"
+                                        > -->
+                                        <v-text-field
+                                            v-model="editedItem.ip"
+                                            label="접속 IP"
+                                        ></v-text-field>
+                                        <!-- </v-col> -->
+                                    </v-row>
+                                    <v-row>
+                                        <!-- <v-col
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                        > -->
+                                        <v-text-field
+                                            v-model="editedItem.auth"
+                                            label="권한"
+                                        ></v-text-field>
+                                        <!-- </v-col> -->
+                                    </v-row>
+                        
+                                    
+                                </v-container>
+                            </v-card-text>
+
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                
+                                <v-btn
+                                color="blue darken-1"
+                                text
+                                @click="save"
+                                >
+                                저장
+                                </v-btn>
+                                <v-btn
+                                color="blue darken-1"
+                                text
+                                @click="close"
+                                >
+                                취소
+                                </v-btn>
+                            </v-card-actions>
+                            </v-card>
+                        </v-dialog>                        
+                    </v-col>
                 </v-row>
-                <app-my-modal
-                    v-if="showModal" @close="showModal = false">            
-                    <h3 slot="header">{{ modalTitle }}</h3>
-                </app-my-modal>
         </base-material-card>       
     </v-container>
 </template>
 <script>
 
-import modalTemplate from './signUpModal'
+// import modalTemplate from './signUpModal'
 // Vue.component('modal', {
 //   template: '#modal-template'
 // })
 
+import EventBus from '../../../../EventBus'
+
+
 export default {
-    components:{
-        appMyModal: modalTemplate
-    },
+    // components:{
+    //     appMyModal: modalTemplate
+    // },
     data() {
         return{
             param: {
@@ -81,11 +145,23 @@ export default {
                 name: '',
                 auth: ''
             },
-            showModal: false,
-            //visible: false,
-            modalTitle: '계정등록'
+            // showModal: false,
+            // visible: false,
+            // modalTitle: '계정등록',
+            dialog: false,
+            editedItem: {
+                id: '',
+                name: '',
+                auth: ''
+            },
 
         }
+    },
+    computed: {
+      formTitle () {
+        // return this.editedIndex === -1 ? '등록' : '수정'
+        return '계정등록'
+      },
     },
     methods: {
         searchMethod: function() {
@@ -96,7 +172,23 @@ export default {
         },
         handleClickButton(){
             this.visible = !this.visible
-        } 
+        },
+
+        save () {
+            console.log('save method call : ',this.editedItem)        
+            
+            EventBus.$emit('createItem', this.editedItem)
+
+            this.close()
+        },
+
+        close () {
+            this.dialog = false
+            this.$nextTick(() => {
+            this.editedItem = Object.assign({}, this.defaultItem)
+            // this.editedIndex = -1
+            })
+        },
     },  
 }
 </script>

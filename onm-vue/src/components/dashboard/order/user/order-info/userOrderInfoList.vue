@@ -31,6 +31,8 @@
       <v-data-table
         :headers="headers"
         :items="pList"
+        :options.sync="options"
+        :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
         @click:row="handleClick"
       >          
@@ -45,12 +47,15 @@
 // import EventBus from '../../../../../EventBus';
 
 export default {
-    props: ['pList'],
+    props: ['pList', 'resPagingInfo'],
     data() {
       return {
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
         headers: [
           {
             text: '거래고유번호', align: 'start',
@@ -74,7 +79,72 @@ export default {
       handleClick: function(value){
         console.log(value)
         this.$emit("child", value.guid);
+      },
+
+      getDataFromApi () {
+        // console.log(this.resPagingInfo)
+        this.loading = true
+        // this.fakeApiCall().then(data => {
+        //   this.desserts = data.items
+        // this.totalList = this.resPagingInfo.total_page_cnt
+        //   this.loading = false
+        // })
+
+        const { page, itemsPerPage } = this.options
+        console.log(page, itemsPerPage)
+        this.$emit("pagination", this.options)
+      },
+
+      fakeApiCall () {
+        return new Promise((resolve) => {
+          const {page, itemsPerPage } = this.options
+
+          // let items = this.getDesserts()
+          let items = this.props.pList
+          console.log(items)
+          const total = items.length
+
+          // if (sortBy.length === 1 && sortDesc.length === 1) {
+          //   items = items.sort((a, b) => {
+          //     const sortA = a[sortBy[0]]
+          //     const sortB = b[sortBy[0]]
+
+          //     if (sortDesc[0]) {
+          //       if (sortA < sortB) return 1
+          //       if (sortA > sortB) return -1
+          //       return 0
+          //     } else {
+          //       if (sortA < sortB) return -1
+          //       if (sortA > sortB) return 1
+          //       return 0
+          //     }
+          //   })
+          // }
+
+          if (itemsPerPage > 0) {
+            items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+          }
+
+          setTimeout(() => {
+            resolve({
+              items,
+              total,
+            })
+          }, 1000)
+        })
       }
+      
+    },
+    watch: {
+      options: {
+        handler () {
+          this.getDataFromApi()
+        },
+        deep: true,
+      },
+    },
+    mounted () {
+      this.getDataFromApi()
     }
 
 }

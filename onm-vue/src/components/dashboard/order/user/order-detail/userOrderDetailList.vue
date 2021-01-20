@@ -14,6 +14,7 @@
             <v-data-table
                 :headers="headers"
                 :items="pList"
+                :options.sync="options"
                 class="elevation-1"
             >          
             </v-data-table>
@@ -30,37 +31,9 @@ export default {
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
-        /*
-appointdate: "20171218"
-arnoadrbassbst: "서울시 종로구 내수동"
-arnoadrdtlsbst: "용비어천가"
-bizpnm: "목동매장"
-cdate: "20171218201651"
-custid: "C394134"
-custnm: "홍길동"
-guid: "GPNA_201712182003000_TEST0011"
-ktt_user_yn: "N"
-notice_yn: "Y"
-oderno: "20171218200200"
-oderseq: "2"
-ordertype: "4201"
-pprodcd: "B001"
-pprodnm: "GiGAeyes smart"
-psaid: "099Q1030901"
-regdate: 1513595812040
-resultcode: "200"
-resultmsg: "SUCCESS"
-said: "TEST18201802"
-salesmanid: "24134414"
-salesmannm: "이순신"
-srcsystem: "LBNR"
-svcofccd: "R02471"
-svcofcnm: "가경국사"
-telno: "01012341111"
-tgtsystem: "GPNA"
-updatetype: "5512"
-user_id: "0000028234"
-        */
+        options: {},
+        totalList: 0,
+        loading: true,
         headers: [
           {
             text: '거래고유번호', align: 'start',
@@ -83,6 +56,38 @@ user_id: "0000028234"
           { text: '파라미터값', value: 'cdate' }
         ]
       }
+    },
+    // mounted: function(){
+    //   console.log("mounted : ")
+    //   console.log(pagination)
+    // },
+    // created: function(){
+    //   console.log("created : ")
+    //   console.log(pagination)
+    // }
+    watch: {
+      options: {
+        handler () {
+          this.getDataFromApi()
+        },
+        deep: true,
+      },
+    },
+    mounted () {
+      this.getDataFromApi()
+    },
+    methods: {
+      getDataFromApi () {
+        this.loading = true
+        // this.fakeApiCall().then(data => {
+        //   this.desserts = data.items
+        //   this.totalDesserts = data.total
+        //   this.loading = false
+        // })
+
+        const { sortBy, sortDesc, page, itemsPerPage } = this.options
+        console.log(sortBy, sortDesc, page, itemsPerPage)
+      },
     }
 
 }

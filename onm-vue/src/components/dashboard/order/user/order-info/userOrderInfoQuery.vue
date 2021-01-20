@@ -83,9 +83,9 @@ export default {
                 hopeDateEnd: '',
                 said: '',
                 guid: '',
-                order_no: '',
-                page_no: 1,
-                view_cnt: 5
+                order_no: ''
+                // page_no: 1,
+                // view_cnt: 5
             }
         }
     },
