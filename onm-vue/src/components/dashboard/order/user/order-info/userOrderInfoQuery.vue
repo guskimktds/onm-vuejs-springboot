@@ -16,7 +16,7 @@
                     <v-text-field 
                         dense 
                         label="검색기간" 
-                        v-model="param.startdate"
+                        v-model="param.start_date"
                         placeholder="Placeholder" 
                     >                        
                     </v-text-field>                    
@@ -26,7 +26,7 @@
                     <v-text-field 
                         dense 
                         label="검색기간" 
-                        v-model="param.enddate"
+                        v-model="param.end_date"
                         placeholder="Placeholder" 
                     >                        
                     </v-text-field>
@@ -53,7 +53,7 @@
                     <v-text-field 
                         dense 
                         label="오더번호" 
-                        v-model="param.order_no"
+                        v-model="param.oderno"
                         placeholder="Placeholder" 
                     >                        
                     </v-text-field>
@@ -76,19 +76,20 @@
 
 <script>
 export default {
-    data() {
-        return{
-            param: {
-                hopeDateStart: '',
-                hopeDateEnd: '',
-                said: '',
-                guid: '',
-                order_no: ''
-                // page_no: 1,
-                // view_cnt: 5
-            }
-        }
-    },
+    // data() {
+    //     return{
+    //         param: {
+    //             hopeDateStart: '',
+    //             hopeDateEnd: '',
+    //             said: '',
+    //             guid: '',
+    //             order_no: ''
+    //             // page_no: 1,
+    //             // view_cnt: 5
+    //         }
+    //     }
+    // },
+    props: ['param'],
     methods: {
         searchMethod: function() {
             this.$emit('search', this.param)

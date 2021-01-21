@@ -3,6 +3,7 @@
       <v-card>
         <user-order-info-query 
           v-on:search="searchToUserOrderInfo"
+          v-bind:param=searchParam
         ></user-order-info-query>
         <user-order-info-list 
           v-bind:pList=pList 
@@ -59,37 +60,37 @@ export default {
         view_cnt: 10
       },
       resPagingInfo: {}
+      ,
+      searchParam: {
+        /*
+    "start_date": null,
+    "end_date": null,
+    "said": "",
+    "guid": "",
+    "oderno": "",
+    "page_no": 1,
+    "view_cnt": 10
+        */
+        start_date: '',
+        end_date: '',
+        said: '',
+        guid: '',
+        oderno: ''
+      }
     }
   },
   created: function() {
 
     // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12001/get_user_subs_order_info'
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12001/get_user_subs_order_info`
-    // var params = {
-    //   page_no: 1,
-    //   view_cnt: 5
-    // }
-    // var headers = {
-    //   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-    //   // 'Content-Type': 'application/json'
-    // }
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
 
-    console.log('VUE_APP_BACKEND_SERVER_URL_TB:', url)
-    console.log(process.env)
-    console.log(this.reqPagingInfo)
+    // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
     var params = this.reqPagingInfo
-    console.log(params)
-    // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
-
-    // axios.defaults.baseURL = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}`;
-    // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
-    // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
     axios
         .post(url, params, headers)
         .then((response) => {
           console.log(response.data)
-          //this.list = JSON.parse(result.data.menu)
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
@@ -103,7 +104,7 @@ export default {
           }
         })
         .catch((ex) => {
-          console.log('조회 실패',ex)
+          console.log('조회 실패', ex)
         })
   },
   // mounted: function() {
@@ -139,39 +140,32 @@ export default {
   methods: {
     searchToUserOrderInfo: function(params){
 
-    // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12001/get_user_subs_order_info'
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12001/get_user_subs_order_info`
-    // var params = {
-    //   page_no: 1,
-    //   view_cnt: 5
-    // }
-    // var headers = {
-    //   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-    //   'Content-Type': 'application/json'
-    // }
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
 
-        axios.post(url, params, headers)
-            // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
-            //   params
-            // })
-            .then((response) => {
-              console.log(response)
-              //this.list = JSON.parse(result.data.menu)
-              var resCode = response.data.res_code;
-              var resMsg = response.data.res_msg;
-              if(resCode == 200){
-                this.pList = response.data.data.list;
-                this.resPagingInfo = response.data.data.paging_info
+      //params : 페이징 + 검색조건
+      var reqParams = this.handleParams(params)      
 
-              }else{
-                this.pList = [];
-                this.resPagingInfo = {};
-                alert(resCode + " / " + resMsg);
-              }
-            })
-            .catch((ex) => {
-              console.log('조회 실패',ex)
-            })
+      console.log(reqParams)
+
+      axios.post(url, reqParams, headers)
+      .then((response) => {
+        console.log(response)
+        //this.list = JSON.parse(result.data.menu)
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.pList = response.data.data.list;
+          this.resPagingInfo = response.data.data.paging_info
+
+        }else{
+          this.pList = [];
+          this.resPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
     },
 
     clickToSearchDetailObject: function(values){
@@ -180,37 +174,40 @@ export default {
         this.showDetailObject = true
         this.isReloadDetailObject = true
 
-        // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12002/get_user_subs_detail'
-        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12002/get_user_subs_detail`
+        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12002/get_user_subs_detail`
         var params = {
           guid: values
         }
 
         console.log(params)
-        // var headers = {
-        //   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-        //   'Content-Type': 'application/json'
-        // }
 
         axios.post(url, params, headers)
-            // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
-            //   params
-            // })
-            .then((result) => {
-              console.log(result)
-              //this.list = JSON.parse(result.data.menu)
-              // console.log(Array.isArray(result.data.data))
-              // if(Array.isArray(result.data.data)){
-              //   this.pList = result.data.data                
-              // }else{
-                console.log(result.data.data)
-                this.pObject = result.data.data
-                this.isArrayed = false
-              // }
-            })
-            .catch((ex) => {
-              console.log('조회 실패',ex)
-            })
+        .then((response) => {
+          console.log(response)
+          //this.list = JSON.parse(result.data.menu)
+          // console.log(Array.isArray(result.data.data))
+          // if(Array.isArray(result.data.data)){
+          //   this.pList = result.data.data                
+          // }else{
+            console.log(response.data.data)
+            // this.pObject = response.data.data
+            // this.isArrayed = false
+          // }
+
+           var resCode = response.data.res_code;
+            var resMsg = response.data.res_msg;
+            if(resCode == 200){
+              this.pObject = response.data.data
+              // this.isArrayed = false
+            }else{
+              this.pObject = {};
+              // this.resPagingInfo = {};
+              alert(resCode + " / " + resMsg);
+            }
+        })
+        .catch((ex) => {
+          console.log('조회 실패',ex)
+        })
 
       }
     },
@@ -229,6 +226,36 @@ export default {
       console.log(params)
 
       this.searchToUserOrderInfo(params)
+    },
+
+    handleParams: function(params){
+      let newParams = {}
+      if(params.page_no === undefined || params.page_no === ''){
+        newParams.page_no = this.reqPagingInfo.page_no
+      }else{
+        newParams.page_no = params.page_no
+      }
+
+      if(params.view_cnt === undefined || params.view_cnt === ''){
+        newParams.view_cnt = this.reqPagingInfo.view_cnt
+      }else{
+        newParams.view_cnt = params.view_cnt
+      }
+
+      if(params.said !== undefined && params.said !== ''){
+        newParams.said = params.said
+      }
+
+      if(params.guid !== undefined && params.guid !== ''){
+        newParams.guid = params.guid
+      }
+
+      if(params.oderno !== undefined && params.oderno !== ''){
+        newParams.oderno = params.oderno
+      }
+
+      return newParams
+
     }
   }
 }
