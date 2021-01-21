@@ -41,7 +41,7 @@ export default {
           sortable: false,
           value: "sensor_prod_id",
         },
-        { text: "사용자 id", value: "user_id" },
+        // { text: "사용자 id", value: "user_id" },
         { text: "센서제품명", value: "sensor_prod_name" },
         { text: "센서태그코드", value: "sensor_tag_cd" },
         { text: "상태 코드", value: "status_code" },
