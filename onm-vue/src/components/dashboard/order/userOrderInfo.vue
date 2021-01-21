@@ -71,6 +71,7 @@ export default {
     "page_no": 1,
     "view_cnt": 10
         */
+        // approveDate: [],
         start_date: '',
         end_date: '',
         said: '',
@@ -107,36 +108,6 @@ export default {
           console.log('조회 실패', ex)
         })
   },
-  // mounted: function() {
-  //    EventBus.$on('createItem', params => {
-  //       //console.log('codeMain.vue eventbus : param : ',parameter)
-  //       var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12001/get_user_subs_order_info'
-  //       // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12001/get_user_subs_order_info`
-  //       var headers = {
-  //         'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-  //         'Content-Type': 'application/json'
-  //       }
-
-  //       axios
-  //       .post(url, params, headers)
-  //       .then((response) => {
-  //         // console.log(response.data)
-  //         //this.list = JSON.parse(result.data.menu)
-  //         var resCode = response.data.res_code;
-  //         var resMsg = response.data.res_msg;
-  //         if(resCode == 200){
-  //           this.pList = response.data.data.list;
-
-  //         }else{
-  //           this.pList = [];
-  //           alert(resCode + " / " + resMsg);
-  //         }
-  //       })
-  //       .catch((ex) => {
-  //         console.log('조회 실패',ex)
-  //       })
-  //   })
-  // },
   methods: {
     searchToUserOrderInfo: function(params){
 
@@ -242,6 +213,14 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date
+      }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date
+      }
+
       if(params.said !== undefined && params.said !== ''){
         newParams.said = params.said
       }
@@ -253,6 +232,8 @@ export default {
       if(params.oderno !== undefined && params.oderno !== ''){
         newParams.oderno = params.oderno
       }
+
+      
 
       return newParams
 
