@@ -114,7 +114,9 @@ export default {
   },
   computed: {
     dateRangeText() {
-      return this.param.approveDate.join(" ~ ");
+      if (this.param.approveDate[0].length == 0) {
+        return "";
+      } else return this.param.approveDate.join(" ~ ");
     },
   },
   methods: {

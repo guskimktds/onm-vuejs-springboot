@@ -38,7 +38,7 @@ import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
 import SessLiveInfo from '../components/dashboard/customer/rtime-access-session/sessLiveInfo'
 import LoginHistoryInfo from '../components/dashboard/customer/signin-history/loginHistoryInfo'
 import SmsHistoryInfo from '../components/dashboard/customer/sms-history/smsHistoryInfo'
-import OtpExpress from '../components/dashboard/customer/otpExpress'
+//import OtpExpress from '../components/dashboard/customer/otpExpress'
 import MobileListInfo from '../components/dashboard/customer/mobile-list/mobileListInfo'
 import PushHistory from '../components/dashboard/customer/push-history/pushHistory'
 
@@ -121,9 +121,9 @@ export default new Router({
             name: 'PlatformMain',
             component: PlatformMain,
             children: [{
-                path: "dashboard",
-                name: 'PlatformDashboard',
-                component: PlatformDashboard
+                    path: "dashboard",
+                    name: 'PlatformDashboard',
+                    component: PlatformDashboard
                 },
                 {
                     path: "process",
@@ -331,11 +331,11 @@ export default new Router({
                     name: 'sms-history',
                     component: SmsHistoryInfo
                 },
-                {
-                    path: "otp-express",
-                    name: 'otp-express',
-                    component: OtpExpress
-                },
+                // {
+                //     path: "otp-express",
+                //     name: 'otp-express',
+                //     component: OtpExpress
+                // },
                 {
                     path: "mobile-list",
                     name: 'mobile-list',

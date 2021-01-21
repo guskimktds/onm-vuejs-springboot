@@ -57,11 +57,11 @@ export default new Vuex.Store({
             state.menu = []
             state.id = ''
         },
-        SET_BAR_IMAGE (state, payload) {
+        SET_BAR_IMAGE(state, payload) {
             state.barImage = payload
         },
-        SET_DRAWER (state, payload) {
-        state.drawer = payload
+        SET_DRAWER(state, payload) {
+            state.drawer = payload
         },
 
     },
