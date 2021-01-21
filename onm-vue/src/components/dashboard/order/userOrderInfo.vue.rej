@@ -1,0 +1,9 @@
+diff a/onm-vue/src/components/dashboard/order/userOrderInfo.vue b/onm-vue/src/components/dashboard/order/userOrderInfo.vue	(rejected hunks)
+@@ -3,6 +3,7 @@
+       <v-card>
+         <user-order-info-query 
+           v-on:search="searchToUserOrderInfo"
++          v-bind:param=searchParam
+         ></user-order-info-query>
+         <user-order-info-list 
+           v-bind:pList=pList 

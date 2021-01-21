@@ -23,7 +23,7 @@
 
     <br>
 
-<table class="type02" style="visibility:hidden;" id="tbTest">
+<table class="type02" style="display:none;" id="tbTest">
   <tr>
     <th scope="row">계약ID</th>
     <td><input type="text" value=" " id="contactID"></td>
@@ -113,12 +113,14 @@
 <v-col cols="auto">
    <v-btn color="primary"
        v-on:click="kttClick"
-       style="visibility:hidden;"
+       style="display:none;"
        id="kttBtn"
    >
        사용자-KTT 정보
   </v-btn>
-  <table class="type02" style="visibility:hidden;" id="tbTest2">
+</v-col>
+
+  <table class="type02" style="display:none;" id="tbTest2">
   <tr>
     <th scope="row">매장ID</th>
     <th scope="row">서비스번호</th>
@@ -136,7 +138,229 @@
     <td> </td>
   </tr>
   </table>
+
+<v-col cols="auto">
+   <v-btn color="primary"
+       v-on:click="telClick"
+       style="display:none;"
+       id="telBtn"
+   >
+      사용자 전화번호
+  </v-btn>
 </v-col>
+  
+  <table class="type02" style="display:none;" id="tbTest3">
+    <tr>
+    <th scope="row">매장ID</th>
+    <th scope="row">사용자이름</th>
+    <th scope="row">전화번호</th>
+    <th scope="row">권한</th>
+    <th scope="row">전화번호ID</th>
+    <th scope="row">알림설정권한</th>
+    <th scope="row">상태코드</th>
+    <th scope="row">mgt상태코드</th>
+    <th scope="row">승인여부</th>
+    <th scope="row">승일인날짜</th>
+    <th scope="row">등록일시</th>
+  </tr>
+  <tr>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+  </tr>
+  </table>
+  
+<v-col cols="auto">
+   <v-btn color="primary"
+       v-on:click="prodClick"
+       style="display:none;"
+       id="prodBtn"
+   >
+      상품 요약 정보
+  </v-btn>
+</v-col>
+
+  <table class="type02" style="display:none;" id="tbTest4">
+  <tr>
+    <th scope="row">매장ID</th>
+    <th scope="row">상품코드</th>
+    <th scope="row">상품이름</th>
+    <th scope="row">상품유형</th>
+    <th scope="row">갯수</th>
+    <th scope="row">등록일시</th>
+    <th scope="row">수정일시</th>
+  </tr>
+  <tr>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+  </tr>
+  </table>
+
+<v-col cols="auto">
+   <v-btn color="primary"
+       v-on:click="vaClick"
+       style="display:none;"
+       id="vaBtn"
+   >
+      사용자 VA 상품정보
+  </v-btn>
+</v-col>
+
+  <table class="type02" style="display:none;" id="tbTest5">
+  <tr>
+    <th scope="row">매장ID</th>
+    <th scope="row">상품번호</th>
+    <th scope="row">VA명</th>
+    <th scope="row">갯수</th>
+  </tr>
+  <tr>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+  </tr>
+  </table>
+
+<v-col cols="auto">
+   <v-btn color="primary"
+       v-on:click="sensorAppClick"
+       style="display:none;"
+       id="sensorAppBtn"
+   >
+      센서 신청 현황
+  </v-btn>
+</v-col>
+
+  <table class="type02" style="display:none;" id="tbTest6">
+  <tr>
+    <th scope="row">센서제품ID</th>
+    <th scope="row">제품명</th>
+    <th scope="row">갯수</th>
+    <th scope="row">상태코드</th>
+    <th scope="row">센서태그코드</th>
+  </tr>
+  <tr>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+  </tr>
+  </table>
+
+<v-col cols="auto">
+   <v-btn color="primary"
+       v-on:click="cameraClick"
+       style="display:none;"
+       id="cameraBtn"
+   >
+      카메라 정보
+  </v-btn>
+</v-col>
+
+  <table class="type02" style="display:none;" id="tbTest7">
+  <tr>
+    <th scope="row">매장ID</th>
+    <th scope="row">카메라ID</th>
+    <th scope="row">카메라IP</th>
+    <th scope="row">MAC ID</th>
+    <th scope="row">카메라명</th>
+    <th scope="row">펌웨어</th>
+    <th scope="row">상태코드</th>
+    <th scope="row">개통일시</th>
+    <th scope="row">등록일시</th>
+  </tr>
+  <tr>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+  </tr>
+  </table>
+
+<v-col cols="auto">
+   <v-btn color="primary"
+       v-on:click="iotClick"
+       style="display:none;"
+       id="iotBtn"
+   >
+      IoT GW 정보
+  </v-btn>
+</v-col>
+
+  <table class="type02" style="display:none;" id="tbTest8">
+  <tr>
+    <th scope="row">매장ID</th>
+    <th scope="row">GWID</th>
+    <th scope="row">GWID(시스템)</th>
+    <th scope="row">GW명</th>
+    <th scope="row">GW 모델코드</th>
+    <th scope="row">mac_id</th>
+    <th scope="row">상태코드</th>
+    <th scope="row">등록일</th>
+  </tr>
+  <tr>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+  </tr>
+  </table>
+
+  <v-col cols="auto">
+   <v-btn color="primary"
+       v-on:click="sensorClick"
+       style="display:none;"
+       id="sensorBtn"
+   >
+     센서 정보
+  </v-btn>
+</v-col>
+
+  <table class="type02" style="display:none;" id="tbTest9">
+  <tr>
+    <th scope="row">매장ID</th>
+    <th scope="row">센서ID</th>
+    <th scope="row">단말 GW ID</th>
+    <th scope="row">센서명</th>
+    <th scope="row">센서태그코드</th>
+    <th scope="row">mac_id</th>
+    <th scope="row">상태코드</th>
+    <th scope="row">등록일</th>
+  </tr>
+  <tr>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+  </tr>
+  </table>
 
   </v-container>  
 </template>
@@ -172,11 +396,41 @@ export default {
       document.getElementById('userName').value=value.user_name;
       document.getElementById('localGwId').value=value.local_gw_id;
       document.getElementById('telNo').value=value.tel_no;
-      document.getElementById('tbTest').style.visibility="visible";
-      document.getElementById('kttBtn').style.visibility="visible";
+
+      document.getElementById('tbTest').style.display="";
+
+      document.getElementById('kttBtn').style.display="";
+      document.getElementById('telBtn').style.display="";
+      document.getElementById('prodBtn').style.display="";
+      document.getElementById('vaBtn').style.display="";
+      document.getElementById('sensorAppBtn').style.display="";
+      document.getElementById('cameraBtn').style.display="";
+      document.getElementById('iotBtn').style.display="";
+      document.getElementById('sensorBtn').style.display="";
     },
     kttClick(){
-      document.getElementById('tbTest2').style.visibility="visible";
+      document.getElementById('tbTest2').style.display="";
+    },
+    telClick(){
+      document.getElementById('tbTest3').style.display="";
+    },
+    prodClick(){
+      document.getElementById('tbTest4').style.display="";
+    },
+    vaClick(){
+      document.getElementById('tbTest5').style.display="";
+    },
+    sensorAppClick(){
+      document.getElementById('tbTest6').style.display="";
+    },
+    cameraClick(){
+       document.getElementById('tbTest7').style.display="";
+    },
+    iotClick(){
+       document.getElementById('tbTest8').style.display="";
+    },
+    sensorClick(){
+       document.getElementById('tbTest9').style.display="";
     }
   },
 }

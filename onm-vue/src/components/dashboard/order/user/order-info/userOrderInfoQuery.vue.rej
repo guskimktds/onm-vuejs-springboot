@@ -1,0 +1,10 @@
+diff a/onm-vue/src/components/dashboard/order/user/order-info/userOrderInfoQuery.vue b/onm-vue/src/components/dashboard/order/user/order-info/userOrderInfoQuery.vue	(rejected hunks)
+@@ -26,7 +26,7 @@
+                     <v-text-field 
+                         dense 
+                         label="검색기간" 
+-                        v-model="param.enddate"
++                        v-model="param.end_date"
+                         placeholder="Placeholder" 
+                     >                        
+                     </v-text-field>

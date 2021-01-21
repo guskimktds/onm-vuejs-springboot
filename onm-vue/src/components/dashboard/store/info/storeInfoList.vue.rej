@@ -1,0 +1,9 @@
+diff a/onm-vue/src/components/dashboard/store/info/storeInfoList.vue b/onm-vue/src/components/dashboard/store/info/storeInfoList.vue	(rejected hunks)
+@@ -23,7 +23,6 @@
+ 
+     <br>
+ 
+-<table class="type02" style="visibility:hidden;" id="tbTest">
+ <table class="type02" style="display:none;" id="tbTest">
+   <tr>
+     <th scope="row">계약ID</th>
