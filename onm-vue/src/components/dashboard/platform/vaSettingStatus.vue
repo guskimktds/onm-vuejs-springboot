@@ -27,36 +27,16 @@ export default {
   },
   methods: {
     searchToList: function(params){
-      console.log("1 params = ");
-      console.log(params)
 
-      if(!params) params = new Object();
-      if(!params.local_gw_id) params.local_gw_id = 1;
-      
-      console.log("2 params = ");
-      console.log(params);
-
-      // var url = "https://test-onm.ktvsaas.co.kr:8443/V110/ONM_11004/get_va_status";
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_11004/get_va_status`
-      var headers = {
-        'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-        'Content-Type': 'application/json'
-      }
-
-      axios.post(url, params, headers)
+    axios.post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_11004/get_va_status`, params)
       .then( (response) => {
-        console.log("#####response");
-        console.log(response);
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if(resCode == 200){
+        console.log(response)
+        if(response.data.res_code == 200){
           this.pList = response.data.data.list;
-
         }else{
           this.pList = [];
-          alert(resCode + " / " + resMsg);
+          alert(response.data.res_code + " / " + response.data.res_msg);
         }
-        
       })
       .catch(function (error) {
         console.log(error);
@@ -68,10 +48,10 @@ export default {
     
     },
 
-    mounted() {
-      this.search();
-    },
+  },
 
-  }
+  mounted() {
+    this.searchToList({"local_gw_id":"D"});
+  },
 }
 </script>

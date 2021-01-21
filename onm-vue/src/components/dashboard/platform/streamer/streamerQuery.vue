@@ -12,7 +12,13 @@
 
             <v-row>
                 <v-col cols=auto>
-                    <v-select item-text="text" item-value="value" :items="localGwOptions" v-model="param.localGwId">></v-select>
+                    <v-select 
+                        item-text="text" 
+                        item-value="value" 
+                        :items="localGwOptions" 
+                        v-model="param.local_gw_id" 
+                        v-on:change="searchMethod"
+                        ></v-select>
                 </v-col>
             </v-row>
 
@@ -27,10 +33,13 @@ export default {
     data() {
         return{
             param: {
-                localGwId: '1',
+                local_gw_id: 'D', 
+                page_no:1,
+                view_cnt:50
             },
             showModal: false,
             modalTitle: '스트리머 등록',
+            /*
             localGwOptions:[
                 {text:'혜화',   value:'1'},
                 {text:'헤화-2', value:'2'},
@@ -43,6 +52,11 @@ export default {
                 {text:'구로-2', value:'4'},
                 {text:'구로-3', value:'7'},
                 {text:'구로-4', value:'8'}
+            ]
+            */
+           localGwOptions:[
+                {text:'TB1',   value:'D'},
+                {text:'TB2',   value:'E'},
             ]
         }
     },
