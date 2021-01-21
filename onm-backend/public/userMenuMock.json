@@ -85,7 +85,6 @@
                     { "name": "실시간 접속 세션 조회", "path": "/customer/rtime-access-session", "component": "rtime-access-session" },
                     { "name": "로그인 이력 조회", "path": "/customer/signin-history", "component": "signin-history" },
                     { "name": "SMS 발송 이력 조회", "path": "/customer/sms-history", "component": "sms-history" },
-                    { "name": "OTP Express 관리", "path": "/customer/otp-express", "component": "otp-express" },
                     { "name": "모바일 단말 목록", "path": "/customer/mobile-list", "component": "mobile-list" },
                     { "name": "푸시발송 이력", "path": "/customer/push-history", "component": "push-history" }
                 ]

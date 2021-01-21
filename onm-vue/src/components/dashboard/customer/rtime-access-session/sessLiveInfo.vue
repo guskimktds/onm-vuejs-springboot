@@ -33,7 +33,7 @@ export default {
   },
   created: function () {
 
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_14002/get_login_session_list'
+    var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_14002/get_login_session_list'
     // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
     var params = {
       page_no: 1,
