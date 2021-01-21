@@ -11,33 +11,34 @@
         >
 
             <v-row>
-                <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="VA IP" placeholder="Placeholder" v-model="param.va_ip">                        
-                    </v-text-field>
-                </v-col>         
-                <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="VA 상태" placeholder="Placeholder" v-model="param.va_status">                        
-                    </v-text-field>
-                </v-col> 
-                <v-col cols="12" sm="6" md="3">
-                    <v-btn elevation="2" medium v-on:click="searchMethod">
-                        검색
-                    </v-btn>
-                </v-col>                
+                <v-col cols=auto>
+                    <v-select 
+                        item-text="text" 
+                        item-value="value" 
+                        :items="localGwOptions" 
+                        v-model="param.local_gw_id" 
+                        v-on:change="searchMethod"
+                        ></v-select>
+                </v-col>
             </v-row>
 
         </base-material-card>
     </v-container>
 </template>
 
+
 <script>
 export default {
     data() {
         return{
             param: {
-                va_ip: '',
-                va_status: ''
-            }
+                local_gw_id: 'D',
+            },
+
+            localGwOptions:[
+                {text:'TB1',   value:'D'},
+                {text:'TB2',   value:'E'},
+            ]
         }
     },
     methods: {
