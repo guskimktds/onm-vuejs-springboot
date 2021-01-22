@@ -12,26 +12,6 @@
         class="px-5 py-3"
         >
             <v-row>
-                <!-- <v-col cols="12" sm="6" md="1">
-                    <v-text-field 
-                        dense 
-                        label="검색기간" 
-                        v-model="param.start_date"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>                    
-                </v-col> 
-                ~        
-                <v-col cols="12" sm="6" md="1">
-                    <v-text-field 
-                        dense 
-                        label="검색기간" 
-                        v-model="param.end_date"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col>  -->
-
                 <v-col cols="12" sm="6" md="4">
                     <v-menu
                         ref="menu"
@@ -112,8 +92,7 @@
 export default {
     props: ['param'],
     data() {
-        return {
-           
+        return {           
             approveDate: ["", ""],            
             date: false,
             menu: false
