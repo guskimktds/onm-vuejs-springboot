@@ -33,8 +33,6 @@ import UserOrderDetailObject from './user/order-detail/userOrderDetailObject'
 
 import axios from "axios"
 
-// import EventBus from '../../../EventBus';
-
 const headers = {
   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
   'Content-Type': 'application/json'
@@ -62,16 +60,6 @@ export default {
       resPagingInfo: {}
       ,
       searchParam: {
-        /*
-    "start_date": null,
-    "end_date": null,
-    "said": "",
-    "guid": "",
-    "oderno": "",
-    "page_no": 1,
-    "view_cnt": 10
-        */
-        // approveDate: [],
         start_date: '',
         end_date: '',
         said: '',
@@ -88,25 +76,24 @@ export default {
     // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
     var params = this.reqPagingInfo
 
-    axios
-        .post(url, params, headers)
-        .then((response) => {
-          console.log(response.data)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.list;
-            this.resPagingInfo = response.data.data.paging_info
+    axios.post(url, params, headers)
+    .then((response) => {
+      console.log(response.data)
+      var resCode = response.data.res_code;
+      var resMsg = response.data.res_msg;
+      if(resCode == 200){
+        this.pList = response.data.data.list;
+        this.resPagingInfo = response.data.data.paging_info
 
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패', ex)
-        })
+      }else{
+        this.pList = [];
+        this.resPagingInfo = {};
+        alert(resCode + " / " + resMsg);
+      }
+    })
+    .catch((ex) => {
+      console.log('조회 실패', ex)
+    })
   },
   methods: {
     searchToUserOrderInfo: function(params){
@@ -231,12 +218,8 @@ export default {
 
       if(params.oderno !== undefined && params.oderno !== ''){
         newParams.oderno = params.oderno
-      }
-
-      
-
+      }     
       return newParams
-
     }
   }
 }
