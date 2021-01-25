@@ -1,30 +1,35 @@
 <template>
-    <v-container
-        id="regular-tables"
-        fluid
-        tag="section"
+  <v-container id="regular-tables" fluid tag="section">
+    <base-material-card
+      color="orange"
+      dark
+      icon="mdi-keyboard"
+      title="로그인 History"
+      class="px-5 py-3"
     >
-        <base-material-card
-            color="orange"
-            dark
-            icon="mdi-keyboard"
-            title="로그인 History"
-            class="px-5 py-3"
-            >
-            <v-data-table
-                :headers="headers"
-                :items="pList"
-                class="elevation-1"
-            >          
-            </v-data-table>
-        </base-material-card>
-    </v-container>
+      <v-data-table
+        :headers="headers"
+        :items="pList"
+        :options.sync="options"
+        :server-items-length="resPagingInfo.total_cnt"
+        class="elevation-1"
+        @click:row="handleClick"
+      >
+      </v-data-table>
+    </base-material-card>
+  </v-container>
 </template>
 <script>
 export default {
-  props: ["pList"],
+  props: ["pList", "resPagingInfo"],
   data() {
     return {
+      dialog: false,
+      dialogDelete: false,
+      editedIndex: -1,
+      options: {},
+      totalList: 0,
+      loading: true,
       headers: [
         {
           text: "로그인 키",
@@ -36,10 +41,56 @@ export default {
         { text: "로그인 타입", value: "login_type" },
         { text: "만료일시", value: "expire_date" },
         { text: "로그인일시", value: "login_date" },
-        { text: "로그아웃일시", value: "logoutDate" },
+        { text: "로그아웃일시", value: "logout_date" },
         { text: "OS타입", value: "os_type" },
       ],
     };
+  },
+  methods: {
+    handleClick: function (value) {
+      this.$emit("child", value.login_key);
+    },
+
+    getDataFromApi() {
+      this.loading = true;
+
+      const { page, itemsPerPage } = this.options;
+      console.log("option")
+      console.log(this.options)
+      console.log(page, itemsPerPage);
+      this.$emit("pagination", this.options);
+    },
+    fakeApiCall() {
+      return new Promise((resolve) => {
+        const { page, itemsPerPage } = this.options;
+
+        // let items = this.getDesserts()
+        let items = this.props.pList;
+        const total = items.length;
+
+        if (itemsPerPage > 0) {
+          items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+        }
+
+        setTimeout(() => {
+          resolve({
+            items,
+            total,
+          });
+        }, 1000);
+      });
+    },
+  },
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    this.getDataFromApi();
   },
 };
 </script>

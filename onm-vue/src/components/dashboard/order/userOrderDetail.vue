@@ -105,15 +105,15 @@ export default {
 
     setToSearchParams: function(values){
       console.log(values)
-      var params = {
-        page_no: values.page,
-        view_cnt: values.itemsPerPage
-      }
+      // var params = {
+      //   page_no: values.page,
+      //   view_cnt: values.itemsPerPage
+      // }
 
       //페이징 params add search params
-      let newParams = handleParams(params)
-      console.log(newParams)
-      this.searchToUserOrderDetail(newParams)
+      //let newParams = handleParams(params)
+      //console.log(newParams)
+      //this.searchToUserOrderDetail(newParams)
     },
 
     handleParams: function(params){

@@ -32,8 +32,8 @@ const headers = {
 };
 
 const url =
-  "https://test-onm.ktvsaas.co.kr:8443/V110/ONM_14002/get_login_session_list";
-// var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
+  // "https://test-onm.ktvsaas.co.kr:8443/V110/ONM_14002/get_login_session_list";
+  `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_14002/get_login_session_list`;
 
 export default {
   components: {
@@ -85,7 +85,7 @@ export default {
         "부모 메소드 searchToSessLiveInfo 호출: " + JSON.stringify(params)
       );
       var reqParams = this.handleParams(params);
-    
+
       console.log(reqParams);
       axios
         .post(url, reqParams, headers)
@@ -96,8 +96,6 @@ export default {
           if (resCode == 200) {
             this.pList = response.data.data.session_list;
             this.resPagingInfo = response.data.data.paging_info;
-            console.log("--------resPagingInfo")
-            console.log(this.resPagingInfo)
           } else {
             this.pList = [];
             this.resPagingInfo = {};
@@ -113,7 +111,7 @@ export default {
       console.log(params);
       let newParams = {};
       if (params.page === undefined || params.page === "") {
-        newParams.page_no = this.resPagingInfo.page_no;
+        newParams.page_no = this.reqPagingInfo.page_no;
       } else {
         newParams.page_no = params.page;
       }
