@@ -29,12 +29,9 @@
 
 <script>
 export default {
+    props : ['param'],
     data() {
-        return{
-            param: {
-                local_gw_id: 'D',
-            },
-
+        return{       
             localGwOptions:[
                 {text:'TB1',   value:'D'},
                 {text:'TB2',   value:'E'},

@@ -16,6 +16,8 @@
       <v-data-table
         :headers="headers"
         :items="pList"
+        :options.sync="options"
+        :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
       >
       </v-data-table>
@@ -27,19 +29,46 @@
 
 <script>
 export default {
-    props: ['pList'],
-    data() {
-      return {
-        headers: [
-          { text: '국사코드', value: 'local_gw_id' },
-          { text: '프로세스타입', value: 'proc_type' },
-          { text: '프로세스명', value: 'proc_name' },
-          { text: '상태', value: 'proc_status' },
-          { text: '보고일시(Last)', value: 'last_upd_date' },
-        ]
-      }
-    },
+  props: ["pList", "resPagingInfo"],
+  data() {
+    return {
+      headers: [
+        { text: '국사코드', value: 'local_gw_id' },
+        { text: '프로세스타입', value: 'proc_type' },
+        { text: '프로세스명', value: 'proc_name' },
+        { text: '상태', value: 'proc_status' },
+        { text: '보고일시(Last)', value: 'last_upd_date' },
+      ],
+        dialog: false,
+        dialogDelete: false,
+        editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
 
+    }
+  },
+
+  methods: {
+    getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
+    },
+    
+  },
+
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+
+  mounted() {
+    this.getDataFromApi();
+  },
     
 }
 </script>

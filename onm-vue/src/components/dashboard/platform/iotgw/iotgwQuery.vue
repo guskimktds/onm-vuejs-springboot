@@ -28,11 +28,12 @@
 
 <script>
 export default {
+
+    props: ['param'],
+
     data() {
         return{
-            param: {
-                local_gw_id: ''
-            }
+            
         }
     },
     methods: {

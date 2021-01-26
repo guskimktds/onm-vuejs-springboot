@@ -36,22 +36,12 @@
 </template>
 <script>
 export default {
+    props: ['param'],
     data() {
-        return{
-            param: {
-                local_gw_id: '',
-                process_status: '',
-                process: ''
-            }
-        }
+        return {}
     },
     methods: {
         searchMethod: function() {
-            
-            if(!this.param.local_gw_id) delete this.param.local_gw_id;
-            if(!this.param.process_status) delete this.param.process_status;
-            if(!this.param.process) delete this.param.process;
-
             this.$emit('search', this.param)
         }
     },  
