@@ -1,5 +1,5 @@
 <template>
-    <v-form>
+
       <v-container>
         <base-material-card
         icon="mdi-magnify"
@@ -28,7 +28,7 @@
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="param.addDate" no-title scrollable range>
+              <v-date-picker v-model="param.reg_date" no-title scrollable range>
                 <v-spacer></v-spacer>
                 <v-btn text color="primary" @click="menu = false">
                   Cancel
@@ -43,7 +43,7 @@
             <v-text-field
               dense
               label="단말 GWID"
-              v-model="param.deviceGWID"
+              v-model="param.terminal_gw_id"
               placeholder=" "
               
             >
@@ -53,7 +53,7 @@
             <v-text-field
               dense
               label="사용자 ID"
-              v-model="param.usrId"
+              v-model="param.user_id"
               placeholder=" "
               
             >
@@ -63,7 +63,7 @@
             <v-text-field
               dense
               label="센서 이름"
-              v-model="param.sensorName"
+              v-model="param.sensor_name"
               placeholder=" "
               
             >
@@ -80,7 +80,6 @@
         </v-row>
         </base-material-card>
       </v-container>
-    </v-form>
 </template>
 
 <script>
@@ -88,10 +87,10 @@ export default {
   data() {
     return {
       param: {
-        addDate: ["", ""],
-        deviceGWID: "",
-        usrId: "",
-        sensorName: "",
+        reg_date: ["", ""],
+        terminal_gw_id: "",
+        user_id: "",
+        sensor_name: "",
       },
       date: false,
       menu: false,
@@ -99,9 +98,9 @@ export default {
   },
   computed: {
     dateRangeText() {
-      if (this.param.addDate[0].length == 0) {
+      if (this.param.reg_date[0].length == 0) {
         return "";
-      } else return this.param.addDate.join(" ~ ");
+      } else return this.param.reg_date.join(" ~ ");
     },
   },
   methods: {

@@ -1,6 +1,4 @@
 <template>
-  
-    <v-form>
       <v-container>
         <base-material-card
         icon="mdi-magnify"
@@ -29,7 +27,7 @@
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="param.openDate" no-title scrollable range>
+              <v-date-picker v-model="param.open_date" no-title scrollable range>
                 <v-spacer></v-spacer>
                 <v-btn text color="primary" @click="menu = false">
                   Cancel
@@ -44,7 +42,7 @@
             <v-text-field
               dense
               label="카메라 ID"
-              v-model="param.camId"
+              v-model="param.cam_id"
               placeholder=" "
               
             >
@@ -54,7 +52,7 @@
             <v-text-field
               dense
               label="카메라명 "
-              v-model="param.camName"
+              v-model="param.cam_name"
               placeholder=" "
               
             >
@@ -64,7 +62,7 @@
             <v-text-field
               dense
               label="MAC ID"
-              v-model="param.macId"
+              v-model="param.mac_id"
               placeholder=" "
               
             >
@@ -81,7 +79,6 @@
         </v-row>
         </base-material-card>
       </v-container>
-    </v-form>
 </template>
 
 <script>
@@ -89,10 +86,10 @@ export default {
   data() {
     return {
       param: {
-        openDate: ["", ""],
-        camId: "",
-        camName: "",
-        macId: "",
+        open_date: ["", ""],
+        cam_id: "",
+        cam_name: "",
+        mac_id: "",
       },
       date: false,
       menu: false,
@@ -100,9 +97,9 @@ export default {
   },
   computed: {
     dateRangeText() {
-      if (this.param.openDate[0].length == 0) {
+      if (this.param.open_date[0].length == 0) {
         return "";
-      } else return this.param.openDate.join(" ~ ");
+      } else return this.param.open_date.join(" ~ ");
     },
   },
   methods: {

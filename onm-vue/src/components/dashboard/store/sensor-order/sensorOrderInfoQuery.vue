@@ -1,6 +1,4 @@
 <template>
-  <div>
-    <v-form>
       <v-container>
         <base-material-card
         icon="mdi-magnify"
@@ -12,7 +10,7 @@
             <v-text-field
               dense
               label="센서 ID"
-              v-model="param.sensorId"
+              v-model="param.sensor_prod_id"
               placeholder=" "
              
             >
@@ -22,7 +20,7 @@
             <v-text-field
               dense
               label="상태 코드"
-              v-model="param.statusCode"
+              v-model="param.status_code"
               placeholder=" "
               
             >
@@ -32,7 +30,7 @@
             <v-text-field
               dense
               label="센서 제품명"
-              v-model="param.sensorName"
+              v-model="param.sensor_prod_name"
               placeholder=" "
               
             >
@@ -50,21 +48,11 @@
         </v-row>
         </base-material-card>
       </v-container>
-    </v-form>
-  </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      param: {
-        sensorId: "",
-        statusCode: "",
-        sensorName: "",
-      },
-    };
-  },
+ props:['param'],
   methods: {
     searchMethod: function () {
       this.$emit("search", this.param);

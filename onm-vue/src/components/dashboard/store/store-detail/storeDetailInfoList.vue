@@ -4,7 +4,6 @@
       fluid
       tag="section"
     >
-
     <base-material-card
         color="orange"
         dark
@@ -14,36 +13,34 @@
       >
       <v-data-table
         :headers="headers"
-        :items="List"
-        :items-per-page="5"
-        item-key="contractId"
+        :items="pList"
+        :options.sync="options"
+        :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
       >
-        <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
-          <td :colspan="headers.length">
-            <List></List>
-          </td>
-        </template>       -->
-    </v-data-table>
-
+      </v-data-table>
     </base-material-card>
-  </v-container>
+
+  </v-container>  
 </template>
 
 <script>
 export default {
-    props: ['List'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
-    data() {
+  props: ['pList','resPagingInfo'],
+  data() {
     return {
-      headers: [
+      dialog:false,
+      dialogDelete:false,
+      editedIndex:-1,
+      options:{},
+      totalList: 0,
+      loading: true,
+      headers:[
         {
-          text: "사용자ID",
-          align: "start",
-          sortable: false,
-          value: "user_id",
+          text: "매장ID", align: "start",
+          sortable: false, value: "user_id"
         },
-        { text: "사용자명", value: "user_name" },
+        { text: "매장명", value: "user_name" },
         { text: "상품코드", value: "prod_code" },
         { text: "상태코드", value: "status_code" },
         { text: "주문번호", value: "order_no" },
@@ -54,9 +51,55 @@ export default {
         { text: " ", value: " " },
         { text: "/", value: " " },
         { text: "희망처리일자", value: "appoint_date" },
-      ],
-    };
+      ]
+    }
   },
+
+  methods: {
+
+      getDataFromApi () {
+        console.log(this.resPagingInfo)
+        this.loading = true
+
+        const { page, itemsPerPage } = this.options
+        console.log(page, itemsPerPage)
+        this.$emit("pagination", this.options)
+      },
+
+      fakeApiCall () {
+        return new Promise((resolve) => {
+          const {page, itemsPerPage } = this.options
+
+          let items = this.props.pList
+          console.log(items)
+          const total = items.length
+
+          if (itemsPerPage > 0) {
+            items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+          }
+
+          setTimeout(() => {
+            resolve({
+              items,
+              total,
+            })
+          }, 1000)
+        })
+      }
+      
+    },
+    watch: {
+      options: {
+        handler () {
+          this.getDataFromApi()
+        },
+        deep: true,
+      },
+    },
+    mounted () {
+      this.getDataFromApi()
+    }
+
 }
 </script>
 <style>

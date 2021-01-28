@@ -30,7 +30,7 @@
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="param.addDate" no-title scrollable range>
+              <v-date-picker v-model="param.reg_date" no-title scrollable range>
                 <v-spacer></v-spacer>
                 <v-btn text color="primary" @click="menu = false">
                   Cancel
@@ -46,7 +46,7 @@
             <v-text-field
               dense
               label="사용자 ID"
-              v-model="param.usrID"
+              v-model="param.user_id"
               placeholder=" "
               
             >
@@ -57,7 +57,7 @@
             <v-text-field
               dense
               label="서비스 번호"
-              v-model="param.serviceNum"
+              v-model="param.service_no"
               placeholder=" "
              
             >
@@ -68,7 +68,7 @@
             <v-text-field
               dense
               label="시스템 ID"
-              v-model="param.systemId"
+              v-model="param.system_id"
               placeholder=" "
               
             >
@@ -94,10 +94,10 @@ export default {
   data() {
     return {
       param: {
-        addDate: ["",""],
-        usrID: "",
-        serviceNum: "",
-        systemId: "",
+        reg_date: ["",""],
+        user_id: "",
+        service_no: "",
+        system_id: "",
       },
       date: false,
       menu: false,
@@ -105,9 +105,9 @@ export default {
   },
   computed: {
     dateRangeText() {
-      if (this.param.addDate[0].length == 0) {
+      if (this.param.reg_date[0].length == 0) {
         return "";
-      } else return this.param.addDate.join(" ~ ");
+      } else return this.param.reg_date.join(" ~ ");
     },
   },
   methods: {

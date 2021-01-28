@@ -30,7 +30,7 @@
                 ></v-text-field>
               </template>
               <v-date-picker
-                v-model="param.modifiedDate"
+                v-model="param.mod_date"
                 no-title
                 scrollable
                 range
@@ -54,7 +54,7 @@
             <v-text-field
               dense
               label="상품번호"
-              v-model="param.productCode"
+              v-model="param.prod_code"
               placeholder=" "
         
             >
@@ -65,7 +65,7 @@
             <v-text-field
               dense
               label="사용자 ID"
-              v-model="param.usrID"
+              v-model="param.user_id"
               placeholder=" "
            
             >
@@ -92,9 +92,9 @@ export default {
   data() {
     return {
       param: {
-        modifiedDate: ["", ""],
-        productCode: "",
-        usrID: "",
+        mod_date: ["", ""],
+        prod_code: "",
+        user_id: "",
       },
       date: false,
       menu: false,
@@ -102,9 +102,9 @@ export default {
   },
   computed: {
     dateRangeText() {
-      if (this.param.modifiedDate[0].length == 0) {
+      if (this.param.mod_date[0].length == 0) {
         return "";
-      } else return this.param.modifiedDate.join(" ~ ");
+      } else return this.param.mod_date.join(" ~ ");
     },
   },
   methods: {

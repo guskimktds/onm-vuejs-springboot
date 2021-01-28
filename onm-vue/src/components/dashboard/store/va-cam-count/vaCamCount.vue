@@ -1,8 +1,14 @@
 <template>
     <v-container fluid>
       <v-card>
-        <vaCamCount-query v-on:search="searchToVaCamCount"></vaCamCount-query>
-        <vaCamCount-list v-bind:List="list"></vaCamCount-list>
+        <vaCamCount-query
+         v-on:search="searchToVaCamCount"
+         v-bind:param=searchParam></vaCamCount-query>
+        <vaCamCount-list 
+          v-bind:vaList="vaList"
+          v-bind:resPagingInfo=resPagingInfo
+
+          @pagination="setToSearchParams"></vaCamCount-list>
       </v-card>
     </v-container>
 </template>
@@ -13,6 +19,11 @@ import VaCamCountQuery from "./vaCamCountQuery";
 
 import axios from "axios";
 
+const headers={
+  'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+  'Content-Type': 'application/json'
+}
+
 export default {
   components: {
     VaCamCountList,
@@ -21,51 +32,108 @@ export default {
   data() {
     return {
       title: "VA상품 및 카메라 대수 확인",
-      list: [],
-      // pList: [
-      //   {usrId: "0009755665", productCode: "1", vaName:"VA 서비스 영상분석 6종", vaCount:1},
-      //   {usrId: "0009755664", productCode: "5", vaName:"기본 VA 서비스 영상분석 6종", vaCount:1},
-      // ]
-    };
+      vaList: [],
+      reqPagingInfo:{
+        page_no:1,
+        view_cnt:10
+      },
+      resPagingInfo:{},
+      searchParam:{
+        mod_date:'',
+        prod_code:'',
+        user_id:''
+      }
+    }
   },
+  
   created: function () {
-    axios
-      .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13006/get_user_va_list`,{
-        
-        "page_no": 1,
-        "view_cnt": 5
+  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13006/get_user_va_list`
+  
+  var params=this.reqPagingInfo
 
-      })
-      .then((result) => {
-        console.log(result);
-        // this.list = JSON.parse(result.data.menu)
-        this.list = result.data.data.va_prod_list;
-      })
-      .catch((ex) => {
-        console.log("조회 실패", ex);
-      });
-  },
-  methods: {
-    searchToVaCamCount: function (params) {
-      console.log(
-        "부모 메소드 searchToVaCamCount 호출: " + JSON.stringify(params)
-      );
-      console.log(process.env);
-      axios
-        .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/store-vcc/query`, {
-          params,
-        })
-        .then((result) => {
-          console.log(result);
-          // this.list = JSON.parse(result.data.menu)
-          this.list = result.data;
+    axios
+        .post(url, params, headers)
+        .then((response) => {
+          console.log(response.data)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.vaList = response.data.data.va_prod_list;
+            this.resPagingInfo = response.data.data.paging_info
+          }else{
+            this.vaList = [];
+            this.resPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
         })
         .catch((ex) => {
-          console.log("조회 실패", ex);
-        });
-    },
+          console.log('조회 실패', ex)
+        })
   },
-};
+ methods: {
+  searchToVaCamCount: function (params) {
+    
+   var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13006/get_user_va_list`
+
+   var reqParams=this.handleParams(params)
+  
+      axios.post(url, reqParams, headers)
+      .then((response) => {
+        console.log(response)
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.vaList = response.data.data.va_prod_list;
+          this.resPagingInfo = response.data.data.paging_info
+    
+        }else{
+          this.vaList = [];
+          this.resPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
+    },
+
+    setToSearchParams: function(values){
+      console.log(values)
+
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      console.log(params)
+
+      this.searchToVaCamCount(params)
+    },
+
+    handleParams:function(params){
+    let newParams = {}
+      if(params.page_no === undefined || params.page_no === ''){
+        newParams.page_no = this.reqPagingInfo.page_no
+      }else{
+        newParams.page_no = params.page_no
+      }
+      if(params.view_cnt === undefined || params.view_cnt === ''){
+        newParams.view_cnt = this.reqPagingInfo.view_cnt
+      }else{
+        newParams.view_cnt = params.view_cnt
+      }
+
+      if(params.va_name !== undefined && params.va_name !== ''){
+        newParams.va_name = params.va_name
+      }
+      if(params.user_id !== undefined && params.user_id !== ''){
+        newParams.user_id = params.user_id
+      }
+
+      return newParams
+    }
+  },
+}
 </script>
 
 <style scoped>

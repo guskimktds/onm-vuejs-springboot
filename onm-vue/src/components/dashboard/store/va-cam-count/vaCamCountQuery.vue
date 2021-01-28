@@ -1,7 +1,4 @@
 <template>
-  <div>
-    
-    <v-form>
       <v-container>
         <base-material-card
         icon="mdi-magnify"
@@ -13,7 +10,7 @@
             <v-text-field
               dense
               label="사용자 ID"
-              v-model="param.usrID"
+              v-model="param.user_id"
               placeholder=" "
              
             >
@@ -24,7 +21,7 @@
             <v-text-field
               dense
               label="VA 명"
-              v-model="param.vaName"
+              v-model="param.va_name"
               placeholder=" "
              
             >
@@ -42,19 +39,10 @@
         </v-row>
         </base-material-card>
       </v-container>
-    </v-form>
-  </div>
 </template>
 <script>
 export default {
-  data() {
-    return {
-      param: {
-        usrID: "",
-        vaName: "",
-      },
-    };
-  },
+ props:['param'],
   methods: {
     searchMethod: function () {
       this.$emit("search", this.param);
