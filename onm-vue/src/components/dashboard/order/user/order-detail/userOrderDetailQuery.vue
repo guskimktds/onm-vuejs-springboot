@@ -4,7 +4,6 @@
         fluid
         tag="section"
     >
-
         <base-material-card
         icon="mdi-magnify"
         title="사용자 청약 오더 상세 검색"
@@ -35,13 +34,7 @@
 </template>
 <script>
 export default {
-    data() {
-        return{
-            param: {
-                guid: ''
-            }
-        }
-    },
+    props: ['param'],
     methods: {
         searchMethod: function() {
             this.$emit('search', this.param)

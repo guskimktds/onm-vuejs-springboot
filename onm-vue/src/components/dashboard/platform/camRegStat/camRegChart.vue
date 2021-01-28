@@ -14,13 +14,13 @@
 
           <v-row>
             <v-col cols='4'>
-              <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
+              <line-chart :chart-data="fillData()" :options="chartOptions" :styles="myStyles"></line-chart>
             </v-col>
             <v-col cols='4'>
-              <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
+              <line-chart :chart-data="fillData()" :options="chartOptions" :styles="myStyles"></line-chart>
             </v-col>
             <v-col cols='4'>
-              <line-chart :chart-data="fillData()" :options="chartOptions" height="250px"></line-chart>
+              <line-chart :chart-data="fillData()" :options="chartOptions" :styles="myStyles"></line-chart>
             </v-col>
           </v-row>
 
@@ -75,6 +75,13 @@
       getRandomInt () {
         return Math.floor(Math.random() * 100000)
       }
+    },
+    computed: {
+        myStyles () {
+            return {
+                height: `250px`,
+            }
+        }
     }
   }
 </script>

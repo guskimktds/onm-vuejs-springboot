@@ -1,26 +1,9 @@
 <template>
-   <!-- <div id="app">
-    <v-app id="inspire">
-      <div>
-        <v-data-table
-          :headers="headers"
-          :items="pList"
-          class="elevation-1"
-        >          
-        </v-data-table>
-      </div>      
-    </v-app>
-  </div> -->
   <v-container
     id="regular-tables"
     fluid
     tag="section"
   >
-  <!-- <base-material-card
-      icon="mdi-clipboard-text"
-      title="Simple Table"
-      class="px-5 py-3"
-    > -->
     <base-material-card
       color="orange"
       dark
@@ -54,7 +37,6 @@ export default {
         dialogDelete: false,
         editedIndex: -1,
         options: {},
-        totalList: 0,
         loading: true,
         headers: [
           {
@@ -76,20 +58,14 @@ export default {
       }
     },
     methods: {
+      // guid 개별 row 클릭 시 이벤트 전달
       handleClick: function(value){
         console.log(value)
         this.$emit("child", value.guid);
       },
 
       getDataFromApi () {
-        // console.log(this.resPagingInfo)
-        this.loading = true
-        // this.fakeApiCall().then(data => {
-        //   this.desserts = data.items
-        // this.totalList = this.resPagingInfo.total_page_cnt
-        //   this.loading = false
-        // })
-
+        this.loading = true     
         const { page, itemsPerPage } = this.options
         console.log(page, itemsPerPage)
         this.$emit("pagination", this.options)
@@ -99,7 +75,6 @@ export default {
         return new Promise((resolve) => {
           const {page, itemsPerPage } = this.options
 
-          // let items = this.getDesserts()
           let items = this.props.pList
           console.log(items)
           const total = items.length

@@ -29,14 +29,9 @@
 <script>
 
 export default {
-    
+    props : ['param'],
     data() {
         return{
-            param: {
-                local_gw_id: 'D', 
-                page_no:1,
-                view_cnt:50
-            },
             showModal: false,
             modalTitle: '스트리머 등록',
             /*

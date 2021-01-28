@@ -1,7 +1,10 @@
 <template>
     <v-container fluid>
       <v-card>
-        <process-query v-on:search="searchToProcess"></process-query>
+        <process-query 
+          v-on:search="searchToProcess"
+          v-bind:param="searchParam"
+        ></process-query>
         <process-list v-bind:pList=pList></process-list>
       </v-card>
     </v-container>
@@ -14,6 +17,13 @@ import Query from './iotgw/iotgwQuery'
 
 import axios from "axios"
 
+const headers = {
+  "User-Agent": "GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)",
+  "Content-Type": "application/json",
+};
+
+const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11003/get_iotgw_status`;
+
 export default {
   components: {
     'process-list': List,
@@ -23,12 +33,17 @@ export default {
     return {
       title: 'IoT GW 상태현황',
       pList: [],
+      searchParam: {
+          local_gw_id: ''
+      }
     }
   },
   methods: {
     searchToProcess: function(params){
 
-      axios.post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_11003/get_iotgw_status`, params)
+      var reqParams = this.handleParams(params);
+
+      axios.post(url, reqParams, headers)
       .then( (response) => {
         if(response.data.res_code == 200){
           this.pList = response.data.data.list;
@@ -44,11 +59,29 @@ export default {
       .finally(function () {
         // always executed
       });
-    }
+    },
+
+    handleParams: function (params) {
+
+      let newParams = {};
+
+      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
+        newParams.local_gw_id = params.local_gw_id;
+      } else if (
+        this.searchParam.local_gw_id !== undefined &&
+        this.searchParam.local_gw_id !== ""
+      ) {
+        newParams.local_gw_id = this.searchParam.local_gw_id;
+      }
+
+      return newParams;
+    },
+    
     
   },
+
   created: function() {
-    this.searchToProcess({"page_no":"1", "view_cnt":"10"});
+    this.searchToProcess(this.searchParam);
   }  
 }
 </script>

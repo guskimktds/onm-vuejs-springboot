@@ -27,31 +27,22 @@
 
 <script>
 export default {
-    props: ['pList'],
-    data() {
-      return {
-        headers: [
-          { text: '국사코드', value: 'local_gw_id' },
-          { text: '전체', value: 'total_cnt' },
-          { text: '정상', value: 'normal_cnt' },
-          { text: '개통대기', value: 'waiting_cnt' },
-          { text: '개통진행', value: 'proc_cnt' },
-          { text: '개통실패', value: 'fail_cnt' },
-          { text: '네트워크장애', value: 'disconn_cnt' },
-        ]
-      }
+  props: ['pList'],
+  data() {
+    return {
+      headers: [
+        { text: '국사코드', value: 'local_gw_id' },
+        { text: '전체', value: 'total_cnt' },
+        { text: '정상', value: 'normal_cnt' },
+        { text: '개통대기', value: 'waiting_cnt' },
+        { text: '개통진행', value: 'proc_cnt' },
+        { text: '개통실패', value: 'fail_cnt' },
+        { text: '네트워크장애', value: 'disconn_cnt' },
+      ],
     }
+  },
 
-    /*
-    disconn_cnt: "7"
-    fail_cnt: "0"
-    local_gw_id: "1"
-    normal_cnt: "5"
-    pause_cnt: "0"
-    proc_cnt: "0"
-    total_cnt: "12"
-    waiting_cnt: "0"
-    */
+
 }
 </script>
 

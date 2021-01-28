@@ -15,6 +15,7 @@
                 :headers="headers"
                 :items="pList"
                 :options.sync="options"
+                :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
             >          
             </v-data-table>
@@ -25,7 +26,7 @@
 <script>
 
 export default {
-    props: ['pList'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
         dialog: false,
@@ -57,14 +58,6 @@ export default {
         ]
       }
     },
-    // mounted: function(){
-    //   console.log("mounted : ")
-    //   console.log(pagination)
-    // },
-    // created: function(){
-    //   console.log("created : ")
-    //   console.log(pagination)
-    // }
     watch: {
       options: {
         handler () {
@@ -78,16 +71,32 @@ export default {
     },
     methods: {
       getDataFromApi () {
-        this.loading = true
-        // this.fakeApiCall().then(data => {
-        //   this.desserts = data.items
-        //   this.totalDesserts = data.total
-        //   this.loading = false
-        // })
-
-        const { sortBy, sortDesc, page, itemsPerPage } = this.options
-        console.log(sortBy, sortDesc, page, itemsPerPage)
+        this.loading = true     
+        const { page, itemsPerPage } = this.options
+        console.log(page, itemsPerPage)
+        this.$emit("pagination", this.options)
       },
+
+      fakeApiCall () {
+        return new Promise((resolve) => {
+          const {page, itemsPerPage } = this.options
+          let items = this.props.pList
+ 
+          const total = items.length
+
+          if (itemsPerPage > 0) {
+            items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+          }
+
+          setTimeout(() => {
+            resolve({
+              items,
+              total,
+            })
+          }, 1000)
+        })
+      }
+
     }
 
 }
