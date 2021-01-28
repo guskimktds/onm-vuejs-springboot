@@ -1,9 +1,9 @@
 <template>
-    <v-form>
+ 
       <v-container>
         <base-material-card
         icon="mdi-magnify"
-        title="매장정보 조회"
+        title="매장정보 검색"
         class="px-5 py-3"
         >
         <v-row>
@@ -11,19 +11,7 @@
             <v-text-field
               dense
               label="계약 ID"
-              v-model="param.contractId"
-              placeholder=" "
-              v-on:click="counter+=1"
-            >
-            
-            </v-text-field>
-          </v-col>
-
-          <v-col cols="12" sm="6" md="2">
-            <v-text-field
-              dense
-              label="사용자명"
-              v-model="param.usrName"
+              v-model="param.said"
               placeholder=" "
             >
             </v-text-field>
@@ -32,8 +20,8 @@
           <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
-              label="사용자 ID"
-              v-model="param.usrID"
+              label="매장명"
+              v-model="param.user_name"
               placeholder=" "
             >
             </v-text-field>
@@ -42,8 +30,18 @@
           <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
-              label="사용자 전화번호"
-              v-model="param.usrNumber"
+              label="매장ID"
+              v-model="param.user_id"
+              placeholder=" "
+            >
+            </v-text-field>
+          </v-col>
+
+          <v-col cols="12" sm="6" md="2">
+            <v-text-field
+              dense
+              label="매장 전화번호"
+              v-model="param.tel_no"
               placeholder=" "
             >
             </v-text-field>
@@ -60,21 +58,12 @@
         </v-row>
         </base-material-card>
       </v-container>
-    </v-form>
+
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      param: {
-        contractId: "",
-        usrName: "",
-        usrID: "",
-        usrNumber: "",
-      },
-    };
-  },
+  props:['param'],
   methods: {
     searchMethod: function () {
       this.$emit("search", this.param);

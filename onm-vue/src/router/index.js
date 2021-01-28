@@ -22,7 +22,7 @@ import CamregStat from '@/components/dashboard/platform/camRegStat/camRegStat'
 import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
 
 // 매장 정보 조회 메뉴
-import StoreInfo from '../components/dashboard/store/info/storeInfo'
+import StoreInfo from '../components/dashboard/store/storeInfo'
 import StoreDetailInfo from '../components/dashboard/store/store-detail/storeDetailInfo'
 import StoreProductInfo from '../components/dashboard/store/store-product/storeProductInfo'
 import StoreProductSummaryInfo from '../components/dashboard/store/product-summary/storeProductSummaryInfo'

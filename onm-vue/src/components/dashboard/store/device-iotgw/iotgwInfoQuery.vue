@@ -1,5 +1,4 @@
 <template>
-    <v-form>
       <v-container>
         <base-material-card
         icon="mdi-magnify"
@@ -28,7 +27,7 @@
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="param.openDate" no-title scrollable range>
+              <v-date-picker v-model="param.open_date" no-title scrollable range>
                 <v-spacer></v-spacer>
                 <v-btn text color="primary" @click="menu = false">
                   Cancel
@@ -43,7 +42,7 @@
             <v-text-field
               dense
               label="단말 GWID"
-              v-model="param.deviceGWID"
+              v-model="param.gw_id"
               placeholder=" "
             
             >
@@ -53,7 +52,7 @@
             <v-text-field
               dense
               label="단말GW명 "
-              v-model="param.gwName"
+              v-model="param.gw_name"
               placeholder=" "
               
             >
@@ -63,7 +62,7 @@
             <v-text-field
               dense
               label="단말모델코드 "
-              v-model="param.modelCode"
+              v-model="param.gw_model_code"
               placeholder=" "
              
             >
@@ -81,7 +80,6 @@
         </v-row>
         </base-material-card>
       </v-container>
-    </v-form>
 </template>
 
 <script>
@@ -89,10 +87,10 @@ export default {
   data() {
     return {
       param: {
-        openDate: ["", ""],
-        deviceGWID: "",
-        gwName: "",
-        modelCode: "",
+        open_date: ["", ""],
+        gw_id: "",
+        gw_name: "",
+        gw_model_code: "",
       },
       date: false,
       menu: false,
@@ -100,9 +98,9 @@ export default {
   },
   computed: {
     dateRangeText() {
-      if (this.param.openDate[0].length == 0) {
+      if (this.param.open_date[0].length == 0) {
         return "";
-      } else return this.param.openDate.join(" ~ ");
+      } else return this.param.open_date.join(" ~ ");
     },
   },
   methods: {

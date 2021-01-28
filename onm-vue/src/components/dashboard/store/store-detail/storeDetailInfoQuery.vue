@@ -30,7 +30,7 @@
                 ></v-text-field>
               </template>
               <v-date-picker
-                v-model="param.approveHopeDate"
+                v-model="param.appoint_date"
                 no-title
                 scrollable
                 range
@@ -53,8 +53,8 @@
           <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
-              label="사용자명"
-              v-model="param.usrName"
+              label="매장명"
+              v-model="param.user_name"
               placeholder=" "
           
             >
@@ -64,8 +64,8 @@
           <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
-              label="사용자 ID"
-              v-model="param.usrID"
+              label="매장ID"
+              v-model="param.user_id"
               placeholder=" "
             >
             </v-text-field>
@@ -75,7 +75,7 @@
             <v-text-field
               dense
               label="상태"
-              v-model="param.status"
+              v-model="param.status_code"
               placeholder=" "
             >
             </v-text-field>
@@ -100,10 +100,10 @@ export default {
   data() {
     return {
       param: {
-        approveHopeDate: ["", ""],
-        usrName: "",
-        usrID: "",
-        status: "",
+        appoint_date: ["", ""],
+        user_name: "",
+        user_id: "",
+        status_code: "",
       },
       date: false,
       menu: false,
@@ -111,9 +111,9 @@ export default {
   },
   computed: {
     dateRangeText() {
-      if (this.param.approveHopeDate[0].length == 0) {
+      if (this.param.appoint_date[0].length == 0) {
         return "";
-      } else return this.param.approveHopeDate.join(" ~ ");
+      } else return this.param.appoint_date.join(" ~ ");
     },
   },
   methods: {

@@ -13,16 +13,11 @@
       >
       <v-data-table
         :headers="headers"
-        :items="List"
-        :items-per-page="5"
-        item-key="contractId"
+        :items="kList"
+        :options.sync="options"
+        :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
       >
-        <!-- <template v-slot:expanded-item="{ headers }" :style="`background-color: red`">
-          <td :colspan="headers.length">
-            <List></List>
-          </td>
-        </template>       -->
       </v-data-table>
     </base-material-card>
   </v-container>
@@ -30,13 +25,18 @@
 
 <script>
 export default {
-  props: ["List"],
-  //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
+  props: ["kList",'resPagingInfo'],
   data() {
     return {
+      dialog: false,
+      dialogDelete: false,
+      editedIndex: -1,
+      options: {},
+      totalList: 0,
+      loading: true,
       headers: [
         {
-          text: "사용자 ID",
+          text: "매장 ID",
           align: "start",
           sortable: false,
           value: "user_id",
@@ -49,7 +49,52 @@ export default {
       ],
     };
   },
-};
+ methods: {
+
+      getDataFromApi () {
+        console.log(this.resPagingInfo)
+        this.loading = true
+
+        const { page, itemsPerPage } = this.options
+        console.log(page, itemsPerPage)
+        this.$emit("pagination", this.options)
+      },
+
+      fakeApiCall () {
+        return new Promise((resolve) => {
+          const {page, itemsPerPage } = this.options
+
+          let items = this.props.kList
+          console.log(items)
+          const total = items.length
+
+          if (itemsPerPage > 0) {
+            items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+          }
+
+          setTimeout(() => {
+            resolve({
+              items,
+              total,
+            })
+          }, 1000)
+        })
+      }
+      
+    },
+    watch: {
+      options: {
+        handler () {
+          this.getDataFromApi()
+        },
+        deep: true,
+      },
+    },
+    mounted () {
+      this.getDataFromApi()
+    }
+
+}
 </script>
 <style>
 </style>

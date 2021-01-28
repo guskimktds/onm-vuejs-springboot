@@ -3,8 +3,12 @@
       <v-card>
         <sensorOrderInfo-query
           v-on:search="searchSensorOrderInfo"
-        ></sensorOrderInfo-query>
-        <sensorOrderInfo-list v-bind:List="list"></sensorOrderInfo-list>
+          v-bind:param=searchParam></sensorOrderInfo-query>
+        <sensorOrderInfo-list 
+        v-bind:soList="soList"
+        v-bind:resPagingInfo=resPagingInfo
+        
+        @pagination="setToSearchParams"></sensorOrderInfo-list>
       </v-card>
     </v-container>
 </template>
@@ -15,6 +19,11 @@ import SensorOrderInfoQuery from "./sensorOrderInfoQuery";
 
 import axios from "axios";
 
+const headers={
+  'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+  'Content-Type': 'application/json'
+}
+
 export default {
   components: {
     SensorOrderInfoList,
@@ -23,52 +32,113 @@ export default {
   data() {
     return {
       title: "사용자 센서 신청 현황",
-      list: [],
-      // pList: [
-      //   {sensorId: "1", sensorName: "문열림센서", sensorTag:"S", statusCode:"10002", sensorCnt:2},
-      //   {sensorId: "2", sensorName: "유리창깨짐센서", sensorTag:"S", statusCode:"10003", sensorCnt:1},
-      //   {sensorId: "3", sensorName: "움직임센서", sensorTag:"S", statusCode:"10004", sensorCnt:2},
-      // ]
-    };
+      soList: [],
+      reqPagingInfo:{
+        page_no:1,
+        view_cnt:10
+      },
+      resPagingInfo:{},
+      searchParam:{
+        mod_date:'',
+        prod_code:'',
+        user_id:''
+      }
+    }
   },
   created: function () {
-    axios
-      .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13007/get_sensor_status_list`,{
-        
-        "page_no": 1,
-        "view_cnt": 5
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13007/get_sensor_status_list`
+    
+    var params=this.reqPagingInfo
 
-      })
-      .then((result) => {
-        console.log(result);
-        // this.list = JSON.parse(result.data.menu)
-        this.list = result.data.data.sensor_list;
-      })
-      .catch((ex) => {
-        console.log("조회 실패", ex);
-      });
-  },
-  methods: {
-    searchSensorOrderInfo: function (params) {
-      console.log(
-        "부모 메소드 searchSensorOrderInfo 호출: " + JSON.stringify(params)
-      );
-      console.log(process.env);
-      axios
-        .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/store-detail/query`, {
-          params,
-        })
-        .then((result) => {
-          console.log(result);
-          // this.list = JSON.parse(result.data.menu)
-          this.list = result.data;
+    axios
+        .post(url, params, headers)
+        .then((response) => {
+          console.log(response.data)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.soList = response.data.data.sensor_list;
+            this.resPagingInfo = response.data.data.paging_info
+          }else{
+            this.soList = [];
+            this.resPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
         })
         .catch((ex) => {
-          console.log("조회 실패", ex);
-        });
-    },
+          console.log('조회 실패', ex)
+        })
   },
-};
+ methods: {
+  searchSensorOrderInfo: function (params) {
+    
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13007/get_sensor_status_list`
+
+    var reqParams=this.handleParams(params)
+    console.log('센서id')
+    console.log(params.sensor_prod_id)
+  
+      axios.post(url, reqParams, headers)
+      .then((response) => {
+        console.log(response)
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.soList = response.data.data.sensor_list;
+          this.resPagingInfo = response.data.data.paging_info
+    
+        }else{
+          this.soList = [];
+          this.resPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
+    },
+    
+    setToSearchParams: function(values){
+      console.log(values)
+
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      console.log(params)
+
+      this.searchSensorOrderInfo(params)
+    },
+
+    handleParams:function(params){
+    let newParams = {}
+      if(params.page_no === undefined || params.page_no === ''){
+        newParams.page_no = this.reqPagingInfo.page_no
+      }else{
+        newParams.page_no = params.page_no
+      }
+      if(params.view_cnt === undefined || params.view_cnt === ''){
+        newParams.view_cnt = this.reqPagingInfo.view_cnt
+      }else{
+        newParams.view_cnt = params.view_cnt
+      } 
+
+      if(params.sensor_prod_id !== undefined && params.sensor_prod_id !== ''){
+        newParams.sensor_prod_id = params.sensor_prod_id
+      }
+      if(params.status_code !== undefined && params.status_code !== ''){
+        newParams.status_code = params.status_code
+      }
+      if(params.sensor_prod_name !== undefined && params.sensor_prod_name !== ''){
+        newParams.sensor_prod_name = params.sensor_prod_name
+      }
+
+      return newParams
+    }
+  },
+}
+
 </script>
 
 <style scoped>

@@ -8,16 +8,15 @@
         color="orange"
         dark
         icon="mdi-keyboard"
-        title="매장정보 조회 LIST"
+        title="사용자 전화번호 조회 LIST"
         class="px-5 py-3"
       >
       <v-data-table
         :headers="headers"
-        :items="pList"
+        :items="pnList"
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
-        @click:row="handleClick"
       >
       </v-data-table>
     </base-material-card>
@@ -27,8 +26,8 @@
 
 <script>
 export default {
-    props: ['pList','resPagingInfo'],
-
+    props: ['pnList','resPagingInfo'],
+    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
     data() {
     return {
         dialog: false,
@@ -39,24 +38,24 @@ export default {
         loading: true,
         headers: [
         {
-          text: "계약ID", align: "start",
-          sortable: false, value: "said",
+          text: "매장ID", align: "start",
+          sortable: false, value: "user_id",
         },
-        { text: "매장ID", value: "user_id" },
-        { text: "매장명", value: "user_name" },
-        { text: "매장 전화번호", value: "tel_no" },
+        { text: "사용자이름", value: "user_name" },
+        { text: "전화번호", value: "tel_no" },
+        { text: "권한", value: "auth" },
+        { text: "전화번호ID", value: "tel_no_id" },
+        { text: "알림설정권한", value: "alim_auth_yn" },
         { text: "상태코드", value: "status_code" },
-        { text: "로컬융합GW아이디", value: "local_gw_id" },
-        { text: "상품코드", value: "prod_code" },
-        { text: "등록일시", value: "reg_date" },
+        { text: "mgt상태코드", value: "ngt_status" },
+        { text: "승인여부", value: "confirm_yn" },
+        { text: "승일인날짜", value: "confirm_date" },
+        { text: "등록일시", value: " " },
       ],
     };
   },
 
  methods: {
-      handleClick: function(value){
-        this.$emit("child", value.said);
-      },
 
       getDataFromApi () {
         console.log(this.resPagingInfo)
@@ -71,7 +70,7 @@ export default {
         return new Promise((resolve) => {
           const {page, itemsPerPage } = this.options
 
-          let items = this.props.pList
+          let items = this.props.pnList
           console.log(items)
           const total = items.length
 
