@@ -13,8 +13,8 @@
             <v-row>
                 <v-col cols=auto>
                     <v-select 
-                        item-text="text" 
-                        item-value="value" 
+                        item-text="server_name" 
+                        item-value="local_gw_id" 
                         :items="localGwOptions" 
                         v-model="param.local_gw_id" 
                         v-on:change="searchMethod"
@@ -29,13 +29,10 @@
 
 <script>
 export default {
-    props : ['param'],
+    props : ['param', 'localGwOptions'],
     data() {
         return{       
-            localGwOptions:[
-                {text:'TB1',   value:'D'},
-                {text:'TB2',   value:'E'},
-            ]
+
         }
     },
     methods: {
