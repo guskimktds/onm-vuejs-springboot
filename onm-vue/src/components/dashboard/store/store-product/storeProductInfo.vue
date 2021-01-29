@@ -133,8 +133,8 @@ export default {
       if(params.mod_date !== undefined && params.mod_date !== ''){
         newParams.mod_date = params.mod_date
       }
-      if(params.prod_code !== undefined && params.prod_code !== ''){
-        newParams.prod_code = params.prod_code
+      if(params.prod_info_id !== undefined && params.prod_info_id !== ''){
+        newParams.prod_info_id = params.prod_info_id
       }
       if(params.user_id !== undefined && params.user_id !== ''){
         newParams.user_id = params.user_id

@@ -39,7 +39,7 @@ export default {
           text: "단말 GW ID",
           align: "start",
           sortable: false,
-          value: "gw_id",
+          value: "terminal_gw_id",
         },
         { text: "단말GWID", value: "gw_id" },
         { text: "단말GW명", value: "gw_name" },
