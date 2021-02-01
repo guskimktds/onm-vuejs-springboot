@@ -15,6 +15,16 @@
                 { "name": "스트리머 관리 현황", "path": "/platform/streamer", "component": "streamer" },
                 { "name": "개통해지 추이", "path": "/platform/camreg-stat", "component": "camreg-stat" }
             ]
+        },
+        {
+            "name": "통계",
+            "path": "/platform/stats",
+            "component": "stats",
+            "children": [
+                { "name": "청약 통계", "path": "/platform/order-stats", "component": "order-stats" },
+                { "name": "고객이전 통계", "path": "/platform/customer-transfer-stats", "component": "customer-transfer-stats" },
+                { "name": "상품 통계", "path": "/platform/product-stats", "component": "product-stats" }
+            ]
         }]
     },
     {
