@@ -18,6 +18,11 @@ import StreamerStatus from '../components/dashboard/platform/streamerStatus'
 import IotGwStatus from '../components/dashboard/platform/iotGwStatus'
 import CamregStat from '@/components/dashboard/platform/camRegStat/camRegStat'
 
+// 플랫폼현황 > 통계
+import OrderStats from '@/components/dashboard/platform/stats/order-stats/orderStats'
+import CustomerTransferStats from '@/components/dashboard/platform/stats/customer-transfer-stats/customerTransferStats'
+import ProductStats from '@/components/dashboard/platform/stats/product-stats/productStats'
+
 // 하위 메뉴 - 서비스관리
 import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
 
@@ -154,7 +159,23 @@ export default new Router({
                     path: "camreg-stat",
                     name: 'CamregStat',
                     component: CamregStat
+                },
+                {
+                    path: "order-stats",
+                    name: 'OrderStats',
+                    component: OrderStats
+                },
+                {
+                    path: "customer-transfer-stats",
+                    name: 'CustomerTransferStats',
+                    component: CustomerTransferStats
+                },
+                {
+                    path: "product-stats",
+                    name: 'ProductStats',
+                    component: ProductStats
                 }
+
             ]
         },
         {

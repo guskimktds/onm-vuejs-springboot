@@ -33,20 +33,21 @@ export default {
       return {
         headers: [
           { text: 'VA IP', value: 'ip' },
-          { text: 'VA 상태', value: 'status' },
-          { text: '최대용량', value: 'maxMem' },
-          { text: '요청 카메라', value: 'reqCam' },
-          { text: '중지 카메라', value: 'analysisCam' },
-          { text: '', value: 'value' },
-          { text: '3rd VA 상태', value: 'thirdVaStatus' },
-          { text: '3rd 용량', value: 'thirdMaxMem' },
-          { text: '3rd 요청 카메라', value: 'thirdReqCam' },
-          { text: '3rd 분석 카메라', value: 'thirdAnalysisCam' },
-          { text: '요약영상 처리', value: 'summaryProc' },
-          { text: '가중치', value: 'weight' },
+          { text: 'VA 상태', value: 'stat_kt' },
+          { text: '최대용량', value: 'mx_va' },
+          { text: '요청 카메라', value: 'no_va' },
+          { text: '분석 카메라', value: 'proc_va' },
+          { text: '중지 카메라', value: 'va_paused' },
+          { text: '3rd VA 상태', value: 'stat_3rd' },
+          { text: '3rd 최대용량', value: 'mx_3rd' },
+          { text: '3rd 요청 카메라', value: 'no_3rd' },
+          { text: '3rd 분석 카메라', value: 'proc_3rd' },
+          { text: '요약영상 처리', value: 'va_summary' },
+          { text: '가중치', value: 'load_va' },
+          { text: '객체분석 va 수', value: 'va_oc' },
         ]
       }
-    }
+    },
 }
 </script>
 

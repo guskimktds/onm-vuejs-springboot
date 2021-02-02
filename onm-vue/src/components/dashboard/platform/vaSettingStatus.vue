@@ -4,6 +4,7 @@
         <va-query 
           v-on:search="searchToList"
           v-bind:param="searchParam"
+          v-bind:localGwOptions="localGwOptions"
         ></va-query>
         <va-list v-bind:pList="pList"></va-list>
       </v-card>
@@ -23,7 +24,7 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/V110/ONM_11004/get_va_status`;
+const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11004/get_va_status`;
 
 export default {
   components: {
@@ -35,13 +36,31 @@ export default {
       title: 'VA 설정 현황',
       pList: [],
       searchParam: {
-          local_gw_id: 'D',
+          local_gw_id: '1',
       },
+      localGwOptions: [],
     }
   },
+
+  beforeCreate() {
+    
+    axios
+    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
+    .then((response) => {
+        this.localGwOptions = response.data.data.local_gw_list;
+    })
+    .catch(function (error) {
+        console.log(error);
+        alert("국사정보 조회실패")
+      })
+      .finally(function () {
+        // always executed
+      });
+
+  },
+  
   methods: {
     searchToList: function(params){
-
       var reqParams = this.handleParams(params);
 
       axios.post(url, reqParams, headers)
@@ -82,8 +101,7 @@ export default {
 
   },
 
-  mounted() {
-    this.searchToList({"local_gw_id":"D"});
-  },
+  
+
 }
 </script>
