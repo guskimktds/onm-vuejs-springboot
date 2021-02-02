@@ -32,21 +32,21 @@ export default {
   data() {
     return {
       headers: [
-        { text: 'WOWZA 서버 인덱스', value: 'wowza_server_index' },
+        { text: 'WOWZA 서버 인덱스', value: 'wowza_index' },
         { text: '프로토콜', value: 'protocol' },
         { text: '사설IP', value: 'private_ip' },
         { text: '공인IP', value: 'public_ip' },
-        { text: '스트림주소', value: 'stream_address' },
+        { text: '스트림주소', value: 'stream_lock' },
         { text: '포트', value: 'port' },
-        { text: '계정', value: 'account' },
-        { text: '패스워드', value: 'password' },
-        { text: 'RTSP 포트', value: 'rtsp_port' },
-        { text: 'RTMP 포트', value: 'rtmp_port' },
-        { text: 'RTMPS 포트', value: 'rtmps_port' },
-        { text: 'WOWZA URL', value: 'wowza_url' },
+        { text: '계정', value: 'admin_id' },
+        { text: '패스워드', value: 'admin_pwd' },
+        { text: 'RTSP 포트', value: 'port_rtsp' },
+        { text: 'RTMP 포트', value: 'port_rtmp' },
+        { text: 'RTMPS 포트', value: 'port_rtmps' },
+        { text: 'WOWZA URL', value: 'wowza_streamer_daemon' },
         { text: 'WOWZA 상태', value: 'wowza_status' },
-        { text: 'GLS 여부', value: 'gls_yn' },
-        { text: 'GLS RTC 포트', value: 'gls_rtc_port' },
+        { text: 'GLS 여부', value: 'is_gls' },
+        { text: 'GLS RTC 포트', value: 'gls_port_rtc' },
       ],
         dialog: false,
         dialogDelete: false,
@@ -75,9 +75,6 @@ export default {
     },
   },
 
-  mounted() {
-    this.getDataFromApi();
-  },
 }
 </script>
 
