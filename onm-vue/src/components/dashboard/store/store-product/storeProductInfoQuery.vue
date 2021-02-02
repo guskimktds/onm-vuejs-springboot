@@ -54,7 +54,7 @@
             <v-text-field
               dense
               label="상품번호"
-              v-model="param.prod_code"
+              v-model="param.prod_info_id"
               placeholder=" "
         
             >
@@ -93,7 +93,7 @@ export default {
     return {
       param: {
         mod_date: ["", ""],
-        prod_code: "",
+        prod_info_id: "",
         user_id: "",
       },
       date: false,

@@ -55,17 +55,17 @@
           </v-btn>
 
           <v-btn color="indigo" v-if="showDetailObject" v-on:click="clickToSearchDeviceSensor()">
-            단말 센서 정보 조회
+            단말 센서 정보 조회{{showDeviceSensorList?" Close":" Open"}}
           </v-btn>
 
           <v-btn color="indigo" v-if="showDetailObject" v-on:click="clickToSearchPhone()">
-            사용자 전화번호
+            사용자 전화번호{{showPhoneList?" Close":" Open"}}
           </v-btn>
 
         </v-container>
         <storeInfo-detail-object v-if=showDetailObject v-bind:pObject=pObject></storeInfo-detail-object>
 
-
+      <v-container v-if=showDetailObject>
         <ktt-list v-if=showKttList 
         v-bind:kList=kList
         v-bind:resPagingInfo=resPagingInfo
@@ -99,6 +99,7 @@
         <phone-list v-if=showPhoneList
         v-bind:pnList="pnList"
         v-bind:resPagingInfo=resPagingInfo></phone-list>
+      </v-container>
 
       </v-card>
     </v-container>
@@ -146,7 +147,7 @@ export default {
       title: '매장 정보 조회',
       pList: [],
       pObject:{},
-      showDetailObject: false,
+      showDetailObject: false,                                                                                                    
       isReloadDetailObject: false,
       btnTitle: '매장정보상세Open',
 
@@ -254,7 +255,6 @@ export default {
     },
 
     clickToSearchDetailObject: function(values){
-
       if(values) {
         this.showDetailObject = true
         this.isReloadDetailObject = true
@@ -282,10 +282,8 @@ export default {
           console.log('조회 실패',ex)
         })
       }
-
     },
     clickToSearchKTT: function(){
-
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13003/get_user_ktt_info_list`
     var params={
       user_id: this.pObject.user_id,
@@ -342,6 +340,7 @@ export default {
         })
 
     },
+
     clickToSearchVACount: function(){
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13006/get_user_va_list`
       var params={

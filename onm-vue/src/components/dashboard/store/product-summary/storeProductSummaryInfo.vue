@@ -131,8 +131,8 @@ export default {
       if(params.reg_date !== undefined && params.reg_date !== ''){
         newParams.reg_date = params.reg_date
       }
-      if(params.prodnm !== undefined && params.prodnme !== ''){
-        newParams.prodnm = params.prodnm
+      if(params.product_name !== undefined && params.product_name !== ''){
+        newParams.product_name = params.product_name
       }
       if(params.user_id !== undefined && params.user_id !== ''){
         newParams.user_id = params.user_id

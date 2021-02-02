@@ -49,7 +49,7 @@
             <v-text-field
               dense
               label="상품이름"
-              v-model="param.prodnm"
+              v-model="param.product_name"
               placeholder=" "
               
             >
@@ -97,7 +97,7 @@ export default {
     return {
       param: {
         reg_date: ["", ""],
-        prodnm: "",
+        product_name: "",
         user_id: "",
         prodcd: "",
       },
