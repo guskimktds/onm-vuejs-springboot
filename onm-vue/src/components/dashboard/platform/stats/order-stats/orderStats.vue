@@ -1,16 +1,16 @@
-
 <template>
     <v-container fluid>
       <v-card>
 
-        <process-query 
+        <status-query 
           v-on:search="searchToProcess"
-          v-bind:param="searchParam"
-        ></process-query>
+          v-bind:param=searchParam></status-query>
 
-        <process-list 
+        <stats-list
           v-bind:pList=pList
-        ></process-list>
+          v-bind:resPagingInfo=resPagingInfo
+
+          @pagination="setToSearchParams"></stats-list>
 
       </v-card>
     </v-container>
@@ -18,8 +18,8 @@
 
 
 <script>
-import List from './orderStatsList'
-import Query from './orderStatusQuery'
+import StatsList from './orderStatsList'
+import StatusQuery from './orderStatusQuery'
 
 import axios from "axios"
 
@@ -28,19 +28,20 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11002/get_cam_status`;
-
 export default {
   components: {
-    'process-list': List,
-    'process-query': Query
+    StatsList,
+    StatusQuery
   },
   data () {
     return {
       title: '청약 통계',
-
       pList: [],
-
+      reqPagingInfo:{
+        page_no:1,
+        view_cnt:10
+      },
+      resPagingInfo:{},
       searchParam: {
         dateRangeText: '',
         approveDate: ["", ""],
@@ -48,8 +49,34 @@ export default {
 
     }
   },
+  created:function(){
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11007/get_subs_stat`
+    
+    var params=this.resPagingInfo
+
+    axios
+        .post(url, params, headers)
+        .then((response) => {
+          console.log(response.data)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.pList = response.data.data.subs_stat_list;
+            this.resPagingInfo = response.data.data.paging_info
+          }else{
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패', ex)
+        })
+  },
+
   methods: {
     searchToProcess: function(params){
+      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11007/get_subs_stat`
 
       var reqParams = this.handleParams(params);
 
@@ -60,7 +87,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
-          this.pList = response.data.data.list;
+          this.pList = response.data.data.subs_stat_list;
           this.resPagingInfo = response.data.data.paging_info;
         } else {
           this.pList = [];
@@ -78,6 +105,18 @@ export default {
       });
     },
 
+    setToSearchParams: function(values){
+      console.log(values)
+
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      console.log(params)
+
+      this.searchToVaCamCount(params)
+    },
     handleParams: function (params) {
 
       let newParams = {};
@@ -94,10 +133,7 @@ export default {
       return newParams;
     },
     
-  },
-  created: function() {
-    this.searchToProcess(this.searchParam);
-  }  
+  }
 }
 </script>
 

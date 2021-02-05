@@ -2,24 +2,23 @@
 <template>
     <v-container fluid>
       <v-card>
-
-        <process-query 
+        <stats-query 
           v-on:search="searchToProcess"
-          v-bind:param="searchParam"
-        ></process-query>
+          v-bind:param=searchParam></stats-query>
 
-        <process-list 
+        <stats-list 
           v-bind:pList=pList
-        ></process-list>
+          v-bind:resPagingInfo=resPagingInfo
 
+          @pagination="setToSearchParams"></stats-list>
       </v-card>
     </v-container>
 </template>
 
 
 <script>
-import List from './customerTransferStatsList'
-import Query from './customerTransferStatsQuery'
+import StatsList from './customerTransferStatsList'
+import StatsQuery from './customerTransferStatsQuery'
 
 import axios from "axios"
 
@@ -28,28 +27,57 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11002/get_cam_status`;
+ 
 
 export default {
   components: {
-    'process-list': List,
-    'process-query': Query
+    StatsList,
+    StatsQuery
   },
   data () {
     return {
       title: '고객이전 통계',
-
       pList: [],
-
+      reqPagingInfo:{
+        start_date: "20210201",
+        end_date: "20210201"
+      },
+      resPagingInfo:{},
       searchParam: {
         approveDate: ["", ""],
       },
 
     }
   },
+  
+  created:function(){
+    var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11008/get_user_mig_stat`;
+    
+    var params=this.reqPagingInfo
+
+    axios
+        .post(url, params, headers)
+        .then((response) => {
+          console.log(response.data)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.pList = response.data.data.mig_stat_list;
+            this.resPagingInfo = response.data.data.paging_info
+          }else{
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패', ex)
+        })
+  },
   methods: {
     searchToProcess: function(params){
-
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11008/get_user_mig_stat`;
+      
       var reqParams = this.handleParams(params);
 
       axios
@@ -59,7 +87,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
-          this.pList = response.data.data.list;
+          this.pList = response.data.data.mig_stat_list;
           this.resPagingInfo = response.data.data.paging_info;
         } else {
           this.pList = [];
@@ -75,6 +103,19 @@ export default {
       .finally(function () {
         // always executed
       });
+    },
+
+    setToSearchParams: function(values){
+      console.log(values)
+
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      console.log(params)
+
+      this.searchToVaCamCount(params)
     },
 
     handleParams: function (params) {
@@ -93,10 +134,7 @@ export default {
       return newParams;
     },
     
-  },
-  created: function() {
-    this.searchToProcess(this.searchParam);
-  }  
+  }
 }
 </script>
 
