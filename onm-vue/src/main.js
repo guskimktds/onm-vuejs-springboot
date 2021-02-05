@@ -4,6 +4,10 @@ import router from './router'
 import store from './store'
 import './plugins/base'
 
+import ('./assets/css/font-awesome.min.css')
+import ('./assets/css/materialdesignicons.min.css')
+import ('./assets/css/fonts.googleapis-Material+Icons.css')
+import ('./assets/css/fonts.googleapis-Roboto.css')
 //import 'expose-loader?$!expose-loader?jQuery!jquery'
 
 // import 'bootstrap'
@@ -13,8 +17,8 @@ import vuetify from './plugins/vuetify';
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App),
-  router,
-  vuetify,
-  store
+    render: h => h(App),
+    router,
+    vuetify,
+    store
 }).$mount('#app')
