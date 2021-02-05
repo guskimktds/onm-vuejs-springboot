@@ -1,8 +1,11 @@
 <template>
    <v-container fluid>
       <v-card>
-        <device-order-result-query v-on:search="searchToDeviceOrderResult"></device-order-result-query>
-        <device-order-result-list v-bind:pList=pList></device-order-result-list>
+        <device-order-result-query v-on:search="searchToDeviceOrderResult"
+        v-bind:param=searchParam></device-order-result-query>
+        <device-order-result-list v-bind:dorList=dorList
+        v-bind:resPagingInfo=resPagingInfo
+        @pagination="setToSearchParams"></device-order-result-list>
       </v-card>
     </v-container>
 </template>
@@ -13,6 +16,11 @@ import DeviceOrderResultQuery from './device-order-result/deviceOrderResultQuery
 
 import axios from "axios"
 
+const headers = {
+  'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+  'Content-Type': 'application/json'
+}
+
 export default {
   components: {
     DeviceOrderResultList,
@@ -21,23 +29,24 @@ export default {
   data () {
     return {
       title: '단말 청약 오더 처리결과',
-      pList: [
-          // {tranId:"GPNA_20201029133825838_LVSPWS0001", orderType:"4201", orderNumber:"20303DO9519190", responseCode: 200, responseMessage: "SUCCESS", orderStatusAlarm: "T",orderStatusAlarmDate: "2020-10-29 13:38:04.718", orderStatusAlarmResult:"LVSP_2020113111604839_GPNA//N0002//SUCCESS//"},
-        ]
+      dorList: [],
+      reqPagingInfo: {
+        page_no: 1,
+        view_cnt: 10
+      },
+      resPagingInfo: {},
+      searchParam: {
+        start_date: '',
+        end_date: '',
+        oderno:'',
+        guid:''
+      }
     }
   },
   created: function() {
-
-    // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12012/get_device_order_result_list'
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12012/get_device_order_result_list`
-    var params = {
-      page_no: 1,
-      view_cnt: 5
-    }
-    var headers = {
-      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-      'Content-Type': 'application/json'
-    }
+    
+    var params = this.reqPagingInfo
 
     axios
         .post(url, params, headers)
@@ -45,11 +54,11 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            console.log(response.data.data.device_order_result_list);
-            this.pList = response.data.data.device_order_result_list;
-
+            this.dorList = response.data.data.device_order_result_list;
+            this.resPagingInfo=response.data.data.paging_info;
           }else{
-            this.pList = [];
+            this.dorList = [];
+            this.resPagingInfo={};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -59,30 +68,73 @@ export default {
   },
   methods: {
     searchToDeviceOrderResult: function(params){
-    // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12012/get_device_order_result_list'
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12012/get_device_order_result_list`
-    // var params = {
-    //   page_no: 1,
-    //   view_cnt: 5
-    // }
-    var headers = {
-      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-      'Content-Type': 'application/json'
-    }
 
-        axios.post(url, params, headers)
-            // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
-            //   params
-            // })
-            .then((result) => {
-              console.log(result)
-              //this.list = JSON.parse(result.data.menu)
-              this.list = result.data
+    var reqParams=this.handleParams(params)
+
+        axios.post(url, reqParams, headers)
+            .then((response) => {
+              console.log(response)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            console.log(response.data.data.device_order_result_list);
+            this.dorList = response.data.data.device_order_result_list;
+            this.resPagingInfo=response.data.data.paging_info;
+          }else{
+            this.dorList = [];
+            this.resPagingInfo={};
+            alert(resCode + " / " + resMsg);
+          }
             })
             .catch((ex) => {
               console.log('조회 실패',ex)
             })
+    },
+
+    setToSearchParams:function(values){
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      this.searchToDeviceOrderResult(params)
+
+    },
+    
+    handleParams:function(params){
+      let newParams = {}
+      if(params.page_no === undefined || params.page_no === ''){
+        newParams.page_no = this.reqPagingInfo.page_no
+      }else{
+        newParams.page_no = params.page_no
+      }
+
+      if(params.view_cnt === undefined || params.view_cnt === ''){
+        newParams.view_cnt = this.reqPagingInfo.view_cnt
+      }else{
+        newParams.view_cnt = params.view_cnt
+      }
+
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date
+      }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date
+      }
+
+      if(params.oderno !== undefined && params.oderno !== ''){
+        newParams.oderno = params.oderno
+      }     
+
+      if(params.guid !== undefined && params.guid !== ''){
+        newParams.guid = params.guid
+      }
+      return newParams
     }
+
+
   }
 }
 </script>

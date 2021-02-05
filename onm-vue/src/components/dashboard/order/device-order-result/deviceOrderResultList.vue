@@ -8,12 +8,14 @@
             color="orange"
             dark
             icon="mdi-keyboard"
-            title="단말 오더 정보 LIST"
+            title="단말오더 처리 결과 LIST"
             class="px-5 py-3"
             >
             <v-data-table
                 :headers="headers"
-                :items="pList"
+                :items="dorList"
+                :options.sync="options"
+                :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
             >          
             </v-data-table>
@@ -22,12 +24,14 @@
 </template>
 <script>
 export default {
-    props: ['pList'],
+    props: ['dorList', 'resPagingInfo'],
     data() {
       return {
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
+        options:{},
+        loading:true,
         headers: [
           {
             text: '거래고유번호', align: 'start',
@@ -44,8 +48,46 @@ export default {
         ]
       }
     },
-    created() {
-        console.log(this.props)
+    methods: {
+      getDataFromApi () {
+        this.loading = true     
+        const { page, itemsPerPage } = this.options
+        console.log(page, itemsPerPage)
+        this.$emit("pagination", this.options)
+      },
+
+      fakeApiCall () {
+        return new Promise((resolve) => {
+          const {page, itemsPerPage } = this.options
+
+          let items = this.props.dorList
+          console.log(items)
+          const total = items.length
+
+          if (itemsPerPage > 0) {
+            items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+          }
+
+          setTimeout(() => {
+            resolve({
+              items,
+              total,
+            })
+          }, 1000)
+        })
+      }
+      
+    },
+    watch: {
+      options: {
+        handler () {
+          this.getDataFromApi()
+        },
+        deep: true,
+      },
+    },
+    mounted () {
+      this.getDataFromApi()
     }
 }
 </script>

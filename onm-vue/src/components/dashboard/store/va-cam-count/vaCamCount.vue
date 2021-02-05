@@ -85,7 +85,6 @@ export default {
         if(resCode == 200){
           this.vaList = response.data.data.va_prod_list;
           this.resPagingInfo = response.data.data.paging_info
-    
         }else{
           this.vaList = [];
           this.resPagingInfo = {};

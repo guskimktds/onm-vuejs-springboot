@@ -26,7 +26,7 @@
                         dense 
                         label="처리희망일자" 
                         v-model="param.enddate"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col> 
@@ -34,8 +34,8 @@
                     <v-text-field 
                         dense 
                         label="오더번호" 
-                        v-model="param.order_no"
-                        placeholder="Placeholder" 
+                        v-model="param.oderno"
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
@@ -44,7 +44,7 @@
                         dense 
                         label="계약 ID" 
                         v-model="param.said"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
@@ -53,7 +53,7 @@
                         dense 
                         label="거래고유번호" 
                         v-model="param.guid"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
@@ -79,9 +79,9 @@ export default {
             param: {
                 hopeDateStart: '',
                 hopeDateEnd: '',
-                orderNumber: '',
-                tranId: '',
-                contractId: ''
+                oderno: '',
+                said: '',
+                guid: ''
             }
         }
     },

@@ -33,28 +33,22 @@ export default {
         dialogDelete: false,
         editedIndex: -1,
         options: {},
-        totalList: 0,
         loading: true,
         headers: [
           {
             text: '거래고유번호', align: 'start',
             sortable: false, value: 'guid',
           },
-          { text: '상품코드', value: 'pprodcd' },
-          { text: '상품명', value: 'pprodnm' },
-          { text: '오터유형', value: 'ordertype' },
           { text: '오더번호', value: 'oderno'},
           { text: '오더순번', value: 'oderseq'},
-          { text: '변경유형코드', value: 'updatetype'},
-
-
-          { text: '등록일시', value: 'cdate'},
-          { text: '오더유형', value: 'bizpnm'},
-          { text: '사업자명', value: 'oderno' },
-          { text: '상품코드', value: 'oderseq' },
-          { text: '파라미터타입코드', value: 'appointdate' },
-          { text: '파라미터타입명칭', value: 'use_yn' },
-          { text: '파라미터값', value: 'cdate' }
+          { text: '사용여부', value: 'use_yn'},
+          { text: '처리희망일자', value: 'appointdate'},
+          { text: '오더유형', value: 'ordertype'},
+          { text: '사업장명', value: 'bizpnm'},
+          { text: '상품코드', value: 'prodcd'},
+          { text: '파라미터타입코드', value: 'paramtypecd'},
+          { text: '파라미터타입명칭', value: 'paramtypenm'},
+          { text: '파라미터값', value: 'paramvalue'},
         ]
       }
     },

@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  props: ["kList",'resPagingInfo'],
+  props: ['kList','resPagingInfo'],
   data() {
     return {
       dialog: false,

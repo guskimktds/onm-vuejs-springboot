@@ -35,9 +35,10 @@ export default {
         loading: true,
         headers: [
           {
-            text: '계약ID', align: 'start',
+            text: '거래고유번호', align: 'start',
             sortable: false, value: 'guid',
           },
+          { text: '계약ID', value: 'said' },
           { text: '오더유형', value: 'ordertype' },
           { text: '처리코드', value: 'resultcode' },
           { text: '처리메세지', value: 'resultmsg' },

@@ -11,53 +11,13 @@
         class="px-5 py-3"
         >
             <v-row>
-                <v-col cols="12" sm="6" md="3">
-                    <v-menu
-                    ref="menu"
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    :return-value.sync="date"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="290px"
-                    attach
-                    >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                        v-model="dateRangeText"
-                        label="승인날짜"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="param.approveDate" no-title scrollable range>
-                        <v-spacer></v-spacer>
-                        <v-btn text color="primary" @click="menu = false">
-                        Cancel
-                        </v-btn>
-                        <v-btn text color="primary" @click="$refs.menu.save(date)">
-                        OK
-                        </v-btn>
-                    </v-date-picker>
-                    </v-menu>
-                </v-col>
+
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
                         dense 
                         label="오더번호" 
-                        v-model="param.order_no"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
-                        label="계약 ID" 
-                        v-model="param.said"
-                        placeholder="Placeholder" 
+                        v-model="param.oderno"
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
@@ -65,8 +25,17 @@
                     <v-text-field 
                         dense 
                         label="MAC ID" 
-                        v-model="param.macid"
-                        placeholder="Placeholder" 
+                        v-model="param.mac_id"
+                        placeholder=" " 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="2">
+                    <v-text-field 
+                        dense 
+                        label="개통 오더번호" 
+                        v-model="param.open_oderno"
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
@@ -87,23 +56,13 @@
 </template>
 <script>
 export default {
-    data() {
-        return{
-            param: {
-                start_date: '',
-                end_date: '',
-                order_no: '',
-                said: '',
-                macid: ''
-            }
-        }
+ props:['param'],
+  methods: {
+    searchMethod: function () {
+      this.$emit("search", this.param);
     },
-    methods: {
-        searchMethod: function() {
-            this.$emit('search', this.param)
-        }
-    }, 
-}
+  },
+};
 </script>
 <style>
     

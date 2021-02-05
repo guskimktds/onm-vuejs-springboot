@@ -67,7 +67,7 @@
                         dense 
                         label="계약ID" 
                         v-model="param.said"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>  
@@ -76,7 +76,7 @@
                         dense 
                         label="거래고유번호" 
                         v-model="param.guid"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>                
