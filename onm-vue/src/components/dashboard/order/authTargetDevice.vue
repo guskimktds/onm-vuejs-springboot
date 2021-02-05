@@ -1,18 +1,24 @@
 <template>
    <v-container fluid>
       <v-card>
-        <auth-target-device-query v-on:search="searchToAuthTargetDevice"></auth-target-device-query>
-        <auth-target-device-list v-bind:pList=pList></auth-target-device-list>
+        <auth-target-device-query v-on:search="searchToAuthTargetDevice"
+        v-bind:param=searchParam></auth-target-device-query>
+        <auth-target-device-list v-bind:pList=pList
+        v-bind:resPagingInfo=resPagingInfo
+        @pagination="setToSearchParams"></auth-target-device-list>
       </v-card>
     </v-container>
-
-
 </template>
 
 <script>
 import AuthTargetDeviceList from './auth-target-device/authTargetDeviceList'
 import AuthTargetDeviceQuery from './auth-target-device/authTargetDeviceQuery'
 import axios from "axios"
+
+const headers = {
+  'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+  'Content-Type': 'application/json'
+}
 
 export default {
   components: {
@@ -22,24 +28,26 @@ export default {
   data () {
     return {
       title: '인증 대상 단말 정보',
-      pList: [
-        // {deviceId:"200000142363", orderNumber:"20303DO9519190", mac_id: "D4B83F03ED74", manageStatusCode:"S", deviceCode: "K9197981", modelName:"VSaaS-SNC-0201DSL", responseCode: 200, openOrderNum: "20303DO95919D", authDate: "2020-10-29 13:38:04.718235", deleteDate: "", registDate:"2020-10-29 13:38:04.718235"},
-        // {deviceId:"200000142364", orderNumber:"20303DO9519190", mac_id: "D4B83F03ED74", manageStatusCode:"S", deviceCode: "K9197981", modelName:"VSaaS-SNC-0201DSL", responseCode: 200, openOrderNum: "20303DO95919D", authDate: "2020-10-29 13:38:04.718235", deleteDate: "", registDate:"2020-10-29 13:38:04.718235"},
-      ]
+      pList: [],
+      reqPagingInfo: {
+        page_no: 1,
+        view_cnt: 10
+      },
+      resPagingInfo: {},
+      searchParam: {
+        start_date: '',
+        end_date: '',
+        oderno:'',
+        mac_id:'',
+        open_oderno:''
+      }
     }
   },  
   created: function() {
 
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12009/get_auth_device_list'
-    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
-    var params = {
-      page_no: 1,
-      view_cnt: 5
-    }
-    var headers = {
-      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-      'Content-Type': 'application/json'
-    }
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
+    
+    var params =this.reqPagingInfo
 
     axios
         .post(url, params, headers)
@@ -47,10 +55,13 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.pList = response.data.data.list;
-
+            this.pList = response.data.data.auth_device_list;
+            this.resPagingInfo=response.data.data.paging_info;
+            console.log('페이지 정보')
+            console.log(this.resPagingInfo)
           }else{
             this.pList = [];
+            this.resPaingInfo={};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -60,29 +71,71 @@ export default {
   },
   methods: {
     searchToAuthTargetDevice: function(params){
-      console.log("부모 메소드 searchToAuthTargetDevice 호출: "+JSON.stringify(params));
-      var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_12009/get_auth_device_list'
-    // var params = {
-    //   page_no: 1,
-    //   view_cnt: 5
-    // }
-    var headers = {
-      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-      'Content-Type': 'application/json'
-    }
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
 
-        axios.post(url, params, headers)
-            // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
-            //   params
-            // })
-            .then((result) => {
-              console.log(result)
-              //this.list = JSON.parse(result.data.menu)
-              this.list = result.data
-            })
-            .catch((ex) => {
-              console.log('조회 실패',ex)
-            })
+      var reqParams=this.handleParams(params)
+
+        axios.post(url, reqParams, headers)
+        .then((response) => {
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.pList = response.data.data.auth_device_list;
+            this.resPagingInfo=response.data.data.paging_info;
+          }else{
+            this.pList = [];
+            this.resPaingInfo={};
+            alert(resCode + " / " + resMsg);
+          }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
+    },
+      setToSearchParams:function(values){
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      this.searchToAuthTargetDevice(params)
+
+    },
+
+    handleParams:function(params){
+      let newParams = {}
+      if(params.page_no === undefined || params.page_no === ''){
+        newParams.page_no = this.reqPagingInfo.page_no
+      }else{
+        newParams.page_no = params.page_no
+      }
+
+      if(params.view_cnt === undefined || params.view_cnt === ''){
+        newParams.view_cnt = this.reqPagingInfo.view_cnt
+      }else{
+        newParams.view_cnt = params.view_cnt
+      }
+
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date
+      }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date
+      }
+
+      if(params.oderno !== undefined && params.oderno !== ''){
+        newParams.oderno = params.oderno
+      }
+
+      if(params.mac_id !== undefined && params.mac_id !== ''){
+        newParams.mac_id = params.mac_id
+      }
+
+      if(params.open_oderno !== undefined && params.open_oderno !== ''){
+        newParams.open_oderno = params.open_oderno
+      }   
+      return newParams
     }
   }
 }

@@ -11,12 +11,12 @@
         class="px-5 py-3"
         >
             <v-row>            
-                <v-col cols="12" sm="6" md="4">
+              <v-col cols="12" sm="6" md="4">
                     <v-text-field 
                         dense 
                         label="등록일시" 
-                        v-model="param.guid"
-                        placeholder="Placeholder" 
+                        v-model="param.regdate"
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col> 
@@ -24,7 +24,7 @@
                     <v-text-field 
                         dense 
                         label="등록일시 끝" 
-                        v-model="param.guid"
+                        v-model="param.regdate"
                         placeholder="Placeholder" 
                     >                        
                     </v-text-field>
@@ -33,8 +33,8 @@
                     <v-text-field 
                         dense 
                         label="전화번호" 
-                        v-model="param.said"
-                        placeholder="Placeholder" 
+                        v-model="param.telno"
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>  
@@ -43,7 +43,7 @@
                         dense 
                         label="거래고유번호" 
                         v-model="param.guid"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>                

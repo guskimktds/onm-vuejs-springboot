@@ -14,20 +14,25 @@
             <v-data-table
                 :headers="headers"
                 :items="pList"
+                :options.sync="options"
+                :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
             >          
             </v-data-table>
         </base-material-card>
     </v-container>
 </template>
+
 <script>
 export default {
-    props: ['pList'],
+    props: ['pList', 'resPagingInfo'],
     data() {
       return {
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
+        options:{},
+        loading: true,
         headers: [
           { text: '오더번호', align: 'start',
             sortable: false, value: 'oderno' },
@@ -45,11 +50,52 @@ export default {
         ]
       }
     },
-    created() {
-        console.log(this.props)
+   methods: {
+
+      getDataFromApi () {
+        console.log(this.resPagingInfo)
+        this.loading = true
+
+        const { page, itemsPerPage } = this.options
+        console.log(page, itemsPerPage)
+        this.$emit("pagination", this.options)
+      },
+
+      fakeApiCall () {
+        return new Promise((resolve) => {
+          const {page, itemsPerPage } = this.options
+
+          let items = this.props.kList
+          console.log(items)
+          const total = items.length
+
+          if (itemsPerPage > 0) {
+            items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+          }
+
+          setTimeout(() => {
+            resolve({
+              items,
+              total,
+            })
+          }, 1000)
+        })
+      }
+      
+    },
+    watch: {
+      options: {
+        handler () {
+          this.getDataFromApi()
+        },
+        deep: true,
+      },
+    },
+    mounted () {
+      this.getDataFromApi()
     }
+
 }
 </script>
 <style>
-    
 </style>

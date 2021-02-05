@@ -53,7 +53,7 @@ export default {
     }
   },
   created: function() {
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12003/get_subs_order_details_list`
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12010/get_subs_details_list`
     // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
     var params = this.reqPagingInfo
 
@@ -63,8 +63,8 @@ export default {
       var resCode = response.data.res_code;
       var resMsg = response.data.res_msg;
       if(resCode == 200){
-        this.pList = response.data.data.list;
-        this.resPagingInfo = response.data.data.order_detail_list
+        this.pList = response.data.data.order_detail_list;
+        this.resPagingInfo = response.data.data.paging_info
 
       }else{
         this.pList = [];
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     searchToUserOrderDetail: function(params){
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12003/get_subs_order_details_list`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12010/get_subs_details_list`
       
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)  
@@ -105,15 +105,15 @@ export default {
 
     setToSearchParams: function(values){
       console.log(values)
-      // var params = {
-      //   page_no: values.page,
-      //   view_cnt: values.itemsPerPage
-      // }
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
 
       //페이징 params add search params
       //let newParams = handleParams(params)
       //console.log(newParams)
-      //this.searchToUserOrderDetail(newParams)
+      this.searchToUserOrderDetail(params)
     },
 
     handleParams: function(params){
@@ -130,8 +130,17 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
+      if(params.appointdate !== undefined && params.appointdate !== ''){
+        newParams.appointdate = params.appointdate
+      }
+      if(params.oderno !== undefined && params.oderno !== ''){
+        newParams.oderno = params.oderno
+      }
       if(params.guid !== undefined && params.guid !== ''){
         newParams.guid = params.guid
+      }
+      if(params.user_id !== undefined && params.user_id !== ''){
+        newParams.user_id = params.user_id
       }
 
         

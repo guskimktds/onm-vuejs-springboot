@@ -16,7 +16,7 @@
                         dense 
                         label="시작일" 
                         v-model="param.start_date"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>                    
                 </v-col> 
@@ -26,7 +26,7 @@
                         dense 
                         label="종료일" 
                         v-model="param.end_date"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col> 
@@ -34,8 +34,8 @@
                     <v-text-field 
                         dense 
                         label="오더번호" 
-                        v-model="param.oder_no"
-                        placeholder="Placeholder" 
+                        v-model="param.oderno"
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
@@ -44,7 +44,7 @@
                         dense 
                         label="거래고유번호" 
                         v-model="param.guid"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
@@ -70,7 +70,7 @@ export default {
             param: {
                 start_date: '',
                 end_date: '',
-                oder_no: '',
+                oderno: '',
                 guid: ''
             }
         }

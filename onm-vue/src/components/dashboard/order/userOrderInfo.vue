@@ -21,7 +21,25 @@
             오더상세{{showDetailObject?" Close":" Open"}}
           </v-btn>
         </v-container>
+    
+        <v-container
+            id="regular-tables"
+            fluid
+            tag="section"
+        >
+          <v-btn color="indigo" v-if=showDetailObject v-on:click="clickToSearchKTT()" >
+            사용자-KTT{{showKttList?" Close":" Open"}}
+          </v-btn>
+
+        </v-container>
+
         <user-order-detail-object v-if=showDetailObject v-bind:pObject=pObject></user-order-detail-object>
+      
+        <ktt-list v-if=showKttList 
+        v-bind:kList=kList
+        v-bind:resPagingInfo=resPagingInfo
+        ></ktt-list>
+
       </v-card>
     </v-container>
 </template>
@@ -30,6 +48,7 @@
 import UserOrderInfoList from './user/order-info/userOrderInfoList'
 import UserOrderInfoQuery from './user/order-info/userOrderInfoQuery'
 import UserOrderDetailObject from './user/order-detail/userOrderDetailObject'
+import KttList from './ktt-order/kttOrderInfoList'
 
 import axios from "axios"
 
@@ -42,7 +61,8 @@ export default {
   components: {
     UserOrderInfoList,
     UserOrderInfoQuery,
-    UserOrderDetailObject
+    UserOrderDetailObject,
+    KttList
   },
   data () {
     return {
@@ -57,6 +77,12 @@ export default {
         page_no: 1,
         view_cnt: 10
       },
+      
+      title2: '사용자-KTT 정보 조회',
+      kList:[],
+      showKttList:false,
+      btnTitle2: '사용자-KTT open',
+
       resPagingInfo: {}
       ,
       searchParam: {
@@ -71,7 +97,7 @@ export default {
   created: function() {
 
     // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12001/get_user_subs_order_info'
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
 
     // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
     var params = this.reqPagingInfo
@@ -98,12 +124,11 @@ export default {
   methods: {
     searchToUserOrderInfo: function(params){
 
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
 
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)      
-
-      console.log(reqParams)
+      
 
       axios.post(url, reqParams, headers)
       .then((response) => {
@@ -168,6 +193,36 @@ export default {
         })
 
       }
+    },
+
+    clickToSearchKTT: function(){
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12005/get_user_ktt_subs`
+    var params={
+      guid: this.pObject.guid,
+      page_no: '1',
+      view_cnt: '5'
+    }
+    axios
+        .post(url, params, headers)
+        .then((response) => {
+          console.log(response.data)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          console.log(resCode)
+          if(resCode == 200){
+            this.kList = response.data.data.list;
+            this.resPagingInfo = response.data.data.paging_info
+
+            this.showKttList =!this.showKttList
+          }else{
+            this.kList = [];
+            this.resPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패', ex)
+        })
     },
 
     setToSearchParams: function(values){

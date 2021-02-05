@@ -1,5 +1,4 @@
 <template>
-  <div>
     <v-container fluid>
       <v-card>        
         <user-order-result-query 
@@ -13,7 +12,6 @@
           ></user-order-result-list>
       </v-card>
     </v-container>
-  </div>
 
 </template>
 
@@ -52,7 +50,7 @@ export default {
     }
   },
   created: function() {
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12011/get_user_subs_result_list`
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12011/get_user_subs_result_list`
 
     var params = this.reqPagingInfo
 
@@ -78,7 +76,7 @@ export default {
   },
   methods: {
     searchToUserOrderResult: function(params){
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12011/get_user_subs_result_list`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12011/get_user_subs_result_list`
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)      
 
