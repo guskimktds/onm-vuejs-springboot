@@ -8,12 +8,12 @@
             color="orange"
             dark
             icon="mdi-keyboard"
-            title="단말오더 처리 결과 LIST"
+            title="사용자 청약 오더 상세 List"
             class="px-5 py-3"
             >
             <v-data-table
                 :headers="headers"
-                :items="dorList"
+                :items="sdList"
                 :options.sync="options"
                 :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
@@ -24,7 +24,7 @@
 </template>
 <script>
 export default {
-    props: ['dorList', 'resPagingInfo'],
+    props: ['sdList', 'resPagingInfo'],
     data() {
       return {
         dialog: false,
@@ -34,17 +34,12 @@ export default {
         loading:true,
         headers: [
           {
-            text: '거래고유번호', align: 'start',
-            sortable: false, value: 'guid',
+            text: '상품코드', align: 'start',
+            sortable: false, value: 'prodcd',
           },
-          { text: '오더유형', value: 'type' },   
-          { text: '오더번호', value: 'oderno' },
-          { text: '청약처리결과코드', value: 'resultcode' },
-          { text: '청약처리결과메시지', value: 'resultmsg' },
-          { text: '청약상태 통보여부', value: 'notice_yn' },
-          { text: '오더처리 통보일시', value: 'notice_date' },
-          { text: '청약결과 통보결과', value: 'notice_result' }
-          
+          { text: '파라미터타입코드', value: 'paramtypecd' },   
+          { text: '파라미터타입명칭', value: 'paramtypenm' },
+          { text: '값', value: 'paramvalue' }
         ]
       }
     },

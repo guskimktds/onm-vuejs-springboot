@@ -3,7 +3,7 @@
       <v-card>
         <device-order-result-query v-on:search="searchToDeviceOrderResult"
         v-bind:param=searchParam></device-order-result-query>
-        <device-order-result-list v-bind:pList=pList
+        <device-order-result-list v-bind:dorList=dorList
         v-bind:resPagingInfo=resPagingInfo
         @pagination="setToSearchParams"></device-order-result-list>
       </v-card>
@@ -29,7 +29,7 @@ export default {
   data () {
     return {
       title: '단말 청약 오더 처리결과',
-      pList: [],
+      dorList: [],
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10
@@ -54,10 +54,10 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.pList = response.data.data.device_order_result_list;
+            this.dorList = response.data.data.device_order_result_list;
             this.resPagingInfo=response.data.data.paging_info;
           }else{
-            this.pList = [];
+            this.dorList = [];
             this.resPagingInfo={};
             alert(resCode + " / " + resMsg);
           }
@@ -79,10 +79,10 @@ export default {
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             console.log(response.data.data.device_order_result_list);
-            this.pList = response.data.data.device_order_result_list;
+            this.dorList = response.data.data.device_order_result_list;
             this.resPagingInfo=response.data.data.paging_info;
           }else{
-            this.pList = [];
+            this.dorList = [];
             this.resPagingInfo={};
             alert(resCode + " / " + resMsg);
           }

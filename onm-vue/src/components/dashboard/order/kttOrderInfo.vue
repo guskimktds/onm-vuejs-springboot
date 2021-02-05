@@ -4,7 +4,7 @@
         <ktt-order-info-query v-on:search="searchToKTTOrderInfo"
         v-bind:param=searchParam></ktt-order-info-query>
         <ktt-order-info-list v-bind:kList=kList
-        @v-bind:resPagingInfo=resPagingInfo
+        v-bind:resPagingInfo=resPagingInfo
         @pagination="setToSearchParams"></ktt-order-info-list>
       </v-card>
     </v-container>
@@ -56,7 +56,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.kList = response.data.data.list;
+            this.kList = response.data.data.tel_no_list;
             this.resPagingInfo=response.data.data.paging_info
           }else{
             this.kList = [];
@@ -82,7 +82,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.kList = response.data.data.list;
+            this.kList = response.data.data.tel_no_list;
             this.resPagingInfo=response.data.data.paging_info
           }else{
             this.kList = [];

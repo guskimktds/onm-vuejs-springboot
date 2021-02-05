@@ -27,6 +27,11 @@
             fluid
             tag="section"
         >
+
+          <v-btn color="indigo" v-if=showDetailObject v-on:click="clickToSearchSubDetailList()" >
+            사용자 청약오더List{{showSubDetailList?" Close":" Open"}}
+          </v-btn>
+
           <v-btn color="indigo" v-if=showDetailObject v-on:click="clickToSearchKTT()" >
             사용자-KTT{{showKttList?" Close":" Open"}}
           </v-btn>
@@ -35,11 +40,17 @@
 
         <user-order-detail-object v-if=showDetailObject v-bind:pObject=pObject></user-order-detail-object>
       
+      <v-container v-if=showDetailObject>
+
+        <user-order-sub-detail-list v-if=showSubDetailList
+        v-bind:sdList=sdList
+        v-bind:resPagingInfo=resPagingInfo></user-order-sub-detail-list>
+
         <ktt-list v-if=showKttList 
         v-bind:kList=kList
-        v-bind:resPagingInfo=resPagingInfo
-        ></ktt-list>
+        v-bind:resPagingInfo=resPagingInfo></ktt-list>
 
+      </v-container>
       </v-card>
     </v-container>
 </template>
@@ -48,7 +59,9 @@
 import UserOrderInfoList from './user/order-info/userOrderInfoList'
 import UserOrderInfoQuery from './user/order-info/userOrderInfoQuery'
 import UserOrderDetailObject from './user/order-detail/userOrderDetailObject'
+import UserOrderSubDetailList from './user/order-detail/userOrderSubDetailList'
 import KttList from './ktt-order/kttOrderInfoList'
+
 
 import axios from "axios"
 
@@ -62,7 +75,8 @@ export default {
     UserOrderInfoList,
     UserOrderInfoQuery,
     UserOrderDetailObject,
-    KttList
+    UserOrderSubDetailList,
+    KttList,
   },
   data () {
     return {
@@ -77,14 +91,18 @@ export default {
         page_no: 1,
         view_cnt: 10
       },
-      
-      title2: '사용자-KTT 정보 조회',
+
+      title2: '사용자 청약오더 List',
+      sdList:[],
+      showSubDetailList:false,
+      btnTitle2: '사용자 청약오더List open',
+
+      title3: '사용자-KTT 정보 조회',
       kList:[],
       showKttList:false,
-      btnTitle2: '사용자-KTT open',
+      btnTitle3: '사용자-KTT open',
 
-      resPagingInfo: {}
-      ,
+      resPagingInfo: {},
       searchParam: {
         start_date: '',
         end_date: '',
@@ -104,7 +122,6 @@ export default {
 
     axios.post(url, params, headers)
     .then((response) => {
-      console.log(response.data)
       var resCode = response.data.res_code;
       var resMsg = response.data.res_msg;
       if(resCode == 200){
@@ -194,6 +211,38 @@ export default {
 
       }
     },
+        
+    clickToSearchSubDetailList:function(){
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12003/get_subs_order_details_list`
+    var params={
+      guid: this.pObject.guid,
+      page_no: '1',
+      view_cnt: '5'
+    }
+    console.log('파라미터')
+    console.log(params)
+    axios
+        .post(url, params, headers)
+        .then((response) => {
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.sdList = response.data.data.list;
+            this.resPagingInfo = response.data.data.paging_info;
+
+            this.showSubDetailList=!this.showSubDetailList;
+            console.log('받은 값')
+            console.log(response.data.data)
+          }else{
+            this.sdList = [];
+            this.resPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패', ex)
+        })
+    },
 
     clickToSearchKTT: function(){
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12005/get_user_ktt_subs`
@@ -205,12 +254,11 @@ export default {
     axios
         .post(url, params, headers)
         .then((response) => {
-          console.log(response.data)
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           console.log(resCode)
           if(resCode == 200){
-            this.kList = response.data.data.list;
+            this.kList = response.data.data.tel_no_list;
             this.resPagingInfo = response.data.data.paging_info
 
             this.showKttList =!this.showKttList

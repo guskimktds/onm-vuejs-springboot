@@ -3,7 +3,8 @@
       <v-card>    
         <device-order-info-query v-on:search="searchToDeviceOrderInfo"
         v-bind:param=searchParam></device-order-info-query>
-        <device-order-info-list v-bind:pList=pList
+        <device-order-info-list 
+        v-bind:pList=pList
         v-bind:resPagingInfo=resPagingInfo
 
         @child="clickToSearchDetailObject"
@@ -17,9 +18,30 @@
         <v-btn color="indigo" v-if=isReloadDetailObject v-on:click="showDetailObject=!showDetailObject">
           단말오더 상세{{showDetailObject?" Close":" Open"}}
          </v-btn>
+
+        <v-btn color="indigo" v-if="showDetailObject" v-on:click="clickToSearchDetailList()">
+          단말오더 상세 내역{{showDetailList?" Close":" Open"}}
+        </v-btn>
+
+        <v-btn color="indigo" v-if="showDetailObject" v-on:click="clickToSearchResultList()">
+          단말오더 처리결과{{showResultList?" Close":" Open"}}
+        </v-btn>
+
        </v-container>
 
       <device-order-object v-if=showDetailObject v-bind:pObject=pObject></device-order-object>
+
+      <v-container v-if=showDetailObject>
+        <device-order-detail-list v-if=showDetailList
+        v-bind:dodList="dodList"
+        v-bind:resPagingInfo=resPagingInfo></device-order-detail-list>
+        
+        <device-order-result-list v-if=showResultList
+        v-bind:dorList="dorList"
+        v-bind:resPagingInfo=resPagingInfo></device-order-result-list>
+      
+      </v-container>
+    
     </v-container>
 </template>
 
@@ -27,6 +49,8 @@
 import DeviceOrderInfoList from './device-order-info/deviceOrderInfoList'
 import DeviceOrderInfoQuery from './device-order-info/deviceOrderInfoQuery'
 import DeviceOrderObject from './device-order-info/deviceOrderObject'
+import DeviceOrderDetailList from './device-order-info/deviceOrderDetailList'
+import DeviceOrderResultList from './device-order-result/deviceOrderResultList'
 
 import axios from "axios"
 
@@ -39,7 +63,9 @@ export default {
   components: {
     DeviceOrderInfoList,
     DeviceOrderInfoQuery,
-    DeviceOrderObject
+    DeviceOrderObject,
+    DeviceOrderDetailList,
+    DeviceOrderResultList
   },
   data () {
     return {
@@ -49,6 +75,17 @@ export default {
       showDetailObject:false,
       isReloadDetailObject:false,
       btnTitle: '단말오더 정보 상세Open',
+
+      title2:'단말오더 상세 내역',
+      dodList:[],
+      showDetailList:false,
+      btnTitle2:'단말오더 상세내역 open',
+
+      title3:'단말오더 처리 결과',
+      dorList:[],
+      showResultList:false,
+      btnTitle3:'단말오더 처리결과 open',
+
       reqPagingInfo:{
         page_no:1,
         view_cnt:10
@@ -110,7 +147,9 @@ export default {
               console.log('조회 실패',ex)
             })
     },
+
     clickToSearchDetailObject: function(values){
+      console.log(values)
       if(values) {
         this.showDetailObject = true
         this.isReloadDetailObject = true
@@ -128,7 +167,8 @@ export default {
            var resCode = response.data.res_code;
             var resMsg = response.data.res_msg;
             if(resCode == 200){
-              this.pObject = response.data.data[0]
+              this.pObject = response.data.data
+               console.log(this.pObject)
             }else{
               this.pObject = {};
               alert(resCode + " / " + resMsg);
@@ -138,6 +178,62 @@ export default {
           console.log('조회 실패',ex)
         })
       }
+    },
+
+    clickToSearchDetailList:function(){
+      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12008/get_device_order_detail_list`
+
+      var params={
+      guid: this.pObject.guid,
+      page_no: '1',
+      view_cnt: '5'
+      }
+      axios
+          .post(url,params,headers)
+          .then((response)=>{
+            var resCode=response.data.res_code;
+            var resMsg=response.data.res_msg;
+            if(resCode==200){
+              this.dodList=response.data.data.device_order_detail_list;
+              this.resPagingInfo=response.data.data.paging_info;
+              this.showDetailList=!this.showDetailList;
+            }else{
+              this.dodList=[];
+              this.resPagingInfo={};
+              alert(resCode + " / "+ resMsg);
+            }
+          })
+          .catch((ex)=>{
+            console.log('조회 실패', ex)
+          })
+    },
+    
+    clickToSearchResultList:function(){
+      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12012/get_device_order_result_list`
+
+      var params={
+        guid:this.pObject.guid,
+        page_no: '1',
+        view_cnt: '5'
+      }
+      axios
+          .post(url,params,headers)
+          .then((response)=>{
+            var resCode=response.data.res_code;
+            var resMsg=response.data.res_msg;
+            if(resCode==200){
+              this.dorList=response.data.data.device_order_result_list;
+              this.resPagingInfo=response.data.data.paging_info;
+              this.showResultList=!this.showResultList;
+            }else{
+              this.dorList=[];
+              this.resPagingInfo={};
+              alert(resCode+" / "+resMsg);
+            }
+          })
+          .catch((ex)=>{
+            console.log('조회 실패',ex)
+          })
     },
 
  setToSearchParams: function(values){
