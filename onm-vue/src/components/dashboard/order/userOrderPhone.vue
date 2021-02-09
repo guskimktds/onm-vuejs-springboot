@@ -41,8 +41,7 @@ export default {
       resPagingInfo: {}
       ,
       searchParam: {
-        start_date: '',
-        end_date: '',
+        cdate:'',
         telno:'',
         guid:'',
       }
@@ -127,20 +126,30 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date
+      if(params.cdate !== undefined && params.cdate !== ''){
+        newParams.cdate = params.cdate
+      }else if(
+        this.searchParam.cdate!==undefined&&
+        this.searchParam.cdate!==""
+      ){
+        newParams.cdate=this.searchParam.cdate
       }
-
-      if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date
-      }
-
       if(params.guid !== undefined && params.guid !== ''){
         newParams.guid = params.guid
+      }else if(
+        this.searchParam.guid!==undefined&&
+        this.searchParam.guid!==""
+      ){
+        newParams.guid=this.searchParam.guid
       }
 
       if(params.telno !== undefined && params.telno !== ''){
         newParams.telno = params.telno
+      }else if(
+        this.searchParam.telno!==undefined&&
+        this.searchParam.telno!==""
+      ){
+        newParams.telno=this.searchParam.telno
       }     
       return newParams
     }

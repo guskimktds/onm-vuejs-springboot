@@ -48,7 +48,10 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        guid: ''
+        appointdate:'',
+        oderno:'',
+        guid: '',
+        user_id:''
       }
     }
   },
@@ -132,15 +135,35 @@ export default {
 
       if(params.appointdate !== undefined && params.appointdate !== ''){
         newParams.appointdate = params.appointdate
+      }else if(
+        this.searchParam.appointdate!==undefined&&
+        this.searchParam.appointdate!==""
+      ){
+        newParams.appointdate=this.searchParam.appointdate
       }
       if(params.oderno !== undefined && params.oderno !== ''){
         newParams.oderno = params.oderno
+      }else if(
+        this.searchParam.oderno!==undefined&&
+        this.searchParam.oderno!==""
+      ){
+        newParams.oderno=this.searchParam.oderno
       }
       if(params.guid !== undefined && params.guid !== ''){
         newParams.guid = params.guid
+      }else if(
+        this.searchParam.guid!==undefined&&
+        this.searchParam.guid!==""
+      ){
+        newParams.guid=this.searchParam.guid
       }
       if(params.user_id !== undefined && params.user_id !== ''){
         newParams.user_id = params.user_id
+      }else if(
+        this.searchParam.user_id!==undefined&&
+        this.searchParam.user_id!==""
+      ){
+        newParams.user_id=this.searchParam.user_id
       }
 
         

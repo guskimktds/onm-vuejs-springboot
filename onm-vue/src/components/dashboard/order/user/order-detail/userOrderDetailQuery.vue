@@ -12,7 +12,7 @@
         class="px-5 py-3"
         >
         <v-row>         
-                      <v-col cols="12" sm="6" md="2">
+<v-col cols="12" sm="6" md="2">
             <v-menu
               ref="menu"
               v-model="menu"
@@ -34,7 +34,7 @@
                 ></v-text-field>
               </template>
               <v-date-picker
-                v-model="param.appoint_date"
+                v-model="param.appointdate"
                 no-title
                 scrollable
                 range
@@ -103,12 +103,25 @@
 <script>
 export default {
     props: ['param'],
-    methods: {
-        searchMethod: function() {
-            this.$emit('search', this.param)
+    data() {
+        return {
+          date:false,
+          menu:false
         }
-    }, 
-}
+    },
+  computed: {
+    dateRangeText() {
+      if (this.param.appointdate.length == 0) {
+        return "";
+      } else return this.param.appointdate.join(" ~ ");
+    },
+  },
+  methods: {
+    searchMethod: function () {
+      this.$emit("search", this.param);
+    },
+  },
+};
 </script>
 <style>
     

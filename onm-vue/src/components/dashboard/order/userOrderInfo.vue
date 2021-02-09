@@ -104,8 +104,7 @@ export default {
 
       resPagingInfo: {},
       searchParam: {
-        start_date: '',
-        end_date: '',
+        appointdate:'',
         said: '',
         guid: '',
         oderno: ''
@@ -258,7 +257,7 @@ export default {
           var resMsg = response.data.res_msg;
           console.log(resCode)
           if(resCode == 200){
-            this.kList = response.data.data.tel_no_list;
+            this.kList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info
 
             this.showKttList =!this.showKttList
@@ -275,13 +274,11 @@ export default {
 
     setToSearchParams: function(values){
       console.log(values)
-      // this.reqPagingInfo.page_no = values.page
-      // this.reqPagingInfo.view_cnt = values.itemsPerPage
-      // console.log(this.reqPagingInfo)
-
+      
       var params = {
         page_no: values.page,
-        view_cnt: values.itemsPerPage
+        view_cnt: values.itemsPerPage,
+
       }
 
       console.log(params)
@@ -302,26 +299,39 @@ export default {
       }else{
         newParams.view_cnt = params.view_cnt
       }
-
-      if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date
+      if(params.appointdate !== undefined && params.appointdate !== ''){
+        newParams.appointdate = params.appointdate
+      }else if(
+        this.searchParam.appointdate!==undefined&&
+        this.searchParam.appointdate!==""
+      ){
+        newParams.appointdate=this.searchParam.appointdate
       }
-
-      if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date
-      }
-
       if(params.said !== undefined && params.said !== ''){
         newParams.said = params.said
+      }else if(
+        this.searchParam.said!==undefined&&
+        this.searchParam.said!==""
+      ){
+        newParams.said=this.searchParam.said
       }
 
       if(params.guid !== undefined && params.guid !== ''){
         newParams.guid = params.guid
+      }else if(
+        this.searchParam.guid!==undefined&&
+        this.searchParam.guid!==""
+      ){
+        newParams.guid=this.searchParam.guid
       }
-
       if(params.oderno !== undefined && params.oderno !== ''){
         newParams.oderno = params.oderno
-      }     
+      }else if(
+        this.searchParam.oderno!==undefined&&
+        this.searchParam.oderno!==""
+      ){
+        newParams.oderno=this.searchParam.oderno
+      } 
       return newParams
     }
   }

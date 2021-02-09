@@ -57,74 +57,32 @@ export default {
         ]
       }
     },
-    methods: {
-      // guid 개별 row 클릭 시 이벤트 전달
-      handleClick: function(value){
-        console.log(value)
-        this.$emit("child", value.guid);
-      },
 
-      getDataFromApi () {
-        this.loading = true     
-        const { page, itemsPerPage } = this.options
-        console.log(page, itemsPerPage)
-        this.$emit("pagination", this.options)
-      },
-
-      fakeApiCall () {
-        return new Promise((resolve) => {
-          const {page, itemsPerPage } = this.options
-
-          let items = this.props.pList
-          console.log(items)
-          const total = items.length
-
-          // if (sortBy.length === 1 && sortDesc.length === 1) {
-          //   items = items.sort((a, b) => {
-          //     const sortA = a[sortBy[0]]
-          //     const sortB = b[sortBy[0]]
-
-          //     if (sortDesc[0]) {
-          //       if (sortA < sortB) return 1
-          //       if (sortA > sortB) return -1
-          //       return 0
-          //     } else {
-          //       if (sortA < sortB) return -1
-          //       if (sortA > sortB) return 1
-          //       return 0
-          //     }
-          //   })
-          // }
-
-          if (itemsPerPage > 0) {
-            items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
-          }
-
-          setTimeout(() => {
-            resolve({
-              items,
-              total,
-            })
-          }, 1000)
-        })
-      }
-      
+methods: {
+    handleClick: function(value){
+      this.$emit("child", value.guid);
     },
-    watch: {
-      options: {
-        handler () {
-          this.getDataFromApi()
-        },
-        deep: true,
-      },
+    getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
     },
-    mounted () {
-      this.getDataFromApi()
-    }
+    
+  },
 
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+
+  mounted() {
+    this.getDataFromApi();
+  },
+    
 }
-
-
 </script>
 <style>
     

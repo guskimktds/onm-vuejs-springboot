@@ -42,8 +42,7 @@ export default {
       resPagingInfo: {}
       ,
       searchParam: {
-        start_date: '',
-        end_date: '',
+        regdate:'',
         said: '',
         guid: ''
       }
@@ -130,20 +129,30 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date
+      if(params.regdate !== undefined && params.regdate !== ''){
+        newParams.regdate = params.regdate
+      }else if(
+        this.searchParam.regdate!==undefined&&
+        this.searchParam.regdate!==""
+      ){
+        newParams.regdate=this.searchParam.regdate
       }
-
-      if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date
-      }
-
       if(params.said !== undefined && params.said !== ''){
         newParams.said = params.said
+      }else if(
+        this.searchParam.said!==undefined&&
+        this.searchParam.said!==""
+      ){
+        newParams.said=this.searchParam.said
       }
 
       if(params.guid !== undefined && params.guid !== ''){
         newParams.guid = params.guid
+      }else if(
+        this.searchParam.guid!==undefined&&
+        this.searchParam.guid!==""
+      ){
+        newParams.guid=this.searchParam.guid
       }
 
       return newParams

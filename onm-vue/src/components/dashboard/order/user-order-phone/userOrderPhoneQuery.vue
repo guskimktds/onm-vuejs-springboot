@@ -10,25 +10,48 @@
         title="사용자 청약 전화번호 조회"
         class="px-5 py-3"
         >
-            <v-row>            
-              <v-col cols="12" sm="6" md="4">
-                    <v-text-field 
-                        dense 
-                        label="등록일시" 
-                        v-model="param.regdate"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
-                </v-col> 
-                <v-col cols="12" sm="6" md="4">
-                    <v-text-field 
-                        dense 
-                        label="등록일시 끝" 
-                        v-model="param.regdate"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col> 
+    <v-row>
+        <v-col cols="12" sm="6" md="2">
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="date"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+              attach
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="dateRangeText"
+                  label="희망처리일자"
+                  prepend-icon="mdi-calendar"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="param.cdate"
+                no-title
+                scrollable
+                range
+              >
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="menu = false">
+                  Cancel
+                </v-btn>
+                <v-btn
+                  text
+                  color="primary"
+                  @click="$refs.menu.save(date)"
+                >
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
+          </v-col>
                 <v-col cols="12" sm="6" md="4">
                     <v-text-field 
                         dense 
@@ -62,22 +85,26 @@
 </template>
 <script>
 export default {
+    props: ['param'],
     data() {
-        return{
-            param: {
-                start_date: '',
-                end_date: '',
-                telno: '',
-                guid: ''
-            }
+        return {
+          date:false,
+          menu:false
         }
     },
-    methods: {
-        searchMethod: function() {
-            this.$emit('search', this.param)
-        }
-    }, 
-}
+  computed: {
+    dateRangeText() {
+      if (this.param.cdate.length == 0) {
+        return "";
+      } else return this.param.cdate.join(" ~ ");
+    },
+  },
+  methods: {
+    searchMethod: function () {
+      this.$emit("search", this.param);
+    },
+  },
+};
 </script>
 <style>
     

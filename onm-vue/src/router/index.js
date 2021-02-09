@@ -10,7 +10,7 @@ import BizMain from '../components/dashboard/bizMain'
 import NotFound from '../components/exceptions/NotFound'
 
 // 하위 메뉴
-import PlatformDashboard from '../components/dashboard/platform/platformDashboard'
+import PlatformDashboard from '../components/dashboard/platform/dashboard/platformDashboard'
 import ProcessStatus from '../components/dashboard/platform/processStatus'
 import CameraStatus from '../components/dashboard/platform/cameraDeviceStatus'
 import VaSettingStatus from '../components/dashboard/platform/vaSettingStatus'

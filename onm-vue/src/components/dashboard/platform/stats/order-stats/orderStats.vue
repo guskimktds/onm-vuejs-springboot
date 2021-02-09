@@ -38,8 +38,8 @@ export default {
       title: '청약 통계',
       pList: [],
       reqPagingInfo:{
-        page_no:1,
-        view_cnt:10
+        start_date: "20210201",
+        end_date: "20210201"
       },
       resPagingInfo:{},
       searchParam: {

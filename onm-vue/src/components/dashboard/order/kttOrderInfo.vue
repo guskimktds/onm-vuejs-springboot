@@ -35,8 +35,6 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        start_date: '',
-        end_date: '',
         said:'',
         guid:'',
         service_no:'',
@@ -56,7 +54,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.kList = response.data.data.tel_no_list;
+            this.kList = response.data.data.list;
             this.resPagingInfo=response.data.data.paging_info
           }else{
             this.kList = [];
@@ -82,7 +80,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.kList = response.data.data.tel_no_list;
+            this.kList = response.data.data.list;
             this.resPagingInfo=response.data.data.paging_info
           }else{
             this.kList = [];
@@ -118,30 +116,40 @@ export default {
       }else{
         newParams.view_cnt = params.view_cnt
       }
-
-      if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date
-      }
-
-      if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date
-      }
-
       if(params.said !== undefined && params.said !== ''){
         newParams.said = params.said
+      }else if(
+        this.searchParam.said!==undefined&&
+        this.searchParam.said!==""
+      ){
+        newParams.said=this.searchParam.said
       }
-
       if(params.guid !== undefined && params.guid !== ''){
         newParams.guid = params.guid
+      }else if(
+        this.searchParam.guid!==undefined&&
+        this.searchParam.guid!==""
+      ){
+        newParams.guid=this.searchParam.guid
       }
 
       if(params.service_no !== undefined && params.service_no !== ''){
         newParams.service_no = params.service_no
-      }   
+      }else if(
+        this.searchParam.service_no!==undefined&&
+        this.searchParam.service_no!==""
+      ){
+        newParams.service_no=this.searchParam.service_no
+      }
 
       if(params.contract_id !== undefined && params.contract_id !== ''){
         newParams.contract_id = params.contract_id
-      }     
+      }else if(
+        this.searchParam.contract_id!==undefined&&
+        this.searchParam.contract_id!==""
+      ){
+        newParams.contract_id=this.searchParam.contract_id
+      }
       return newParams
     }
   }

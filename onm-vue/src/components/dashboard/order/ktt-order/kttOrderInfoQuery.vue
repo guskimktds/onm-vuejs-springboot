@@ -14,24 +14,6 @@
                 <v-col cols="12" sm="6" md="4">
                     <v-text-field 
                         dense 
-                        label="등록일시" 
-                        v-model="param.start_date"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
-                </v-col> 
-                <v-col cols="12" sm="6" md="4">
-                    <v-text-field 
-                        dense 
-                        label="등록일시 끝" 
-                        v-model="param.end_date"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
-                </v-col> 
-                <v-col cols="12" sm="6" md="4">
-                    <v-text-field 
-                        dense 
                         label="계약ID" 
                         v-model="param.said"
                         placeholder=" " 
@@ -81,22 +63,18 @@
 
 <script>
 export default {
+    props: ['param'],
     data() {
-        return{
-            param: {
-                said: '',
-                guid: '',
-                service_no: '',
-                contract_id: ''
-            }
+        return {
         }
     },
-    methods: {
-        searchMethod: function() {
-            this.$emit('search', this.param)
-        }
-    }, 
-}
+  methods: {
+    searchMethod: function () {
+      this.$emit("search", this.param);
+    },
+  },
+};
+
 </script>
 <style>
     

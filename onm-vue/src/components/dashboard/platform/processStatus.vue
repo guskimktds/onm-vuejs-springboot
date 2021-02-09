@@ -90,6 +90,8 @@ export default {
         newParams.page_no = this.reqPagingInfo.page_no;
       } else {
         newParams.page_no = params.page;
+        console.log('페이지 정보')
+        console.log(params)
       }
 
       if (params.itemsPerPage === undefined || params.itemsPerPage === "") {
@@ -107,13 +109,13 @@ export default {
         newParams.local_gw_id = this.searchParam.local_gw_id;
       }
 
-      if (params.process !== undefined && params.process !== "") {
-        newParams.process = params.process;
+      if (params.proc_type !== undefined && params.proc_type !== "") {
+        newParams.proc_type = params.proc_type;
       } else if (
-        this.searchParam.process !== undefined &&
-        this.searchParam.process !== ""
+        this.searchParam.proc_type !== undefined &&
+        this.searchParam.proc_type !== ""
       ) {
-        newParams.process = this.searchParam.process;
+        newParams.proc_type = this.searchParam.proc_type;
       }
 
       if (params.process_status !== undefined && params.process_status !== "") {
