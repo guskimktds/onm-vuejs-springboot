@@ -54,6 +54,16 @@
                 ]
             },
             {
+                "name": "현장 작업자",
+                "path": "/order/worker",
+                "component": "order-worker",
+                "children": [
+                    { "name": "TEMP ID 정보조회", "path": "/order/tempid-info", "component": "tempid-info" },
+                    { "name": "현장작업자 리스트", "path": "/order/workers-info", "component": "workers-info" },
+                    { "name": "현장작업자 로그인이력", "path": "/order/worker-login-history", "component": "worker-login-history" }
+                ]
+            },
+            {
                 "name": "스냅샷 정보",
                 "path": "/order/snapshot",
                 "component": "order-snapshot",
