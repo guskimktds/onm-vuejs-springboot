@@ -9,7 +9,7 @@
         color="orange"
         dark
         icon="mdi-keyboard"
-        title="사용자 전화번호 LIST"
+        title="TEMP ID 정보 LIST"
         class="px-5 py-3"
       >
 
@@ -33,19 +33,16 @@ export default {
   data() {
     return {
       headers: [
-
-        { text: '사용자 ID', value: 'user_id' },
-        { text: '전화번호', value: 'tel_no' },
-        { text: '전화번호 타입', value: 'auth' },
-        { text: '사용자 이름', value: 'user_name' },
-        { text: 'Sub ID(전화번호 ID)', value: 'tel_no_id' },
-        { text: '알림설정권한(Y/N)', value: 'alim_auth_yn' },
-        { text: '승인여부', value: 'confirm_yn' },
-        { text: '승인날짜', value: 'confirm_date' },
-        { text: '상태코드', value: 'status_code' },
-        { text: 'Mgt 상태코드', value: 'mgt_status' },
-        { text: '비고', value: 'memo' },
-
+        { text: 'GUID', value: 'guid' },
+        { text: '서비스계약아이디', value: 'said' },
+        { text: '오더번호', value: 'oderno' },
+        { text: '오더순번', value: 'oderseq' },
+        { text: '요청구분', value: 'requesttypecd' },
+        { text: '오더구분', value: 'oderdivcd' },
+        { text: '전화번호', value: 'spotwrkrtelno' },
+        { text: '처리결과 코드', value: 'resultcode' },
+        { text: '처리결과 메세지', value: 'resultmsg' },
+        { text: '등록일', value: 'reg_date' },
       ],
         options: {},
         totalList: 0,

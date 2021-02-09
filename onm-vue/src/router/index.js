@@ -66,6 +66,10 @@ import AuthTargetDevice from '../components/dashboard/order/authTargetDevice'
 import SnapshotUser from '../components/dashboard/order/snapshotUser'
 import SnapshotDevice from '../components/dashboard/order/snapshotDevice'
 
+import TempIdInfo from '@/components/dashboard/order/worker/tempid-info/tempidInfo'
+import WorkersInfo from '@/components/dashboard/order/worker/workers-info/workersInfo'
+import WorkerLoginHistory from '@/components/dashboard/order/worker/worker-login-history/workerLoginHistory'
+
 //운영관리
 import AccountMain from '../components/dashboard/operation/manage/accountMain'
 import OperationMain from '../components/dashboard/operationMain'
@@ -232,7 +236,25 @@ export default new Router({
                     path: "snapshot-device",
                     name: 'SnapshotDevice',
                     component: SnapshotDevice
-                }
+                },
+
+                // 현장 작업자
+                {
+                    path: "tempid-info",
+                    name: 'TempidOnfo',
+                    component: TempIdInfo
+                },
+                {
+                    path: "workers-info",
+                    name: 'WorkersInfo',
+                    component: WorkersInfo
+                },
+                {
+                    path: "worker-login-history",
+                    name: 'WorkerLoginHistory',
+                    component: WorkerLoginHistory
+                },
+
             ]
         },
         {

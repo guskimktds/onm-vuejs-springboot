@@ -6,25 +6,17 @@
     >
         <base-material-card
             icon="mdi-magnify"
-            title="KTT 청약 정보 조회"
+            title="TEMP ID 정보 조회"
             class="px-5 py-3"
         >
 
             <v-row>
                 <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="거래고유번호" placeholder="Placeholder" v-model="param.guid">                        
+                    <v-text-field dense label="GUID" placeholder="Placeholder" v-model="param.guid">                        
                     </v-text-field>
                 </v-col>         
                 <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="계약 ID" placeholder="Placeholder" v-model="param.said">                        
-                    </v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="서비스번호" placeholder="Placeholder" v-model="param.service_no">                        
-                    </v-text-field>
-                </v-col>         
-                <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="KTT계약ID" placeholder="Placeholder" v-model="param.contract_id">                        
+                    <v-text-field dense label="서비스계약ID" placeholder="Placeholder" v-model="param.said">                        
                     </v-text-field>
                 </v-col> 
                 <v-col cols="12" sm="6" md="3">

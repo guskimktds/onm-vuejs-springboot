@@ -9,7 +9,7 @@
         color="orange"
         dark
         icon="mdi-keyboard"
-        title="사용자 전화번호 LIST"
+        title="현장작업자 로그인 이력 LIST"
         class="px-5 py-3"
       >
 
@@ -32,24 +32,20 @@ export default {
   props: ["pList", "resPagingInfo"],
   data() {
     return {
-      headers: [
 
-        { text: '사용자 ID', value: 'user_id' },
+      headers: [
+        { text: '관리자ID', value: 'admin_id' },
+        { text: '매장ID', value: 'user_id' },
         { text: '전화번호', value: 'tel_no' },
-        { text: '전화번호 타입', value: 'auth' },
-        { text: '사용자 이름', value: 'user_name' },
-        { text: 'Sub ID(전화번호 ID)', value: 'tel_no_id' },
-        { text: '알림설정권한(Y/N)', value: 'alim_auth_yn' },
-        { text: '승인여부', value: 'confirm_yn' },
-        { text: '승인날짜', value: 'confirm_date' },
-        { text: '상태코드', value: 'status_code' },
-        { text: 'Mgt 상태코드', value: 'mgt_status' },
-        { text: '비고', value: 'memo' },
+        { text: '관리자 구분', value: 'admin_type' },
+        { text: '로그인 키', value: 'login_key' },
+        { text: '로그인 날짜', value: 'login_date' },
+        { text: '로그아웃 날짜', value: 'logout_date' },
 
       ],
-        options: {},
-        totalList: 0,
-        loading: true,
+      options: {},
+      totalList: 0,
+      loading: true,
 
     }
   },
@@ -59,7 +55,7 @@ export default {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
-    
+   
   },
 
   watch: {

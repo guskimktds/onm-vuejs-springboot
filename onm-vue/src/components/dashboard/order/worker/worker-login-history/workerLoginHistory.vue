@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import List from './ktt-order/kttOrderInfoList'
-import Query from './ktt-order/kttOrderInfoQuery'
+import List from './workerLoginHistoryList'
+import Query from './workerLoginHistoryQuery'
 
 import axios from "axios"
 
@@ -26,7 +26,7 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12005/get_user_ktt_subs`;
+const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15005/get_mng_access_history`;
 
 export default {
   
@@ -43,13 +43,14 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        guid: "",
-        said: "",
-        service_no: "",
-        contract_id: "",
-        page_no: "",
-        view_cnt: ""
-      }, 
+        admin_id: "",
+        user_id: "",
+        tel_no: "",
+        login_key: "",
+        admin_type: "" // 고정
+
+      },
+      
     }
   },
   methods: {
@@ -64,7 +65,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
-          this.pList = response.data.data.list;
+          this.pList = response.data.data.mng_access_history_list;
           this.resPagingInfo = response.data.data.paging_info;
         } else {
           this.pList = [];
@@ -98,60 +99,50 @@ export default {
         newParams.view_cnt = params.itemsPerPage;
       }
 
-      if (params.guid !== undefined && params.guid !== "") {
-        newParams.guid = params.guid;
+      if (params.admin_id !== undefined && params.admin_id !== "") {
+        newParams.admin_id = params.admin_id;
       } else if (
-        this.searchParam.guid !== undefined &&
-        this.searchParam.guid !== ""
+        this.searchParam.admin_id !== undefined &&
+        this.searchParam.admin_id !== ""
       ) {
-        newParams.guid = this.searchParam.guid;
+        newParams.admin_id = this.searchParam.admin_id;
       }
 
-      if (params.said !== undefined && params.said !== "") {
-        newParams.said = params.said;
+      if (params.user_id !== undefined && params.user_id !== "") {
+        newParams.user_id = params.user_id;
       } else if (
-        this.searchParam.said !== undefined &&
-        this.searchParam.said !== ""
+        this.searchParam.user_id !== undefined &&
+        this.searchParam.user_id !== ""
       ) {
-        newParams.said = this.searchParam.said;
+        newParams.user_id = this.searchParam.user_id;
       }
 
-      if (params.service_no !== undefined && params.service_no !== "") {
-        newParams.service_no = params.service_no;
+      if (params.tel_no !== undefined && params.tel_no !== "") {
+        newParams.tel_no = params.tel_no;
       } else if (
-        this.searchParam.service_no !== undefined &&
-        this.searchParam.service_no !== ""
+        this.searchParam.tel_no !== undefined &&
+        this.searchParam.tel_no !== ""
       ) {
-        newParams.service_no = this.searchParam.service_no;
+        newParams.tel_no = this.searchParam.tel_no;
       }
 
-      if (params.contract_id !== undefined && params.contract_id !== "") {
-        newParams.contract_id = params.contract_id;
+      if (params.login_key !== undefined && params.login_key !== "") {
+        newParams.login_key = params.login_key;
       } else if (
-        this.searchParam.contract_id !== undefined &&
-        this.searchParam.contract_id !== ""
+        this.searchParam.login_key !== undefined &&
+        this.searchParam.login_key !== ""
       ) {
-        newParams.contract_id = this.searchParam.contract_id;
+        newParams.tellogin_key_no = this.searchParam.login_key;
       }
 
-      if (params.page_no !== undefined && params.page_no !== "") {
-        newParams.page_no = params.page_no;
+      if (params.admin_type !== undefined && params.admin_type !== "") {
+        newParams.admin_type = params.admin_type;
       } else if (
-        this.searchParam.page_no !== undefined &&
-        this.searchParam.page_no !== ""
+        this.searchParam.admin_type !== undefined &&
+        this.searchParam.admin_type !== ""
       ) {
-        newParams.page_no = this.searchParam.page_no;
+        newParams.admin_type = this.searchParam.admin_type;
       }
-
-      if (params.view_cnt !== undefined && params.view_cnt !== "") {
-        newParams.view_cnt = params.view_cnt;
-      } else if (
-        this.searchParam.view_cnt !== undefined &&
-        this.searchParam.view_cnt !== ""
-      ) {
-        newParams.view_cnt = this.searchParam.view_cnt;
-      }
-
       return newParams;
     },
     

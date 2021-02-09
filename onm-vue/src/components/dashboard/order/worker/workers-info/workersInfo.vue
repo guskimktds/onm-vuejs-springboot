@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import List from './ktt-order/kttOrderInfoList'
-import Query from './ktt-order/kttOrderInfoQuery'
+import List from './workersInfoList'
+import Query from './workersInfoQuery'
 
 import axios from "axios"
 
@@ -26,7 +26,7 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12005/get_user_ktt_subs`;
+const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12014/get_worker_id_info_list`;
 
 export default {
   
@@ -43,13 +43,11 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        guid: "",
+        tel_no: "",
         said: "",
-        service_no: "",
-        contract_id: "",
-        page_no: "",
-        view_cnt: ""
-      }, 
+        status_code: "",
+      },
+      
     }
   },
   methods: {
@@ -64,7 +62,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
-          this.pList = response.data.data.list;
+          this.pList = response.data.data.order_list;
           this.resPagingInfo = response.data.data.paging_info;
         } else {
           this.pList = [];
@@ -98,13 +96,13 @@ export default {
         newParams.view_cnt = params.itemsPerPage;
       }
 
-      if (params.guid !== undefined && params.guid !== "") {
-        newParams.guid = params.guid;
+      if (params.tel_no !== undefined && params.tel_no !== "") {
+        newParams.tel_no = params.tel_no;
       } else if (
-        this.searchParam.guid !== undefined &&
-        this.searchParam.guid !== ""
+        this.searchParam.tel_no !== undefined &&
+        this.searchParam.tel_no !== ""
       ) {
-        newParams.guid = this.searchParam.guid;
+        newParams.tel_no = this.searchParam.tel_no;
       }
 
       if (params.said !== undefined && params.said !== "") {
@@ -116,40 +114,13 @@ export default {
         newParams.said = this.searchParam.said;
       }
 
-      if (params.service_no !== undefined && params.service_no !== "") {
-        newParams.service_no = params.service_no;
+      if (params.status_code !== undefined && params.status_code !== "") {
+        newParams.status_code = params.status_code;
       } else if (
-        this.searchParam.service_no !== undefined &&
-        this.searchParam.service_no !== ""
+        this.searchParam.status_code !== undefined &&
+        this.searchParam.status_code !== ""
       ) {
-        newParams.service_no = this.searchParam.service_no;
-      }
-
-      if (params.contract_id !== undefined && params.contract_id !== "") {
-        newParams.contract_id = params.contract_id;
-      } else if (
-        this.searchParam.contract_id !== undefined &&
-        this.searchParam.contract_id !== ""
-      ) {
-        newParams.contract_id = this.searchParam.contract_id;
-      }
-
-      if (params.page_no !== undefined && params.page_no !== "") {
-        newParams.page_no = params.page_no;
-      } else if (
-        this.searchParam.page_no !== undefined &&
-        this.searchParam.page_no !== ""
-      ) {
-        newParams.page_no = this.searchParam.page_no;
-      }
-
-      if (params.view_cnt !== undefined && params.view_cnt !== "") {
-        newParams.view_cnt = params.view_cnt;
-      } else if (
-        this.searchParam.view_cnt !== undefined &&
-        this.searchParam.view_cnt !== ""
-      ) {
-        newParams.view_cnt = this.searchParam.view_cnt;
+        newParams.status_code = this.searchParam.status_code;
       }
 
       return newParams;

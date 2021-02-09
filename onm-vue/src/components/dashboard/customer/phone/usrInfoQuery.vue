@@ -1,130 +1,127 @@
 <template>
-  <v-container
+    <v-container
         id="regular-tables"
         fluid
         tag="section"
     >
-
         <base-material-card
-        icon="mdi-magnify"
-        title="사용자 전화번호 조회(기능삭제 - 매장정보 조회 > 사용자 전화번호)"
-        class="px-5 py-3"
+            icon="mdi-magnify"
+            title="사용자 전화번호 조회(기능삭제 - 매장정보 조회 > 사용자 전화번호)"
+            class="px-5 py-3"
         >
-        <v-row>
-          <!-- <v-col cols="12" sm="6">
-            <v-date-picker v-model="dates" range></v-date-picker>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-text-field
-              v-model="dateRangeText"
-              label="Date range"
-              prepend-icon="mdi-calendar"
-              readonly
-            ></v-text-field>
-            model: {{ dates }}
-          </v-col> -->
+
+            <v-row>
+
+                <v-col cols="12" sm="6" md="3">
+                  <v-menu
+                    ref="menu"
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :return-value.sync="date"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="290px"
+                    attach
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="dateRangeText"
+                        label="승인날짜"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="date_range" no-title scrollable range>
+                      <v-spacer></v-spacer>
+                      <v-btn text color="primary" @click="unselected"> Cancel </v-btn>
+                      <v-btn text color="primary" @click="$refs.menu.save(date)">
+                        OK
+                      </v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                </v-col>
+
+                <v-col cols="12" sm="6" md="3">
+                    <v-text-field dense label="사용자명" placeholder="Placeholder" v-model="param.user_name">                        
+                    </v-text-field>
+                </v-col>         
+                <v-col cols="12" sm="6" md="3">
+                    <v-text-field dense label="사용자ID" placeholder="Placeholder" v-model="param.user_id">                        
+                    </v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="3">
+                    <v-text-field dense label="전화번호" placeholder="Placeholder" v-model="param.tel_no">                        
+                    </v-text-field>
+                </v-col>
 
 
-          <v-col cols="12" sm="6" md="3">
-            <v-menu
-              ref="menu"
-              v-model="menu"
-              :close-on-content-click="false"
-              :return-value.sync="date"
-              transition="scale-transition"
-              offset-y
-              min-width="290px"
-              attach
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  v-model="dateRangeText"
-                  label="승인날짜"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker v-model="param.approveDate" no-title scrollable range>
-                <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="menu = false">
-                  Cancel
-                </v-btn>
-                <v-btn text color="primary" @click="$refs.menu.save(date)">
-                  OK
-                </v-btn>
-              </v-date-picker>
-            </v-menu>
-          </v-col>
+                <!--
+                  start_date: "",
+                  end_date: "",
+                -->
 
-
-          <v-col cols="12" sm="6" md="2">
-            <v-text-field
-              dense
-              label="사용자명"
-              v-model="param.userName"
-              placeholder=""
-              outlined
-            >
-            </v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6" md="2">
-            <v-text-field
-              dense
-              label="사용자 ID"
-              v-model="param.userId"
-              placeholder=" "
-              outlined
-            >
-            </v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6" md="2">
-            <v-text-field
-              dense
-              label="전화번호"
-              v-model="param.phoneNum"
-              placeholder=""
-              outlined
-            >
-            </v-text-field>
-          </v-col>
-            
-          <v-col cols="auto">
-            <v-btn v-on:click="searchMethod">검색</v-btn>
-          </v-col>
-        </v-row>
-      </base-material-card>       
+                <v-col cols="12" sm="6" md="3">
+                    <v-btn elevation="2" medium v-on:click="searchMethod">
+                        검색
+                    </v-btn>
+                </v-col>                
+            </v-row>
+   
+        </base-material-card>
     </v-container>
-</template>
 
+</template>
 <script>
 export default {
+  props: ['param'],
   data() {
-    return {
-      param: {
-        approveDate: ["", ""],
-        userName: "",
-        userId: "",
-        phoneNum: "",
-      },
-      date: false,
-      menu: false
-    };
-  },
-  computed: {
-    dateRangeText() {
-      if (this.param.approveDate[0].length == 0) {
-        return "";
-      } else return this.param.approveDate.join(" ~ ");
-    },
+      return {
+        date_range: ["", ""],
+        date: false,
+        menu: false,
+      }
   },
   methods: {
-    searchMethod: function () {
-      this.$emit("search", this.param);
+
+    unselected: function(){
+      this.menu = false
+      this.date_range = ["", ""]
     },
-  },
-};
+    
+    searchMethod: function() {
+
+      if (this.date_range.length > 1) {
+        if (this.date_range[0] > this.date_range[1]) {
+          this.param.start_date = this.date_range[1];
+          this.param.end_date = this.date_range[0];
+        } else {
+          this.param.start_date = this.date_range[0];
+          this.param.end_date = this.date_range[1];
+        }
+      }
+
+      this.param.start_date = this.param.start_date.replace(/-/g, "");
+      this.param.end_date = this.param.end_date.replace(/-/g, "");
+
+      this.$emit('search', this.param)
+    }
+  }, 
+  
+  computed: {
+    dateRangeText() {
+      if (this.date_range[0].length == 0) {
+        return "";
+      } else {
+        if (this.date_range[0] > this.date_range[1]) {
+          return this.date_range[1] + " ~ " + this.date_range[0];
+        } else return this.date_range.join(" ~ ");
+      }
+    },
+  }
+}
 </script>
 <style>
+    
 </style>

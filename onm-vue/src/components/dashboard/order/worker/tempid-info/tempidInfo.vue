@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import List from './ktt-order/kttOrderInfoList'
-import Query from './ktt-order/kttOrderInfoQuery'
+import List from './tempidList'
+import Query from './tempidQuery'
 
 import axios from "axios"
 
@@ -26,7 +26,7 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12005/get_user_ktt_subs`;
+const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12013/get_temp_id_order_list`;
 
 export default {
   
@@ -44,12 +44,9 @@ export default {
       resPagingInfo: {},
       searchParam: {
         guid: "",
-        said: "",
-        service_no: "",
-        contract_id: "",
-        page_no: "",
-        view_cnt: ""
-      }, 
+        said: ""
+      },
+      
     }
   },
   methods: {
@@ -64,7 +61,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
-          this.pList = response.data.data.list;
+          this.pList = response.data.data.order_list;
           this.resPagingInfo = response.data.data.paging_info;
         } else {
           this.pList = [];
@@ -115,43 +112,6 @@ export default {
       ) {
         newParams.said = this.searchParam.said;
       }
-
-      if (params.service_no !== undefined && params.service_no !== "") {
-        newParams.service_no = params.service_no;
-      } else if (
-        this.searchParam.service_no !== undefined &&
-        this.searchParam.service_no !== ""
-      ) {
-        newParams.service_no = this.searchParam.service_no;
-      }
-
-      if (params.contract_id !== undefined && params.contract_id !== "") {
-        newParams.contract_id = params.contract_id;
-      } else if (
-        this.searchParam.contract_id !== undefined &&
-        this.searchParam.contract_id !== ""
-      ) {
-        newParams.contract_id = this.searchParam.contract_id;
-      }
-
-      if (params.page_no !== undefined && params.page_no !== "") {
-        newParams.page_no = params.page_no;
-      } else if (
-        this.searchParam.page_no !== undefined &&
-        this.searchParam.page_no !== ""
-      ) {
-        newParams.page_no = this.searchParam.page_no;
-      }
-
-      if (params.view_cnt !== undefined && params.view_cnt !== "") {
-        newParams.view_cnt = params.view_cnt;
-      } else if (
-        this.searchParam.view_cnt !== undefined &&
-        this.searchParam.view_cnt !== ""
-      ) {
-        newParams.view_cnt = this.searchParam.view_cnt;
-      }
-
       return newParams;
     },
     
