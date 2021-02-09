@@ -10,7 +10,6 @@
         
         @child="clickToSearchDetailObject"
         @pagination="setToSearchParams"
-
         >
         </storeInfo-list>
 
@@ -68,16 +67,16 @@
       <v-container v-if=showDetailObject>
         <ktt-list v-if=showKttList 
         v-bind:kList=kList
-        v-bind:resPagingInfo=resPagingInfo
+        v-bind:kttPagingInfo=kttPagingInfo
         ></ktt-list>
 
         <prod-summary-list v-if=showProdSummaryList 
         v-bind:psList=psList
-        v-bind:resPagingInfo=resPagingInfo></prod-summary-list>
+        v-bind:psPagingInfo=psPagingInfo></prod-summary-list>
         
         <va-cam-count v-if=showVACountList
         v-bind:vaList=vaList
-        v-bind:resPagingInfo=resPagingInfo></va-cam-count>
+        v-bind:vaPagingInfo=vaPagingInfo></va-cam-count>
 
         <sensor-order-list v-if=showSensorOrderList
         v-bind:soList=soList
@@ -156,7 +155,7 @@ export default {
       showKttList:false,
       btnTitle2: '사용자-KTT open',
 
-       title3: '상품 요약 정보 조회',
+      title3: '상품 요약 정보 조회',
       psList:[],
       showProdSummaryList:false,
       btnTitle3: '상품 요약 open',
@@ -196,6 +195,9 @@ export default {
         view_cnt: 10
       },
       resPagingInfo:{},
+      kttPagingInfo:{},
+      psPagingInfo:{},
+      vaPagingInfo:{},
       searchParam:{
         said:'',
         user_name:'',
@@ -299,12 +301,12 @@ export default {
           console.log(resCode)
           if(resCode == 200){
             this.kList = response.data.data.ktt_info_list;
-            this.resPagingInfo = response.data.data.paging_info
+            this.kttPagingInfo = response.data.data.paging_info
 
             this.showKttList =!this.showKttList
           }else{
             this.kList = [];
-            this.resPagingInfo = {};
+            this.kttPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -327,11 +329,11 @@ export default {
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.psList = response.data.data.prod_summary_list;
-            this.resPagingInfo = response.data.data.paging_info
+            this.psPagingInfo = response.data.data.paging_info
             this.showProdSummaryList =!this.showProdSummaryList
           }else{
             this.psList = [];
-            this.resPagingInfo = {};
+            this.psPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -355,11 +357,11 @@ export default {
             var resMsg=response.data.res_msg;
             if(resCode==200){
               this.vaList=response.data.data.va_prod_list;
-              this.resPagingInfo=response.data.data.paging_info
+              this.vaPagingInfo=response.data.data.paging_info
               this.showVACountList=!this.showVACountList
             }else{
               this.vaList=[];
-              this.resPagingInfo={};
+              this.vaPagingInfo={};
               alert(resCode + " / "+ resMsg);
             }
           })
@@ -537,15 +539,35 @@ export default {
 
       if(params.said !== undefined && params.said !== ''){
         newParams.said = params.said
+      }else if(
+        this.searchParam.said!==undefined&&
+        this.searchParam.said!==""
+      ){
+        newParams.said=this.searchParam.said
       }
       if(params.user_id !== undefined && params.user_id !== ''){
         newParams.user_id = params.user_id
+      }else if(
+        this.searchParam.user_id!==undefined&&
+        this.searchParam.user_id!==""
+      ){
+        newParams.user_id=this.searchParam.user_id
       }
       if(params.user_name !== undefined && params.user_name !== ''){
         newParams.user_name = params.user_name
+      }else if(
+        this.searchParam.user_name!==undefined&&
+        this.searchParam.user_name!==""
+      ){
+        newParams.user_name=this.searchParam.user_name
       }
       if(params.tel_no !== undefined && params.tel_no !== ''){
         newParams.tel_no = params.tel_no
+      }else if(
+        this.searchParam.tel_no!==undefined&&
+        this.searchParam.tel_no!==""
+      ){
+        newParams.tel_no=this.searchParam.tel_no
       }
 
       return newParams

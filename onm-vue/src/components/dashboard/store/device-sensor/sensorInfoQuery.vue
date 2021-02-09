@@ -84,21 +84,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      param: {
-        reg_date: ["", ""],
-        terminal_gw_id: "",
-        user_id: "",
-        sensor_name: "",
-      },
-      date: false,
-      menu: false,
-    };
-  },
+    props: ['param'],
+    data() {
+        return {
+          date:false,
+          menu:false
+        }
+    },
   computed: {
     dateRangeText() {
-      if (this.param.reg_date[0].length == 0) {
+      if (this.param.reg_date.length == 0) {
         return "";
       } else return this.param.reg_date.join(" ~ ");
     },

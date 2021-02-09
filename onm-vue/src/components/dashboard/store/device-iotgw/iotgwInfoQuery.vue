@@ -84,21 +84,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      param: {
-        open_date: ["", ""],
-        gw_id: "",
-        gw_name: "",
-        gw_model_code: "",
-      },
-      date: false,
-      menu: false,
-    };
-  },
+    props: ['param'],
+    data() {
+        return {
+          date:false,
+          menu:false
+        }
+    },
   computed: {
     dateRangeText() {
-      if (this.param.open_date[0].length == 0) {
+      if (this.param.open_date.length == 0) {
         return "";
       } else return this.param.open_date.join(" ~ ");
     },

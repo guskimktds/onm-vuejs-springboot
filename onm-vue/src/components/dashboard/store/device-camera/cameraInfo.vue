@@ -37,9 +37,11 @@ export default {
       },
       resPagingInfo:{},
       searchParam:{
-        mod_date:'',
-        prod_code:'',
-        user_id:''
+        open_date:'',
+        cam_id:'',
+        cam_name:'',
+        mac_id:'',
+
       }
     }
   },
@@ -123,15 +125,35 @@ export default {
 
       if(params.open_date !== undefined && params.open_date !== ''){
         newParams.open_date = params.open_date
+      }else if(
+        this.searchParam.open_date!==undefined&&
+        this.searchParam.open_date!==""
+      ){
+        newParams.open_date=this.searchParam.open_date
       }
       if(params.cam_id !== undefined && params.cam_id !== ''){
         newParams.cam_id = params.cam_id
+      }else if(
+        this.searchParam.cam_id!==undefined&&
+        this.searchParam.cam_id!==""
+      ){
+        newParams.cam_id=this.searchParam.cam_id
       }
       if(params.cam_name !== undefined && params.cam_name !== ''){
         newParams.cam_name = params.cam_name
+      }else if(
+        this.searchParam.cam_name!==undefined&&
+        this.searchParam.cam_name!==""
+      ){
+        newParams.cam_name=this.searchParam.cam_name
       }
       if(params.mac_id !== undefined && params.mac_id !== ''){
         newParams.mac_id = params.mac_id
+      }else if(
+        this.searchParam.mac_id!==undefined&&
+        this.searchParam.mac_id!==""
+      ){
+        newParams.mac_id=this.searchParam.mac_id
       }
 
       return newParams

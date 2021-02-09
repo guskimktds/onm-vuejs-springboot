@@ -134,17 +134,36 @@ export default{
 
       if(params.appoint_date !== undefined && params.appoint_date !== ''){
         newParams.appoint_date = params.appoint_date
+      }else if(
+        this.searchParam.appoint_date!==undefined&&
+        this.searchParam.appoint_date!==""
+      ){
+        newParams.appoint_date=this.searchParam.appoint_date
       }
       if(params.user_id !== undefined && params.user_id !== ''){
         newParams.user_id = params.user_id
+      }else if(
+        this.searchParam.user_id!==undefined&&
+        this.searchParam.user_id!==""
+      ){
+        newParams.user_id=this.searchParam.user_id
       }
       if(params.user_name !== undefined && params.user_name !== ''){
         newParams.user_name = params.user_name
+      }else if(
+        this.searchParam.user_name!==undefined&&
+        this.searchParam.user_name!==""
+      ){
+        newParams.user_name=this.searchParam.user_name
       }
       if(params.status_code !== undefined && params.status_code !== ''){
         newParams.status_code = params.status_code
+      }else if(
+        this.searchParam.status_code!==undefined&&
+        this.searchParam.status_code!==""
+      ){
+        newParams.status_code=this.searchParam.status_code
       }
-
       return newParams
     }
   },

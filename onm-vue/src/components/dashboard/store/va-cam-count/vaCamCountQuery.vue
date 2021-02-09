@@ -42,13 +42,16 @@
 </template>
 <script>
 export default {
- props:['param'],
-  methods: {
-    searchMethod: function () {
-      this.$emit("search", this.param);
+    props: ['param'],
+    data() {
+        return {}
     },
-  },
-};
+    methods: {
+        searchMethod: function() {
+            this.$emit('search', this.param)
+        }
+    },  
+}
 </script>
 <style>
 </style>

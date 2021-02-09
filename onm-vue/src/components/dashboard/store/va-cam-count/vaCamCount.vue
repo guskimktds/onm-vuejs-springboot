@@ -6,7 +6,7 @@
          v-bind:param=searchParam></vaCamCount-query>
         <vaCamCount-list 
           v-bind:vaList="vaList"
-          v-bind:resPagingInfo=resPagingInfo
+          v-bind:vaPagingInfo=vaPagingInfo
 
           @pagination="setToSearchParams"></vaCamCount-list>
       </v-card>
@@ -37,10 +37,9 @@ export default {
         page_no:1,
         view_cnt:10
       },
-      resPagingInfo:{},
+      vaPagingInfo:{},
       searchParam:{
-        mod_date:'',
-        prod_code:'',
+        va_name:'',
         user_id:''
       }
     }
@@ -59,10 +58,10 @@ export default {
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.vaList = response.data.data.va_prod_list;
-            this.resPagingInfo = response.data.data.paging_info
+            this.vaPagingInfo = response.data.data.paging_info
           }else{
             this.vaList = [];
-            this.resPagingInfo = {};
+            this.vaPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -84,10 +83,10 @@ export default {
         var resMsg = response.data.res_msg;
         if(resCode == 200){
           this.vaList = response.data.data.va_prod_list;
-          this.resPagingInfo = response.data.data.paging_info
+          this.vaPagingInfo = response.data.data.paging_info
         }else{
           this.vaList = [];
-          this.resPagingInfo = {};
+          this.vaPagingInfo = {};
           alert(resCode + " / " + resMsg);
         }
       })
@@ -124,9 +123,19 @@ export default {
 
       if(params.va_name !== undefined && params.va_name !== ''){
         newParams.va_name = params.va_name
+      }else if(
+        this.searchParam.va_name!==undefined&&
+        this.searchParam.va_name!==""
+      ){
+        newParams.va_name=this.searchParam.va_name
       }
       if(params.user_id !== undefined && params.user_id !== ''){
         newParams.user_id = params.user_id
+      }else if(
+        this.searchParam.user_id!==undefined&&
+        this.searchParam.user_id!==""
+      ){
+        newParams.user_id=this.searchParam.user_id
       }
 
       return newParams

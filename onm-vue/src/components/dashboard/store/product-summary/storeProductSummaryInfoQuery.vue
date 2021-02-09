@@ -29,7 +29,11 @@
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="param.reg_date" no-title scrollable range>
+              <v-date-picker
+              v-model="param.reg_date" 
+              no-title
+              scrollable 
+              range>
                 <v-spacer></v-spacer>
                 <v-btn text color="primary" @click="menu= false">
                   Cancel
@@ -93,21 +97,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      param: {
-        reg_date: ["", ""],
-        product_name: "",
-        user_id: "",
-        prodcd: "",
-      },
-      date: false,
-      menu: false,
-    };
-  },
+    props: ['param'],
+    data() {
+        return {
+          date:false,
+          menu:false
+        }
+    },
   computed: {
     dateRangeText() {
-      if (this.param.reg_date[0].length == 0) {
+      if (this.param.reg_date.length == 0) {
         return "";
       } else return this.param.reg_date.join(" ~ ");
     },
@@ -118,6 +117,7 @@ export default {
     },
   },
 };
+
 </script>
 <style>
 </style>

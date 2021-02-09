@@ -132,12 +132,27 @@ export default {
 
       if(params.mod_date !== undefined && params.mod_date !== ''){
         newParams.mod_date = params.mod_date
+      }else if(
+        this.searchParam.mod_date!==undefined&&
+        this.searchParam.mod_date!==""
+      ){
+        newParams.mod_date=this.searchParam.mod_date
       }
       if(params.prod_info_id !== undefined && params.prod_info_id !== ''){
         newParams.prod_info_id = params.prod_info_id
+      }else if(
+        this.searchParam.prod_info_id!==undefined&&
+        this.searchParam.prod_info_id!==""
+      ){
+        newParams.prod_info_id=this.searchParam.prod_info_id
       }
       if(params.user_id !== undefined && params.user_id !== ''){
         newParams.user_id = params.user_id
+      }else if(
+        this.searchParam.user_id!==undefined&&
+        this.searchParam.user_id!==""
+      ){
+        newParams.user_id=this.searchParam.user_id
       }
 
       return newParams

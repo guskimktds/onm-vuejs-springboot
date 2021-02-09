@@ -89,20 +89,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      param: {
-        mod_date: ["", ""],
-        prod_info_id: "",
-        user_id: "",
-      },
-      date: false,
-      menu: false,
-    };
-  },
+    props: ['param'],
+    data() {
+        return {
+          date:false,
+          menu:false
+        }
+    },
   computed: {
     dateRangeText() {
-      if (this.param.mod_date[0].length == 0) {
+      if (this.param.mod_date.length == 0) {
         return "";
       } else return this.param.mod_date.join(" ~ ");
     },
