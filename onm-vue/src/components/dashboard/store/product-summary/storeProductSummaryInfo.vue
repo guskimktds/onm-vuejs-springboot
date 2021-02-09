@@ -8,7 +8,7 @@
         ></storeProductSummaryInfo-query>
         <storeProductSummaryInfo-list
           v-bind:psList="psList"
-          v-bind:resPagingInfo=resPagingInfo
+          v-bind:psPagingInfo=psPagingInfo
 
           @pagination="setToSearchParams"
         ></storeProductSummaryInfo-list>
@@ -40,11 +40,12 @@ export default {
         page_no:1,
         view_cnt:10
       },
-      resPagingInfo:{},
+      psPagingInfo:{},
       searchParam:{
-        mod_date:'',
-        prod_code:'',
-        user_id:''
+        reg_date:'',
+        product_name:'',
+        user_id:'',
+        prodcd:'',
       }
     }
   },
@@ -62,10 +63,10 @@ export default {
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.psList = response.data.data.prod_summary_list;
-            this.resPagingInfo = response.data.data.paging_info
+            this.psPagingInfo = response.data.data.paging_info
           }else{
             this.psList = [];
-            this.resPagingInfo = {};
+            this.psPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -89,11 +90,11 @@ export default {
         var resMsg = response.data.res_msg;
         if(resCode == 200){
           this.psList = response.data.data.prod_summary_list;
-          this.resPagingInfo = response.data.data.paging_info
+          this.psPagingInfo = response.data.data.paging_info
    
         }else{
           this.psList = [];
-          this.resPagingInfo = {};
+          this.psPagingInfo = {};
           alert(resCode + " / " + resMsg);
         }
       })
@@ -130,15 +131,35 @@ export default {
 
       if(params.reg_date !== undefined && params.reg_date !== ''){
         newParams.reg_date = params.reg_date
+      }else if(
+        this.searchParam.reg_date!==undefined&&
+        this.searchParam.reg_date!==""
+      ){
+        newParams.reg_date=this.searchParam.reg_date
       }
       if(params.product_name !== undefined && params.product_name !== ''){
         newParams.product_name = params.product_name
+      }else if(
+        this.searchParam.product_name!==undefined&&
+        this.searchParam.product_name!==""
+      ){
+        newParams.product_name=this.searchParam.product_name
       }
       if(params.user_id !== undefined && params.user_id !== ''){
         newParams.user_id = params.user_id
+      }else if(
+        this.searchParam.user_id!==undefined&&
+        this.searchParam.user_id!==""
+      ){
+        newParams.user_id=this.searchParam.user_id
       }
         if(params.prodcd !== undefined && params.prodcd !== ''){
         newParams.prodcd = params.prodcd
+      }else if(
+        this.searchParam.prodcd!==undefined&&
+        this.searchParam.prodcd!==""
+      ){
+        newParams.prodcd=this.searchParam.prodcd
       }
 
       return newParams

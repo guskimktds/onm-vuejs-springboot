@@ -39,9 +39,9 @@ export default {
       },
       resPagingInfo:{},
       searchParam:{
-        mod_date:'',
-        prod_code:'',
-        user_id:''
+        sensor_prod_id:'',
+        status_code:'',
+        sensor_prod_name:''
       }
     }
   },
@@ -126,12 +126,27 @@ export default {
 
       if(params.sensor_prod_id !== undefined && params.sensor_prod_id !== ''){
         newParams.sensor_prod_id = params.sensor_prod_id
+      }else if(
+        this.searchParam.sensor_prod_id!==undefined&&
+        this.searchParam.sensor_prod_id!==""
+      ){
+        newParams.sensor_prod_id=this.searchParam.sensor_prod_id
       }
       if(params.status_code !== undefined && params.status_code !== ''){
         newParams.status_code = params.status_code
+      }else if(
+        this.searchParam.status_code!==undefined&&
+        this.searchParam.status_code!==""
+      ){
+        newParams.status_code=this.searchParam.status_code
       }
       if(params.sensor_prod_name !== undefined && params.sensor_prod_name !== ''){
         newParams.sensor_prod_name = params.sensor_prod_name
+      }else if(
+        this.searchParam.sensor_prod_name!==undefined&&
+        this.searchParam.sensor_prod_name!==""
+      ){
+        newParams.sensor_prod_name=this.searchParam.sensor_prod_name
       }
 
       return newParams

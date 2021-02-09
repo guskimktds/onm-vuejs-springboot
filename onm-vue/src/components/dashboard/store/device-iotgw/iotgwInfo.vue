@@ -37,9 +37,10 @@ export default {
       },
       resPagingInfo:{},
       searchParam:{
-        mod_date:'',
-        prod_code:'',
-        user_id:''
+        open_date:'',
+        gw_id:'',
+        gw_name:'',
+        gw_model_code:''
       }
     }
   },
@@ -123,15 +124,35 @@ export default {
 
       if(params.open_date !== undefined && params.open_date !== ''){
         newParams.open_date = params.open_date
+      }else if(
+        this.searchParam.open_date!==undefined&&
+        this.searchParam.open_date!==""
+      ){
+        newParams.open_date=this.searchParam.open_date
       }
       if(params.gw_id !== undefined && params.gw_id !== ''){
         newParams.gw_id = params.gw_id
+      }else if(
+        this.searchParam.gw_id!==undefined &&
+        this.searchParam.gw_id!==""
+      ){
+        newParams.gw_id=this.searchParam.gw_id
       }
       if(params.gw_name !== undefined && params.gw_name !== ''){
         newParams.gw_name = params.gw_name
+      }else if(
+        this.searchParam.gw_name!==undefined&&
+        this.searchParam.gw_name!==""
+      ){
+        newParams.gw_name=this.searchParam.gw_name
       }
       if(params.gw_model_code !== undefined && params.gw_model_code !== ''){
         newParams.gw_model_code = params.gw_model_code
+      }else if(
+        this.searchParam.gw_model_code!==undefined&&
+        this.searchParam.gw_model_code!==""
+      ){
+        newParams.gw_model_code=this.searchParam.gw_model_code
       }
 
 

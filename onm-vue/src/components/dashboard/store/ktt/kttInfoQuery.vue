@@ -91,21 +91,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      param: {
-        reg_date: ["",""],
-        user_id: "",
-        service_no: "",
-        system_id: "",
-      },
-      date: false,
-      menu: false,
-    };
-  },
+    props: ['param'],
+    data() {
+        return {
+          date:false,
+          menu:false
+        }
+    },
   computed: {
     dateRangeText() {
-      if (this.param.reg_date[0].length == 0) {
+      if (this.param.reg_date.length == 0) {
         return "";
       } else return this.param.reg_date.join(" ~ ");
     },
@@ -116,6 +111,7 @@ export default {
     },
   },
 };
+
 </script>
 <style>
 </style>

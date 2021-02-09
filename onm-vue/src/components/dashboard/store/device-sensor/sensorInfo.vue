@@ -37,9 +37,9 @@ export default {
       },
       resPagingInfo:{},
       searchParam:{
-        mod_date:'',
-        prod_code:'',
-        user_id:''
+        reg_date:'',
+        user_id:'',
+        sensor_name:''
       }
     }
   },
@@ -122,15 +122,35 @@ export default {
 
       if(params.reg_date !== undefined && params.reg_date !== ''){
         newParams.reg_date = params.reg_date
+      }else if(
+        this.searchParam.reg_date!==undefined&&
+        this.searchParam.reg_date!==""
+      ){
+        newParams.reg_date=this.searchParam.reg_date
       }
       if(params.terminal_gw_id !== undefined && params.terminal_gw_id !== ''){
         newParams.terminal_gw_id = params.terminal_gw_id
+      }else if(
+        this.searchParam.terminal_gw_id!==undefined&&
+        this.searchParam.terminal_gw_id!==""
+      ){
+        newParams.terminal_gw_id=this.searchParam.terminal_gw_id
       }
       if(params.user_id !== undefined && params.user_id !== ''){
         newParams.user_id = params.user_id
+      }else if(
+        this.searchParam.user_id!==undefined&&
+        this.searchParam.user_id!==""
+      ){
+        newParams.user_id=this.searchParam.user_id
       }
       if(params.sensor_name !== undefined && params.sensor_name !== ''){
         newParams.sensor_name = params.sensor_name
+      }else if(
+        this.searchParam.sensor_name!==undefined&&
+        this.searchParam.sensor_name!==""
+      ){
+        newParams.sensor_name=this.searchParam.sensor_name
       }
 
 
