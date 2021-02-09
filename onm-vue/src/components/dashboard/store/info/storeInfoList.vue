@@ -1,16 +1,12 @@
 <template>
-  <v-container
-      id="regular-tables"
-      fluid
-      tag="section"
-    >
+  <v-container id="regular-tables" fluid tag="section">
     <base-material-card
-        color="orange"
-        dark
-        icon="mdi-keyboard"
-        title="매장정보 조회 LIST"
-        class="px-5 py-3"
-      >
+      color="orange"
+      dark
+      icon="mdi-keyboard"
+      title="매장정보 조회 LIST"
+      class="px-5 py-3"
+    >
       <v-data-table
         :headers="headers"
         :items="pList"
@@ -21,26 +17,27 @@
       >
       </v-data-table>
     </base-material-card>
-
-  </v-container>  
+  </v-container>
 </template>
 
 <script>
 export default {
-    props: ['pList','resPagingInfo'],
+  props: ["pList", "resPagingInfo"],
 
-    data() {
+  data() {
     return {
-        dialog: false,
-        dialogDelete: false,
-        editedIndex: -1,
-        options: {},
-        totalList: 0,
-        loading: true,
-        headers: [
+      dialog: false,
+      dialogDelete: false,
+      editedIndex: -1,
+      options: {},
+      totalList: 0,
+      loading: true,
+      headers: [
         {
-          text: "계약ID", align: "start",
-          sortable: false, value: "said",
+          text: "계약ID",
+          align: "start",
+          sortable: false,
+          value: "said",
         },
         { text: "매장ID", value: "user_id" },
         { text: "매장명", value: "user_name" },
@@ -53,15 +50,14 @@ export default {
     };
   },
 
-methods: {
-    handleClick: function(value){
+  methods: {
+    handleClick: function (value) {
       this.$emit("child", value.said);
     },
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
-    
   },
 
   watch: {
@@ -76,10 +72,7 @@ methods: {
   mounted() {
     this.getDataFromApi();
   },
-    
-}
-
+};
 </script>
 <style>
-
 </style>
