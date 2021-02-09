@@ -1,32 +1,28 @@
 <template>
-  <v-container
-      id="regular-tables"
-      fluid
-      tag="section"
-    >
+  <v-container id="regular-tables" fluid tag="section">
     <base-material-card
-        color="orange"
-        dark
-        icon="mdi-keyboard"
-        title="카메라 정보 조회 LIST"
-        class="px-5 py-3"
-      >
+      color="orange"
+      dark
+      icon="mdi-keyboard"
+      title="카메라 정보 조회 LIST"
+      class="px-5 py-3"
+    >
       <v-data-table
         :headers="headers"
         :items="dcList"
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
+        @click:row="handleClick"
       >
-
       </v-data-table>
     </base-material-card>
-  </v-container>  
+  </v-container>
 </template>
 
 <script>
 export default {
-  props: ["dcList",'resPagingInfo'],
+  props: ["dcList", "resPagingInfo"],
   data() {
     return {
       dialog: false,
@@ -58,11 +54,13 @@ export default {
     };
   },
   methods: {
+    handleClick: function (value) {
+      this.$emit("child", value);
+    },
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
-    
   },
 
   watch: {
@@ -77,9 +75,7 @@ export default {
   mounted() {
     this.getDataFromApi();
   },
-    
-}
+};
 </script>
 <style>
-    
 </style>

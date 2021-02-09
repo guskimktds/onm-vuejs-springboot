@@ -1,31 +1,28 @@
 <template>
-  <v-container
-      id="regular-tables"
-      fluid
-      tag="section"
-    >
+  <v-container id="regular-tables" fluid tag="section">
     <base-material-card
-        color="orange"
-        dark
-        icon="mdi-keyboard"
-        title="IoT GW 정보 조회 LIST"
-        class="px-5 py-3"
-      >
+      color="orange"
+      dark
+      icon="mdi-keyboard"
+      title="IoT GW 정보 조회 LIST"
+      class="px-5 py-3"
+    >
       <v-data-table
         :headers="headers"
         :items="iotList"
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
+        @click:row="handleClick"
       >
       </v-data-table>
     </base-material-card>
-  </v-container> 
+  </v-container>
 </template>
 
 <script>
 export default {
-  props: ["iotList",'resPagingInfo'],
+  props: ["iotList", "resPagingInfo"],
   data() {
     return {
       dialog: false,
@@ -49,17 +46,19 @@ export default {
         { text: "서비스 상태코드", value: "status_code" },
         { text: "등록일시", value: "reg_date" },
         { text: "개통일시", value: "open_date" },
-        { text: "관리자상태코드", value: "mgt_stauts" },
+        { text: "관리자상태코드", value: "mgt_status" },
         { text: "해지일시", value: "close_date" },
       ],
     };
   },
   methods: {
+    handleClick: function (value) {
+      this.$emit("child", value);
+    },
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
-    
   },
 
   watch: {
@@ -74,8 +73,7 @@ export default {
   mounted() {
     this.getDataFromApi();
   },
-    
-}
+};
 </script>
 <style>
 </style>
