@@ -15,7 +15,7 @@
         :headers="headers"
         :items="dodList"
         :options.sync="options"
-        :server-items-length="resPagingInfo.total_cnt"
+        :server-items-length="dodPagingInfo.total_cnt"
         class="elevation-1"
       >
       </v-data-table>
@@ -26,7 +26,7 @@
 
 <script>
 export default {
-    props: ['dodList','resPagingInfo'],
+    props: ['dodList','dodPagingInfo'],
     //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
     data() {
     return {
@@ -54,7 +54,7 @@ export default {
  methods: {
 
       getDataFromApi () {
-        console.log(this.resPagingInfo)
+        console.log(this.dodPagingInfo)
         this.loading = true
 
         const { page, itemsPerPage } = this.options

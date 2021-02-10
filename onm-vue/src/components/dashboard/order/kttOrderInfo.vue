@@ -7,8 +7,8 @@
         ></query>
 
         <list 
-          v-bind:pList=pList
-          v-bind:resPagingInfo="resPagingInfo"
+          v-bind:kttList=kttList
+          v-bind:kttPagingInfo="kttPagingInfo"
           @pagination="searchToProcess"
         ></list>
       </v-card>
@@ -36,12 +36,12 @@ export default {
   
   data () {
     return {
-      pList: [],
+      kttList: [],
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10,
       },
-      resPagingInfo: {},
+      kttPagingInfo: {},
       searchParam: {
         guid: "",
         said: "",
@@ -64,11 +64,11 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
-          this.pList = response.data.data.list;
-          this.resPagingInfo = response.data.data.paging_info;
+          this.kttList = response.data.data.list;
+          this.kttPagingInfo = response.data.data.paging_info;
         } else {
-          this.pList = [];
-          this.resPagingInfo = {};
+          this.kttList = [];
+          this.kttPagingInfo = {};
           alert(resCode + " / " + resMsg);
         }
 
@@ -93,7 +93,7 @@ export default {
       }
 
       if (params.itemsPerPage === undefined || params.itemsPerPage === "") {
-        newParams.view_cnt = this.resPagingInfo.view_cnt;
+        newParams.view_cnt = this.kttPagingInfo.view_cnt;
       } else {
         newParams.view_cnt = params.itemsPerPage;
       }
