@@ -23,7 +23,8 @@
             "children": [
                 { "name": "청약 통계", "path": "/platform/order-stats", "component": "order-stats" },
                 { "name": "고객이전 통계", "path": "/platform/customer-transfer-stats", "component": "customer-transfer-stats" },
-                { "name": "상품 통계", "path": "/platform/product-stats", "component": "product-stats" }
+                { "name": "상품 통계", "path": "/platform/product-stats", "component": "product-stats" },
+                { "name": "단말 통계", "path": "/platform/device-stats", "component": "device-stats" }
             ]
         }]
     },

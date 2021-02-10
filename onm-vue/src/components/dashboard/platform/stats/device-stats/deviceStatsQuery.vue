@@ -6,7 +6,7 @@
     >
         <base-material-card
             icon="mdi-magnify"
-            title="상품통계 조회"
+            title="단말통계 조회"
             class="px-5 py-3"
         >
 
@@ -73,7 +73,7 @@ export default {
     },
     computed: {
         dateRangeText() {
-            if (this.param.appoint_date.length == 0) {
+            if (this.param.appoint_date[0].length == 0) {
                 return "";
             } else return this.param.appoint_date.join(" ~ ");
         },

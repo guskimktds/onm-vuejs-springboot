@@ -9,7 +9,7 @@
         color="orange"
         dark
         icon="mdi-keyboard"
-        title="청약통계 LIST"
+        title="단말통계 LIST"
         class="px-5 py-3"
       >
 
@@ -31,12 +31,12 @@ export default {
   data() {
     return {
       headers: [
-        { text: '희망일자', value: 'appointdate' },
+        { text: '희망일자', value: 'appoint_date' },
         { text: '신규 청약 수', value: 'new_cnt' },
         { text: '변경 청약수', value: 'change_cnt' },
         { text: '일시정지 청약수', value: 'pause_cnt' },
         { text: '부활 청약 수', value: 'restore_cnt' },
-        { text: '해지 청약 수', value: 'close_cnt' },
+        { text: '해지 청약 수', value: 'cloase_cnt' },
       ],
     }
   },
