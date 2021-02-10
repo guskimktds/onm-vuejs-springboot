@@ -8,7 +8,7 @@
       color="orange"
       dark
       icon="mdi-keyboard"
-      title="client 단말 정보 LIST"
+      title="APP(Client) 단말 정보 LIST"
       class="px-5 py-3"
     >
         <v-data-table
@@ -47,16 +47,16 @@
                           cols="12" sm="6" md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.appversion"
+                            v-model="editedItem.app_version_id"
                             label="앱버전ID"
-                            
+                            readonly
                           ></v-text-field>
                         </v-col>
                         <v-col
                           cols="12" sm="6" md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.ostype"
+                            v-model="editedItem.os_type"
                             label="OS타입"
                           ></v-text-field>
                         </v-col>
@@ -64,7 +64,7 @@
                           cols="12" sm="6" md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.updateversion"
+                            v-model="editedItem.update_version"
                             label="업데이트 버전"
                           ></v-text-field>
                         </v-col>
@@ -72,7 +72,7 @@
                           cols="12" sm="6" md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.versioncode"
+                            v-model="editedItem.version_code"
                             label="버전코드"
                           ></v-text-field>
                         </v-col>
@@ -80,7 +80,7 @@
                           cols="12" sm="6" md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.downloadurl"
+                            v-model="editedItem.download_url"
                             label="다운로드 URL"
                           ></v-text-field>
                         </v-col>
@@ -88,26 +88,10 @@
                           cols="12" sm="6" md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.updateyn"
+                            v-model="editedItem.required_yn"
                             label="필수 업데이트여부"
                           ></v-text-field>
-                        </v-col>
-                        <v-col
-                          cols="12" sm="6" md="6"
-                        >
-                          <v-text-field
-                            v-model="editedItem.createdate"
-                            label="등록일시"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col
-                          cols="12" sm="6" md="6"
-                        >
-                          <v-text-field
-                            v-model="editedItem.updatedate"
-                            label="수정일시"
-                          ></v-text-field>
-                        </v-col>
+                        </v-col>                        
                         <v-col
                           cols="12" sm="6" md="6"
                         >
@@ -150,7 +134,7 @@
               </v-dialog>
               <v-dialog v-model="dialogDelete" max-width="500px">
                 <v-card>
-                  <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
+                  <v-card-title class="headline">삭제</v-card-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -304,7 +288,7 @@ export default {
           // Object.assign(this.desserts[this.editedIndex], this.editedItem)
           const editedItem = this.editedItem
           console.log("111111111 : ", editedItem)
-          EventBus.$emit('editedItem', editedItem, this.editedIndex)
+          EventBus.$emit('editedItemApp', editedItem, this.editedIndex)
           // update 
             // axios
             // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/localcode/update`, editedItem )

@@ -13,7 +13,7 @@
     >
         <v-data-table
           :headers="headers"
-          :items="localCodeList"
+          :items="pList"
           class="elevation-1"
         >
           <template v-slot:top>
@@ -56,7 +56,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.localgwid"
+                            v-model="editedItem.local_gw_id"
                             label="LOCAL_GW_ID"
                             
                           ></v-text-field>
@@ -67,7 +67,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.name"
+                            v-model="editedItem.server_name"
                             label="서버명"
                           ></v-text-field>
                         </v-col>
@@ -77,7 +77,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.serverurl"
+                            v-model="editedItem.server_url"
                             label="서버URL"
                           ></v-text-field>
                         </v-col>
@@ -87,7 +87,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.socketurl"
+                            v-model="editedItem.ws_url"
                             label="웹소켓URL"
                           ></v-text-field>
                         </v-col>
@@ -107,7 +107,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.ecurl"
+                            v-model="editedItem.ec_url"
                             label="EC URL"
                           ></v-text-field>
                         </v-col>
@@ -117,7 +117,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.ldms"
+                            v-model="editedItem.ldms_url"
                             label="LDMS URL"
                           ></v-text-field>
                         </v-col>
@@ -127,7 +127,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.stmcnt"
+                            v-model="editedItem.max_cam_cnt"
                             label="STM 최대 수용 카메라 수"
                           ></v-text-field>
                         </v-col>
@@ -137,7 +137,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.vacnt"
+                            v-model="editedItem.max_va_cnt"
                             label="VA서버 최대 분석 채널 수"
                           ></v-text-field>
                         </v-col>
@@ -147,7 +147,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.intcode"
+                            v-model="editedItem.version_code"
                             label="INT 배포버전 코드"
                           ></v-text-field>
                         </v-col>
@@ -157,7 +157,7 @@
                           md="12"
                         >
                           <v-text-field
-                            v-model="editedItem.mqurl"
+                            v-model="editedItem.mq_url"
                             label="MQ URL"
                           ></v-text-field>
                         </v-col>                        
@@ -187,7 +187,7 @@
               </v-dialog>
               <v-dialog v-model="dialogDelete" max-width="500px">
                 <v-card>
-                  <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
+                  <v-card-title class="headline">삭제 하시겠습니까?</v-card-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -225,8 +225,13 @@ import axios from "axios"
 // import { eventBus } from '../../../../../main'
 import EventBus from '../../../../../EventBus';
 
+// const headers = {
+//   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+//   'Content-Type': 'application/json'
+// }
+
 export default {
-    props: ['localCodeList'],
+    props: ['pList'],
     data() {
       return {
         dialog: false,
@@ -234,62 +239,52 @@ export default {
         editedIndex: -1,
         headers: [
           {
-            text: 'Local_GW_ID',
+            text: '국사코드',
             align: 'start',
             sortable: false,
-            value: 'localgwid',
+            value: 'local_gw_id',
           },
-          { 
-            text: '서버명', 
-            value: 'name',
-          },
-          { 
-            text: '서버URL', 
-            value: 'serverurl',
-          },
-          { 
-            text: '웹소켓URL', 
-            value: 'socketurl',
-          },
+          { text: '서버명', value: 'server_name' },
+          { text: '서버URL', value: 'server_url' },
+          { text: '웹소켓URL', value: 'ws_url' },
           { text: '국사판단 패턴', value: 'pattern' },
-          { text: 'EC서버 URL', value: 'ecurl' },
-          { text: 'LDMS URL', value: 'ldms' },
-          { text: 'STM 최대 수용 카메라 수', value: 'stmcnt' },
-          { text: 'VA서버 최대 분석 채널 수', value: 'vacnt' },
-          { text: 'INT 배포버전 코드', value: 'intcode' },
-          { text: 'MQ URL', value: 'mqurl' },
+          { text: 'EC서버 URL', value: 'ec_url' },
+          { text: 'LDMS URL', value: 'ldms_url' },
+          { text: 'STM 최대 수용 카메라 수', value: 'max_cam_cnt' },
+          { text: 'VA서버 최대 분석 채널 수', value: 'max_va_cnt' },
+          { text: 'INT 배포버전 코드', value: 'version_code' },
+          { text: 'MQ URL', value: 'mq_url' },
           { text: '변경', value: 'actions', sortable: false }
         ],
         editedItem: {
-          localgwid: '',
-          name: '',
-          serverurl: '',
-          socketurl: '',
+          local_gw_id: '',
+          server_name: '',
+          server_url: '',
+          ws_url: '',
           pattern: '',
-          ecurl: '',
-          ldms: '',
-          stmcnt: 0,
-          vacnt: 0,
-          intcode: '',
-          mqurl: '',
-          editor: '82095586',
-          editDate: '2021-01-06 10:20:30'
+          ec_url: '',
+          ldms_url: '',
+          max_cam_cnt: 0,
+          max_va_cnt: 0,
+          version_code: '',
+          mq_url: '',
+          cmd_type:''
         },
         defaultItem: {
-          localgwid: '',
-          name: '',
-          serverurl: '',
-          socketurl: '',
+          local_gw_id: '',
+          server_name: '',
+          server_url: '',
+          ws_url: '',
           pattern: '',
-          ecurl: '',
-          ldms: '',
-          stmcnt: 0,
-          vacnt: 0,
-          intcode: '',
-          mqurl: '',
-          editor: '82095586',
-          editDate: '2021-01-06 10:20:30'
+          ec_url: '',
+          ldms_url: '',
+          max_cam_cnt: 0,
+          max_va_cnt: 0,
+          version_code: '',
+          mq_url: '',
+          cmd_type:''
         },
+        newPlist: []
       }
     },
     computed: {
@@ -300,10 +295,11 @@ export default {
     methods: {
       editItem (item) {
         console.log('editItem method call : ',item)
-        this.editedIndex = this.localCodeList.indexOf(item)
+        this.editedIndex = this.pList.indexOf(item)
         console.log('editItem method call : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
-
+        // 수정
+        this.editedItem.cmd_type = 'U'
         console.log('editItem method call : ',this.editedItem)
 
         this.dialog = true
@@ -311,27 +307,41 @@ export default {
 
       deleteItem (item) {
         console.log('deleteItem method call : ',item)
-        this.editedIndex = this.localCodeList.indexOf(item)
+        this.editedIndex = this.pList.indexOf(item)
         this.editedItem = Object.assign({}, item)
+        // 삭제
+        this.editedItem.cmd_type = 'D'
         this.dialogDelete = true
       },
 
       deleteItemConfirm () {
-        //서버 측 delete 처리
-        const deleteItem = this.editedItem
-        axios
-            .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/localcode/delete`, deleteItem)
-            .then((result) => {
-              console.log(result)
-              // this.list = JSON.parse(result.data.menu)
-              // this.list = result.data
-              this.localCodeList.splice(this.editedIndex, 1)
+        if (this.editedIndex > -1) {
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15009/set_local_gw`
+
+          // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
+          var params = this.editedItem
+          var deleteIndex = this.editedIndex
+          console.log(params)
+          var headers = this.$store.state.headers
+          console.log(headers)
+          axios.post(url, params, headers)
+            .then((response) => {
+              console.log(response)
+              var resCode = response.data.res_code;
+              var resMsg = response.data.res_msg;
+              if(resCode == 200){
+                //현재 목록에서 선택한 Item을 삭제한다.
+                this.pList.splice(deleteIndex, 1)
+              }else{
+                alert(resCode + " / " + resMsg);
+              }
             })
             .catch((ex) => {
-              console.log('조회 실패',ex)
+              console.log('변경 실패',ex)
             })
 
-        // this.localCodeList.splice(this.editedIndex, 1)
+        // this.pList.splice(this.editedIndex, 1)
+        }
         this.closeDelete()
       },
 
@@ -365,7 +375,7 @@ export default {
             //   console.log(result)
             //   // this.list = JSON.parse(result.data.menu)
             //   // this.list = result.data
-            //   // Object.assign(this.localCodeList[this.editedIndex], this.editedItem)
+            //   // Object.assign(this.pList[this.editedIndex], this.editedItem)
             // })
             // .catch((ex) => {
             //   console.log('조회 실패',ex)

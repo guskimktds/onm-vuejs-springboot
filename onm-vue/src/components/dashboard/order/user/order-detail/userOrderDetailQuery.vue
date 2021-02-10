@@ -12,7 +12,7 @@
         class="px-5 py-3"
         >
         <v-row>         
-                      <v-col cols="12" sm="6" md="2">
+          <v-col cols="12" sm="6" md="2">
             <v-menu
               ref="menu"
               v-model="menu"

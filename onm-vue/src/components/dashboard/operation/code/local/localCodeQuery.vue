@@ -11,11 +11,11 @@
             class="px-5 py-3"
         >
             <v-row>
-                <v-col cols="12" sm="6" md="2">
+                <!-- <v-col cols="12" sm="6" md="2">
                     <v-text-field 
                         dense 
-                        label="서버url" 
-                        v-model="param.url"
+                        label="국사코드" 
+                        v-model="param.local_gw_id"
                         placeholder="Placeholder" 
                     >                        
                     </v-text-field>
@@ -24,20 +24,12 @@
                     <v-text-field 
                         dense 
                         label="서버명" 
-                        v-model="param.name"
+                        v-model="param.server_name"
                         placeholder="Placeholder" 
                     >                        
                     </v-text-field>
                 </v-col> 
-                <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
-                        label="웹소켓url" 
-                        v-model="param.websocket"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col>                
+                           
                 <v-col cols="12" sm="6" md="2">
                     <v-btn 
                         elevation="2" 
@@ -46,7 +38,8 @@
                     >
                         검색
                     </v-btn>
-                </v-col>
+                </v-col> -->
+                <v-col cols="12" sm="6" md="10"></v-col>
                 <v-col cols="12" sm="6" md="2">
                 <v-dialog
                     v-model="dialog"
@@ -55,7 +48,7 @@
                 >
                     <template v-slot:activator="{ on, attrs }">
                     <v-btn
-                        color="primary"
+                        color="indigo"
                         dark
                         class="mb-2"
                         v-bind="attrs"
@@ -78,7 +71,7 @@
                             md="6"
                             >
                             <v-text-field
-                                v-model="editedItem.localgwid"
+                                v-model="editedItem.local_gw_id"
                                 label="LOCAL_GW_ID"
                                 
                             ></v-text-field>
@@ -89,7 +82,7 @@
                             md="6"
                             >
                             <v-text-field
-                                v-model="editedItem.name"
+                                v-model="editedItem.server_name"
                                 label="서버명"
                             ></v-text-field>
                             </v-col>
@@ -99,7 +92,7 @@
                             md="6"
                             >
                             <v-text-field
-                                v-model="editedItem.serverurl"
+                                v-model="editedItem.server_url"
                                 label="서버URL"
                             ></v-text-field>
                             </v-col>
@@ -109,7 +102,7 @@
                             md="6"
                             >
                             <v-text-field
-                                v-model="editedItem.socketurl"
+                                v-model="editedItem.ws_url"
                                 label="웹소켓URL"
                             ></v-text-field>
                             </v-col>
@@ -129,7 +122,7 @@
                             md="6"
                             >
                             <v-text-field
-                                v-model="editedItem.ecurl"
+                                v-model="editedItem.ec_url"
                                 label="EC URL"
                             ></v-text-field>
                             </v-col>
@@ -139,7 +132,7 @@
                             md="6"
                             >
                             <v-text-field
-                                v-model="editedItem.ldms"
+                                v-model="editedItem.ldms_url"
                                 label="LDMS URL"
                             ></v-text-field>
                             </v-col>
@@ -149,7 +142,7 @@
                             md="6"
                             >
                             <v-text-field
-                                v-model="editedItem.stmcnt"
+                                v-model="editedItem.max_cam_cnt"
                                 label="STM 최대 수용 카메라 수"
                             ></v-text-field>
                             </v-col>
@@ -159,7 +152,7 @@
                             md="6"
                             >
                             <v-text-field
-                                v-model="editedItem.vacnt"
+                                v-model="editedItem.max_va_cnt"
                                 label="VA서버 최대 분석 채널 수"
                             ></v-text-field>
                             </v-col>
@@ -169,7 +162,7 @@
                             md="6"
                             >
                             <v-text-field
-                                v-model="editedItem.intcode"
+                                v-model="editedItem.version_code"
                                 label="INT 배포버전 코드"
                             ></v-text-field>
                             </v-col>
@@ -179,7 +172,7 @@
                             md="12"
                             >
                             <v-text-field
-                                v-model="editedItem.mqurl"
+                                v-model="editedItem.mq_url"
                                 label="MQ URL"
                             ></v-text-field>
                             </v-col>                        
@@ -245,44 +238,43 @@
 import EventBus from '../../../../../EventBus';
 
 export default {
+    props:['param'],
     data() {
         return{
-            param: {
-                url: '',
-                name: '',
-                websocket: ''
-            },
+            // param: {
+            //     url: '',
+            //     name: '',
+            //     websocket: ''
+            // },
             dialog: false,
-            dialogDelete: false,
+            // dialogDelete: false,
             editedItem: {
-                localgwid: '',
-                name: '',
-                serverurl: '',
-                socketurl: '',
+                local_gw_id: '',
+                server_name: '',
+                server_url: '',
+                ws_url: '',
                 pattern: '',
-                ecurl: '',
-                ldms: '',
-                stmcnt: 0,
-                vacnt: 0,
-                intcode: '',
-                mqurl: '',
-                editor: '82095586',
-                editDate: '2021-01-06 10:20:30'
+                ec_url: '',
+                ldms_url: '',
+                max_cam_cnt: 0,
+                max_va_cnt: 0,
+                version_code: '',
+                mq_url: '',
+                cmd_type:''
             },
             defaultItem: {
-                localgwid: '',
-                name: '',
-                serverurl: '',
-                socketurl: '',
+                local_gw_id: '',
+                server_name: '',
+                server_url: '',
+                ws_url: '',
                 pattern: '',
-                ecurl: '',
-                ldms: '',
-                stmcnt: 0,
-                vacnt: 0,
-                intcode: '',
-                mqurl: '',
-                editor: '82095586',
-                editDate: '2021-01-06 10:20:30'
+                ec_url: '',
+                ldms_url: '',
+                max_cam_cnt: 0,
+                max_va_cnt: 0,
+                version_code: '',
+                mq_url: '',
+                cmd_type:''
             },
 
         }
@@ -300,7 +292,8 @@ export default {
 
         save () {
             console.log('save method call : ',this.editedItem)        
-            
+            // 수정
+            this.editedItem.cmd_type = 'I'
             EventBus.$emit('createItem', this.editedItem)
 
             this.close()
@@ -314,17 +307,17 @@ export default {
             })
         },
 
-        closeDelete () {
-            this.dialogDelete = false
-            this.$nextTick(() => {
-            this.editedItem = Object.assign({}, this.defaultItem)
-            //   this.editedIndex = -1
-            })
-        },
-        deleteItemConfirm () {
-            // this.codeList.splice(this.editedIndex, 1)
-            this.closeDelete()
-        }
+        // closeDelete () {
+        //     this.dialogDelete = false
+        //     this.$nextTick(() => {
+        //     this.editedItem = Object.assign({}, this.defaultItem)
+        //     //   this.editedIndex = -1
+        //     })
+        // },
+        // deleteItemConfirm () {
+        //     // this.codeList.splice(this.editedIndex, 1)
+        //     this.closeDelete()
+        // }
     }
 }
 </script>

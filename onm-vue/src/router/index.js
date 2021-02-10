@@ -79,6 +79,7 @@ import ChangeHistory from '../components/dashboard/operation/change/changeHistor
 import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
 import LocalCode from '../components/dashboard/operation/code/local/codeMain'
 import ClientDevice from '../components/dashboard/operation/code/client/deviceMain'
+import CodeMaster from '../components/dashboard/operation/code/master/codeMain'
 
 //운영관리 / 고객이전
 import CustomerTransfer from '../components/dashboard/operation/transfer/customerTransfer'
@@ -407,6 +408,11 @@ export default new Router({
                     path: "client-device",
                     name: 'ClientDevice',
                     component: ClientDevice
+                },
+                {
+                    path: "code-master",
+                    name: 'CodeMaster',
+                    component: CodeMaster
                 },
                 {
                     path: "customer-transfer",

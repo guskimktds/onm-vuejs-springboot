@@ -7,11 +7,11 @@
 
         <base-material-card
             icon="mdi-magnify"
-            title="client 단말 정보 조회"
+            title="APP(Client) 단말 정보 관리"
             class="px-5 py-3"
         >
             <v-row>
-                <v-col cols="12" sm="6" md="3">
+                <!-- <v-col cols="12" sm="6" md="3">
                     <v-text-field 
                         dense 
                         label="앱버전" 
@@ -47,7 +47,8 @@
                     >
                         검색
                     </v-btn>
-                </v-col>
+                </v-col> -->
+                <v-col cols="12" sm="6" md="10"></v-col>
                 <v-col cols="12" sm="6" md="2">
                     <v-dialog
                         v-model="dialog"
@@ -76,7 +77,7 @@
                                 cols="12" sm="6" md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.appversion"
+                                    v-model="editedItem.app_version_id"
                                     label="앱버전ID"
                                     
                                 ></v-text-field>
@@ -85,7 +86,7 @@
                                 cols="12" sm="6" md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.ostype"
+                                    v-model="editedItem.os_type"
                                     label="OS타입"
                                 ></v-text-field>
                                 </v-col>
@@ -93,7 +94,7 @@
                                 cols="12" sm="6" md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.updateversion"
+                                    v-model="editedItem.update_version"
                                     label="업데이트 버전"
                                 ></v-text-field>
                                 </v-col>
@@ -101,7 +102,7 @@
                                 cols="12" sm="6" md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.versioncode"
+                                    v-model="editedItem.version_code"
                                     label="버전코드"
                                 ></v-text-field>
                                 </v-col>
@@ -109,7 +110,7 @@
                                 cols="12" sm="6" md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.downloadurl"
+                                    v-model="editedItem.download_url"
                                     label="다운로드 URL"
                                 ></v-text-field>
                                 </v-col>
@@ -117,26 +118,10 @@
                                 cols="12" sm="6" md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.updateyn"
+                                    v-model="editedItem.required_yn"
                                     label="필수 업데이트여부"
                                 ></v-text-field>
-                                </v-col>
-                                <v-col
-                                cols="12" sm="6" md="6"
-                                >
-                                <v-text-field
-                                    v-model="editedItem.createdate"
-                                    label="등록일시"
-                                ></v-text-field>
-                                </v-col>
-                                <v-col
-                                cols="12" sm="6" md="6"
-                                >
-                                <v-text-field
-                                    v-model="editedItem.updatedate"
-                                    label="수정일시"
-                                ></v-text-field>
-                                </v-col>
+                                </v-col>                                
                                 <v-col
                                 cols="12" sm="6" md="6"
                                 >
@@ -186,44 +171,40 @@
 <script>
 
 import EventBus from '../../../../../EventBus';
-
+import dateInfo from '../../../../utils/common';
 
 export default {
     data() {
         return{
-            param: {
-                appversion: '',
-                ostype: '',
-                updateversion: ''
-            },
+            // param: {
+            //     appversion: '',
+            //     ostype: '',
+            //     updateversion: ''
+            // },
             dialog: false,
             editedItem: {
-                appversion: '',
-                ostype: '',
-                updateversion: '',
-                versioncode: '',
-                downloadurl: '',
-                updateyn: '',
-                createDate: '',
-                updateDate: '',
+                app_version_id: 0,
+                os_type: '',
+                update_version: '',
+                version_code: '',
+                download_url: '',
+                required_yn:'',
                 title: '',
                 content: '',
-                editor: '82095586',
-                editDate: '2021-01-06 10:20:30'
+                reg_date: '',
+                mod_date: ''
             },
             defaultItem: {
-                appversion: '',
-                ostype: '',
-                updateversion: '',
-                versioncode: '',
-                downloadurl: '',
-                updateyn: '',
-                createDate: '',
-                updateDate: '',
+                app_version_id: 0,
+                os_type: '',
+                update_version: '',
+                version_code: '',
+                download_url: '',
+                required_yn:'',
                 title: '',
                 content: '',
-                editor: '82095586',
-                editDate: '2021-01-06 10:20:30'
+                reg_date: '',
+                mod_date: ''
             },
 
         }
@@ -241,8 +222,11 @@ export default {
 
         save () {
             console.log('save method call : ',this.editedItem)        
-            
-            EventBus.$emit('createItem', this.editedItem)
+            this.editedItem.cmd_type = 'I'
+            // console.log(dateInfo().current)
+            this.editedItem.mod_date = dateInfo().current 
+            this.editedItem.reg_date = dateInfo().current 
+            EventBus.$emit('createItemApp', this.editedItem)
 
             this.close()
         },
@@ -251,7 +235,7 @@ export default {
             this.dialog = false
             this.$nextTick(() => {
             this.editedItem = Object.assign({}, this.defaultItem)
-            // this.editedIndex = -1
+            this.editedIndex = -1
             })
         },
     },  
