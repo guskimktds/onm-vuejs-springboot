@@ -68,7 +68,8 @@ export default {
         options2:{},
         totalList: 0,
         loading: true,
-
+        pList: [],
+        cList: [],
         resPagingInfo:{}
       }
     },

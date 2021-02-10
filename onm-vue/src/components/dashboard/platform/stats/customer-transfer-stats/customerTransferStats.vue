@@ -44,7 +44,7 @@ export default {
       },
       resPagingInfo:{},
       searchParam: {
-        approveDate: ["", ""],
+        mig_start_date: ''
       },
 
     }

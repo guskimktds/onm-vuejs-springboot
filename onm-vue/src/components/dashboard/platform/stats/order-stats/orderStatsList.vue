@@ -31,13 +31,12 @@ export default {
   data() {
     return {
       headers: [
-        { text: '국사코드', value: 'local_gw_id' },
-        { text: '전체', value: 'total_cnt' },
-        { text: '정상', value: 'normal_cnt' },
-        { text: '개통대기', value: 'waiting_cnt' },
-        { text: '개통진행', value: 'proc_cnt' },
-        { text: '개통실패', value: 'fail_cnt' },
-        { text: '네트워크장애', value: 'disconn_cnt' },
+        { text: '희망일자', value: 'appoint_date' },
+        { text: '신규 청약 수', value: 'new_cnt' },
+        { text: '변경 청약수', value: 'change_cnt' },
+        { text: '일시정지 청약수', value: 'pause_cnt' },
+        { text: '부활 청약 수', value: 'restore_cnt' },
+        { text: '해지 청약 수', value: 'cloase_cnt' },
       ],
     }
   },

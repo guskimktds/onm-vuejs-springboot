@@ -44,11 +44,11 @@
 
         <user-order-sub-detail-list v-if=showSubDetailList
         v-bind:sdList=sdList
-        v-bind:resPagingInfo=resPagingInfo></user-order-sub-detail-list>
+        v-bind:sdPagingInfo=resPagingInfo></user-order-sub-detail-list>
 
         <ktt-list v-if=showKttList 
         v-bind:kList=kList
-        v-bind:resPagingInfo=resPagingInfo></ktt-list>
+        v-bind:kttPagingInfo=resPagingInfo></ktt-list>
 
       </v-container>
       </v-card>
@@ -118,6 +118,8 @@ export default {
 
     // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
     var params = this.reqPagingInfo
+
+    //this.$store.state.headers
 
     axios.post(url, params, headers)
     .then((response) => {

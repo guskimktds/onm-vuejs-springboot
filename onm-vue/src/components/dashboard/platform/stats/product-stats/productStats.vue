@@ -42,7 +42,7 @@ export default {
       },
       resPagingInfo:{},
       searchParam: {
-        approveDate: ["", ""],
+        appoint_date: ''
       },
     }
   },

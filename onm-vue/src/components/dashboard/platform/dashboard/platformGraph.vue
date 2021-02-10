@@ -143,6 +143,11 @@ export default {
                 })
         },
 
+        getDataFromApi() {
+        this.loading = true;
+        // this.graph1()
+        },
+
         fillData () {
         var datacollection = {
           
@@ -172,6 +177,14 @@ export default {
       getRandomInt () {
         return Math.floor(Math.random() * 100000)
       }
+    },
+    watch: {
+        options: {
+        handler() {
+         this.getDataFromApi();
+        },
+        deep: true,
+        },
     },
     computed: {
         myStyles () {

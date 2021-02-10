@@ -32,7 +32,7 @@
                         v-on="on"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.approveDate" no-title scrollable range>
+                    <v-date-picker v-model="param.mig_start_date" no-title scrollable range>
                         <v-spacer></v-spacer>
                         <v-btn text color="primary" @click="menu = false">
                         Cancel
@@ -70,9 +70,9 @@ export default {
     },
     computed: {
         dateRangeText() {
-            if (this.param.approveDate[0].length == 0) {
+            if (this.param.mig_start_date[0].length == 0) {
                 return "";
-            } else return this.param.approveDate.join(" ~ ");
+            } else return this.param.mig_start_date.join(" ~ ");
         },
     }
 }

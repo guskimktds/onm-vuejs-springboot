@@ -31,13 +31,10 @@ export default {
   data() {
     return {
       headers: [
-        { text: '국사코드', value: 'local_gw_id' },
-        { text: '전체', value: 'total_cnt' },
-        { text: '정상', value: 'normal_cnt' },
-        { text: '개통대기', value: 'waiting_cnt' },
-        { text: '개통진행', value: 'proc_cnt' },
-        { text: '개통실패', value: 'fail_cnt' },
-        { text: '네트워크장애', value: 'disconn_cnt' },
+        { text: '상품명', value: 'prod_name' },
+        { text: '일자목록', value: 'date_list' },
+        { text: '희망일', value: 'appoint_date' },
+        { text: '카운트', value: 'cnt' },
       ],
     }
   },

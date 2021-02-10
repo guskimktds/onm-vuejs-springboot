@@ -52,7 +52,7 @@ export default {
   created:function(){
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11007/get_subs_stat`
     
-    var params=this.resPagingInfo
+    var params=this.reqPagingInfo
 
     axios
         .post(url, params, headers)
@@ -121,13 +121,13 @@ export default {
 
       let newParams = {};
 
-      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
-        newParams.local_gw_id = params.local_gw_id;
+      if (params.appoint_date !== undefined && params.appoint_date !== "") {
+        newParams.appoint_date = params.appoint_date;
       } else if (
-        this.searchParam.local_gw_id !== undefined &&
-        this.searchParam.local_gw_id !== ""
+        this.searchParam.appoint_date !== undefined &&
+        this.searchParam.appoint_date !== ""
       ) {
-        newParams.local_gw_id = this.searchParam.local_gw_id;
+        newParams.appoint_date = this.searchParam.appoint_date;
       }
 
       return newParams;
