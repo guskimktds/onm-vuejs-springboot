@@ -15,7 +15,7 @@
                 :headers="headers"
                 :items="sdList"
                 :options.sync="options"
-                :server-items-length="resPagingInfo.total_cnt"
+                :server-items-length="sdPagingInfo.total_cnt"
                 class="elevation-1"
             >          
             </v-data-table>
@@ -24,7 +24,7 @@
 </template>
 <script>
 export default {
-    props: ['sdList', 'resPagingInfo'],
+    props: ['sdList', 'sdPagingInfo'],
     data() {
       return {
         dialog: false,

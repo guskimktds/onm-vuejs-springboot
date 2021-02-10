@@ -34,11 +34,11 @@
       <v-container v-if=showDetailObject>
         <device-order-detail-list v-if=showDetailList
         v-bind:dodList="dodList"
-        v-bind:resPagingInfo=resPagingInfo></device-order-detail-list>
+        v-bind:dodPagingInfo=dodPagingInfo></device-order-detail-list>
         
         <device-order-result-list v-if=showResultList
         v-bind:dorList="dorList"
-        v-bind:resPagingInfo=resPagingInfo></device-order-result-list>
+        v-bind:dorPagingInfo=dorPagingInfo></device-order-result-list>
       
       </v-container>
     
@@ -91,6 +91,8 @@ export default {
         view_cnt:10
       },
       resPagingInfo:{},
+      dodPagingInfo:{},
+      dorPagingInfo:{},
       searchParam:{
         guid:'',
         oderno:'',
@@ -195,11 +197,11 @@ export default {
             var resMsg=response.data.res_msg;
             if(resCode==200){
               this.dodList=response.data.data.device_order_detail_list;
-              this.resPagingInfo=response.data.data.paging_info;
+              this.dodPagingInfo=response.data.data.paging_info;
               this.showDetailList=!this.showDetailList;
             }else{
               this.dodList=[];
-              this.resPagingInfo={};
+              this.dodPagingInfo={};
               alert(resCode + " / "+ resMsg);
             }
           })
@@ -223,11 +225,11 @@ export default {
             var resMsg=response.data.res_msg;
             if(resCode==200){
               this.dorList=response.data.data.device_order_result_list;
-              this.resPagingInfo=response.data.data.paging_info;
+              this.dorPagingInfo=response.data.data.paging_info;
               this.showResultList=!this.showResultList;
             }else{
               this.dorList=[];
-              this.resPagingInfo={};
+              this.dorPagingInfo={};
               alert(resCode+" / "+resMsg);
             }
           })

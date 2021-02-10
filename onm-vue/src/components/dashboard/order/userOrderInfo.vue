@@ -44,11 +44,11 @@
 
         <user-order-sub-detail-list v-if=showSubDetailList
         v-bind:sdList=sdList
-        v-bind:sdPagingInfo=resPagingInfo></user-order-sub-detail-list>
+        v-bind:sdPagingInfo=sdPagingInfo></user-order-sub-detail-list>
 
         <ktt-list v-if=showKttList 
-        v-bind:kList=kList
-        v-bind:kttPagingInfo=resPagingInfo></ktt-list>
+        v-bind:kttList=kttList
+        v-bind:kttPagingInfo=kttPagingInfo></ktt-list>
 
       </v-container>
       </v-card>
@@ -98,11 +98,14 @@ export default {
       btnTitle2: '사용자 청약오더List open',
 
       title3: '사용자-KTT 정보 조회',
-      kList:[],
+      kttList:[],
       showKttList:false,
       btnTitle3: '사용자-KTT open',
 
       resPagingInfo: {},
+      sdPagingInfo:{},
+      kttPagingInfo:{},
+      
       searchParam: {
         appointdate:'',
         said: '',
@@ -150,6 +153,7 @@ export default {
 
       axios.post(url, reqParams, headers)
       .then((response) => {
+        console.log('전달된 sub order 정보')
         console.log(response)
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
@@ -229,14 +233,12 @@ export default {
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.sdList = response.data.data.list;
-            this.resPagingInfo = response.data.data.paging_info;
+            this.sdPagingInfo = response.data.data.paging_info;
 
             this.showSubDetailList=!this.showSubDetailList;
-            console.log('받은 값')
-            console.log(response.data.data)
           }else{
             this.sdList = [];
-            this.resPagingInfo = {};
+            this.sdPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -259,13 +261,13 @@ export default {
           var resMsg = response.data.res_msg;
           console.log(resCode)
           if(resCode == 200){
-            this.kList = response.data.data.list;
-            this.resPagingInfo = response.data.data.paging_info
+            this.kttList = response.data.data.list;
+            this.kttPagingInfo = response.data.data.paging_info
 
             this.showKttList =!this.showKttList
           }else{
-            this.kList = [];
-            this.resPagingInfo = {};
+            this.kttList = [];
+            this.kttPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })

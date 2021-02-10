@@ -22,6 +22,7 @@ import CamregStat from '@/components/dashboard/platform/camRegStat/camRegStat'
 import OrderStats from '@/components/dashboard/platform/stats/order-stats/orderStats'
 import CustomerTransferStats from '@/components/dashboard/platform/stats/customer-transfer-stats/customerTransferStats'
 import ProductStats from '@/components/dashboard/platform/stats/product-stats/productStats'
+import DeviceStats from '@/components/dashboard/platform/stats/device-stats/deviceStats'
 
 // 하위 메뉴 - 서비스관리
 import AccountInquiry from '../components/dashboard/service/accountInquiry/accountInquiry'
@@ -178,6 +179,11 @@ export default new Router({
                     path: "product-stats",
                     name: 'ProductStats',
                     component: ProductStats
+                },
+                {
+                    path: "device-stats",
+                    name: 'DeviceStats',
+                    component: DeviceStats
                 }
 
             ]

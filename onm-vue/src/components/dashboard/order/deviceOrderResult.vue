@@ -4,7 +4,7 @@
         <device-order-result-query v-on:search="searchToDeviceOrderResult"
         v-bind:param=searchParam></device-order-result-query>
         <device-order-result-list v-bind:dorList=dorList
-        v-bind:resPagingInfo=resPagingInfo
+        v-bind:dorPagingInfo=dorPagingInfo
         @pagination="setToSearchParams"></device-order-result-list>
       </v-card>
     </v-container>
@@ -34,7 +34,7 @@ export default {
         page_no: 1,
         view_cnt: 10
       },
-      resPagingInfo: {},
+      dorPagingInfo: {},
       searchParam: {
         start_date: '',
         end_date: '',
@@ -55,10 +55,10 @@ export default {
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.dorList = response.data.data.device_order_result_list;
-            this.resPagingInfo=response.data.data.paging_info;
+            this.dorPagingInfo=response.data.data.paging_info;
           }else{
             this.dorList = [];
-            this.resPagingInfo={};
+            this.dorPagingInfo={};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -80,10 +80,10 @@ export default {
           if(resCode == 200){
             console.log(response.data.data.device_order_result_list);
             this.dorList = response.data.data.device_order_result_list;
-            this.resPagingInfo=response.data.data.paging_info;
+            this.dorPagingInfo=response.data.data.paging_info;
           }else{
             this.dorList = [];
-            this.resPagingInfo={};
+            this.dorPagingInfo={};
             alert(resCode + " / " + resMsg);
           }
             })

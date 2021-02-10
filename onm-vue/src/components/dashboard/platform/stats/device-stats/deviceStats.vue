@@ -18,8 +18,8 @@
 
 
 <script>
-import StatsList from './orderStatsList'
-import StatusQuery from './orderStatusQuery'
+import StatsList from './deviceStatsList'
+import StatusQuery from './deviceStatsQuery'
 
 import axios from "axios"
 
@@ -40,11 +40,12 @@ export default {
       reqPagingInfo:{
         start_date: "19000101",
         end_date: "20210201",
-        search_type: "D"
+        search_type:"D"
       },
       resPagingInfo:{},
       searchParam: {
-        appointdate: ''
+        dateRangeText: '',
+        approveDate: ["", ""],
       },
 
     }

@@ -37,8 +37,9 @@ export default {
       title: '상품 통계',
       pList: [],
       reqPagingInfo:{
-        start_date: "20210201",
-        end_date: "20210201"
+        start_date: "19000101",
+        end_date: "20210201",
+        search_type: "D"
       },
       resPagingInfo:{},
       searchParam: {

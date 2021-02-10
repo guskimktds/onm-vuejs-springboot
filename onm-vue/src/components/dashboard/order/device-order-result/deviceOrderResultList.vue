@@ -15,7 +15,7 @@
                 :headers="headers"
                 :items="dorList"
                 :options.sync="options"
-                :server-items-length="resPagingInfo.total_cnt"
+                :server-items-length="dorPagingInfo.total_cnt"
                 class="elevation-1"
             >          
             </v-data-table>
@@ -24,7 +24,7 @@
 </template>
 <script>
 export default {
-    props: ['dorList', 'resPagingInfo'],
+    props: ['dorList', 'dorPagingInfo'],
     data() {
       return {
         dialog: false,

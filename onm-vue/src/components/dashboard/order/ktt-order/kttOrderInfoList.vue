@@ -15,9 +15,9 @@
 
       <v-data-table
         :headers="headers"
-        :items="pList"
+        :items="kttList"
         :options.sync="options"
-        :server-items-length="resPagingInfo.total_cnt"
+        :server-items-length="kttPagingInfo.total_cnt"
         class="elevation-1"
       >
       </v-data-table>
@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  props: ["pList", "resPagingInfo"],
+  props: ["kttList", "kttPagingInfo"],
   data() {
     return {
       headers: [

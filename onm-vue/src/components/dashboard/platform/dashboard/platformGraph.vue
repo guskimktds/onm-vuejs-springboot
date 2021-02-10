@@ -15,7 +15,7 @@
                  <div class="col-4">
                         <div class="chart-board">
                             <div class="chart-area">
-                                <line-chart :chart-data="fillData()" :options="chartOptions" :styles="myStyles"></line-chart>
+                                <line-chart :chart-data="fillData2()" :options="chartOptions" :styles="myStyles"></line-chart>
                             </div>
                             <div class="text-area">카메라 개통/해지 추이(일간/월간)</div>
                             <div class="board-footer">updated 4 minutes ago</div>
@@ -25,7 +25,7 @@
                     <div class="col-4">
                         <div class="chart-board">
                             <div class="chart-area">
-                                <line-chart :chart-data="fillData()" :options="chartOptions" :styles="myStyles"></line-chart>
+                                <line-chart :chart-data="fillData3()" :options="chartOptions" :styles="myStyles"></line-chart>
                             </div>
                             <div class="text-area">IoT 개통/해지 추이(일간/월간)</div>
                             <div class="board-footer">campaign sent 26 minutes ago</div>
@@ -55,6 +55,8 @@ export default {
             List1:[],
             List2:[],
             List3:[],
+            openCnt1:[],
+            closeCnt1:[],
          chartOptions : {
             maintainAspectRatio:false
         },
@@ -69,13 +71,15 @@ export default {
             var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_11010/get_user_transition`
 
             var params={
-                start_date: "20210101",
+                start_date: "19000101",
                 end_date: "20210101",
-                search_type : "D"}
+                search_type : "D"
+                }
             
             axios
                 .post(url,params,headers)
                 .then((response)=>{
+                    console.log('전달된 그래프 데이터1')
                     console.log(response.data)
                     var resCode = response.data.res_code;
                     var resMsg = response.data.res_msg;
@@ -95,13 +99,14 @@ export default {
             var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_11011/get_cam_transition`
 
             var params={
-                start_date: "20210101",
+                start_date: "19000101",
                 end_date: "20210101",
                 search_type : "D"}
             
             axios
                 .post(url,params,headers)
                 .then((response)=>{
+                    console.log('전달된 그래프 데이터2')
                     console.log(response.data)
                     var resCode = response.data.res_code;
                     var resMsg = response.data.res_msg;
@@ -121,13 +126,14 @@ export default {
             var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_11012/get_iot_transition`
 
             var params={
-                start_date: "20210101",
+                start_date: "19000101",
                 end_date: "20210101",
                 search_type : "D"}
             
             axios
                 .post(url,params,headers)
                 .then((response)=>{
+                    console.log('전달된 그래프 데이터3')
                     console.log(response.data)
                     var resCode = response.data.res_code;
                     var resMsg = response.data.res_msg;
@@ -145,7 +151,9 @@ export default {
 
         getDataFromApi() {
         this.loading = true;
-        // this.graph1()
+        this.graph1()
+        this.graph2()
+        this.graph3()
         },
 
         fillData () {
@@ -153,20 +161,19 @@ export default {
           
           datasets: [
             {
-              label: '범례',
+              label: '고객 개통',
               borderColor:'#47df8b',
               data: [
-                this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
+                this.List1[0].new_cnt,this.List1[0].new_cnt,this.List1[0].new_cnt,this.List1[0].new_cnt,this.List1[0].new_cnt,
+                this.List1[0].new_cnt,this.List1[0].new_cnt,this.List1[0].new_cnt,this.List1[0].new_cnt,this.List1[0].new_cnt,
+              ]
+            },
+            {
+              label: '고객 해지',
+              borderColor:'white',
+              data:[
+                  this.List1[0].close_cnt,this.List1[10].close_cnt,this.List1[20].close_cnt,this.List1[30].close_cnt,this.List1[40].close_cnt,
+                  this.List1[50].close_cnt,this.List1[60].close_cnt,this.List1[70].close_cnt,this.List1[80].close_cnt,this.List1[90].close_cnt
               ]
             }
           ]
@@ -174,10 +181,58 @@ export default {
       return datacollection;
       },
 
-      getRandomInt () {
-        return Math.floor(Math.random() * 100000)
-      }
+    fillData2 () {
+        var datacollection = {
+          
+          datasets: [
+            {
+              label: '카메라 개통',
+              borderColor:'#47df8b',
+              data: [  
+                this.List2[0].open_cnt,  this.List2[0].open_cnt,  this.List2[0].open_cnt,  this.List2[0].open_cnt,  this.List2[0].open_cnt,
+                this.List2[0].open_cnt,  this.List2[0].open_cnt,  this.List2[0].open_cnt,  this.List2[0].open_cnt,  this.List2[0].open_cnt,
+              ]
+            },
+            {
+              label: '카메라 해지',
+              borderColor:'white',
+              data:[
+                this.List2[0].close_cnt,this.List2[0].close_cnt,this.List2[0].close_cnt,this.List2[0].close_cnt,this.List2[0].close_cnt,
+                this.List2[0].close_cnt,this.List2[0].close_cnt,this.List2[0].close_cnt,this.List2[0].close_cnt,this.List2[0].close_cnt,
+              ]
+            }
+          ]
+        }
+      return datacollection;
+      },
+
+    fillData3 () {
+        var datacollection = {
+          
+          datasets: [
+            {
+              label: 'iot gw 개통',
+              borderColor:'#47df8b',
+              data: [
+                  this.List3[0].open_cnt,this.List3[0].open_cnt,this.List3[0].open_cnt,this.List3[0].open_cnt,this.List3[0].open_cnt,this.List3[0].open_cnt,
+                  this.List3[0].open_cnt,this.List3[0].open_cnt,this.List3[0].open_cnt,this.List3[0].open_cnt,this.List3[0].open_cnt,this.List3[0].open_cnt,
+              ]
+            },
+            {
+              label: 'iot gw 해지',
+              borderColor:'white',
+              data:[
+                this.List3[0].close_cnt,this.List3[0].close_cnt,this.List3[0].close_cnt,this.List3[0].close_cnt,this.List3[0].close_cnt,this.List3[0].close_cnt,
+                this.List3[0].close_cnt,this.List3[0].close_cnt,this.List3[0].close_cnt,this.List3[0].close_cnt,this.List3[0].close_cnt,this.List3[0].close_cnt,
+              ]
+            }
+          ]
+        }
+      return datacollection;
+      },
+      
     },
+    
     watch: {
         options: {
         handler() {
@@ -185,6 +240,9 @@ export default {
         },
         deep: true,
         },
+    },
+    mounted() {
+        this.getDataFromApi();
     },
     computed: {
         myStyles () {
