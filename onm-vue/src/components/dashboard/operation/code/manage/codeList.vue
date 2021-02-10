@@ -49,7 +49,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.codeClass"
+                            v-model="editedItem.code_master_id"
                             label="코드구분"
                           ></v-text-field>
                         </v-col>
@@ -59,7 +59,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.code"
+                            v-model="editedItem.code_id"
                             label="코드"
                           ></v-text-field>
                         </v-col>
@@ -69,7 +69,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.name"
+                            v-model="editedItem.code_name"
                             label="코드명"
                           ></v-text-field>
                         </v-col>
@@ -79,7 +79,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.type"
+                            v-model="editedItem.code_type"
                             label="코드타입"
                           ></v-text-field>
                         </v-col>
@@ -89,7 +89,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.useYn"
+                            v-model="editedItem.use_yn"
                             label="사용여부"
                           ></v-text-field>
                         </v-col>
@@ -99,7 +99,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.orderby"
+                            v-model="editedItem.orderby_no"
                             label="정렬순서"
                           ></v-text-field>
                         </v-col>
@@ -109,7 +109,7 @@
                           md="12"
                         >
                           <v-text-field
-                            v-model="editedItem.desc"
+                            v-model="editedItem.description"
                             label="설명"
                           ></v-text-field>
                         </v-col>
@@ -139,7 +139,7 @@
               </v-dialog>
               <v-dialog v-model="dialogDelete" max-width="500px">
                 <v-card>
-                  <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
+                  <v-card-title class="headline">삭제 하시겠습니까?</v-card-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -176,7 +176,12 @@
 
 import axios from "axios"
 // import { eventBus } from '../../../../../main'
-import EventBus from '../../../../../EventBus';
+// import EventBus from '../../../../../EventBus';
+
+const headers = {
+  'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+  'Content-Type': 'application/json'
+}
 
 export default {
     props: ['pList'],
@@ -190,45 +195,49 @@ export default {
             text: '코드구분',
             align: 'start',
             sortable: false,
-            value: 'codeClass',
+            value: 'code_master_id',
           },
-          { 
-            text: '코드', 
-            value: 'code',
-          },
-          { 
-            text: '코드명', 
-            value: 'name',
-          },
-          { text: '타입', value: 'type' },
-          { text: '설명', value: 'desc' },
-          { text: '정렬', value: 'orderby' },
-          { text: '사용여부', value: 'useYn' },
-          { text: '등록일시', value: 'createDate' },
+          { text: '코드', value: 'code_id' },
+          { text: '코드명', value: 'code_name' },
+          { text: '타입', value: 'code_type' },
+          { text: '설명', value: 'description' },
+          { text: '정렬', value: 'orderby_no' },
+          { text: '사용여부', value: 'use_yn' },
+          // { text: '등록일시', value: 'reg_date' },
+          { text: '수정일시', value: 'mod_date' },
           { text: '변경', value: 'actions', sortable: false }
         ],
         editedItem: {
-          codeClass: '',
-          code: '',
-          name: '',
-          type: '',
-          useYn: '',
-          orderby: '',
-          desc: '',
-          editor: '82095586',
-          editDate: '2021-01-06 10:20:30'
+          code_master_id: '',
+          code_id: '',
+          code_name: '',
+          code_type: '',
+          use_yn: '',
+          orderby_no: '',
+          description: '',
+          cmd_type: 'U',
+          local_gw_id: '0',
+          // editor: '82095586',
+          // editDate: '2021-01-06 10:20:30'
+          reg_date:'',
+          mod_date:''
         },
         defaultItem: {
-          codeClass: '',
-          code: '',
-          name: '',
-          type: '',
-          useYn: '',
-          orderby: '',
-          desc: '',
-          editor: '82095586',
-          editDate: '2021-01-06 10:20:30'
+          code_master_id: '',
+          code_id: '',
+          code_name: '',
+          code_type: '',
+          use_yn: '',
+          orderby_no: '',
+          description: '',
+          cmd_type: '',
+          local_gw_id: '0',
+          // editor: '82095586',
+          // editDate: '2021-01-06 10:20:30'
+          reg_date:'',
+          mod_date:''
         },
+        newPlist: []
       }
     },
     computed: {
@@ -238,26 +247,60 @@ export default {
     },
     methods: {
       editItem (item) {
-        console.log('editItem method call : ',item)
         this.editedIndex = this.pList.indexOf(item)
-        console.log('editItem method call : ',this.editedIndex)
+        console.log('update Item Index : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
+        // 수정
+        this.editedItem.cmd_type = 'U'
+        this.editedItem.local_gw_id = '0'    
+        // this.editedItem.mod_date = getDate 
+        // this.editedItem.reg_date = getDate     
 
-        console.log('editItem method call : ',this.editedItem)
+        console.log('update Item value : ',this.editedItem)
 
         this.dialog = true
       },
 
       deleteItem (item) {
-        console.log('deleteItem method call : ',item)
+        // console.log('deleteItem method call : ',item)
         this.editedIndex = this.pList.indexOf(item)
+        console.log('Delte Item Index : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
+        // 삭제
+        this.editedItem.cmd_type = 'D'
+        this.editedItem.local_gw_id = '0' 
         this.dialogDelete = true
       },
 
       deleteItemConfirm () {
-        this.pList.splice(this.editedIndex, 1)
-        this.closeDelete()
+
+        if (this.editedIndex > -1) {
+
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15007/set_code`
+
+          // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
+          var params = this.editedItem
+          var deleteIndex = this.editedIndex
+          console.log(params)
+
+          axios.post(url, params, headers)
+            .then((response) => {
+              console.log(response)
+              var resCode = response.data.res_code;
+              var resMsg = response.data.res_msg;
+              if(resCode == 200){
+                //현재 목록에서 선택한 Item을 삭제한다.
+                this.pList.splice(deleteIndex, 1)
+              }else{
+                alert(resCode + " / " + resMsg);
+              }
+            })
+            .catch((ex) => {
+              console.log('변경 실패',ex)
+            })
+        
+        }
+        this.closeDelete() //다이얼로그를 닫는다.
       },
 
       close () {
@@ -279,41 +322,36 @@ export default {
       save () {
         console.log('save method call : ',this.editedIndex)
         if (this.editedIndex > -1) {
-          // Object.assign(this.desserts[this.editedIndex], this.editedItem)
-          const editedItem = this.editedItem
-          console.log("111111111")
-          // update 
-            axios
-            .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/update`, {       
-                  editedItem
-            })
-            .then((result) => {
-              console.log(result)
-              // this.list = JSON.parse(result.data.menu)
-              // this.list = result.data
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15007/set_code`
+
+          // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
+          var params = this.editedItem
+          var updateIndex = this.editedIndex
+          console.log(params)
+
+          axios.post(url, params, headers)
+            .then((response) => {
+              console.log(response)
+              var resCode = response.data.res_code;
+              var resMsg = response.data.res_msg;
+              if(resCode == 200){
+                //현재 목록에서 선택한 item 을 변경해준다.
+                this.pList.splice(updateIndex, 1, params)
+              }else{
+                alert(resCode + " / " + resMsg);
+              }
             })
             .catch((ex) => {
-              console.log('조회 실패',ex)
+              console.log('변경 실패',ex)
             })
-        } else {
-          // this.desserts.push(this.editedItem)
-          // create
-          const createItem = this.editedItem
-          console.log("2222222222222")
-          EventBus.$emit('createItem', createItem)
-
-          // axios
-          //   .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code`, createItem)
-          //   .then((result) => {
-          //     console.log(result)
-          //     // this.list = JSON.parse(result.data.menu)
-          //     // this.list = result.data
-          //   })
-          //   .catch((ex) => {
-          //     console.log('조회 실패',ex)
-          //   })
-
-        }
+        } 
+        // else {
+        //   // this.desserts.push(this.editedItem)
+        //   // create
+        //   const createItem = this.editedItem
+        //   console.log("2222222222222")
+        //   EventBus.$emit('createItem', createItem)
+        // }
         this.close()
       }
 

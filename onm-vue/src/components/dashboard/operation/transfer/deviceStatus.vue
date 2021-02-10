@@ -1,7 +1,10 @@
 <template>
     <v-container fluid>
       <v-card>
-        <device-status-query v-on:search="searchToButton"></device-status-query>
+        <device-status-query 
+          v-on:search="searchToButton"
+          v-bind:param=searchParam
+        ></device-status-query>
         <device-status-list v-bind:pList=pList></device-status-list>
       </v-card>
     </v-container>
@@ -13,6 +16,7 @@ import deviceStatusList from './deviceStatusList'
 
 //로그인 시 서버에서 불러오면 수정해야함
 import axios from "axios"
+// import EventBus from '../../../../../EventBus';
 
 export default {
   components:{
@@ -22,31 +26,39 @@ export default {
   data () {
     return {
       title: '고객이전 단말상태 조회',
-      pList: []
+      pList: [],
+      reqPagingInfo: {
+        page_no: 1,
+        view_cnt: 10
+      },
+      resPagingInfo: {},
+      searchParam: {
+        start_date: '',
+        end_date: '',
+        mig_seq: '',
+        device_type: '',
+        device_id: '',
+        status_code: ''
+      }
     }
   },
   created: function() {
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15014/get_user_mig_device'
-    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
-    var params = {
-      page_no: 1,
-      view_cnt: 5
-    }
-    var headers = {
-      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-      'Content-Type': 'application/json'
-    }
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15014/get_user_mig_device`
+
+    // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
+    var params = this.reqPagingInfo
 
     axios
-        .post(url, params, headers)
+        .post(url, params, this.$store.state.headers)
         .then((response) => {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.pList = response.data.data.user_mig_device_list;
-
+            this.resPagingInfo = response.data.data.paging_info
           }else{
             this.pList = [];
+            this.resPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -56,29 +68,71 @@ export default {
   },
   methods: {
     searchToButton: function(params){
-      console.log("부모 메소드 searchToDeviceOrderInfo 호출: "+JSON.stringify(params));
-      var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15014/get_user_mig_device'
-      // var params = {
-      //   page_no: 1,
-      //   view_cnt: 5
-      // }
-      var headers = {
-        'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-        'Content-Type': 'application/json'
-      }
+      console.log(params);
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15014/get_user_mig_device`
 
-      axios.post(url, params, headers)
-        // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
-        //   params
-        // })
-        .then((result) => {
-          console.log(result)
-          //this.list = JSON.parse(result.data.menu)
-          this.pList = result.data.data.user_mig_device_list;
+      //params : 페이징 + 검색조건
+      var reqParams = this.handleParams(params)  
+
+      axios.post(url, reqParams, this.$store.state.headers)
+        .then((response) => {
+          console.log(response)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.pList = response.data.data.user_mig_device_list;
+            this.resPagingInfo = response.data.data.paging_info
+
+          }else{
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
         })
         .catch((ex) => {
           console.log('조회 실패',ex)
         })
+    },
+
+    handleParams: function(params){
+      let newParams = {}
+      if(params.page_no === undefined || params.page_no === ''){
+        newParams.page_no = this.reqPagingInfo.page_no
+      }else{
+        newParams.page_no = params.page_no
+      }
+
+      if(params.view_cnt === undefined || params.view_cnt === ''){
+        newParams.view_cnt = this.reqPagingInfo.view_cnt
+      }else{
+        newParams.view_cnt = params.view_cnt
+      }
+
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date
+      }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date
+      }
+
+      if(params.mig_seq !== undefined && params.mig_seq !== ''){
+        newParams.mig_seq = params.mig_seq
+      }
+
+      if(params.device_type !== undefined && params.device_type !== ''){
+        newParams.device_type = params.device_type
+      }   
+      
+      if(params.device_id !== undefined && params.device_id !== ''){
+        newParams.device_id = params.device_id
+      } 
+
+      if(params.status_code !== undefined && params.status_code !== ''){
+        newParams.status_code = params.status_code
+      }  
+
+      return newParams
     }
   }
 }

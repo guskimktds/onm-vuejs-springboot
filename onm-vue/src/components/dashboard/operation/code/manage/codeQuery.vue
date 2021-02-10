@@ -15,7 +15,7 @@
                     <v-text-field 
                         dense 
                         label="코드구분" 
-                        v-model="param.codeClass"
+                        v-model="param.code_master_id"
                         placeholder="Placeholder" 
                     >                        
                     </v-text-field>
@@ -24,7 +24,7 @@
                     <v-text-field 
                         dense 
                         label="코드" 
-                        v-model="param.code"
+                        v-model="param.code_id"
                         placeholder="Placeholder" 
                     >                        
                     </v-text-field>
@@ -33,7 +33,7 @@
                     <v-text-field 
                         dense 
                         label="코드명" 
-                        v-model="param.name"
+                        v-model="param.code_name"
                         placeholder="Placeholder" 
                     >                        
                     </v-text-field>
@@ -42,7 +42,7 @@
                     <v-text-field 
                         dense 
                         label="코드타입" 
-                        v-model="param.type"
+                        v-model="param.code_type"
                         placeholder="Placeholder" 
                     >                        
                     </v-text-field>
@@ -87,7 +87,7 @@
                                 md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.codeClass"
+                                    v-model="editedItem.code_master_id"
                                     label="코드구분"
                                 ></v-text-field>
                                 </v-col>
@@ -97,7 +97,7 @@
                                 md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.code"
+                                    v-model="editedItem.code_id"
                                     label="코드"
                                 ></v-text-field>
                                 </v-col>
@@ -107,7 +107,7 @@
                                 md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.name"
+                                    v-model="editedItem.code_name"
                                     label="코드명"
                                 ></v-text-field>
                                 </v-col>
@@ -117,7 +117,7 @@
                                 md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.type"
+                                    v-model="editedItem.code_type"
                                     label="코드타입"
                                 ></v-text-field>
                                 </v-col>
@@ -127,7 +127,7 @@
                                 md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.useYn"
+                                    v-model="editedItem.use_yn"
                                     label="사용여부"
                                 ></v-text-field>
                                 </v-col>
@@ -137,7 +137,7 @@
                                 md="6"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.orderby"
+                                    v-model="editedItem.orderby_no"
                                     label="정렬순서"
                                 ></v-text-field>
                                 </v-col>
@@ -147,7 +147,7 @@
                                 md="12"
                                 >
                                 <v-text-field
-                                    v-model="editedItem.desc"
+                                    v-model="editedItem.description"
                                     label="설명"
                                 ></v-text-field>
                                 </v-col>
@@ -177,7 +177,7 @@
                     </v-dialog>
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
-                        <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
+                        <v-card-title class="headline">삭제 하시겠습니까?</v-card-title>
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -195,39 +195,45 @@
 <script>
 
 import EventBus from '../../../../../EventBus';
+// import dateInfo from '../../../../utils/common';
 
 export default {
+    props:['param'],
     data() {
         return{            
-            param: {
-                codeClass: '',
-                code: '',
-                name: '',
-                type: ''
-            },
+            // param: {
+            //     codeClass: '',
+            //     code: '',
+            //     name: '',
+            //     type: ''
+            // },
             dialog: false,
             dialogDelete: false,        
             editedItem: {
-                codeClass: '',
-                code: '',
-                name: '',
-                type: '',
-                useYn: '',
-                orderby: '',
-                desc: '',
-                editor: '82095586',
-                editDate: '2021-01-06 10:20:30'
+                code_master_id: '',
+                code_id: '',
+                code_name: '',
+                code_type: '',
+                use_yn: '',
+                orderby_no: '',
+                description: '',
+                cmd_type: '',
+                local_gw_id: '0',
+                reg_date:'',
+                mod_date:''
             },
             defaultItem: {
-                codeClass: '',
-                code: '',
-                name: '',
-                type: '',
-                useYn: '',
-                orderby: '',
-                desc: '',
-                editor: '82095586',
-                editDate: '2021-01-06 10:20:30'
+                code_master_id: '',
+                code_id: '',
+                code_name: '',
+                code_type: '',
+                use_yn: '',
+                orderby_no: '',
+                description: '',
+                cmd_type: 'I',
+                local_gw_id: '0',
+                reg_date:'',
+                mod_date:''
             },
         }
     },
@@ -243,10 +249,17 @@ export default {
         },
 
         save () {
-            console.log('save method call : ',this.editedItem)        
-            
-            EventBus.$emit('createItem', this.editedItem)
+            console.log('save method call : ',this.editedItem)     
+            // 수정
+            this.editedItem.cmd_type = 'I'
+            this.editedItem.local_gw_id = '0'  
+            // console.log(dateInfo().current)
+            // this.editedItem.mod_date = getDate 
+            // this.editedItem.reg_date = getDate 
 
+            // console.log(this.editedItem.mod_date)
+
+            EventBus.$emit('createItem', this.editedItem)
             this.close()
         },
 
