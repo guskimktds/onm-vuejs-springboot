@@ -8,7 +8,7 @@
             color="orange"
             dark
             icon="mdi-keyboard"
-            title="관리자 등록 이력 LIST"
+            title="[매장]관리자 변경 이력 LIST"
             class="px-5 py-3"
             >
             <v-data-table

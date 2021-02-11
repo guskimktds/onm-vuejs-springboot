@@ -8,7 +8,7 @@
             color="orange"
             dark
             icon="mdi-keyboard"
-            title="관리자 접속 이력 LIST"
+            title="[매장]관리자 접속 이력 LIST"
             class="px-5 py-3"
             >
             <v-data-table
@@ -33,10 +33,7 @@ export default {
             sortable: false,
             value: 'admin_id',
           },
-          { 
-            text: '매장ID', 
-            value: 'user_id',
-          },
+          { text: '매장ID', value: 'user_id' },
           { text: '전화번호', value: 'tel_no' },
           { text: '관리자 구분', value: 'admin_type' },
           { text: '로그인 키', value: 'login_key' },
@@ -45,18 +42,8 @@ export default {
         ]
       }
     }
-
-    //<th>사번</th><th>이름</th><th>작업</th><th>접속IP</th>
-    //<th>권한</th><th>생성일자</th><th>수정일자</th><th>생성자</th>
-
 }
 </script>
 
-<style scoped>
- /* table, tr, id {
-     border: 1px solid blue;
- } */
- /* td:nth-last-of-type(-n+2) {
-     text-align: right;
- } */
+<style>
 </style>>

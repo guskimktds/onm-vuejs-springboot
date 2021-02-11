@@ -1,7 +1,10 @@
 <template>
   <v-container fluid>
       <v-card>
-        <admin-history-query v-on:search="searchToButton"></admin-history-query>
+        <admin-history-query 
+          v-on:search="searchToButton"
+          v-bind:param=searchParam
+        ></admin-history-query>
         <admin-history-list v-bind:pList=pList></admin-history-list>
       </v-card>
 
@@ -13,7 +16,6 @@ import AdminHistoryQuery from './adminHistoryQuery'
 import AdminHistoryList from './adminHistoryList'
 
 //로그인 시 서버에서 불러오면 수정해야함
-//import AdminMenuMock from '../../../mock/AdminListMock.json';
 import axios from "axios"
 
 export default {
@@ -23,32 +25,39 @@ export default {
   },
   data () {
     return {
-      title: '관리자 접속 이력',
-      pList: []
+      title: '[매장]관리자 접속 이력',
+      pList: [],
+      reqPagingInfo: {
+        page_no: 1,
+        view_cnt: 10
+      },
+      resPagingInfo: {},
+      searchParam: {
+        admin_id: '',
+        user_id: '',
+        tel_no: '',
+        login_key: '',
+        admin_type: ''
+      }
     }
   },
   created: function() {
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15005/get_mng_access_history'
-    // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
-    var params = {
-      page_no: 1,
-      view_cnt: 5
-    }
-    var headers = {
-      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-      'Content-Type': 'application/json'
-    }
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15005/get_mng_access_history`
+
+    // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
+    var params = this.reqPagingInfo
 
     axios
-        .post(url, params, headers)
+        .post(url, params, this.$store.state.headers)
         .then((response) => {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.pList = response.data.data.mng_access_history_list;
-
+            this.resPagingInfo = response.data.data.paging_info
           }else{
             this.pList = [];
+            this.resPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -58,29 +67,69 @@ export default {
   },
   methods: {
     searchToButton: function(params){
-    var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15005/get_mng_access_history'
-    // var params = {
-    //   page_no: 1,
-    //   view_cnt: 5
-    // }
-    var headers = {
-      'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-      'Content-Type': 'application/json'
+      console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15005/get_mng_access_history`
+
+      //params : 페이징 + 검색조건
+      var reqParams = this.handleParams(params)  
+
+      axios.post(url, reqParams, this.$store.state.headers)
+      .then((response) => {
+        console.log(response)
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.pList = response.data.data.mng_access_history_list;
+          this.resPagingInfo = response.data.data.paging_info
+
+        }else{
+          this.pList = [];
+          this.resPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
+    },
+
+    handleParams: function(params){
+      let newParams = {}
+      if(params.page_no === undefined || params.page_no === ''){
+        newParams.page_no = this.reqPagingInfo.page_no
+      }else{
+        newParams.page_no = params.page_no
+      }
+
+      if(params.view_cnt === undefined || params.view_cnt === ''){
+        newParams.view_cnt = this.reqPagingInfo.view_cnt
+      }else{
+        newParams.view_cnt = params.view_cnt
+      }
+
+      if(params.admin_id !== undefined && params.admin_id !== ''){
+        newParams.admin_id = params.admin_id
+      }
+
+      if(params.user_id !== undefined && params.user_id !== ''){
+        newParams.user_id = params.user_id
+      }
+
+      if(params.tel_no !== undefined && params.tel_no !== ''){
+        newParams.tel_no = params.tel_no
+      }
+
+      if(params.login_key !== undefined && params.login_key !== ''){
+        newParams.login_key = params.login_key
+      }
+
+      if(params.admin_type !== undefined && params.admin_type !== ''){
+        newParams.admin_type = params.admin_type
+      }
+
+      return newParams
     }
 
-        axios.post(url, params, headers)
-            // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
-            //   params
-            // })
-            .then((result) => {
-              console.log(result)
-              //this.list = JSON.parse(result.data.menu)
-              this.pList = result.data.data.mng_access_history_list;
-            })
-            .catch((ex) => {
-              console.log('조회 실패',ex)
-            })
-    }
   },
 }
 </script>

@@ -31,18 +31,21 @@ export default {
             text: '사번',
             align: 'start',
             sortable: false,
-            value: 'id',
+            value: 'onm_user_id',
           },
           { 
             text: '이름', 
             value: 'name',
           },
-          { text: 'JOB', value: 'job' },
-          { text: '접속지', value: 'ip' },
-          { text: '권한', value: 'auth' },
-          { text: '생성일자', value: 'createDate' },
-          { text: '수정일자', value: 'updateDate' },
-          { text: '생성자', value: 'editUser' },
+          { text: '권한그룹', value: 'auth_group_id' },
+          { text: '호출IP주소', value: 'client_ip_addr' },
+          { text: '호출uri', value: 'proc_api_uri' },
+          { text: '유형', value: 'cmd_type' },
+          { text: '요청메세지', value: 'request_msg' },
+          { text: '응답메시지', value: 'response_msg' },
+          { text: '결과코드', value: 'result_code' },
+          { text: '마스킹(Y/N)', value: 'is_masking' },
+          { text: '호출일시', value: 'reg_date' }
         ]
       }
     }

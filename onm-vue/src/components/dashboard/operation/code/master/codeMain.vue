@@ -16,14 +16,8 @@ import CodeQuery from './codeQuery'
 import CodeList from './codeList'
 
 //로그인 시 서버에서 불러오면 수정해야함
-//import AdminMenuMock from '../../../mock/AdminListMock.json';
 import axios from "axios"
 import EventBus from '../../../../../EventBus';
-
-// const headers = {
-//   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-//   'Content-Type': 'application/json'
-// }
 
 export default {
   components:{
@@ -41,9 +35,7 @@ export default {
       resPagingInfo: {},
       searchParam: {
         code_master_id: '',
-        // code_id: '',
-        code_master_name: '',
-        // code_type: ''
+        code_master_name: ''
       }
     }
   },
@@ -103,24 +95,24 @@ export default {
     //params : 페이징 + 검색조건
     var reqParams = this.handleParams(params)  
 
-        axios.post(url, reqParams, this.$store.state.headers)
-        .then((response) => {
-          console.log(response)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.list;
-            this.resPagingInfo = response.data.data.paging_info
+      axios.post(url, reqParams, this.$store.state.headers)
+      .then((response) => {
+        console.log(response)
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.pList = response.data.data.list;
+          this.resPagingInfo = response.data.data.paging_info
 
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
+        }else{
+          this.pList = [];
+          this.resPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
     },  
 
     handleParams: function(params){
@@ -136,7 +128,6 @@ export default {
       }else{
         newParams.view_cnt = params.view_cnt
       }
-
 
       if(params.code_master_id !== undefined && params.code_master_id !== ''){
         newParams.code_master_id = params.code_master_id

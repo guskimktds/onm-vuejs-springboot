@@ -7,7 +7,7 @@
 
         <base-material-card
         icon="mdi-magnify"
-        title="처리 이력 조회"
+        title="[O&M]처리 이력 조회"
         class="px-5 py-3"
         >
             <v-row>
@@ -16,21 +16,62 @@
                     </v-text-field>
                 </v-col> -->
                 <v-col cols="12" sm="6" md="2">
-                    <v-text-field dense label="사번" placeholder="Placeholder" outlined>                        
-                    </v-text-field>
-                </v-col>         
-                <v-col cols="12" sm="6" md="2">
-                    <v-text-field dense label="이름" placeholder="Placeholder" outlined>                        
+                    <v-text-field 
+                        dense 
+                        label="ONM 처리자ID(사번)" 
+                        v-model="param.onm_user_id"
+                        placeholder="Placeholder" 
+                    >                        
                     </v-text-field>
                 </v-col> 
-                <v-col cols="12" sm="6" md="2">
-                    <v-text-field dense label="권한" placeholder="Placeholder" outlined>                        
-                    </v-text-field>
-                </v-col>
                 <v-col cols="12" sm="6" md="3">
+                    <v-text-field 
+                        dense 
+                        label="호출 URI" 
+                        v-model="param.uri"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>     
+                   
+                <v-col cols="12" sm="6" md="5">
+                    <v-radio-group
+                        v-model="param.cmd_type"
+                        row
+                    >
+                        <v-radio
+                            label="전체"
+                            value=""
+                        ></v-radio>
+                        <v-radio
+                            label="입력"
+                            value="I"
+                        ></v-radio>
+                        <v-radio
+                            label="조회"
+                            value="R"
+                        ></v-radio>
+                        <v-radio
+                            label="수정"
+                            value="U"
+                        ></v-radio>
+                        <v-radio
+                            label="삭제"
+                            value="D"
+                        ></v-radio>
+                    </v-radio-group>
+                </v-col>
+                <v-col cols="12" sm="6" md="2">
+                    <v-switch
+                        v-model="param.is_masking"                    
+                        :label="`마스킹(Y/N)`"
+                        color="secondary"
+                    ></v-switch>
+                </v-col>
+                
+                <v-col cols="12" sm="6" md="1">
                     <v-btn elevation="2" medium
-                    v-on:click="searchMethod"
-                    color="green"
+                    v-on:click="searchMethod"                    
                     >
                         검색
                     </v-btn>
@@ -42,16 +83,17 @@
 <script>
 
 export default {
-    data() {
-        return{
-            param: {
-                id: '',
-                name: '',
-                auth: ''
-            }
+    props:['param'],
+    // data() {
+    //     return{
+    //         param: {
+    //             id: '',
+    //             name: '',
+    //             auth: ''
+    //         }
 
-        }
-    },
+    //     }
+    // },
     methods: {
         searchMethod: function() {
             this.$emit('search', this.param)
