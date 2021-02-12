@@ -14,8 +14,6 @@
 <script>
 import AdminHistoryQuery from './adminHistoryQuery'
 import AdminHistoryList from './adminHistoryList'
-
-//로그인 시 서버에서 불러오면 수정해야함
 import axios from "axios"
 
 export default {

@@ -23,7 +23,7 @@ export default new Vuex.Store({
         accessToken: null, //cookie 로 대체
         isAuthenticated: false,
         menu: [],
-        id: '',
+        onm_user_id: '',
         barColor: 'rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)',
         barImage: 'https://demos.creative-tim.com/material-dashboard/assets/img/sidebar-1.jpg',
         drawer: null,
@@ -56,7 +56,7 @@ export default new Vuex.Store({
             // state.menu = JSON.parse(param.data.menu)
             state.menu = param.menuMock
 
-            state.id = param.id
+            state.onm_user_id = param.id
             state.headers = {
                 'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
                 'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ export default new Vuex.Store({
             state.accessToken = null
             state.isAuthenticated = false
             state.menu = []
-            state.id = ''
+            state.onm_user_id = ''
             state.headers = {}
         },
         SET_BAR_IMAGE(state, payload) {

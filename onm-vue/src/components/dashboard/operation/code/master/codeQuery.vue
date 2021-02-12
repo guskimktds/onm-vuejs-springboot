@@ -127,18 +127,7 @@
                             </v-btn>
                         </v-card-actions>
                         </v-card>
-                    </v-dialog>
-                    <!-- <v-dialog v-model="dialogDelete" max-width="500px">
-                        <v-card>
-                        <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                            <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-                            <v-spacer></v-spacer>
-                        </v-card-actions>
-                        </v-card>
-                    </v-dialog> -->
+                    </v-dialog>                  
                 </v-col>
             </v-row>       
 
@@ -154,14 +143,7 @@ export default {
     props:['param'],
     data() {
         return{            
-            // param: {
-            //     codeClass: '',
-            //     code: '',
-            //     name: '',
-            //     type: ''
-            // },
-            dialog: false,
-            // dialogDelete: false,        
+            dialog: false,    
             editedItem: {
                 code_master_id: '',     
                 code_master_name: '',        
@@ -181,7 +163,7 @@ export default {
                 local_gw_id: '0',
                 reg_date:'',
                 mod_date:''
-            },
+            }
         }
     },
     computed: {
@@ -197,12 +179,12 @@ export default {
 
         save () {
             console.log('save method call : ',this.editedItem)     
-            // 수정
+            // 등록
             this.editedItem.cmd_type = 'I'
             this.editedItem.local_gw_id = '0'  
             // console.log(dateInfo().current)
-            this.editedItem.mod_date = dateInfo().current 
-            // this.editedItem.reg_date = getDate 
+            // this.editedItem.mod_date = dateInfo().current 
+            this.editedItem.reg_date = dateInfo().current 
 
             // console.log(this.editedItem.mod_date)
 

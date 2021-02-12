@@ -111,7 +111,7 @@
                                 md="6"
                                 >
                                 <v-text-field                            
-                                    v-model="editedItem.codeClass"
+                                    v-model="editedItem.user_id"
                                     label="매장ID"
                                 ></v-text-field>
                                 </v-col>

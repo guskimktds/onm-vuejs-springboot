@@ -259,7 +259,7 @@ export default {
 
             // console.log(this.editedItem.mod_date)
 
-            EventBus.$emit('createItem', this.editedItem)
+            EventBus.$emit('createItemCode', this.editedItem)
             this.close()
         },
 

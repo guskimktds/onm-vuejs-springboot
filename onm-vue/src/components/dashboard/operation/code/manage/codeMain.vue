@@ -18,7 +18,7 @@ import CodeList from './codeList'
 //로그인 시 서버에서 불러오면 수정해야함
 //import AdminMenuMock from '../../../mock/AdminListMock.json';
 import axios from "axios"
-import EventBus from '../../../../../EventBus';
+import EventBus from '../../../../../EventBus'
 
 // const headers = {
 //   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
@@ -84,7 +84,7 @@ export default {
         })
   },
   mounted: function() {
-     EventBus.$on('createItem', params => {
+     EventBus.$on('createItemCode', params => {
         //console.log('codeMain.vue eventbus : param : ',parameter)
         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15007/set_code`
 

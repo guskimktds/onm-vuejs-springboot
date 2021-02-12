@@ -15,7 +15,111 @@
                 :headers="headers"
                 :items="pList"
                 class="elevation-1"
-            >          
+            >      
+              <template v-slot:top>
+              <v-toolbar
+                flat
+              >
+                <v-dialog
+                  v-model="dialog"
+                  max-width="500px"
+                >
+
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline">{{ formTitle }}</span>
+                    </v-card-title>
+
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col
+                            cols="12"
+                            sm="6"
+                            md="6"
+                          >
+                            <v-text-field
+                              v-model="editedItem.onm_user_id"
+                              label="계정(사번)"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col
+                            cols="12"
+                            sm="6"
+                            md="6"
+                          >
+                            <v-text-field
+                              v-model="editedItem.auth_group_id"
+                              label="권한그룹ID"
+                            ></v-text-field>
+                          </v-col>
+                          
+                          <v-col
+                            cols="12"
+                            sm="6"
+                            md="6"
+                          >
+                            <v-text-field
+                              v-model="editedItem.access_ip"
+                              label="접속IP"
+                            ></v-text-field>
+                          </v-col>                     
+                          
+                        </v-row>
+                      </v-container>
+                    </v-card-text>
+
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      
+                      <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="save"
+                      >
+                        저장
+                      </v-btn>
+                      <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="close"
+                      >
+                        취소
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+                <v-dialog v-model="dialogDelete" max-width="500px">
+                  <v-card>
+                    <v-card-title class="headline">삭제 하시겠습니까?</v-card-title>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+                      <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                      <v-spacer></v-spacer>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-toolbar>
+            </template>
+
+            <template v-slot:item.actions="{ item }">
+              <v-icon
+                small
+                class="mr-2"
+                @click="editItem(item)"
+              >
+                mdi-pencil
+              </v-icon>
+              <v-icon
+                small
+                @click="deleteItem(item)"
+              >
+                mdi-delete
+              </v-icon>
+            </template>
+
+
             </v-data-table>
         </base-material-card>
     </v-container>
@@ -23,28 +127,169 @@
 
 
 <script>
+import dateInfo from '../../../utils/common'
+import axios from "axios"
 export default {
     props: ['pList'],
     data() {
       return {
+        dialog: false,
+        dialogDelete: false,
+        editedIndex: -1,
         headers: [
           {
             text: '사번',
             align: 'start',
             sortable: false,
-            value: 'id',
+            value: 'onm_user_id',
           },
           { 
             text: '이름', 
             value: 'name',
           },
-          { text: '접속지', value: 'ip' },
-          { text: '권한', value: 'auth' },
-          { text: '생성일자', value: 'createDate' },
-          { text: '수정일자', value: 'updateDate' },
-          { text: '생성자', value: 'editUser' },
-        ]
+          { text: '접속IP', value: 'access_ip' },
+          { text: '권한그룹ID', value: 'auth_group_id' },
+          { text: '권한그룹명', value: 'auth_group_name' },
+          { text: '생성일', value: 'reg_date' },
+          { text: '수정일', value: 'mod_date' },
+          { text: '생성자', value: 'rgistrant' },
+          { text: '수정자', value: 'modifier' },
+        ],
+        editedItem: {
+          onm_user_id: '',     
+          access_ip: '',
+          auth_group_id: '',
+          cmd_type: 'U',
+          reg_date: '',
+          mod_date: '',
+          rgistrant:'',
+          modifier:''
+        },
+        defaultItem: {
+          onm_user_id: '',     
+          access_ip: '',
+          auth_group_id: '',
+          cmd_type: '',
+          reg_date: '',
+          mod_date: '',
+          rgistrant:'',
+          modifier:''
+        },
+        newPlist: []
       }
+    },
+
+    computed: {
+      formTitle () {
+        return this.editedIndex === -1 ? '등록' : '계정수정'
+      },
+    },
+    methods: {
+      editItem (item) {
+        this.editedIndex = this.pList.indexOf(item)
+        console.log('update Item Index : ',this.editedIndex)
+        this.editedItem = Object.assign({}, item)
+        // 수정
+        this.editedItem.cmd_type = 'U' 
+        this.editedItem.mod_date = dateInfo().current
+        this.editedItem.modifier = this.$store.state.onm_user_id
+        // this.editedItem.reg_date = getDate     
+
+        console.log('update Item value : ',this.editedItem)
+
+        this.dialog = true
+      },
+
+      deleteItem (item) {
+        // console.log('deleteItem method call : ',item)
+        this.editedIndex = this.pList.indexOf(item)
+        console.log('Delte Item Index : ',this.editedIndex)
+        this.editedItem = Object.assign({}, item)
+        // 삭제
+        this.editedItem.cmd_type = 'D'
+        this.editedItem.mod_date = dateInfo().current
+        this.editedItem.modifier = this.$store.state.onm_user_id
+
+        this.dialogDelete = true
+      },
+
+      deleteItemConfirm () {
+
+        if (this.editedIndex > -1) {
+
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15002/set_account`
+
+          // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
+          var params = this.editedItem
+          var deleteIndex = this.editedIndex
+          console.log(params)
+
+          axios.post(url, params, this.$store.state.headers)
+            .then((response) => {
+              console.log(response)
+              var resCode = response.data.res_code;
+              var resMsg = response.data.res_msg;
+              if(resCode == 200){
+                //현재 목록에서 선택한 Item을 삭제한다.
+                this.pList.splice(deleteIndex, 1)
+              }else{
+                alert(resCode + " / " + resMsg);
+              }
+            })
+            .catch((ex) => {
+              console.log('변경 실패',ex)
+            })
+        
+        }
+        this.closeDelete() //다이얼로그를 닫는다.
+      },
+
+      close () {
+        this.dialog = false
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        })
+      },
+
+      closeDelete () {
+        this.dialogDelete = false
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        })
+      },
+
+      save () {
+        console.log('save method call : ',this.editedIndex)
+        if (this.editedIndex > -1) {
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15002/set_account`
+
+          // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
+          var params = this.editedItem
+          var updateIndex = this.editedIndex
+          console.log(updateIndex)
+          console.log(params)
+
+          axios.post(url, params, this.$store.state.headers)
+            .then((response) => {
+              console.log(response)
+              var resCode = response.data.res_code;
+              var resMsg = response.data.res_msg;
+              if(resCode == 200){
+                //현재 목록에서 선택한 item 을 변경해준다.
+                this.pList.splice(updateIndex, 1, params)
+              }else{
+                alert(resCode + " / " + resMsg);
+              }
+            })
+            .catch((ex) => {
+              console.log('변경 실패',ex)
+            })
+        } 
+        this.close()
+      }
+
     }
 }
 </script>

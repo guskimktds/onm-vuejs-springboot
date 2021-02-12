@@ -113,6 +113,41 @@ export default {
           .catch((ex) => {
             console.log('조회 실패',ex)
           })
+    },
+
+    handleParams: function(params){
+      let newParams = {}
+      if(params.page_no === undefined || params.page_no === ''){
+        newParams.page_no = this.reqPagingInfo.page_no
+      }else{
+        newParams.page_no = params.page_no
+      }
+
+      if(params.view_cnt === undefined || params.view_cnt === ''){
+        newParams.view_cnt = this.reqPagingInfo.view_cnt
+      }else{
+        newParams.view_cnt = params.view_cnt
+      }
+
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date
+      }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date
+      }
+
+      if(params.user_id !== undefined && params.user_id !== ''){
+        newParams.user_id = params.user_id
+      }
+
+      if(params.status_code !== undefined && params.status_code !== ''){
+        newParams.status_code = params.status_code
+      }
+
+      
+
+      return newParams
     }
   }
 }
