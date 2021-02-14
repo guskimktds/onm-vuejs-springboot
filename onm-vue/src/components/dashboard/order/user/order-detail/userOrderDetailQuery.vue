@@ -12,7 +12,7 @@
         class="px-5 py-3"
         >
         <v-row>         
-<v-col cols="12" sm="6" md="2">
+          <v-col cols="12" sm="6" md="2">
             <v-menu
               ref="menu"
               v-model="menu"
@@ -102,13 +102,13 @@
 </template>
 <script>
 export default {
-    props: ['param'],
-    data() {
-        return {
-          date:false,
-          menu:false
-        }
-    },
+  props: ['param'],
+  data() {
+      return {
+        date:false,
+        menu:false
+      }
+  },
   computed: {
     dateRangeText() {
       if (this.param.appointdate.length == 0) {

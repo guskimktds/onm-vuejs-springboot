@@ -154,6 +154,7 @@ export default {
           { text: '수정일', value: 'mod_date' },
           { text: '생성자', value: 'rgistrant' },
           { text: '수정자', value: 'modifier' },
+          { text: '변경', value: 'actions', sortable: false }
         ],
         editedItem: {
           onm_user_id: '',     

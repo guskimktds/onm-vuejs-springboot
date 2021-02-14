@@ -129,8 +129,12 @@ export default {
 
     searchToAuthMenuButton: function(params){
       console.log("부모 메소드 searchToAuthMenuButton 호출: "+JSON.stringify(params));
+      if(this.isAuthMenu) {        
+        this.isAuthMenu = false
+        return
+      }
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10003/get_auth_menu_list`
-
+      
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)  
       console.log(reqParams)
