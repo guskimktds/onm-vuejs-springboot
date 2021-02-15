@@ -17,6 +17,7 @@
 <script>
 import StatsList from './productStatsList'
 import StatsQuery from './productStatsQuery'
+import dateInfo from '../../../../utils/common'
 
 import axios from "axios"
 
@@ -37,8 +38,8 @@ export default {
       pList: [],
       pHeader:[],
       reqPagingInfo:{
-        start_date: "20210101",
-        end_date: "20210201"
+        start_date: dateInfo().lastWeek,
+        end_date: dateInfo().currentDate
       },
      
       searchParam: {
@@ -48,11 +49,31 @@ export default {
   },
   methods: {
     searchToProcess: function(params){
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11009/get_prod_stat`;
+     var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11009/get_prod_stat`;
      
-     console.log(params)
+
+     if(params==undefined){
      var reqParams=this.reqPagingInfo
-      // var reqParams = this.setToSearchParams(params);
+     }
+     else{
+       var startDate,endDate
+       var start_period=params.appoint_date[0]
+       var end_period=params.appoint_date[1]
+       if(start_period.length>1){
+         if(start_period>end_period){
+           startDate=end_period
+           endDate=start_period
+         }else{
+           startDate=start_period
+           endDate=end_period
+         }
+       }
+      var searchDate={
+        start_date: startDate.replace(/-/g,""),
+        end_date: endDate.replace(/-/g,"")
+      }
+      reqParams=searchDate
+     }
 
       axios
       .post(url, reqParams, headers)
@@ -100,10 +121,13 @@ export default {
       watch: {
         options: {
         handler() {
-         this.getDataFromApi();
+        this.getDataFromApi();
         },
         deep: true,
         },
+    },
+    mounted() {
+        this.getDataFromApi();
     },
 }
 </script>
