@@ -1,4 +1,3 @@
-
 <template>
     <v-container fluid>
       <v-card>
@@ -7,9 +6,9 @@
           v-bind:param=searchParam></stats-query>
         <stats-list 
           v-bind:pList=pList
-          v-bind:resPagingInfo=resPagingInfo
-
-          @pagination="setToSearchParams"></stats-list>
+          v-bind:pHeader=pHeader
+          
+         ></stats-list>
       </v-card>
     </v-container>
 </template>
@@ -36,47 +35,24 @@ export default {
     return {
       title: '상품 통계',
       pList: [],
+      pHeader:[],
       reqPagingInfo:{
-        start_date: "19000101",
-        end_date: "20210201",
-        search_type: "D"
+        start_date: "20210101",
+        end_date: "20210201"
       },
-      resPagingInfo:{},
+     
       searchParam: {
         appoint_date: ''
       },
     }
   },
-  created:function(){
-    var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11009/get_prod_stat`;
-
-    var params=this.reqPagingInfo
-
-    axios
-        .post(url, params, headers)
-        .then((response) => {
-          console.log(response.data)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.prod_list;
-            this.resPagingInfo = response.data.data.paging_info
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패', ex)
-        })
-    
-  },
   methods: {
     searchToProcess: function(params){
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11009/get_prod_stat`;
-      
-      var reqParams = this.handleParams(params);
+     
+     console.log(params)
+     var reqParams=this.reqPagingInfo
+      // var reqParams = this.setToSearchParams(params);
 
       axios
       .post(url, reqParams, headers)
@@ -85,11 +61,12 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
+          this.pHeader=response.data.data.header_list;
           this.pList = response.data.data.prod_list;
-          this.resPagingInfo = response.data.data.paging_info;
         } else {
+          this.pHeader=[];
           this.pList = [];
-          this.resPagingInfo = {};
+        
           alert(resCode + " / " + resMsg);
         }
 
@@ -107,32 +84,27 @@ export default {
       console.log(values)
 
       var params = {
-        page_no: values.page,
-        view_cnt: values.itemsPerPage
+        start_date: values.start_date,
+        end_date: values.end_date
       }
 
       console.log(params)
 
-      this.searchToVaCamCount(params)
+      this.searchToProcess(params)
     },
-
-    handleParams: function (params) {
-
-      let newParams = {};
-
-      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
-        newParams.local_gw_id = params.local_gw_id;
-      } else if (
-        this.searchParam.local_gw_id !== undefined &&
-        this.searchParam.local_gw_id !== ""
-      ) {
-        newParams.local_gw_id = this.searchParam.local_gw_id;
-      }
-
-      return newParams;
+    getDataFromApi(){
+      this.loading=true;
+      this.searchToProcess(this.options);
+    }
+  },
+      watch: {
+        options: {
+        handler() {
+         this.getDataFromApi();
+        },
+        deep: true,
+        },
     },
-    
-  }
 }
 </script>
 

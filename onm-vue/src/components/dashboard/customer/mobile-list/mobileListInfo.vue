@@ -4,7 +4,7 @@
         <mobileListInfo-query
           v-on:search="searchToMobileListInfo"
         ></mobileListInfo-query>
-        <mobileListInfo-list v-bind:List="list"></mobileListInfo-list>
+        <mobileListInfo-list v-bind:pList="pList"></mobileListInfo-list>
       </v-card>
     </v-container>
 </template>
@@ -32,13 +32,13 @@ export default {
       .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_14005/get_mobile_device_list`,{
         
         "page_no": 1,
-        "view_cnt": 5
+        "view_cnt": 5,
+        "local_gw_id": "1"
 
       })
       .then((result) => {
         console.log(result);
-        // this.list = JSON.parse(result.data.menu)
-        this.list = result.data.data.mobile_device_list;
+        this.pList = result.data.data.list;
       })
       .catch((ex) => {
         console.log("조회 실패", ex);
@@ -60,7 +60,7 @@ export default {
         .then((result) => {
           console.log(result);
           // this.list = JSON.parse(result.data.menu)
-          this.list = result.data.data.mobile_device_list;
+          this.list = result.data.data.list;
         })
         .catch((ex) => {
           console.log("조회 실패", ex);

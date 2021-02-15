@@ -33,12 +33,15 @@
                         v-on="on"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.appoint_date" no-title scrollable range>
+                    <v-date-picker v-model="param.appoint_date"
+                     no-title 
+                     scrollable 
+                     range>
                         <v-spacer></v-spacer>
                         <v-btn text color="primary" @click="menu = false">
                         Cancel
                         </v-btn>
-                        <v-btn text color="primary" @click="$refs.menu.save(date)">
+                        <v-btn text color="primary" @click="handleDate(date)">
                         OK
                         </v-btn>
                     </v-date-picker>
@@ -58,12 +61,15 @@
 </template>
 
 <script>
+
 export default {
     props: ['param'],
     data() {
         return{
             date: false,
-            menu: false
+            menu: false,
+            appoint_date:["",""]
+
         }
     },
     methods: {

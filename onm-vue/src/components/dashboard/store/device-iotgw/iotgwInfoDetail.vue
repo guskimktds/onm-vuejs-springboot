@@ -20,60 +20,60 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.user_id" label="매장 ID">
+          <v-text-field v-model="pObject.user_id" label="매장 ID" readonly>
           </v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.gw_id" label="GWID(청약)">
-          </v-text-field>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.gw_name" label="GW 명"> </v-text-field>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.gw_model_code" label="GW 모델코드">
+          <v-text-field v-model="pObject.gw_id" label="GWID(청약)" readonly>
           </v-text-field>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.mac_id" label="mac_id"> </v-text-field>
+          <v-text-field v-model="pObject.gw_name" label="GW 명" readonly> </v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.iot_device_seq" label="IoT 장치 seq">
+          <v-text-field v-model="pObject.gw_model_code" label="GW 모델코드" readonly>
           </v-text-field>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.status_code" label="상태코드">
-          </v-text-field>
+          <v-text-field v-model="pObject.mac_id" label="mac_id" readonly> </v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.reg_date" label="등록일시">
-          </v-text-field>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.open_date" label="개통일시">
-          </v-text-field>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.mgt_status" label="관리상태코드">
+          <v-text-field v-model="pObject.iot_device_seq" label="IoT 장치 seq" readonly>
           </v-text-field>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.close_date" label="해지일시">
+          <v-text-field v-model="pObject.status_code" label="상태코드" readonly>
+          </v-text-field>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field v-model="pObject.reg_date" label="등록일시" readonly>
+          </v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-text-field v-model="pObject.open_date" label="개통일시" readonly>
+          </v-text-field>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field v-model="pObject.mgt_status" label="관리상태코드" readonly>
+          </v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-text-field v-model="pObject.close_date" label="해지일시" readonly>
           </v-text-field>
         </v-col>
       </v-row>

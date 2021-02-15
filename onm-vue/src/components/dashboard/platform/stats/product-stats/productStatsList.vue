@@ -14,7 +14,7 @@
       >
 
       <v-data-table
-        :headers="headers"
+        :headers="pHeader"
         :items="pList"
         class="elevation-1"
       >
@@ -27,20 +27,17 @@
 
 <script>
 export default {
-  props: ['pList'],
+  props: ['pHeader','pList'],
   data() {
     return {
-      headers: [
-        { text: '상품명', value: 'prod_name' },
-        { text: '일자목록', value: 'date_list' },
-        { text: '희망일', value: 'appoint_date' },
-        { text: '카운트', value: 'cnt' },
-      ],
+      headers:[{
+        text:'text', value: 'value'
+      }]
     }
-  },
-
-
+  }, 
+  
 }
+
 </script>
 
 <style>
