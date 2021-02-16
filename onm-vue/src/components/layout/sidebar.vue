@@ -73,7 +73,7 @@
           />
         </v-list-item-avatar>
         <v-list-item-title class="display-1">
-          {{menu}}
+          {{title}}
         </v-list-item-title>
       </v-list-item>
     </v-list>
@@ -140,14 +140,20 @@ export default {
   },
   data () {
     return {
-      menu: 'GiGAeyes O&M',
+      title: 'GiGAeyes O&M',
       newMenus: [] 
     }
   },
   created(){
-      EventBus.$on('top-path', (payload)=>{          
-        //console.log(payload)
+      EventBus.$on('top-path-login', (payload)=>{          
+        // console.log(payload)
         this.newMenus = payload
+      });
+
+      EventBus.$on('top-path-logout', ()=>{          
+        console.log('top-path-logout')
+        this.newMenus = []
+        console.log(this.newMenus)
       });
   },
 

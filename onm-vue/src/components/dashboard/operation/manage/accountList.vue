@@ -60,7 +60,7 @@
                             md="6"
                           >
                             <v-text-field
-                              v-model="editedItem.access_ip"
+                              v-model="editedItem.accept_ip"
                               label="접속IP"
                             ></v-text-field>
                           </v-col>                     
@@ -143,37 +143,37 @@ export default {
             sortable: false,
             value: 'onm_user_id',
           },
-          { 
-            text: '이름', 
-            value: 'name',
-          },
-          { text: '접속IP', value: 'access_ip' },
+          // { 
+          //   text: '이름', 
+          //   value: 'name',
+          // },
+          { text: '접속IP', value: 'accept_ip' },
           { text: '권한그룹ID', value: 'auth_group_id' },
           { text: '권한그룹명', value: 'auth_group_name' },
           { text: '생성일', value: 'reg_date' },
           { text: '수정일', value: 'mod_date' },
-          { text: '생성자', value: 'rgistrant' },
-          { text: '수정자', value: 'modifier' },
+          { text: '생성자', value: 'reg_user' },
+          // { text: '수정자', value: 'modifier' },
           { text: '변경', value: 'actions', sortable: false }
         ],
         editedItem: {
           onm_user_id: '',     
-          access_ip: '',
+          accept_ip: '',
           auth_group_id: '',
           cmd_type: 'U',
           reg_date: '',
           mod_date: '',
-          rgistrant:'',
+          reg_user:'',
           modifier:''
         },
         defaultItem: {
           onm_user_id: '',     
-          access_ip: '',
+          accept_ip: '',
           auth_group_id: '',
           cmd_type: '',
           reg_date: '',
           mod_date: '',
-          rgistrant:'',
+          reg_user:'',
           modifier:''
         },
         newPlist: []
