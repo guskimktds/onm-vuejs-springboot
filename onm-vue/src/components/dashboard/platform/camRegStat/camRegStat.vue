@@ -1,8 +1,11 @@
 <template>
     <v-container fluid>
       <v-card>
-        <cam-reg-chart></cam-reg-chart>
-        <cam-reg-list :pList="pList"></cam-reg-list>
+        <cam-reg-chart
+        v-on:datepick="searchCamRegStat"></cam-reg-chart>
+        <cam-reg-list 
+        v-bind:pList="pList"
+        ></cam-reg-list>
       </v-card>
     </v-container>
 </template>
@@ -10,9 +13,16 @@
 <script>
 import List from './camRegList'
 import Chart from './camRegChart'
+import dateInfo from '../../../utils/common'
+
+import axios from "axios";
+
+const headers={
+  'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+  'Content-Type': 'application/json'
+}
 
 export default {
-  
   components: {
     CamRegList: List,
     CamRegChart: Chart
@@ -20,22 +30,67 @@ export default {
   data () {
     return {
       title: '개통/해지 추이(대시보드)',
-      pList: [
-        {date:'2020-12-05', storeReg:'64', storeUnreg:'55', camReg:'64', camUnreg:'44', iotReg:'39', iotUnreg:'66'},
-        {date:'2020-12-04', storeReg:'33', storeUnreg:'12', camReg:'34', camUnreg:'76', iotReg:'54', iotUnreg:'45'},
-        {date:'2020-12-03', storeReg:'57', storeUnreg:'34', camReg:'87', camUnreg:'6', iotReg:'56', iotUnreg:'12'},
-        {date:'2020-12-02', storeReg:'12', storeUnreg:'78', camReg:'13', camUnreg:'4', iotReg:'28', iotUnreg:'55'},
-        {date:'2020-12-01', storeReg:'75', storeUnreg:'41', camReg:'85', camUnreg:'35', iotReg:'94', iotUnreg:'76'},
-        {date:'2020-11-30', storeReg:'54', storeUnreg:'54', camReg:'34', camUnreg:'5', iotReg:'41', iotUnreg:'88'},
-        {date:'2020-11-29', storeReg:'44', storeUnreg:'56', camReg:'12', camUnreg:'36', iotReg:'76', iotUnreg:'33'}
-      ]
+      pList: [],
+      datepick:{
+        start_date:'',
+        end_date:'',
+        search_type:''
+      },
+      startpick:{
+        search_type:'D',
+        start_date: dateInfo().lastWeek,
+        end_date: dateInfo().currentDate
+      }
     }
   },
   methods: {
-    search: function(){
-      console.log("부모 메소드 search 호출");
-    },
+    searchCamRegStat: function(datepick){
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_11014/get_transition`
+    let params={}
+    console.log('데이트픽')
+    console.log(datepick)
+    if(datepick.end_date===''||datepick.start_date===''){
+      params=this.startpick
+      console.log('파라미터 값')
+      console.log(params)
+    }else{
+      params=datepick
+    }
 
-  }
+      axios.post(url, params, headers)
+      .then((response) => {
+        console.log(response)
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.pList = response.data.data.date_list;
+          console.log('전달된 개통 해지추이 리스트')
+          console.log(this.pList)
+        }else{
+          this.pList = [];
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
+      .finally(function(){})
+    },
+    getDataFromApi() {
+        this.loading = true;
+        this.searchCamRegStat(this.datepick)
+    },
+  },
+        watch: {
+        options: {
+        handler() {
+        this.getDataFromApi();
+        },
+        deep: true,
+        },
+    },
+    mounted() {
+        this.getDataFromApi();
+    },
 }
 </script>

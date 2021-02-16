@@ -101,7 +101,7 @@ export default {
   props:['param','localGwOptions'],
   data() {
     return {
-      items:["iPhone","Android"],
+      items:["선택안함","iPhone","Android"],
       date: false,
       menu: false,
     };
@@ -115,6 +115,9 @@ export default {
   },
   methods: {
     searchMethod: function () {
+      if(this.param.os_type==="선택안함"){
+        this.param.os_type=""
+      }
       this.$emit("search", this.param);
     },
   },
