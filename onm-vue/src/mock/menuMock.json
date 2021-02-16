@@ -42,16 +42,8 @@
                     { "name": "단말 청약 오더 처리 결과", "path": "/order/device-order-result", "component": "device-order-result" },
                     { "name": "인증 대상 단말 정보", "path": "/order/auth-target-device", "component": "auth-target-device" }
                 ]
-            },
-            {
-                "name": "스냅샷 정보",
-                "path": "/order/snapshot",
-                "component": "order-snapshot",
-                "children": [
-                    { "name": "사용자 청약 오더 Snapshot", "path": "/order/snapshot-user", "component": "snapshot-user" },
-                    { "name": "단말 오더 Snapshot", "path": "/order/snapshot-device", "component": "snapshot-device" }
-                ]
             }
+
         ]
     },
     {

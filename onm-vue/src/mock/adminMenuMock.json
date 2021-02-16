@@ -63,16 +63,8 @@
                     { "name": "현장작업자 리스트", "path": "/order/workers-info", "component": "workers-info" },
                     { "name": "현장작업자 로그인이력", "path": "/order/worker-login-history", "component": "worker-login-history" }
                 ]
-            },
-            {
-                "name": "스냅샷 정보",
-                "path": "/order/snapshot",
-                "component": "order-snapshot",
-                "children": [
-                    { "name": "사용자 청약 오더 Snapshot", "path": "/order/snapshot-user", "component": "snapshot-user" },
-                    { "name": "단말 오더 Snapshot", "path": "/order/snapshot-device", "component": "snapshot-device" }
-                ]
             }
+
         ]
     },
     {

@@ -33,7 +33,7 @@
                 ></v-text-field>
               </template>
               <v-date-picker
-                v-model="param.alarmTime"
+                v-model="param.alarm_start_time"
                 no-title
                 scrollable
                 range
@@ -53,9 +53,8 @@
             <v-text-field
               dense
               label="알림 ID"
-              v-model="param.alarmId"
+              v-model="param.alim_id"
               placeholder=" "
-              outlined
             >
             </v-text-field>
           </v-col>
@@ -64,9 +63,8 @@
             <v-text-field
               dense
               label="사용자 ID"
-              v-model="param.usrId"
+              v-model="param.user_id"
               placeholder=" "
-              outlined
             >
             </v-text-field>
           </v-col>
@@ -75,9 +73,8 @@
             <v-text-field
               dense
               label="카메라 ID"
-              v-model="param.camId"
+              v-model="param.cam_id"
               placeholder=" "
-              outlined
             >
             </v-text-field>
           </v-col>
@@ -91,21 +88,16 @@
 </template>
 <script>
 export default {
+  props:['param'],
   data() {
     return {
-      param: {
-        alarmTime: ["", ""],
-        alarmId: "",
-        usrId: "",
-        camId: "",
-      },
       date: false,
       menu: false,
     };
   },
   computed: {
     dateRangeText() {
-      if (this.param.alarmTime[0].length == 0) {
+      if (this.param.alarm_start_time.length == 0) {
         return "";
       } else return this.param.alarmTime.join(" ~ ");
     },
