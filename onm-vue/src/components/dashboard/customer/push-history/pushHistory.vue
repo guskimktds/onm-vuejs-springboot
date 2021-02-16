@@ -4,6 +4,7 @@
         <pushHistory-query
           v-on:search="searchToPushHistory"
           v-bind:param="searchParam"
+          v-bind:localGwOptions="localGwOptions"
         ></pushHistory-query>
         <pushHistory-list 
         v-bind:pList="pList"
@@ -43,28 +44,26 @@ export default {
         alarm_start_time:'',
         alim_id:'',
         user_id:'',
-        cam_id:''
-      }
+        cam_id:'',
+        local_gw_id:'1'
+      },
+      localGwOptions:[]
     }
   },
-  // created: function () {
-  //   console.log(process.env);
-  //   axios
-  //     .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_14006/get_push_sending_history`,{
-        
-  //       "page_no": 1,
-  //       "view_cnt": 5,
-  //       "local_gw_id": "1"
-
-  //     })
-  //     .then((result) => {
-  //       console.log(result);
-  //       this.pList = result.data.data.list;
-  //     })
-  //     .catch((ex) => {
-  //       console.log("조회 실패", ex);
-  //     });
-  // },
+  beforeCreate() {  
+    axios
+    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
+    .then((response) => {
+        this.localGwOptions = response.data.data.local_gw_list;
+    })
+    .catch(function (error) {
+        console.log(error);
+        alert("국사정보 조회실패")
+      })
+      .finally(function () {
+        // always executed
+      });
+  },
   methods: {
     searchToPushHistory: function(params){
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_14006/get_push_sending_history`
@@ -113,11 +112,15 @@ export default {
       }else{
         newParams.view_cnt = params.view_cnt
       } 
-      if(params.local_gw_id === undefined || params.local_gw_id === ''){
-        newParams.local_gw_id = this.reqPagingInfo.local_gw_id
-      }else{
-        newParams.local_gw_id = params.local_gw_id
-      } 
+      
+      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
+        newParams.local_gw_id = params.local_gw_id;
+      } else if (
+        this.searchParam.local_gw_id !== undefined &&
+        this.searchParam.local_gw_id !== ""
+      ) {
+        newParams.local_gw_id = this.searchParam.local_gw_id;
+      }
 
       if(params.alarm_start_time===undefined||params.alarm_start_time===''){
         newParams.alarm_start_time=this.pushPagingInfo.alarm_start_time
