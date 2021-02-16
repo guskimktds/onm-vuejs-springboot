@@ -79,6 +79,7 @@ import PlatformGraph from '../dashboard/platformGraph'
 import dateInfo from '../../../utils/common'
 
 export default{
+
   components:{
     PlatformGraph
   },
@@ -125,6 +126,7 @@ export default{
             this.param.start_date = startDate.replace(/-/g,"")
             this.param.end_date = endDate.replace(/-/g,"")
             console.log(this.param)
+            this.$emit("datepick",this.param);
         },
 
         handleRadio: function(value) {
