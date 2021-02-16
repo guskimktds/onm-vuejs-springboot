@@ -1,8 +1,10 @@
 <template>
   <v-container fluid>
       <v-card>    
-        <device-order-info-query v-on:search="searchToDeviceOrderInfo"
-        v-bind:param=searchParam></device-order-info-query>
+        <device-order-info-query 
+        v-on:search="searchToDeviceOrderInfo"
+        v-bind:param="searchParam"></device-order-info-query>
+        
         <device-order-info-list 
         v-bind:pList=pList
         v-bind:resPagingInfo=resPagingInfo
@@ -94,35 +96,14 @@ export default {
       dodPagingInfo:{},
       dorPagingInfo:{},
       searchParam:{
+        appointdate:'',
         guid:'',
         oderno:'',
         said:''
       }
     }
   },
-  created: function() {
-    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12006/get_device_order`
-    var params = this.reqPagingInfo
 
-    axios
-        .post(url, params, headers)
-        .then((response) => {
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.device_order_list;
-            this.resPagingInfo=response.data.data.paging_info;
-          }else{
-            this.pList = [];
-            this.resPagingInfo={};
-            alert(resCode + " / " + resMsg);
-          }
-          console.log(response)
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-  },
   methods: {
     searchToDeviceOrderInfo: function(params){
       console.log('검색값')
@@ -148,6 +129,7 @@ export default {
             .catch((ex) => {
               console.log('조회 실패',ex)
             })
+            .finally(function(){})
     },
 
     clickToSearchDetailObject: function(values){
@@ -238,7 +220,7 @@ export default {
           })
     },
 
- setToSearchParams: function(values){
+    setToSearchParams: function(values){
       console.log(values)
 
       var params = {
@@ -248,7 +230,7 @@ export default {
 
       console.log(params)
 
-      this.handleParams(params)
+      this.searchToDeviceOrderInfo(params)
     },
 
     handleParams:function(params){
@@ -264,17 +246,37 @@ export default {
         newParams.view_cnt = params.view_cnt
       } 
 
-      if(params.reg_date !== undefined && params.reg_date !== ''){
-        newParams.reg_date = params.reg_date
+      if(params.appointdate !== undefined && params.appointdate !== ''){
+        newParams.appointdate = params.appointdate
+      }else if(
+        this.searchParam.appointdate!==undefined&&
+        this.searchParam.appointdate!==""
+      ){
+        newParams.appointdate=this.searchParam.appointdate
       }
       if(params.guid !== undefined && params.guid !== ''){
         newParams.guid = params.guid
+      }else if(
+        this.searchParam.guid!==undefined&&
+        this.searchParam.guid!==""
+      ){
+        newParams.guid=this.searchParam.guid
       }
       if(params.oderno !== undefined && params.oderno !== ''){
         newParams.oderno = params.oderno
+      }else if(
+        this.searchParam.oderno!==undefined&&
+        this.searchParam.oderno!==""
+      ){
+        newParams.oderno=this.searchParam.oderno
       }
       if(params.said !== undefined && params.said !== ''){
         newParams.said = params.said
+      }else if(
+        this.searchParam.said!==undefined&&
+        this.searchParam.said!==""
+      ){
+        newParams.said=this.searchParam.said
       }
 
       return newParams

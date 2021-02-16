@@ -46,32 +46,7 @@ export default {
       }
     }
   },
-  // created: function () {
-  //   var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13003/get_user_ktt_info_list`
 
-  //   var params=this.reqPagingInfo
-
-  //   axios
-  //       .post(url, params, headers)
-  //       .then((response) => {
-  //         console.log(response.data)
-  //         var resCode = response.data.res_code;
-  //         var resMsg = response.data.res_msg;
-  //         if(resCode == 200){
-  //           this.kList = response.data.data.ktt_info_list;
-  //           this.kttPagingInfo = response.data.data.paging_info
-  //            console.log('전체 list 값')
-  //           console.log(this.kList)
-  //         }else{
-  //           this.kList = [];
-  //           this.kttPagingInfo = {};
-  //           alert(resCode + " / " + resMsg);
-  //         }
-  //       })
-  //       .catch((ex) => {
-  //         console.log('조회 실패', ex)
-  //       })
-  // },
 methods: {
   searchKTTInfo: function (params) {
     
@@ -124,8 +99,6 @@ methods: {
         newParams.page_no = this.reqPagingInfo.page_no
       }else{
         newParams.page_no = params.page_no
-        console.log('페이지 정보')
-        console.log(params)
       }
       if(params.view_cnt === undefined || params.view_cnt === ''){
         newParams.view_cnt = this.reqPagingInfo.view_cnt

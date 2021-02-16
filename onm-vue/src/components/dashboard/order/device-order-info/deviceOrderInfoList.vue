@@ -50,54 +50,30 @@ export default {
         ]
       }
     },
-    methods: {
-      handleClick:function(value){
+   methods: {
+    handleClick:function(value){
         this.$emit("child", value.guid);
       },
-
-      getDataFromApi () {
-        console.log(this.resPagingInfo)
-        this.loading = true
-
-        const { page, itemsPerPage } = this.options
-        console.log(page, itemsPerPage)
-        this.$emit("pagination", this.options)
-      },
-
-      fakeApiCall () {
-        return new Promise((resolve) => {
-          const {page, itemsPerPage } = this.options
-
-          let items = this.props.kList
-          console.log(items)
-          const total = items.length
-
-          if (itemsPerPage > 0) {
-            items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
-          }
-
-          setTimeout(() => {
-            resolve({
-              items,
-              total,
-            })
-          }, 1000)
-        })
-      }
-      
+    getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
     },
-    watch: {
-      options: {
-        handler () {
-          this.getDataFromApi()
-        },
-        deep: true,
-      },
-    },
-    mounted () {
-      this.getDataFromApi()
-    }
+    
+  },
 
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+
+  mounted() {
+    this.getDataFromApi();
+  },
+    
 }
 </script>
 <style>

@@ -10,6 +10,19 @@
         title="모바일 단말 목록 조회"
         class="px-5 py-3"
         >
+
+      <v-row>
+          <v-col cols=auto>
+              <v-select 
+                  item-text="server_name" 
+                  item-value="local_gw_id" 
+                  :items="localGwOptions" 
+                  v-model="param.local_gw_id" 
+                  v-on:change="searchMethod"
+                  ></v-select>
+          </v-col>
+      </v-row>
+
         <v-row>
           <v-col cols="12" sm="6" md="3">
             <v-menu
@@ -69,11 +82,10 @@
 
           <v-col cols="12" sm="6" md="3">
             <v-select
-              item-text="server_name"
-              item-value="os_type"
-              :items="osTypeOptions"
-              v-model="param.os_type"
-              v-on:change="searchMethod"
+            v-model="param.os_type"
+            :items="items"
+            label="장치타입"
+            attach
             ></v-select>
           </v-col>
 
@@ -86,9 +98,10 @@
 </template>
 <script>
 export default {
-  props:['param','osTypeOptions'],
+  props:['param','localGwOptions'],
   data() {
     return {
+      items:["iPhone","Android"],
       date: false,
       menu: false,
     };

@@ -4,11 +4,11 @@
         <mobileListInfo-query
           v-on:search="searchToMobileListInfo"
           v-bind:param="searchParam"
+          v-bind:localGwOptions="localGwOptions"
         ></mobileListInfo-query>
         <mobileListInfo-list 
         v-bind:pList="pList"
         v-bind:mobilePagingInfo=mobilePagingInfo
-        v-bind:osTypeOptions="osTypeOptions"
         @pagination="setToSearchParams"></mobileListInfo-list>
       </v-card>
     </v-container>
@@ -44,41 +44,26 @@ export default {
         login_date:'',
         tel_no_id:'',
         user_id:'',
+        local_gw_id:'1'
       },
-      osTypeOptions:[]
+      localGwOptions:[]
     };
   },
-  // created: function () {
-  //   console.log(process.env);
-  //   axios
-  //     .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_14005/get_mobile_device_list`,{
-        
-  //       "page_no": 1,
-  //       "view_cnt": 5,
-  //       "local_gw_id": "1"
-
-  //     })
-  //     .then((result) => {
-  //       console.log(result);
-  //       this.pList = result.data.data.list;
-  //     })
-  //     .catch((ex) => {
-  //       console.log("조회 실패", ex);
-  //     });
-  // },
-  beforeCreate() {
+  beforeCreate() {  
     axios
-    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_14005/get_mobile_device_list`)
-    .then((response)=>{
-      this.osTypeOptions=response.data.data.list
+    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
+    .then((response) => {
+        this.localGwOptions = response.data.data.local_gw_list;
     })
-   .catch(function (error) {
+    .catch(function (error) {
         console.log(error);
-        alert("OS 조회실패")
+        alert("국사정보 조회실패")
       })
       .finally(function () {
+        // always executed
       });
   },
+
   methods: {
     searchToMobileListInfo: function (params) {
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_14005/get_mobile_device_list`
@@ -128,11 +113,14 @@ export default {
         newParams.view_cnt = params.view_cnt
       } 
 
-      if(params.local_gw_id === undefined || params.local_gw_id === ''){
-        newParams.local_gw_id = this.reqPagingInfo.local_gw_id
-      }else{
-        newParams.local_gw_id = params.local_gw_id
-      } 
+      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
+        newParams.local_gw_id = params.local_gw_id;
+      } else if (
+        this.searchParam.local_gw_id !== undefined &&
+        this.searchParam.local_gw_id !== ""
+      ) {
+        newParams.local_gw_id = this.searchParam.local_gw_id;
+      }
 
       if(params.login_date===undefined||params.login_date===''){
         newParams.login_date=this.mobilePagingInfo.login_date
@@ -156,6 +144,14 @@ export default {
         this.searchParam.user_id!==undefined&&
         this.searchParam.user_id!==""){
         newParams.user_id=params.user_id
+      }
+
+      if(params.os_type===undefined||params.os_type===''){
+        newParams.os_type=this.mobilePagingInfo.os_type
+      }else if(
+        this.searchParam.os_type!==undefined&&
+        this.searchParam.os_type!==""){
+        newParams.os_type=params.os_type
       }
 
       return newParams
