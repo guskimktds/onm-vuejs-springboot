@@ -1,21 +1,21 @@
 <template>
     <v-container fluid>
       <v-card>
-        <kttInfo-query 
+        <ktt-info-query 
         v-on:search="searchKTTInfo"
-        v-bind:param="searchParam">></kttInfo-query>
+        v-bind:param="searchParam">></ktt-info-query>
 
-        <kttInfo-list 
+        <ktt-info-list 
         v-bind:kList="kList"
         v-bind:kttPagingInfo="kttPagingInfo"
-        @pagination="setToSearchParams"></kttInfo-list>
+        @pagination="setToSearchParams"></ktt-info-list>
       </v-card>
     </v-container>
 </template>
 
 <script>
-import KTTInfoList from "./kttInfoList";
-import KTTInfoQuery from "./kttInfoQuery";
+import KttInfoList from "./kttInfoList";
+import KttInfoQuery from "./kttInfoQuery";
 
 import axios from "axios";
 
@@ -26,8 +26,8 @@ const headers={
 
 export default {
   components: {
-    'kttInfo-list': KTTInfoList,
-    'kttInfo-query': KTTInfoQuery
+    KttInfoList,
+    KttInfoQuery
   },
   data() {
     return {

@@ -14,6 +14,8 @@
             <v-data-table
                 :headers="headers"
                 :items="pList"
+                :options.sync="options"
+                :server-items-length="pushPagingInfo.total_cnt"
                 class="elevation-1"
             >          
             </v-data-table>
@@ -22,10 +24,16 @@
 </template>
 <script>
 export default {
-  props: ["pList"],
+  props: ['pList','pushPagingInfo'],
   //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
   data() {
     return {
+      dialog: false,
+      dialogDelete: false,
+      editedIndex: -1,
+      options: {},
+      totalList: 0,
+      loading: true,
       headers: [
         {
           text: "PUSH 이력 ID",
@@ -44,7 +52,28 @@ export default {
       ],
     };
   },
-};
+   methods: {
+    getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
+    },
+    
+  },
+
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+
+  mounted() {
+    this.getDataFromApi();
+  },
+    
+}
 </script>
 <style>
 </style>

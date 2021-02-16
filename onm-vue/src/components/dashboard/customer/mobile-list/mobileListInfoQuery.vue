@@ -33,7 +33,7 @@
                 ></v-text-field>
               </template>
               <v-date-picker
-                v-model="param.loginDate"
+                v-model="param.login_date"
                 no-title
                 scrollable
                 range
@@ -52,9 +52,8 @@
             <v-text-field
               dense
               label="전화번호 ID"
-              v-model="param.phoneNumId"
+              v-model="param.tel_no_id"
               placeholder=" "
-              outlined
             >
             </v-text-field>
           </v-col>
@@ -62,19 +61,19 @@
             <v-text-field
               dense
               label="사용자 ID"
-              v-model="param.usrId"
+              v-model="param.user_id"
               placeholder=" "
-              outlined
             >
             </v-text-field>
           </v-col>
 
           <v-col cols="12" sm="6" md="3">
             <v-select
-              v-model="param.osType"
-              :items="items"
-              label="OS타입"
-              attach
+              item-text="server_name"
+              item-value="os_type"
+              :items="osTypeOptions"
+              v-model="param.os_type"
+              v-on:change="searchMethod"
             ></v-select>
           </v-col>
 
@@ -87,24 +86,18 @@
 </template>
 <script>
 export default {
+  props:['param','osTypeOptions'],
   data() {
     return {
-      param: {
-        loginDate: ["", ""],
-        phoneNumId: "",
-        usrId: "",
-        osType: "",
-      },
-      items: ["PC", "iOS", "Android"],
       date: false,
       menu: false,
     };
   },
   computed: {
     dateRangeText() {
-      if (this.param.loginDate[0].length == 0) {
+      if (this.param.login_date.length == 0) {
         return "";
-      } else return this.param.loginDate.join(" ~ ");
+      } else return this.param.login_date.join(" ~ ");
     },
   },
   methods: {

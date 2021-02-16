@@ -14,6 +14,8 @@
             <v-data-table
                 :headers="headers"
                 :items="pList"
+                :options.sync="options"
+                :server-items-length="mobilePagingInfo.total_cnt"
                 class="elevation-1"
             >          
             </v-data-table>
@@ -23,10 +25,16 @@
 
 <script>
 export default {
-  props: ["pList"],
+  props: ['pList','mobilePagingInfo'],
   //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
   data() {
     return {
+      dialog: false,
+      dialogDelete: false,
+      editedIndex: -1,
+      options: {},
+      totalList: 0,
+      loading: true,
       headers: [
         {
           text: "로그인키",
@@ -48,7 +56,28 @@ export default {
       ],
     };
   },
-};
+   methods: {
+    getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
+    },
+    
+  },
+
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+
+  mounted() {
+    this.getDataFromApi();
+  },
+    
+}
 </script>
 <style>
 </style>
