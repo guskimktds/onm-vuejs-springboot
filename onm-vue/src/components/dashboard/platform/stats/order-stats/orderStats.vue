@@ -35,13 +35,10 @@ export default {
     return {
       title: '청약 통계',
       pList: [],
-      reqPagingInfo:{
-        start_date: dateInfo().lastWeek,
-        end_date: dateInfo().currentDate,
-      },
 
       searchParam: {
-        appointdate: ''
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
       },
 
     }
@@ -77,54 +74,20 @@ export default {
       });
     },
 
-    getDataFromApi(){
-      this.loading=true;
-      this.searchToProcess(this.options);
-      },
-
     handleParams: function (params) {
-      console.log(params)
-      let newParams = {};
-      if(params===undefined||params===""){
-        newParams=this.reqPagingInfo
-        console.log('기본값')
-        console.log(newparams)
-      }else{
-       var startDate,endDate
-       var start_period=params.appoint_date[0]
-       var end_period=params.appoint_date[1]
-       if(start_period.length>1){
-         if(start_period>end_period){
-           startDate=end_period
-           endDate=start_period
-         }else{
-           startDate=start_period
-           endDate=end_period
-         }
+      
+      var newParams ={
+        start_date: params.start_date.replace(/-/g,""),
+        end_date: params.end_date.replace(/-/g,"")
       }
-        var searchDate={
-        start_date: startDate.replace(/-/g,""),
-        end_date: endDate.replace(/-/g,"")
-      }
-
-      newParams=searchDate
-      }
-      console.log('전달값')
-      console.log(newParams)
       return newParams;
     },
+  }
+
+  ,mounted() {
+    this.searchToProcess(this.searchParam);
   },
-        watch: {
-        options: {
-        handler() {
-        this.getDataFromApi();
-        },
-        deep: true,
-        },
-    },
-    mounted() {
-        this.getDataFromApi();
-    },
+
 }
 </script>
 
