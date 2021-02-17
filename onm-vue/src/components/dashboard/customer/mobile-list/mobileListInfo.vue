@@ -44,7 +44,7 @@ export default {
         login_date:'',
         tel_no_id:'',
         user_id:'',
-        local_gw_id:'1'
+        local_gw_id:''
       },
       localGwOptions:[]
     };

@@ -12,9 +12,16 @@
 
             <v-row>
                 <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="국사코드" placeholder="Placeholder" v-model="param.local_gw_id">                        
-                    </v-text-field>
-                </v-col>         
+                 <v-select 
+                  item-text="server_name" 
+                  item-value="local_gw_id" 
+                  :items="localGwOptions"
+                  label="국사코드" 
+                  v-model="param.local_gw_id" 
+                  v-on:change="searchMethod"
+                  ></v-select>
+                </v-col>
+
                 <v-col cols="12" sm="6" md="3">
                     <v-text-field dense label="프로세스 타입" placeholder="Placeholder" v-model="param.process">                        
                     </v-text-field>
@@ -36,9 +43,10 @@
 </template>
 <script>
 export default {
-    props: ['param'],
+    props: ['param','localGwOptions'],
     data() {
-        return {}
+        return {
+        }
     },
     methods: {
         searchMethod: function() {

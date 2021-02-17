@@ -12,14 +12,15 @@
 
             <v-row>
                 <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="국사코드" placeholder="Placeholder" v-model="param.local_gw_id">                        
-                    </v-text-field>
-                </v-col>         
-                <v-col cols="12" sm="6" md="3">
-                    <v-btn elevation="2" medium v-on:click="searchMethod">
-                        검색
-                    </v-btn>
-                </v-col>                
+                 <v-select 
+                  item-text="server_name" 
+                  item-value="local_gw_id" 
+                  :items="localGwOptions"
+                  label="국사코드" 
+                  v-model="param.local_gw_id" 
+                  v-on:change="searchMethod"
+                  ></v-select>
+                </v-col> 
             </v-row>
 
         </base-material-card>
@@ -29,7 +30,7 @@
 <script>
 export default {
 
-    props: ['param'],
+    props: ['param','localGwOptions'],
 
     data() {
         return{

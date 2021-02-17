@@ -4,6 +4,7 @@
         <process-query 
           v-on:search="searchToProcess"
           v-bind:param="searchParam"
+          v-bind:localGwOptions="localGwOptions"
         ></process-query>
 
         <process-list 
@@ -49,9 +50,32 @@ export default {
         process: "",
         process_status: ""
       },
-      
+      localGwOptions:[],
+      allOptions:{
+        server_name:"전체",
+        local_gw_id: ""
+      }
+
     }
   },
+
+  beforeCreate() {  
+    axios
+    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
+    .then((response) => {
+      this.localGwOptions = response.data.data.local_gw_list;
+      this.localGwOptions.unshift(this.allOptions);
+    
+    })
+    .catch(function (error) {
+        console.log(error);
+        alert("국사정보 조회실패")
+      })
+      .finally(function () {
+        // always executed
+      });
+  },
+
   methods: {
     searchToProcess: function(params){
 
@@ -90,8 +114,6 @@ export default {
         newParams.page_no = this.reqPagingInfo.page_no;
       } else {
         newParams.page_no = params.page;
-        console.log('페이지 정보')
-        console.log(params)
       }
 
       if (params.itemsPerPage === undefined || params.itemsPerPage === "") {
