@@ -135,8 +135,6 @@ export default {
     clickToSearchDetailObject: function(values){
       console.log(values)
       if(values) {
-        this.showDetailObject = true
-        this.isReloadDetailObject = true
 
         var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12007/get_device_order_detail`
 
@@ -153,9 +151,13 @@ export default {
             if(resCode == 200){
               this.pObject = response.data.data
                console.log(this.pObject)
+              this.showDetailObject = true
+              this.isReloadDetailObject = true
             }else{
               this.pObject = {};
               alert(resCode + " / " + resMsg);
+              this.showDetailObject = false
+              this.isReloadDetailObject = false
             }
         })
         .catch((ex) => {
@@ -185,6 +187,7 @@ export default {
               this.dodList=[];
               this.dodPagingInfo={};
               alert(resCode + " / "+ resMsg);
+              this.showDetailList=false
             }
           })
           .catch((ex)=>{
@@ -213,6 +216,7 @@ export default {
               this.dorList=[];
               this.dorPagingInfo={};
               alert(resCode+" / "+resMsg);
+              this.showResultList=false
             }
           })
           .catch((ex)=>{

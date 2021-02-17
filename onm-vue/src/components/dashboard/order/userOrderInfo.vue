@@ -38,7 +38,7 @@
 
         </v-container>
 
-        <user-order-detail-object v-if=showDetailObject v-bind:pObject=pObject></user-order-detail-object>
+      <user-order-detail-object v-if=showDetailObject v-bind:pObject=pObject></user-order-detail-object>
       
       <v-container v-if=showDetailObject>
 
@@ -176,9 +176,7 @@ export default {
     clickToSearchDetailObject: function(values){
       console.log(values)
       if(values) {
-        this.showDetailObject = true
-        this.isReloadDetailObject = true
-
+     
         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12002/get_user_subs_detail`
         var params = {
           guid: values
@@ -189,31 +187,25 @@ export default {
         axios.post(url, params, headers)
         .then((response) => {
           console.log(response)
-          //this.list = JSON.parse(result.data.menu)
-          // console.log(Array.isArray(result.data.data))
-          // if(Array.isArray(result.data.data)){
-          //   this.pList = result.data.data                
-          // }else{
-            console.log(response.data.data)
-            // this.pObject = response.data.data
-            // this.isArrayed = false
-          // }
-
+          console.log(response.data.data)
+          
            var resCode = response.data.res_code;
             var resMsg = response.data.res_msg;
             if(resCode == 200){
               this.pObject = response.data.data
               // this.isArrayed = false
+              this.showDetailObject = true
+              this.isReloadDetailObject = true
             }else{
               this.pObject = {};
-              // this.resPagingInfo = {};
+              this.showDetailObject = false
+              this.isReloadDetailObject = false
               alert(resCode + " / " + resMsg);
             }
         })
         .catch((ex) => {
           console.log('조회 실패',ex)
         })
-
       }
     },
         
@@ -239,6 +231,7 @@ export default {
           }else{
             this.sdList = [];
             this.sdPagingInfo = {};
+            this.showSubDetailList=false
             alert(resCode + " / " + resMsg);
           }
         })
@@ -269,6 +262,7 @@ export default {
             this.kttList = [];
             this.kttPagingInfo = {};
             alert(resCode + " / " + resMsg);
+            this.showKttList=false
           }
         })
         .catch((ex) => {
