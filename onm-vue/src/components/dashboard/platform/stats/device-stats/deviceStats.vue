@@ -40,7 +40,6 @@ export default {
       reqPagingInfo:{
         start_date: "19000101",
         end_date: "20210201",
-        search_type:"D"
       },
       resPagingInfo:{},
       searchParam: {

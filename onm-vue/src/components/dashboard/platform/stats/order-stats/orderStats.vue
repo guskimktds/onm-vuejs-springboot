@@ -7,10 +7,7 @@
           v-bind:param=searchParam></status-query>
 
         <stats-list
-          v-bind:pList=pList
-          v-bind:resPagingInfo=resPagingInfo
-
-          @pagination="setToSearchParams"></stats-list>
+          v-bind:pList=pList></stats-list>
 
       </v-card>
     </v-container>
@@ -20,6 +17,7 @@
 <script>
 import StatsList from './orderStatsList'
 import StatusQuery from './orderStatusQuery'
+import dateInfo from '../../../../utils/common'
 
 import axios from "axios"
 
@@ -38,48 +36,24 @@ export default {
       title: '청약 통계',
       pList: [],
       reqPagingInfo:{
-        start_date: "19000101",
-        end_date: "20210201",
-        search_type: "D"
+        start_date: dateInfo().lastWeek,
+        end_date: dateInfo().currentDate,
       },
-      resPagingInfo:{},
+
       searchParam: {
         appointdate: ''
       },
 
     }
   },
-  created:function(){
-    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11007/get_subs_stat`
-    
-    var params=this.reqPagingInfo
-
-    axios
-        .post(url, params, headers)
-        .then((response) => {
-          console.log(response.data)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.subs_stat_list;
-            this.resPagingInfo = response.data.data.paging_info
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패', ex)
-        })
-  },
 
   methods: {
     searchToProcess: function(params){
+
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11007/get_subs_stat`
 
       var reqParams = this.handleParams(params);
-
+ 
       axios
       .post(url, reqParams, headers)
       .then( (response) => {
@@ -88,10 +62,8 @@ export default {
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
           this.pList = response.data.data.subs_stat_list;
-          this.resPagingInfo = response.data.data.paging_info;
         } else {
           this.pList = [];
-          this.resPagingInfo = {};
           alert(resCode + " / " + resMsg);
         }
 
@@ -105,35 +77,54 @@ export default {
       });
     },
 
-    setToSearchParams: function(values){
-      console.log(values)
+    getDataFromApi(){
+      this.loading=true;
+      this.searchToProcess(this.options);
+      },
 
-      var params = {
-        page_no: values.page,
-        view_cnt: values.itemsPerPage
-      }
-
-      console.log(params)
-
-      this.searchToVaCamCount(params)
-    },
     handleParams: function (params) {
-
+      console.log(params)
       let newParams = {};
-
-      if (params.appoint_date !== undefined && params.appoint_date !== "") {
-        newParams.appoint_date = params.appoint_date;
-      } else if (
-        this.searchParam.appoint_date !== undefined &&
-        this.searchParam.appoint_date !== ""
-      ) {
-        newParams.appoint_date = this.searchParam.appoint_date;
+      if(params===undefined||params===""){
+        newParams=this.reqPagingInfo
+        console.log('기본값')
+        console.log(newparams)
+      }else{
+       var startDate,endDate
+       var start_period=params.appoint_date[0]
+       var end_period=params.appoint_date[1]
+       if(start_period.length>1){
+         if(start_period>end_period){
+           startDate=end_period
+           endDate=start_period
+         }else{
+           startDate=start_period
+           endDate=end_period
+         }
+      }
+        var searchDate={
+        start_date: startDate.replace(/-/g,""),
+        end_date: endDate.replace(/-/g,"")
       }
 
+      newParams=searchDate
+      }
+      console.log('전달값')
+      console.log(newParams)
       return newParams;
     },
-    
-  }
+  },
+        watch: {
+        options: {
+        handler() {
+        this.getDataFromApi();
+        },
+        deep: true,
+        },
+    },
+    mounted() {
+        this.getDataFromApi();
+    },
 }
 </script>
 

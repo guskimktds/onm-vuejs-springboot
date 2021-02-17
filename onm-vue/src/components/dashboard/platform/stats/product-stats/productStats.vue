@@ -100,19 +100,7 @@ export default {
         // always executed
       });
     },
-    
-    setToSearchParams: function(values){
-      console.log(values)
 
-      var params = {
-        start_date: values.start_date,
-        end_date: values.end_date
-      }
-
-      console.log(params)
-
-      this.searchToProcess(params)
-    },
     getDataFromApi(){
       this.loading=true;
       this.searchToProcess(this.options);
