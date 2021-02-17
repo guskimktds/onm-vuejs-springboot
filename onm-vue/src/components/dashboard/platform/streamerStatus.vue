@@ -8,8 +8,6 @@
         ></streamer-query>
         <streamer-list 
           v-bind:pList=pList
-          v-bind:resPagingInfo="resPagingInfo"
-          @pagination="searchToProcess"
         ></streamer-list>
       </v-card>
     </v-container>
@@ -36,37 +34,28 @@ export default {
   data () {
     return {
       title: '스트리머 조회',
-
       pList: [],
-
-      reqPagingInfo: {
-        page_no: 1,
-        view_cnt: 10,
-      },
-
-      resPagingInfo: {},
-
       searchParam: {
-        local_gw_id: "1"
+        local_gw_id: ''
       },
-      
       localGwOptions: [],
     }
   },
 
-  beforeCreate() {
+  mounted() {
     
     axios
     .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
     .then((response) => {
         this.localGwOptions = response.data.data.local_gw_list;
+        this.searchParam.local_gw_id=this.localGwOptions[0].local_gw_id;
+        this.searchToProcess(this.searchParam)
     })
     .catch(function (error) {
         console.log(error);
         alert("국사정보 조회실패")
       })
       .finally(function () {
-        // always executed
       });
 
   },
@@ -75,10 +64,8 @@ export default {
   methods: {
     searchToProcess: function(params){
 
-      var reqParams = this.handleParams(params);
-
       axios
-      .post(url, reqParams, headers)
+      .post(url, params, headers)
       .then( (response) => {
 
         console.log(response);
@@ -97,33 +84,6 @@ export default {
       .finally(function () {
         // always executed
       });
-    },
-    
-    handleParams: function (params) {
-      
-      let newParams = {};
-      if (params.page === undefined || params.page === "") {
-        newParams.page_no = this.reqPagingInfo.page_no;
-      } else {
-        newParams.page_no = params.page;
-      }
-
-      if (params.itemsPerPage === undefined || params.itemsPerPage === "") {
-        newParams.view_cnt = this.resPagingInfo.view_cnt;
-      } else {
-        newParams.view_cnt = params.itemsPerPage;
-      }
-
-      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
-        newParams.local_gw_id = params.local_gw_id;
-      } else if (
-        this.searchParam.local_gw_id !== undefined &&
-        this.searchParam.local_gw_id !== ""
-      ) {
-        newParams.local_gw_id = this.searchParam.local_gw_id;
-      }
-
-      return newParams;
     },
     
   },

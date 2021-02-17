@@ -12,14 +12,13 @@
         title="스트리머 설정현황 LIST"
         class="px-5 py-3"
       >
-
+      
       <v-data-table
-        :headers="headers"
-        :items="pList"
-        :options.sync="options"
-        :server-items-length="resPagingInfo.total_cnt"
-        class="elevation-1"
-      >
+          :headers="headers"
+          :items="pList"
+          item-key="id"
+          class="elevation-1"
+        >
       </v-data-table>
 
     </base-material-card>
@@ -28,7 +27,7 @@
 
 <script>
 export default {
-  props: ['pList', 'resPagingInfo'],
+  props: ['pList'],
   data() {
     return {
       headers: [
@@ -48,31 +47,7 @@ export default {
         { text: 'GLS 여부', value: 'is_gls' },
         { text: 'GLS RTC 포트', value: 'gls_port_rtc' },
       ],
-        dialog: false,
-        dialogDelete: false,
-        editedIndex: -1,
-        options: {},
-        totalList: 0,
-        loading: true,
     }
-  },
-
-  
-  methods: {
-    getDataFromApi() {
-      this.loading = true;
-      this.$emit("pagination", this.options);
-    },
-    
-  },
-
-  watch: {
-    options: {
-      handler() {
-        this.getDataFromApi();
-      },
-      deep: true,
-    },
   },
 
 }
