@@ -27,9 +27,15 @@
 
 <script>
 export default {
-  props: ['pList'],
+  props: ['pList','resPagingInfo'],
   data() {
     return {
+        dialog: false,
+        dialogDelete: false,
+        editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
       headers: [
         { text: '국사코드', value: 'local_gw_id' },
         { text: '전체', value: 'total_cnt' },
