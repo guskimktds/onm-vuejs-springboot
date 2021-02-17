@@ -19,6 +19,7 @@
 <script>
 import StoreProductSummaryInfoList from "./storeProductSummaryInfoList";
 import StoreProductSummaryInfoQuery from "./storeProductSummaryInfoQuery";
+import dateInfo from "../../../utils/common"
 
 import axios from "axios";
 
@@ -42,7 +43,8 @@ export default {
       },
       psPagingInfo:{},
       searchParam:{
-        reg_date:'',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         product_name:'',
         user_id:'',
         prodcd:'',
@@ -50,30 +52,7 @@ export default {
     }
   },
 
- created: function () {
-  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13005/get_prod_summary_list`
-  
-  var params=this.reqPagingInfo
 
-    axios
-        .post(url, params, headers)
-        .then((response) => {
-          console.log(response.data)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.psList = response.data.data.prod_summary_list;
-            this.psPagingInfo = response.data.data.paging_info
-          }else{
-            this.psList = [];
-            this.psPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패', ex)
-        })
-  },
  methods: {
   searchToStoreProductSummaryInfo: function (params) {
     
@@ -129,14 +108,24 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if(params.reg_date !== undefined && params.reg_date !== ''){
-        newParams.reg_date = params.reg_date
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
       }else if(
-        this.searchParam.reg_date!==undefined&&
-        this.searchParam.reg_date!==""
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
       ){
-        newParams.reg_date=this.searchParam.reg_date
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+      }
+
       if(params.product_name !== undefined && params.product_name !== ''){
         newParams.product_name = params.product_name
       }else if(

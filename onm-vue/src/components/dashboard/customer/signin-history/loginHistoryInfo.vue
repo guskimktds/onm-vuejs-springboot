@@ -18,6 +18,7 @@
 <script>
 import LoginHistoryInfoList from "./loginHistoryInfoList";
 import LoginHistoryInfoQuery from "./loginHistoryInfoQuery";
+import dateInfo from '../../../utils/common'
 
 import axios from "axios";
 
@@ -46,10 +47,8 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        login_start_date: "",
-        login_end_date: "",
-        logout_start_date: "",
-        logout_end_date: "",
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         login_id: "",
         os_type: "",
       },
@@ -120,50 +119,25 @@ export default {
         newParams.view_cnt = params.itemsPerPage;
       }
 
-      if (
-        params.login_start_date !== undefined &&
-        params.login_start_date !== ""
-      ) {
-        newParams.login_start_date = params.login_start_date;
-      } else if (
-        this.searchParam.login_start_date !== undefined &&
-        this.searchParam.login_start_date !== ""
-      ) {
-        newParams.login_start_date = this.searchParam.login_start_date;
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
+      ){
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
 
-      if (params.login_end_date !== undefined && params.login_end_date !== "") {
-        newParams.login_end_date = params.login_end_date;
-      } else if (
-        this.searchParam.login_end_date !== undefined &&
-        this.searchParam.login_end_date !== ""
-      ) {
-        newParams.login_end_date = this.searchParam.login_end_date;
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
 
-      if (
-        params.logout_start_date !== undefined &&
-        params.logout_start_date !== ""
-      ) {
-        newParams.logout_start_date = params.logout_start_date;
-      } else if (
-        this.searchParam.logout_start_date !== undefined &&
-        this.searchParam.logout_start_date !== ""
-      ) {
-        newParams.logout_start_date = this.searchParam.logout_start_date;
-      }
 
-      if (
-        params.logout_end_date !== undefined &&
-        params.logout_end_date !== ""
-      ) {
-        newParams.logout_end_date = params.logout_end_date;
-      } else if (
-        this.searchParam.logout_end_date !== undefined &&
-        this.searchParam.logout_end_date !== ""
-      ) {
-        newParams.logout_end_date = this.searchParam.logout_end_date;
-      }
 
       if (params.login_id !== undefined && params.login_id !== "") {
         newParams.login_id = params.login_id;

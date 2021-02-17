@@ -9,38 +9,45 @@
         class="px-5 py-3"
         >
         <v-row>
-          <v-col cols="12" sm="6" md="2">
-            <v-menu
-              ref="menu"
-              v-model="menu"
-              :close-on-content-click="false"
-              :return-value.sync="date"
-              transition="scale-transition"
-              offset-y
-              min-width="290px"
-              attach
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  v-model="dateRangeText"
-                  label="등록일시"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker v-model="param.reg_date" no-title scrollable range>
-                <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="menu = false">
-                  Cancel
-                </v-btn>
-                <v-btn text color="primary" @click="$refs.menu.save(date)">
-                  OK
-                </v-btn>
-              </v-date-picker>
-            </v-menu>
-          </v-col>
+                <v-col cols="2">
+                    <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.start_date"
+                        label="희망일자 시작일"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.start_date" no-title scrollable>
+                    </v-date-picker>
+                    </v-menu>
+                </v-col>
+                <v-col cols="2">
+                    <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.end_date"
+                        label="희망일자 종료일"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.end_date" no-title scrollable>
+                    </v-date-picker>
+                    </v-menu>
+                </v-col>
+
 
           <v-col cols="12" sm="6" md="2">
             <v-text-field
@@ -94,17 +101,9 @@ export default {
     props: ['param'],
     data() {
         return {
-          date:false,
-          menu:false
         }
     },
-  computed: {
-    dateRangeText() {
-      if (this.param.reg_date.length == 0) {
-        return "";
-      } else return this.param.reg_date.join(" ~ ");
-    },
-  },
+
   methods: {
     searchMethod: function () {
       this.$emit("search", this.param);

@@ -17,6 +17,7 @@
 <script>
 import UserOrderPhoneList from './user-order-phone/userOrderPhoneList'
 import UserOrderPhoneQuery from './user-order-phone/userOrderPhoneQuery'
+import dateInfo from '../../utils/common'
 
 import axios from "axios"
 
@@ -41,39 +42,14 @@ export default {
       resPagingInfo: {}
       ,
       searchParam: {
-        cdate:'',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         telno:'',
         guid:'',
       }
     }
   },
-  created: function() {
 
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
-
-    // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
-    var params = this.reqPagingInfo
-
-    axios
-    .post(url, params, headers)
-    .then((response) => {
-      console.log(response.data)
-      //this.list = JSON.parse(result.data.menu)
-      var resCode = response.data.res_code;
-      var resMsg = response.data.res_msg;
-      if(resCode == 200){
-        this.pList = response.data.data.tel_no_list;
-        this.resPagingInfo = response.data.data.paging_info
-      }else{
-        this.pList = [];
-        this.resPagingInfo = {};
-        alert(resCode + " / " + resMsg);
-      }
-    })
-    .catch((ex) => {
-      console.log('조회 실패',ex)
-    })
-  },
   methods: {
     searchToUserOrderPhone: function(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
@@ -126,14 +102,24 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if(params.cdate !== undefined && params.cdate !== ''){
-        newParams.cdate = params.cdate
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
       }else if(
-        this.searchParam.cdate!==undefined&&
-        this.searchParam.cdate!==""
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
       ){
-        newParams.cdate=this.searchParam.cdate
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+      }
+      
       if(params.guid !== undefined && params.guid !== ''){
         newParams.guid = params.guid
       }else if(

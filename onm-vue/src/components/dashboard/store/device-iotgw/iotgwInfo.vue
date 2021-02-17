@@ -34,6 +34,7 @@
 import IotgwInfoList from "./iotgwInfoList";
 import IotgwInfoQuery from "./iotgwInfoQuery";
 import IotgwInfoDetail from "./iotgwInfoDetail";
+import dateInfo from "../../../utils/common"
 
 import axios from "axios";
 
@@ -62,37 +63,15 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        open_date: "",
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         gw_id: "",
         gw_name: "",
         gw_model_code: "",
       },
     };
   },
-  created: function () {
-    var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13009/get_iotgw_list`;
 
-    var params = this.reqPagingInfo;
-
-    axios
-      .post(url, params, headers)
-      .then((response) => {
-        console.log(response.data);
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if (resCode == 200) {
-          this.iotList = response.data.data.iotgw_list;
-          this.resPagingInfo = response.data.data.paging_info;
-        } else {
-          this.iotList = [];
-          this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
-        }
-      })
-      .catch((ex) => {
-        console.log("조회 실패", ex);
-      });
-  },
   methods: {
     searchToIotGWInfo: function (params) {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13009/get_iotgw_list`;
@@ -156,14 +135,24 @@ export default {
         newParams.view_cnt = params.view_cnt;
       }
 
-      if (params.open_date !== undefined && params.open_date !== "") {
-        newParams.open_date = params.open_date;
-      } else if (
-        this.searchParam.open_date !== undefined &&
-        this.searchParam.open_date !== ""
-      ) {
-        newParams.open_date = this.searchParam.open_date;
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
+      ){
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+      }
+      
       if (params.gw_id !== undefined && params.gw_id !== "") {
         newParams.gw_id = params.gw_id;
       } else if (

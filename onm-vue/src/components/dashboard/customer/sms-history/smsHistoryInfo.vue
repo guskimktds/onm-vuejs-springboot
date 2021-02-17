@@ -17,6 +17,7 @@
 <script>
 import SmsHistoryInfoList from "./smsHistoryInfoList";
 import SmsHistoryInfoQuery from "./smsHistoryInfoQuery";
+import dateInfo from '../../../utils/common'
 
 import axios from "axios";
 
@@ -45,34 +46,14 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        start_date: "",
-        end_date: "",
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         tel_number: "",
         otp: "",
       },
     };
   },
-  created: function () {
-    var params = this.reqPagingInfo;
 
-    axios
-      .post(url, params, headers)
-      .then((response) => {
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if (resCode == 200) {
-          this.pList = response.data.data.sms_history_list;
-          this.resPagingInfo = response.data.data.paging_info;
-        } else {
-          this.pList = [];
-          this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
-        }
-      })
-      .catch((ex) => {
-        console.log("조회 실패", ex);
-      });
-  },
   methods: {
     searchToSmsHistoryInfo: function (params) {
       console.log(
@@ -115,22 +96,22 @@ export default {
         newParams.view_cnt = params.itemsPerPage;
       }
 
-      if (params.start_date !== undefined && params.start_date !== "") {
-        newParams.start_date = params.start_date;
-      } else if (
-        this.searchParam.start_date !== undefined &&
-        this.searchParam.start_date !== ""
-      ) {
-        newParams.start_date = this.searchParam.start_date;
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
+      ){
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
 
-      if (params.end_date !== undefined && params.end_date !== "") {
-        newParams.end_date = params.end_date;
-      } else if (
-        this.searchParam.end_date !== undefined &&
-        this.searchParam.end_date !== ""
-      ) {
-        newParams.end_date = this.searchParam.end_date;
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
 
       if (params.tel_number !== undefined && params.tel_number !== "") {

@@ -17,6 +17,7 @@
 <script>
 import PushHistoryList from './pushHistoryList'
 import PushHistoryQuery from './pushHistoryQuery'
+import dateInfo from '../../../utils/common'
 
 import axios from "axios";
 
@@ -37,11 +38,12 @@ export default {
       reqPagingInfo:{
         page_no:1,
         view_cnt:10,
-        local_gw_id:'1'
+        local_gw_id:''
       },
       pushPagingInfo:{},
       searchParam:{
-        alarm_start_time:'',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         alim_id:'',
         user_id:'',
         cam_id:'',
@@ -50,11 +52,13 @@ export default {
       localGwOptions:[]
     }
   },
-  beforeCreate() {  
+  mounted() {  
     axios
     .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
     .then((response) => {
         this.localGwOptions = response.data.data.local_gw_list;
+        this.searchParam.local_gw_id=this.localGwOptions[0].local_gw_id;
+        this.searchToMobileListInfo(this.searchParam);
     })
     .catch(function (error) {
         console.log(error);
@@ -94,7 +98,7 @@ export default {
       var params={
         page_no:values.page,
         view_cnt:values.itemsPerPage,
-        local_gw_id:'1'
+        local_gw_id:values.local_gw_id
       }
       this.searchToPushHistory(params)
     },
@@ -122,12 +126,22 @@ export default {
         newParams.local_gw_id = this.searchParam.local_gw_id;
       }
 
-      if(params.alarm_start_time===undefined||params.alarm_start_time===''){
-        newParams.alarm_start_time=this.pushPagingInfo.alarm_start_time
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
       }else if(
-        this.searchParam.alarm_start_time!==undefined&&
-        this.searchParam.alarm_start_time!==""){
-        newParams.alarm_start_time=params.alarm_start_time
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
+      ){
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+      }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
       if(params.alim_id===undefined||params.alim_id===''){
         newParams.alim_id=this.pushPagingInfo.alim_id

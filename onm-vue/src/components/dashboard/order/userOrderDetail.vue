@@ -11,7 +11,6 @@
           v-bind:resPagingInfo=resPagingInfo 
           @pagination="setToSearchParams"
         ></user-order-detail-list>
-        <!-- <user-order-detail-object v-bind:pObject=pObject></user-order-detail-object> -->
       </v-card>
     </v-container>
   </div>
@@ -20,8 +19,8 @@
 
 <script>
 import UserOrderDetailList from './user/order-detail/userOrderDetailList'
-// import UserOrderDetailObject from './user/order-detail/userOrderDetailObject'
 import UserOrderDetailQuery from './user/order-detail/userOrderDetailQuery'
+import dateInfo from '../../utils/common'
 
 import axios from "axios"
 
@@ -33,7 +32,6 @@ const headers = {
 export default {
   components: {
     UserOrderDetailList,
-    // UserOrderDetailObject,
     UserOrderDetailQuery
   },
   data () {
@@ -48,36 +46,13 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        appointdate:'',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         oderno:'',
         guid: '',
         user_id:''
       }
     }
-  },
-  created: function() {
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12010/get_subs_details_list`
-    // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
-    var params = this.reqPagingInfo
-
-    axios.post(url, params, headers)
-    .then((response) => {
-      console.log(response.data)
-      var resCode = response.data.res_code;
-      var resMsg = response.data.res_msg;
-      if(resCode == 200){
-        this.pList = response.data.data.order_detail_list;
-        this.resPagingInfo = response.data.data.paging_info
-
-      }else{
-        this.pList = [];
-        this.resPagingInfo = {};
-        alert(resCode + " / " + resMsg);
-      }
-    })
-    .catch((ex) => {
-      console.log('조회 실패',ex)
-    })
   },
   methods: {
     searchToUserOrderDetail: function(params){
@@ -113,9 +88,6 @@ export default {
         view_cnt: values.itemsPerPage
       }
 
-      //페이징 params add search params
-      //let newParams = handleParams(params)
-      //console.log(newParams)
       this.searchToUserOrderDetail(params)
     },
 
@@ -133,14 +105,24 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if(params.appointdate !== undefined && params.appointdate !== ''){
-        newParams.appointdate = params.appointdate
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
       }else if(
-        this.searchParam.appointdate!==undefined&&
-        this.searchParam.appointdate!==""
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
       ){
-        newParams.appointdate=this.searchParam.appointdate
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+      }
+
       if(params.oderno !== undefined && params.oderno !== ''){
         newParams.oderno = params.oderno
       }else if(

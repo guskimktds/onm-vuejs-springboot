@@ -53,6 +53,7 @@ import DeviceOrderInfoQuery from './device-order-info/deviceOrderInfoQuery'
 import DeviceOrderObject from './device-order-info/deviceOrderObject'
 import DeviceOrderDetailList from './device-order-info/deviceOrderDetailList'
 import DeviceOrderResultList from './device-order-result/deviceOrderResultList'
+import dateInfo from '../../utils/common'
 
 import axios from "axios"
 
@@ -96,7 +97,8 @@ export default {
       dodPagingInfo:{},
       dorPagingInfo:{},
       searchParam:{
-        appointdate:'',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         guid:'',
         oderno:'',
         said:''
@@ -250,13 +252,22 @@ export default {
         newParams.view_cnt = params.view_cnt
       } 
 
-      if(params.appointdate !== undefined && params.appointdate !== ''){
-        newParams.appointdate = params.appointdate
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
       }else if(
-        this.searchParam.appointdate!==undefined&&
-        this.searchParam.appointdate!==""
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
       ){
-        newParams.appointdate=this.searchParam.appointdate
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+      }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
       if(params.guid !== undefined && params.guid !== ''){
         newParams.guid = params.guid

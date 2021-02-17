@@ -13,6 +13,7 @@
 <script>
 import DeviceOrderResultList from './device-order-result/deviceOrderResultList'
 import DeviceOrderResultQuery from './device-order-result/deviceOrderResultQuery'
+import dateInfo from '../../utils/common'
 
 import axios from "axios"
 
@@ -36,36 +37,14 @@ export default {
       },
       dorPagingInfo: {},
       searchParam: {
-        start_date: '',
-        end_date: '',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         oderno:'',
         guid:''
       }
     }
   },
-  created: function() {
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12012/get_device_order_result_list`
-    
-    var params = this.reqPagingInfo
 
-    axios
-        .post(url, params, headers)
-        .then((response) => {
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.dorList = response.data.data.device_order_result_list;
-            this.dorPagingInfo=response.data.data.paging_info;
-          }else{
-            this.dorList = [];
-            this.dorPagingInfo={};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-  },
   methods: {
     searchToDeviceOrderResult: function(params){
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12012/get_device_order_result_list`
@@ -115,15 +94,24 @@ export default {
       }else{
         newParams.view_cnt = params.view_cnt
       }
-
+      
       if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date
+        newParams.start_date = params.start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
+      ){
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
 
       if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
-
       if(params.oderno !== undefined && params.oderno !== ''){
         newParams.oderno = params.oderno
       }     

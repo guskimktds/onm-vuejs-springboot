@@ -37,13 +37,10 @@ export default {
       title: '상품 통계',
       pList: [],
       pHeader:[],
-      reqPagingInfo:{
-        start_date: dateInfo().lastWeek,
-        end_date: dateInfo().currentDate
-      },
-     
+
       searchParam: {
-        appoint_date: ''
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
       },
     }
   },
@@ -51,29 +48,7 @@ export default {
     searchToProcess: function(params){
      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11009/get_prod_stat`;
      
-
-     if(params==undefined){
-     var reqParams=this.reqPagingInfo
-     }
-     else{
-       var startDate,endDate
-       var start_period=params.appoint_date[0]
-       var end_period=params.appoint_date[1]
-       if(start_period.length>1){
-         if(start_period>end_period){
-           startDate=end_period
-           endDate=start_period
-         }else{
-           startDate=start_period
-           endDate=end_period
-         }
-       }
-      var searchDate={
-        start_date: startDate.replace(/-/g,""),
-        end_date: endDate.replace(/-/g,"")
-      }
-      reqParams=searchDate
-     }
+     var reqParams=this.handleParams(params)
 
       axios
       .post(url, reqParams, headers)
@@ -101,22 +76,16 @@ export default {
       });
     },
 
-    getDataFromApi(){
-      this.loading=true;
-      this.searchToProcess(this.options);
-    }
+     handleParams: function (params) {
+      
+      var newParams ={
+        start_date: params.start_date.replace(/-/g,""),
+        end_date: params.end_date.replace(/-/g,"")
+      }
+      return newParams;
+    },
   },
-      watch: {
-        options: {
-        handler() {
-        this.getDataFromApi();
-        },
-        deep: true,
-        },
-    },
-    mounted() {
-        this.getDataFromApi();
-    },
+
 }
 </script>
 

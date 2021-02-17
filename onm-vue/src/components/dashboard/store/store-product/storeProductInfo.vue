@@ -18,6 +18,7 @@
 <script>
 import StoreProductInfoList from "./storeProductInfoList";
 import StoreProductInfoQuery from "./storeProductInfoQuery";
+import dateInfo from "../../../utils/common"
 
 import axios from "axios";
 
@@ -42,37 +43,12 @@ export default {
       },
       resPagingInfo:{},
       searchParam:{
-        mod_date:'',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         prod_code:'',
         user_id:''
       }
     }
-  },
-
-  created: function () {
-
-  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13002/get_user_detail`
-  
-  var params=this.reqPagingInfo
-
-    axios
-        .post(url, params, headers)
-        .then((response) => {
-          console.log(response.data)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.List = response.data.data.user_detail_list;
-            this.resPagingInfo = response.data.data.paging_info
-          }else{
-            this.List = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패', ex)
-        })
   },
 
  methods: {
@@ -129,15 +105,25 @@ export default {
       }else{
         newParams.view_cnt = params.view_cnt
       }
-
-      if(params.mod_date !== undefined && params.mod_date !== ''){
-        newParams.mod_date = params.mod_date
+      
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
       }else if(
-        this.searchParam.mod_date!==undefined&&
-        this.searchParam.mod_date!==""
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
       ){
-        newParams.mod_date=this.searchParam.mod_date
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+      }
+
       if(params.prod_info_id !== undefined && params.prod_info_id !== ''){
         newParams.prod_info_id = params.prod_info_id
       }else if(

@@ -17,6 +17,7 @@
 <script>
 import MobileListInfoList from "./mobileListInfoList";
 import MobileListInfoQuery from "./mobileListInfoQuery";
+import dateInfo from '../../../utils/common'
 
 import axios from "axios";
 
@@ -37,11 +38,12 @@ export default {
       reqPagingInfo:{
         page_no:1,
         view_cnt:10,
-        local_gw_id:'1'
+        local_gw_id:''
       },
       mobilePagingInfo:{},
       searchParam:{
-        login_date:'',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         tel_no_id:'',
         user_id:'',
         local_gw_id:''
@@ -49,11 +51,15 @@ export default {
       localGwOptions:[]
     };
   },
-  beforeCreate() {  
+  mounted() {  
+    console.log('보내주는 값')
+    console.log(this.searchParam)
     axios
     .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
     .then((response) => {
         this.localGwOptions = response.data.data.local_gw_list;
+        this.searchParam.local_gw_id=this.localGwOptions[0].local_gw_id;
+        this.searchToMobileListInfo(this.searchParam);
     })
     .catch(function (error) {
         console.log(error);
@@ -93,7 +99,7 @@ export default {
       var params={
         page_no:values.page,
         view_cnt:values.itemsPerPage,
-        local_gw_id:'1'
+        local_gw_id:values.local_gw_id
       }
 
       this.searchToMobileListInfo(params)
@@ -112,6 +118,23 @@ export default {
       }else{
         newParams.view_cnt = params.view_cnt
       } 
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
+      ){
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+      }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+      }
 
       if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
         newParams.local_gw_id = params.local_gw_id;
@@ -120,14 +143,6 @@ export default {
         this.searchParam.local_gw_id !== ""
       ) {
         newParams.local_gw_id = this.searchParam.local_gw_id;
-      }
-
-      if(params.login_date===undefined||params.login_date===''){
-        newParams.login_date=this.mobilePagingInfo.login_date
-      }else if(
-        this.searchParam.login_date!==undefined&&
-        this.searchParam.login_date!==""){
-        newParams.login_date=params.login_date
       }
 
       if(params.tel_no_id===undefined||params.tel_no_id===''){

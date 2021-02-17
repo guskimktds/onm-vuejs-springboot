@@ -34,6 +34,7 @@
 import SensorInfoList from "./sensorInfoList";
 import SensorInfoQuery from "./sensorInfoQuery";
 import SensorInfoDetail from "./sensorInfoDetail";
+import dateInfo from "../../../utils/common"
 
 import axios from "axios";
 
@@ -62,36 +63,14 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        reg_date: "",
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         user_id: "",
         sensor_name: "",
       },
     };
   },
-  created: function () {
-    var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13010/get_sensor_list`;
 
-    var params = this.reqPagingInfo;
-
-    axios
-      .post(url, params, headers)
-      .then((response) => {
-        console.log(response.data);
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if (resCode == 200) {
-          this.dsList = response.data.data.sensor_list;
-          this.resPagingInfo = response.data.data.paging_info;
-        } else {
-          this.dsList = [];
-          this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
-        }
-      })
-      .catch((ex) => {
-        console.log("조회 실패", ex);
-      });
-  },
   methods: {
     searchToSensorInfo: function (params) {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13010/get_sensor_list`;
@@ -154,14 +133,22 @@ export default {
       } else {
         newParams.view_cnt = params.view_cnt;
       }
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
+      ){
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+      }
 
-      if (params.reg_date !== undefined && params.reg_date !== "") {
-        newParams.reg_date = params.reg_date;
-      } else if (
-        this.searchParam.reg_date !== undefined &&
-        this.searchParam.reg_date !== ""
-      ) {
-        newParams.reg_date = this.searchParam.reg_date;
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
       if (params.terminal_gw_id !== undefined && params.terminal_gw_id !== "") {
         newParams.terminal_gw_id = params.terminal_gw_id;
