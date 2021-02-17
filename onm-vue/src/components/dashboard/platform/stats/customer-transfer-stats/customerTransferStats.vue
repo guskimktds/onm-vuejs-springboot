@@ -7,10 +7,7 @@
           v-bind:param=searchParam></stats-query>
 
         <stats-list 
-          v-bind:pList=pList
-          v-bind:resPagingInfo=resPagingInfo
-
-          @pagination="setToSearchParams"></stats-list>
+          v-bind:pList=pList></stats-list>
       </v-card>
     </v-container>
 </template>
@@ -19,6 +16,7 @@
 <script>
 import StatsList from './customerTransferStatsList'
 import StatsQuery from './customerTransferStatsQuery'
+import dateInfo from '../../../../utils/common'
 
 import axios from "axios"
 
@@ -38,42 +36,15 @@ export default {
     return {
       title: '고객이전 통계',
       pList: [],
-      reqPagingInfo:{
-        start_date: "19000101",
-        end_date: "20210201"
-      },
-      resPagingInfo:{},
+
       searchParam: {
-        mig_start_date: ''
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
       },
 
     }
   },
   
-  created:function(){
-    var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11008/get_user_mig_stat`;
-    
-    var params=this.reqPagingInfo
-
-    axios
-        .post(url, params, headers)
-        .then((response) => {
-          console.log(response.data)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.mig_stat_list;
-            this.resPagingInfo = response.data.data.paging_info
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패', ex)
-        })
-  },
   methods: {
     searchToProcess: function(params){
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11008/get_user_mig_stat`;
@@ -88,10 +59,8 @@ export default {
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
           this.pList = response.data.data.mig_stat_list;
-          this.resPagingInfo = response.data.data.paging_info;
         } else {
           this.pList = [];
-          this.resPagingInfo = {};
           alert(resCode + " / " + resMsg);
         }
 
@@ -105,36 +74,18 @@ export default {
       });
     },
 
-    setToSearchParams: function(values){
-      console.log(values)
-
-      var params = {
-        page_no: values.page,
-        view_cnt: values.itemsPerPage
-      }
-
-      console.log(params)
-
-      this.searchToVaCamCount(params)
-    },
-
     handleParams: function (params) {
-
-      let newParams = {};
-
-      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
-        newParams.local_gw_id = params.local_gw_id;
-      } else if (
-        this.searchParam.local_gw_id !== undefined &&
-        this.searchParam.local_gw_id !== ""
-      ) {
-        newParams.local_gw_id = this.searchParam.local_gw_id;
+      
+      var newParams ={
+        start_date: params.start_date.replace(/-/g,""),
+        end_date: params.end_date.replace(/-/g,"")
       }
-
       return newParams;
     },
-    
   }
+    ,mounted() {
+    this.searchToProcess(this.searchParam);
+  },
 }
 </script>
 

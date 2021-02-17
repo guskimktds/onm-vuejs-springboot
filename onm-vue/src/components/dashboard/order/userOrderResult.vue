@@ -18,6 +18,7 @@
 <script>
 import UserOrderResultList from './user-order-result/userOrderResultList'
 import UserOrderResultQuery from './user-order-result/userOrderResultQuery'
+import dateInfo from '../../utils/common'
 
 import axios from "axios"
 
@@ -42,36 +43,12 @@ export default {
       resPagingInfo: {}
       ,
       searchParam: {
-        regdate:'',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         said: '',
         guid: ''
       }
     }
-  },
-  created: function() {
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12011/get_user_subs_result_list`
-
-    var params = this.reqPagingInfo
-
-    axios
-        .post(url, params, headers)
-        .then((response) => {          
-          console.log(response.data)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.subs_result_list;
-            this.resPagingInfo = response.data.data.paging_info
-
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
   },
   methods: {
     searchToUserOrderResult: function(params){
@@ -129,14 +106,24 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if(params.regdate !== undefined && params.regdate !== ''){
-        newParams.regdate = params.regdate
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
       }else if(
-        this.searchParam.regdate!==undefined&&
-        this.searchParam.regdate!==""
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
       ){
-        newParams.regdate=this.searchParam.regdate
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+      }
+      
       if(params.said !== undefined && params.said !== ''){
         newParams.said = params.said
       }else if(

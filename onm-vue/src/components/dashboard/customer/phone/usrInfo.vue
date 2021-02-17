@@ -18,6 +18,7 @@
 <script>
 import List from './usrInfoList'
 import Query from './usrInfoQuery'
+import dateInfo from '../../../utils/common'
 
 import axios from "axios"
 
@@ -43,8 +44,8 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        start_date: "",
-        end_date: "",
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         user_name: "",
         user_id: "",
         tel_no: "",
@@ -97,23 +98,23 @@ export default {
       } else {
         newParams.view_cnt = params.itemsPerPage;
       }
-
-      if (params.start_date !== undefined && params.start_date !== "") {
-        newParams.start_date = params.start_date;
-      } else if (
-        this.searchParam.start_date !== undefined &&
-        this.searchParam.start_date !== ""
-      ) {
-        newParams.start_date = this.searchParam.start_date;
+      
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
+      ){
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
 
-      if (params.end_date !== undefined && params.end_date !== "") {
-        newParams.end_date = params.end_date;
-      } else if (
-        this.searchParam.end_date !== undefined &&
-        this.searchParam.end_date !== ""
-      ) {
-        newParams.end_date = this.searchParam.end_date;
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
 
       if (params.user_name !== undefined && params.user_name !== "") {

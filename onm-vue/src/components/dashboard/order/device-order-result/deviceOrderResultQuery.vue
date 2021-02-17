@@ -11,25 +11,44 @@
         class="px-5 py-3"
         >
             <v-row>
-                <v-col cols="12" sm="6" md="1">
-                    <v-text-field 
-                        dense 
-                        label="시작일" 
+                <v-col cols="2">
+                    <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
                         v-model="param.start_date"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>                    
-                </v-col> 
-                ~        
-                <v-col cols="12" sm="6" md="1">
-                    <v-text-field 
-                        dense 
-                        label="종료일" 
+                        label="희망일자 시작일"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.start_date" no-title scrollable>
+                    </v-date-picker>
+                    </v-menu>
+                </v-col>
+                <v-col cols="2">
+                    <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
                         v-model="param.end_date"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
-                </v-col> 
+                        label="희망일자 종료일"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.end_date" no-title scrollable>
+                    </v-date-picker>
+                    </v-menu>
+                </v-col>
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
                         dense 
@@ -65,14 +84,10 @@
 </template>
 <script>
 export default {
+    props:['param'],
     data() {
         return{
-            param: {
-                start_date: '',
-                end_date: '',
-                oderno: '',
-                guid: ''
-            }
+
         }
     },
     methods: {

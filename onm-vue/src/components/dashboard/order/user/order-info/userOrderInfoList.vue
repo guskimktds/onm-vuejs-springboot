@@ -47,10 +47,8 @@ export default {
           { text: '상품코드', value: 'pprodcd'},
           { text: '기가아이즈 모상품명', value: 'pprodnm'},
           { text: '사업자명', value: 'bizpnm'},
-        //   { text: '오더유형', value: 'type' },
           { text: '오더번호', value: 'oderno' },
           { text: '오더순번', value: 'oderseq' },
-        //   { text: '변경유형코드', value: 'useYn' },
           { text: '처리희망일자', value: 'appointdate' },
           { text: '사용여부', value: 'use_yn' },
           { text: '생성일시', value: 'cdate' }

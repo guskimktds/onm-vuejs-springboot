@@ -61,7 +61,7 @@ import UserOrderInfoQuery from './user/order-info/userOrderInfoQuery'
 import UserOrderDetailObject from './user/order-detail/userOrderDetailObject'
 import UserOrderSubDetailList from './user/order-detail/userOrderSubDetailList'
 import KttList from './ktt-order/kttOrderInfoList'
-
+import dateInfo from '../../utils/common'
 
 import axios from "axios"
 
@@ -107,41 +107,15 @@ export default {
       kttPagingInfo:{},
       
       searchParam: {
-        appointdate:'',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         said: '',
         guid: '',
         oderno: ''
       }
     }
   },
-  created: function() {
 
-    // var url = 'https://test-onm.ktvsaas.co.kr:8443/V110/ONM_12001/get_user_subs_order_info'
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
-
-    // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
-    var params = this.reqPagingInfo
-
-    //this.$store.state.headers
-
-    axios.post(url, params, headers)
-    .then((response) => {
-      var resCode = response.data.res_code;
-      var resMsg = response.data.res_msg;
-      if(resCode == 200){
-        this.pList = response.data.data.list;
-        this.resPagingInfo = response.data.data.paging_info
-
-      }else{
-        this.pList = [];
-        this.resPagingInfo = {};
-        alert(resCode + " / " + resMsg);
-      }
-    })
-    .catch((ex) => {
-      console.log('조회 실패', ex)
-    })
-  },
   methods: {
     searchToUserOrderInfo: function(params){
 
@@ -297,14 +271,25 @@ export default {
       }else{
         newParams.view_cnt = params.view_cnt
       }
-      if(params.appointdate !== undefined && params.appointdate !== ''){
-        newParams.appointdate = params.appointdate
+
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
       }else if(
-        this.searchParam.appointdate!==undefined&&
-        this.searchParam.appointdate!==""
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
       ){
-        newParams.appointdate=this.searchParam.appointdate
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+      }
+
       if(params.said !== undefined && params.said !== ''){
         newParams.said = params.said
       }else if(
@@ -330,6 +315,8 @@ export default {
       ){
         newParams.oderno=this.searchParam.oderno
       } 
+
+
       return newParams
     }
   }

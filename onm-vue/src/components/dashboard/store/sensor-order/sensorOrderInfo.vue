@@ -45,30 +45,7 @@ export default {
       }
     }
   },
-  created: function () {
-    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13007/get_sensor_status_list`
-    
-    var params=this.reqPagingInfo
 
-    axios
-        .post(url, params, headers)
-        .then((response) => {
-          console.log(response.data)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.soList = response.data.data.sensor_list;
-            this.resPagingInfo = response.data.data.paging_info
-          }else{
-            this.soList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패', ex)
-        })
-  },
  methods: {
   searchSensorOrderInfo: function (params) {
     

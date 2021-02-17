@@ -16,6 +16,7 @@
 <script>
 import KttInfoList from "./kttInfoList";
 import KttInfoQuery from "./kttInfoQuery";
+import dateInfo from "../../../utils/common"
 
 import axios from "axios";
 
@@ -39,7 +40,8 @@ export default {
       },
       kttPagingInfo:{},
       searchParam:{
-        reg_date:'',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         user_id:'',
         service_no:'',
         system_id:''
@@ -106,14 +108,24 @@ methods: {
         newParams.view_cnt = params.view_cnt
       } 
 
-      if(params.reg_date !== undefined && params.reg_date !== ''){
-        newParams.reg_date = params.reg_date
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
       }else if(
-        this.searchParam.reg_date!==undefined&&
-        this.searchParam.reg_date!==""
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
       ){
-        newParams.reg_date=this.searchParam.reg_date
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+      }
+      
       if(params.user_id !== undefined && params.user_id !== ''){
         newParams.user_id = params.user_id
       }else if(

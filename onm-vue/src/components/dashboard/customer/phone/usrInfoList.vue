@@ -70,6 +70,9 @@ export default {
       deep: true,
     },
   },
+    mounted() {
+    this.getDataFromApi();
+  },
     
 }
 </script>

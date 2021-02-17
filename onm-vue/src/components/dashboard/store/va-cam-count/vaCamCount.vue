@@ -45,30 +45,6 @@ export default {
     }
   },
   
-  created: function () {
-  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13006/get_user_va_list`
-  
-  var params=this.reqPagingInfo
-
-    axios
-        .post(url, params, headers)
-        .then((response) => {
-          console.log(response.data)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.vaList = response.data.data.va_prod_list;
-            this.vaPagingInfo = response.data.data.paging_info
-          }else{
-            this.vaList = [];
-            this.vaPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패', ex)
-        })
-  },
  methods: {
   searchToVaCamCount: function (params) {
     
