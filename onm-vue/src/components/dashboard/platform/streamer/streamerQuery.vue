@@ -32,27 +32,6 @@ export default {
     props : ['param', 'localGwOptions'],
     data() {
         return{
-            showModal: false,
-            modalTitle: '스트리머 등록',
-            /*
-            localGwOptions:[
-                {text:'혜화',   value:'1'},
-                {text:'헤화-2', value:'2'},
-                {text:'혜화-3', value:'5'},
-                {text:'혜화-4', value:'6'},
-                {text:'헤화-5', value:'9'},
-                {text:'헤화-6', value:'A'},
-                {text:'헤화-7', value:'B'},
-                {text:'구로-1', value:'3'},
-                {text:'구로-2', value:'4'},
-                {text:'구로-3', value:'7'},
-                {text:'구로-4', value:'8'}
-            ]
-            */
-        //    localGwOptions:[
-        //         {text:'TB1',   value:'D'},
-        //         {text:'TB2',   value:'E'},
-        //     ]
         }
     },
     methods: {
