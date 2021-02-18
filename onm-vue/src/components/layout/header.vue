@@ -18,8 +18,9 @@
   >
     <v-toolbar dense>
       <v-toolbar-items>
-        <v-btn text v-for="menu in menuArray" :key="menu.name" v-on:click="changeTap(menu.children)" :to="menu.path">
-          {{ menu.name }}
+        <!-- <v-btn text v-for="menu in topMenu" :key="menu.menu_name" v-on:click="changeTap(menu.children)" :to="menu.path"> -->
+        <v-btn text v-for="menu in topMenu" :key="menu.menu_name" v-on:click="changeTap(menu.menu_id)">
+          {{ menu.menu_name }}
         </v-btn>
       </v-toolbar-items>
 
@@ -29,13 +30,21 @@
       </v-toolbar-title> -->
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="$vuetify.breakpoint.smAndUp">
-        <v-btn text v-for="link in links" :key="link.icon" :to="link.route">
+        <!-- <v-btn text v-for="link in links" :key="link.icon" :to="link.route">
           <v-icon>
             {{ link.icon }}
           </v-icon>
           {{ link.text }}
+        </v-btn> -->
+        <v-btn text v-if="this.$store.state.isAuthenticated" :to="'/account'">
+          <v-icon>mdi-account</v-icon>
+          My Page
         </v-btn>
-        <v-btn text @click.native="signOutClicked">
+        <v-btn text :to="'/signin'">
+          <v-icon>mdi-login</v-icon>
+          login
+        </v-btn>
+        <v-btn text @click.native="signOutClicked" :to="'/signout'">
           <v-icon>mdi-logout</v-icon>
           logout
         </v-btn>
@@ -69,23 +78,32 @@ export default {
     }
   },
   methods: {
-    changeTap(childern){
-      console.log(childern);
-      EventBus.$emit('top-path', childern);
+    changeTap(param){
+      // console.log(param);
+      var selectMenu = this.subMenu.filter(obj => { return obj['menu_id'] === param})
+      // console.log(selectMenu[0].children)
+      EventBus.$emit('top-path-login', selectMenu[0].children);
     },
     signOutClicked: function() {
-      console.log("signOutClicked :"+this.$store.state.id)
+      // console.log("signOutClicked :"+this.$store.state.id)
       console.log(this.$store.state)
+      EventBus.$emit('top-path-logout');
       this.$store
-          .dispatch("LOGOUT", this.$store.state.id)
-          .then( res => { console.log(res.status)})
+          .dispatch("LOGOUT")
+          .then( res => { 
+            console.log(res.status)
+            //
+            // EventBus.$emit('top-path-logout');
+            })
           //.then(this.$router.replace('/signout'))
           .catch(({ message }) => (this.msg = message))
     }
   },
   computed: {
     ...mapState({ 
-        menuArray: 'menu', 
+        // menuArray: 'menu', 
+        topMenu: 'topMenu',
+        subMenu: 'menu',
       }),
   },
   created(){

@@ -105,7 +105,7 @@ export default {
           .then(this.$router.replace('/platform'))
           .catch(({ message }) => (this.msg = message))
           //alert('push sign up')
-          //this.$router.push({name:'AccountView'})
+          this.$router.push({name:'AccountView'})
       },
       // redirect() {
         // this.$router.replace('/account')
