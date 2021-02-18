@@ -87,8 +87,6 @@ export default {
       let newParams = {};
       if(params===undefined||params===""){
         newParams=this.reqPagingInfo
-        console.log('기본값')
-        console.log(newparams)
       }else{
        var startDate,endDate
        var start_period=params.appoint_date[0]
