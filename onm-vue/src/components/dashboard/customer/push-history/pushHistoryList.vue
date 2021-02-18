@@ -52,26 +52,8 @@ export default {
       ],
     };
   },
-   methods: {
-    getDataFromApi() {
-      this.loading = true;
-      this.$emit("pagination", this.options);
-    },
-    
-  },
 
-  watch: {
-    options: {
-      handler() {
-        this.getDataFromApi();
-      },
-      deep: true,
-    },
-  },
 
-  mounted() {
-    this.getDataFromApi();
-  },
     
 }
 </script>

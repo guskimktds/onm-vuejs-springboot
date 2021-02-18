@@ -47,7 +47,7 @@ export default {
         alim_id:'',
         user_id:'',
         cam_id:'',
-        local_gw_id:'1'
+        local_gw_id:''
       },
       localGwOptions:[]
     }
@@ -58,7 +58,9 @@ export default {
     .then((response) => {
         this.localGwOptions = response.data.data.local_gw_list;
         this.searchParam.local_gw_id=this.localGwOptions[0].local_gw_id;
-        this.searchToMobileListInfo(this.searchParam);
+        console.log(this.searchParam)
+        console.log('############')
+        this.searchToPushHistory(this.searchParam);
     })
     .catch(function (error) {
         console.log(error);
@@ -74,7 +76,7 @@ export default {
 
       var reqParams=this.handleParams(params)
       console.log('보내는 값')
-      console.log(reqParams)
+      console.log(params)
       axios.post(url,reqParams,headers)
         .then((response)=>{
           var resCode=response.data.res_code;
