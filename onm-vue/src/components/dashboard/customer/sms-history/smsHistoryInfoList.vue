@@ -51,7 +51,7 @@ export default {
   methods: {
     handleClick: function (value) {
       console.log(value);
-      this.$emit("child", value.sms_history_id);
+      this.$emit("child", value.otp);
     },
 
     getDataFromApi() {

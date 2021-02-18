@@ -5,14 +5,21 @@
         v-bind:param=searchParam></auth-target-device-query>
         <auth-target-device-list v-bind:pList=pList
         v-bind:resPagingInfo=resPagingInfo
-        @pagination="setToSearchParams"></auth-target-device-list>
+        @pagination="setToSearchParams"
+        @child="clickMaskObject"></auth-target-device-list>
       </v-card>
+
+    <auth-target-device-modal
+    v-bind:mask="mask"
+    ref="modal"></auth-target-device-modal>
     </v-container>
 </template>
 
 <script>
 import AuthTargetDeviceList from './auth-target-device/authTargetDeviceList'
 import AuthTargetDeviceQuery from './auth-target-device/authTargetDeviceQuery'
+import AuthTargetDeviceModal from './auth-target-device/authTargetDeviceModal'
+
 import axios from "axios"
 
 const headers = {
@@ -23,7 +30,8 @@ const headers = {
 export default {
   components: {
     AuthTargetDeviceList,
-    AuthTargetDeviceQuery
+    AuthTargetDeviceQuery,
+    AuthTargetDeviceModal
   },
   data () {
     return {
@@ -33,6 +41,7 @@ export default {
         page_no: 1,
         view_cnt: 10
       },
+      mask:{},
       resPagingInfo: {},
       searchParam: {
         start_date: '',
@@ -43,32 +52,7 @@ export default {
       }
     }
   },  
-  created: function() {
 
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
-    
-    var params =this.reqPagingInfo
-
-    axios
-        .post(url, params, headers)
-        .then((response) => {
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.auth_device_list;
-            this.resPagingInfo=response.data.data.paging_info;
-            console.log('페이지 정보')
-            console.log(this.resPagingInfo)
-          }else{
-            this.pList = [];
-            this.resPaingInfo={};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-  },
   methods: {
     searchToAuthTargetDevice: function(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
@@ -99,6 +83,40 @@ export default {
       }
 
       this.searchToAuthTargetDevice(params)
+
+    },
+
+    clickMaskObject:function(values){
+      if(values){
+        console.log('클릭값')
+        console.log(values)
+        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
+        var params={
+          oderno:values,
+          page__no:"1",
+          view_cnt:"5",
+          is_masking: "N"
+        }
+        var reqParams=params
+
+      axios.post(url, reqParams, headers)
+      .then((response) => {
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.mask = response.data.data.auth_device_list[0];
+          console.log(this.mask)
+        }else{
+          this.mask = [];
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+        })
+      }
+
+      this.$refs.modal.open();
 
     },
 

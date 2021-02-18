@@ -49,7 +49,7 @@ export default {
   methods: {
     handleClick: function (value) {
       console.log(value);
-      this.$emit("child", value.login_key);
+      this.$emit("child", value.user_id);
     },
 
     getDataFromApi() {
