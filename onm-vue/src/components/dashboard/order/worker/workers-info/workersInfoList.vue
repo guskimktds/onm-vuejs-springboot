@@ -19,6 +19,7 @@
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
+        @click:row="handleClick"
       >
       </v-data-table>
 
@@ -49,24 +50,26 @@ export default {
 
     }
   },
-
-  methods: {
-    getDataFromApi() {
-      this.loading = true;
-      this.$emit("pagination", this.options);
-    },
-    
-  },
-
-  watch: {
-    options: {
-      handler() {
-        this.getDataFromApi();
+    methods: {
+      handleClick:function(value){
+        this.$emit("child",value.said)
       },
-      deep: true,
+      getDataFromApi () {
+        this.loading = true
+        this.$emit("pagination", this.options)
+      },
     },
-  },
-    
+    watch: {
+      options: {
+        handler () {
+          this.getDataFromApi()
+        },
+        deep: true,
+      },
+    },
+    mounted () {
+      this.getDataFromApi()
+    }
 }
 </script>
 

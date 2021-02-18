@@ -96,6 +96,8 @@ export default {
       resPagingInfo:{},
       dodPagingInfo:{},
       dorPagingInfo:{},
+      oldValue:'',
+
       searchParam:{
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
@@ -166,6 +168,15 @@ export default {
           console.log('조회 실패',ex)
         })
       }
+
+      if(values!==this.oldValue){
+          console.log('실행')
+          this.showDetailList=false
+          this.showResultList=false
+      } 
+        this.oldValue={}
+        this.oldValue=values
+
     },
 
     clickToSearchDetailList:function(){

@@ -239,6 +239,7 @@ export default {
       kttPagingInfo: {},
       psPagingInfo: {},
       vaPagingInfo: {},
+      oldValue:'',
       searchParam: {
         said: "",
         user_name: "",
@@ -302,6 +303,20 @@ export default {
             console.log("조회 실패", ex);
           });
       }
+      
+      if(values!==this.oldValue){
+          console.log('실행')
+          this.showKttList=false
+          this.showProdSummaryList=false
+          this.showVACountList=false
+          this.showPhoneList=false
+          this.showSensorOrderList=false
+          this.showDeviceCameraList=false
+          this.showIotGwList=false
+          this.showDeviceSensorList=false
+      } 
+        this.oldValue={}
+        this.oldValue=values
     },
     clickToSearchKTT: function () {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13003/get_user_ktt_info_list`;

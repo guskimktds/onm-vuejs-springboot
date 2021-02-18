@@ -7,9 +7,14 @@
         <user-order-phone-list v-bind:pList=pList
         v-bind:resPagingInfo=resPagingInfo
         @pagination="setToSearchParams"
+        @child="clickMaskObject"
         ></user-order-phone-list>
       </v-card>
     </v-container>
+    <user-order-modal
+    v-bind:mask="mask"
+    ref="modal"
+    ></user-order-modal>
   </div>
 
 </template>
@@ -17,6 +22,7 @@
 <script>
 import UserOrderPhoneList from './user-order-phone/userOrderPhoneList'
 import UserOrderPhoneQuery from './user-order-phone/userOrderPhoneQuery'
+import UserOrderModal from './user-order-phone/userOrderModal'
 import dateInfo from '../../utils/common'
 
 import axios from "axios"
@@ -29,7 +35,8 @@ const headers = {
 export default {
   components: {
     UserOrderPhoneList,
-    UserOrderPhoneQuery
+    UserOrderPhoneQuery,
+    UserOrderModal
   },
   data () {
     return {
@@ -39,8 +46,8 @@ export default {
         page_no: 1,
         view_cnt: 10
       },
-      resPagingInfo: {}
-      ,
+      mask:{},
+      resPagingInfo: {},
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
@@ -78,6 +85,41 @@ export default {
         console.log('조회 실패',ex)
       })
     },
+
+    clickMaskObject:function(values){
+      if(values){
+
+        var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
+
+        var params={
+          guid:values,
+          page__no:"1",
+          view_cnt:"5",
+          is_masking: "N"
+        }
+        var reqParams=params
+
+      axios.post(url, reqParams, headers)
+      .then((response) => {
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.mask = response.data.data.tel_no_list[0];
+          console.log(this.mask)
+        }else{
+          this.mask = [];
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+        })
+      }
+
+      this.$refs.modal.open();
+
+    },
+
 
     setToSearchParams:function(values){
       var params = {

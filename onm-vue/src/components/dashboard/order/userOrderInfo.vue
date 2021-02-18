@@ -105,6 +105,7 @@ export default {
       resPagingInfo: {},
       sdPagingInfo:{},
       kttPagingInfo:{},
+      oldValue:'',
       
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
@@ -148,9 +149,7 @@ export default {
     },
 
     clickToSearchDetailObject: function(values){
-      console.log(values)
       if(values) {
-     
         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12002/get_user_subs_detail`
         var params = {
           guid: values
@@ -181,6 +180,15 @@ export default {
           console.log('조회 실패',ex)
         })
       }
+
+      if(values!==this.oldValue){
+          console.log('실행')
+          this.showSubDetailList=false
+          this.showKttList=false
+      } 
+        this.oldValue={}
+        this.oldValue=values
+
     },
         
     clickToSearchSubDetailList:function(){
