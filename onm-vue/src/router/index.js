@@ -105,8 +105,8 @@ const requireAuth = () => (from, to, next) => {
     //alert('isAuthenticated '+isAuthenticated)
     //if (isAuthenticated) return next()
     //next('/login?returnPath=me')
-    console.log(store.state.isAuthenticated)
-    if (store.state.isAuthenticated) return next()
+    // console.log(store.state.isAuthenticated)
+    if (store.state.isAuthenticated) { return next() }
     next({
         path: "/signin",
         query: { redirect: to.fullPath },

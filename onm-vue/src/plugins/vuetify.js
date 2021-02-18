@@ -14,7 +14,7 @@ const theme = {
     secondary: '#9C27b0',
     accent: '#9C27b0',
     info: '#00CAE3',
-  }
+}
 
 export default new Vuetify({ // option을 지정한 Vuetify instance 생성해서 export
     icons: {
@@ -36,9 +36,9 @@ export default new Vuetify({ // option을 지정한 Vuetify instance 생성해�
     //     },
     // },
     theme: {
-    themes: {
-        dark: theme,
-        light: theme,
-    },
+        themes: {
+            dark: theme,
+            light: theme,
+        },
     },
 });
