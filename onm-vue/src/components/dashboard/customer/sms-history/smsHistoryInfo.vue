@@ -90,7 +90,7 @@ export default {
         });
     },
 
-        clickMaskObject:function(values){
+    clickMaskObject:function(values){
 
       if(values){
         console.log('클릭값')

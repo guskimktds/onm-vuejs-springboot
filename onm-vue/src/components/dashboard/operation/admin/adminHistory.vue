@@ -5,21 +5,30 @@
           v-on:search="searchToButton"
           v-bind:param=searchParam
         ></admin-history-query>
-        <admin-history-list v-bind:pList=pList></admin-history-list>
+        <admin-history-list 
+        v-bind:pList=pList
+        v-bind:resPagingInfo="resPagingInfo"
+        @pagination="searchToButton"
+        @child="clickMaskObject"></admin-history-list>
+            
+      <modal
+      v-bind:mask="mask"
+      ref="modal"></modal>
       </v-card>
-
     </v-container>
 </template>
 
 <script>
 import AdminHistoryQuery from './adminHistoryQuery'
 import AdminHistoryList from './adminHistoryList'
+import Modal from './adminHistoryModal'
 import axios from "axios"
 
 export default {
   components:{
     AdminHistoryQuery,
-    AdminHistoryList
+    AdminHistoryList,
+    Modal
   },
   data () {
     return {
@@ -29,6 +38,7 @@ export default {
         page_no: 1,
         view_cnt: 10
       },
+      mask:{},
       resPagingInfo: {},
       searchParam: {
         admin_id: '',
@@ -39,30 +49,7 @@ export default {
       }
     }
   },
-  created: function() {
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15005/get_mng_access_history`
 
-    // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
-    var params = this.reqPagingInfo
-
-    axios
-        .post(url, params, this.$store.state.headers)
-        .then((response) => {
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.mng_access_history_list;
-            this.resPagingInfo = response.data.data.paging_info
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-  },
   methods: {
     searchToButton: function(params){
       console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
@@ -91,18 +78,56 @@ export default {
       })
     },
 
-    handleParams: function(params){
-      let newParams = {}
-      if(params.page_no === undefined || params.page_no === ''){
-        newParams.page_no = this.reqPagingInfo.page_no
-      }else{
-        newParams.page_no = params.page_no
+    clickMaskObject:function(values){
+
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15005/get_mng_access_history`
+
+      if(values){
+        console.log('클릭값')
+        console.log(values)
+
+        var params={
+          admin_id: values,
+          page__no:"1",
+          view_cnt:"5",
+          is_masking: "N"
+        }
+        var reqParams=params
+
+      axios.post(url, reqParams, this.$store.state.headers)
+      .then((response) => {
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.mask = response.data.data.mng_access_history_list[0];
+          console.log(this.mask)
+        }else{
+          this.mask = [];
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+        })
       }
 
-      if(params.view_cnt === undefined || params.view_cnt === ''){
-        newParams.view_cnt = this.reqPagingInfo.view_cnt
-      }else{
-        newParams.view_cnt = params.view_cnt
+      this.$refs.modal.open();
+    },
+
+    handleParams: function(params){
+      console.log("======")
+      console.log(params)
+      let newParams = {}
+      if (params.page === undefined || params.page === "") {
+        newParams.page_no = this.reqPagingInfo.page_no;
+      } else {
+        newParams.page_no = params.page;
+      }
+
+      if (params.itemsPerPage === undefined || params.itemsPerPage === "") {
+        newParams.view_cnt = this.reqPagingInfo.view_cnt;
+      } else {
+        newParams.view_cnt = params.itemsPerPage;
       }
 
       if(params.admin_id !== undefined && params.admin_id !== ''){

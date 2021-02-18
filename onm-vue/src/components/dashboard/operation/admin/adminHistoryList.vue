@@ -14,7 +14,10 @@
             <v-data-table
                 :headers="headers"
                 :items="pList"
+                :options.sync="options"
+                :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
+                @click:row="handleClick"
             >          
             </v-data-table>
         </base-material-card>
@@ -23,9 +26,15 @@
 
 <script>
 export default {
-    props: ['pList'],
+    props: ['pList', 'resPagingInfo'],
     data() {
       return {
+        dialog: false,
+        dialogDelete: false,
+        editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
         headers: [
           {
             text: '관리자ID',
@@ -41,8 +50,31 @@ export default {
           { text: '로그아웃', value: 'logout_date' }
         ]
       }
-    }
-}
+    },
+  methods: {
+    handleClick: function (value) {
+      console.log(value);
+      this.$emit("child", value.admin_id);
+    },
+
+    getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
+    },
+
+  },
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    this.getDataFromApi();
+  },
+};
 </script>
 
 <style>
