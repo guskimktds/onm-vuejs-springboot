@@ -36,15 +36,25 @@
           </v-icon>
           {{ link.text }}
         </v-btn> -->
-        <v-btn text v-if="this.$store.state.isAuthenticated" :to="'/account'">
+        <v-btn text 
+          v-if="this.$store.state.isAuthenticated" 
+          :to="'/account'"
+        >
           <v-icon>mdi-account</v-icon>
           My Page
         </v-btn>
-        <v-btn text :to="'/signin'">
+        <v-btn text 
+          v-if="!this.$store.state.isAuthenticated" 
+          :to="'/signin'"
+        >
           <v-icon>mdi-login</v-icon>
           login
         </v-btn>
-        <v-btn text @click.native="signOutClicked" :to="'/signout'">
+        <v-btn text 
+          v-if="this.$store.state.isAuthenticated" 
+          @click.native="signOutClicked" 
+          :to="'/signout'"
+        >
           <v-icon>mdi-logout</v-icon>
           logout
         </v-btn>

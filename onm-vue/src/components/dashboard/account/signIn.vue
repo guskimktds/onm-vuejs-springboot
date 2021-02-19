@@ -45,6 +45,7 @@
               <v-col>
                 <v-text-field
                   v-model="password" 
+                  type="password"
                   placeholder="비밀번호를 입력하세요"
                 >                
                 </v-text-field>
