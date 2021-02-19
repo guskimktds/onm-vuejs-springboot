@@ -17,15 +17,15 @@
         id="regular-tables"
         fluid
         tag="section">
-        <v-btn color="indigo" v-if=isReloadDetailObject v-on:click="showDetailObject=!showDetailObject">
+        <v-btn v-bind:color="changeColor(showDetailObject)" v-if=isReloadDetailObject v-on:click="showDetailObject=!showDetailObject">
           단말오더 상세{{showDetailObject?" Close":" Open"}}
          </v-btn>
 
-        <v-btn color="indigo" v-if="showDetailObject" v-on:click="clickToSearchDetailList()">
+        <v-btn v-bind:color="changeColor(showDetailList)" v-if="showDetailObject" v-on:click="clickToSearchDetailList()">
           단말오더 상세 내역{{showDetailList?" Close":" Open"}}
         </v-btn>
 
-        <v-btn color="indigo" v-if="showDetailObject" v-on:click="clickToSearchResultList()">
+        <v-btn v-bind:color="changeColor(showResultList)" v-if="showDetailObject" v-on:click="clickToSearchResultList()">
           단말오더 처리결과{{showResultList?" Close":" Open"}}
         </v-btn>
 
@@ -136,8 +136,14 @@ export default {
             .finally(function(){})
     },
 
+    changeColor(values){
+      if(values===true){
+        return 'green';
+      }else{
+        return "indigo";
+      }
+    },
     clickToSearchDetailObject: function(values){
-      console.log(values)
       if(values) {
 
         var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12007/get_device_order_detail`
@@ -187,15 +193,21 @@ export default {
       page_no: '1',
       view_cnt: '5'
       }
+
+      console.log('검색값')
+      console.log(params)
+      
       axios
           .post(url,params,headers)
           .then((response)=>{
             var resCode=response.data.res_code;
             var resMsg=response.data.res_msg;
             if(resCode==200){
-              this.dodList=response.data.data.device_order_detail_list;
+              this.dodList=response.data.data.list;
               this.dodPagingInfo=response.data.data.paging_info;
               this.showDetailList=!this.showDetailList;
+              console.log('$$$$')
+              console.log(this.dodList)
             }else{
               this.dodList=[];
               this.dodPagingInfo={};

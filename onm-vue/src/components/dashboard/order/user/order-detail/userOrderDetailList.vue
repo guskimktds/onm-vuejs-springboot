@@ -15,7 +15,7 @@
                 :headers="headers"
                 :items="pList"
                 :options.sync="options"
-                :server-items-length="resPagingInfo.total_cnt"
+                :server-items-length="dodPagingInfo.total_cnt"
                 class="elevation-1"
             >          
             </v-data-table>
@@ -26,7 +26,7 @@
 <script>
 
 export default {
-    props: ['pList','resPagingInfo'],
+    props: ['pList','dodPagingInfo'],
     data() {
       return {
         dialog: false,
@@ -36,7 +36,7 @@ export default {
         loading: true,
         headers: [
           {
-            text: '거래고유번호', align: 'start',
+            text: '거래고유번호',
             sortable: false, value: 'guid',
           },
           { text: '오더번호', value: 'oderno'},

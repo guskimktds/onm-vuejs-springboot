@@ -10,20 +10,15 @@
           v-bind:pList=pList
           v-bind:resPagingInfo="resPagingInfo"
           @pagination="searchToProcess"
-          @child="clickMaskObject"
         ></list>
       </v-card>
 
-      <modal
-      v-bind:mask="mask"
-      ref="modal"></modal>
     </v-container>
 </template>
 
 <script>
 import List from './workersInfoList'
 import Query from './workersInfoQuery'
-import Modal from './workersInfoModal'
 
 import axios from "axios"
 
@@ -37,7 +32,7 @@ const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_
 export default {
   
   components: {
-    List, Query, Modal
+    List, Query
   },
   
   data () {
@@ -47,7 +42,6 @@ export default {
         page_no: 1,
         view_cnt: 10,
       },
-      mask:{},
       resPagingInfo: {},
       searchParam: {
         tel_no: "",
@@ -86,39 +80,6 @@ export default {
         // always executed
       });
 
-    },
-
-    clickMaskObject:function(values){
-      if(values){
-        console.log('클릭값')
-        console.log(values)
-
-        var params={
-          oderno:values,
-          page__no:"1",
-          view_cnt:"5",
-          is_masking: "N"
-        }
-        var reqParams=params
-
-      axios.post(url, reqParams, headers)
-      .then((response) => {
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if(resCode == 200){
-          this.mask = response.data.data.order_list[0];
-          console.log(this.mask)
-        }else{
-          this.mask = [];
-          alert(resCode + " / " + resMsg);
-        }
-      })
-      .catch((ex) => {
-        console.log('조회 실패',ex)
-        })
-      }
-
-      this.$refs.modal.open();
     },
 
     handleParams: function (params) {
@@ -161,6 +122,12 @@ export default {
         this.searchParam.status_code !== ""
       ) {
         newParams.status_code = this.searchParam.status_code;
+      }
+
+      if(params.is_masking===true){
+        newParams.is_masking='N'
+      }else if(params.is_masking===false){
+        newParams.is_masking='Y'
       }
 
       return newParams;

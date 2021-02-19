@@ -44,8 +44,11 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+        </v-row>
+        
+        <v-row>
 
-          <v-col cols="12" sm="6" md="2">
+          <v-col cols="12" sm="6" md="3">
             <v-text-field
               dense
               label="단말 GWID"
@@ -55,7 +58,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="2">
+          <v-col cols="12" sm="6" md="3">
             <v-text-field
               dense
               label="단말GW명 "
@@ -65,7 +68,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="2">
+          <v-col cols="12" sm="6" md="3">
             <v-text-field
               dense
               label="단말모델코드 "

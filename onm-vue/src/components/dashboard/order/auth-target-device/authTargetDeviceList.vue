@@ -17,8 +17,10 @@
                 :options.sync="options"
                 :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
-                @click:row="handleClick"
             >          
+            <template v-slot:item.mgt_status="{item}">
+              <span>{{ switchString(item.mgt_status) }}</span>
+            </template>
             </v-data-table>
         </base-material-card>
     </v-container>
@@ -52,14 +54,18 @@ export default {
       }
     },
     methods: {
-      handleClick:function(value){
-        this.$emit("child",value.oderno)
-      },
       getDataFromApi () {
         this.loading = true
         this.$emit("pagination", this.options)
       },
-    },
+      switchString(values){
+      if(values==='S'){
+        return '양호(D)'
+      }else if(values==='D'){
+        return '수리중(D)'
+          }
+        }
+      },
     watch: {
       options: {
         handler () {

@@ -12,7 +12,7 @@
 
             <v-row>
 
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -31,7 +31,7 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"

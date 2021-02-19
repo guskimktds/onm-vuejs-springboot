@@ -10,7 +10,6 @@
           v-bind:pList=pList
           v-bind:resPagingInfo="resPagingInfo"
           @pagination="searchToProcess"
-          @child="clickMaskObject"
         ></list>
       </v-card>
 
@@ -23,7 +22,6 @@
 <script>
 import List from './workerLoginHistoryList'
 import Query from './workerLoginHistoryQuery'
-import Modal from './workerLoginHistoryModal'
 
 import axios from "axios"
 
@@ -37,7 +35,7 @@ const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_
 export default {
   
   components: {
-    List, Query, Modal
+    List, Query
   },
   
   data () {
@@ -47,7 +45,6 @@ export default {
         page_no: 1,
         view_cnt: 10,
       },
-      mask:{},
       resPagingInfo: {},
       searchParam: {
         admin_id: "",
@@ -89,39 +86,6 @@ export default {
         // always executed
       });
 
-    },
-
-    clickMaskObject:function(values){
-      if(values){
-        console.log('클릭값')
-        console.log(values)
-
-        var params={
-          admin_id:values,
-          page__no:"1",
-          view_cnt:"5",
-          is_masking: "N"
-        }
-        var reqParams=params
-
-      axios.post(url, reqParams, headers)
-      .then((response) => {
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if(resCode == 200){
-          this.mask = response.data.data.mng_access_history_list[0];
-          console.log(this.mask)
-        }else{
-          this.mask = [];
-          alert(resCode + " / " + resMsg);
-        }
-      })
-      .catch((ex) => {
-        console.log('조회 실패',ex)
-        })
-      }
-
-      this.$refs.modal.open();
     },
 
     handleParams: function (params) {
@@ -182,6 +146,12 @@ export default {
         this.searchParam.admin_type !== ""
       ) {
         newParams.admin_type = this.searchParam.admin_type;
+      }
+
+      if(params.is_masking===true){
+        newParams.is_masking='N'
+      }else if(params.is_masking===false){
+        newParams.is_masking='Y'
       }
       return newParams;
     },

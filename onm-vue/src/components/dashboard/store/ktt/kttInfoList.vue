@@ -36,7 +36,7 @@ export default {
       loading: true,
       headers: [
         {
-          text: "매장 ID",
+          text: "사용자 ID",
           align: "start",
           sortable: false,
           value: "user_id",

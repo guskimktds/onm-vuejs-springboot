@@ -6,7 +6,7 @@
       class="px-5 py-3"
     >
       <v-row>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -25,7 +25,7 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -45,7 +45,17 @@
                     </v-menu>
                 </v-col>
 
-        <v-col cols="12" sm="6" md="2">
+                <v-col cols="12" md="2">
+                    <v-switch
+                        v-model="param.is_masking"                    
+                        :label="`마스킹(Y/N)`"
+                        color="secondary"
+                    ></v-switch>
+                </v-col> 
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" sm="6" md="4">
           <v-text-field
             dense
             label="발송 전화번호"
@@ -55,7 +65,7 @@
           </v-text-field>
         </v-col>
 
-        <v-col cols="12" sm="6" md="2">
+        <v-col cols="12" sm="6" md="4">
           <v-text-field
             dense
             label="OTP 번호"

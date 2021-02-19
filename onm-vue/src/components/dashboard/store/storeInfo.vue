@@ -15,7 +15,7 @@
 
       <v-container id="regular-tables" fluid tag="section">
         <v-btn
-          color="indigo"
+          v-bind:color="changeColor(showDetailObject)"
           v-if="isReloadDetailObject"
           v-on:click="showDetailObject = !showDetailObject"
         >
@@ -25,7 +25,7 @@
 
       <v-container id="regular-tables" fluid tag="section">
         <v-btn
-          color="indigo"
+          v-bind:color="changeColor(showKttList)"
           v-if="showDetailObject"
           v-on:click="clickToSearchKTT()"
         >
@@ -33,7 +33,7 @@
         </v-btn>
 
         <v-btn
-          color="indigo"
+          v-bind:color="changeColor(showProdSummaryList)"
           v-if="showDetailObject"
           v-on:click="clickToSearchProdSummary()"
         >
@@ -41,7 +41,7 @@
         </v-btn>
 
         <v-btn
-          color="indigo"
+          v-bind:color="changeColor(showVACountList)"
           v-if="showDetailObject"
           v-on:click="clickToSearchVACount()"
         >
@@ -49,7 +49,7 @@
         </v-btn>
 
         <v-btn
-          color="indigo"
+          v-bind:color="changeColor(showSensorOrderList)"
           v-if="showDetailObject"
           v-on:click="clickToSearchSensorOrder()"
         >
@@ -57,7 +57,7 @@
         </v-btn>
 
         <v-btn
-          color="indigo"
+          v-bind:color="changeColor(showDeviceCameraList)"
           v-if="showDetailObject"
           v-on:click="clickToSearchDeviceCamera()"
         >
@@ -65,7 +65,7 @@
         </v-btn>
 
         <v-btn
-          color="indigo"
+          v-bind:color="changeColor(showIotGwList)"
           v-if="showDetailObject"
           v-on:click="clickToSearchIotGw()"
         >
@@ -73,7 +73,7 @@
         </v-btn>
 
         <v-btn
-          color="indigo"
+          v-bind:color="changeColor(showDeviceSensorList)"
           v-if="showDetailObject"
           v-on:click="clickToSearchDeviceSensor()"
         >
@@ -81,7 +81,7 @@
         </v-btn>
 
         <v-btn
-          color="indigo"
+          v-bind:color="changeColor(showPhoneList)"
           v-if="showDetailObject"
           v-on:click="clickToSearchPhone()"
         >
@@ -272,6 +272,14 @@ export default {
         .catch((ex) => {
           console.log("조회 실패", ex);
         });
+    },
+
+    changeColor(values){
+      if(values===true){
+        return 'green';
+      }else{
+        return "indigo";
+      }
     },
 
     clickToSearchDetailObject: function (values) {

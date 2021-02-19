@@ -10,6 +10,7 @@
         title="인증 대상 단말 조회"
         class="px-5 py-3"
         >
+
             <v-row>
 
                 <v-col cols="12" sm="6" md="2">
@@ -48,6 +49,14 @@
                     >
                         검색
                     </v-btn>
+                </v-col>
+
+                <v-col cols="12" sm="6" md="2">
+                    <v-switch
+                        v-model="param.is_masking"                    
+                        :label="`마스킹(Y/N)`"
+                        color="secondary"
+                    ></v-switch>
                 </v-col>
             </v-row>     
 

@@ -6,7 +6,7 @@
         class="px-5 py-3"
         >
         <v-row>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -25,7 +25,7 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -44,8 +44,10 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+        </v-row>
 
-          <v-col cols="12" sm="6" md="2">
+        <v-row>
+          <v-col cols="12" sm="6" md="3">
             <v-text-field
               dense
               label="카메라 ID"
@@ -55,7 +57,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="2">
+          <v-col cols="12" sm="6" md="3">
             <v-text-field
               dense
               label="카메라명 "
@@ -65,7 +67,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="2">
+          <v-col cols="12" sm="6" md="3">
             <v-text-field
               dense
               label="MAC ID"

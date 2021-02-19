@@ -13,7 +13,6 @@
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
-        @click:row="handleClick"
       >
       </v-data-table>
     </base-material-card>
@@ -49,11 +48,6 @@ export default {
     };
   },
   methods: {
-    handleClick: function (value) {
-      console.log(value);
-      this.$emit("child", value.otp);
-    },
-
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);

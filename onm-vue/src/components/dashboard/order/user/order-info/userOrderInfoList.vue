@@ -40,18 +40,18 @@ export default {
         loading: true,
         headers: [
           {
-            text: '거래고유번호', align: 'start',
+            text: '거래고유번호', align: 'left',
             sortable: false, value: 'guid',
           },
-          { text: '계약ID', value: 'said'},
-          { text: '상품코드', value: 'pprodcd'},
-          { text: '기가아이즈 모상품명', value: 'pprodnm'},
-          { text: '사업자명', value: 'bizpnm'},
-          { text: '오더번호', value: 'oderno' },
-          { text: '오더순번', value: 'oderseq' },
-          { text: '처리희망일자', value: 'appointdate' },
-          { text: '사용여부', value: 'use_yn' },
-          { text: '생성일시', value: 'cdate' }
+          { text: '계약ID', value: 'said' , align: 'left'},
+          { text: '상품코드', value: 'pprodcd' , align: 'left'},
+          { text: '기가아이즈 모상품명', value: 'pprodnm' , align: 'left'},
+          { text: '사업자명', value: 'bizpnm' , align: 'left'},
+          { text: '오더번호', value: 'oderno' , align: 'left'},
+          { text: '오더순번', value: 'oderseq' , align: 'left'},
+          { text: '처리희망일자', value: 'appointdate' , align: 'left'},
+          { text: '사용여부', value: 'use_yn' , align: 'left'},
+          { text: '생성일시', value: 'cdate' , align: 'left' }
         ]
       }
     },

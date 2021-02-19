@@ -10,21 +10,9 @@
         title="모바일 단말 목록 조회"
         class="px-5 py-3"
         >
-
-      <v-row>
-          <v-col cols=auto>
-              <v-select 
-                  item-text="server_name" 
-                  item-value="local_gw_id" 
-                  :items="localGwOptions" 
-                  v-model="param.local_gw_id" 
-                  v-on:change="searchMethod"
-                  ></v-select>
-          </v-col>
-      </v-row>
-
+    
         <v-row>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -43,7 +31,7 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -63,7 +51,30 @@
                     </v-menu>
                 </v-col>
 
+            <v-col cols="3">
+              <v-select 
+                  item-text="server_name" 
+                  item-value="local_gw_id" 
+                  :items="localGwOptions" 
+                  v-model="param.local_gw_id" 
+                  v-on:change="searchMethod"
+                  ></v-select>
+          </v-col>
+
+          
           <v-col cols="12" sm="6" md="3">
+            <v-select
+            v-model="param.os_type"
+            :items="items"
+            label="장치타입"
+            attach
+            ></v-select>
+          </v-col>
+        </v-row>
+
+        <v-row>
+
+          <v-col cols="12" sm="6" md="4">
             <v-text-field
               dense
               label="전화번호 ID"
@@ -72,7 +83,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="4">
             <v-text-field
               dense
               label="사용자 ID"
@@ -80,15 +91,6 @@
               placeholder=" "
             >
             </v-text-field>
-          </v-col>
-
-          <v-col cols="12" sm="6" md="3">
-            <v-select
-            v-model="param.os_type"
-            :items="items"
-            label="장치타입"
-            attach
-            ></v-select>
           </v-col>
 
           <v-col cols="auto">

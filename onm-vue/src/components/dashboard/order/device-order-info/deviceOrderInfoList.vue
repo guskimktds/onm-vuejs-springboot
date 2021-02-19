@@ -18,7 +18,10 @@
                 :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
                 @click:row="handleClick"
-            >          
+            >
+            <template v-slot:item.notice_yn="{item}">
+              <span>{{ switchString(item.notice_yn) }}</span>
+            </template>          
             </v-data-table>
         </base-material-card>
     </v-container>
@@ -58,6 +61,15 @@ export default {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
+    switchString(values){
+      if(values==='T'){
+        return '청약취소'
+      }else if(values==='Y'){
+        return '통보완료'
+      }else if(values==='N'){
+        return '미통보'
+      }
+    }
     
   },
 
