@@ -40,7 +40,7 @@ export default {
         },
         { text: "카메라 IP", value: "cam_ip" },
         { text: "카메라명", value: "cam_name" },
-        { text: "mac_id", value: "macId" },
+        { text: "mac_id", value: "mac_id" },
         { text: "모델명", value: "model_name" },
         { text: "펌웨어 버전 정보", value: "firmware" },
         { text: "제조사", value: "vendor" },
