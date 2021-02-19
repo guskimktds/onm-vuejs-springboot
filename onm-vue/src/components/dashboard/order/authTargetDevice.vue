@@ -5,20 +5,15 @@
         v-bind:param=searchParam></auth-target-device-query>
         <auth-target-device-list v-bind:pList=pList
         v-bind:resPagingInfo=resPagingInfo
-        @pagination="setToSearchParams"
-        @child="clickMaskObject"></auth-target-device-list>
+        @pagination="setToSearchParams"></auth-target-device-list>
       </v-card>
 
-    <auth-target-device-modal
-    v-bind:mask="mask"
-    ref="modal"></auth-target-device-modal>
     </v-container>
 </template>
 
 <script>
 import AuthTargetDeviceList from './auth-target-device/authTargetDeviceList'
 import AuthTargetDeviceQuery from './auth-target-device/authTargetDeviceQuery'
-import AuthTargetDeviceModal from './auth-target-device/authTargetDeviceModal'
 
 import axios from "axios"
 
@@ -30,8 +25,7 @@ const headers = {
 export default {
   components: {
     AuthTargetDeviceList,
-    AuthTargetDeviceQuery,
-    AuthTargetDeviceModal
+    AuthTargetDeviceQuery
   },
   data () {
     return {
@@ -41,7 +35,6 @@ export default {
         page_no: 1,
         view_cnt: 10
       },
-      mask:{},
       resPagingInfo: {},
       searchParam: {
         start_date: '',
@@ -86,40 +79,6 @@ export default {
 
     },
 
-    clickMaskObject:function(values){
-      if(values){
-        console.log('클릭값')
-        console.log(values)
-        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
-        var params={
-          oderno:values,
-          page__no:"1",
-          view_cnt:"5",
-          is_masking: "N"
-        }
-        var reqParams=params
-
-      axios.post(url, reqParams, headers)
-      .then((response) => {
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if(resCode == 200){
-          this.mask = response.data.data.auth_device_list[0];
-          console.log(this.mask)
-        }else{
-          this.mask = [];
-          alert(resCode + " / " + resMsg);
-        }
-      })
-      .catch((ex) => {
-        console.log('조회 실패',ex)
-        })
-      }
-
-      this.$refs.modal.open();
-
-    },
-
     handleParams:function(params){
       let newParams = {}
       if(params.page_no === undefined || params.page_no === ''){
@@ -153,6 +112,12 @@ export default {
       if(params.open_oderno !== undefined && params.open_oderno !== ''){
         newParams.open_oderno = params.open_oderno
       }   
+      
+      if(params.is_masking===true){
+        newParams.is_masking='N'
+      }else if(params.is_masking===false){
+        newParams.is_masking='Y'
+      }
       return newParams
     }
   }

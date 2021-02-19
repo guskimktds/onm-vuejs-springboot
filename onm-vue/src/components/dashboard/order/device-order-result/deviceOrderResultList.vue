@@ -18,6 +18,10 @@
                 :server-items-length="dorPagingInfo.total_cnt"
                 class="elevation-1"
             >          
+            <template v-slot:item.notice_yn="{item}">
+              <span>{{ switchString(item.notice_yn) }}</span>
+            </template>  
+
             </v-data-table>
         </base-material-card>
     </v-container>
@@ -54,7 +58,18 @@ export default {
         const { page, itemsPerPage } = this.options
         console.log(page, itemsPerPage)
         this.$emit("pagination", this.options)
+      },
+
+       switchString(values){
+      if(values==='T'){
+        return '청약취소'
+      }else if(values==='Y'){
+        return '통보완료'
+      }else if(values==='N'){
+        return '미통보'
       }
+    }
+    
     },
     watch: {
       options: {

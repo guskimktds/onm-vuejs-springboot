@@ -40,7 +40,7 @@ export default {
         },
         { text: "카메라 IP", value: "cam_ip" },
         { text: "카메라명", value: "cam_name" },
-        { text: "mac_id", value: "macId" },
+        { text: "mac_id", value: "mac_id" },
         { text: "모델명", value: "model_name" },
         { text: "펌웨어 버전 정보", value: "firmware" },
         { text: "제조사", value: "vendor" },
@@ -48,7 +48,7 @@ export default {
         { text: "관리상태코드", value: "mgt_status" },
         { text: "해상도", value: "resolution" },
         { text: "카메라 수정일자", value: "mod_date" },
-        { text: "개통일시", value: "opendate" },
+        { text: "개통일시", value: "open_date" },
         { text: "해지일시", value: "close_date" },
       ],
     };

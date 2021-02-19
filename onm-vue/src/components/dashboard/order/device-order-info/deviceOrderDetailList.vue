@@ -52,37 +52,10 @@ export default {
   },
 
  methods: {
-
       getDataFromApi () {
-        console.log(this.dodPagingInfo)
         this.loading = true
-
-        const { page, itemsPerPage } = this.options
-        console.log(page, itemsPerPage)
         this.$emit("pagination", this.options)
-      },
-
-      fakeApiCall () {
-        return new Promise((resolve) => {
-          const {page, itemsPerPage } = this.options
-
-          let items = this.props.pnList
-          console.log(items)
-          const total = items.length
-
-          if (itemsPerPage > 0) {
-            items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
-          }
-
-          setTimeout(() => {
-            resolve({
-              items,
-              total,
-            })
-          }, 1000)
-        })
       }
-      
     },
     watch: {
       options: {

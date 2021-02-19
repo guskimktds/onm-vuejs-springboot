@@ -12,19 +12,7 @@
         >
 
         <v-row>
-          <v-col cols=auto>
-              <v-select 
-                  item-text="server_name" 
-                  item-value="local_gw_id" 
-                  :items="localGwOptions" 
-                  v-model="param.local_gw_id" 
-                  v-on:change="searchMethod"
-                  ></v-select>
-          </v-col>
-      </v-row>
-
-        <v-row>
-                         <v-col cols="2">
+                <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -43,7 +31,7 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -62,6 +50,19 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+        
+                  <v-col cols=auto>
+              <v-select 
+                  item-text="server_name" 
+                  item-value="local_gw_id" 
+                  :items="localGwOptions" 
+                  v-model="param.local_gw_id" 
+                  v-on:change="searchMethod"
+                  ></v-select>
+          </v-col>
+        </v-row>
+
+        <v-row>
 
           <v-col cols="12" sm="6" md="3">
             <v-text-field

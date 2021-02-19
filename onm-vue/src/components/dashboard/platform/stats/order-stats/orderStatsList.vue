@@ -31,12 +31,12 @@ export default {
   data() {
     return {
       headers: [
-        { text: '희망일자', value: 'appointdate' },
-        { text: '신규 청약 수', value: 'new_cnt' },
-        { text: '변경 청약수', value: 'change_cnt' },
-        { text: '일시정지 청약수', value: 'pause_cnt' },
-        { text: '부활 청약 수', value: 'restore_cnt' },
-        { text: '해지 청약 수', value: 'close_cnt' },
+        { text: '희망일자', value: 'appointdate', align: 'left'},
+        { text: '신규 청약 수', value: 'new_cnt', align: 'left'},
+        { text: '변경 청약수', value: 'change_cnt', align: 'left' },
+        { text: '일시정지 청약수', value: 'pause_cnt', align: 'left' },
+        { text: '부활 청약 수', value: 'restore_cnt', align: 'left' },
+        { text: '해지 청약 수', value: 'close_cnt', align: 'left' },
       ],
     }
   },

@@ -14,7 +14,7 @@
 
       <v-container id="regular-tables" fluid tag="section">
         <v-btn
-          color="indigo"
+          v-bind:color="changeColor(showDetailObject)"
           v-if="isReloadDetailObject"
           v-on:click="showDetailObject = !showDetailObject"
         >
@@ -95,6 +95,14 @@ export default {
         .catch((ex) => {
           console.log("조회 실패", ex);
         });
+    },
+
+    changeColor(values){
+      if(values===true){
+        return 'green';
+      }else{
+        return "indigo";
+      }
     },
 
     clickToSearchDetailObject: function (values) {

@@ -17,7 +17,7 @@
             fluid
             tag="section"
         >
-          <v-btn color="indigo" v-if=isReloadDetailObject v-on:click="showDetailObject=!showDetailObject">
+          <v-btn v-bind:color="changeColor(showDetailObject)"  v-if=isReloadDetailObject v-on:click="showDetailObject=!showDetailObject">
             오더상세{{showDetailObject?" Close":" Open"}}
           </v-btn>
         </v-container>
@@ -28,13 +28,14 @@
             tag="section"
         >
 
-          <v-btn color="indigo" v-if=showDetailObject v-on:click="clickToSearchSubDetailList()" >
+          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="clickToSearchSubDetailList()">
             사용자 청약오더List{{showSubDetailList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn color="indigo" v-if=showDetailObject v-on:click="clickToSearchKTT()" >
+          <v-btn v-bind:color="changeColor(showKttList)" v-if=showDetailObject v-on:click="clickToSearchKTT()" >
             사용자-KTT{{showKttList?" Close":" Open"}}
           </v-btn>
+
 
         </v-container>
 
@@ -106,7 +107,6 @@ export default {
       sdPagingInfo:{},
       kttPagingInfo:{},
       oldValue:'',
-      
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
@@ -128,8 +128,6 @@ export default {
 
       axios.post(url, reqParams, headers)
       .then((response) => {
-        console.log('전달된 sub order 정보')
-        console.log(response)
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
@@ -148,7 +146,16 @@ export default {
       })
     },
 
+    changeColor(values){
+      if(values===true){
+        return 'green';
+      }else{
+        return "indigo";
+      }
+    },
+
     clickToSearchDetailObject: function(values){
+
       if(values) {
         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12002/get_user_subs_detail`
         var params = {
@@ -166,9 +173,10 @@ export default {
             var resMsg = response.data.res_msg;
             if(resCode == 200){
               this.pObject = response.data.data
-              // this.isArrayed = false
+              
               this.showDetailObject = true
               this.isReloadDetailObject = true
+              this.orderBtn=!this.orderBtn
             }else{
               this.pObject = {};
               this.showDetailObject = false
@@ -198,8 +206,7 @@ export default {
       page_no: '1',
       view_cnt: '5'
     }
-    console.log('파라미터')
-    console.log(params)
+
     axios
         .post(url, params, headers)
         .then((response) => {
@@ -210,6 +217,7 @@ export default {
             this.sdPagingInfo = response.data.data.paging_info;
 
             this.showSubDetailList=!this.showSubDetailList;
+            this.subBtn=!this.subBtn
           }else{
             this.sdList = [];
             this.sdPagingInfo = {};
@@ -240,6 +248,7 @@ export default {
             this.kttPagingInfo = response.data.data.paging_info
 
             this.showKttList =!this.showKttList
+            this.kttBtn=!this.kttBtn
           }else{
             this.kttList = [];
             this.kttPagingInfo = {};
@@ -258,7 +267,6 @@ export default {
       var params = {
         page_no: values.page,
         view_cnt: values.itemsPerPage,
-
       }
 
       console.log(params)

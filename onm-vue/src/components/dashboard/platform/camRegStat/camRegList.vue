@@ -37,13 +37,13 @@ export default {
       totalList: 0,
       loading: true,
         headers: [
-          { text: '일자', value: 'date', align:'center' },
-          { text: '신규 매장 수', value: 'user_new_cnt', align:'center'},
-          { text: '해지 매장 수', value: 'user_close_cnt', align:'center' },
-          { text: '개통 카메라 수', value: 'cam_open_cnt', align:'center' },
-          { text: '해지 카메라 수', value: 'cam_close_cnt', align:'center' },
-          { text: '개통 iot 수', value: 'iot_open_cnt', align:'center' },
-          { text: '해지 iot 수', value: 'iot_close_cnt', align:'center' },
+          { text: '일자', value: 'date', align:'left' },
+          { text: '신규 매장 수', value: 'user_new_cnt', align:'left'},
+          { text: '해지 매장 수', value: 'user_close_cnt', align:'left' },
+          { text: '개통 카메라 수', value: 'cam_open_cnt', align:'left' },
+          { text: '해지 카메라 수', value: 'cam_close_cnt', align:'left' },
+          { text: '개통 iot 수', value: 'iot_open_cnt', align:'left' },
+          { text: '해지 iot 수', value: 'iot_close_cnt', align:'left' },
         ]
       }
     },

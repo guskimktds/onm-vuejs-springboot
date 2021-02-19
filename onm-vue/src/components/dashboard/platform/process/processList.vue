@@ -20,6 +20,10 @@
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
       >
+      <template v-slot:item.proc_status="{item}">
+            <span>{{ switchString(item.proc_status) }}</span>
+      </template>
+
       </v-data-table>
 
     </base-material-card>
@@ -54,6 +58,14 @@ export default {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
+    
+    switchString(values){
+      if(values==='U'){
+        return '미가동'
+      }else if(values==='D'){
+        return '정상'
+      }
+    }
     
   },
 

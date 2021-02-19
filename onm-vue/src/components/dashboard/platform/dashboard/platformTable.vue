@@ -10,7 +10,8 @@
                         :options.sync="options"
                         :server-items-length="resPagingInfo.total_cnt"
                         class="elevation-1"
-                        ></v-data-table>
+                        >
+                        </v-data-table>
                     </div>
         </div>
         
