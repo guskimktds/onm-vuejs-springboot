@@ -60,8 +60,8 @@ export default new Vuex.Store({
             state.isAuthenticated = true
             // state.menu = JSON.parse(param.data.menu)
             // state.menu = param.menuMock
-            console.log(param.data.data.auth_group_list[0].auth_group_list)
-            state.topMenu = param.data.data.auth_group_list[0].auth_group_list 
+            console.log(param.data.auth_group_list[0].auth_group_list)
+            state.topMenu = param.data.auth_group_list[0].auth_group_list 
             state.menu = menuMock
 
             state.onmUserId = param.id
@@ -101,7 +101,7 @@ export default new Vuex.Store({
                 //     commit("LOGIN", { data, id })
                 // })
                 .then((response) => {
-                    // console.log(response.data)
+                    console.log(response.data)
                     var resCode = response.data.res_code
                     var resMsg = response.data.res_msg
                     var data = response.data.data
