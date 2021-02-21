@@ -18,6 +18,7 @@
         :items="pList"
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
+        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         class="elevation-1"
       >
       <template v-slot:item.proc_status="{item}">
@@ -36,6 +37,9 @@ export default {
   props: ["pList", "resPagingInfo"],
   data() {
     return {
+      listSize : [
+        10, 100, 200
+      ],
       headers: [
         { text: '국사코드', value: 'local_gw_id' },
         { text: '프로세스타입', value: 'proc_type' },

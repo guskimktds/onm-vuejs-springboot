@@ -17,6 +17,7 @@
         :headers="headers"
         :items="kttList"
         class="elevation-1"
+        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
       </v-data-table>
 

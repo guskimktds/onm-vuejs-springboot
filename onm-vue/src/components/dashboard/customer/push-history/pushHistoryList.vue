@@ -17,6 +17,7 @@
                 :options.sync="options"
                 :server-items-length="pushPagingInfo.total_cnt"
                 class="elevation-1"
+                :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
             >          
             </v-data-table>
         </base-material-card>

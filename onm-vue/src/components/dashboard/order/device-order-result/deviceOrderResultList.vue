@@ -17,6 +17,7 @@
                 :options.sync="options"
                 :server-items-length="dorPagingInfo.total_cnt"
                 class="elevation-1"
+                :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
             >          
             <template v-slot:item.notice_yn="{item}">
               <span>{{ switchString(item.notice_yn) }}</span>

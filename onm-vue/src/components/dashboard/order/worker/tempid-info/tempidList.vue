@@ -19,6 +19,7 @@
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
+        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
       </v-data-table>
 

@@ -18,6 +18,7 @@
         :items="pList"
         :options.sync="options"
         class="elevation-1"
+        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
       </v-data-table>
 

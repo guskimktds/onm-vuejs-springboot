@@ -15,11 +15,10 @@
                 :headers="headers"
                 :items="pList"
                 class="elevation-1"
+                :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
             >      
               <template v-slot:top>
-              <v-toolbar
-                flat
-              >
+              
                 <v-dialog
                   v-model="dialog"
                   max-width="500px"
@@ -100,7 +99,7 @@
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
-              </v-toolbar>
+              
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -148,6 +147,7 @@ export default {
           //   value: 'name',
           // },
           { text: '접속IP', value: 'accept_ip' },
+          { text: '이름', value: 'name' },
           { text: '권한그룹ID', value: 'auth_group_id' },
           { text: '권한그룹명', value: 'auth_group_name' },
           { text: '생성일', value: 'reg_date' },
