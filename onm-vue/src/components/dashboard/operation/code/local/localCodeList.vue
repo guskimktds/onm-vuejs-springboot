@@ -17,9 +17,9 @@
           class="elevation-1"
         >
           <template v-slot:top>
-            <v-toolbar
+            <!-- <v-toolbar
               flat
-            >
+            > -->
               <!-- <v-toolbar-title>My CRUD</v-toolbar-title> -->
               <!-- <v-divider
                 class="mx-4"
@@ -197,7 +197,7 @@
                 </v-card>
               </v-dialog>
 
-            </v-toolbar>
+            <!-- </v-toolbar> -->
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon
