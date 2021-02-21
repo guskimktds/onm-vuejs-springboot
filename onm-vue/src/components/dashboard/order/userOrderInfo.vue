@@ -43,13 +43,15 @@
       
       <v-container v-if=showDetailObject>
 
-        <user-order-sub-detail-list v-if=showSubDetailList
-        v-bind:sdList=sdList
-        v-bind:sdPagingInfo=sdPagingInfo></user-order-sub-detail-list>
+        <user-order-sub-detail-list 
+          v-if=showSubDetailList
+          v-bind:sdList=sdList >
+        </user-order-sub-detail-list>
 
-        <ktt-list v-if=showKttList 
-        v-bind:kttList=kttList
-        v-bind:kttPagingInfo=kttPagingInfo></ktt-list>
+        <ktt-list 
+          v-if=showKttList 
+          v-bind:kttList=kttList
+        ></ktt-list>
 
       </v-container>
       </v-card>
@@ -104,8 +106,6 @@ export default {
       btnTitle3: '사용자-KTT open',
 
       resPagingInfo: {},
-      sdPagingInfo:{},
-      kttPagingInfo:{},
       oldValue:'',
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
@@ -204,7 +204,7 @@ export default {
     var params={
       guid: this.pObject.guid,
       page_no: '1',
-      view_cnt: '5'
+      view_cnt: '999999'
     }
 
     axios
@@ -214,13 +214,10 @@ export default {
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.sdList = response.data.data.list;
-            this.sdPagingInfo = response.data.data.paging_info;
-
             this.showSubDetailList=!this.showSubDetailList;
             this.subBtn=!this.subBtn
           }else{
             this.sdList = [];
-            this.sdPagingInfo = {};
             this.showSubDetailList=false
             alert(resCode + " / " + resMsg);
           }
@@ -235,7 +232,7 @@ export default {
     var params={
       guid: this.pObject.guid,
       page_no: '1',
-      view_cnt: '5'
+      view_cnt: '999999'
     }
     axios
         .post(url, params, headers)
@@ -245,13 +242,11 @@ export default {
           console.log(resCode)
           if(resCode == 200){
             this.kttList = response.data.data.list;
-            this.kttPagingInfo = response.data.data.paging_info
 
             this.showKttList =!this.showKttList
             this.kttBtn=!this.kttBtn
           }else{
             this.kttList = [];
-            this.kttPagingInfo = {};
             alert(resCode + " / " + resMsg);
             this.showKttList=false
           }

@@ -55,9 +55,9 @@
               <v-select 
                   item-text="server_name" 
                   item-value="local_gw_id" 
+                  label="국사코드"
                   :items="localGwOptions" 
                   v-model="param.local_gw_id" 
-                  v-on:change="searchMethod"
                   ></v-select>
           </v-col>
 

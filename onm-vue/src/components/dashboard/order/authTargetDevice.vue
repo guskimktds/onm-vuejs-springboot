@@ -93,31 +93,43 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date
+
+      if (params.oderno !== undefined && params.oderno !== "") {
+        newParams.oderno = params.oderno;
+      } else if (
+        this.searchParam.oderno !== undefined &&
+        this.searchParam.oderno !== ""
+      ) {
+        newParams.oderno = this.searchParam.oderno;
       }
 
-      if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date
+      if (params.mac_id !== undefined && params.mac_id !== "") {
+        newParams.mac_id = params.mac_id;
+      } else if (
+        this.searchParam.mac_id !== undefined &&
+        this.searchParam.mac_id !== ""
+      ) {
+        newParams.mac_id = this.searchParam.mac_id;
       }
 
-      if(params.oderno !== undefined && params.oderno !== ''){
-        newParams.oderno = params.oderno
+      if (params.open_oderno !== undefined && params.open_oderno !== "") {
+        newParams.open_oderno = params.open_oderno;
+      } else if (
+        this.searchParam.open_oderno !== undefined &&
+        this.searchParam.open_oderno !== ""
+      ) {
+        newParams.open_oderno = this.searchParam.open_oderno;
       }
 
-      if(params.mac_id !== undefined && params.mac_id !== ''){
-        newParams.mac_id = params.mac_id
+      if(params.is_masking !== undefined && params.is_masking !== ''){
+        newParams.is_masking = params.is_masking ? "N" : "Y";
+      }else if(
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
 
-      if(params.open_oderno !== undefined && params.open_oderno !== ''){
-        newParams.open_oderno = params.open_oderno
-      }   
-      
-      if(params.is_masking===true){
-        newParams.is_masking='N'
-      }else if(params.is_masking===false){
-        newParams.is_masking='Y'
-      }
       return newParams
     }
   }

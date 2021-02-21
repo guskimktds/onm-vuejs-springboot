@@ -107,20 +107,40 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if(params.onm_user_id !== undefined && params.onm_user_id !== ''){
-        newParams.onm_user_id = params.onm_user_id
+      if (params.onm_user_id !== undefined && params.onm_user_id !== "") {
+        newParams.onm_user_id = params.onm_user_id;
+      } else if (
+        this.searchParam.onm_user_id !== undefined &&
+        this.searchParam.onm_user_id !== ""
+      ) {
+        newParams.onm_user_id = this.searchParam.onm_user_id;
       }
 
-      if(params.cmd_type !== undefined && params.cmd_type !== ''){
-        newParams.cmd_type = params.cmd_type
+      if (params.cmd_type !== undefined && params.cmd_type !== "") {
+        newParams.cmd_type = params.cmd_type;
+      } else if (
+        this.searchParam.cmd_type !== undefined &&
+        this.searchParam.cmd_type !== ""
+      ) {
+        newParams.cmd_type = this.searchParam.cmd_type;
       }
 
-      if(params.uri !== undefined && params.uri !== ''){
-        newParams.uri = params.uri
+      if (params.cmd_type !== undefined && params.cmd_type !== "") {
+        newParams.cmd_type = params.cmd_type;
+      } else if (
+        this.searchParam.cmd_type !== undefined &&
+        this.searchParam.cmd_type !== ""
+      ) {
+        newParams.cmd_type = this.searchParam.cmd_type;
       }
 
       if(params.is_masking !== undefined && params.is_masking !== ''){
-        newParams.is_masking = params.is_masking
+        newParams.is_masking = params.is_masking ? "N" : "Y";
+      }else if(
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
 
       return newParams

@@ -14,8 +14,6 @@
             <v-data-table
                 :headers="headers"
                 :items="sdList"
-                :options.sync="options"
-                :server-items-length="sdPagingInfo.total_cnt"
                 class="elevation-1"
             >          
             </v-data-table>
@@ -24,14 +22,10 @@
 </template>
 <script>
 export default {
-    props: ['sdList', 'sdPagingInfo'],
+    props: ['sdList'],
     data() {
       return {
-        dialog: false,
-        dialogDelete: false,
         editedIndex: -1,
-        options:{},
-        loading:true,
         headers: [
           {
             text: '상품코드', align: 'start',
@@ -43,24 +37,6 @@ export default {
         ]
       }
     },
-    methods: {
-      getDataFromApi () {
-        this.loading = true     
-        this.$emit("pagination", this.options)
-      },
-    
-    },
-    watch: {
-      options: {
-        handler () {
-          this.getDataFromApi()
-        },
-        deep: true,
-      },
-    },
-    mounted () {
-      this.getDataFromApi()
-    }
 }
 </script>
 <style>

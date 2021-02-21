@@ -133,6 +133,7 @@ export default{
       ){
         newParams.user_id=this.searchParam.user_id
       }
+
       if(params.user_name !== undefined && params.user_name !== ''){
         newParams.user_name = params.user_name
       }else if(
@@ -141,6 +142,7 @@ export default{
       ){
         newParams.user_name=this.searchParam.user_name
       }
+
       if(params.status_code !== undefined && params.status_code !== ''){
         newParams.status_code = params.status_code
       }else if(
@@ -149,11 +151,16 @@ export default{
       ){
         newParams.status_code=this.searchParam.status_code
       }
-      if(params.is_masking===true){
-        newParams.is_masking='N'
-      }else if(params.is_masking===false){
-        newParams.is_masking='Y'
+
+      if(params.is_masking !== undefined && params.is_masking !== ''){
+        newParams.is_masking = params.is_masking ? "N" : "Y";
+      }else if(
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
+
       return newParams
     }
   },

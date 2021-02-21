@@ -16,8 +16,6 @@
       <v-data-table
         :headers="headers"
         :items="kttList"
-        :options.sync="options"
-        :server-items-length="kttPagingInfo.total_cnt"
         class="elevation-1"
       >
       </v-data-table>
@@ -46,22 +44,6 @@ export default {
     }
   },
 
-  methods: {
-    getDataFromApi() {
-      this.loading = true;
-      this.$emit("pagination", this.options);
-    },
-    
-  },
-
-  watch: {
-    options: {
-      handler() {
-        this.getDataFromApi();
-      },
-      deep: true,
-    },
-  },
     
 }
 </script>

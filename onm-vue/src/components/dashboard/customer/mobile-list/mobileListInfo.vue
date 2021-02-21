@@ -38,7 +38,6 @@ export default {
       reqPagingInfo:{
         page_no:1,
         view_cnt:10,
-        local_gw_id:''
       },
       mobilePagingInfo:{},
       searchParam:{
@@ -51,9 +50,7 @@ export default {
       localGwOptions:[]
     };
   },
-  mounted() {  
-    console.log('보내주는 값')
-    console.log(this.searchParam)
+  created() {  
     axios
     .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
     .then((response) => {

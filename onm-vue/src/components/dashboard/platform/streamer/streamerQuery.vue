@@ -18,6 +18,7 @@
                         :items="localGwOptions" 
                         v-model="param.local_gw_id" 
                         v-on:change="searchMethod"
+                        label="국사코드"
                         ></v-select>
                 </v-col>
             </v-row>

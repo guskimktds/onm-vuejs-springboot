@@ -47,7 +47,7 @@ export default {
       resPagingInfo: {},
       searchParam: {
         local_gw_id: "",
-        process: "",
+        process_type: "",
         process_status: ""
       },
       localGwOptions:[],
@@ -131,13 +131,13 @@ export default {
         newParams.local_gw_id = this.searchParam.local_gw_id;
       }
 
-      if (params.proc_type !== undefined && params.proc_type !== "") {
-        newParams.proc_type = params.proc_type;
+      if (params.process_type !== undefined && params.process_type !== "") {
+        newParams.process_type = params.process_type;
       } else if (
-        this.searchParam.proc_type !== undefined &&
-        this.searchParam.proc_type !== ""
+        this.searchParam.process_type !== undefined &&
+        this.searchParam.process_type !== ""
       ) {
-        newParams.proc_type = this.searchParam.proc_type;
+        newParams.process_type = this.searchParam.process_type;
       }
 
       if (params.process_status !== undefined && params.process_status !== "") {
