@@ -7,16 +7,6 @@ import menuMock from "../mock/authMenuList.json"
 
 Vue.use(Vuex)
 
-// const resourceHost = "http://localhost:3000"
-// const headers = {
-//     'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-//     'Content-Type': 'application/json'
-//   }
-
-// const dataState = createPersistedState({
-//   paths: ['module']
-// })
-
 export default new Vuex.Store({
     //const store = new Vuex.Store({
     state: {
@@ -34,11 +24,6 @@ export default new Vuex.Store({
             'Content-Type': 'application/json'
           }
     },
-    // modules: {
-    //   dataStore
-    // },
-    // modules: module,
-    // plugins: [createPersistedState()],
     plugins: [createPersistedState()],
     getters: {
         getAuthenticated: function(state) {
@@ -50,25 +35,11 @@ export default new Vuex.Store({
     },
     mutations: {
         LOGIN(state, param) {
-            // console.log("mutations ============ ")
-            console.log(param)
-            // console.log(param.data)
-            // console.log(JSON.parse(param.data.menu))
-            console.log(param.id)
-                // console.log("mutations end ============ ")
             state.accessToken = param
             state.isAuthenticated = true
-            // state.menu = JSON.parse(param.data.menu)
-            // state.menu = param.menuMock
-            console.log(param.data.auth_group_list[0].auth_group_list)
             state.topMenu = param.data.auth_group_list[0].auth_group_list 
             state.menu = menuMock
-
             state.onmUserId = param.id
-            // state.headers = {
-            //     'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-            //     'Content-Type': 'application/json'
-            //   }
         },
         LOGOUT(state) {
             state.accessToken = null
@@ -96,10 +67,6 @@ export default new Vuex.Store({
             }
             console.log(params)
             return axios.post(url, params, this.headers)
-                // .then(({ data }) => {
-                //     console.log(id)
-                //     commit("LOGIN", { data, id })
-                // })
                 .then((response) => {
                     console.log(response.data)
                     var resCode = response.data.res_code
@@ -111,17 +78,13 @@ export default new Vuex.Store({
               
                     }else{
                         console.log(resCode,resMsg)
-                        // commit("LOGIN", { menuMock, id })
+                        alert("사번 또는 비밀번호가 0회\n오류가 발생하였습니다.\n로그인정보를 확인하시길 바랍니다");
                     }
-                  })
+                })
         },
         LOGOUT({ commit }) {
             // commit("LOGOUT", id)
             var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10002/user_logout`
-            // var params = {
-            //     "user_id":id
-            // }
-            // console.log(params)
             return axios
                 .post(url, this.headers)
                 .then(({ data }) => {
@@ -131,5 +94,3 @@ export default new Vuex.Store({
         },
     },
 })
-
-//export default store;

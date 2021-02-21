@@ -96,6 +96,26 @@
             </v-col>
           </v-row>                  
       </base-material-card>
+
+      <v-card>
+        <v-form justify="center">
+          <v-container class="py-0">
+            <v-row><v-col></v-col></v-row>
+            <v-row>
+              <v-col id="information">
+                <p>
+                  <b>안내</b><br>
+                  비밀번호를 변경을 원하실 경우 운영자에게 연락하시길 바랍니다.
+                </p>
+                <p>연락처 : 000-000-0000 / 이메일 : 0000000000@ktfriend.com</p>
+                <img src="@/img/exclamationMark.png" id="warn-icon"/>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-card>
+
+
     </v-container>
 </template>
 
@@ -140,6 +160,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
+#warn-icon {
+  width: 50px;
+  height: 50px;
+  transform: rotate(180deg); 
+  transform-origin: left top;
+  position: relative; top:-50px; left:-20px;
+}
 </style>

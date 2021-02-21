@@ -19,7 +19,10 @@
     <v-toolbar dense>
       <v-toolbar-items>
         <!-- <v-btn text v-for="menu in topMenu" :key="menu.menu_name" v-on:click="changeTap(menu.children)" :to="menu.path"> -->
-        <v-btn text v-for="menu in topMenu" :key="menu.menu_name" v-on:click="changeTap(menu.menu_id)">
+        <v-btn text v-for="menu in topMenu" 
+          :key="menu.menu_name" 
+          v-on:click="changeTap(menu.menu_id)"
+        >
           {{ menu.menu_name }}
         </v-btn>
       </v-toolbar-items>
@@ -91,8 +94,10 @@ export default {
     changeTap(param){
       // console.log(param);
       var selectMenu = this.subMenu.filter(obj => { return obj['menu_id'] === param})
-      // console.log(selectMenu[0].children)
+      // console.log(selectMenu);
       EventBus.$emit('top-path-login', selectMenu[0].children);
+      var path = selectMenu[0].children[0].children[0].path;
+      this.$router.push(path);
     },
     signOutClicked: function() {
       // console.log("signOutClicked :"+this.$store.state.id)
