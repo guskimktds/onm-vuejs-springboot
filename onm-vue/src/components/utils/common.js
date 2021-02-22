@@ -20,7 +20,7 @@ export default () => {
 
     var currentDate = d.getFullYear() + "" + ("00" + (d.getMonth() + 1)).slice(-2) + "" + ("00" + d.getDate()).slice(-2) 
     var currentDateDashFormat = d.getFullYear() + "-" + ("00" + (d.getMonth() + 1)).slice(-2) + "-" + ("00" + d.getDate()).slice(-2) 
-
+    var currentMonthDefault = d.getFullYear() + "-" + ("00" + (d.getMonth() + 1)).slice(-2)
  
     //일주일전
     var dw = new Date()
@@ -28,19 +28,21 @@ export default () => {
     dw.setDate(dayOfMonth - 7)
     var lastWeek = dw.getFullYear() + "" + ("00" + (dw.getMonth() + 1)).slice(-2) + "" + ("00" + dw.getDate()).slice(-2) 
     var lastWeekDashFormat = dw.getFullYear() + "-" + ("00" + (dw.getMonth() + 1)).slice(-2) + "-" + ("00" + dw.getDate()).slice(-2) 
-
     //1개월전
     var dm = new Date();
     var monthOfYear = dm.getMonth();
     dm.setMonth(monthOfYear - 1)
     var lastMonth = dm.getFullYear() + "" + ("00" + (dm.getMonth() + 1)).slice(-2) + "" + ("00" + dm.getDate()).slice(-2) 
     var lastMonthDashFormat = dm.getFullYear() + "-" + ("00" + (dm.getMonth() + 1)).slice(-2) + "-" + ("00" + dm.getDate()).slice(-2) 
- 
+    var lastMonthDefault = dm.getFullYear() + "-" + ("00" + (dm.getMonth() + 1)).slice(-2) 
+
     const dateInfo = {
         current,
         currentDate,
+        currentMonthDefault,
         lastWeek,
         lastMonth,
+        lastMonthDefault,
         currentDateDashFormat,
         lastWeekDashFormat,
         lastMonthDashFormat

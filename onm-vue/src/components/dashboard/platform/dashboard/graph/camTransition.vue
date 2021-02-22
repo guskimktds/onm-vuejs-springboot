@@ -50,11 +50,9 @@ export default {
           // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
           // var params = this.param
           // console.log(this.param)
-
-          var newParam = this.param
-          if(this.param.search_type === "M"){
-            newParam = this.handleParam()
-          }
+          
+          var newParam = this.handleParam()
+          
 
           axios.post(url, newParam, this.$store.state.headers)
           .then((response) => {
@@ -120,8 +118,8 @@ export default {
       handleParam: function() {
         var result = {
           search_type : this.param.search_type,
-          start_date : this.param.start_date.slice(0,6),
-          end_date : this.param.end_date.slice(0,6)
+          start_date : this.param.start_date.replace(/-/g,""),
+          end_date : this.param.end_date.replace(/-/g,"")
         }
         return result
       }

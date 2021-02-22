@@ -58,11 +58,10 @@ export default {
           // var params = this.param
           // console.log(this.param)
           // this.param.search_type === "M" 이면 날짜를 YYYYMM (6자리로 변경해야함)
-          var newParam = this.param
-          if(this.param.search_type === "M"){
-            newParam = this.handleParam()
-          }
-          // console.log(newParam)
+          var newParam = this.handleParam()
+          
+          console.log('변경된 파라미터')
+          console.log(newParam)
           axios.post(url, newParam, this.$store.state.headers)
           .then((response) => {
             // console.log(response.data)
@@ -127,8 +126,8 @@ export default {
       handleParam: function() {
         var result = {
           search_type : this.param.search_type,
-          start_date : this.param.start_date.slice(0,6),
-          end_date : this.param.end_date.slice(0,6)
+          start_date : this.param.start_date.replace(/-/g,""),
+          end_date : this.param.end_date.replace(/-/g,"")
         }
         return result
       }

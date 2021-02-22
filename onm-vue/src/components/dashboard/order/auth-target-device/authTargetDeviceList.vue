@@ -61,9 +61,9 @@ export default {
       },
       switchString(values){
       if(values==='S'){
-        return '양호(D)'
+        return '정상'
       }else if(values==='D'){
-        return '수리중(D)'
+        return '삭제'
           }
         }
       },
