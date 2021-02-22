@@ -55,7 +55,7 @@
         v-for="(item, i) in computedItems"
         :key="i"
         v-model="item.active"
-        :prepend-icon="'mdi-account'"
+        :prepend-icon="item.icon"
         no-action
       >
         <template v-slot:activator>
