@@ -92,11 +92,13 @@ export default {
   },
   methods: {
     changeTap(param){
-      var topMenuId = this.topMenu[0].menu_id;
-      var selectMenu = this.subMenu.filter(obj => { return obj['menu_id'] === topMenuId})
+      // console.log(param);
+      var selectMenu = this.subMenu.filter(obj => { return obj['menu_id'] === param})
+      // console.log(selectMenu);
       var path = selectMenu[0].children[0].children[0].path;
       this.$router.push(path);
-      EventBus.$emit('top-path-login', selectMenu[0].children); 
+      EventBus.$emit('top-path-login', selectMenu[0].children);
+      
     },
     signOutClicked: function() {
       // console.log("signOutClicked :"+this.$store.state.id)
