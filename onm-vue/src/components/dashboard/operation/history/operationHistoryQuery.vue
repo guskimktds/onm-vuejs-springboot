@@ -14,27 +14,9 @@
                 <!-- <v-col cols="12" sm="6" md="3">
                     <v-text-field label="사번">
                     </v-text-field>
-                </v-col> -->
-                <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
-                        label="ONM 처리자ID(사번)" 
-                        v-model="param.onm_user_id"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col> 
-                <v-col cols="12" sm="6" md="3">
-                    <v-text-field 
-                        dense 
-                        label="호출 URI" 
-                        v-model="param.uri"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col>     
+                </v-col> -->     
                    
-                <v-col cols="12" sm="6" md="5">
+                <v-col cols="12" sm="6" md="12">
                     <v-radio-group
                         v-model="param.cmd_type"
                         row
@@ -61,21 +43,41 @@
                         ></v-radio>
                     </v-radio-group>
                 </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="12" sm="6" md="2">
+                    <v-text-field 
+                        dense 
+                        label="ONM 처리자ID(사번)" 
+                        v-model="param.onm_user_id"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                <v-col cols="12" sm="6" md="3">
+                    <v-text-field 
+                        dense 
+                        label="호출 URI" 
+                        v-model="param.uri"
+                        placeholder="Placeholder" 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                
+                <v-col cols="12" sm="6" md="3">
+                    <v-btn elevation="2" medium
+                    v-on:click="searchMethod"                    
+                    >
+                        검색
+                    </v-btn>
+                </v-col>    
                 <v-col cols="12" sm="6" md="2">
                     <v-switch
                         v-model="param.is_masking"                    
                         :label="`마스킹(Y/N)`"
                         color="secondary"
                     ></v-switch>
-                </v-col>
-                
-                <v-col cols="12" sm="6" md="1">
-                    <v-btn elevation="2" medium
-                    v-on:click="searchMethod"                    
-                    >
-                        검색
-                    </v-btn>
-                </v-col>                
+                </v-col>            
             </v-row>
         </base-material-card>       
     </v-container>

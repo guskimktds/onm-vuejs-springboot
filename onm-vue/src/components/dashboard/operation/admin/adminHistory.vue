@@ -8,12 +8,8 @@
         <admin-history-list 
         v-bind:pList=pList
         v-bind:resPagingInfo="resPagingInfo"
-        @pagination="searchToButton"
-        @child="clickMaskObject"></admin-history-list>
+        @pagination="searchToButton"></admin-history-list>
             
-      <modal
-      v-bind:mask="mask"
-      ref="modal"></modal>
       </v-card>
     </v-container>
 </template>
@@ -21,14 +17,12 @@
 <script>
 import AdminHistoryQuery from './adminHistoryQuery'
 import AdminHistoryList from './adminHistoryList'
-import Modal from './adminHistoryModal'
 import axios from "axios"
 
 export default {
   components:{
     AdminHistoryQuery,
-    AdminHistoryList,
-    Modal
+    AdminHistoryList
   },
   data () {
     return {
@@ -45,7 +39,8 @@ export default {
         user_id: '',
         tel_no: '',
         login_key: '',
-        admin_type: 'N'
+        admin_type: 'N',
+        is_masking:''
       }
     }
   },
@@ -76,42 +71,6 @@ export default {
       .catch((ex) => {
         console.log('조회 실패',ex)
       })
-    },
-
-    clickMaskObject:function(values){
-
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15005/get_mng_access_history`
-
-      if(values){
-        console.log('클릭값')
-        console.log(values)
-
-        var params={
-          admin_id: values,
-          page__no:"1",
-          view_cnt:"5",
-          is_masking: "N"
-        }
-        var reqParams=params
-
-      axios.post(url, reqParams, this.$store.state.headers)
-      .then((response) => {
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if(resCode == 200){
-          this.mask = response.data.data.mng_access_history_list[0];
-          console.log(this.mask)
-        }else{
-          this.mask = [];
-          alert(resCode + " / " + resMsg);
-        }
-      })
-      .catch((ex) => {
-        console.log('조회 실패',ex)
-        })
-      }
-
-      this.$refs.modal.open();
     },
 
     handleParams: function(params){
@@ -164,6 +123,15 @@ export default {
         this.searchParam.login_key !== ""
       ) {
         newParams.login_key = this.searchParam.login_key;
+      }
+
+      if(params.is_masking !== undefined && params.is_masking !== ''){
+        newParams.is_masking = params.is_masking ? "N" : "Y";
+      }else if(
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
 
       newParams.admin_type = this.searchParam.admin_type;
