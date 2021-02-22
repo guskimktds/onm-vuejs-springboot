@@ -6,6 +6,11 @@
         class="px-5 py-3"
         >
         <v-row>
+                <v-col>
+                    <!-- 디자인을 위한 공백 처리 -->
+                </v-col>
+            </v-row>
+        <v-row>
           <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense

@@ -10,57 +10,48 @@
             title="고객이전 단말 상태 조회"
             class="px-5 py-3"
         >
-            <v-row>
-                <!-- <v-col cols="12" sm="6" md="4">
-                    <v-text-field 
-                        dense 
-                        label="검색기간" 
-                        v-model="param.start_date"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col>   -->
-                <v-col cols="12" sm="6" md="4">
+        <v-row>
+            
+                <v-col cols="3">
                     <v-menu
-                    ref="menu"
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    :return-value.sync="date"
-                    transition="scale-transition"
                     offset-y
                     min-width="290px"
-                    attach
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="dateRangeText"
-                        label="검색기간"
+                        v-model="param.start_date"
+                        label="희망일자 시작일"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
                         v-on="on"
                         ></v-text-field>
                     </template>
-                    <v-date-picker
-                        v-model="param.searchDate"
-                        no-title
-                        scrollable
-                        range
-                    >
-                        <v-spacer></v-spacer>
-                        <v-btn text color="primary" @click="menu = false">
-                        Cancel
-                        </v-btn>
-                        <v-btn
-                        text
-                        color="primary"
-                        @click="$refs.menu.save(date)"
-                        >
-                        OK
-                        </v-btn>
+                    <v-date-picker v-model="param.start_date" no-title scrollable>
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+                <v-col cols="3">
+                    <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.end_date"
+                        label="희망일자 종료일"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.end_date" no-title scrollable>
+                    </v-date-picker>
+                    </v-menu>
+                </v-col>
+            </v-row>
+            <v-row>
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
                         dense 
@@ -70,7 +61,7 @@
                     >                        
                     </v-text-field>
                 </v-col>       
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12" sm="6" md="2">
                     <v-text-field 
                         dense 
                         label="단말종류" 
@@ -79,7 +70,7 @@
                     >                        
                     </v-text-field>
                 </v-col> 
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12" sm="6" md="2">
                     <v-text-field 
                         dense 
                         label="장치ID" 
@@ -88,7 +79,7 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12" sm="6" md="2">
                     <v-text-field 
                         dense 
                         label="상태코드" 
@@ -97,7 +88,7 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12" sm="6" md="2">
                     <v-btn 
                         elevation="2" 
                         medium
@@ -116,42 +107,13 @@ export default {
     props:['param'],
     data() {
         return {           
-            searchDate: ["", ""],            
-            date: false,
-            menu: false
         };
     },
-    // methods: {
-    //     searchMethod: function() {
-    //         this.$emit('search', this.param)
-    //     }
-    // },
-    computed: {
-        dateRangeText() {
-            return this.searchDate.join(" ~ ");
-        },
-    }, 
+
     methods: {
         searchMethod: function() {
-            var newParam = this.param
-            var startDate, endDate
-            console.log(this.searchDate.length)
-            if(this.searchDate.length > 1)
-            {
-                if(this.searchDate[0] > this.searchDate[1]){
-                    startDate = this.searchDate[1]
-                    endDate = this.searchDate[0]
-                }
-                else{
-                    startDate = this.searchDate[0]
-                    endDate = this.searchDate[1]
-                }
-            }
-            newParam.start_date = startDate.replace(/-/g,"")
-            newParam.end_date = endDate.replace(/-/g,"")
-            console.log(newParam)
 
-            this.$emit('search', newParam)
+            this.$emit('search', this.param)
         }
     }, 
 }

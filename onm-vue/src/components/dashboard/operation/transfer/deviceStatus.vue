@@ -13,6 +13,7 @@
 <script>
 import deviceStatusQuery from './deviceStatusQuery'
 import deviceStatusList from './deviceStatusList'
+import dateInfo from '../../../utils/common'
 
 //로그인 시 서버에서 불러오면 수정해야함
 import axios from "axios"
@@ -33,8 +34,8 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        start_date: '',
-        end_date: '',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         mig_seq: '',
         device_type: '',
         device_id: '',
@@ -109,11 +110,21 @@ export default {
       }
 
       if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date
+        newParams.start_date = params.start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
+      ){
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
       }
 
       if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
 
       if(params.mig_seq !== undefined && params.mig_seq !== ''){

@@ -9,7 +9,11 @@
             title="TEMP ID 정보 조회"
             class="px-5 py-3"
         >
-
+            <v-row>
+                <v-col>
+                    <!-- 디자인을 위한 공백 처리 -->
+                </v-col>
+            </v-row>
             <v-row>
                 <v-col cols="12" md="3">
                     <v-text-field dense label="GUID" placeholder="Placeholder" v-model="param.guid">                        

@@ -9,7 +9,11 @@
             title="현장작업자 조회"
             class="px-5 py-3"
         >
-
+            <v-row>
+                <v-col>
+                    <!-- 디자인을 위한 공백 처리 -->
+                </v-col>
+            </v-row>
             <v-row>
                 <v-col cols="12" md="2">
                     <v-text-field dense label="전화번호" placeholder="Placeholder" v-model="param.tel_no">                        

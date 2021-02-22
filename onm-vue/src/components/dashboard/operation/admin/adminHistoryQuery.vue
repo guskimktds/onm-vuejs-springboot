@@ -11,6 +11,11 @@
         class="px-5 py-3"
         >
             <v-row>
+                <v-col>
+                    <!-- 디자인을 위한 공백 처리 -->
+                </v-col>
+            </v-row>
+            <v-row>
                 <v-col cols="12" sm="6" md="1">
                     <v-text-field 
                         dense 
@@ -38,6 +43,16 @@
                     >                        
                     </v-text-field>
                 </v-col> 
+                <v-col cols="12" sm="6" md="2">
+                    <v-switch
+                        v-model="param.is_masking"                    
+                        :label="`마스킹(Y/N)`"
+                        color="secondary"
+                    ></v-switch>
+                </v-col>
+            </v-row>
+
+            <v-row>
                 <v-col cols="12" sm="6" md="3">
                     <v-text-field 
                         dense 
