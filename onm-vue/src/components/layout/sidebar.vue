@@ -1,21 +1,4 @@
 <template>
-  <!-- <div id='sidebar'>
-    <header>
-      <span></span>
-        {{ menu }}
-      <a></a>
-    </header>
-    <ul>
-      <li v-for="subMenu in newMenus" :key="subMenu.name">
-        <router-link v-bind:to="subMenu.path">
-          {{ subMenu.name }}
-          
-        </router-link>
-        <sub-menu :menus="subMenu.children"></sub-menu>
-
-      </li>
-    </ul>
-  </div> -->
   <v-navigation-drawer
     id="core-navigation-drawer"
     v-model="drawer"
@@ -28,49 +11,21 @@
     width="260"
     v-bind="$attrs"
   >
-    <template v-slot:img="props">
-      <v-img
-        :gradient="`to bottom, ${barColor}`"
-        v-bind="props"
-      />
-    </template>
+  <template v-slot:img="props">
+    <v-img
+      :gradient="`to bottom, ${barColor}`"
+      v-bind="props"
+    />
+  </template>
 
-    <v-divider class="mb-1" />
-
-    <!-- <v-list
-      dense
-      nav
-    >
-      <v-list-item>
-        <v-list-item-avatar
-          class="align-self-center"
-          color="white"
-          contain
-        >
-          <v-img
-            src="https://demos.creative-tim.com/vuetify-material-dashboard/favicon.ico"
-            max-height="30"
-          />
-        </v-list-item-avatar>
-
-        <v-list-item-content>
-          <v-list-item-title
-            class="display-1"
-            v-text="profile.title"
-          />
-        </v-list-item-content>
-      </v-list-item>
-    </v-list> -->
+  <v-divider class="mb-1" />
     <v-list dense>
-      <v-list-item>
+      <v-list-item v-on:click="linkToFirstMenu()">
         <v-list-item-avatar
           class="align-self-center"
           color="white"
-          
         >
-          <v-img
-            src="@/assets/images/kt_ci.png"
-          />
+          <v-img src="@/assets/images/kt_ci.png" />
         </v-list-item-avatar>
         <v-list-item-title class="display-1">
           {{title}}
@@ -78,65 +33,70 @@
       </v-list-item>
     </v-list>
 
-    <v-divider class="mb-2" /> 
-
-    <!-- <v-list expand nav>
-
-      <v-list-item-group
-        v-for="subMenu in newMenus" :key="subMenu.name"
-      >
-        <router-link v-bind:to="subMenu.path">
-          {{ subMenu.name }}
-          
-        </router-link>
-        <sub-menu :menus="subMenu.children"></sub-menu>
-
-      </v-list-item-group>
-
-    </v-list> -->
-
+<!--
+  <v-divider class="mb-2" /> 
     <v-list nav>
-
       <div />
         <template v-for="(item, i) in computedItems">
-        <base-item-group
-          
-          :key="`group-${i}`"
-          :item="item"
-        >
-          <!--  -->
-          <!-- <sub-menu :menus="item.children"></sub-menu> -->
-        </base-item-group>
-        <!-- <base-item
-          v-else
-          :key="`item-${i}`"
-          :item="item"
-        /> -->
-        
-      </template>
-      
+          <base-item-group          
+            :key="`group-${i}`"
+            :item="item"
+          >
+          </base-item-group>
+        </template>
       <div />
     </v-list>
+-->
+
+  <v-divider class="mb-2" /> 
+  <div>   
+    <v-list>
+      <v-list-group
+        v-for="(item, i) in computedItems"
+        :key="i"
+        v-model="item.active"
+        :prepend-icon="'mdi-account'"
+        no-action
+      >
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.name"></v-list-item-title>
+          </v-list-item-content>
+        </template>
+
+        <v-list-item
+          v-for="subItem in item.children"
+          :key="subItem.component"
+          :to="subItem.path"
+        >
+          <v-list-item-content>
+            <v-list-item-title v-text="subItem.name"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
+    </v-list>
+  </div>
 
   </v-navigation-drawer>
+
+
+
+
 </template>
 
 <script>
 
 import { mapState } from 'vuex'
 import EventBus from '../../EventBus'
-// import subMenu from './subMenu.vue'
 
 export default {
-  //props:['subMenus'],
   props: {
-      expandOnHover: {
-        type: Boolean,
-        default: false,
-      },
+    expandOnHover: {
+      type: Boolean,
+      default: false,
     },
+  },
   components: {
-    // 'sub-menu': subMenu
   },
   data () {
     return {
@@ -145,42 +105,39 @@ export default {
     }
   },
   created(){
-      EventBus.$on('top-path-login', (payload)=>{          
-        // console.log(payload)
-        this.newMenus = payload
-      });
+    EventBus.$on('top-path-login', (payload)=>{          
+      // console.log(payload)
+      this.newMenus = payload
+    });
 
-      EventBus.$on('top-path-logout', ()=>{          
-        console.log('top-path-logout')
-        this.newMenus = []
-        console.log(this.newMenus)
-      });
+    EventBus.$on('top-path-logout', ()=>{          
+      console.log('top-path-logout')
+      this.newMenus = []
+      console.log(this.newMenus)
+    });
   },
 
   computed: {
-      ...mapState(['barColor', 'barImage']),
-      drawer: {
-        get () {
-          return this.$store.state.drawer
-        },
-        set (val) {
-          this.$store.commit('SET_DRAWER', val)
-        },
+    ...mapState(['barColor', 'barImage']),
+    drawer: {
+      get () {
+        return this.$store.state.drawer
       },
-      computedItems () {
-        return this.newMenus.map(this.mapItem)
-      },
-      profile () {
-        return {
-          avatar: true,
-          // title: this.$t('avatar'),
-        }
+      set (val) {
+        this.$store.commit('SET_DRAWER', val)
       },
     },
+    computedItems () {
+      return this.newMenus.map(this.mapItem)
+    },
+    profile () {
+      return {
+        avatar: true,
+        // title: this.$t('avatar'),
+      }
+    },
+  },
   methods: {
-    // openSubMenu: function(){
-    //   console.log("open sub");
-    // }
     mapItem (item) {
         return {
           ...item,
@@ -189,6 +146,10 @@ export default {
           name: item.name
         }
       },
+
+    linkToFirstMenu(){
+      alert("link")
+    }
   }
 }
 </script>
@@ -248,4 +209,6 @@ export default {
 
           +rtl()
             margin-left: 8px
+
+
 </style>

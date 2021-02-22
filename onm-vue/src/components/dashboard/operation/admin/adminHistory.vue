@@ -45,7 +45,7 @@ export default {
         user_id: '',
         tel_no: '',
         login_key: '',
-        admin_type: ''
+        admin_type: 'N'
       }
     }
   },
@@ -130,25 +130,43 @@ export default {
         newParams.view_cnt = params.itemsPerPage;
       }
 
-      if(params.admin_id !== undefined && params.admin_id !== ''){
-        newParams.admin_id = params.admin_id
+      if (params.admin_id !== undefined && params.admin_id !== "") {
+        newParams.admin_id = params.admin_id;
+      } else if (
+        this.searchParam.admin_id !== undefined &&
+        this.searchParam.admin_id !== ""
+      ) {
+        newParams.admin_id = this.searchParam.admin_id;
       }
 
-      if(params.user_id !== undefined && params.user_id !== ''){
-        newParams.user_id = params.user_id
+      if (params.user_id !== undefined && params.user_id !== "") {
+        newParams.user_id = params.user_id;
+      } else if (
+        this.searchParam.user_id !== undefined &&
+        this.searchParam.user_id !== ""
+      ) {
+        newParams.user_id = this.searchParam.user_id;
       }
 
-      if(params.tel_no !== undefined && params.tel_no !== ''){
-        newParams.tel_no = params.tel_no
+      if (params.tel_no !== undefined && params.tel_no !== "") {
+        newParams.tel_no = params.tel_no;
+      } else if (
+        this.searchParam.tel_no !== undefined &&
+        this.searchParam.tel_no !== ""
+      ) {
+        newParams.tel_no = this.searchParam.tel_no;
       }
 
-      if(params.login_key !== undefined && params.login_key !== ''){
-        newParams.login_key = params.login_key
+      if (params.login_key !== undefined && params.login_key !== "") {
+        newParams.login_key = params.login_key;
+      } else if (
+        this.searchParam.login_key !== undefined &&
+        this.searchParam.login_key !== ""
+      ) {
+        newParams.login_key = this.searchParam.login_key;
       }
 
-      if(params.admin_type !== undefined && params.admin_type !== ''){
-        newParams.admin_type = params.admin_type
-      }
+      newParams.admin_type = this.searchParam.admin_type;
 
       return newParams
     }

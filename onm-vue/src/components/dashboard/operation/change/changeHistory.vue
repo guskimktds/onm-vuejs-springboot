@@ -106,16 +106,31 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if(params.user_id !== undefined && params.user_id !== ''){
-        newParams.user_id = params.user_id
+      if (params.user_id !== undefined && params.user_id !== "") {
+        newParams.user_id = params.user_id;
+      } else if (
+        this.searchParam.user_id !== undefined &&
+        this.searchParam.user_id !== ""
+      ) {
+        newParams.user_id = this.searchParam.user_id;
       }
 
-      if(params.tel_no !== undefined && params.tel_no !== ''){
-        newParams.tel_no = params.tel_no
+      if (params.tel_no !== undefined && params.tel_no !== "") {
+        newParams.tel_no = params.tel_no;
+      } else if (
+        this.searchParam.tel_no !== undefined &&
+        this.searchParam.tel_no !== ""
+      ) {
+        newParams.tel_no = this.searchParam.tel_no;
       }
-
-      if(params.admin_type !== undefined && params.admin_type !== ''){
-        newParams.admin_type = params.admin_type
+      
+      if (params.admin_type !== undefined && params.admin_type !== "") {
+        newParams.admin_type = params.admin_type;
+      } else if (
+        this.searchParam.admin_type !== undefined &&
+        this.searchParam.admin_type !== ""
+      ) {
+        newParams.admin_type = this.searchParam.admin_type;
       }
 
       return newParams

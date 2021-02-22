@@ -16,6 +16,7 @@
                 :items="pList"
                 :options.sync="options"
                 :server-items-length="mobilePagingInfo.total_cnt"
+                :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
                 class="elevation-1"
             >          
             </v-data-table>

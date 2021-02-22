@@ -15,11 +15,12 @@
           :headers="headers"
           :items="pList"
           class="elevation-1"
+          :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         >
           <template v-slot:top>
-            <v-toolbar
+            <!-- <v-toolbar
               flat
-            >
+            > -->
               <!-- <v-toolbar-title>My CRUD</v-toolbar-title> -->
               <!-- <v-divider
                 class="mx-4"
@@ -197,7 +198,7 @@
                 </v-card>
               </v-dialog>
 
-            </v-toolbar>
+            <!-- </v-toolbar> -->
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon

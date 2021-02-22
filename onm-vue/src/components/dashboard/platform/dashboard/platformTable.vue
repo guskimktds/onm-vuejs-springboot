@@ -24,6 +24,7 @@
                             :options.sync="options2"
                             :items-per-page="10"
                             class="elevation-1"
+                            :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
                             ></v-data-table>
                     </div>
                 </div>

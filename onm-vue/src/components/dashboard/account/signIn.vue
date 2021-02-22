@@ -65,6 +65,24 @@
         </v-form>
         
       </v-card>
+      <v-card>
+        <v-form justify="center">
+          <v-container class="py-0">
+            <v-row><v-col></v-col></v-row>
+            <v-row>
+              <v-col id="information">
+                <p>
+                  <b>주의</b><br>
+                  로그인 5회 이상 실패시 30분간 로그인 하실 수 없으며, 사번과 비밀번호를 잊으신 경우 운영자에게 연락하시길 바랍니다.
+                </p>
+                <p>연락처 : 000-000-0000 / 이메일 : 0000000000@ktfriend.com</p>
+                <img src="@/img/exclamationMark.png" id="warn-icon"/>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-card>
+
     </v-container>
 </template>
 
@@ -182,5 +200,17 @@ export default {
   a {
     color: #666;
   }
+}
+
+#warn-icon {
+  width: 50px;
+  height: 50px;
+  transform: rotate(180deg); 
+  transform-origin: left top;
+  position: relative; top:-50px; left:-20px;
+}
+
+#information{
+  margin-left:80px;
 }
 </style>
