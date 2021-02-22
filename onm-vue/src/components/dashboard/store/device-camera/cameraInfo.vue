@@ -7,7 +7,7 @@
       ></cameraInfo-query>
       <cameraInfo-list
         v-bind:dcList="dcList"
-        v-bind:resPagingInfo="resPagingInfo"
+        v-bind:dcPagingInfo="dcPagingInfo"
         @child="clickToSearchDetailObject"
         @pagination="setToSearchParams"
       ></cameraInfo-list>
@@ -61,7 +61,7 @@ export default {
         page_no: 1,
         view_cnt: 10,
       },
-      resPagingInfo: {},
+      dcPagingInfo: {},
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
@@ -86,10 +86,10 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.dcList = response.data.data.cam_list;
-            this.resPagingInfo = response.data.data.paging_info;
+            this.dcPagingInfo = response.data.data.paging_info;
           } else {
             this.dcList = [];
-            this.resPagingInfo = {};
+            this.dcPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })

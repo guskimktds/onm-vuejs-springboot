@@ -7,7 +7,7 @@
       ></sensorInfo-query>
       <sensorInfo-list
         v-bind:dsList="dsList"
-        v-bind:resPagingInfo="resPagingInfo"
+        v-bind:dsPagingInfo="dsPagingInfo"
         @child="clickToSearchDetailObject"
         @pagination="setToSearchParams"
       ></sensorInfo-list>
@@ -61,7 +61,7 @@ export default {
         page_no: 1,
         view_cnt: 10,
       },
-      resPagingInfo: {},
+      dsPagingInfo: {},
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
@@ -85,10 +85,10 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.dsList = response.data.data.sensor_list;
-            this.resPagingInfo = response.data.data.paging_info;
+            this.dsPagingInfo = response.data.data.paging_info;
           } else {
             this.dsList = [];
-            this.resPagingInfo = {};
+            this.dsPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })

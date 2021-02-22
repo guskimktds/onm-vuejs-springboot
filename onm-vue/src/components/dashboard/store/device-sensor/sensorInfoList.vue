@@ -15,7 +15,7 @@
         :headers="headers"
         :items="dsList"
         :options.sync="options"
-        :server-items-length="resPagingInfo.total_cnt"
+        :server-items-length="dsPagingInfo.total_cnt"
         class="elevation-1"
         @click:row="handleClick"
       >
@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  props: ["dsList",'resPagingInfo'],
+  props: ["dsList",'dsPagingInfo'],
   data() {
     return {
       dialog: false,

@@ -6,7 +6,7 @@
           v-bind:param=searchParam></sensorOrderInfo-query>
         <sensorOrderInfo-list 
         v-bind:soList="soList"
-        v-bind:resPagingInfo=resPagingInfo
+        v-bind:soPagingInfo=soPagingInfo
         
         @pagination="setToSearchParams"></sensorOrderInfo-list>
       </v-card>
@@ -37,7 +37,7 @@ export default {
         page_no:1,
         view_cnt:10
       },
-      resPagingInfo:{},
+      soPagingInfo:{},
       searchParam:{
         sensor_prod_id:'',
         status_code:'',
@@ -62,11 +62,11 @@ export default {
         var resMsg = response.data.res_msg;
         if(resCode == 200){
           this.soList = response.data.data.sensor_list;
-          this.resPagingInfo = response.data.data.paging_info
+          this.soPagingInfo = response.data.data.paging_info
     
         }else{
           this.soList = [];
-          this.resPagingInfo = {};
+          this.soPagingInfo = {};
           alert(resCode + " / " + resMsg);
         }
       })

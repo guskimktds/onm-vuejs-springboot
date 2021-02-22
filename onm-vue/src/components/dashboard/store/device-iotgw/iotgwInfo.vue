@@ -7,7 +7,7 @@
       ></iotgwInfo-query>
       <iotgwInfo-list
         v-bind:iotList="iotList"
-        v-bind:resPagingInfo="resPagingInfo"
+        v-bind:iotPagingInfo="iotPagingInfo"
         @child="clickToSearchDetailObject"
         @pagination="setToSearchParams"
       ></iotgwInfo-list>
@@ -61,7 +61,7 @@ export default {
         page_no: 1,
         view_cnt: 10,
       },
-      resPagingInfo: {},
+      iotPagingInfo: {},
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
@@ -86,10 +86,10 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.iotList = response.data.data.iotgw_list;
-            this.resPagingInfo = response.data.data.paging_info;
+            this.iotPagingInfo = response.data.data.paging_info;
           } else {
             this.iotList = [];
-            this.resPagingInfo = {};
+            this.iotPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })

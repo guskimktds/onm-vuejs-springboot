@@ -15,7 +15,7 @@
         :headers="headers"
         :items="pnList"
         :options.sync="options"
-        :server-items-length="resPagingInfo.total_cnt"
+        :server-items-length="pnPagingInfo.total_cnt"
         class="elevation-1"
       >
       </v-data-table>
@@ -26,7 +26,7 @@
 
 <script>
 export default {
-    props: ['pnList','resPagingInfo'],
+    props: ['pnList','pnPagingInfo'],
     //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
     data() {
     return {
@@ -58,33 +58,12 @@ export default {
  methods: {
 
       getDataFromApi () {
-        console.log(this.resPagingInfo)
+        console.log(this.pnPagingInfo)
         this.loading = true
 
         const { page, itemsPerPage } = this.options
         console.log(page, itemsPerPage)
         this.$emit("pagination", this.options)
-      },
-
-      fakeApiCall () {
-        return new Promise((resolve) => {
-          const {page, itemsPerPage } = this.options
-
-          let items = this.props.pnList
-          console.log(items)
-          const total = items.length
-
-          if (itemsPerPage > 0) {
-            items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
-          }
-
-          setTimeout(() => {
-            resolve({
-              items,
-              total,
-            })
-          }, 1000)
-        })
       }
       
     },

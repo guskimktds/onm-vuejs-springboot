@@ -15,7 +15,7 @@
         :headers="headers"
         :items="soList"
         :options.sync="options"
-        :server-items-length="resPagingInfo.total_cnt"
+        :server-items-length="soPagingInfo.total_cnt"
         class="elevation-1"
       >
       </v-data-table>
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  props: ["soList",'resPagingInfo'],
+  props: ["soList",'soPagingInfo'],
   data() {
     return {
       dialog: false,

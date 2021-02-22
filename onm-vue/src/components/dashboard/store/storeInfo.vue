@@ -115,31 +115,31 @@
         <sensor-order-list
           v-if="showSensorOrderList"
           v-bind:soList="soList"
-          v-bind:resPagingInfo="resPagingInfo"
+          v-bind:soPagingInfo="soPagingInfo"
         ></sensor-order-list>
 
         <device-camera-list
           v-if="showDeviceCameraList"
           v-bind:dcList="dcList"
-          v-bind:resPagingInfo="resPagingInfo"
+          v-bind:dcPagingInfo="dcPagingInfo"
         ></device-camera-list>
 
         <iot-gw-list
           v-if="showIotGwList"
           v-bind:iotList="iotList"
-          v-bind:resPagingInfo="resPagingInfo"
+          v-bind:iotPagingInfo="iotPagingInfo"
         ></iot-gw-list>
 
         <device-sensor-list
           v-if="showDeviceSensorList"
           v-bind:dsList="dsList"
-          v-bind:resPagingInfo="resPagingInfo"
+          v-bind:dsPagingInfo="dsPagingInfo"
         ></device-sensor-list>
 
         <phone-list
           v-if="showPhoneList"
           v-bind:pnList="pnList"
-          v-bind:resPagingInfo="resPagingInfo"
+          v-bind:pnPagingInfo="pnPagingInfo"
         ></phone-list>
       </v-container>
     </v-card>
@@ -239,6 +239,11 @@ export default {
       kttPagingInfo: {},
       psPagingInfo: {},
       vaPagingInfo: {},
+      soPagingInfo: {},
+      dcPagingInfo: {},
+      iotPagingInfo: {},
+      dsPagingInfo: {},
+      pnPagingInfo: {},
       oldValue:'',
       searchParam: {
         said: "",
@@ -425,7 +430,7 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.soList = response.data.data.sensor_list;
-            this.resPagingInfo = response.data.data.paging_info;
+            this.soPagingInfo = response.data.data.paging_info;
             this.showSensorOrderList = !this.showSensorOrderList;
             console.log("resCode");
             console.log(resCode);
@@ -433,7 +438,7 @@ export default {
             console.log("resCode");
             console.log(resCode);
             this.soList = [];
-            this.resPagingInfo = {};
+            this.soPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -457,11 +462,11 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.dcList = response.data.data.cam_list;
-            this.resPagingInfo = response.data.data.paging_info;
+            this.dcPagingInfo = response.data.data.paging_info;
             this.showDeviceCameraList = !this.showDeviceCameraList;
           } else {
             this.dcList = [];
-            this.resPagingInfo = {};
+            this.dcPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -485,11 +490,11 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.iotList = response.data.data.iotgw_list;
-            this.resPagingInfo = response.data.data.paging_info;
+            this.iotPagingInfo = response.data.data.paging_info;
             this.showIotGwList = !this.showIotGwList;
           } else {
             this.iotList = [];
-            this.resPagingInfo = {};
+            this.iotPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -513,11 +518,11 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.dsList = response.data.data.sensor_list;
-            this.resPagingInfo = response.data.data.paging_info;
+            this.dsPagingInfo = response.data.data.paging_info;
             this.showDeviceSensorList = !this.showDeviceSensorList;
           } else {
             this.dsList = [];
-            this.resPagingInfo = {};
+            this.dsPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -540,11 +545,11 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.pnList = response.data.data.tel_no_list;
-            this.resPagingInfo = response.data.data.paging_info;
+            this.pnPagingInfo = response.data.data.paging_info;
             this.showPhoneList = !this.showPhoneList;
           } else {
             this.pnList = [];
-            this.resPagingInfo = {};
+            this.pnPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })

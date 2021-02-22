@@ -11,7 +11,7 @@
         :headers="headers"
         :items="iotList"
         :options.sync="options"
-        :server-items-length="resPagingInfo.total_cnt"
+        :server-items-length="iotPagingInfo.total_cnt"
         class="elevation-1"
         @click:row="handleClick"
       >
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  props: ["iotList", "resPagingInfo"],
+  props: ["iotList", "iotPagingInfo"],
   data() {
     return {
       dialog: false,
