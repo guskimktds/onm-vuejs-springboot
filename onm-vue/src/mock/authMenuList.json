@@ -8,12 +8,13 @@
             "name": "플랫폼현황",
             "path": "/platform",
             "component": "platform",
+            "icon":"mdi-camcorder",
             "children": [
                 { "name": "대시보드", "path": "/platform/dashboard", "component": "platfrom-dashboard" },
-                { "name": "process 현황", "path": "/platform/process", "component": "process" },
+                { "name": "PROCESS 현황", "path": "/platform/process", "component": "process" },
                 { "name": "카메라상태 현황", "path": "/platform/camera", "component": "camera" },
                 { "name": "IoT GW 상태현황", "path": "/platform/iotgw", "component": "iotgw" },
-                { "name": "va 설정 현황", "path": "/platform/va", "component": "va" },
+                { "name": "VA 설정 현황", "path": "/platform/va", "component": "va" },
                 { "name": "스트리머 관리 현황", "path": "/platform/streamer", "component": "streamer" },
                 { "name": "개통해지 추이", "path": "/platform/camreg-stat", "component": "camreg-stat" }
             ]
@@ -21,12 +22,12 @@
         {
             "name": "통계",
             "path": "/platform/stats",
+            "icon":"mdi-chart-bar",
             "component": "stats",
             "children": [
                 { "name": "청약 통계", "path": "/platform/order-stats", "component": "order-stats" },
                 { "name": "고객이전 통계", "path": "/platform/customer-transfer-stats", "component": "customer-transfer-stats" },
-                { "name": "상품 통계", "path": "/platform/product-stats", "component": "product-stats" },
-                { "name": "단말 통계", "path": "/platform/device-stats", "component": "device-stats" }
+                { "name": "상품 통계", "path": "/platform/product-stats", "component": "product-stats" }
             ]
         }]
     },
@@ -39,6 +40,7 @@
         "children": [{
                 "name": "사용자 청약",
                 "path": "/order/user/order-info",
+                "icon":"mdi-pen",
                 "component": "order-user",
                 "children": [
                     { "name": "사용자 청약 오더 정보", "path": "/order/user/order-info", "component": "order-info" },
@@ -51,6 +53,7 @@
             {
                 "name": "단말 오더",
                 "path": "/order/device-order-info",
+                "icon":"mdi-camera-iris",
                 "component": "order-device",
                 "children": [
                     { "name": "단말 청약 오더 정보", "path": "/order/device-order-info", "component": "device-order-info" },
@@ -61,6 +64,7 @@
             {
                 "name": "현장 작업자",
                 "path": "/order/worker",
+                "icon":"mdi-account-network",
                 "component": "order-worker",
                 "children": [
                     { "name": "TEMP ID 정보조회", "path": "/order/tempid-info", "component": "tempid-info" },
@@ -79,6 +83,7 @@
         "children": [{
                 "name": "매장정보",
                 "path": "/store",
+                "icon":"mdi-store",
                 "component": "store",
                 "children": [
                     { "name": "매장정보 조회", "path": "/store/info", "component": "store-info" },
@@ -93,6 +98,7 @@
             {
                 "name": "단말정보",
                 "path": "/store/device",
+                "icon": "mdi-image-filter-center-focus",
                 "component": "device",
                 "children": [
                     { "name": "카메라 정보 조회", "path": "/store/device-camera", "component": "device-camera" },
@@ -111,6 +117,7 @@
         "children": [{
                 "name": "사용자 정보",
                 "path": "/customer",
+                "icon": "mdi-account-box",
                 "component": "customer",
                 "children": [
                     { "name": "사용자 전화번호", "path": "/customer/phone", "component": "phone" }
@@ -119,6 +126,7 @@
             {
                 "name": "사용자 활동 정보 관리",
                 "path": "/customer/activity",
+                "icon":"mdi-account-convert",
                 "component": "activity",
                 "children": [
                     { "name": "실시간 접속 세션 조회", "path": "/customer/rtime-access-session", "component": "rtime-access-session" },
@@ -139,6 +147,7 @@
         "children": [{
                 "name": "서비스 기본",
                 "path": "/operation",
+                "icon":"mdi-desktop-mac",
                 "component": "operation",
                 "children": [
                     { "name": "계정/권한 관리", "path": "/operation/account", "component": "account" },
@@ -148,6 +157,7 @@
             {
                 "name": "관리자 이력",
                 "path": "/operation/admin-history",
+                "icon":"mdi-account-key",
                 "component": "admin-history",
                 "children": [
                     { "name": "[매장]관리자 접속 이력", "path": "/operation/admin-history", "component": "admin-history" },
@@ -157,6 +167,7 @@
             {
                 "name": "코드 설정 관리",
                 "path": "/operation/code",
+                "icon":"mdi-code-array",
                 "component": "code",
                 "children": [
                     { "name": "코드 관리", "path": "/operation/code", "component": "code" },
@@ -168,6 +179,7 @@
             {
                 "name": "고객이전",
                 "path": "/operation/customer-transfer",
+                "icon":"mdi-account-switch",
                 "component": "customer-transfer",
                 "children": [
                     { "name": "실행관리", "path": "/operation/customer-transfer", "component": "customer-transfer" },

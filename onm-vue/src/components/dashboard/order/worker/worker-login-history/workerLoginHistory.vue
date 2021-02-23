@@ -48,7 +48,7 @@ export default {
         user_id: "",
         tel_no: "",
         login_key: "",
-        admin_type: "" // 고정
+        admin_type: "O" // 고정
 
       },
       
