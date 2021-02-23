@@ -29,12 +29,10 @@ export default {
   //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
   data() {
     return {
-      dialog: false,
-      dialogDelete: false,
+      loading:false,
       editedIndex: -1,
       options: {},
       totalList: 0,
-      loading: true,
       headers: [
         {
           text: "PUSH 이력 ID",
@@ -53,10 +51,26 @@ export default {
       ],
     };
   },
-
-
+   methods: {
+    getDataFromApi() {
+      this.$emit("pagination", this.options);
+    }
+   },
+watch: {
+    options: {
+      handler() {
+        if(this.loading == true){  // 최초에 국사코드 콤보박스를 읽어들이기전에 watch에 의해 호출되는 것을 방지 
+          this.getDataFromApi();
+        }else{
+          this.loading = true;
+        }
+      },
+      deep: true,
+    },
+  },
     
 }
+
 </script>
 <style>
 </style>

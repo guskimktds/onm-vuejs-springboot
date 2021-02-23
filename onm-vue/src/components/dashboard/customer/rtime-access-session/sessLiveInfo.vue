@@ -12,7 +12,7 @@
       <sessLiveInfo-list
         v-bind:pList="pList"
         v-bind:resPagingInfo="resPagingInfo"
-        @pagination="searchToSessLiveInfo"
+        @pagination="setToSearchParams"
       ></sessLiveInfo-list>
 
     </v-card>
@@ -68,6 +68,7 @@ export default {
       );
       var reqParams = this.handleParams(params);
 
+      console.log('호출파라미터')
       console.log(reqParams);
       axios
         .post(url, reqParams, headers)
@@ -89,8 +90,16 @@ export default {
         });
     },
 
+    setToSearchParams: function (values) {
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage,
+      };
+
+      this.searchToSessLiveInfo(params);
+    },
+
     handleParams: function (params) {
-      console.log(params);
       let newParams = {};
       if (params.page === undefined || params.page === "") {
         newParams.page_no = this.reqPagingInfo.page_no;

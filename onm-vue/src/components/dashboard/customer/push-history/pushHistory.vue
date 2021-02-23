@@ -38,7 +38,6 @@ export default {
       reqPagingInfo:{
         page_no:1,
         view_cnt:10,
-        local_gw_id:''
       },
       pushPagingInfo:{},
       searchParam:{
@@ -58,8 +57,8 @@ export default {
     .then((response) => {
         this.localGwOptions = response.data.data.local_gw_list;
         this.searchParam.local_gw_id=this.localGwOptions[0].local_gw_id;
+        console.log('%%%%')
         console.log(this.searchParam)
-        console.log('############')
         this.searchToPushHistory(this.searchParam);
     })
     .catch(function (error) {
@@ -145,26 +144,32 @@ export default {
       ){
         newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
-      if(params.alim_id===undefined||params.alim_id===''){
-        newParams.alim_id=this.pushPagingInfo.alim_id
+     
+     if(params.alim_id !== undefined && params.alim_id !== ''){
+        newParams.alim_id = params.alim_id
       }else if(
         this.searchParam.alim_id!==undefined&&
-        this.searchParam.alim_id!==""){
-        newParams.alim_id=params.alim_id
+        this.searchParam.alim_id!==""
+      ){
+        newParams.alim_id=this.searchParam.alim_id
       }
-      if(params.user_id===undefined||params.user_id===''){
-        newParams.user_id=this.pushPagingInfo.user_id
+
+      if(params.user_id !== undefined && params.user_id !== ''){
+        newParams.user_id = params.user_id
       }else if(
         this.searchParam.user_id!==undefined&&
-        this.searchParam.user_id!==""){
-        newParams.user_id=params.user_id
+        this.searchParam.user_id!==""
+      ){
+        newParams.user_id=this.searchParam.user_id
       }
-      if(params.cam_id===undefined||params.cam_id===''){
-        newParams.cam_id=this.pushPagingInfo.cam_id
+      
+      if(params.cam_id !== undefined && params.cam_id !== ''){
+        newParams.cam_id = params.cam_id
       }else if(
         this.searchParam.cam_id!==undefined&&
-        this.searchParam.cam_id!==""){
-        newParams.cam_id=params.cam_id
+        this.searchParam.cam_id!==""
+      ){
+        newParams.cam_id=this.searchParam.user_id
       }
 
       return newParams

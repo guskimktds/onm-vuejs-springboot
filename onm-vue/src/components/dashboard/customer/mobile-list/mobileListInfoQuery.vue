@@ -55,9 +55,9 @@
               <v-select 
                   item-text="server_name" 
                   item-value="local_gw_id" 
-                  label="국사코드"
                   :items="localGwOptions" 
                   v-model="param.local_gw_id" 
+                  v-on:change="searchMethod" 
                   ></v-select>
           </v-col>
 
@@ -66,7 +66,7 @@
             <v-select
             v-model="param.os_type"
             :items="items"
-            label="장치타입"
+            label="OS타입"
             attach
             ></v-select>
           </v-col>
@@ -105,13 +105,13 @@ export default {
   props:['param','localGwOptions'],
   data() {
     return {
-      items:["선택안함","iPhone","Android"],
+      items:["선택안함","iOS","Android"],
     };
   },
 
   methods: {
     searchMethod: function () {
-      if(this.param.os_type==="선택안함"){
+      if(this.param.os_type=="선택안함"){
         this.param.os_type=""
       }
       this.$emit("search", this.param);
