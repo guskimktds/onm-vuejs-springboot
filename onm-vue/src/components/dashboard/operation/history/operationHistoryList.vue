@@ -17,6 +17,9 @@
                 class="elevation-1"
                 :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
             >          
+            <template v-slot:item.result_code="{item}">
+              <span>{{ switchString(item.result_code) }}</span>
+            </template>
             </v-data-table>
         </base-material-card>
     </v-container>
@@ -49,7 +52,16 @@ export default {
           { text: '호출일시', value: 'reg_date' }
         ]
       }
+    },
+    methods:{
+      switchString(values){
+      if(values===200){
+        return '성공'
+      }else{
+        return '실패'
+      }
     }
+  }
 }
 </script>
 

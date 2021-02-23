@@ -21,6 +21,9 @@
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
+      <template v-slot:item.resultcode="{item}">
+              <span>{{ switchString(item.resultcode) }}</span>
+      </template>  
       </v-data-table>
 
     </base-material-card>
@@ -56,6 +59,15 @@ export default {
         this.loading = true
         this.$emit("pagination", this.options)
       },
+      switchString(values){
+        if(values==='200'){
+          return '성공'
+        }else if(values==='204'){
+          return '성공'
+        }else if(values==='401'){
+          return '실패'
+        }
+      }
     },
     watch: {
       options: {

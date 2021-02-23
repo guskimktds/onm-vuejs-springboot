@@ -13,9 +13,6 @@
         ></list>
       </v-card>
 
-      <modal
-      v-bind:mask="mask"
-      ref="modal"></modal>
     </v-container>
 </template>
 

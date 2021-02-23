@@ -21,6 +21,9 @@
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
+      <template v-slot:item.status_code="{item}">
+              <span>{{ switchString(item.status_code) }}</span>
+      </template>
       </v-data-table>
 
     </base-material-card>
@@ -55,6 +58,13 @@ export default {
         this.loading = true
         this.$emit("pagination", this.options)
       },
+      switchString(values){
+        if(values==='S'){
+          return '사용중'
+        }else if(values==='D'){
+          return '삭제'
+        }
+      }
     },
     watch: {
       options: {

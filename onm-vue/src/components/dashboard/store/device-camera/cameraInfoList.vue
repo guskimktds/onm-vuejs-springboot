@@ -16,6 +16,12 @@
         @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
+      <template v-slot:item.status_code="{item}">
+              <span>{{ switchString(item.status_code) }}</span>
+      </template>
+      <template v-slot:item.mgt_status="{item}">
+              <span>{{ switchString2(item.mgt_status) }}</span>
+      </template>
       </v-data-table>
     </base-material-card>
   </v-container>
@@ -62,6 +68,36 @@ export default {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
+    switchString(values){
+      if(values==='A'){
+        return '접수'
+      }else if(values==='D'){
+        return '삭제'
+      }else if(values==='F'){
+        return '실패'
+      }else if(values==='P'){
+        return '진행중'
+      }else if(values==='S'){
+        return '성공'
+      }else if(values==='Z'){
+        return '카메라 장애'
+      }
+    },
+    switchString2(values){
+      if(values==='A'){
+        return '접수'
+      }else if(values==='D'){
+        return '삭제'
+      }else if(values==='F'){
+        return '실패'
+      }else if(values==='P'){
+        return '진행중'
+      }else if(values==='S'){
+        return '성공'
+      }else if(values==='Z'){
+        return '카메라 장애'
+      }
+    }
   },
 
   watch: {

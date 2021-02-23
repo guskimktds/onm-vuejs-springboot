@@ -53,8 +53,9 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.pList = response.data.data.proc_history_list;
+            this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info
+            console.log(this.pList)
           }else{
             this.pList = [];
             this.resPagingInfo = {};
@@ -67,7 +68,6 @@ export default {
   },
   methods: {
     searchToButton: function(params){
-      console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15003/get_onm_use_history`
 
       //params : 페이징 + 검색조건
@@ -75,13 +75,12 @@ export default {
 
       axios.post(url, reqParams, this.$store.state.headers)
         .then((response) => {
-          console.log(response)
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.pList = response.data.data.proc_history_list;
+            this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info
-
+            console.log(this.pList)
           }else{
             this.pList = [];
             this.resPagingInfo = {};

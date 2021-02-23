@@ -14,8 +14,7 @@
       <v-data-table
         :headers="headers"
         :items="dodList"
-        :options.sync="options"
-        :server-items-length="dodPagingInfo.total_cnt"
+        
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
@@ -27,7 +26,7 @@
 
 <script>
 export default {
-    props: ['dodList','dodPagingInfo'],
+    props: ['dodList'],
     //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
     data() {
     return {

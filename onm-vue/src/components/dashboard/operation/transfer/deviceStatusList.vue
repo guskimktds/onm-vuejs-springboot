@@ -17,7 +17,9 @@
           class="elevation-1"
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         >        
-          
+          <template v-slot:item.status_code="{item}">
+              <span>{{ switchString(item.status_code) }}</span>
+          </template>
         </v-data-table>
 
     </base-material-card>
@@ -55,6 +57,21 @@ export default {
           { text: '등록일', value: 'reg_date' },
           { text: '수정일', value: 'mod_date' }
         ]
+      }
+    },
+    methods:{
+       switchString(values){
+        console.log('테스트')
+        console.log(values)
+        if(values==='P'){
+          return '진행'
+        }else if(values==='S'){
+          return '성공'
+        }else if(values==='F'){
+          return '실패'
+        }else if(values==='A'){
+          return '등록'
+        }
       }
     }
     

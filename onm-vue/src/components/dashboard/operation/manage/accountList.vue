@@ -157,7 +157,7 @@ export default {
           { text: '변경', value: 'actions', sortable: false }
         ],
         editedItem: {
-          onm_user_id: '',     
+          onm_user_id: '',    
           accept_ip: '',
           auth_group_id: '',
           cmd_type: 'U',

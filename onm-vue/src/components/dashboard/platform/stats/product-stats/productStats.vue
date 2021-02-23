@@ -7,7 +7,6 @@
         <stats-list 
           v-bind:pList=pList
           v-bind:pHeader=pHeader
-          
          ></stats-list>
       </v-card>
     </v-container>
@@ -44,6 +43,11 @@ export default {
       },
     }
   },
+  
+  mounted(){
+   this.searchToProcess(this.searchParam)
+  },
+
   methods: {
     searchToProcess: function(params){
      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11009/get_prod_stat`;

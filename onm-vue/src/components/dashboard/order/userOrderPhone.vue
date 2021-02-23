@@ -55,6 +55,8 @@ export default {
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)    
+      console.log('요청하는 파람')
+      console.log(reqParams)
       axios.post(url, reqParams, headers)
       // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
       //   params

@@ -36,11 +36,13 @@
       <v-container v-if=showDetailObject>
         <device-order-detail-list v-if=showDetailList
         v-bind:dodList="dodList"
-        v-bind:dodPagingInfo=dodPagingInfo></device-order-detail-list>
+    
+        ></device-order-detail-list>
         
         <device-order-result-list v-if=showResultList
         v-bind:dorList="dorList"
-        v-bind:dorPagingInfo=dorPagingInfo></device-order-result-list>
+        v-bind:dorPagingInfo="dorPagingInfo"
+        ></device-order-result-list>
       
       </v-container>
     
@@ -94,7 +96,6 @@ export default {
         view_cnt:10
       },
       resPagingInfo:{},
-      dodPagingInfo:{},
       dorPagingInfo:{},
       oldValue:'',
 
@@ -203,14 +204,14 @@ export default {
             var resCode=response.data.res_code;
             var resMsg=response.data.res_msg;
             if(resCode==200){
-              this.dodList=response.data.data.list;
-              this.dodPagingInfo=response.data.data.paging_info;
+              this.dodList=response.data.data.device_order_detail_list;
+              
               this.showDetailList=!this.showDetailList;
               console.log('$$$$')
               console.log(this.dodList)
             }else{
               this.dodList=[];
-              this.dodPagingInfo={};
+           
               alert(resCode + " / "+ resMsg);
               this.showDetailList=false
             }
@@ -235,11 +236,11 @@ export default {
             var resMsg=response.data.res_msg;
             if(resCode==200){
               this.dorList=response.data.data.device_order_result_list;
-              this.dorPagingInfo=response.data.data.paging_info;
+             
               this.showResultList=!this.showResultList;
             }else{
               this.dorList=[];
-              this.dorPagingInfo={};
+             
               alert(resCode+" / "+resMsg);
               this.showResultList=false
             }

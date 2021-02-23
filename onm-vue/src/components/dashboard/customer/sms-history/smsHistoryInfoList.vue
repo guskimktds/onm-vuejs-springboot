@@ -15,6 +15,9 @@
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
+      <template v-slot:item.res_code="{item}">
+              <span>{{ switchString(item.res_code) }}</span>
+      </template>
       </v-data-table>
     </base-material-card>
   </v-container>
@@ -53,7 +56,15 @@ export default {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
-
+    switchString(values){
+      if(values==='NOK'){
+        return 'OTP 인증 실패'
+      }else if(values==='OK'){
+        return 'OTP 인증 성공'
+      }else if(values==='203'){
+        return '전송 실패'
+      }
+    }
   },
   watch: {
     options: {

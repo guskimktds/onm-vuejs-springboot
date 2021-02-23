@@ -21,6 +21,12 @@
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
+      <template v-slot:item.status_code="{item}">
+              <span>{{ switchString(item.status_code) }}</span>
+      </template>
+      <template v-slot:item.mgt_status="{item}">
+              <span>{{ switchString2(item.mgt_status) }}</span>
+      </template>
       </v-data-table>
 
     </base-material-card>
@@ -60,6 +66,24 @@ export default {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
+    switchString(values){
+      if(values==='S'){
+        return '정상'
+      }else if(values==='D'){
+        return '삭제'
+      }else if(values==='A'){
+        return '접수/등록'
+      }
+    },
+    switchString2(values){
+      if(values==='X'){
+        return '삭제대기'
+      }else if(values==='S'){
+        return '정상'
+      }else if(values==='D'){
+        return '삭제'
+      }
+    }
     
   },
 

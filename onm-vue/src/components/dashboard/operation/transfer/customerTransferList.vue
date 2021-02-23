@@ -14,10 +14,14 @@
         <v-data-table
           :headers="headers"
           :items="pList"
+          :options.sync="options"
+          :server-items-length="resPagingInfo.total_cnt"
           class="elevation-1"
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         >
-          
+          <template v-slot:item.status_code="{item}">
+              <span>{{ switchString(item.status_code) }}</span>
+          </template>
         </v-data-table>
 
     </base-material-card>
@@ -27,18 +31,22 @@
 <script>
 
 // import EventBus from '../../../../EventBus';
+// import axios from "axios"
 
 export default {
-    props: ['pList'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
         headers: [
           {
             text: '이전 일련번호',
-            align: 'start',
+            align: 'left',
             sortable: false,
             value: 'mig_seq',
           },
@@ -53,82 +61,62 @@ export default {
           { text: '이전종료일시', value: 'mig_end_date' },
           { text: 'Data삭제일시', value: 'data_clean_date' },
           { text: 'Iot이전상태코드', value: 'iot_status' },
-          // { text: '사용여부', value: 'useYn' },
-          // { text: '등록일시', value: 'createDate' },
-          // { text: '변경', value: 'actions', sortable: false }
         ],
-        // editedItem: {
-        //   codeClass: '',
-        //   code: '',
-        //   name: '',
-        //   type: '',
-        //   useYn: '',
-        //   orderby: '',
-        //   desc: '',
-        //   editor: '82095586',
-        //   editDate: '2021-01-06 10:20:30'
-        // },
-        // defaultItem: {
-        //   codeClass: '',
-        //   code: '',
-        //   name: '',
-        //   type: '',
-        //   useYn: '',
-        //   orderby: '',
-        //   desc: '',
-        //   editor: '82095586',
-        //   editDate: '2021-01-06 10:20:30'
-        // },
+  
       }
+    },
+    methods: {
+      getDataFromApi(){
+        this.loading=true;
+        this.$emit("pagination", this.options);
+      },
+      switchString(values){
+        console.log('테스트')
+        console.log(values)
+        if(values=='P'){
+          return '진행'
+        }else if(values=='S'){
+          return '성공'
+        }else if(values=='F'){
+          return '실패'
+        }else if(values=='A'){
+          return '등록'
+        }
+      }
+    },
+    watch:{
+      options:{
+        handler(){
+          this.getDataFromApi();
+        },
+        deep: true,
+      }
+    },
+    mounted(){
+      this.getDataFromApi();
+
+    //   EventBus.$on('createItemTransfer', params => {
+    //     console.log(params)
+    //     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15013/move_local`
+
+    //     axios.post(url, params, this.$store.state.headers)
+    //         .then((response) => {
+    //           console.log(response)
+    //           var resCode = response.data.res_code;
+    //           var resMsg = response.data.res_msg;
+    //           if(resCode == 200){
+    //             //현재 목록에서 선택한 Item을 삭제한다.
+    //             console.log(params)
+    //             // this.pList.unshift(params)
+    //           }else{
+    //             alert(resCode + " / " + resMsg);
+    //           }
+    //         })
+    //         .catch((ex) => {
+    //           console.log('변경 실패',ex)
+    //         })
+    // })
     }
-    // computed: {
-    //   formTitle () {
-    //     return this.editedIndex === -1 ? '고객이전' : '수정'
-    //   },
-    // },
-    // methods: {
-      
-
-    //   // deleteItem (item) {
-    //   //   console.log('deleteItem method call : ',item)
-    //   //   this.editedIndex = this.codeList.indexOf(item)
-    //   //   this.editedItem = Object.assign({}, item)
-    //   //   this.dialogDelete = true
-    //   // },
-
-    //   deleteItemConfirm () {
-    //     this.codeList.splice(this.editedIndex, 1)
-    //     this.closeDelete()
-    //   },
-
-    //   close () {
-    //     this.dialog = false
-    //     this.$nextTick(() => {
-    //       this.editedItem = Object.assign({}, this.defaultItem)
-    //       this.editedIndex = -1
-    //     })
-    //   },
-
-    //   closeDelete () {
-    //     this.dialogDelete = false
-    //     this.$nextTick(() => {
-    //       this.editedItem = Object.assign({}, this.defaultItem)
-    //       this.editedIndex = -1
-    //     })
-    //   },
-
-    //   save () {
-    //     console.log('save method call : ',this.editedIndex)
-        
-    //       // create
-    //       const createItem = this.editedItem
-    //       console.log("2222222222222")
-    //       EventBus.$emit('createItem', createItem)
-    //       this.close()
-    //   }
-
-    // }
-
 }
 </script>
 
