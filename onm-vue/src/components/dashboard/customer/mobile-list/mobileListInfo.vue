@@ -50,12 +50,14 @@ export default {
       localGwOptions:[]
     };
   },
-  created() {  
+  mounted() {  
     axios
     .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
     .then((response) => {
         this.localGwOptions = response.data.data.local_gw_list;
         this.searchParam.local_gw_id=this.localGwOptions[0].local_gw_id;
+        console.log('%%%%')
+        console.log(this.searchParam)
         this.searchToMobileListInfo(this.searchParam);
     })
     .catch(function (error) {
@@ -72,8 +74,9 @@ export default {
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_14005/get_mobile_device_list`
 
       var reqParams=this.handleParams(params)
-        console.log('리퀘스트파람')
-        console.log(reqParams)
+
+      console.log('리퀘스트 파람')
+      console.log(reqParams)
         axios.post(url, reqParams, headers)
           .then((response)=>{
             var resCode = response.data.res_code;
@@ -81,6 +84,8 @@ export default {
             if(resCode==200){
               this.pList=response.data.data.list;
               this.mobilePagingInfo=response.data.data.paging_info
+              console.log('보내준 List')
+              console.log(this.pList)
             }else{
               this.pList=[];
               this.mobilePagingInfo={};
@@ -104,6 +109,7 @@ export default {
 
     handleParams:function(params){
       let newParams={}
+    
 
       if(params.page_no === undefined || params.page_no === ''){
         newParams.page_no = this.reqPagingInfo.page_no
@@ -142,30 +148,34 @@ export default {
         newParams.local_gw_id = this.searchParam.local_gw_id;
       }
 
-      if(params.tel_no_id===undefined||params.tel_no_id===''){
-        newParams.tel_no_id=this.mobilePagingInfo.tel_no_id
+     if(params.tel_no_id !== undefined && params.tel_no_id !== ''){
+        newParams.tel_no_id = params.tel_no_id
       }else if(
         this.searchParam.tel_no_id!==undefined&&
-        this.searchParam.tel_no_id!==""){
-        newParams.tel_no_id=params.tel_no_id
+        this.searchParam.tel_no_id!==""
+      ){
+        newParams.tel_no_id=this.searchParam.tel_no_id
       }
 
-      if(params.user_id===undefined||params.user_id===''){
-        newParams.user_id=this.mobilePagingInfo.user_id
+      if(params.user_id !== undefined && params.user_id !== ''){
+        newParams.user_id = params.user_id
       }else if(
         this.searchParam.user_id!==undefined&&
-        this.searchParam.user_id!==""){
-        newParams.user_id=params.user_id
+        this.searchParam.user_id!==""
+      ){
+        newParams.user_id=this.searchParam.user_id
       }
 
-      if(params.os_type===undefined||params.os_type===''){
-        newParams.os_type=this.mobilePagingInfo.os_type
+      if(params.os_type !== undefined && params.os_type !== ''){
+        newParams.os_type = params.os_type
       }else if(
         this.searchParam.os_type!==undefined&&
-        this.searchParam.os_type!==""){
-        newParams.os_type=params.os_type
+        this.searchParam.os_type!==""
+      ){
+        newParams.os_type=this.searchParam.os_type
       }
-
+     
+  
       return newParams
     }
   },
