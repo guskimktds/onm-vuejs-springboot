@@ -1,13 +1,13 @@
 [{
         "name": "플랫폼현황",
         "menu_id": "M100",
-        "is_show": false,
         "path": "/platform",
         "component": "platform",
         "children": [{
             "name": "플랫폼현황",
             "path": "/platform",
             "component": "platform",
+            "active": true,
             "icon":"mdi-camcorder",
             "children": [
                 { "name": "대시보드", "path": "/platform/dashboard", "component": "platfrom-dashboard" },
@@ -34,12 +34,12 @@
     {
         "name": "청약정보 관리",
         "menu_id": "M200",
-        "is_show": false,
         "path": "/order",
         "component": "order",
         "children": [{
                 "name": "사용자 청약",
                 "path": "/order/user/order-info",
+                "active": true,
                 "icon":"mdi-pen",
                 "component": "order-user",
                 "children": [
@@ -77,12 +77,12 @@
     {
         "name": "매장정보 관리",
         "menu_id": "M300",
-        "is_show": false,
         "path": "/store",
         "component": "store",
         "children": [{
                 "name": "매장정보",
                 "path": "/store",
+                "active": true,
                 "icon":"mdi-store",
                 "component": "store",
                 "children": [
@@ -111,12 +111,12 @@
     {
         "name": "사용자정보 관리",
         "menu_id": "M400",
-        "is_show": false,
         "path": "/customer",
         "component": "customer",
         "children": [{
                 "name": "사용자 정보",
                 "path": "/customer",
+                "active": true,
                 "icon": "mdi-account-box",
                 "component": "customer",
                 "children": [
@@ -141,12 +141,12 @@
     {
         "name": "운영 관리",
         "menu_id": "M500",
-        "is_show": false,
         "path": "/operation",
         "component": "operation",
         "children": [{
                 "name": "서비스 기본",
                 "path": "/operation",
+                "active": true,
                 "icon":"mdi-desktop-mac",
                 "component": "operation",
                 "children": [
