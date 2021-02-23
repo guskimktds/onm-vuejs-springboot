@@ -23,7 +23,8 @@
                     >
                         <v-radio
                             label="전체"
-                            value=""
+                            value="All"
+                            
                         ></v-radio>
                         <v-radio
                             label="입력"
@@ -86,16 +87,6 @@
 
 export default {
     props:['param'],
-    // data() {
-    //     return{
-    //         param: {
-    //             id: '',
-    //             name: '',
-    //             auth: ''
-    //         }
-
-    //     }
-    // },
     methods: {
         searchMethod: function() {
             this.$emit('search', this.param)

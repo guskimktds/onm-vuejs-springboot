@@ -14,6 +14,8 @@
         <v-data-table
           :headers="headers"
           :items="pList"
+          :options.sync="options"
+          :server-items-length="resPagingInfo.total_cnt"
           class="elevation-1"
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         >        
@@ -29,12 +31,15 @@
 <script>
 
 export default {
-    props: ['pList'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
-        dialog: false,
-        dialogDelete: false,
-        editedIndex: -1,
+      dialog: false,
+      dialogDelete: false,
+      editedIndex: -1,
+      options: {},
+      totalList: 0,
+      loading: true,
         headers: [
           {
             text: '이전일련번호',
@@ -61,8 +66,6 @@ export default {
     },
     methods:{
        switchString(values){
-        console.log('테스트')
-        console.log(values)
         if(values==='P'){
           return '진행'
         }else if(values==='S'){
@@ -72,10 +75,26 @@ export default {
         }else if(values==='A'){
           return '등록'
         }
-      }
-    }
-    
+      },
+      getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
+    },
+  },
 
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+
+  mounted() {
+    this.getDataFromApi();
+  },
+    
 }
 </script>
 

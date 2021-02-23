@@ -51,7 +51,7 @@ export default {
         { text: "시리얼 번호", value: "serial_num" },
         { text: "상태코드", value: "status_code" },
         { text: "등록일시", value: "reg_date" },
-        { text: "수정일시", value: "mode_date" },
+        { text: "수정일시", value: "mod_date" },
       ],
     };
   },

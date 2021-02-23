@@ -5,7 +5,10 @@
           v-on:search="searchToButton"
           v-bind:param=searchParam
         ></device-status-query>
-        <device-status-list v-bind:pList=pList></device-status-list>
+        <device-status-list
+        v-bind:pList=pList
+        v-bind:resPagingInfo="resPagingInfo"
+        @pagination="setToSearchParams"></device-status-list>
       </v-card>
     </v-container>
 </template>
@@ -43,37 +46,15 @@ export default {
       }
     }
   },
-  created: function() {
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15014/get_user_mig_device`
-
-    // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
-    var params = this.reqPagingInfo
-
-    axios
-        .post(url, params, this.$store.state.headers)
-        .then((response) => {
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.user_mig_device_list;
-            this.resPagingInfo = response.data.data.paging_info
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-  },
+ 
   methods: {
     searchToButton: function(params){
-      console.log(params);
+      
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15014/get_user_mig_device`
 
-      //params : 페이징 + 검색조건
-      var reqParams = this.handleParams(params)  
+      var reqParams = this.handleParams(params) 
+        console.log('전달값')
+        console.log(reqParams) 
 
       axios.post(url, reqParams, this.$store.state.headers)
         .then((response) => {
@@ -82,8 +63,9 @@ export default {
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.pList = response.data.data.user_mig_device_list;
-            this.resPagingInfo = response.data.data.paging_info
-
+            this.resPagingInfo = response.data.data.paging_info;
+            console.log('페이지 정보')
+            console.log(this.resPagingInfo)
           }else{
             this.pList = [];
             this.resPagingInfo = {};
@@ -94,6 +76,18 @@ export default {
           console.log('조회 실패',ex)
         })
     },
+    setToSearchParams: function(values){
+      console.log(values)
+      console.log('검색 정보')
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      console.log(params)
+
+      this.searchToButton(params)
+    },
 
     handleParams: function(params){
       let newParams = {}
@@ -102,12 +96,11 @@ export default {
       }else{
         newParams.page_no = params.page_no
       }
-
       if(params.view_cnt === undefined || params.view_cnt === ''){
         newParams.view_cnt = this.reqPagingInfo.view_cnt
       }else{
         newParams.view_cnt = params.view_cnt
-      }
+      } 
 
       if(params.start_date !== undefined && params.start_date !== ''){
         newParams.start_date = params.start_date.replace(/-/g,"")
@@ -126,22 +119,42 @@ export default {
       ){
         newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
-
+      
       if(params.mig_seq !== undefined && params.mig_seq !== ''){
         newParams.mig_seq = params.mig_seq
+      }else if(
+        this.searchParam.mig_seq!==undefined&&
+        this.searchParam.mig_seq!==""
+      ){
+        newParams.mig_seq=this.searchParam.mig_seq
       }
 
       if(params.device_type !== undefined && params.device_type !== ''){
         newParams.device_type = params.device_type
-      }   
-      
+      }else if(
+        this.searchParam.device_type!==undefined&&
+        this.searchParam.device_type!==""
+      ){
+        newParams.device_type=this.searchParam.device_type
+      }
+
       if(params.device_id !== undefined && params.device_id !== ''){
         newParams.device_id = params.device_id
-      } 
+      }else if(
+        this.searchParam.device_id!==undefined&&
+        this.searchParam.device_id!==""
+      ){
+        newParams.device_id=this.searchParam.device_id
+      }
 
       if(params.status_code !== undefined && params.status_code !== ''){
         newParams.status_code = params.status_code
-      }  
+      }else if(
+        this.searchParam.status_code!==undefined&&
+        this.searchParam.status_code!==""
+      ){
+        newParams.status_code=this.searchParam.status_code
+      }
 
       return newParams
     }

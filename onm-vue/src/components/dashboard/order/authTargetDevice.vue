@@ -59,6 +59,9 @@ export default {
           if(resCode == 200){
             this.pList = response.data.data.auth_device_list;
             this.resPagingInfo=response.data.data.paging_info;
+            console.log('전달리스트')
+            console.log(this.pList)
+            
           }else{
             this.pList = [];
             this.resPaingInfo={};
