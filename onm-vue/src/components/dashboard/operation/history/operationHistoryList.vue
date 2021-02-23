@@ -14,6 +14,8 @@
             <v-data-table
                 :headers="headers"
                 :items="pList"
+                :options.sync="options"
+                :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
                 :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
             >          
@@ -27,9 +29,15 @@
 
 <script>
 export default {
-    props: ['pList'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
+      dialog: false,
+      dialogDelete: false,
+      editedIndex: -1,
+      options: {},
+      totalList: 0,
+      loading: true,
         headers: [
           {
             text: '사번',
@@ -54,6 +62,11 @@ export default {
       }
     },
     methods:{
+       getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
+      },
+    
       switchString(values){
       if(values===200){
         return '성공'
@@ -61,7 +74,20 @@ export default {
         return '실패'
       }
     }
-  }
+  },
+   watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+
+  // mounted() {
+  //   this.getDataFromApi();
+  // },
+    
 }
 </script>
 

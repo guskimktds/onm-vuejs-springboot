@@ -71,8 +71,6 @@ export default {
         this.$emit("pagination", this.options);
       },
       switchString(values){
-        console.log('테스트')
-        console.log(values)
         if(values=='P'){
           return '진행'
         }else if(values=='S'){
