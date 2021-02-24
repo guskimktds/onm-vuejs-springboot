@@ -50,7 +50,7 @@ export default {
   },
   created: function() {
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15001/get_account`
-
+    
       // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
     var params = this.reqPagingInfo
 
@@ -78,7 +78,8 @@ export default {
         //console.log('codeMain.vue eventbus : param : ',parameter)
         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15002/set_account`
 
-        axios.post(url, params, this.$store.state.headers)
+        var changeParams=this.changeIp(params)
+        axios.post(url, changeParams, this.$store.state.headers)
           .then((response) => {
             console.log(response)
             var resCode = response.data.res_code;
@@ -199,6 +200,14 @@ export default {
         newParams.auth_group_id = params.auth_group_id
       }
 
+      return newParams
+    },
+    changeIp(values){
+      let newParams={}
+      newParams.onm_user_id=values.onm_user_id
+      newParams.auth_group_id=values.auth_group_id
+      newParams.cmd_type=values.cmd_type
+      newParams.access_ip=values.access_ip.split(',')
       return newParams
     }
   }
