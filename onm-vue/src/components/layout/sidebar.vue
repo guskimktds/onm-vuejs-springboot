@@ -47,10 +47,10 @@
       <div />
     </v-list>
 -->
-
+  
   <v-divider class="mb-2" /> 
   <div>   
-    <v-list>
+    <v-list ref="vList">
       <v-list-group
         v-for="(item, i) in computedItems"
         :key="i"
@@ -76,11 +76,11 @@
       </v-list-group>
     </v-list>
   </div>
-
+  
   </v-navigation-drawer>
 
 
-
+  
 
 </template>
 
@@ -107,7 +107,8 @@ export default {
   created(){
     EventBus.$on('top-path-login', (payload)=>{          
       // console.log(payload)
-      this.newMenus = payload
+      this.newMenus = payload;
+      this.openFirstSideMenu();
     });
 
     EventBus.$on('top-path-logout', ()=>{          
@@ -157,7 +158,18 @@ export default {
       var path = selectMenu[0].children[0].children[0].path;
       this.$router.push(path);
       EventBus.$emit('top-path-login', selectMenu[0].children); 
+    },
+
+    openFirstSideMenu(){
+      try{
+        var uid = this.$refs.vList.$children[0]._uid;
+        this.$refs.vList.listClick(uid);
+      }catch(e){
+        console.log("");
+      }
+      
     }
+
   }
 }
 </script>
