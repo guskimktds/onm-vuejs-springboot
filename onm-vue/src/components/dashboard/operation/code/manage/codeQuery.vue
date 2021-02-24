@@ -92,9 +92,11 @@
                                 sm="6"
                                 md="6"
                                 >
-                                <v-text-field
+                               <v-text-field
                                     v-model="editedItem.code_master_id"
                                     label="코드구분"
+                                    counter
+                                    maxlength="20"
                                 ></v-text-field>
                                 </v-col>
                                 <v-col
@@ -105,6 +107,8 @@
                                 <v-text-field
                                     v-model="editedItem.code_id"
                                     label="코드"
+                                    counter
+                                    maxlength="20"
                                 ></v-text-field>
                                 </v-col>
                                 <v-col
@@ -125,6 +129,8 @@
                                 <v-text-field
                                     v-model="editedItem.code_type"
                                     label="코드타입"
+                                    counter
+                                    maxlength="20"
                                 ></v-text-field>
                                 </v-col>
                                 <v-col
@@ -145,6 +151,9 @@
                                 <v-text-field
                                     v-model="editedItem.orderby_no"
                                     label="정렬순서"
+                                    counter
+                                    maxlength="4"
+                                    oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
                                 ></v-text-field>
                                 </v-col>
                                 <v-col
@@ -167,14 +176,14 @@
                             <v-btn
                             color="blue darken-1"
                             text
-                            @click="save"
+                            @click="saveSure"
                             >
                             저장
                             </v-btn>
                             <v-btn
                             color="blue darken-1"
                             text
-                            @click="close"
+                            @click="closeSure"
                             >
                             취소
                             </v-btn>
@@ -266,15 +275,57 @@ export default {
             // console.log(this.editedItem.mod_date)
 
             EventBus.$emit('createItemCode', this.editedItem)
+            this.$fire({
+                       title: "등록 되었습니다.",
+                       html: "코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
+            "<br/>코드명 : "+this.editedItem.code_name+"<br/>코드타입 : "+this.editedItem.code_type+
+            "<br/>사용여부 : "+this.editedItem.use_yn+"<br/>정렬순서 : "+this.editedItem.orderby_no+
+            "<br/>설명 : "+this.editedItem.description,
+                       type : "success"})
             this.close()
         },
 
+        saveSure(){
+            this.$fire({
+            title: "정말 등록 하시겠습니까?",
+            type: "question",
+            html: "코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
+            "<br/>코드명 : "+this.editedItem.code_name+"<br/>코드타입 : "+this.editedItem.code_type+
+            "<br/>사용여부 : "+this.editedItem.use_yn+"<br/>정렬순서 : "+this.editedItem.orderby_no+
+            "<br/>설명 : "+this.editedItem.description,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText: '아니오'
+            }).then(result => {
+               if(result.value){
+                   this.save()
+               }else{
+                 this.closeSure()
+               }
+            });
+            
+        },
+        
         close () {
             this.dialog = false
             this.$nextTick(() => {
             this.editedItem = Object.assign({}, this.defaultItem)
             // this.editedIndex = -1
             })
+        },
+
+        closeSure(){
+            this.close()
+            this.$fire({
+                       title: "등록이 취소되었습니다.",
+                       html: "코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
+            "<br/>코드명 : "+this.editedItem.code_name+"<br/>코드타입 : "+this.editedItem.code_type+
+            "<br/>사용여부 : "+this.editedItem.use_yn+"<br/>정렬순서 : "+this.editedItem.orderby_no+
+            "<br/>설명 : "+this.editedItem.description,
+                       type : "error"
+                   })
         },
 
         closeDelete () {
