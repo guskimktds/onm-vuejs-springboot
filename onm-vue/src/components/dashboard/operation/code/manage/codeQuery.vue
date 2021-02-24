@@ -275,13 +275,7 @@ export default {
             // console.log(this.editedItem.mod_date)
 
             EventBus.$emit('createItemCode', this.editedItem)
-            this.$fire({
-                       title: "등록 되었습니다.",
-                       html: "코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
-            "<br/>코드명 : "+this.editedItem.code_name+"<br/>코드타입 : "+this.editedItem.code_type+
-            "<br/>사용여부 : "+this.editedItem.use_yn+"<br/>정렬순서 : "+this.editedItem.orderby_no+
-            "<br/>설명 : "+this.editedItem.description,
-                       type : "success"})
+            
             this.close()
         },
 

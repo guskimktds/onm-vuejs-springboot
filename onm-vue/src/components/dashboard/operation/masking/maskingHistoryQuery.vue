@@ -7,47 +7,10 @@
 
         <base-material-card
             icon="mdi-magnify"
-            title="APP(Client) 단말 정보 관리"
+            title="Masking 이력 관리"
             class="px-5 py-3"
         >
             <v-row>
-                <!-- <v-col cols="12" sm="6" md="3">
-                    <v-text-field 
-                        dense 
-                        label="앱버전" 
-                        v-model="param.appversion"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col>         
-                <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
-                        label="OS타입" 
-                        v-model="param.ostype"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col> 
-                <v-col cols="12" sm="6" md="3">
-                    <v-text-field 
-                        dense 
-                        label="업데이터버전" 
-                        v-model="param.updateversion"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col>                
-                <v-col cols="12" sm="6" md="2">
-                    <v-btn 
-                        elevation="2" 
-                        medium
-                        v-on:click="searchMethod"
-                        color="primary"
-                    >
-                        검색
-                    </v-btn>
-                </v-col> -->
                 <v-col cols="12" sm="6" md="10"></v-col>
                 <v-col cols="12" sm="6" md="2">
                     <v-dialog
@@ -187,17 +150,13 @@
 </template>
 <script>
 
-import EventBus from '../../../../../EventBus';
-import dateInfo from '../../../../utils/common';
+import EventBus from '../../../../EventBus'
+import dateInfo from '../../../utils/common'
 
 export default {
     data() {
         return{
-            // param: {
-            //     appversion: '',
-            //     ostype: '',
-            //     updateversion: ''
-            // },
+            
             dialog: false,
             editedItem: {
                 app_version_id: 0,
@@ -290,24 +249,6 @@ export default {
                    })
         },
 
-        // checkValue(param){
-           
-        //     if(param.app_version_id.length>8||param.app_version_id.length<0){
-        //         param.app_version_id=""
-        //     }
-        //     if(param.os_type.length!==1){
-        //         param.os_type=""
-        //     }
-        //     if(param.update_version.length>20||param.update_version.length<0){
-        //         param.update_version=""
-        //     }
-        //     if(param.version_code.length>4||param.version_code.length<0||isNaN(param.version_code)){
-        //         param.version_code=""
-        //     }
-        //     if(param.required_yn!=='Y'||param.required_yn!=='N'){
-        //         param.required_yn=""
-        //     }
-        // }
     },  
 }
 </script>

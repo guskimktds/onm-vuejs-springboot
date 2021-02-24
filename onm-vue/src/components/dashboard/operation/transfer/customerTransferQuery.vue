@@ -234,12 +234,7 @@ export default {
         save () {
             console.log('save method call : ',this.editedItem)        
             EventBus.$emit('createItemTransfer', this.editedItem)
-            this.$fire({
-                       title: "등록 되었습니다.",
-                       type : "success",
-                       html: "매장ID : "+this.editedItem.user_id+"<br>이전할 국사코드 : "+this.editedItem.to_local+
-                        "<br>고객이전 처리코드 : "+this.editedItem.process_code+"<br>진행여부 : "+this.editedItem.step
-                   })
+
             this.close()
         },
 

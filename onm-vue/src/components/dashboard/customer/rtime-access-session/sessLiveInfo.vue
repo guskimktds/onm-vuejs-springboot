@@ -12,7 +12,7 @@
       <sessLiveInfo-list
         v-bind:pList="pList"
         v-bind:resPagingInfo="resPagingInfo"
-        @pagination="setToSearchParams"
+        @pagination="searchToSessLiveInfo"
       ></sessLiveInfo-list>
 
     </v-card>
@@ -88,15 +88,6 @@ export default {
         .catch((ex) => {
           console.log("조회 실패", ex);
         });
-    },
-
-    setToSearchParams: function (values) {
-      var params = {
-        page_no: values.page,
-        view_cnt: values.itemsPerPage,
-      };
-
-      this.searchToSessLiveInfo(params);
     },
 
     handleParams: function (params) {
