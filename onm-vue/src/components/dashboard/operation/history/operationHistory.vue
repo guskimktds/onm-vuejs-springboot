@@ -5,7 +5,10 @@
           v-on:search="searchToButton"
           v-bind:param=searchParam
         ></operation-history-query>
-        <operation-history-list v-bind:pList=pList></operation-history-list>
+        <operation-history-list 
+        v-bind:pList=pList
+        v-bind:resPagingInfo=resPagingInfo
+        @pagination="setToSearchParams"></operation-history-list>
       </v-card>
 
   </v-container>
@@ -40,38 +43,24 @@ export default {
       }
     }
   },
-  created: function() {
-    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15003/get_proc_history'
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15003/get_onm_use_history`
-    
-    // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
-    var params = this.reqPagingInfo
-
-    axios
-        .post(url, params, this.$store.state.headers)
-        .then((response) => {
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.list;
-            this.resPagingInfo = response.data.data.paging_info
-            console.log(this.pList)
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
+  mounted() {
+    var params=this.searchParam
+    if(params.cmd_type==""||params.cmd_type==undefined){
+      params.cmd_type='All'
+    }
+    this.searchToButton(params)
   },
   methods: {
     searchToButton: function(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15003/get_onm_use_history`
 
       //params : 페이징 + 검색조건
-      var reqParams = this.handleParams(params)  
+      var reqParams = this.handleParams(params)
+      if(reqParams.cmd_type=='All'){ 
+        delete reqParams.cmd_type
+      }  
+      console.log('전달값')
+      console.log(reqParams)
 
       axios.post(url, reqParams, this.$store.state.headers)
         .then((response) => {
@@ -90,6 +79,18 @@ export default {
         .catch((ex) => {
           console.log('조회 실패',ex)
         })        
+    },
+    setToSearchParams: function(values){
+      console.log(values)
+
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      console.log(params)
+
+      this.searchToButton(params)
     },
 
     handleParams: function(params){
@@ -124,13 +125,13 @@ export default {
         newParams.cmd_type = this.searchParam.cmd_type;
       }
 
-      if (params.cmd_type !== undefined && params.cmd_type !== "") {
-        newParams.cmd_type = params.cmd_type;
+      if (params.uri !== undefined && params.uri !== "") {
+        newParams.uri = params.uri;
       } else if (
-        this.searchParam.cmd_type !== undefined &&
-        this.searchParam.cmd_type !== ""
+        this.searchParam.uri !== undefined &&
+        this.searchParam.uri !== ""
       ) {
-        newParams.cmd_type = this.searchParam.cmd_type;
+        newParams.uri = this.searchParam.uri;
       }
 
       if(params.is_masking !== undefined && params.is_masking !== ''){

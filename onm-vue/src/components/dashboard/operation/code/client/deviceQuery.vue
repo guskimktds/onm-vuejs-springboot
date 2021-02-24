@@ -78,6 +78,10 @@
                                 >
                                 <v-text-field
                                     v-model="editedItem.app_version_id"
+                                    :rules="rules"
+                                    counter
+                                    maxlength="8"
+                                    oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
                                     label="앱버전ID"
                                     
                                 ></v-text-field>
@@ -87,6 +91,9 @@
                                 >
                                 <v-text-field
                                     v-model="editedItem.os_type"
+                                    :rules="rules"
+                                    counter
+                                    maxlength="1"
                                     label="OS타입"
                                 ></v-text-field>
                                 </v-col>
@@ -95,6 +102,9 @@
                                 >
                                 <v-text-field
                                     v-model="editedItem.update_version"
+                                    :rules="rules"
+                                    counter
+                                    maxlength="20"
                                     label="업데이트 버전"
                                 ></v-text-field>
                                 </v-col>
@@ -103,6 +113,10 @@
                                 >
                                 <v-text-field
                                     v-model="editedItem.version_code"
+                                    :rules="rules"
+                                    counter
+                                    maxlength="4"
+                                    oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
                                     label="버전코드"
                                 ></v-text-field>
                                 </v-col>
@@ -114,14 +128,21 @@
                                     label="다운로드 URL"
                                 ></v-text-field>
                                 </v-col>
-                                <v-col
-                                cols="12" sm="6" md="6"
-                                >
-                                <v-text-field
+                               
+                                <v-radio-group
+                                    label="필수 업데이트"
                                     v-model="editedItem.required_yn"
-                                    label="필수 업데이트여부"
-                                ></v-text-field>
-                                </v-col>                                
+                                    row>
+                                    <v-radio
+                                    label="Y"
+                                    value="Y"
+                                    ></v-radio>
+                                    <v-radio
+                                    label="N"
+                                    value="N">
+                                    </v-radio>
+                                </v-radio-group>
+                                                               
                                 <v-col
                                 cols="12" sm="6" md="6"
                                 >
@@ -221,14 +242,14 @@ export default {
         },
 
         save () {
-            console.log('save method call : ',this.editedItem)        
+            console.log('save method call : ',this.editedItem)       
             this.editedItem.cmd_type = 'I'
-            // console.log(dateInfo().current)
             this.editedItem.mod_date = dateInfo().current 
             this.editedItem.reg_date = dateInfo().current 
             EventBus.$emit('createItemApp', this.editedItem)
 
             this.close()
+            
         },
 
         close () {
@@ -238,6 +259,24 @@ export default {
             this.editedIndex = -1
             })
         },
+        // checkValue(param){
+           
+        //     if(param.app_version_id.length>8||param.app_version_id.length<0){
+        //         param.app_version_id=""
+        //     }
+        //     if(param.os_type.length!==1){
+        //         param.os_type=""
+        //     }
+        //     if(param.update_version.length>20||param.update_version.length<0){
+        //         param.update_version=""
+        //     }
+        //     if(param.version_code.length>4||param.version_code.length<0||isNaN(param.version_code)){
+        //         param.version_code=""
+        //     }
+        //     if(param.required_yn!=='Y'||param.required_yn!=='N'){
+        //         param.required_yn=""
+        //     }
+        // }
     },  
 }
 </script>
