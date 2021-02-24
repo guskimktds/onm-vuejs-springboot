@@ -105,9 +105,8 @@
               <v-col id="information">
                 <p>
                   <b>안내</b><br>
-                  비밀번호를 변경을 원하실 경우 운영자에게 연락하시길 바랍니다.
+                  비밀번호를 변경을 원하실 경우 포털(IDMS)에서 변경하셔야 합니다.
                 </p>
-                <p>연락처 : 000-000-0000 / 이메일 : 0000000000@ktfriend.com</p>
                 <img src="@/img/exclamationMark.png" id="warn-icon"/>
               </v-col>
             </v-row>
@@ -167,6 +166,11 @@ export default {
   height: 50px;
   transform: rotate(180deg); 
   transform-origin: left top;
-  position: relative; top:-50px; left:-20px;
+  position: relative; top:-15px; left:-20px;
+}
+
+#information{
+  margin-top:5px;
+  height:80px;
 }
 </style>
