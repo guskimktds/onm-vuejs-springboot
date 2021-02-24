@@ -307,15 +307,6 @@ export default {
             // 수정
             this.editedItem.cmd_type = 'I'
             EventBus.$emit('createItem', this.editedItem)
-            this.$fire({
-                       title: "등록 되었습니다.",
-                       html: "LOCAL_GW_ID : "+this.editedItem.local_gw_id+"<br>서버명 : "+this.editedItem.server_name+
-                              "<br>서버URL : "+this.editedItem.server_url+"<br>웹소켓URL : "+this.editedItem.ws_url+
-                              "<br>국사판단패턴 : "+this.editedItem.pattern+"<br>EC URL : "+this.ec_url+
-                              "<br>LDMS URL : "+this.editedItem.ldms_url+"<br>STM 최대 수용 카메라 수 : "+this.editedItem.max_cam_cnt+
-                              "<br>VA서버 최대 분석 채널 수 : "+this.editedItem.max_va_cnt+"<br>INT 배포버전 코드 : "+this.editedItem.version_code+
-                              "<br>MQ URL : "+this.editedItem.mq_url,
-                       type : "success"})
             this.close()
         },
 

@@ -94,10 +94,15 @@ export default {
             var resCode = response.data.res_code;
             var resMsg = response.data.res_msg;
             if(resCode == 200){
-              //현재 목록에서 선택한 Item을 삭제한다.
               this.pList.unshift(params)
+              this.$fire({
+                       title: "등록 되었습니다.",
+                       type : "success"})
             }else{
-              alert(resCode + " / " + resMsg);
+              this.$fire({
+                       title: "등록 실패하였습니다.",
+                       html: resMsg,
+                       type : "error"})
             }
           })
           .catch((ex) => {

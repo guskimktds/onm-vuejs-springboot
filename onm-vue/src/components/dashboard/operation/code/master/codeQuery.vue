@@ -206,13 +206,6 @@ export default {
 
             EventBus.$emit('createItemMasterCode', this.editedItem)
 
-             this.$fire({
-                    title: "등록 되었습니다.",
-                    type : "success", 
-                    html: "코드구분 :"+this.editedItem.code_master_id+"<br>코드구분코드명 : "+this.editedItem.code_master_name+
-                    "<br>설명 : "+this.editedItem.description+"<br>사용여부 : "+this.editedItem.use_yn
-                    })
-
             this.close()
         },
 

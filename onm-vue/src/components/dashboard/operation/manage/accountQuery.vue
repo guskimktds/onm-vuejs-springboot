@@ -214,11 +214,6 @@ export default {
             this.editedItem.cmd_type = 'I'
             this.editedItem.reg_date = dateInfo().current 
             EventBus.$emit('createItemAccount', this.editedItem)
-            this.$fire({
-                       title: "등록 되었습니다.",
-                       html: "계정(사번) : "+this.editedItem.onm_user_id+"<br/>접속 IP : "
-                       +this.editedItem.access_ip+"<br/>권한 그룹 ID : "+this.editedItem.auth_group_id,
-                       type : "success"})
             this.close()
         },
 

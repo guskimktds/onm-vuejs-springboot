@@ -243,13 +243,7 @@ export default {
             this.editedItem.mod_date = dateInfo().current 
             this.editedItem.reg_date = dateInfo().current 
             EventBus.$emit('createItemApp', this.editedItem)
-            this.$fire({
-                    title: "등록 되었습니다.",
-                    type : "success",
-                    html:"앱버전ID : "+this.editedItem.app_version_id+"<br>OS타입 : "+this.editedItem.os_type+
-                        "<br>업데이트 버전 : "+this.editedItem.update_version+"<br>버전코드 : "+this.editedItem.version_code+
-                        "<br>다운로드 URL : "+this.editedItem.download_url+"<br>필수 업데이트 : "+this.editedItem.required_yn+
-                        "<br>타이틀 : "+this.editedItem.title+"<br>내용 : "+this.editedItem.content })
+    
             this.close()
             
         },
