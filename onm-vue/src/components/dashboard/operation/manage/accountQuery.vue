@@ -78,10 +78,12 @@
                                         <v-col
                                         cols="12"
                                         sm="6"
-                                        md="4"
+                                        md="12"
                                         >
                                         <v-text-field
                                             v-model="editedItem.onm_user_id"
+                                            counter
+                                            maxlength="10"
                                             label="계정(사번)"
                                         ></v-text-field>
                                         </v-col>
@@ -90,7 +92,7 @@
                                         <v-col
                                         cols="12"
                                         sm="6"
-                                        md="4"
+                                        md="12"
                                         >
                                         <v-text-field
                                             v-model="editedItem.access_ip"
@@ -102,10 +104,12 @@
                                         <v-col
                                         cols="12"
                                         sm="6"
-                                        md="4"
+                                        md="12"
                                         >
                                         <v-text-field
                                             v-model="editedItem.auth_group_id"
+                                            counter
+                                            maxlength="4"
                                             label="권한그룹id"
                                         ></v-text-field>
                                         </v-col>
@@ -121,14 +125,14 @@
                                 <v-btn
                                 color="blue darken-1"
                                 text
-                                @click="save"
+                                @click="saveSure"
                                 >
                                 저장
                                 </v-btn>
                                 <v-btn
                                 color="blue darken-1"
                                 text
-                                @click="close"
+                                @click="closeSure"
                                 >
                                 취소
                                 </v-btn>
@@ -210,8 +214,33 @@ export default {
             this.editedItem.cmd_type = 'I'
             this.editedItem.reg_date = dateInfo().current 
             EventBus.$emit('createItemAccount', this.editedItem)
-
+            this.$fire({
+                       title: "등록 되었습니다.",
+                       html: "계정(사번) : "+this.editedItem.onm_user_id+"<br/>접속 IP : "
+                       +this.editedItem.access_ip+"<br/>권한 그룹 ID : "+this.editedItem.auth_group_id,
+                       type : "success"})
             this.close()
+        },
+
+        saveSure(){
+            this.$fire({
+            title: "정말 등록 하시겠습니까?",
+            html: "계정(사번) : "+this.editedItem.onm_user_id+"<br/>접속 IP : "
+            +this.editedItem.access_ip+"<br/>권한 그룹 ID : "+this.editedItem.auth_group_id,
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText: '아니오'
+            }).then(result => {
+               if(result.value){
+                   this.save()
+               }else{
+                 this.closeSure()
+               }
+            });
+            
         },
 
         close () {
@@ -220,6 +249,16 @@ export default {
             this.editedItem = Object.assign({}, this.defaultItem)
             // this.editedIndex = -1
             })
+        },
+
+        closeSure(){
+            this.close()
+            this.$fire({
+                       title: "등록이 취소되었습니다.",
+                       html: "계정(사번) : "+this.editedItem.onm_user_id+"<br/>접속 IP : "
+                        +this.editedItem.access_ip+"<br/>권한 그룹 ID : "+this.editedItem.auth_group_id,
+                       type : "error"
+                   })
         },
     },  
 }
