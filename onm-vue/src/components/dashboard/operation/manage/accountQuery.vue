@@ -169,21 +169,13 @@ export default {
                 onm_user_id: '',     
                 access_ip: '',
                 auth_group_id: '',
-                cmd_type: 'I',
-                reg_date: '',
-                mod_date: '',
-                rgistrant:'',
-                modifier:''
+                cmd_type: 'I'
             },
             defaultItem: {
                 onm_user_id: '',     
                 access_ip: '',
                 auth_group_id: '',
-                cmd_type: '',
-                reg_date: '',
-                mod_date: '',
-                rgistrant:'',
-                modifier:''
+                cmd_type: '' 
             }
 
         }
@@ -209,10 +201,11 @@ export default {
         // },
 
         save () {
-            console.log('save method call : ',this.editedItem)        
+            console.log('save method call : ',this.editedItem)   
+            console.log('date ',dateInfo().current )     
             // 등록
             this.editedItem.cmd_type = 'I'
-            this.editedItem.reg_date = dateInfo().current 
+            // this.editedItem.reg_date = dateInfo().current 
             EventBus.$emit('createItemAccount', this.editedItem)
             this.close()
         },

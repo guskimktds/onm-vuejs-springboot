@@ -1,43 +1,38 @@
 <template>
     <v-container fluid>
-      <v-card>
-        <!-- <device-query v-on:search="searchToButton"></device-query> -->
-        <device-query></device-query>
-        <device-list v-bind:pList=pList></device-list>
-      </v-card>
+        <v-card>
+            <masking-history-query></masking-history-query>
+            <masking-history-list v-bind:pList=pList></masking-history-list>
+        </v-card>
     </v-container>
 </template>
 
 <script>
-import deviceQuery from './deviceQuery'
-import deviceList from './deviceList'
+import maskingHistoryQuery from './maskingHistoryQuery'
+import maskingHistoryList from './maskingHistoryList'
 
 import axios from "axios"
-import EventBus from '../../../../../EventBus';
+import EventBus from '../../../../EventBus'
 
 export default {
-  components:{
-    deviceQuery,
-    deviceList
-  },
-  data () {
-    return {
-      title: 'APP(Client) 단말 관리',
-      pList: [],
-      reqPagingInfo: {
-        page_no: 1,
-        view_cnt: 10
-      },
-      resPagingInfo: {},
-      // searchParam: { 
-      //   app_version_id: '',
-      //   // code_id: '',
-      //   os_type: '',
-      //   // code_type: ''
-      // }
-    }
-  },
+  components: {
+       maskingHistoryQuery,
+       maskingHistoryList 
+       },
+       data(){
+           return{
+            title: 'masking 이력 관리',
+            pList: [],
+            reqPagingInfo:{
+                page_no:1,
+                view_cnt:10
+            },
+            resPagingInfo: {},
+           }
+       },
+
   created: function() {
+      console.log('시작')
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15010/get_app_info`
     // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
     var params = this.reqPagingInfo
@@ -119,4 +114,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

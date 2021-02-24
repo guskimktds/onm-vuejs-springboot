@@ -17,7 +17,7 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
-Vue.use(VueSimpleAlert, {reverseButtons: true})
+Vue.use(VueSimpleAlert, { reverseButtons: true } )
 
 new Vue({
     render: h => h(App),

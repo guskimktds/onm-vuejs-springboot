@@ -77,6 +77,7 @@ import OperationMain from '../components/dashboard/operationMain'
 import OperationHistory from '../components/dashboard/operation/history/operationHistory'
 import AdminHistory from '../components/dashboard/operation/admin/adminHistory'
 import ChangeHistory from '../components/dashboard/operation/change/changeHistory'
+import MaskingHistory from '../components/dashboard/operation/masking/maskingHistory'
 
 //운영관리 / 관리자 이력 조회
 
@@ -421,6 +422,11 @@ export default new Router({
                     path: "change-history",
                     name: 'ChangeHistory',
                     component: ChangeHistory
+                },
+                {
+                    path: "masking-history",
+                    name: 'MaskingHistory',
+                    component: MaskingHistory
                 },
                 {
                     path: "code",

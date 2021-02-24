@@ -106,7 +106,10 @@ export default {
             }
           })
           .catch((ex) => {
-            console.log('변경 실패',ex)
+            this.$fire({
+                       title: "등록 실패하였습니다.",
+                       text: ex,
+                       type : "error"})
           })
     })
   },
