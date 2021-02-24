@@ -78,7 +78,6 @@
                                 >
                                 <v-text-field
                                     v-model="editedItem.app_version_id"
-                                    :rules="rules"
                                     counter
                                     maxlength="8"
                                     oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
@@ -91,7 +90,6 @@
                                 >
                                 <v-text-field
                                     v-model="editedItem.os_type"
-                                    :rules="rules"
                                     counter
                                     maxlength="1"
                                     label="OS타입"
@@ -102,7 +100,6 @@
                                 >
                                 <v-text-field
                                     v-model="editedItem.update_version"
-                                    :rules="rules"
                                     counter
                                     maxlength="20"
                                     label="업데이트 버전"
@@ -113,7 +110,6 @@
                                 >
                                 <v-text-field
                                     v-model="editedItem.version_code"
-                                    :rules="rules"
                                     counter
                                     maxlength="4"
                                     oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
@@ -169,14 +165,14 @@
                             <v-btn
                             color="blue darken-1"
                             text
-                            @click="save"
+                            @click="saveSure"
                             >
                             완료
                             </v-btn>
                             <v-btn
                             color="blue darken-1"
                             text
-                            @click="close"
+                            @click="closeSure"
                             >
                             취소
                             </v-btn>
@@ -247,9 +243,37 @@ export default {
             this.editedItem.mod_date = dateInfo().current 
             this.editedItem.reg_date = dateInfo().current 
             EventBus.$emit('createItemApp', this.editedItem)
-
+            this.$fire({
+                    title: "등록 되었습니다.",
+                    type : "success",
+                    html:"앱버전ID : "+this.editedItem.app_version_id+"<br>OS타입 : "+this.editedItem.os_type+
+                        "<br>업데이트 버전 : "+this.editedItem.update_version+"<br>버전코드 : "+this.editedItem.version_code+
+                        "<br>다운로드 URL : "+this.editedItem.download_url+"<br>필수 업데이트 : "+this.editedItem.required_yn+
+                        "<br>타이틀 : "+this.editedItem.title+"<br>내용 : "+this.editedItem.content })
             this.close()
             
+        },
+        
+        saveSure(){
+            this.$fire({
+            title: "정말 등록 하시겠습니까?",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText: '아니오',
+            html:"앱버전ID : "+this.editedItem.app_version_id+"<br>OS타입 : "+this.editedItem.os_type+
+            "<br>업데이트 버전 : "+this.editedItem.update_version+"<br>버전코드 : "+this.editedItem.version_code+
+            "<br>다운로드 URL : "+this.editedItem.download_url+"<br>필수 업데이트 : "+this.editedItem.required_yn+
+            "<br>타이틀 : "+this.editedItem.title+"<br>내용 : "+this.editedItem.content 
+            }).then(result => {
+               if(result.value){
+                   this.save()
+               }else{
+                   this.closeSure()
+               }
+            });
         },
 
         close () {
@@ -259,6 +283,19 @@ export default {
             this.editedIndex = -1
             })
         },
+
+        closeSure(){
+            this.close()
+            this.$fire({
+                       title: "등록이 취소되었습니다.",
+                       type : "error",
+                       html:"앱버전ID : "+this.editedItem.app_version_id+"<br>OS타입 : "+this.editedItem.os_type+
+                            "<br>업데이트 버전 : "+this.editedItem.update_version+"<br>버전코드 : "+this.editedItem.version_code+
+                            "<br>다운로드 URL : "+this.editedItem.download_url+"<br>필수 업데이트 : "+this.editedItem.required_yn+
+                            "<br>타이틀 : "+this.editedItem.title+"<br>내용 : "+this.editedItem.content 
+                   })
+        },
+
         // checkValue(param){
            
         //     if(param.app_version_id.length>8||param.app_version_id.length<0){

@@ -73,7 +73,8 @@
                             <v-text-field
                                 v-model="editedItem.local_gw_id"
                                 label="LOCAL_GW_ID"
-                                
+                                counter
+                                maxlength="1"
                             ></v-text-field>
                             </v-col>
                             <v-col
@@ -84,6 +85,8 @@
                             <v-text-field
                                 v-model="editedItem.server_name"
                                 label="서버명"
+                                counter
+                                maxlength="50"
                             ></v-text-field>
                             </v-col>
                             <v-col
@@ -144,6 +147,9 @@
                             <v-text-field
                                 v-model="editedItem.max_cam_cnt"
                                 label="STM 최대 수용 카메라 수"
+                                counter
+                                maxlength="4"
+                                oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
                             ></v-text-field>
                             </v-col>
                             <v-col
@@ -154,6 +160,9 @@
                             <v-text-field
                                 v-model="editedItem.max_va_cnt"
                                 label="VA서버 최대 분석 채널 수"
+                                counter
+                                maxlength="4"
+                                oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
                             ></v-text-field>
                             </v-col>
                             <v-col
@@ -164,6 +173,9 @@
                             <v-text-field
                                 v-model="editedItem.version_code"
                                 label="INT 배포버전 코드"
+                                counter
+                                maxlength="4"
+                                oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
                             ></v-text-field>
                             </v-col>
                             <v-col
@@ -186,14 +198,14 @@
                         <v-btn
                         color="blue darken-1"
                         text
-                        @click="save"
+                        @click="saveSure"
                         >
                         완료
                         </v-btn>
                         <v-btn
                         color="blue darken-1"
                         text
-                        @click="close"
+                        @click="closeSure"
                         >
                         취소
                         </v-btn>
@@ -295,8 +307,41 @@ export default {
             // 수정
             this.editedItem.cmd_type = 'I'
             EventBus.$emit('createItem', this.editedItem)
-
+            this.$fire({
+                       title: "등록 되었습니다.",
+                       html: "LOCAL_GW_ID : "+this.editedItem.local_gw_id+"<br>서버명 : "+this.editedItem.server_name+
+                              "<br>서버URL : "+this.editedItem.server_url+"<br>웹소켓URL : "+this.editedItem.ws_url+
+                              "<br>국사판단패턴 : "+this.editedItem.pattern+"<br>EC URL : "+this.ec_url+
+                              "<br>LDMS URL : "+this.editedItem.ldms_url+"<br>STM 최대 수용 카메라 수 : "+this.editedItem.max_cam_cnt+
+                              "<br>VA서버 최대 분석 채널 수 : "+this.editedItem.max_va_cnt+"<br>INT 배포버전 코드 : "+this.editedItem.version_code+
+                              "<br>MQ URL : "+this.editedItem.mq_url,
+                       type : "success"})
             this.close()
+        },
+
+        saveSure(){
+            this.$fire({
+            title: "정말 등록 하시겠습니까?",
+            type: "question",
+            html: "LOCAL_GW_ID : "+this.editedItem.local_gw_id+"<br>서버명 : "+this.editedItem.server_name+
+            "<br>서버URL : "+this.editedItem.server_url+"<br>웹소켓URL : "+this.editedItem.ws_url+
+            "<br>국사판단패턴 : "+this.editedItem.pattern+"<br>EC URL : "+this.ec_url+
+            "<br>LDMS URL : "+this.editedItem.ldms_url+"<br>STM 최대 수용 카메라 수 : "+this.editedItem.max_cam_cnt+
+            "<br>VA서버 최대 분석 채널 수 : "+this.editedItem.max_va_cnt+"<br>INT 배포버전 코드 : "+this.editedItem.version_code+
+            "<br>MQ URL : "+this.editedItem.mq_url,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText: '아니오'
+            }).then(result => {
+               if(result.value){
+                   this.save()
+               }else{
+                 this.closeSure()
+               }
+            });
+            
         },
 
         close () {
@@ -305,6 +350,19 @@ export default {
             this.editedItem = Object.assign({}, this.defaultItem)
             // this.editedIndex = -1
             })
+        },
+        closeSure(){
+            this.close()
+            this.$fire({
+                       title: "등록이 취소되었습니다.",
+                       html: "LOCAL_GW_ID : "+this.editedItem.local_gw_id+"<br>서버명 : "+this.editedItem.server_name+
+                              "<br>서버URL : "+this.editedItem.server_url+"<br>웹소켓URL : "+this.editedItem.ws_url+
+                              "<br>국사판단패턴 : "+this.editedItem.pattern+"<br>EC URL : "+this.ec_url+
+                              "<br>LDMS URL : "+this.editedItem.ldms_url+"<br>STM 최대 수용 카메라 수 : "+this.editedItem.max_cam_cnt+
+                              "<br>VA서버 최대 분석 채널 수 : "+this.editedItem.max_va_cnt+"<br>INT 배포버전 코드 : "+this.editedItem.version_code+
+                              "<br>MQ URL : "+this.editedItem.mq_url,
+                       type : "error"
+                   })
         },
 
         // closeDelete () {

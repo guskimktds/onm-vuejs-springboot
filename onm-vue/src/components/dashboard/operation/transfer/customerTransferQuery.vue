@@ -140,11 +140,20 @@
                                 sm="6"
                                 md="6"
                                 >
-                                <v-text-field
+                                <v-radio-group
+                                    label="진행여부"
                                     v-model="editedItem.step"
-                                    label="진행여부(Y/N)"
-                                ></v-text-field>
-                                </v-col>
+                                    row>
+                                    <v-radio
+                                    label="Y"
+                                    value="Y"
+                                    ></v-radio>
+                                    <v-radio
+                                    label="N"
+                                    value="N">
+                                    </v-radio>
+                                </v-radio-group>
+                               </v-col>
                                 
                             </v-row>
                             </v-container>
@@ -156,14 +165,14 @@
                             <v-btn
                             color="blue darken-1"
                             text
-                            @click="save"
+                            @click="saveSure"
                             >
                             저장
                             </v-btn>
                             <v-btn
                             color="blue darken-1"
                             text
-                            @click="close"
+                            @click="closeSure"
                             >
                             취소
                             </v-btn>
@@ -224,10 +233,34 @@ export default {
 
         save () {
             console.log('save method call : ',this.editedItem)        
-            
             EventBus.$emit('createItemTransfer', this.editedItem)
-
+            this.$fire({
+                       title: "등록 되었습니다.",
+                       type : "success",
+                       html: "매장ID : "+this.editedItem.user_id+"<br>이전할 국사코드 : "+this.editedItem.to_local+
+                        "<br>고객이전 처리코드 : "+this.editedItem.process_code+"<br>진행여부 : "+this.editedItem.step
+                   })
             this.close()
+        },
+
+        saveSure(){
+            this.$fire({
+            title: "정말 등록 하시겠습니까?",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText: '아니오',
+            html: "매장ID : "+this.editedItem.user_id+"<br>이전할 국사코드 : "+this.editedItem.to_local+
+            "<br>고객이전 처리코드 : "+this.editedItem.process_code+"<br>진행여부 : "+this.editedItem.step 
+            }).then(result => {
+               if(result.value){
+                   this.save()
+               }else{
+                   this.closeSure()
+               }
+            });
         },
 
         close () {
@@ -237,6 +270,16 @@ export default {
             // this.editedIndex = -1
             })
         },
+
+        closeSure(){
+            this.close()
+            this.$fire({
+                       title: "등록이 취소되었습니다.",
+                       type : "error",
+                       html: "매장ID : "+this.editedItem.user_id+"<br>이전할 국사코드 : "+this.editedItem.to_local+
+                        "<br>고객이전 처리코드 : "+this.editedItem.process_code+"<br>진행여부 : "+this.editedItem.step
+                   })
+        }
 
     },  
 }
