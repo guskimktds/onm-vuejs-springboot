@@ -161,8 +161,7 @@
                 "component": "admin-history",
                 "children": [
                     { "name": "[매장]관리자 접속 이력", "path": "/operation/admin-history", "component": "admin-history" },
-                    { "name": "[매장]관리자 변경 이력", "path": "/operation/change-history", "component": "change-history" },
-                    { "name": "마스킹 열람 내역", "path": "/operation/masking-history", "component": "masking-history" }
+                    { "name": "[매장]관리자 변경 이력", "path": "/operation/change-history", "component": "change-history" }
                 ]
             },
             {

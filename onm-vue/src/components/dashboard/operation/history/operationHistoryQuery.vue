@@ -15,6 +15,46 @@
                     <v-text-field label="사번">
                     </v-text-field>
                 </v-col> -->     
+
+                <v-col cols="6">
+                    <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.start_date"
+                        label="시작일"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.start_date" no-title scrollable type="date">
+                    </v-date-picker>
+                    </v-menu>
+                </v-col>
+
+                 <v-col cols="6">
+                    <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.end_date"
+                        label="종료일"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.end_date" no-title scrollable type="date">
+                    </v-date-picker>
+                    </v-menu>
+                 </v-col>
                    
                 <v-col cols="12" sm="6" md="12">
                     <v-radio-group

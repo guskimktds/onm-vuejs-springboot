@@ -63,16 +63,21 @@
                           ></v-text-field>
                         </v-col>
                         
-                        <v-col
-                          cols="12"
-                          sm="6"
-                          md="6"
-                        >
-                          <v-text-field
-                            v-model="editedItem.use_yn"
-                            label="사용여부"
-                          ></v-text-field>
-                        </v-col>                      
+                     
+                         <v-radio-group
+                                    label="사용여부"
+                                    v-model="editedItem.use_yn"
+                                    row>
+                                    <v-radio
+                                    label="Y"
+                                    value="Y"
+                                    ></v-radio>
+                                    <v-radio
+                                    label="N"
+                                    value="N">
+                                    </v-radio>
+                        </v-radio-group>
+                                            
                         <v-col
                           cols="12"
                           sm="6"

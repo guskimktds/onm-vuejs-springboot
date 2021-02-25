@@ -55,7 +55,7 @@
       </v-row>
 
       <v-row>
-        <v-col cols="12" sm="6" md="4">
+        <v-col cols="12" sm="3" md="3">
           <v-text-field
             dense
             label="발송 전화번호"
@@ -65,7 +65,7 @@
           </v-text-field>
         </v-col>
 
-        <v-col cols="12" sm="6" md="4">
+        <v-col cols="12" sm="3" md="3">
           <v-text-field
             dense
             label="OTP 번호"
@@ -78,6 +78,55 @@
         <v-col cols="auto">
           <v-btn v-on:click="searchMethod">검색</v-btn>
         </v-col>
+        <v-col>
+          <v-dialog
+          v-model="dialog"
+          max-width="500px">
+          <template v-slot:activator="{on,attrs}">
+            <v-btn
+             color="blue"
+             v-bind="attrs"
+             v-on="on">발송이력코드 보기</v-btn>
+          </template>
+          <v-card-title>발송이력코드</v-card-title>
+          <v-card>
+            <v-img
+            src="@/img/exclamationMark.png"
+            v-show="this.img1"></v-img>
+          </v-card>
+          <v-card>
+            <v-img
+            src="@/img/chart.png"
+            v-show="this.img2"></v-img>
+          </v-card>
+          <v-card>
+            <v-img
+            src="@/img/chart.png"
+            v-show="this.img3"></v-img>
+          </v-card>
+
+          <v-card-actions>
+            <v-btn
+              color="green"
+              v-on:click="showImg('1')"
+              >1</v-btn>
+          <v-btn
+              color="green"
+              v-on:click="showImg('2')"
+              > 2</v-btn>
+          <v-btn
+              color="green"
+              v-on:click="showImg('3')"
+              > 3</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="indigo"
+              dark
+              class="mb-2"
+              @click="close"> 취소</v-btn>
+          </v-card-actions>
+          </v-dialog>
+        </v-col>
       </v-row>
     </base-material-card>
   </v-container>
@@ -87,6 +136,10 @@ export default {
   props: ["param"],
   data() {
     return {
+      img1: true,
+      img2: false,
+      img3: false,
+      dialog: false
     };
   },
 
@@ -94,6 +147,24 @@ export default {
     searchMethod: function () {
       this.$emit("search", this.param);
     },
+    close(){
+      this.dialog=false
+    },
+    showImg(values){
+      if(values=='1'){
+        this.img1=true
+        this.img2=false
+        this.img3=false
+      }else if(values=='2'){
+        this.img1=false
+        this.img2=true
+        this.img3=false
+      }else if(values=='3'){
+        this.img1=false
+        this.img2=false
+        this.img3=true
+      }
+    }
   },
 };
 </script>
