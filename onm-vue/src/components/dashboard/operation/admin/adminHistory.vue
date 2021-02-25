@@ -134,7 +134,7 @@ export default {
         newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
 
-      newParams.admin_type = this.searchParam.admin_type;
+      newParams.admin_type = 'N'
 
       return newParams
     }

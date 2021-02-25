@@ -612,6 +612,14 @@ export default {
       ) {
         newParams.tel_no = this.searchParam.tel_no;
       }
+      if(params.is_masking !== undefined && params.is_masking !== ''){
+        newParams.is_masking = params.is_masking ? "N" : "Y";
+      }else if(
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
+      }
 
       return newParams;
     },
