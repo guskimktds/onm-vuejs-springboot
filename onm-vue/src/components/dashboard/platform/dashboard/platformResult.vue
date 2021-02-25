@@ -5,7 +5,7 @@
                         <div class="count-board">
                             <div class="row">
                                 <div class="col-3">
-                                    <img class="dashboard-icon" width="50px" height="50px" src="https://thumbs.dreamstime.com/b/squared-colored-round-edges-twitter-logo-icon-web-printing-purpose-squared-colored-round-edges-twitter-logo-icon-176486749.jpg"/>
+                                    <img class="dashboard-icon" width="50px" height="50px" src="@/img/bird.jpg"/>
                                 </div>
                                 <div class="col-9 count-board-text">
                                     <div>고객 변화(전일대비)</div>
@@ -20,7 +20,7 @@
                         <div class="count-board">
                             <div class="row">
                                 <div class="col-3">
-                                    <img class="dashboard-icon" width="50px" height="50px" src="https://thumbs.dreamstime.com/b/financial-analysis-chart-icon-white-isolated-green-background-vector-illustration-financial-analysis-chart-icon-green-109781393.jpg"/>
+                                    <img class="dashboard-icon" width="50px" height="50px" src="@/img/rchart.jpg"/>
                                 </div>
                                 <div class="col-9 count-board-text">
                                     <div>전체 고객 수</div>
@@ -35,7 +35,7 @@
                         <div class="count-board">
                             <div class="row">
                                 <div class="col-3">
-                                    <img class="dashboard-icon" width="50px" height="50px" src="https://thumbs.dreamstime.com/b/white-surveillance-camera-white-surveillance-camera-orange-square-106767884.jpg"/>
+                                    <img class="dashboard-icon" width="50px" height="50px" src="@/img/cam.jpg"/>
                                 </div>
                                 <div class="col-9 count-board-text">
                                     <div>카메라 변화(전일대비)</div>
@@ -50,7 +50,7 @@
                         <div class="count-board">
                             <div class="row">
                                 <div class="col-3">
-                                    <img class="dashboard-icon" width="50px" height="50px" src="https://thumbs.dreamstime.com/b/cctv-camera-icon-white-isolated-green-background-vector-illustration-102899492.jpg"/>
+                                    <img class="dashboard-icon" width="50px" height="50px" src="@/img/cctv.jpg"/>
                                 </div>
                                 <div class="col-9 count-board-text">
                                     <div>전체 카메라 수</div>

@@ -16,7 +16,7 @@
                     </v-text-field>
                 </v-col> -->     
 
-                <v-col cols="6">
+                <v-col cols="5">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -36,7 +36,7 @@
                     </v-menu>
                 </v-col>
 
-                 <v-col cols="6">
+                 <v-col cols="5">
                     <v-menu
                     offset-y
                     min-width="290px"
