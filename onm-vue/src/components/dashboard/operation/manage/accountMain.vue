@@ -73,40 +73,7 @@ export default {
         console.log('조회 실패',ex)
       })
   },
-  mounted: function() {
-     EventBus.$on('createItemAccount', params => {
-        //console.log('codeMain.vue eventbus : param : ',parameter)
-        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15002/set_account`
-
-        var changeParams=this.changeIp(params)
-        axios.post(url, changeParams, this.$store.state.headers)
-          .then((response) => {
-            console.log(response)
-            var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
-            if(resCode == 200){
-              //현재 목록에서 선택한 Item을 삭제한다.
-              this.pList.unshift(params)
-              this.$fire({
-                       title: "등록 되었습니다.",
-                       type : "success"})
-            }else{
-              console.log('오류메세지')
-              console.log(resMsg)
-              this.$fire({
-                       title: "등록 실패하였습니다.",
-                       html: resMsg,
-                       type : "error"})
-            }
-          })
-          .catch((ex) => {
-            this.$fire({
-                       title: "등록 실패하였습니다.",
-                       text: ex,
-                       type : "error"})
-          })
-    })
-  },
+  
   methods: {
     searchToButton: function(params){
       console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
@@ -202,14 +169,7 @@ export default {
 
       return newParams
     },
-    changeIp(values){
-      let newParams={}
-      newParams.onm_user_id=values.onm_user_id
-      newParams.auth_group_id=values.auth_group_id
-      newParams.cmd_type=values.cmd_type
-      newParams.access_ip=values.access_ip.split(',')
-      return newParams
-    }
+    
   }
   
 }
