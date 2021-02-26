@@ -50,6 +50,7 @@
                           <v-text-field
                             v-model="editedItem.code_master_id"
                             label="코드구분"
+                            readonly
                           ></v-text-field>
                         </v-col>
                         <v-col

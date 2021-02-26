@@ -30,7 +30,7 @@
       tag="section"
     >
       <v-card>
-        <v-form justify="center">
+        <v-form justify="center" @keyup.enter="onSubmit(id,password)">
           <v-container class="py-0">
             <v-row>
               <v-col>
@@ -55,6 +55,7 @@
             <v-row>
               <v-col>
                 <v-btn                 
+                  type="submit"
                   @click="onSubmit(id, password)"                  
                 >
                   Login

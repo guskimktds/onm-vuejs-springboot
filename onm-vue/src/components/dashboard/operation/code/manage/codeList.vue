@@ -52,6 +52,7 @@
                           <v-text-field
                             v-model="editedItem.code_master_id"
                             label="코드구분"
+                            readonly
                           ></v-text-field>
                         </v-col>
                         <v-col
@@ -62,6 +63,7 @@
                           <v-text-field
                             v-model="editedItem.code_id"
                             label="코드"
+                            readonly
                           ></v-text-field>
                         </v-col>
                         <v-col
@@ -82,6 +84,8 @@
                           <v-text-field
                             v-model="editedItem.code_type"
                             label="코드타입"
+                            counter
+                            maxlength="20"
                           ></v-text-field>
                         </v-col>
                         <v-col
@@ -102,6 +106,9 @@
                           <v-text-field
                             v-model="editedItem.orderby_no"
                             label="정렬순서"
+                            counter
+                            maxlength="4"
+                            oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
                           ></v-text-field>
                         </v-col>
                         <v-col

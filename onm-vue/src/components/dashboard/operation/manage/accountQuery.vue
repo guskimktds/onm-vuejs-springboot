@@ -117,14 +117,14 @@
                         placeholder="Placeholder" >                        
                         </v-text-field>
                     </v-col>         
-                    <v-col cols="12" sm="6" md="2">
+                    <!-- <v-col cols="12" sm="6" md="2">
                         <v-text-field 
                         dense 
                         label="이름" 
                         v-model="param.name" 
                         placeholder="Placeholder" >                        
                         </v-text-field>
-                    </v-col> 
+                    </v-col>  -->
                     <v-col cols="12" sm="6" md="2">
                         <v-text-field 
                         dense 
