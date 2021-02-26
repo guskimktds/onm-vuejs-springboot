@@ -19,6 +19,7 @@
     "vue": "^2.6.11",
     "vue-captcha": "^1.0.2",
     "vue-chartjs": "^3.5.1",
+    "vue-cool-lightbox": "^2.7.1",
     "vue-router": "^3.4.9",
     "vue-simple-alert": "^1.1.1",
     "vue2-simplert": "^1.0.0",

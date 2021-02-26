@@ -10,9 +10,102 @@
             title="계정 정보 조회"
             class="px-5 py-3"
         >
-                <v-row>
-                <v-col>
-                    <!-- 디자인을 위한 공백 처리 -->
+        <v-row>
+           <v-col cols="3">
+                    <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.start_date"
+                        label="시작일(생성일)"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        v-show=regOption
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.start_date" no-title scrollable type="date">
+                    </v-date-picker>
+                    </v-menu>
+
+                     <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.start_date"
+                        label="시작일(수정일)"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        v-show=modOption
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.start_date" no-title scrollable type="date">
+                    </v-date-picker>
+                    </v-menu>
+
+                </v-col>
+                <v-col cols="3">
+                    <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.end_date"
+                        label="종료일(생성일)"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        v-show=regOption
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.end_date" no-title scrollable type="date">
+                    </v-date-picker>
+                    </v-menu>
+                    
+                    <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.end_date"
+                        label="종료일(수정일)"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        v-show=modOption
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.end_date" no-title scrollable type="date">
+                    </v-date-picker>
+                    </v-menu>
+                </v-col>
+                
+              <v-col cols="12" sm="6" md="3">
+                    <v-radio-group
+                        row
+                        v-on:change="handleRadio"
+                        v-model="optionType"
+                    >
+                        <v-radio
+                            label="생성일"
+                            value="reg_date"
+                        ></v-radio>
+                        <v-radio
+                            label="수정일"
+                            value="mod_date"
+                        ></v-radio>                        
+                    </v-radio-group>
                 </v-col>
                 </v-row>
                 <v-row >
@@ -24,14 +117,14 @@
                         placeholder="Placeholder" >                        
                         </v-text-field>
                     </v-col>         
-                    <v-col cols="12" sm="6" md="2">
+                    <!-- <v-col cols="12" sm="6" md="2">
                         <v-text-field 
                         dense 
                         label="이름" 
                         v-model="param.name" 
                         placeholder="Placeholder" >                        
                         </v-text-field>
-                    </v-col> 
+                    </v-col>  -->
                     <v-col cols="12" sm="6" md="2">
                         <v-text-field 
                         dense 
@@ -156,15 +249,17 @@
 </template>
 <script>
 
-import EventBus from '../../../../EventBus'
 import dateInfo from '../../../utils/common';
-
+import axios from "axios"
 
 export default {
     props:['param'],
     data() {
         return{
             dialog: false,
+            regOption:true,
+            modOption:false,
+            optionType: 'reg_date',
             editedItem: {
                 onm_user_id: '',     
                 access_ip: '',
@@ -205,9 +300,48 @@ export default {
             console.log('date ',dateInfo().current )     
             // 등록
             this.editedItem.cmd_type = 'I'
-            // this.editedItem.reg_date = dateInfo().current 
-            EventBus.$emit('createItemAccount', this.editedItem)
+
+            var params = this.editedItem;
+            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15002/set_account`
+            var changeParams=this.changeIp(params)
+
+            axios.post(url, changeParams, this.$store.state.headers)
+            .then((response) => {
+                console.log(response)
+                var resCode = response.data.res_code;
+                var resMsg = response.data.res_msg;
+                if(resCode == 200){
+                //현재 목록에서 선택한 Item을 삭제한다.
+                this.pList.unshift(params)
+                this.$fire({
+                        title: "등록 되었습니다.",
+                        type : "success"})
+                }else{
+                console.log('오류메세지')
+                console.log(resMsg)
+                this.$fire({
+                        title: "등록 실패하였습니다.",
+                        html: resMsg,
+                        type : "error"})
+                }
+            })
+            .catch((ex) => {
+                this.$fire({
+                        title: "등록 실패하였습니다.",
+                        text: ex,
+                        type : "error"})
+            })
+
             this.close()
+        },
+
+        changeIp(values){
+            let newParams={}
+            newParams.onm_user_id=values.onm_user_id
+            newParams.auth_group_id=values.auth_group_id
+            newParams.cmd_type=values.cmd_type
+            newParams.access_ip=values.access_ip.split(',')
+            return newParams
         },
 
         saveSure(){
@@ -248,6 +382,18 @@ export default {
                        type : "error"
                    })
         },
+
+        handleRadio:function(value){
+            console.log(value)
+            this.optionType=value
+            if(value=='reg_date'){
+                this.regOption=true
+                this.modOption=false
+            }else if(value=='mod_date'){
+                this.regOption=false
+                this.modOption=true
+            }
+        }
     },  
 }
 </script>

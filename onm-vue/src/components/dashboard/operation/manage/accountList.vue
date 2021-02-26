@@ -40,6 +40,7 @@
                             <v-text-field
                               v-model="editedItem.onm_user_id"
                               label="계정(사번)"
+                              readonly
                             ></v-text-field>
                           </v-col>
                           <v-col
@@ -50,6 +51,8 @@
                             <v-text-field
                               v-model="editedItem.auth_group_id"
                               label="권한그룹ID"
+                              counter
+                              maxlength="4"
                             ></v-text-field>
                           </v-col>
                           

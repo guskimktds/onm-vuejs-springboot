@@ -59,6 +59,8 @@
                           <v-text-field
                             v-model="editedItem.os_type"
                             label="OS타입"
+                            counter
+                            maxlength="1"
                           ></v-text-field>
                         </v-col>
                         <v-col
@@ -67,6 +69,8 @@
                           <v-text-field
                             v-model="editedItem.update_version"
                             label="업데이트 버전"
+                            counter
+                            maxlength="20"
                           ></v-text-field>
                         </v-col>
                         <v-col
@@ -75,6 +79,9 @@
                           <v-text-field
                             v-model="editedItem.version_code"
                             label="버전코드"
+                            counter
+                            maxlength="4"
+                            oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
                           ></v-text-field>
                         </v-col>
                         <v-col
@@ -85,14 +92,21 @@
                             label="다운로드 URL"
                           ></v-text-field>
                         </v-col>
-                        <v-col
-                          cols="12" sm="6" md="6"
-                        >
-                          <v-text-field
-                            v-model="editedItem.required_yn"
-                            label="필수 업데이트여부"
-                          ></v-text-field>
-                        </v-col>                        
+                       
+                          <v-radio-group
+                                    label="필수 업데이트"
+                                    v-model="editedItem.required_yn"
+                                    row>
+                                    <v-radio
+                                    label="Y"
+                                    value="Y"
+                                    ></v-radio>
+                                    <v-radio
+                                    label="N"
+                                    value="N">
+                                    </v-radio>
+                                </v-radio-group>
+                                              
                         <v-col
                           cols="12" sm="6" md="6"
                         >

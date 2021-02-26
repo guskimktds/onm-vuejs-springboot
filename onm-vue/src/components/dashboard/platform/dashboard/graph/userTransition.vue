@@ -102,7 +102,7 @@ export default {
       getLabels: function(arr){
         var new_arr = []
         arr.forEach(function(element){
-            new_arr.push(element.date) 
+            new_arr.push(element.dt) 
         })
         return new_arr
       },
