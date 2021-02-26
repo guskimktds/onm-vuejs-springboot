@@ -11,45 +11,9 @@
             class="px-5 py-3"
         >
             <v-row>
-                <v-col cols="5">
-                    <v-menu
-                    offset-y
-                    min-width="290px"
-                    >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                        v-model="param.start_date"
-                        label="시작일"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="param.start_date" no-title scrollable type="date">
-                    </v-date-picker>
-                    </v-menu>
+                <v-col>
+                    <!-- 디자인을 위한 공백 처리 -->
                 </v-col>
-                
-                 <v-col cols="5">
-                    <v-menu
-                    offset-y
-                    min-width="290px"
-                    >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                        v-model="param.end_date"
-                        label="종료일"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="param.end_date" no-title scrollable type="date">
-                    </v-date-picker>
-                    </v-menu>
-                 </v-col>
             </v-row>
             <v-row>
                 <v-col cols="12" sm="6" md="2">
