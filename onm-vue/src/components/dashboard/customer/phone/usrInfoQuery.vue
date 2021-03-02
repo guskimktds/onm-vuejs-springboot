@@ -63,15 +63,15 @@
             <v-row>
 
                 <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="사용자명" placeholder="Placeholder" v-model="param.user_name">                        
+                    <v-text-field dense label="사용자명" placeholder=" " v-model="param.user_name">                        
                     </v-text-field>
                 </v-col>         
                 <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="사용자ID" placeholder="Placeholder" v-model="param.user_id">                        
+                    <v-text-field dense label="사용자ID" placeholder=" " v-model="param.user_id">                        
                     </v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="전화번호" placeholder="Placeholder" v-model="param.tel_no">                        
+                    <v-text-field dense label="전화번호" placeholder=" " v-model="param.tel_no">                        
                     </v-text-field>
                 </v-col>
 

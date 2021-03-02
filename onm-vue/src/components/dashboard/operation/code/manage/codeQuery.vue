@@ -22,7 +22,7 @@
                         dense 
                         label="코드구분" 
                         v-model="param.code_master_id"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>         
@@ -31,7 +31,7 @@
                         dense 
                         label="코드" 
                         v-model="param.code_id"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col> 
@@ -40,7 +40,7 @@
                         dense 
                         label="코드명" 
                         v-model="param.code_name"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
@@ -49,7 +49,7 @@
                         dense 
                         label="코드타입" 
                         v-model="param.code_type"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>

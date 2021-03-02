@@ -114,7 +114,7 @@
                         dense 
                         label="매장ID" 
                         v-model="param.user_id"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>   
@@ -123,7 +123,7 @@
                         dense 
                         label="전화번호" 
                         v-model="param.tel_no"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
@@ -132,7 +132,7 @@
                         dense 
                         label="관리자구분" 
                         v-model="param.admin_type"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>  

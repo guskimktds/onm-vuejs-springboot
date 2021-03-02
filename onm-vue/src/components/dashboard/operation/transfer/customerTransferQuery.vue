@@ -57,7 +57,7 @@
                         dense 
                         label="매장ID" 
                         v-model="param.user_id"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>

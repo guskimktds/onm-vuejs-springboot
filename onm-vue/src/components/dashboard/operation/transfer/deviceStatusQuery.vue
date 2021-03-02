@@ -57,7 +57,7 @@
                         dense 
                         label="이전 일련번호" 
                         v-model="param.mig_seq"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>       
@@ -66,7 +66,7 @@
                         dense 
                         label="단말종류" 
                         v-model="param.device_type"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col> 
@@ -75,7 +75,7 @@
                         dense 
                         label="장치ID" 
                         v-model="param.device_id"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
@@ -84,7 +84,7 @@
                         dense 
                         label="상태코드" 
                         v-model="param.status_code"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>

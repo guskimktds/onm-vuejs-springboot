@@ -91,7 +91,7 @@
                         dense 
                         label="ONM 처리자ID(사번)" 
                         v-model="param.onm_user_id"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col> 
@@ -100,7 +100,7 @@
                         dense 
                         label="호출 URI" 
                         v-model="param.uri"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>

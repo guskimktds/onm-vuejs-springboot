@@ -16,11 +16,11 @@
             </v-row>
             <v-row>
                 <v-col cols="12" md="3">
-                    <v-text-field dense label="GUID" placeholder="Placeholder" v-model="param.guid">                        
+                    <v-text-field dense label="GUID" placeholder=" " v-model="param.guid">                        
                     </v-text-field>
                 </v-col>         
                 <v-col cols="12" md="3">
-                    <v-text-field dense label="서비스계약ID" placeholder="Placeholder" v-model="param.said">                        
+                    <v-text-field dense label="서비스계약ID" placeholder=" " v-model="param.said">                        
                     </v-text-field>
                 </v-col> 
                 <v-col cols="12" md="3">

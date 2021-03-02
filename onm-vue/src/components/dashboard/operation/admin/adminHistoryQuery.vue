@@ -123,7 +123,7 @@
                         dense 
                         label="관리자ID" 
                         v-model="param.admin_id"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col> 
@@ -132,7 +132,7 @@
                         dense 
                         label="매장ID" 
                         v-model="param.user_id"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
@@ -143,7 +143,7 @@
                         dense 
                         label="전화번호" 
                         v-model="param.tel_no"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col> 
@@ -153,7 +153,7 @@
                         dense 
                         label="로그인키" 
                         v-model="param.login_key"
-                        placeholder="Placeholder" 
+                        placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col> 

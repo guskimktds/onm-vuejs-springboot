@@ -114,7 +114,7 @@
                         dense 
                         label="사번" 
                         v-model="param.onm_user_id" 
-                        placeholder="Placeholder" >                        
+                        placeholder=" " >                        
                         </v-text-field>
                     </v-col>         
                     <!-- <v-col cols="12" sm="6" md="2">
@@ -130,7 +130,7 @@
                         dense 
                         label="권한그룹ID" 
                         v-model="param.auth_group_id" 
-                        placeholder="Placeholder" >                        
+                        placeholder=" " >                        
                         </v-text-field>
                     </v-col>
                     <v-col cols="auto" >
