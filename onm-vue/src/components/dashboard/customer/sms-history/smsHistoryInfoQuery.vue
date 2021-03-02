@@ -91,17 +91,17 @@
           <v-card-title>발송이력코드</v-card-title>
           <v-card>
             <v-img
-            src="@/img/exclamationMark.png"
+            src="@/img/sms_code1.png"
             v-show="this.img1"></v-img>
           </v-card>
           <v-card>
             <v-img
-            src="@/img/chart.png"
+            src="@/img/sms-code2.png"
             v-show="this.img2"></v-img>
           </v-card>
           <v-card>
             <v-img
-            src="@/img/chart.png"
+            src="@/img/sms-code3.png"
             v-show="this.img3"></v-img>
           </v-card>
 

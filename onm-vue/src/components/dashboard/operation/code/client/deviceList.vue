@@ -149,7 +149,7 @@
               </v-dialog>
               <v-dialog v-model="dialogDelete" max-width="500px">
                 <v-card>
-                  <v-card-title class="headline">삭제</v-card-title>
+                  <v-card-title class="headline">삭제 하시겠습니까?</v-card-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -186,6 +186,11 @@
 import axios from "axios"
 // import { eventBus } from '../../../../../main'
 import EventBus from '../../../../../EventBus';
+
+const headers = {
+  'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+  'Content-Type': 'application/json'
+}
 
 export default {
     props: ['pList'],
@@ -249,6 +254,8 @@ export default {
         this.editedIndex = this.pList.indexOf(item)
         console.log('editItem method call : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
+        this.editedItem.cmd_type = 'U'
+        this.editedItem.local_gw_id = '0' 
 
         console.log('editItem method call : ',this.editedItem)
 
@@ -259,26 +266,44 @@ export default {
         console.log('deleteItem method call : ',item)
         this.editedIndex = this.pList.indexOf(item)
         this.editedItem = Object.assign({}, item)
+
+        this.editedItem.cmd_type = 'D'
+        this.editedItem.local_gw_id = '0' 
         this.dialogDelete = true
       },
 
       deleteItemConfirm () {
         //서버 측 delete 처리
-        const deleteItem = this.editedItem
-        axios
-            .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/localcode/delete`, deleteItem)
-            .then((result) => {
-              console.log(result)
-              // this.list = JSON.parse(result.data.menu)
-              // this.list = result.data
-              this.pList.splice(this.editedIndex, 1)
+
+        if (this.editedIndex > -1) {
+
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15011/set_app_info`
+
+          // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
+          var params = this.editedItem
+          var deleteIndex = this.editedIndex
+
+          console.log('삭제 파라미터')
+          console.log(params)
+
+          axios.post(url, params, headers)
+            .then((response) => {
+              console.log(response)
+              var resCode = response.data.res_code;
+              var resMsg = response.data.res_msg;
+              if(resCode == 200){
+                //현재 목록에서 선택한 Item을 삭제한다.
+                this.pList.splice(deleteIndex, 1)
+              }else{
+                alert(resCode + " / " + resMsg);
+              }
             })
             .catch((ex) => {
-              console.log('조회 실패',ex)
+              console.log('변경 실패',ex)
             })
-
-        // this.pList.splice(this.editedIndex, 1)
-        this.closeDelete()
+        
+        }
+        this.closeDelete() //다이얼로그를 닫는다.
       },
 
       close () {
