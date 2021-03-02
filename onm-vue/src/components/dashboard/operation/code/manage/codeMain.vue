@@ -4,6 +4,7 @@
         <code-query 
           v-on:search="searchToButton"
           v-bind:param=searchParam
+          @Items="saveItems"
         ></code-query>
         <code-list v-bind:pList=pList></code-list>
       </v-card>
@@ -18,7 +19,6 @@ import CodeList from './codeList'
 //로그인 시 서버에서 불러오면 수정해야함
 //import AdminMenuMock from '../../../mock/AdminListMock.json';
 import axios from "axios"
-import EventBus from '../../../../../EventBus'
 
 // const headers = {
 //   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
@@ -83,36 +83,7 @@ export default {
           console.log('조회 실패',ex)
         })
   },
-  mounted: function() {
-     EventBus.$on('createItemCode', params => {
-        //console.log('codeMain.vue eventbus : param : ',parameter)
-        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15007/set_code`
-
-        axios.post(url, params, this.$store.state.headers)
-          .then((response) => {
-            console.log(response)
-            var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
-            if(resCode == 200){
-              this.pList.unshift(params)
-              this.$fire({
-                       title: "등록 되었습니다.",
-                       type : "success"})
-            }else{
-              this.$fire({
-                       title: "등록 실패하였습니다.",
-                       html: resMsg,
-                       type : "error"})
-            }
-          })
-          .catch((ex) => {
-            this.$fire({
-                       title: "등록 실패하였습니다.",
-                       text: ex,
-                       type : "error"})
-          })
-    })
-  },
+  
   methods: {
     searchToButton: function(params){
     console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
@@ -155,6 +126,34 @@ export default {
     //           console.log('조회 실패',ex)
     //         })
     // }
+    saveItems(params){
+           var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15007/set_code`
+
+           axios.post(url, params, this.$store.state.headers)
+            .then((response)=>{
+                var resCode=response.data.res_code;
+                var resMsg=response.data.res_msg;
+                if(resCode==200){
+                    this.pList.unshift(params)
+                    this.$fire({
+                        title: "등록 되었습니다.",
+                        type: "success"})
+                }else{
+                    this.$fire({
+                        title: "등록 실패하였습니다.",
+                        html: resMsg,
+                        type: "error"})
+                }
+            })
+            .catch((ex)=>{
+                this.$fire({
+                    title: "등록 실패하였습니다.",
+                    text: ex,
+                    type: "error"
+                })
+            })
+
+        },
 
     handleParams: function(params){
       let newParams = {}

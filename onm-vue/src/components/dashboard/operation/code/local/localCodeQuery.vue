@@ -247,8 +247,6 @@
 </template>
 <script>
 
-import EventBus from '../../../../../EventBus';
-
 export default {
     props:['param'],
     data() {
@@ -306,7 +304,7 @@ export default {
             console.log('save method call : ',this.editedItem)        
             // 수정
             this.editedItem.cmd_type = 'I'
-            EventBus.$emit('createItem', this.editedItem)
+            this.$emit('Items',this.editedItem)
             this.close()
         },
 

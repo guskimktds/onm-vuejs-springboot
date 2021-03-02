@@ -61,14 +61,14 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
-                        label="상태코드" 
-                        v-model="param.status_code"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
+                <v-col cols="12" sm="6" md="2">                   
+                    <v-select 
+                    label="상태코드" 
+                    v-model="select"
+                    :items="items"
+                    item-text="state"
+                    item-value="abbr"
+                  ></v-select>    
                 </v-col>
                 <v-col cols="12" sm="6" md="2">
                     <v-btn 
@@ -188,7 +188,7 @@
 
 <script>
 
-import EventBus from '../../../../EventBus';
+
 
 export default {
     props:['param'],
@@ -200,6 +200,14 @@ export default {
             //     name: '',
             //     type: ''
             // },
+            
+                select:{state:'전체', abbr:''},
+                items:[
+                    {state:'전체', abbr:''},
+                    {state:'진행', abbr: 'P'},
+                    {state:'성공', abbr:'S'},
+                    {state:'실패', abbr:'F'},
+                    {state:'등록', abbr:'A'}],
             dialog: false,
             editedItem: {
                 user_id: '',
@@ -228,13 +236,15 @@ export default {
     },
     methods: {
         searchMethod: function() {
+            this.param.status_code=this.select
+            console.log('검색값')
+            console.log(this.select)
             this.$emit('search', this.param)
         },
 
         save () {
             console.log('save method call : ',this.editedItem)        
-            EventBus.$emit('createItemTransfer', this.editedItem)
-
+            this.$emit('items',this.editedItem)
             this.close()
         },
 

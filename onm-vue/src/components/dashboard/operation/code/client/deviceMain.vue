@@ -2,7 +2,8 @@
     <v-container fluid>
       <v-card>
         <!-- <device-query v-on:search="searchToButton"></device-query> -->
-        <device-query></device-query>
+        <device-query
+        @Items="saveItems"></device-query>
         <device-list v-bind:pList=pList></device-list>
       </v-card>
     </v-container>
@@ -13,7 +14,6 @@ import deviceQuery from './deviceQuery'
 import deviceList from './deviceList'
 
 import axios from "axios"
-import EventBus from '../../../../../EventBus';
 
 export default {
   components:{
@@ -60,61 +60,37 @@ export default {
         .catch((ex) => {
           console.log('조회 실패',ex)
         })
-
   },
-  mounted: function() {[
-    EventBus.$on('createItemApp', params => {
+  methods: {
+    saveItems(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15011/set_app_info`
 
-      axios.post(url, params, this.$store.state.headers)
-          .then((response) => {
-            console.log(response)
-            var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
-            if(resCode == 200){
-              //현재 목록에서 선택한 Item을 삭제한다.
-              console.log(params)
-              this.pList.unshift(params)
-              this.$fire({
-                       title: "등록 되었습니다.",
-                       type : "success"})
-            }else{
-              this.$fire({
-                       title: "등록 실패하였습니다.",
-                       html: resMsg,
-                       type : "error"})
-            }
-          })
-          .catch((ex) => {
+      axios.post(url,params,this.$store.state.headers)
+        .then((response)=>{
+          var resCode=response.data.res_code;
+          var resMsg=response.data.res_msg;
+          if(resCode==200){
+            this.pList.unshift(params)
             this.$fire({
-                       title: "등록 실패하였습니다.",
-                       text: ex,
-                       type : "error"})
+              title : "등록 되었습니다.",
+              type : "success"})
+          }else{
+            this.$fire({
+              title: "등록 실패하였습니다.",
+              html: resMsg,
+              type: "error"})
+          }
+        })
+        .catch((ex)=>{
+          this.$fire({
+            title: "등록 실패하였습니다.",
+            text: ex,
+            type: "error"
           })
-    }),
-    EventBus.$on('editedItemApp', (params, updateIndex) => {
-      console.log(params, updateIndex)
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15011/set_app_info`
-
-        axios.post(url, params, this.$store.state.headers)
-            .then((response) => {
-              console.log(response)
-              var resCode = response.data.res_code;
-              var resMsg = response.data.res_msg;
-              if(resCode == 200){
-                //현재 목록에서 선택한 item 을 변경해준다.
-                this.pList.splice(updateIndex, 1, params)
-              }else{
-                alert(resCode + " / " + resMsg);
-              }
-            })
-            .catch((ex) => {
-              console.log('변경 실패',ex)
-            })
-      })
-    ]
-
-  }
+        })
+    }
+  },
+ 
 }
 </script>
 

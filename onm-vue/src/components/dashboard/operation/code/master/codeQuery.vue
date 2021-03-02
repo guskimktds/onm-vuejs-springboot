@@ -152,7 +152,6 @@
 </template>
 <script>
 
-import EventBus from '../../../../../EventBus';
 import dateInfo from '../../../../utils/common';
 
 export default {
@@ -203,9 +202,7 @@ export default {
             this.editedItem.reg_date = dateInfo().current 
 
             // console.log(this.editedItem.mod_date)
-
-            EventBus.$emit('createItemMasterCode', this.editedItem)
-
+            this.$emit('Items',this.editedItem)
             this.close()
         },
 

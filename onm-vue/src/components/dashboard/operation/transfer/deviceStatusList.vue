@@ -22,6 +22,10 @@
           <template v-slot:item.status_code="{item}">
               <span>{{ switchString(item.status_code) }}</span>
           </template>
+
+          <template v-slot:item.pre_status_code="{item}">
+              <span>{{ switchString2(item.pre_status_code) }}</span>
+          </template>
         </v-data-table>
 
     </base-material-card>
@@ -66,6 +70,17 @@ export default {
     },
     methods:{
        switchString(values){
+        if(values==='P'){
+          return '진행'
+        }else if(values==='S'){
+          return '성공'
+        }else if(values==='F'){
+          return '실패'
+        }else if(values==='A'){
+          return '등록'
+        }
+      },
+      switchString2(values){
         if(values==='P'){
           return '진행'
         }else if(values==='S'){

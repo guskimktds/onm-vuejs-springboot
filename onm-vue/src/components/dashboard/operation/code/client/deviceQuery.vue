@@ -286,7 +286,6 @@
 </template>
 <script>
 
-import EventBus from '../../../../../EventBus';
 import dateInfo from '../../../../utils/common';
 
 export default {
@@ -344,7 +343,7 @@ export default {
             this.editedItem.cmd_type = 'I'
             this.editedItem.mod_date = dateInfo().current 
             this.editedItem.reg_date = dateInfo().current 
-            EventBus.$emit('createItemApp', this.editedItem)
+            this.$emit('Items', this.editedItem)
     
             this.close()
             

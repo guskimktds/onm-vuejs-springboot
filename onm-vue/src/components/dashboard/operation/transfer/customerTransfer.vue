@@ -4,6 +4,7 @@
         <customer-transfer-query 
           v-on:search="searchToButton"
           v-bind:param=searchParam
+          @items="saveItem"
         ></customer-transfer-query>
         <customer-transfer-list 
         v-bind:pList=pList
@@ -44,6 +45,7 @@ export default {
       }
     }
   },
+
 
   // mounted: function() {
   //    EventBus.$on('createItemTransfer', params => {
@@ -105,6 +107,35 @@ export default {
             console.log('조회 실패',ex)
           })
     },
+
+  saveItem(params){
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15013/move_local`
+
+    axios.post(url,params,this.$store.state.headers)
+      .then((response)=>{
+        var resCode=response.data.res_code
+        var resMsg=response.data.res_msg
+        if(resCode==200){
+          this.pList.unshift(params)
+
+          this.$fire({
+            title: "등록 되었습니다.",
+            type: "success"})
+        }else{
+          this.$fire({
+            title: "등록 실패하였습니다.",
+            html: resMsg,
+            type: "error"})
+        }
+      })
+      .catch((ex)=>{
+        this.$fire({
+          title: "등록 실패하였습니다.",
+          text: ex,
+          type: "error"})
+      })
+  },
+
     setToSearchParams: function(values){
       console.log(values)
 

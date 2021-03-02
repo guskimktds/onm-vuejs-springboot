@@ -133,16 +133,19 @@
                                     maxlength="20"
                                 ></v-text-field>
                                 </v-col>
-                                <v-col
-                                cols="12"
-                                sm="6"
-                                md="6"
-                                >
-                                <v-text-field
-                                    v-model="editedItem.use_yn"
+                                <v-radio-group
                                     label="사용여부"
-                                ></v-text-field>
-                                </v-col>
+                                    v-model="editedItem.use_yn"
+                                    row>
+                                    <v-radio
+                                    label="Y"
+                                    value="Y"
+                                    ></v-radio>
+                                    <v-radio
+                                    label="N"
+                                    value="N">
+                                    </v-radio>
+                                </v-radio-group>
                                 <v-col
                                 cols="12"
                                 sm="6"
@@ -207,9 +210,8 @@
        </base-material-card>       
     </v-container>
 </template>
-<script>
 
-import EventBus from '../../../../../EventBus';
+<script>
 // import dateInfo from '../../../../utils/common';
 
 export default {
@@ -274,7 +276,7 @@ export default {
 
             // console.log(this.editedItem.mod_date)
 
-            EventBus.$emit('createItemCode', this.editedItem)
+            this.$emit("Items",this.editedItem)
             
             this.close()
         },
@@ -301,7 +303,7 @@ export default {
             });
             
         },
-        
+    
         close () {
             this.dialog = false
             this.$nextTick(() => {

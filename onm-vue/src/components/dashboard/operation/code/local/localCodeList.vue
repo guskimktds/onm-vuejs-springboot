@@ -235,7 +235,6 @@
 
 import axios from "axios"
 // import { eventBus } from '../../../../../main'
-import EventBus from '../../../../../EventBus';
 
 // const headers = {
 //   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
@@ -306,13 +305,11 @@ export default {
     },
     methods: {
       editItem (item) {
-        console.log('editItem method call : ',item)
         this.editedIndex = this.pList.indexOf(item)
-        console.log('editItem method call : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
         // 수정
         this.editedItem.cmd_type = 'U'
-        console.log('editItem method call : ',this.editedItem)
+      
 
         this.dialog = true
       },
@@ -377,40 +374,59 @@ export default {
         console.log('save method call : ',this.editedIndex)
         if (this.editedIndex > -1) {
           // Object.assign(this.desserts[this.editedIndex], this.editedItem)
-          const editedItem = this.editedItem
-          console.log("111111111 : ", editedItem)
-          EventBus.$emit('editedItem', editedItem, this.editedIndex)
-          // update 
-            // axios
-            // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/localcode/update`, editedItem )
-            // .then((result) => {
-            //   console.log(result)
-            //   // this.list = JSON.parse(result.data.menu)
-            //   // this.list = result.data
-            //   // Object.assign(this.pList[this.editedIndex], this.editedItem)
-            // })
-            // .catch((ex) => {
-            //   console.log('조회 실패',ex)
-            // })
-        } else {
-          // this.desserts.push(this.editedItem)
-          // create
-          const createItem = this.editedItem
-          console.log("2222222222222")
-          EventBus.$emit('createItem', createItem)
 
-          // axios
-          //   .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code`, createItem)
-          //   .then((result) => {
-          //     console.log(result)
-          //     // this.list = JSON.parse(result.data.menu)
-          //     // this.list = result.data
-          //   })
-          //   .catch((ex) => {
-          //     console.log('조회 실패',ex)
-          //   })
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15009/set_local_gw`
+          var params=this.editedItem
+          var updateIndex=this.editedIndex
 
+          console.log('파람 '+params.local_gw_id+'업데이트 인덱스'+updateIndex)
+          
+          axios.post(url,params,this.$store.state.headers)
+            .then((response)=>{
+              var resCode=response.data.res_code;
+              var resMsg=response.data.res_msg;
+              if(resCode==200){
+                this.pList.splice(updateIndex,1,params)
+              }else{
+                alert(resCode+" / "+resMsg);
+              }
+            })
+            .catch((ex)=>{
+              console.log('변경 실패', ex)
+            })
         }
+     
+        //   // update 
+        //     // axios
+        //     // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/localcode/update`, editedItem )
+        //     // .then((result) => {
+        //     //   console.log(result)
+        //     //   // this.list = JSON.parse(result.data.menu)
+        //     //   // this.list = result.data
+        //     //   // Object.assign(this.pList[this.editedIndex], this.editedItem)
+        //     // })
+        //     // .catch((ex) => {
+        //     //   console.log('조회 실패',ex)
+        //     // })
+        // } else {
+        //   // this.desserts.push(this.editedItem)
+        //   // create
+        //   const createItem = this.editedItem
+        //   console.log("2222222222222")
+        //   EventBus.$emit('createItem', createItem)
+
+        //   // axios
+        //   //   .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code`, createItem)
+        //   //   .then((result) => {
+        //   //     console.log(result)
+        //   //     // this.list = JSON.parse(result.data.menu)
+        //   //     // this.list = result.data
+        //   //   })
+        //   //   .catch((ex) => {
+        //   //     console.log('조회 실패',ex)
+        //   //   })
+
+        // }
         this.close()
       }
 
