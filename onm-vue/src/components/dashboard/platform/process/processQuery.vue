@@ -21,6 +21,19 @@
                   v-on:change="searchMethod"
                   ></v-select>
                 </v-col>
+                
+                <v-radio-group
+                    v-model="param.process_status"
+                    row>
+                <v-radio
+                    label="정상"
+                    value="D"
+                    ></v-radio>
+                <v-radio
+                    label="미가동"
+                    value="U">
+                </v-radio>
+                </v-radio-group>
             </v-row>
 
             <v-row>
@@ -28,10 +41,7 @@
                     <v-text-field dense label="프로세스 타입" placeholder="Placeholder" v-model="param.process_type">                        
                     </v-text-field>
                 </v-col> 
-                <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="프로세스 상태" placeholder="Placeholder" v-model="param.process_status">                        
-                    </v-text-field>
-                </v-col>
+
                 <v-col cols="12" sm="6" md="3">
                     <v-btn elevation="2" medium v-on:click="searchMethod">
                         검색

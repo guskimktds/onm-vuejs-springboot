@@ -23,10 +23,20 @@
                     <v-text-field dense label="서비스계약ID" placeholder="Placeholder" v-model="param.said">                        
                     </v-text-field>
                 </v-col> 
-                <v-col cols="12" md="2">
-                    <v-text-field dense label="상태코드" placeholder="Placeholder" v-model="param.status_code">                        
-                    </v-text-field>
-                </v-col>
+                
+                   <v-radio-group
+                    v-model="param.status_code"
+                    row>
+                <v-radio
+                    label="사용중"
+                    value="S"
+                    ></v-radio>
+                <v-radio
+                    label="삭제"
+                    value="D">
+                </v-radio>
+                </v-radio-group>
+              
                 <v-col cols="12" md="2">
                     <v-btn elevation="2" medium v-on:click="searchMethod">
                         검색
