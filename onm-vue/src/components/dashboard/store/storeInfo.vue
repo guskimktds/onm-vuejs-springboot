@@ -256,7 +256,7 @@ export default {
 
   methods: {
     searchToStoreInfo: function (params) {
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13001/get_user_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13001/get_user_list`;
 
       var reqParams = this.handleParams(params);
 
@@ -292,7 +292,7 @@ export default {
         this.showDetailObject = true;
         this.isReloadDetailObject = true;
         
-        var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13002/get_user_detail`;
+        var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13002/get_user_detail`;
 
         var params = {
           said: values,
@@ -332,7 +332,7 @@ export default {
         this.oldValue=values
     },
     clickToSearchKTT: function () {
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13003/get_user_ktt_info_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13003/get_user_ktt_info_list`;
       var params = {
         user_id: this.pObject.user_id,
         page_no: "1",
@@ -361,7 +361,7 @@ export default {
         });
     },
     clickToSearchProdSummary: function () {
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13005/get_prod_summary_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13005/get_prod_summary_list`;
       var params = {
         user_id: this.pObject.user_id,
         page_no: "1",
@@ -389,7 +389,7 @@ export default {
     },
 
     clickToSearchVACount: function () {
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13006/get_user_va_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13006/get_user_va_list`;
       var params = {
         user_id: this.pObject.user_id,
         page_no: "1",
@@ -416,7 +416,7 @@ export default {
     },
 
     clickToSearchSensorOrder: function () {
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13007/get_sensor_status_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13007/get_sensor_status_list`;
 
       var params = {
         user_id: this.pObject.user_id,
@@ -448,7 +448,7 @@ export default {
     },
 
     clickToSearchDeviceCamera: function () {
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13008/get_cam_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
 
       var params = {
         user_id: this.pObject.user_id,
@@ -476,7 +476,7 @@ export default {
     },
 
     clickToSearchIotGw: function () {
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13009/get_iotgw_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13009/get_iotgw_list`;
 
       var params = {
         user_id: this.pObject.user_id,
@@ -504,7 +504,7 @@ export default {
     },
 
     clickToSearchDeviceSensor: function () {
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13010/get_sensor_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13010/get_sensor_list`;
 
       var params = {
         user_id: this.pObject.user_id,
@@ -531,7 +531,7 @@ export default {
         });
     },
     clickToSearchPhone: function () {
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13004/get_user_tel_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13004/get_user_tel_list`;
 
       var params = {
         user_id: this.pObject.user_id,

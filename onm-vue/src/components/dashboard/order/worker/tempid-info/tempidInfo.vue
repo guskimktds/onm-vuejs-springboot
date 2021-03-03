@@ -27,7 +27,7 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12013/get_temp_id_order_list`;
+const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12013/get_temp_id_order_list`;
 
 export default {
   

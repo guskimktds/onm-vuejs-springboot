@@ -113,7 +113,7 @@ export default {
     searchToDeviceOrderInfo: function(params){
       console.log('검색값')
       console.log(params)
-      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12006/get_device_order`
+      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12006/get_device_order`
 
       var reqParams=this.handleParams(params)
 
@@ -147,7 +147,7 @@ export default {
     clickToSearchDetailObject: function(values){
       if(values) {
 
-        var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12007/get_device_order_detail`
+        var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12007/get_device_order_detail`
 
         var params = {
           guid: values,
@@ -187,7 +187,7 @@ export default {
     },
 
     clickToSearchDetailList:function(){
-      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12008/get_device_order_detail_list`
+      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12008/get_device_order_detail_list`
 
       var params={
       guid: this.pObject.guid,
@@ -222,7 +222,7 @@ export default {
     },
     
     clickToSearchResultList:function(){
-      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12012/get_device_order_result_list`
+      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12012/get_device_order_result_list`
 
       var params={
         guid:this.pObject.guid,

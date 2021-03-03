@@ -47,7 +47,7 @@ export default {
   
   methods: {
     searchToProcess: function(params){
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11008/get_user_mig_stat`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_11008/get_user_mig_stat`;
       
       var reqParams = this.handleParams(params);
 

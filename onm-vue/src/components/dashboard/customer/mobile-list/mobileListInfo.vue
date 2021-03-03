@@ -52,7 +52,7 @@ export default {
   },
   mounted() {  
     axios
-    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
+    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
     .then((response) => {
         this.localGwOptions = response.data.data.local_gw_list;
         this.searchParam.local_gw_id=this.localGwOptions[0].local_gw_id;
@@ -71,7 +71,7 @@ export default {
 
   methods: {
     searchToMobileListInfo: function (params) {
-      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_14005/get_mobile_device_list`
+      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_14005/get_mobile_device_list`
 
       var reqParams=this.handleParams(params)
 

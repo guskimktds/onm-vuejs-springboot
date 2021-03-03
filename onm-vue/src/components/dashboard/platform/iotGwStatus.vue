@@ -24,7 +24,7 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-const url = `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11003/get_iotgw_status`;
+const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_11003/get_iotgw_status`;
 
 export default {
   components: {
@@ -48,7 +48,7 @@ export default {
   
   beforeCreate() {  
     axios
-    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
+    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
     .then((response) => {
       this.localGwOptions = response.data.data.local_gw_list;
       this.localGwOptions.unshift(this.allOptions);

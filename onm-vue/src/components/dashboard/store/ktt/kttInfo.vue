@@ -52,7 +52,7 @@ export default {
 methods: {
   searchKTTInfo: function (params) {
     
-    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13003/get_user_ktt_info_list`
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13003/get_user_ktt_info_list`
 
     var reqParams=this.handleParams(params)
 

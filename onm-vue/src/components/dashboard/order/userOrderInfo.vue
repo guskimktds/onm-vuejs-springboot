@@ -120,7 +120,7 @@ export default {
   methods: {
     searchToUserOrderInfo: function(params){
 
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
 
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)      
@@ -157,7 +157,7 @@ export default {
     clickToSearchDetailObject: function(values){
 
       if(values) {
-        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12002/get_user_subs_detail`
+        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12002/get_user_subs_detail`
         var params = {
           guid: values
         }
@@ -200,7 +200,7 @@ export default {
     },
         
     clickToSearchSubDetailList:function(){
-    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12003/get_subs_order_details_list`
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12003/get_subs_order_details_list`
     var params={
       guid: this.pObject.guid,
       page_no: '1',
@@ -228,7 +228,7 @@ export default {
     },
 
     clickToSearchKTT: function(){
-    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_12005/get_user_ktt_subs`
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12005/get_user_ktt_subs`
     var params={
       guid: this.pObject.guid,
       page_no: '1',

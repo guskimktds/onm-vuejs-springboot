@@ -49,7 +49,7 @@ export default {
  methods: {
   searchSensorOrderInfo: function (params) {
     
-    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_13007/get_sensor_status_list`
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13007/get_sensor_status_list`
 
     var reqParams=this.handleParams(params)
     console.log('센서id')
