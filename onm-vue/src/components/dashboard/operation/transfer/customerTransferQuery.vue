@@ -50,6 +50,22 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+
+                <v-radio-group
+                    row
+                    v-on:change="handleRadio"
+                    v-model="param.order_category"
+                >
+                    <v-radio
+                        label="이전 시작일"
+                        value="S"
+                    ></v-radio>
+                    <v-radio
+                        label="이전 종료일"
+                        value="E"
+                    ></v-radio>                        
+                </v-radio-group>
+
             </v-row>
             <v-row>
                 <v-col cols="12" sm="6" md="2">
@@ -64,7 +80,7 @@
                 <v-col cols="12" sm="6" md="2">                   
                     <v-select 
                     label="상태코드" 
-                    v-model="select"
+                    v-model="selected"
                     :items="items"
                     item-text="state"
                     item-value="abbr"
@@ -201,8 +217,7 @@ export default {
             //     type: ''
             // },
             
-                select:{state:'전체', abbr:''},
-                items:[
+            items:[
                     {state:'전체', abbr:''},
                     {state:'진행', abbr: 'P'},
                     {state:'성공', abbr:'S'},
@@ -236,10 +251,17 @@ export default {
     },
     methods: {
         searchMethod: function() {
-            this.param.status_code=this.select
+            this.param.status_code=this.selected
             console.log('검색값')
             console.log(this.select)
             this.$emit('search', this.param)
+        },
+        handleRadio:function(value){
+            if(value=='이전 시작일'){
+                this.param.order_category="S"
+            }else if(value=='이전 종료일'){
+                this.param.order_category="E"
+            }
         },
 
         save () {

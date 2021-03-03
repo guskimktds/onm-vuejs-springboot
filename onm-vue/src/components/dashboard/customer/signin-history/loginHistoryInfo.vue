@@ -127,40 +127,48 @@ export default {
       if(params.optionType=="login"){
         if(params.start_date !== undefined && params.start_date !== ''){
           newParams.login_start_date = params.start_date.replace(/-/g,"")
+          delete newParams.logout_start_date
         }else if(
           this.searchParam.start_date!==undefined&&
           this.searchParam.start_date!==""
         ){
           newParams.login_start_date=this.searchParam.start_date.replace(/-/g,"")
+          delete newParams.logout_start_date
         }
 
         if(params.end_date !== undefined && params.end_date !== ''){
           newParams.login_end_date = params.end_date.replace(/-/g,"")
+          delete newParams.logout_end_date
         }else if(
           this.searchParam.end_date!==undefined&&
           this.searchParam.end_date!==""
         ){
           newParams.login_end_date=this.searchParam.end_date.replace(/-/g,"")
+          delete newParams.logout_end_date
         }
       }
 
       if(params.optionType=="logout"){
         if(params.start_date !== undefined && params.start_date !== ''){
           newParams.logout_start_date = params.start_date.replace(/-/g,"")
+          delete newParams.login_start_date
         }else if(
           this.searchParam.start_date!==undefined&&
           this.searchParam.start_date!==""
         ){
           newParams.logout_start_date=this.searchParam.start_date.replace(/-/g,"")
+          delete newParams.login_start_date
         }
 
         if(params.end_date !== undefined && params.end_date !== ''){
           newParams.logout_end_date = params.end_date.replace(/-/g,"")
+          delete newParams.login_end_date
         }else if(
           this.searchParam.end_date!==undefined&&
           this.searchParam.end_date!==""
         ){
           newParams.logout_end_date=this.searchParam.end_date.replace(/-/g,"")
+          delete newParams.login_end_date
         }
       }
 
