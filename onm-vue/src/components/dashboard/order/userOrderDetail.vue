@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     searchToUserOrderDetail: function(params){
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12010/get_subs_details_list`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12010/get_subs_details_list`
       
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)  

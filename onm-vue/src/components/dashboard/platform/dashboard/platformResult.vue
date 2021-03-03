@@ -80,7 +80,7 @@ export default{
     },
     methods: {
             showResult:function(){
-            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_11013/get_user_cam_cnt`
+            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_11013/get_user_cam_cnt`
             
             axios
                 .post(url,headers)

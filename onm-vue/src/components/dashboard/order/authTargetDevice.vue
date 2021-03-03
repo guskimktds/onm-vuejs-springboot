@@ -48,7 +48,7 @@ export default {
 
   methods: {
     searchToAuthTargetDevice: function(params){
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
 
       var reqParams=this.handleParams(params)
 

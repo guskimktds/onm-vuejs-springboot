@@ -30,7 +30,7 @@ const headers = {
 
 const url =
   // "https://test-onm.ktvsaas.co.kr:8443/V110/ONM_14002/get_login_session_list";
-  `${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_14003/get_login_history`;
+  `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_14003/get_login_history`;
 
 export default {
   components: {

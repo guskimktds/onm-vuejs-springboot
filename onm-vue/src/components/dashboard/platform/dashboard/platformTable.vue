@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         processList:function(options) {
-            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11001/get_process_status`
+            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_11001/get_process_status`
             
             var reqParams=this.setParams(options)
             console.log(reqParams)
@@ -103,7 +103,7 @@ export default {
                 })
         },
         cameraList:function(options) {
-            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11002/get_cam_status`
+            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_11002/get_cam_status`
             
             var reqParams=this.setParams(options)
             axios

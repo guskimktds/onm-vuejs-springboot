@@ -46,7 +46,7 @@ export default {
     methods: {
         fillData: function() {
           this.loaded = false
-          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/${process.env.VUE_APP_API_VERSION}/ONM_11012/get_iot_transition`
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_11012/get_iot_transition`
           // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
           // var params = this.param
         

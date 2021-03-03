@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     searchCamRegStat: function(datepick){
-    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/V110/ONM_11014/get_transition`
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_11014/get_transition`
     let params={}
     console.log('데이트픽')
     console.log(datepick)
