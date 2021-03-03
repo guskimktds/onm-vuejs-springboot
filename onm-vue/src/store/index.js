@@ -7,6 +7,8 @@ import menuMock from "../mock/authMenuList.json"
 
 Vue.use(Vuex)
 
+// axios.defaults.withCredentials = true;
+
 export default new Vuex.Store({
     //const store = new Vuex.Store({
     state: {
@@ -37,7 +39,8 @@ export default new Vuex.Store({
         LOGIN(state, param) {
             state.accessToken = param
             state.isAuthenticated = true
-            state.topMenu = param.data.auth_group_list[0].auth_group_list 
+            state.topMenu = param.data.auth_group_list[0].auth_group_list
+            state.authGroupId = param.data.auth_group_list[0].auth_group_id
             state.menu = menuMock
             state.onmUserId = param.id
         },
@@ -46,6 +49,7 @@ export default new Vuex.Store({
             state.isAuthenticated = false
             state.menu = []
             state.topMenu = []
+            state.authGroupId = ''
             state.onmUserId = ''
             state.headers = {}
         },
@@ -68,7 +72,11 @@ export default new Vuex.Store({
             console.log(params)
             return axios.post(url, params, this.headers)
                 .then((response) => {
-                    console.log(response.data)
+                    console.log("####  Cookie 1####");
+                    // var cookie = response.headers.get('Set-Cookie');
+                    console.log(response);
+                    console.log("####  Cookie 2####");
+
                     var resCode = response.data.res_code
                     var resMsg = response.data.res_msg
                     var data = response.data.data
@@ -81,6 +89,11 @@ export default new Vuex.Store({
                         alert("사번 또는 비밀번호가 0회\n오류가 발생하였습니다.\n로그인정보를 확인하시길 바랍니다");
                     }
                 })
+                .catch(e => {
+                    console.log("####### ERROR 1############")
+                    console.error(e)
+                    console.log("####### ERROR 2############")
+                  })
         },
         LOGOUT({ commit }) {
             // commit("LOGOUT", id)

@@ -20,7 +20,7 @@
 
   <v-divider class="mb-1" />
     <v-list dense>
-      <v-list-item v-on:click="linkToFirstMenu()">
+      <v-list-item v-on:click="linkToHome()">
         <v-list-item-avatar
           class="align-self-center"
           color="white"
@@ -140,6 +140,7 @@ export default {
     ...mapState({ 
       topMenu: 'topMenu',
       subMenu: 'menu',
+      authGroup: 'authGroupId',
     }),
   },
   methods: {
@@ -152,12 +153,30 @@ export default {
         }
       },
 
-    linkToFirstMenu(){
-      var topMenuId = this.topMenu[0].menu_id;
-      var selectMenu = this.subMenu.filter(obj => { return obj['menu_id'] === topMenuId})
-      var path = selectMenu[0].children[0].children[0].path;
+    linkToHome(){
+
+      var path = '';
+
+      switch(this.authGroup){
+        case "G100": //최상위 관리자
+        case "G200": //운영자
+          path='/platform/dashboard';
+          break;
+        case "G300": //일반사용자
+          path='/platform/camreg-stat';
+          break;
+        default:
+          break;
+      }
+
+      this.changeTap('M100', path)
+    },
+
+    changeTap(id, path){
+      var selectMenu = this.subMenu.filter(obj => { return obj['menu_id'] === id})
       this.$router.push(path);
-      EventBus.$emit('top-path-login', selectMenu[0].children); 
+      EventBus.$emit('top-path-login', selectMenu[0].children);
+      
     },
 
     openFirstSideMenu(){
