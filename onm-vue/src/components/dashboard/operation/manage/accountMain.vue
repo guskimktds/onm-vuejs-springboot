@@ -7,7 +7,10 @@
           v-bind:param=searchParam
           @Items="saveItems"
         ></account-query>
-        <account-list v-bind:pList=pList></account-list>
+        <account-list 
+        v-bind:pList=pList
+        v-bind:resPagingInfo="resPagingInfo"
+        @pagination="setToSearchParams"></account-list>
         <auth-menu-list v-if=isAuthMenu v-bind:authGroupList=authGroupList></auth-menu-list>
        </v-card>
     </v-container>
@@ -18,6 +21,7 @@
 import AccountList from './accountList'
 import AccountQuery from './accountQuery'
 import AuthMenuList from './authMenuList'
+import dateInfo from '../../../utils/common'
 import axios from "axios"
 
 
@@ -37,42 +41,20 @@ export default {
       pList: [],
       reqPagingInfo: {
         page_no: 1,
-        view_cnt: 10
+        view_cnt: 10,
       },
       resPagingInfo: {},
       searchParam: {
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         onm_user_id: '',
         name: '',
-        auth_group_id: ''
+        auth_group_id: '',
+        order_category:'R',
       },
       authGroupList:[],
       isAuthMenu: false
     }
-  },
-  created: function() {
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15001/get_account`
-    
-      // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
-    var params = this.reqPagingInfo
-
-    axios
-      .post(url, params, this.$store.state.headers)
-      .then((response) => {
-        console.log(response)
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if(resCode == 200){
-          this.pList = response.data.data.list;
-          this.resPagingInfo = response.data.data.paging_info
-        }else{
-          this.pList = [];
-          this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
-        }
-      })
-      .catch((ex) => {
-        console.log('조회 실패',ex)
-      })
   },
   
   methods: {
@@ -81,7 +63,8 @@ export default {
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15001/get_account`
 
       //params : 페이징 + 검색조건
-      var reqParams = this.handleParams(params)  
+      var reqParams = this.handleParams(params)
+      console.log('요청하는 값')  
       console.log(reqParams)
       axios
         .post(url, reqParams, this.$store.state.headers)
@@ -184,6 +167,19 @@ export default {
             return newParams
         },
 
+    setToSearchParams: function(values){
+      console.log(values)
+
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      console.log(params)
+
+      this.searchToButton(params)
+    },
+
     handleParams: function(params){
       let newParams = {}
       if(params.page_no === undefined || params.page_no === ''){
@@ -198,6 +194,24 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
+      if(params.start_date !== undefined && params.start_date !== ''){
+          newParams.start_date = params.start_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+        }
+
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.end_date = params.end_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        }
+
       if(params.onm_user_id !== undefined && params.onm_user_id !== ''){
         newParams.onm_user_id = params.onm_user_id
       }
@@ -208,6 +222,15 @@ export default {
 
       if(params.auth_group_id !== undefined && params.auth_group_id !== ''){
         newParams.auth_group_id = params.auth_group_id
+      }
+      
+      if (params.order_category !== undefined && params.order_category !== "") {
+        newParams.order_category = params.order_category;
+      } else if (
+        this.searchParam.order_category !== undefined &&
+        this.searchParam.order_category !== ""
+      ) {
+        newParams.order_category = this.searchParam.order_category;
       }
 
       return newParams

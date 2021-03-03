@@ -81,11 +81,13 @@ export default {
   // },
   methods: {
     searchToButton: function(params){
-      console.log(params);
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15012/get_user_mig_info`
 
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)  
+
+      console.log('전달값')
+      console.log(reqParams)
 
       axios.post(url, reqParams, this.$store.state.headers)
           .then((response) => {
@@ -95,8 +97,6 @@ export default {
             if(resCode == 200){
               this.pList = response.data.data.user_mig_info_list;
               this.resPagingInfo = response.data.data.paging_info
-              console.log('받은 값')
-              console.log(this.pList)
             }else{
               this.pList = [];
               this.resPagingInfo = {};
@@ -188,8 +188,6 @@ export default {
       if(params.status_code !== undefined && params.status_code !== ''){
         newParams.status_code = params.status_code
       }
-
-      
 
       return newParams
     }

@@ -19,38 +19,18 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                         v-model="param.start_date"
-                        label="시작일(등록일)"
+                        label="시작일"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
                         v-on="on"
-                        v-show=regOption
                         ></v-text-field>
                     </template>
                     <v-date-picker v-model="param.start_date" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
-
-                     <v-menu
-                    offset-y
-                    min-width="290px"
-                    >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                        v-model="param.start_date"
-                        label="시작일(수정일)"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        v-show=modOption
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="param.start_date" no-title scrollable type="date">
-                    </v-date-picker>
-                    </v-menu>
-
                 </v-col>
+
                 <v-col cols="3">
                     <v-menu
                     offset-y
@@ -59,31 +39,11 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                         v-model="param.end_date"
-                        label="종료일(등록일)"
+                        label="종료일"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
                         v-on="on"
-                        v-show=regOption
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="param.end_date" no-title scrollable type="date">
-                    </v-date-picker>
-                    </v-menu>
-                    
-                    <v-menu
-                    offset-y
-                    min-width="290px"
-                    >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                        v-model="param.end_date"
-                        label="종료일(수정일)"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        v-show=modOption
                         ></v-text-field>
                     </template>
                     <v-date-picker v-model="param.end_date" no-title scrollable type="date">
@@ -95,15 +55,15 @@
                     <v-radio-group
                         row
                         v-on:change="handleRadio"
-                        v-model="optionType"
+                        v-model="param.order_category"
                     >
                         <v-radio
                             label="등록일"
-                            value="reg_date"
+                            value="R"
                         ></v-radio>
                         <v-radio
                             label="수정일"
-                            value="mod_date"
+                            value="M"
                         ></v-radio>                        
                     </v-radio-group>
                 </v-col>
@@ -160,26 +120,16 @@
 
 export default {
     props:['param'],
-    data() {
-        return {
-            regOption:true,
-            modOption:false,
-            optionType: 'reg_date'
-        }
-    },
+
     methods: {
         searchMethod: function() {
             this.$emit('search', this.param)
         },
         handleRadio:function(value){
-            console.log(value)
-            this.optionType=value
-            if(value=='reg_date'){
-                this.regOption=true
-                this.modOption=false
+            if(value=='등록일'){
+                this.param.order_category="R"
             }else if(value=='mod_date'){
-                this.regOption=false
-                this.modOption=true
+                this.param.order_category="M"
             }
         }
     },  

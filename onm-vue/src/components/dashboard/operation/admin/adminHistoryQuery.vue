@@ -19,31 +19,11 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                         v-model="param.start_date"
-                        label="시작일(로그인)"
+                        label="시작일"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
                         v-on="on"
-                        v-show=loginOption
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="param.start_date" no-title scrollable type="date">
-                    </v-date-picker>
-                    </v-menu>
-
-                     <v-menu
-                    offset-y
-                    min-width="290px"
-                    >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                        v-model="param.start_date"
-                        label="시작일(로그아웃)"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        v-show=logoutOption
                         ></v-text-field>
                     </template>
                     <v-date-picker v-model="param.start_date" no-title scrollable type="date">
@@ -59,31 +39,11 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                         v-model="param.end_date"
-                        label="종료일(로그인)"
+                        label="종료일"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
                         v-on="on"
-                        v-show=loginOption
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="param.end_date" no-title scrollable type="date">
-                    </v-date-picker>
-                    </v-menu>
-                    
-                    <v-menu
-                    offset-y
-                    min-width="290px"
-                    >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                        v-model="param.end_date"
-                        label="종료일(로그아웃)"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        v-show=logoutOption
                         ></v-text-field>
                     </template>
                     <v-date-picker v-model="param.end_date" no-title scrollable type="date">
@@ -95,15 +55,15 @@
                     <v-radio-group
                         row
                         v-on:change="handleRadio"
-                        v-model="optionType"
+                        v-model="param.order_category"
                     >
                         <v-radio
                             label="로그인"
-                            value="login"
+                            value="I"
                         ></v-radio>
                         <v-radio
                             label="로그아웃"
-                            value="logout"
+                            value="O"
                         ></v-radio>                        
                     </v-radio-group>
                 </v-col>
@@ -172,25 +132,16 @@
 
 export default {
     props:['param'],
-    data() {
-        return {
-            loginOption:true,
-            logoutOption:false,
-            optionType:'login'
-        }
-    },
+
     methods: {
         searchMethod: function() {
             this.$emit('search', this.param)
         },
         handleRadio:function(value){
-            this.optionType=value
-            if(value=='login'){
-                this.loginOption=true
-                this.logoutOption=false
-            }else if(value=='logout'){
-                this.loginOption=false
-                this.logoutOption=true
+            if(value=='로그인'){
+                this.param.order_category="I"
+            }else if(value=='로그아웃'){
+                this.param.order_category="O"
             }
         }
     },  

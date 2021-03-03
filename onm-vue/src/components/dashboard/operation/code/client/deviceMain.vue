@@ -3,6 +3,7 @@
       <v-card>
         <!-- <device-query v-on:search="searchToButton"></device-query> -->
         <device-query
+        @search="searchDate"
         @Items="saveItems"></device-query>
         <device-list v-bind:pList=pList></device-list>
       </v-card>
@@ -29,6 +30,11 @@ export default {
         view_cnt: 10
       },
       resPagingInfo: {},
+      searchParam:{
+        start_date:'',
+        end_date:'',
+        order_category:''
+      }
       // searchParam: { 
       //   app_version_id: '',
       //   // code_id: '',
@@ -88,8 +94,66 @@ export default {
             type: "error"
           })
         })
+    },
+
+    searchDate:function(params){
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15010/get_app_info`
+    
+    var reqParam=this.handleParams(params)
+   
+    axios
+        .post(url, reqParam, this.$store.state.headers)
+        .then((response) => {
+          var resCode = response.data.res_code
+          var resMsg = response.data.res_msg
+          if(resCode == 200){
+            this.pList = response.data.data.app_info_list
+            this.resPagingInfo = response.data.data.paging_info
+
+          }else{
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패',ex)
+        })
+    },
+
+    handleParams: function(params){
+      let newParams = {}
+      if(params.start_date !== undefined && params.start_date !== ''){
+          newParams.start_date = params.start_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+        }
+
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.end_date = params.end_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        }
+
+        if (params.order_category !== undefined && params.order_category !== "") {
+        newParams.order_category = params.order_category;
+      } else if (
+        this.searchParam.order_category !== undefined &&
+        this.searchParam.order_category !== ""
+      ) {
+        newParams.order_category = this.searchParam.order_category;
+      }
+
+        return newParams
     }
-  },
+
+  }
  
 }
 </script>

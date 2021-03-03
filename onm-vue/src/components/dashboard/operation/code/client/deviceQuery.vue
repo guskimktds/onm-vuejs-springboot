@@ -18,35 +18,15 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        
-                        label="시작일(등록일)"
+                        v-model="search.start_date"
+                        label="시작일"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
                         v-on="on"
-                        v-show=regOption
                         ></v-text-field>
                     </template>
-                    <v-date-picker no-title scrollable type="date">
-                    </v-date-picker>
-                    </v-menu>
-
-                     <v-menu
-                    offset-y
-                    min-width="290px"
-                    >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                        
-                        label="시작일(수정일)"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        v-show=modOption
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker no-title scrollable type="date">
+                    <v-date-picker v-model="search.start_date" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
 
@@ -58,56 +38,38 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        
-                        label="종료일(등록일)"
+                        v-model="search.end_date"
+                        label="종료일"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
                         v-on="on"
-                        v-show=regOption
                         ></v-text-field>
                     </template>
-                    <v-date-picker no-title scrollable type="date">
+                    <v-date-picker v-model="search.end_date" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
                     
-                    <v-menu
-                    offset-y
-                    min-width="290px"
-                    >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                        
-                        label="종료일(수정일)"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        v-show=modOption
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker no-title scrollable type="date">
-                    </v-date-picker>
-                    </v-menu>
                 </v-col>
                 
               <v-col cols="12" sm="6" md="3">
                     <v-radio-group
                         row
                         v-on:change="handleRadio"
-                        v-model="optionType"
+                        v-model="search.order_category"
                     >
                         <v-radio
                             label="등록일"
-                            value="reg_date"
+                            value="R"
                         ></v-radio>
                         <v-radio
                             label="수정일"
-                            value="mod_date"
+                            value="M"
                         ></v-radio>                        
                     </v-radio-group>
                 </v-col>
-                </v-row>
+
+            </v-row>
 
             <v-row>
                 <!-- <v-col cols="12" sm="6" md="3">
@@ -147,7 +109,16 @@
                         검색
                     </v-btn>
                 </v-col> -->
-                <v-col cols="12" sm="6" md="10"></v-col>
+                <v-col cols="12" sm="6" md="8"></v-col>
+                <v-col cols="12" sm="6" md="2">
+                    <v-btn
+                    color="green"
+                    dark
+                    class="mb-2"
+                    @click="searchDate">
+                    검색
+                    </v-btn>
+                </v-col>
                 <v-col cols="12" sm="6" md="2">
                     <v-dialog
                         v-model="dialog"
@@ -297,9 +268,11 @@ export default {
             //     updateversion: ''
             // },
             dialog: false,
-            regOption:true,
-            modOption:false,
-            optionType:'reg_date',
+            search:{
+                start_date:'',
+                end_date:'',
+                order_category:'R'
+            },
             editedItem: {
                 app_version_id: 0,
                 os_type: '',
@@ -390,16 +363,18 @@ export default {
                             "<br>타이틀 : "+this.editedItem.title+"<br>내용 : "+this.editedItem.content 
                    })
         },
+        searchDate(){
+            console.log('확인')
+            console.log(this.search)
+            this.$emit('search', this.search)
+        },
 
         handleRadio:function(value){
-            console.log(value)
-            this.optionType=value
+           
             if(value=='reg_date'){
-                this.regOption=true
-                this.modOption=false
+                this.search.order_category="R"
             }else if(value=='mod_date'){
-                this.regOption=false
-                this.modOption=true
+                this.search.order_category="M"
             }
         }
 
