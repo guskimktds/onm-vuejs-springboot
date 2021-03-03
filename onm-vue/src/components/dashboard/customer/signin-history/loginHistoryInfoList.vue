@@ -13,7 +13,6 @@
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
-        @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
       </v-data-table>
@@ -48,9 +47,6 @@ export default {
     };
   },
   methods: {
-    handleClick: function (value) {
-      this.$emit("child", value.login_key);
-    },
 
     getDataFromApi() {
       this.loading = true;

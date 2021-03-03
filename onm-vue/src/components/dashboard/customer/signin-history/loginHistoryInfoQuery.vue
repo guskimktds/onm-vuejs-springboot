@@ -45,6 +45,21 @@
                     </v-menu>
                 </v-col>
 
+                <v-radio-group
+                        row
+                        v-on:change="handleRadio"
+                        v-model="param.optionType"
+                    >
+                        <v-radio
+                            label="로그인"
+                            value="login"
+                        ></v-radio>
+                        <v-radio
+                            label="로그아웃"
+                            value="logout"
+                        ></v-radio>                        
+                    </v-radio-group>
+
         <v-col cols="12" sm="6" md="2">
           <v-select
             v-model="param.os_type"
@@ -89,6 +104,13 @@ export default {
       }
       this.$emit("search", this.param);
     },
+    handleRadio(values){
+      if(values=="로그인"){
+        this.param.optionType="login"
+      }else if(values=="로그아웃"){
+        this.param.optionType="logout"
+      }
+    }
   },
 };
 </script>
