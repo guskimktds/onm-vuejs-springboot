@@ -33,20 +33,15 @@ export default {
       title: '고객이전 조회',
       pList: [],
       reqPagingInfo: {
-        start_date: dateInfo().lastWeekDashFormat,
-        end_date: dateInfo().currentDateDashFormat,
         page_no: 1,
-        view_cnt: 10,
-        status_code: '',
-        order_category: 'S'
+        view_cnt: 10
       },
       resPagingInfo: {},
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
         user_id: '',
-        status_code: '',
-        order_category: 'S'
+        status_code: ''
       }
     }
   },
@@ -84,10 +79,6 @@ export default {
   //           })
   //   })
   // },
-  mounted:function(){
-    var params=this.reqPagingInfo
-    this.searchToButton(params);
-  },
   methods: {
     searchToButton: function(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15012/get_user_mig_info`
@@ -196,10 +187,6 @@ export default {
 
       if(params.status_code !== undefined && params.status_code !== ''){
         newParams.status_code = params.status_code
-      }
-
-      if(params.order_category !== undefined && params.order_category !== ''){
-        newParams.order_category = params.order_category
       }
 
       return newParams
