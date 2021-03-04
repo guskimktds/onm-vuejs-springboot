@@ -129,6 +129,15 @@ export default {
           .dispatch("LOGIN", { id, password })
           //.then( res => { console.log(res.status)})
           //alert('push sign up')
+          var auth=this.authGroupId
+          console.log('로그인 권한')
+          console.log(this.authGroupId)
+          if(auth==''||auth==undefined){
+            this.$router.push({name:'SignOut'})
+          }else if(auth=='G100'||auth=='G200'){
+            this.$router.push({name:'PlatformDashboard'})
+          }else if(auth=='G300'){
+            this.$router.push({name:'CustomerTransferStats'})
           }
       },
       // redirect() {
