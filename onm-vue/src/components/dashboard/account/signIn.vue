@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 // import Capcha from '../../utils/capcah'
 // import axios from "axios"
 // const resourceHost = "http://localhost:3000"
@@ -106,6 +107,11 @@ export default {
         msg: {}
       }
     },
+    computed: {
+    ...mapState({ 
+      authGroupId: 'authGroupId',
+    }),
+  },
     methods:{
       onSubmit(id, password) {     
         //alert("onSubmit"+id+password);
@@ -122,10 +128,17 @@ export default {
         this.$store
           .dispatch("LOGIN", { id, password })
           //.then( res => { console.log(res.status)})
-          .then(this.$router.replace('/platform'))
-          .catch(({ message }) => (this.msg = message))
           //alert('push sign up')
-          this.$router.push({name:'AccountView'})
+          var auth=this.authGroupId
+          console.log('로그인 권한')
+          console.log(this.authGroupId)
+          if(auth==''||auth==undefined){
+            this.$router.push({name:'SignIn'})
+          }else if(auth=='G100'||auth=='G200'){
+            this.$router.push({name:'PlatformDashboard'})
+          }else if(auth=='G300'){
+            this.$router.push({name:'CamregStat'})
+          }
       },
       // redirect() {
         // this.$router.replace('/account')

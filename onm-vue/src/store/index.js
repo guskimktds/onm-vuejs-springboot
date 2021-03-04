@@ -7,7 +7,7 @@ import menuMock from "../mock/authMenuList.json"
 
 Vue.use(Vuex)
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 export default new Vuex.Store({
     //const store = new Vuex.Store({
@@ -64,8 +64,7 @@ export default new Vuex.Store({
     actions: {
         LOGIN({ commit }, { id, password }) {
             // commit("LOGIN", { menuMock, id, password })
-            // var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
-            var url = `/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
+            var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
             var params = {
                 login_id: id,
                 login_pwd: password
@@ -81,7 +80,7 @@ export default new Vuex.Store({
                     var resCode = response.data.res_code
                     var resMsg = response.data.res_msg
                     var data = response.data.data
-
+                    
                     if(resCode == 200){
                         commit("LOGIN", { data, id })
               
@@ -99,6 +98,7 @@ export default new Vuex.Store({
         LOGOUT({ commit }) {
             // commit("LOGOUT", id)
             var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10002/user_logout`
+
             return axios
                 .post(url, this.headers)
                 .then(({ data }) => {

@@ -28,7 +28,6 @@ export default {
         }
     },
     created() {
-
         this.interval = setInterval(() => {
             if (this.value === 100) {
                 // return (this.value = 0)

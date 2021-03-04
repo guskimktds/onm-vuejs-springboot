@@ -267,7 +267,7 @@ export default {
         this.editedItem = Object.assign({}, item)
 
         this.editedItem.cmd_type = 'D'
-        this.editedItem.local_gw_id = '0' 
+        this.editedItem.local_gw_id = '0'
         this.dialogDelete = true
       },
 

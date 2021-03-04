@@ -330,6 +330,7 @@ export default {
           // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
           var params = this.editedItem
           var deleteIndex = this.editedIndex
+          console.log('삭제값')
           console.log(params)
           var headers = this.$store.state.headers
           console.log(headers)
