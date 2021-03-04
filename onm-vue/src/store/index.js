@@ -64,8 +64,8 @@ export default new Vuex.Store({
     actions: {
         LOGIN({ commit }, { id, password }) {
             // commit("LOGIN", { menuMock, id, password })
-            // var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
-            var url = `/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
+            var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
+            // var url = `/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
             var params = {
                 login_id: id,
                 login_pwd: password
