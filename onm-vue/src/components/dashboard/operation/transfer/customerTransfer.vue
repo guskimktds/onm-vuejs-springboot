@@ -198,10 +198,13 @@ export default {
         newParams.status_code = params.status_code
       }
 
+<<<<<<< HEAD
       if(params.order_category !== undefined && params.order_category !== ''){
         newParams.order_category = params.order_category
       }
 
+=======
+>>>>>>> dfbf9ecdd527e1c5d3585ebed4b778bcfa8889f3
       return newParams
     }
   }

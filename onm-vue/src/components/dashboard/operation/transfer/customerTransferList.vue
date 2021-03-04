@@ -81,7 +81,19 @@ export default {
           return '등록'
         }
       }
+<<<<<<< HEAD
     }
+=======
+    },
+    watch:{
+      options:{
+        handler(){
+          this.getDataFromApi();
+        },
+        deep: true,
+      }
+    },
+>>>>>>> dfbf9ecdd527e1c5d3585ebed4b778bcfa8889f3
    
     //   EventBus.$on('createItemTransfer', params => {
     //     console.log(params)
