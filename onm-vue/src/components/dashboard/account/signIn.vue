@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 // import Capcha from '../../utils/capcah'
 // import axios from "axios"
 // const resourceHost = "http://localhost:3000"
@@ -106,6 +107,11 @@ export default {
         msg: {}
       }
     },
+    computed: {
+    ...mapState({ 
+      authGroupId: 'authGroupId',
+    }),
+  },
     methods:{
       onSubmit(id, password) {     
         //alert("onSubmit"+id+password);
@@ -122,10 +128,8 @@ export default {
         this.$store
           .dispatch("LOGIN", { id, password })
           //.then( res => { console.log(res.status)})
-          .then(this.$router.replace('/platform'))
-          .catch(({ message }) => (this.msg = message))
           //alert('push sign up')
-          this.$router.push({name:'AccountView'})
+          }
       },
       // redirect() {
         // this.$router.replace('/account')
