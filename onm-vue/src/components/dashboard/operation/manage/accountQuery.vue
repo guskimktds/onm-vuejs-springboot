@@ -256,7 +256,7 @@ export default {
             // 등록
             this.editedItem.cmd_type = 'I'
 
-            this.emit("Items",this.editedItem)
+            this.$emit("Items",this.editedItem)
 
             this.close()
         },

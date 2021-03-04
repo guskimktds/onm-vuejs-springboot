@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+import GoHome from '../components/utils/goHome'
+
 import PlatformMain from '../components/dashboard/platformMain'
 import ServiceMain from '../components/dashboard/serviceMain'
 import VocMain from '../components/dashboard/vocMain'
@@ -120,6 +123,10 @@ export default new Router({
     base: process.env.BASE_URL,
 
     routes: [{
+            path: "/go-home",
+            name: 'GoHome',
+            component: GoHome,
+        },{
             path: "/",
             name: 'Home',
             component: PlatformMain,

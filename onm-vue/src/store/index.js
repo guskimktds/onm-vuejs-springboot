@@ -5,9 +5,27 @@ import createPersistedState from "vuex-persistedstate"
 // import module from '../module/index'
 import menuMock from "../mock/authMenuList.json"
 
+
 Vue.use(Vuex)
 
 axios.defaults.withCredentials = true;
+/*
+axios.interceptors.request.use(
+    function (config) {
+        console.log("##### COOKIE = " + document.cookie)
+        config.headers.headers.common['Cookie'] = document.cookie;
+
+        
+        console.log(config)
+
+        return config;
+    }, 
+    function (error) {
+        // 요청 에러 직전 호출됩니다.
+        return Promise.reject(error);
+    }
+);
+*/
 
 export default new Vuex.Store({
     //const store = new Vuex.Store({
@@ -17,7 +35,7 @@ export default new Vuex.Store({
         menu: [],
         topMenu:[],
         onmUserId: '',
-        // auth_group_id:'',
+        authGroupId:'',
         barColor: 'rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)',
         barImage: 'https://demos.creative-tim.com/material-dashboard/assets/img/sidebar-1.jpg',
         drawer: null,
@@ -33,7 +51,10 @@ export default new Vuex.Store({
         },
         getMenus: function(state) {
             return state.menu
-        }
+        },
+        getAuthGroupId: function(state) {
+            return state.authGroupId
+        },
     },
     mutations: {
         LOGIN(state, param) {
