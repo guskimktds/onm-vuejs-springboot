@@ -23,8 +23,12 @@
                 </v-col>
                 
                 <v-radio-group
-                    v-model="param.process_status"
+                    v-model="param.proc_status"
                     row>
+                <v-radio
+                    label="전체"
+                    value=""
+                ></v-radio>
                 <v-radio
                     label="정상"
                     value="D"

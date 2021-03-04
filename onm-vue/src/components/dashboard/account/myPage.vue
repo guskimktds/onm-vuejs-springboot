@@ -96,24 +96,21 @@
             </v-col>
           </v-row>                  
       </base-material-card>
-
+      
       <v-card>
-        <v-form justify="center">
-          <v-container class="py-0">
-            <v-row><v-col></v-col></v-row>
-            <v-row>
-              <v-col id="information">
-                <p>
-                  <b>안내</b><br>
-                  비밀번호를 변경을 원하실 경우 포털(IDMS)에서 변경하셔야 합니다.
-                </p>
-                <img src="@/img/exclamationMark.png" id="warn-icon"/>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
+        <div class="count-board">
+          <div class="row">
+            <div class="col-3">
+            </div>
+            <div class="col-1">
+              <img class="dashboard-icon" width="50px" height="50px" src="@/img/exclamationMark.png"/>
+            </div>
+            <div class="col-auto" >
+              <p style="font-size:16px; margin-top: 16px">비밀번호를 변경을 원하실 경우 포털(IDMS)에서 변경하셔야 합니다.</p>
+            </div>
+         </div>
+        </div>
       </v-card>
-
 
     </v-container>
 </template>

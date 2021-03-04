@@ -48,7 +48,7 @@ export default {
       searchParam: {
         local_gw_id: "",
         process_type: "",
-        process_status: ""
+        proc_status: ""
       },
       localGwOptions:[],
       allOptions:{
@@ -140,13 +140,16 @@ export default {
         newParams.process_type = this.searchParam.process_type;
       }
 
-      if (params.process_status !== undefined && params.process_status !== "") {
-        newParams.process_status = params.process_status;
+      if (params.proc_status !== undefined && params.proc_status !== "") {
+        newParams.proc_status = params.proc_status;
       } else if (
-        this.searchParam.process_status !== undefined &&
-        this.searchParam.process_status !== ""
+        this.searchParam.proc_status !== undefined &&
+        this.searchParam.proc_status !== ""
       ) {
-        newParams.process_status = this.searchParam.process_status;
+        newParams.proc_status = this.searchParam.proc_status;
+      }else if(this.searchParam.proc_status==0){
+        delete newParams.proc_status
+        delete this.searchParam.proc_status
       }
 
       return newParams;
