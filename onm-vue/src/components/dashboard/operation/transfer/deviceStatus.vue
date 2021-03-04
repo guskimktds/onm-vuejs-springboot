@@ -42,7 +42,8 @@ export default {
         mig_seq: '',
         device_type: '',
         device_id: '',
-        status_code: ''
+        status_code: '',
+        order_category:'R'
       }
     }
   },
@@ -154,6 +155,15 @@ export default {
         this.searchParam.status_code!==""
       ){
         newParams.status_code=this.searchParam.status_code
+      }
+
+      if(params.order_category !== undefined && params.order_category !== ''){
+        newParams.order_category = params.order_category
+      }else if(
+        this.searchParam.order_category!==undefined&&
+        this.searchParam.order_category!==""
+      ){
+        newParams.order_category=this.searchParam.order_category
       }
 
       return newParams

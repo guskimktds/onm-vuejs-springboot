@@ -14,6 +14,8 @@
             <v-data-table
                 :headers="headers"
                 :items="pList"
+                :options.sync="options"
+                :server-items-length="resPaginginfo.total_cnt"
                 class="elevation-1"
                 :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
             >          
@@ -24,9 +26,15 @@
 
 <script>
 export default {
-    props: ['pList'],
+    props: ['pList','resPaginginfo'],
     data() {
       return {
+        dialog: false,
+        dialogDelete: false,
+        editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
         headers: [
           {
             text: '관리자ID',
@@ -46,6 +54,23 @@ export default {
           // { text: '생성자', value: 'editUser' },
         ]
       }
+    },
+    methods: {
+       getDataFromApi() {
+        this.loading = true;
+        this.$emit("pagination", this.options);
+      },
+    },
+    watch:{
+      options:{
+        handler(){
+          this.getDataFromApi();
+        },
+        deep: true
+      }
+    },
+    mounted(){
+      this.getDataFromApi();
     }
 
     //<th>사번</th><th>이름</th><th>작업</th><th>접속IP</th>

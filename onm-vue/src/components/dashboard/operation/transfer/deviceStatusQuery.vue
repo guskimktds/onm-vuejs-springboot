@@ -50,6 +50,23 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+
+                <v-radio-group
+                    row
+                    v-on:change="handleRadio"
+                    v-model="param.order_category"
+                >
+                    <v-radio
+                        label="등록일"
+                        value="R"
+                    ></v-radio>
+                    <v-radio
+                        label="수정일"
+                        value="M"
+                    ></v-radio>                        
+                </v-radio-group>
+
+
             </v-row>
             <v-row>
                 <v-col cols="12" sm="6" md="2">
@@ -114,6 +131,14 @@ export default {
         searchMethod: function() {
 
             this.$emit('search', this.param)
+        },
+
+        handleRadio:function(value){
+            if(value=='등록일'){
+                this.param.order_category="R"
+            }else if(value=='mod_date'){
+                this.param.order_category="M"
+            }
         }
     }, 
 }

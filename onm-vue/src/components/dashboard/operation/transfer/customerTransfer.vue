@@ -33,15 +33,20 @@ export default {
       title: '고객이전 조회',
       pList: [],
       reqPagingInfo: {
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         page_no: 1,
-        view_cnt: 10
+        view_cnt: 10,
+        status_code: '',
+        order_category: 'S'
       },
       resPagingInfo: {},
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
         user_id: '',
-        status_code: ''
+        status_code: '',
+        order_category: 'S'
       }
     }
   },
@@ -79,13 +84,19 @@ export default {
   //           })
   //   })
   // },
+  mounted:function(){
+    var params=this.reqPagingInfo
+    this.searchToButton(params);
+  },
   methods: {
     searchToButton: function(params){
-      console.log(params);
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15012/get_user_mig_info`
 
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)  
+
+      console.log('전달값')
+      console.log(reqParams)
 
       axios.post(url, reqParams, this.$store.state.headers)
           .then((response) => {
@@ -95,8 +106,6 @@ export default {
             if(resCode == 200){
               this.pList = response.data.data.user_mig_info_list;
               this.resPagingInfo = response.data.data.paging_info
-              console.log('받은 값')
-              console.log(this.pList)
             }else{
               this.pList = [];
               this.resPagingInfo = {};
@@ -189,7 +198,9 @@ export default {
         newParams.status_code = params.status_code
       }
 
-      
+      if(params.order_category !== undefined && params.order_category !== ''){
+        newParams.order_category = params.order_category
+      }
 
       return newParams
     }

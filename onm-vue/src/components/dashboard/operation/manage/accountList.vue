@@ -14,6 +14,8 @@
             <v-data-table
                 :headers="headers"
                 :items="pList"
+                :options.sync="options"
+                :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
                 :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
             >      
@@ -132,12 +134,15 @@
 import dateInfo from '../../../utils/common'
 import axios from "axios"
 export default {
-    props: ['pList'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
         headers: [
           {
             text: '사번',
@@ -189,6 +194,10 @@ export default {
       },
     },
     methods: {
+      getDataFromApi(){
+        this.loading=true;
+        this.$emit("pagination",this.options);
+      },
       editItem (item) {
         this.editedIndex = this.pList.indexOf(item)
         console.log('update Item Index : ',this.editedIndex)

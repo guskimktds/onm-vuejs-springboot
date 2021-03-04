@@ -17,7 +17,7 @@
 <script>
 import OperationHistoryQuery from './operationHistoryQuery'
 import OperationHistoryList from './operationHistoryList'
-
+import dateInfo from '../../../utils/common'
 //로그인 시 서버에서 불러오면 수정해야함
 import axios from "axios"
 
@@ -36,6 +36,8 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         onm_user_id: '',
         cmd_type: '',
         uri: '',
@@ -105,6 +107,24 @@ export default {
         newParams.view_cnt = this.reqPagingInfo.view_cnt
       }else{
         newParams.view_cnt = params.view_cnt
+      }
+
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
+      ){
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+      }
+
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
 
       if (params.onm_user_id !== undefined && params.onm_user_id !== "") {

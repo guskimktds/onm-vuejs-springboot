@@ -8,7 +8,7 @@
         <admin-history-list 
         v-bind:pList=pList
         v-bind:resPagingInfo="resPagingInfo"
-        @pagination="searchToButton"></admin-history-list>
+        @pagination="setToSearchParams"></admin-history-list>
             
       </v-card>
     </v-container>
@@ -17,6 +17,7 @@
 <script>
 import AdminHistoryQuery from './adminHistoryQuery'
 import AdminHistoryList from './adminHistoryList'
+import dateInfo from '../../../utils/common'
 import axios from "axios"
 
 export default {
@@ -35,12 +36,15 @@ export default {
       mask:{},
       resPagingInfo: {},
       searchParam: {
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         admin_id: '',
         user_id: '',
         tel_no: '',
         login_key: '',
         admin_type: 'N',
-        is_masking:''
+        is_masking:'',
+        order_category:'I'
       }
     }
   },
@@ -52,6 +56,9 @@ export default {
 
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)  
+      
+      console.log('검색값')
+      console.log(reqParams)
 
       axios.post(url, reqParams, this.$store.state.headers)
       .then((response) => {
@@ -73,9 +80,20 @@ export default {
       })
     },
 
-    handleParams: function(params){
-      console.log("======")
+    setToSearchParams: function(values){
+      console.log(values)
+
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
       console.log(params)
+
+      this.searchToButton(params)
+    },
+
+    handleParams: function(params){
       let newParams = {}
       if (params.page === undefined || params.page === "") {
         newParams.page_no = this.reqPagingInfo.page_no;
@@ -88,6 +106,24 @@ export default {
       } else {
         newParams.view_cnt = params.itemsPerPage;
       }
+
+      if(params.start_date !== undefined && params.start_date !== ''){
+          newParams.start_date = params.start_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+        }
+
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.end_date = params.end_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        }
 
       if (params.admin_id !== undefined && params.admin_id !== "") {
         newParams.admin_id = params.admin_id;
@@ -132,6 +168,15 @@ export default {
         this.searchParam.is_masking!==""
       ){
         newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
+      }
+
+       if (params.order_category !== undefined && params.order_category !== "") {
+        newParams.order_category = params.order_category;
+      } else if (
+        this.searchParam.order_category !== undefined &&
+        this.searchParam.order_category !== ""
+      ) {
+        newParams.order_category = this.searchParam.order_category;
       }
 
       newParams.admin_type = 'N'

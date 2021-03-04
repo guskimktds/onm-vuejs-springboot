@@ -81,18 +81,8 @@ export default {
           return '등록'
         }
       }
-    },
-    watch:{
-      options:{
-        handler(){
-          this.getDataFromApi();
-        },
-        deep: true,
-      }
-    },
-    mounted(){
-      this.getDataFromApi();
-
+    }
+   
     //   EventBus.$on('createItemTransfer', params => {
     //     console.log(params)
     //     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15013/move_local`
@@ -114,7 +104,7 @@ export default {
     //           console.log('변경 실패',ex)
     //         })
     // })
-    }
+    
 }
 </script>
 

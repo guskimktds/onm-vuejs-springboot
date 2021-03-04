@@ -9,7 +9,7 @@
       <loginHistoryInfo-list
         v-bind:pList="pList"
         v-bind:resPagingInfo="resPagingInfo"
-        @pagination="searchToLoginHistoryInfo"
+        @pagination="setToSearchParams"
       ></loginHistoryInfo-list>
     </v-card>
   </v-container>
@@ -51,40 +51,16 @@ export default {
         end_date: dateInfo().currentDateDashFormat,
         login_id: "",
         os_type: "",
+        optionType:"login"
       },
     };
   },
-  created: function () {
-    var params = this.reqPagingInfo;
-
-    console.log(params);
-    axios
-      .post(url, params, headers)
-      .then((response) => {
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if (resCode == 200) {
-          this.pList = response.data.data.login_history_list;
-          this.resPagingInfo = response.data.data.paging_info;
-          console.log(response);
-        } else {
-          this.pList = [];
-          this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
-        }
-      })
-      .catch((ex) => {
-        console.log("조회 실패", ex);
-      });
-  },
   methods: {
     searchToLoginHistoryInfo: function (params) {
-      console.log(
-        "부모 메소드 searchToLoginHistoryInfo 호출: " + JSON.stringify(params)
-      );
       var reqParams = this.handleParams(params);
-      console.log("-----------");
-      console.log(reqParams);
+      console.log('검색값')
+      console.log(reqParams)
+      
       axios
         .post(url, reqParams, headers)
         .then((response) => {
@@ -104,6 +80,18 @@ export default {
           console.log("조회 실패", ex);
         });
     },
+    setToSearchParams: function(values){
+      console.log(values)
+
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      console.log(params)
+
+      this.searchToLoginHistoryInfo(params)
+    },
     handleParams: function (params) {
       console.log(params);
       let newParams = {};
@@ -120,23 +108,69 @@ export default {
       }
 
       if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date.replace(/-/g,"")
-      }else if(
-        this.searchParam.start_date!==undefined&&
-        this.searchParam.start_date!==""
-      ){
-        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+          newParams.login_start_date = params.start_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.login_start_date=this.searchParam.start_date.replace(/-/g,"")
+        }
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.login_end_date = params.end_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.login_end_date=this.searchParam.end_date.replace(/-/g,"")
+        }
+
+      if(params.optionType=="login"){
+        if(params.start_date !== undefined && params.start_date !== ''){
+          newParams.login_start_date = params.start_date.replace(/-/g,"")
+          delete newParams.logout_start_date
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.login_start_date=this.searchParam.start_date.replace(/-/g,"")
+          delete newParams.logout_start_date
+        }
+
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.login_end_date = params.end_date.replace(/-/g,"")
+          delete newParams.logout_end_date
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.login_end_date=this.searchParam.end_date.replace(/-/g,"")
+          delete newParams.logout_end_date
+        }
       }
 
-      if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date.replace(/-/g,"")
-      }else if(
-        this.searchParam.end_date!==undefined&&
-        this.searchParam.end_date!==""
-      ){
-        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
-      }
+      if(params.optionType=="logout"){
+        if(params.start_date !== undefined && params.start_date !== ''){
+          newParams.logout_start_date = params.start_date.replace(/-/g,"")
+          delete newParams.login_start_date
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.logout_start_date=this.searchParam.start_date.replace(/-/g,"")
+          delete newParams.login_start_date
+        }
 
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.logout_end_date = params.end_date.replace(/-/g,"")
+          delete newParams.login_end_date
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.logout_end_date=this.searchParam.end_date.replace(/-/g,"")
+          delete newParams.login_end_date
+        }
+      }
 
 
       if (params.login_id !== undefined && params.login_id !== "") {
@@ -161,6 +195,8 @@ export default {
     },
   },
 };
+ 
+
 </script>
 
 <style scoped>

@@ -17,7 +17,6 @@
                 :options.sync="options"
                 :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
-                @click:row="handleClick"
                 :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
             >          
             </v-data-table>
@@ -53,11 +52,6 @@ export default {
       }
     },
   methods: {
-    handleClick: function (value) {
-      console.log(value);
-      this.$emit("child", value.admin_id);
-    },
-
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
