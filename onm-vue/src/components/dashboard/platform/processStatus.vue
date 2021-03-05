@@ -48,7 +48,7 @@ export default {
       searchParam: {
         local_gw_id: "",
         process_type: "",
-        proc_status: ""
+        proc_status: "전체"
       },
       localGwOptions:[],
       allOptions:{
@@ -149,7 +149,6 @@ export default {
         newParams.proc_status = this.searchParam.proc_status;
       }else if(this.searchParam.proc_status==0){
         delete newParams.proc_status
-        delete this.searchParam.proc_status
       }
 
       return newParams;

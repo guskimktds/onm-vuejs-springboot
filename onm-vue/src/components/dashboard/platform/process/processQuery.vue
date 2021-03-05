@@ -22,12 +22,19 @@
                   ></v-select>
                 </v-col>
                 
+            </v-row>
+
+            <v-row>
+                <v-col cols="12" sm="6" md="3">
+                    <v-text-field dense label="프로세스 타입" placeholder=" " v-model="param.process_type">                        
+                    </v-text-field>
+                </v-col> 
                 <v-radio-group
-                    v-model="param.proc_status"
+                    v-model="status"
                     row>
                 <v-radio
                     label="전체"
-                    value=""
+                    value="All"
                 ></v-radio>
                 <v-radio
                     label="정상"
@@ -38,14 +45,6 @@
                     value="U">
                 </v-radio>
                 </v-radio-group>
-            </v-row>
-
-            <v-row>
-                <v-col cols="12" sm="6" md="3">
-                    <v-text-field dense label="프로세스 타입" placeholder=" " v-model="param.process_type">                        
-                    </v-text-field>
-                </v-col> 
-
                 <v-col cols="12" sm="6" md="3">
                     <v-btn elevation="2" medium v-on:click="searchMethod">
                         검색
@@ -62,10 +61,16 @@ export default {
     props: ['param','localGwOptions'],
     data() {
         return {
+            status: 'All'
         }
     },
     methods: {
         searchMethod: function() {
+            if(this.status=="All"){
+                this.param.proc_status=''
+            }else{
+                this.param.proc_status=this.status
+            }
             this.$emit('search', this.param)
         }
     },  
