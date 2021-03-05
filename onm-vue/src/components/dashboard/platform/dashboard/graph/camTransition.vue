@@ -65,16 +65,16 @@ export default {
                 labels: this.labels,
                 datasets: [
                   {
-                    label:'신규', 
-                    // backgroundColor: '#f87979',
-                    borderColor:'#152FD6',
-                    data: this.getCloseCnt(response.data.data.date_list)
-                  },
-                  {
-                    label:"해지", 
+                    label:"신규", 
                     // backgroundColor: 'white',
                     borderColor:'#D6852F',
                     data: this.getNewCnt(response.data.data.date_list)
+                  },
+                  {
+                    label:'해지', 
+                    // backgroundColor: '#f87979',
+                    borderColor:'#152FD6',
+                    data: this.getCloseCnt(response.data.data.date_list)
                   }
                 ]
               }

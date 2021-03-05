@@ -70,7 +70,8 @@
           :to="subItem.path"
         >
           <v-list-item-content>
-            <v-list-item-title v-text="subItem.name"></v-list-item-title>
+            <v-list-item-title 
+            v-text="subItem.name"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-group>
@@ -101,7 +102,7 @@ export default {
   data () {
     return {
       title: 'GiGAeyes O&M',
-      newMenus: [] 
+      newMenus: []
     }
   },
   created(){
@@ -116,8 +117,12 @@ export default {
       this.newMenus = []
       console.log(this.newMenus)
     });
-  },
 
+  },
+  mounted() {
+    this.newMenus=this.$store.getters.getMenus[this.$store.state.menuIndex].children
+    this.openLoadMenu();
+  },
   computed: {
     ...mapState(['barColor', 'barImage']),
     drawer: {
@@ -176,7 +181,6 @@ export default {
       var selectMenu = this.subMenu.filter(obj => { return obj['menu_id'] === id})
       this.$router.push(path);
       EventBus.$emit('top-path-login', selectMenu[0].children);
-      
     },
 
     openFirstSideMenu(){
@@ -186,7 +190,9 @@ export default {
       }catch(e){
         console.log("");
       }
-      
+    },
+    openLoadMenu(){
+     console.log('실행')
     }
 
   }

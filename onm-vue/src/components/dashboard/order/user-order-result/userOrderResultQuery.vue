@@ -55,7 +55,7 @@
             
             <v-row>
 
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="12" sm="6" md="4">
                     <v-text-field 
                         dense 
                         label="계약ID" 
@@ -64,7 +64,7 @@
                     >                        
                     </v-text-field>
                 </v-col>  
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="12" sm="6" md="4">
                     <v-text-field 
                         dense 
                         label="거래고유번호" 

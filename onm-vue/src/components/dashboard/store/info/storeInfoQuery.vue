@@ -56,8 +56,10 @@
           </v-col>
 
           <v-col cols="2">
-            <v-btn color="primary"
-               v-on:click="searchMethod"
+            <v-btn 
+              elevation="2" 
+              medium
+              v-on:click="searchMethod"
                >
                검색
             </v-btn>

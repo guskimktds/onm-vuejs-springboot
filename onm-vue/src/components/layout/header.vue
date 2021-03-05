@@ -98,6 +98,26 @@ export default {
       var path = selectMenu[0].children[0].children[0].path;
       this.$router.push(path);
       EventBus.$emit('top-path-login', selectMenu[0].children);
+
+      var menuName=selectMenu[0].path.replace('/','')
+      console.log(menuName)
+      if(menuName=='platform'){
+        this.$store.commit('MENU', 0)
+        // this.$store.state.menuIndex=0
+      }else if(menuName=='order'){
+        this.$store.commit('MENU', 1)
+        // this.$store.state.menuIndex=1
+      }else if(menuName=='store'){
+        this.$store.commit('MENU', 2)
+        // this.$store.state.menuIndex=2
+      }else if(menuName=='customer'){
+        this.$store.commit('MENU', 3)
+        // this.$store.state.menuIndex=3
+      }else if(menuName=='operation'){
+        this.$store.commit('MENU', 4)
+        // this.$store.state.menuIndex=4
+      }
+      console.log(this.$store.state.menuIndex)
       
     },
     signOutClicked: function() {

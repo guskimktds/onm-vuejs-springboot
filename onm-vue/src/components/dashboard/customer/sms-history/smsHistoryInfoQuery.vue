@@ -86,9 +86,8 @@
             <v-btn
              color="blue"
              v-bind="attrs"
-             v-on="on">발송이력코드 보기</v-btn>
+             v-on="on">발송결과코드 보기</v-btn>
           </template>
-          <v-card-title>발송이력코드</v-card-title>
           <v-card>
             <v-img
             src="@/img/sms_code1.png"

@@ -53,11 +53,11 @@ export default {
           { text: '호출IP주소', value: 'client_ip_addr' },
           { text: '호출uri', value: 'proc_api_uri' },
           { text: '유형', value: 'cmd_type' },
-          { text: '요청메세지', value: 'request_msg' },
-          { text: '응답메시지', value: 'response_msg' },
           { text: '결과코드', value: 'result_code' },
           { text: '마스킹(Y/N)', value: 'is_masking' },
-          { text: '호출일시', value: 'reg_date' }
+          { text: '호출일시', value: 'reg_date' },
+          { text: '요청메세지', value: 'request_msg' },
+          { text: '응답메시지', value: 'response_msg' }
         ]
       }
     },

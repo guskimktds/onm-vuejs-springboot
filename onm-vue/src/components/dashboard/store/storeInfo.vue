@@ -250,6 +250,7 @@ export default {
         user_name: "",
         user_id: "",
         tel_no: "",
+        is_masking:""
       },
     };
   },
@@ -298,6 +299,7 @@ export default {
           said: values,
           page_no: "1",
           view_cnt: "5",
+          is_masking: this.searchParam.is_masking? "N" : "Y"
         };
 
         axios
@@ -337,6 +339,7 @@ export default {
         user_id: this.pObject.user_id,
         page_no: "1",
         view_cnt: "5",
+        is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
         .post(url, params, headers)
@@ -366,6 +369,7 @@ export default {
         user_id: this.pObject.user_id,
         page_no: "1",
         view_cnt: "5",
+        is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
         .post(url, params, headers)
@@ -394,6 +398,7 @@ export default {
         user_id: this.pObject.user_id,
         page_no: "1",
         view_cnt: "5",
+        is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
         .post(url, params, headers)
@@ -422,6 +427,7 @@ export default {
         user_id: this.pObject.user_id,
         page_no: "1",
         view_cnt: "5",
+        is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
         .post(url, params, headers)
@@ -454,6 +460,7 @@ export default {
         user_id: this.pObject.user_id,
         page_no: "1",
         view_cnt: "5",
+        is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
         .post(url, params, headers)
@@ -482,6 +489,7 @@ export default {
         user_id: this.pObject.user_id,
         page_no: "1",
         view_cnt: "5",
+        is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
         .post(url, params, headers)
@@ -510,6 +518,7 @@ export default {
         user_id: this.pObject.user_id,
         page_no: "1",
         view_cnt: "5",
+        is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
         .post(url, params, headers)
@@ -537,6 +546,7 @@ export default {
         user_id: this.pObject.user_id,
         page_no: "1",
         view_cnt: "5",
+        is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
         .post(url, params, headers)

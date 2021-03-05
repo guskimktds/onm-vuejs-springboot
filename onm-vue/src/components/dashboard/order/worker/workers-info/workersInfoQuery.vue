@@ -25,8 +25,12 @@
                 </v-col> 
                 
                    <v-radio-group
-                    v-model="param.status_code"
+                    v-model="status"
                     row>
+                <v-radio
+                    label="전체"
+                    value="All"
+                    ></v-radio>
                 <v-radio
                     label="사용중"
                     value="S"
@@ -60,10 +64,17 @@
 export default {
     props: ['param'],
     data() {
-        return {}
+        return {
+            status: 'All'
+        }
     },
     methods: {
         searchMethod: function() {
+            if(this.status=='All'){
+                this.param.status_code=''
+            }else{
+                this.param.status_code=this.status
+            }
             this.$emit('search', this.param)
         }
     },  

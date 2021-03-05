@@ -112,8 +112,6 @@
                 <v-col cols="12" sm="6" md="8"></v-col>
                 <v-col cols="12" sm="6" md="2">
                     <v-btn
-                    color="green"
-                    dark
                     class="mb-2"
                     @click="searchDate">
                     검색

@@ -122,6 +122,8 @@ export default {
         this.searchParam.status_code !== ""
       ) {
         newParams.status_code = this.searchParam.status_code;
+      } else if(this.searchParam.status_code==0){
+        delete newParams.status_code
       }
 
       if(params.is_masking !== undefined && params.is_masking !== ''){

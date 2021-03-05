@@ -96,7 +96,6 @@
                         <v-btn 
                             elevation="2" 
                             medium
-                            color="primary"
                             v-on:click="searchMethod"
                             >
                             검색

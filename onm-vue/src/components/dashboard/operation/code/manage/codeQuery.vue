@@ -58,7 +58,6 @@
                         elevation="2" 
                         medium
                         v-on:click="searchMethod"
-                        color="primary"
                     >
                         검색
                     </v-btn>
