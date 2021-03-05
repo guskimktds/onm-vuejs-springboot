@@ -67,9 +67,9 @@ export default {
     methods: {
         searchMethod: function() {
             if(this.status=="All"){
-                this.param.proc_status=''
+                this.param.process_status=''
             }else{
-                this.param.proc_status=this.status
+                this.param.process_status=this.status
             }
             this.$emit('search', this.param)
         }

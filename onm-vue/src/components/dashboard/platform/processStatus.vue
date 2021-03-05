@@ -48,7 +48,7 @@ export default {
       searchParam: {
         local_gw_id: "",
         process_type: "",
-        proc_status: "전체"
+        process_status: ""
       },
       localGwOptions:[],
       allOptions:{
@@ -80,7 +80,8 @@ export default {
     searchToProcess: function(params){
 
       var reqParams = this.handleParams(params);
-
+      console.log('리퀘스트 파람')
+      console.log(reqParams)
       axios
       .post(url, reqParams, headers)
       .then( (response) => {
@@ -140,15 +141,15 @@ export default {
         newParams.process_type = this.searchParam.process_type;
       }
 
-      if (params.proc_status !== undefined && params.proc_status !== "") {
-        newParams.proc_status = params.proc_status;
+      if (params.process_status !== undefined && params.process_status !== "") {
+        newParams.process_status = params.process_status;
       } else if (
-        this.searchParam.proc_status !== undefined &&
-        this.searchParam.proc_status !== ""
+        this.searchParam.process_status !== undefined &&
+        this.searchParam.process_status !== ""
       ) {
-        newParams.proc_status = this.searchParam.proc_status;
-      }else if(this.searchParam.proc_status==0){
-        delete newParams.proc_status
+        newParams.process_status = this.searchParam.process_status;
+      }else if(this.searchParam.process_status==0){
+        delete newParams.process_status
       }
 
       return newParams;
