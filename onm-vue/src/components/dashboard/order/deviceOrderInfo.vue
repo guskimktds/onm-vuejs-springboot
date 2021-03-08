@@ -194,7 +194,7 @@ export default {
       var params={
       guid: this.pObject.guid,
       page_no: '1',
-      view_cnt: '5'
+      view_cnt: '5',
       }
 
       console.log('검색값')
@@ -206,7 +206,7 @@ export default {
             var resCode=response.data.res_code;
             var resMsg=response.data.res_msg;
             if(resCode==200){
-              this.dodList=response.data.data.device_order_detail_list;
+              this.dodList=response.data.data.list;
               
               this.showDetailList=!this.showDetailList;
               console.log('$$$$')

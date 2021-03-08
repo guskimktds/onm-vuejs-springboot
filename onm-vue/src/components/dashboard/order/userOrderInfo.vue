@@ -214,7 +214,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.sdList = response.data.data.list;
+            this.sdList = response.data.data.order_detail_list;
             this.showSubDetailList=!this.showSubDetailList;
             this.subBtn=!this.subBtn
           }else{
