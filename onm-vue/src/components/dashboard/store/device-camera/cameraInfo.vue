@@ -74,6 +74,8 @@ export default {
 
   methods: {
     searchToCameraInfo: function (params) {
+      this.showDetailObject=false
+      this.isReloadDetailObject=false
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
 
       var reqParams = this.handleParams(params);

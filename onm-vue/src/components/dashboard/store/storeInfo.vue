@@ -257,6 +257,8 @@ export default {
 
   methods: {
     searchToStoreInfo: function (params) {
+      this.showDetailObject=false
+      this.isReloadDetailObject=false
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13001/get_user_list`;
 
       var reqParams = this.handleParams(params);

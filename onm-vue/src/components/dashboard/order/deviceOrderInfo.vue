@@ -111,10 +111,12 @@ export default {
 
   methods: {
     searchToDeviceOrderInfo: function(params){
+      this.showDetailObject=false
+      this.isReloadDetailObject=false
       console.log('검색값')
       console.log(params)
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12006/get_device_order`
-
+     
       var reqParams=this.handleParams(params)
 
         axios.post(url, reqParams, headers)

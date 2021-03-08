@@ -119,7 +119,8 @@ export default {
 
   methods: {
     searchToUserOrderInfo: function(params){
-
+      this.showDetailObject=false
+      this.isReloadDetailObject=false
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
 
       //params : 페이징 + 검색조건
