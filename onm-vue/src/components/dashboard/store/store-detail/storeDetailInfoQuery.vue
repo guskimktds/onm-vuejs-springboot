@@ -78,13 +78,13 @@
           </v-col>
 
           <v-col cols="12" sm="6" md="2">
-            <v-text-field
-              dense
-              label="상태"
-              v-model="param.status_code"
-              placeholder=" "
-            >
-            </v-text-field>
+            <v-select 
+                    label="상태코드" 
+                    v-model="selected"
+                    :items="items"
+                    item-text="state"
+                    item-value="abbr"
+                  ></v-select>
           </v-col>
 
           <v-col cols="auto">
@@ -109,10 +109,18 @@ export default {
     props: ['param'],
     data() {
         return {
+          items:[
+                    {state:'전체', abbr:''},
+                    {state:'정상 사용자', abbr: 'S'},
+                    {state:'해지', abbr:'D'},
+                    {state:'일시정지', abbr:'T'},
+                    {state:'사용자 생성 대기중', abbr:'P'}],
+          selected:'전체'
         }
     },
   methods: {
     searchMethod: function () {
+      this.param.status_code=this.selected
       this.$emit("search", this.param);
     },
   },

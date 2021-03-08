@@ -128,7 +128,8 @@ export default {
     saveItems(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15002/set_account`
       var changeParams=this.changeIp(params)
-
+      console.log('보내는 값')
+      console.log(changeParams)
       axios.post(url, changeParams, this.$store.state.headers)
             .then((response) => {
                 console.log(response)

@@ -21,16 +21,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="2">
-            <v-text-field
-              dense
-              label="상태 코드"
-              v-model="param.status_code"
-              placeholder=" "
-              
-            >
-            </v-text-field>
-          </v-col>
+
           <v-col cols="12" sm="6" md="2">
             <v-text-field
               dense
@@ -41,7 +32,17 @@
             >
             </v-text-field>
           </v-col>
-         
+          
+          <v-col cols="12" sm="6" md="2">
+            <v-select 
+                label="상태코드" 
+                v-model="selected"
+                :items="items"
+                item-text="state"
+                item-value="abbr"
+              ></v-select>
+          </v-col>
+          
           <v-col cols="auto">
             <v-btn 
               elevation="2" 
@@ -61,10 +62,18 @@
 export default {
     props: ['param'],
     data() {
-        return {}
+        return {
+          items:[
+                    {state:'전체', abbr:''},
+                    {state:'정상', abbr: 'S'},
+                    {state:'장애', abbr:'F'},
+                    {state:'삭제', abbr:'D'}],
+          selected:'전체'
+        }
     },
     methods: {
         searchMethod: function() {
+            this.param.status_code=this.selected
             this.$emit('search', this.param)
         }
     },  

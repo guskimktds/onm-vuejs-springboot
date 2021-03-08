@@ -75,7 +75,7 @@ export default {
 
       var reqParams=this.handleParams(params)
       console.log('보내는 값')
-      console.log(params)
+      console.log(reqParams)
       axios.post(url,reqParams,headers)
         .then((response)=>{
           var resCode=response.data.res_code;

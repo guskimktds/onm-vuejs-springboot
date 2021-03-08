@@ -71,7 +71,8 @@
         >
           <v-list-item-content>
             <v-list-item-title 
-            v-text="subItem.name"></v-list-item-title>
+            v-text="subItem.name"
+            ></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-group>
@@ -118,10 +119,9 @@ export default {
       console.log(this.newMenus)
     });
 
-  },
+  },  
   mounted() {
     this.newMenus=this.$store.getters.getMenus[this.$store.state.menuIndex].children
-    this.openLoadMenu();
   },
   computed: {
     ...mapState(['barColor', 'barImage']),
@@ -191,10 +191,6 @@ export default {
         console.log("");
       }
     },
-    openLoadMenu(){
-     console.log('실행')
-    }
-
   }
 }
 </script>

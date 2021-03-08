@@ -239,7 +239,8 @@ export default {
                 step: '',
                 // mod_date:'',
                 // reg_date:''
-            }
+            },
+            selected:'전체'
 
         }
     },
