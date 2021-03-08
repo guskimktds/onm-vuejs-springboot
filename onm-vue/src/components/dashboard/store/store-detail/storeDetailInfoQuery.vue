@@ -109,18 +109,22 @@ export default {
     props: ['param'],
     data() {
         return {
+          selected:'All',
           items:[
-                    {state:'전체', abbr:''},
+                    {state:'전체', abbr:'All'},
                     {state:'정상 사용자', abbr: 'S'},
                     {state:'해지', abbr:'D'},
                     {state:'일시정지', abbr:'T'},
-                    {state:'사용자 생성 대기중', abbr:'P'}],
-          selected:'전체'
+                    {state:'사용자 생성 대기중', abbr:'P'}]
         }
     },
   methods: {
     searchMethod: function () {
+      if(this.selected=='All'){
+        this.param.status_code=''
+      }else{
       this.param.status_code=this.selected
+      }
       this.$emit("search", this.param);
     },
   },

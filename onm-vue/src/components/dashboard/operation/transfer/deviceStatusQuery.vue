@@ -125,18 +125,22 @@ export default {
     data() {
         return {
             items:[
-                    {state:'전체', abbr:''},
+                    {state:'전체', abbr:'All'},
                     {state:'진행', abbr: 'P'},
                     {state:'성공', abbr:'S'},
                     {state:'실패', abbr:'F'},
                     {state:'등록', abbr:'A'}],   
-            selected:'전체'        
+            selected:'All'        
         };
     },
 
     methods: {
         searchMethod: function() {
+            if(this.selected=='All'){
+            this.param.status_code=''
+            }else{
             this.param.status_code=this.selected
+            }
             this.$emit('search', this.param)
         },
 

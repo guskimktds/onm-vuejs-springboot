@@ -218,7 +218,7 @@ export default {
             // },
             
             items:[
-                    {state:'전체', abbr:''},
+                    {state:'전체', abbr:'All'},
                     {state:'진행', abbr: 'P'},
                     {state:'성공', abbr:'S'},
                     {state:'실패', abbr:'F'},
@@ -240,7 +240,7 @@ export default {
                 // mod_date:'',
                 // reg_date:''
             },
-            selected:'전체'
+            selected:'All'
 
         }
     },
@@ -252,7 +252,11 @@ export default {
     },
     methods: {
         searchMethod: function() {
+            if(this.selected=='All'){
+            this.param.status_code=''
+            }else{
             this.param.status_code=this.selected
+            }
             console.log('검색값')
             console.log(this.select)
             this.$emit('search', this.param)

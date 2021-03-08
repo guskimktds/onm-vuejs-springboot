@@ -63,17 +63,21 @@ export default {
     props: ['param'],
     data() {
         return {
+          selected:'All',
           items:[
-                    {state:'전체', abbr:''},
+                    {state:'전체', abbr:'All'},
                     {state:'정상', abbr: 'S'},
                     {state:'장애', abbr:'F'},
                     {state:'삭제', abbr:'D'}],
-          selected:'전체'
         }
     },
     methods: {
         searchMethod: function() {
+           if(this.selected=='All'){
+            this.param.status_code=''
+            }else{
             this.param.status_code=this.selected
+            }
             this.$emit('search', this.param)
         }
     },  

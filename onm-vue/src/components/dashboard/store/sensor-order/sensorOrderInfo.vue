@@ -48,7 +48,8 @@ export default {
 
  methods: {
   searchSensorOrderInfo: function (params) {
-    
+    console.log(params)
+    console.log('fdsafdsa ')
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13007/get_sensor_status_list`
 
     var reqParams=this.handleParams(params)
