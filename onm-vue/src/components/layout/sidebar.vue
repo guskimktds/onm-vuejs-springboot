@@ -56,6 +56,7 @@
         :key="i"
         v-model="item.active"
         :prepend-icon="item.icon"
+        v-on:click="saveSubMenu(i)"
         no-action
       >
         <template v-slot:activator>
@@ -110,7 +111,7 @@ export default {
     EventBus.$on('top-path-login', (payload)=>{          
       // console.log(payload)
       this.newMenus = payload;
-      this.openFirstSideMenu();
+      this.openSideMenu(0);
     });
 
     EventBus.$on('top-path-logout', ()=>{          
@@ -122,6 +123,7 @@ export default {
   },  
   mounted() {
     this.newMenus=this.$store.getters.getMenus[this.$store.state.menuIndex].children
+    setTimeout(() => this.openSideMenu(this.$store.state.subMenuIndex), 100);  
   },
   computed: {
     ...mapState(['barColor', 'barImage']),
@@ -183,9 +185,13 @@ export default {
       EventBus.$emit('top-path-login', selectMenu[0].children);
     },
 
-    openFirstSideMenu(){
+    saveSubMenu(i){
+      this.$store.commit('SUB_MENU', i)
+    },
+
+    openSideMenu(menuIdx){
       try{
-        var uid = this.$refs.vList.$children[0]._uid;
+        var uid = this.$refs.vList.$children[menuIdx]._uid;
         this.$refs.vList.listClick(uid);
       }catch(e){
         console.log("");
