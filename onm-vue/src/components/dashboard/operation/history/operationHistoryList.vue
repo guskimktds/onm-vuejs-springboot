@@ -45,10 +45,6 @@ export default {
             sortable: false,
             value: 'onm_user_id',
           },
-          { 
-            text: '이름', 
-            value: 'name',
-          },
           { text: '권한그룹', value: 'auth_group_id' },
           { text: '호출IP주소', value: 'client_ip_addr' },
           { text: '호출uri', value: 'proc_api_uri' },
