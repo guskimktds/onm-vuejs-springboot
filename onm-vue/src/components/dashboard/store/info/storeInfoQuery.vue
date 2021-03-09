@@ -70,7 +70,7 @@
                         v-model="param.is_masking"                    
                         :label="`마스킹(Y/N)`"
                         color="secondary"
-                        v-showw="showMasking()"
+                        v-show="showMasking()"
                     ></v-switch>
                 </v-col>
 

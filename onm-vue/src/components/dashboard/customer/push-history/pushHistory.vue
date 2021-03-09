@@ -83,6 +83,7 @@ export default {
           if(resCode==200){
             this.pList=response.data.data.list;
             this.pushPagingInfo=response.data.data.paging_info;
+            console.log(this.pList)
           }else{
             this.pList=[];
             this.pushPagingInfo={};

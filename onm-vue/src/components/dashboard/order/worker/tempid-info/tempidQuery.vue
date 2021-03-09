@@ -51,9 +51,8 @@ export default {
     methods: {
     searchMethod: function() {
             this.$emit('search', this.param)
-        }
-    },  
-    showMasking(){
+        },
+        showMasking(){
         var auth=this.$store.state.authGroupId
         if(auth=='G100'||auth=='G200'){
             return true;
@@ -61,6 +60,7 @@ export default {
             return false;
         }
     }
+    },  
 }
 </script>
 <style>
