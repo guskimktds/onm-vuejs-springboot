@@ -51,7 +51,7 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.status_code" label="상태코드" readonly>
+          <v-text-field v-model="status_code" label="상태코드" readonly>
           </v-text-field>
         </v-col>
         <v-col cols="12" md="6">
@@ -66,7 +66,7 @@
           </v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.mgt_status" label="관리상태코드" readonly>
+          <v-text-field v-model="mgt_status" label="관리상태코드" readonly>
           </v-text-field>
         </v-col>
       </v-row>
@@ -78,8 +78,6 @@
         </v-col>
       </v-row>
 
-      <!-- <i class="fa fa-check"
-    @click="checkObject(pObject)"></i> -->
     </base-material-card>
   </v-container>
 </template>
@@ -87,11 +85,42 @@
 <script>
 export default {
   props: ["pObject"],
-  // ,methods: {
-  //   checkObject:function(values){
-  //     console.log(values)
-  //   }
-  // },
+  data() {
+    return {
+      status_code:'',
+      mgt_status: ''
+    }
+  },
+  created() {
+    this.switchString()
+  },
+  updated() {
+    this.switchString()
+  },
+  methods: {
+    switchString(){
+      var status=this.pObject.status_code
+      var mgt=this.pObject.mgt_status
+      console.log('fdsafasd')
+      console.log(status)
+      console.log(mgt)
+      if(status=='S'){
+        this.status_code='정상'
+      }else if(status=='F'){
+        this.status_code='장애'
+      }else if(status=='D'){
+        this.status_code='삭제'
+      }
+      
+      if(mgt=='S'){
+        this.mgt_status='정상'
+      }else if(mgt=='F'){
+        this.mgt_status='장애'
+      }else if(mgt=='D'){
+        this.mgt_status='삭제'
+      }
+    }
+  },
 };
 </script>
 <style>

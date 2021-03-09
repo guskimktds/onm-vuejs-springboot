@@ -61,7 +61,7 @@
           <v-col cols="12" sm="6" md="3">
             <v-text-field
               dense
-              label="단말 GWID"
+              label="GWID(시스템)"
               v-model="param.gw_id"
               placeholder=" "
             

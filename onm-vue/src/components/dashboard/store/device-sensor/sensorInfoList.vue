@@ -20,6 +20,9 @@
         @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
+      <template v-slot:item.status_code="{item}">
+              <span>{{ switchString(item.status_code) }}</span>
+      </template>
       </v-data-table>
     </base-material-card>
   </v-container> 
@@ -61,8 +64,18 @@ export default {
     },
     getDataFromApi() {
       this.loading = true;
+      this.dsList.status_code=this.switchString(this.dsList.status_code)
       this.$emit("pagination", this.options);
     },
+    switchString(values){
+        if(values=='S'){
+          return '정상'
+        }else if(values=='F'){
+          return '장애'
+        }else if(values=='D'){
+          return '삭제'
+        }
+      }
     
   },
 

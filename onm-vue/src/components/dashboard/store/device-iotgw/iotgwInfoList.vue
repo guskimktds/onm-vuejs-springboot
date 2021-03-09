@@ -40,12 +40,12 @@ export default {
       loading: true,
       headers: [
         {
-          text: "단말 GW ID",
+          text: "GWID(시스템)",
           align: "start",
           sortable: false,
           value: "terminal_gw_id",
         },
-        { text: "단말GWID", value: "gw_id" },
+        { text: "GWID(청약)", value: "gw_id" },
         { text: "단말GW명", value: "gw_name" },
         { text: "단말모델코드", value: "gw_model_code" },
         { text: "mac_id", value: "mac_id" },

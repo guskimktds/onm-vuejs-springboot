@@ -6,7 +6,7 @@
     >
         <base-material-card
             icon="mdi-magnify"
-            title="사용자 전화번호 조회(기능삭제 - 매장정보 조회 > 사용자 전화번호)"
+            title="사용자 전화번호 조회"
             class="px-5 py-3"
         >
 

@@ -52,14 +52,14 @@
           <v-text-field v-model="pObject.vendor" label="제조사" readonly> </v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.status_code" label="서비스 상태코드" readonly>
+          <v-text-field v-model="status_code" label="서비스 상태코드" readonly>
           </v-text-field>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.mgt_status" label="관리상태코드" readonly>
+          <v-text-field v-model="mgt_status" label="관리상태코드" readonly>
           </v-text-field>
         </v-col>
         <v-col cols="12" md="6">
@@ -90,8 +90,6 @@
         </v-col>
       </v-row>
 
-      <!-- <i class="fa fa-check"
-    @click="checkObject(pObject)"></i> -->
     </base-material-card>
   </v-container>
 </template>
@@ -99,11 +97,55 @@
 <script>
 export default {
   props: ["pObject"],
-  // ,methods: {
-  //   checkObject:function(values){
-  //     console.log(values)
-  //   }
-  // },
+  data() {
+    return {
+      status_code:'',
+      mgt_status: ''
+    }
+  },
+  created() {
+    this.switchString()
+  },
+  updated() {
+    this.switchString()
+  },
+  methods: {
+    switchString(){
+      var status=this.pObject.status_code
+      var mgt=this.pObject.mgt_status
+      console.log('fdsafasd')
+      console.log(status)
+      console.log(mgt)
+      if(status=='A'){
+        this.status_code='접수'
+      }else if(status=='D'){
+        this.status_code='삭제'
+      }else if(status=='F'){
+        this.status_code= '실패'
+      }else if(status=='P'){
+        this.status_code='진행중'
+      }else if(status=='S'){
+        this.status_code='성공'
+      }else if(status=='Z'){
+        this.status_code='카메라 장애'
+      }
+      
+      if(mgt=='A'){
+        this.mgt_status='접수'
+      }else if(mgt=='D'){
+        this.mgt_status='삭제'
+      }else if(mgt=='F'){
+        this.mgt_status='실패'
+      }else if(mgt=='P'){
+        this.mgt_status='진행중'
+      }else if(mgt=='S'){
+        this.mgt_status='성공'
+      }else if(mgt=='Z'){
+        this.mgt_status='카메라 장애'
+      }
+    }
+  },
+
 };
 </script>
 <style>

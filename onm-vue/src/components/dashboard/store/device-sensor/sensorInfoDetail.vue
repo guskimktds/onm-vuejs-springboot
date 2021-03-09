@@ -49,7 +49,7 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-text-field v-model="pObject.status_code" label="상태코드" readonly >
+          <v-text-field v-model="status_code" label="상태코드" readonly >
           </v-text-field>
         </v-col>
         <v-col cols="12" md="6">
@@ -65,8 +65,6 @@
         </v-col>
       </v-row>
 
-      <!-- <i class="fa fa-check"
-    @click="checkObject(pObject)"></i> -->
     </base-material-card>
   </v-container>
 </template>
@@ -74,11 +72,30 @@
 <script>
 export default {
   props: ["pObject"],
-  // ,methods: {
-  //   checkObject:function(values){
-  //     console.log(values)
-  //   }
-  // },
+  data() {
+    return {
+      status_code:''
+    }
+  },
+  created() {
+    this.switchString()
+  },
+  updated() {
+    this.switchString()
+  },
+  methods: {
+   switchString(){
+     var values=this.pObject.status_code
+        if(values=='S'){
+          this.status_code='정상'
+        }else if(values=='F'){
+          this.status_code='장애'
+        }else if(values=='D'){
+          this.status_code='삭제'
+        }
+      }
+  },
+
 };
 </script>
 <style>

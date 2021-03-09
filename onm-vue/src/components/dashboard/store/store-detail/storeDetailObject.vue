@@ -74,7 +74,7 @@
           cols="12"
           md="12">
             <v-text-field
-              v-model="pObject.status_code"
+              v-model="status_code"
               label="상태코드"
               readonly>
             </v-text-field>
@@ -153,9 +153,6 @@
         </v-col>
       </v-row>
 
-  
-    <!-- <i class="fa fa-check"
-    @click="checkObject(pObject)"></i> -->
     </base-material-card>
   </v-container>
   
@@ -163,12 +160,33 @@
 
 <script>
 export default {
-    props: ['pObject']
-  // ,methods: {
-  //   checkObject:function(values){
-  //     console.log(values)
-  //   }
-  // },
+    props: ['pObject'],
+    data() {
+      return {
+        status_code:''
+      }
+    },
+    created() {
+      this.switchString()
+    },
+    updated(){
+      this.switchString()
+    },
+    methods: {
+      switchString(){
+        var status=this.pObject.status_code
+        if(status=='S'){
+        this.status_code= '정상 사용자'
+      }else if(status=='D'){
+        this.status_code= '해지'
+      }else if(status=='T'){
+        this.status_code= '일시정지'
+      }else if(status=='P'){
+        this.status_code='사용자 생성 대기중'
+      }
+      }
+    },
+
 }
 </script>
 <style>

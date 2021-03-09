@@ -19,6 +19,12 @@
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
       >
+      <template v-slot:item.status_code="{item}">
+              <span>{{ switchString(item.status_code) }}</span>
+      </template>
+      <template v-slot:item.mgt_status="{item}">
+              <span>{{ switchString2(item.mgt_status) }}</span>
+      </template>
       </v-data-table>
     </base-material-card>
 
@@ -48,10 +54,10 @@ export default {
         { text: "전화번호ID", value: "tel_no_id" },
         { text: "알림설정권한", value: "alim_auth_yn" },
         { text: "상태코드", value: "status_code" },
-        { text: "mgt상태코드", value: "ngt_status" },
+        { text: "mgt상태코드", value: "mgt_status" },
         { text: "승인여부", value: "confirm_yn" },
         { text: "승일인날짜", value: "confirm_date" },
-        { text: "등록일시", value: " " },
+        { text: "비고", value: "memo" },
       ],
     };
   },
@@ -65,6 +71,24 @@ export default {
         const { page, itemsPerPage } = this.options
         console.log(page, itemsPerPage)
         this.$emit("pagination", this.options)
+      },
+      switchString(value){
+        if(value=='S'){
+          return '정상'
+        }else if(value=='D'){
+          return '삭제'
+        }else if(value=='A'){
+          return '접수/등록'
+        }
+      },
+      switchString2(value){
+        if(value=='X'){
+          return '삭제대기'
+        }else if(value=='S'){
+          return '정상'
+        }else if(value=='D'){
+          return '삭제'
+        }
       }
       
     },

@@ -43,8 +43,7 @@ export default new Vuex.Store({
             'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
             'Content-Type': 'application/json'
           },
-        menuIndex: '',
-        subMenuIndex: 0
+        menuIndex: ''
     },
     plugins: [createPersistedState()],
     getters: {
@@ -84,10 +83,7 @@ export default new Vuex.Store({
         },
         MENU(state,payload){
             state.menuIndex=payload
-        },
-        SUB_MENU(state,payload){
-            state.subMenuIndex=payload
-        },
+        }
 
     },
     actions: {
@@ -116,7 +112,8 @@ export default new Vuex.Store({
               
                     }else{
                         console.log(resCode,resMsg)
-                        alert("사번 또는 비밀번호가 0회\n오류가 발생하였습니다.\n로그인정보를 확인하시길 바랍니다");
+                        alert("사번 또는 비밀번호가 오류가 발생하였습니다.\n로그인정보를 확인하시길 바랍니다");
+                        alert("로그인을 5회 실패하셔서\n30분간 로그인 하실 수 없습니다.\n로그인 제한시간 : 30:00 ");
                     }
                 })
                 .catch(e => {
