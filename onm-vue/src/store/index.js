@@ -43,7 +43,8 @@ export default new Vuex.Store({
             'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
             'Content-Type': 'application/json'
           },
-        menuIndex: ''
+        menuIndex: '',
+        subMenuIndex: 0
     },
     plugins: [createPersistedState()],
     getters: {
@@ -83,6 +84,9 @@ export default new Vuex.Store({
         },
         MENU(state,payload){
             state.menuIndex=payload
+        },
+        SUB_MENU(state,payload){
+            state.subMenuIndex=payload
         }
 
     },
