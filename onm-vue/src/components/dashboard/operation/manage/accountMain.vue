@@ -56,7 +56,9 @@ export default {
       isAuthMenu: false
     }
   },
-  
+  mounted() {
+    this.searchToButton(this.searchParam)
+  },
   methods: {
     searchToButton: function(params){
       console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
