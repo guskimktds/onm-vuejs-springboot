@@ -15,8 +15,8 @@
       >
       <v-row>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.said"
               label="계약ID"
@@ -28,8 +28,8 @@
 
       <v-row>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.user_id"
               label="매장ID"
@@ -38,8 +38,8 @@
         </v-col>
    
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.user_name"
               label="매장명"
@@ -50,8 +50,8 @@
 
       <v-row>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.local_gw_id"
               label="로컬GW아이디"
@@ -59,8 +59,8 @@
             </v-text-field>
         </v-col>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.tel_no"
               label="전화번호"
@@ -71,8 +71,8 @@
 
        <v-row>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="status_code"
               label="상태코드"
@@ -80,8 +80,8 @@
             </v-text-field>
         </v-col>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.prod_code"
               label="상품번호"
@@ -92,8 +92,8 @@
       
       <v-row>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.resolution"
               label="해상도"
@@ -101,8 +101,8 @@
             </v-text-field>
         </v-col>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.subid_cnt"
               label="서브ID 개수"
@@ -113,8 +113,8 @@
 
       <v-row>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.storage_chg_day"
               label="영상저장기간"
@@ -122,8 +122,8 @@
             </v-text-field>
         </v-col>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.iot_target_seq"
               label="iot_target_seq"
@@ -134,8 +134,8 @@
 
       <v-row>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.iot_member_seq"
               label="iot_member_seq"
@@ -143,11 +143,86 @@
             </v-text-field>
         </v-col>
         <v-col
-          cols="12"
-          md="12">
+          cols="6"
+          md="6">
             <v-text-field
               v-model="pObject.order_no"
               label="주문번호"
+              readonly>
+            </v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col
+          cols="6"
+          md="6">
+            <v-text-field
+              v-model="pObject.reg_date"
+              label="등록일시"
+              readonly>
+            </v-text-field>
+        </v-col>
+        <v-col
+          cols="6"
+          md="6">
+            <v-text-field
+              v-model="pObject.mod_date"
+              label="수정일시"
+              readonly>
+            </v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col
+          cols="6"
+          md="6">
+            <v-text-field
+              v-model="pObject.cam_cnt"
+              label="전체 카메라 대수"
+              readonly>
+            </v-text-field>
+        </v-col>
+        <v-col
+          cols="6"
+          md="6">
+            <v-text-field
+              v-model="pObject.normal_cam_cnt"
+              label="정상 카메라 대수"
+              readonly>
+            </v-text-field>
+        </v-col>
+      </v-row>
+      
+      <v-row>
+        <v-col
+          cols="6"
+          md="6">
+            <v-text-field
+              v-model="pObject.ip_cam_cnt"
+              label="IP 카메라 대수"
+              readonly>
+            </v-text-field>
+        </v-col>
+        <v-col
+          cols="6"
+          md="6">
+            <v-text-field
+              v-model="pObject.pos_cam_cnt"
+              label="POS 카메라 대수"
+              readonly>
+            </v-text-field>
+        </v-col>
+      </v-row>
+      
+      <v-row>
+      <v-col
+          cols="6"
+          md="6">
+            <v-text-field
+              v-model="pObject.iotgw_cnt"
+              label="IoT GW 대수"
               readonly>
             </v-text-field>
         </v-col>

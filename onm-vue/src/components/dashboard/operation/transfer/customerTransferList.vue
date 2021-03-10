@@ -22,6 +22,10 @@
           <template v-slot:item.status_code="{item}">
               <span>{{ switchString(item.status_code) }}</span>
           </template>
+
+          <template v-slot:item.iot_status="{item}">
+              <span>{{ switchString(item.iot_status) }}</span>
+          </template>
         </v-data-table>
 
     </base-material-card>

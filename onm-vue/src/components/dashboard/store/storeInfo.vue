@@ -262,15 +262,17 @@ export default {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13001/get_user_list`;
 
       var reqParams = this.handleParams(params);
-
+      console.log(reqParams)
       axios
         .post(url, reqParams, headers)
         .then((response) => {
+          console.log(response)
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info;
+            console.log(this.pList)
           } else {
             this.pList = [];
             this.resPagingInfo = {};
