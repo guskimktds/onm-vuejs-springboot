@@ -125,8 +125,6 @@
 </template>
 <script>
 
-import dateInfo from '../../../../utils/common';
-
 export default {
     data() {
         return{
@@ -153,7 +151,8 @@ export default {
     methods: {
         searchMethod: function() {
             this.$emit('search', this.param)
-        }
+        },
+
     },  
 }
 </script>
