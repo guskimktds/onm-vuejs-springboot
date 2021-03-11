@@ -16,7 +16,7 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                         v-model="param.start_date"
-                        label="시작일"
+                        label="시작일(등록일)"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
@@ -35,7 +35,7 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                         v-model="param.end_date"
-                        label="종료일"
+                        label="종료일(등록일)"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"

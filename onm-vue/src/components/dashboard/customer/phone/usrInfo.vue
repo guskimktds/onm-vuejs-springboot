@@ -2,7 +2,7 @@
     <v-container fluid>
       <v-card>
         <query 
-          v-on:search="searchToProcess2"
+          v-on:search="searchToProcess"
           v-bind:param="searchParam"
         ></query>
 
@@ -58,36 +58,6 @@ export default {
 
       var reqParams = this.handleParams(params);
 
-      axios
-      .post(url, reqParams, headers)
-      .then( (response) => {
-
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if (resCode == 200) {
-          this.pList = response.data.data.tel_no_list;
-          this.resPagingInfo = response.data.data.paging_info;
-        } else {
-          this.pList = [];
-          this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
-        }
-
-      })
-      .catch(function (error) {
-        console.log(error);
-        alert("Error")
-      })
-      .finally(function () {
-        // always executed
-      });
-
-    },
-
-    searchToProcess2: function(params){
-      var reqParams = this.handleParams(params);
-      reqParams.page_no=1
-      console.log(reqParams)
       axios
       .post(url, reqParams, headers)
       .then( (response) => {

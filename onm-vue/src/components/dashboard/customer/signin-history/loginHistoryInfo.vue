@@ -95,13 +95,13 @@ export default {
     handleParams: function (params) {
       console.log(params);
       let newParams = {};
-      if (params.page === undefined || params.page === "") {
+      if (params.page_no === undefined || params.page_no === "") {
         newParams.page_no = this.resPagingInfo.page_no;
       } else {
         newParams.page_no = params.page_no;
       }
 
-      if (params.itemsPerPage === undefined || params.itemsPerPage === "") {
+      if (params.view_cnt === undefined || params.view_cnt === "") {
         newParams.view_cnt = this.resPagingInfo.view_cnt;
       } else {
         newParams.view_cnt = params.view_cnt;
