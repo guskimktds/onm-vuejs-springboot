@@ -64,7 +64,7 @@ export default {
       },
     
       switchString(values){
-      if(values===200){
+      if(values=='200'){
         return '성공'
       }else{
         return '실패'

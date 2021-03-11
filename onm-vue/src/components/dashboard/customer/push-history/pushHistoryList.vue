@@ -47,7 +47,7 @@ export default {
         { text: "알림 발생 시작시간", value: "alim_start_time" },
         { text: "알림 발생 끝시간", value: "alim_end_time" },
         { text: "카메라 아이디", value: "cam_id" },
-        { text: "매장명", value: "user_name" },
+        { text: "매장명", value: "store_name" },
         { text: "푸시 발송 안드로이드 수", value: "android_count" },
         { text: "푸시 발송 ios 수", value: "ios_count" }
       ],

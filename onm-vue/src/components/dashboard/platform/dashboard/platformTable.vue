@@ -95,7 +95,7 @@ export default {
                     }else{
                     this.pList = [];
                     this.resPagingInfo = {};
-                    alert(resCode + " / " + resMsg);
+                    console.log(resCode + " / " + resMsg);
                     }
                 })
                 .catch((ex)=>{
@@ -115,7 +115,7 @@ export default {
                     if(resCode == 200){
                     this.cList = response.data.data.list;
                     }else{
-                    alert(resCode + " / " + resMsg);
+                    console.log(resCode + " / " + resMsg);
                     }
                 })
                 .catch((ex)=>{
@@ -133,6 +133,7 @@ export default {
         getDataFromApi() {
         this.loading = true;
         this.processList(this.options)
+        this.cameraList(this.options2)
         },
         
     },
@@ -146,7 +147,17 @@ export default {
         },
     },
     mounted() {
-        this.cameraList(this.options2);
+        var count=0
+        setInterval(() => {
+            count=count+1
+            if(count%2==0){
+            this.getDataFromApi();
+            }
+            else{
+                this.pList=[];
+                this.cList=[];
+            }
+          }, 6000);
     },
 }
 </script>

@@ -42,6 +42,12 @@ export default {
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10,
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
+        onm_user_id: '',
+        name: '',
+        auth_group_id: '',
+        order_category:'R',
       },
       resPagingInfo: {},
       searchParam: {
@@ -79,6 +85,7 @@ export default {
             // this.isAuthMenu = true
             this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info
+            console.log(this.pList)
           }else{
             // this.authGroupList = [];
             // this.isAuthMenu = false
@@ -114,6 +121,7 @@ export default {
             this.isAuthMenu = true
             // this.pList = response.data.data.account_list;
             this.resPagingInfo = response.data.data.paging_info
+            this.searchToButton(this.reqPagingInfo)
           }else{
             // this.pList = [];
             this.authGroupList = [];

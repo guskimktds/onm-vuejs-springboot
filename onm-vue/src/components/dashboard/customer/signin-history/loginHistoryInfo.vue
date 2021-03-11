@@ -96,15 +96,15 @@ export default {
       console.log(params);
       let newParams = {};
       if (params.page === undefined || params.page === "") {
-        newParams.page_no = this.reqPagingInfo.page_no;
+        newParams.page_no = this.resPagingInfo.page_no;
       } else {
-        newParams.page_no = params.page;
+        newParams.page_no = params.page_no;
       }
 
       if (params.itemsPerPage === undefined || params.itemsPerPage === "") {
-        newParams.view_cnt = this.reqPagingInfo.view_cnt;
+        newParams.view_cnt = this.resPagingInfo.view_cnt;
       } else {
-        newParams.view_cnt = params.itemsPerPage;
+        newParams.view_cnt = params.view_cnt;
       }
 
       if(params.start_date !== undefined && params.start_date !== ''){

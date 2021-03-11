@@ -116,8 +116,7 @@ export default new Vuex.Store({
               
                     }else{
                         console.log(resCode,resMsg)
-                        alert("사번 또는 비밀번호가 오류가 발생하였습니다.\n로그인정보를 확인하시길 바랍니다");
-                        alert("로그인을 5회 실패하셔서\n30분간 로그인 하실 수 없습니다.\n로그인 제한시간 : 30:00 ");
+                        alert(resMsg)
                     }
                 })
                 .catch(e => {

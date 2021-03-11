@@ -93,7 +93,7 @@ export default{
                     this.Data = response.data.data;
                     }else{
                     this.Data = [];
-                    alert(resCode + " / " + resMsg);
+                    console.log(resCode + " / " + resMsg);
                     }
                 })
                 .catch((ex)=>{
