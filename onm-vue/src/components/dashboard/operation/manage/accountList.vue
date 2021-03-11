@@ -204,6 +204,7 @@ export default {
         this.editedItem = Object.assign({}, item)
         // 수정
         this.editedItem.cmd_type = 'U' 
+        this.editedItem.accept_ip=this.editedItem.accept_ip.split(',')
         this.editedItem.mod_date = dateInfo().current
         this.editedItem.modifier = this.$store.state.onm_user_id
         // this.editedItem.reg_date = getDate     
