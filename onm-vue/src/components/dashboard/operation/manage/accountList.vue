@@ -308,7 +308,7 @@ export default {
             newParams.onm_user_id=values.onm_user_id
             newParams.auth_group_id=values.auth_group_id
             newParams.cmd_type=values.cmd_type
-            newParams.access_ip=values.access_ip.split(',')
+            newParams.accept_ip=values.accept_ip.split(',')
             return newParams
         },
 
