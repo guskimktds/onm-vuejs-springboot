@@ -62,6 +62,7 @@ export default {
   methods: {
     getDataFromApi() {
       this.loading = true;
+      this.options.page=1;
       this.$emit("pagination", this.options);
     },
     switchString(values){

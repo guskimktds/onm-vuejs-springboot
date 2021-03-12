@@ -68,8 +68,6 @@ export default{
         if(resCode == 200){
           this.pList = response.data.data.user_detail_list;
           this.resPagingInfo = response.data.data.paging_info
-          console.log('출력')
-          console.log(this.pList.appoint_date)
         }else{
           this.pList = [];
           this.resPagingInfo = {};
@@ -97,7 +95,8 @@ export default{
   searchReset: function (params) {
    
    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13002/get_user_detail`
-    params.page_no=1;
+    params.page_no=1
+    params.view_cnt=10
    var reqParams=this.handleParams(params)
    console.log(reqParams)
       axios.post(url, reqParams, headers)
@@ -108,8 +107,6 @@ export default{
         if(resCode == 200){
           this.pList = response.data.data.user_detail_list;
           this.resPagingInfo = response.data.data.paging_info
-          console.log('출력')
-          console.log(this.pList.appoint_date)
         }else{
           this.pList = [];
           this.resPagingInfo = {};
