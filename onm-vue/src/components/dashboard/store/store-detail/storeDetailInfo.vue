@@ -2,7 +2,7 @@
     <v-container fluid>
       <v-card>
         <storeDetailInfo-query
-          v-on:search="searchToStoreDetailInfo"
+          v-on:search="searchReset"
           v-bind:param=searchParam></storeDetailInfo-query>
         <storeDetailInfo-list 
         v-bind:pList=pList
@@ -58,6 +58,46 @@ export default{
    
    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13002/get_user_detail`
 
+   var reqParams=this.handleParams(params)
+   console.log(reqParams)
+      axios.post(url, reqParams, headers)
+      .then((response) => {
+        console.log(response)
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.pList = response.data.data.user_detail_list;
+          this.resPagingInfo = response.data.data.paging_info
+          console.log('출력')
+          console.log(this.pList.appoint_date)
+        }else{
+          this.pList = [];
+          this.resPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
+    },
+
+    setToSearchParams: function(values){
+      console.log(values)
+
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      console.log(params)
+
+      this.searchToStoreDetailInfo(params)
+    },
+
+  searchReset: function (params) {
+   
+   var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13002/get_user_detail`
+    params.page_no=1;
    var reqParams=this.handleParams(params)
    console.log(reqParams)
       axios.post(url, reqParams, headers)

@@ -151,6 +151,7 @@ export default {
                 this.$fire({
                         title: "등록 되었습니다.",
                         type : "success"})
+                this.searchToButton(this.reqPagingInfo)
                 }else{
                 console.log('오류메세지')
                 console.log(resMsg)

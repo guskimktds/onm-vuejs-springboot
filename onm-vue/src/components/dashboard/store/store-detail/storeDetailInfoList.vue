@@ -18,7 +18,6 @@
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
-        @update:options="updateOptions"
       >
       <template v-slot:item.status_code="{item}">
               <span>{{ switchString(item.status_code) }}</span>
@@ -79,11 +78,6 @@ export default {
   },
 
   watch: {
-    items () {
-      if (this.pageStart >= this.itemsLength) {
-        this.resetPagination()
-      }
-    },
     options: {
       handler() {
         this.getDataFromApi();
