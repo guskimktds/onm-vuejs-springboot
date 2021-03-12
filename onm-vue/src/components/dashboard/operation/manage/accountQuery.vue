@@ -146,7 +146,7 @@
                                         md="12"
                                         >
                                         <v-text-field
-                                            v-model="editedItem.access_ip"
+                                            v-model="editedItem.accept_ip"
                                             label="접속 IP"
                                         ></v-text-field>
                                         </v-col>
@@ -216,13 +216,13 @@ export default {
             dialog: false,
             editedItem: {
                 onm_user_id: '',     
-                access_ip: '',
+                accept_ip: '',
                 auth_group_id: '',
                 cmd_type: 'I'
             },
             defaultItem: {
                 onm_user_id: '',     
-                access_ip: '',
+                accept_ip: '',
                 auth_group_id: '',
                 cmd_type: '' 
             }
@@ -265,7 +265,7 @@ export default {
             this.$fire({
             title: "정말 등록 하시겠습니까?",
             html: "계정(사번) : "+this.editedItem.onm_user_id+"<br/>접속 IP : "
-            +this.editedItem.access_ip+"<br/>권한 그룹 ID : "+this.editedItem.auth_group_id,
+            +this.editedItem.accept_ip+"<br/>권한 그룹 ID : "+this.editedItem.auth_group_id,
             type: "question",
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -295,7 +295,7 @@ export default {
             this.$fire({
                        title: "등록이 취소되었습니다.",
                        html: "계정(사번) : "+this.editedItem.onm_user_id+"<br/>접속 IP : "
-                        +this.editedItem.access_ip+"<br/>권한 그룹 ID : "+this.editedItem.auth_group_id,
+                        +this.editedItem.accept_ip+"<br/>권한 그룹 ID : "+this.editedItem.auth_group_id,
                        type : "error"
                    })
         },

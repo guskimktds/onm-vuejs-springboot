@@ -79,6 +79,11 @@ export default {
   },
 
   watch: {
+    items () {
+      if (this.pageStart >= this.itemsLength) {
+        this.resetPagination()
+      }
+    },
     options: {
       handler() {
         this.getDataFromApi();
