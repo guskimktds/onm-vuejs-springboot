@@ -33,6 +33,7 @@ export default {
   props: ['pList','resPagingInfo'],
   data() {
     return {
+      page_no: 0,
       dialog:false,
       dialogDelete:false,
       editedIndex:-1,
@@ -62,8 +63,13 @@ export default {
   methods: {
     getDataFromApi() {
       this.loading = true;
-      this.options.page=1;
+      if(this.options.page==1){
+      this.page_no=this.options.page
       this.$emit("pagination", this.options);
+      }else if(this.page_no>=this.optios.page){
+      this.options.page=1
+      this.$emit("pagination", this.options);
+      }
     },
     switchString(values){
       if(values==='S'){
