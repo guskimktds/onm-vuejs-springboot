@@ -204,7 +204,6 @@ export default {
         this.editedItem = Object.assign({}, item)
         // 수정
         this.editedItem.cmd_type = 'U'
-        this.editedItem.accept_ip.split(',')
         this.editedItem.mod_date = dateInfo().current
         this.editedItem.modifier = this.$store.state.onm_user_id
         // this.editedItem.reg_date = getDate     
@@ -281,11 +280,12 @@ export default {
 
           // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
           var params = this.editedItem
+          var reqParams=this.changeIp(params)
           var updateIndex = this.editedIndex
           console.log(updateIndex)
           console.log(params)
 
-          axios.post(url, params, this.$store.state.headers)
+          axios.post(url, reqParams, this.$store.state.headers)
             .then((response) => {
               console.log(response)
               var resCode = response.data.res_code;
@@ -302,7 +302,15 @@ export default {
             })
         } 
         this.close()
-      }
+      },
+      changeIp(values){
+            let newParams={}
+            newParams.onm_user_id=values.onm_user_id
+            newParams.auth_group_id=values.auth_group_id
+            newParams.cmd_type=values.cmd_type
+            newParams.access_ip=values.access_ip.split(',')
+            return newParams
+        },
 
     }
 }
