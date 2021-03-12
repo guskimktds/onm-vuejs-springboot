@@ -121,19 +121,6 @@ export default{
       })
     },
 
-    setToSearchParams: function(values){
-      console.log(values)
-
-      var params = {
-        page_no: values.page,
-        view_cnt: values.itemsPerPage
-      }
-
-      console.log(params)
-
-      this.searchToStoreDetailInfo(params)
-    },
-
     handleParams:function(params){
     let newParams = {}
       if(params.page_no === undefined || params.page_no === ''){
