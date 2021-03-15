@@ -52,7 +52,7 @@
                     
                 </v-col>
                 
-              <v-col cols="12" sm="6" md="3">
+              <v-col cols="3">
                     <v-radio-group
                         row
                         v-on:change="handleRadio"
@@ -67,6 +67,15 @@
                             value="M"
                         ></v-radio>                        
                     </v-radio-group>
+                </v-col>
+
+                <v-col cols="3">
+                    <v-switch
+                        v-model="search.date_yn"                    
+                        :label="`날짜검색(Y/N)`"
+                        color="secondary"
+                        v-on:change="handleSwitch"
+                    ></v-switch>
                 </v-col>
 
             </v-row>
@@ -113,7 +122,7 @@
                 <v-col cols="12" sm="6" md="2">
                     <v-btn
                     class="mb-2"
-                    @click="searchDate">
+                    v-on:click="searchMethod">
                     검색
                     </v-btn>
                 </v-col>
@@ -124,6 +133,7 @@
     </v-container>
 </template>
 <script>
+import dateInfo from '../../../../utils/common'
 
 export default {
     data() {
@@ -135,9 +145,10 @@ export default {
             // },
             dialog: false,
             search:{
-                start_date:'',
-                end_date:'',
-                order_category:'R'
+                start_date:dateInfo().lastWeekDashFormat,
+                end_date:dateInfo().currentDateDashFormat,
+                order_category:'R',
+                date_yn: true
             },
 
         }
@@ -150,8 +161,18 @@ export default {
     },
     methods: {
         searchMethod: function() {
-            this.$emit('search', this.param)
+            this.$emit('search', this.search)
         },
+        handleRadio(values){
+            if(values=="등록일"){
+                this.search.order_category="R"
+            }else if(values=="수정일"){
+                this.search.order_category="M"
+            }   
+        },
+        handleSwitch(values){
+            this.date_yn=values
+        }
 
     },  
 }

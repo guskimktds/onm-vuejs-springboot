@@ -110,6 +110,7 @@ export default {
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
+        date_yn: true,
         said: '',
         guid: '',
         oderno: ''
@@ -125,8 +126,8 @@ export default {
 
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)      
-      
-
+      console.log('넣어지는 값')
+      console.log(reqParams)
       axios.post(url, reqParams, headers)
       .then((response) => {
         //this.list = JSON.parse(result.data.menu)
@@ -272,6 +273,11 @@ export default {
 
     handleParams: function(params){
       let newParams = {}
+      console.log(this.searchParam.date_yn)
+      if(params.date_yn==undefined){
+        params.date_yn=this.searchParam.date_yn
+      }
+
       if(params.page_no === undefined || params.page_no === ''){
         newParams.page_no = this.reqPagingInfo.page_no
       }else{
@@ -284,24 +290,26 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date.replace(/-/g,"")
-      }else if(
-        this.searchParam.start_date!==undefined&&
-        this.searchParam.start_date!==""
-      ){
-        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
-      }
+     if(params.date_yn==true){
+        if(params.start_date !== undefined && params.start_date !== ''){
+          newParams.start_date = params.start_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+        }
 
-      if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date.replace(/-/g,"")
-      }else if(
-        this.searchParam.end_date!==undefined&&
-        this.searchParam.end_date!==""
-      ){
-        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
-      }
-
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.end_date = params.end_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        }
+     }
+      
       if(params.said !== undefined && params.said !== ''){
         newParams.said = params.said
       }else if(
@@ -319,6 +327,7 @@ export default {
       ){
         newParams.guid=this.searchParam.guid
       }
+
       if(params.oderno !== undefined && params.oderno !== ''){
         newParams.oderno = params.oderno
       }else if(
@@ -328,6 +337,16 @@ export default {
         newParams.oderno=this.searchParam.oderno
       } 
 
+      if(params.date_yn !== undefined && params.date_yn !== ''){
+        newParams.date_yn = params.date_yn
+      }else if(
+        this.searchParam.date_yn!==undefined&&
+        this.searchParam.date_yn!==""
+      ){
+        newParams.date_yn=this.searchParam.date_yn
+      } 
+
+   
 
       return newParams
     }

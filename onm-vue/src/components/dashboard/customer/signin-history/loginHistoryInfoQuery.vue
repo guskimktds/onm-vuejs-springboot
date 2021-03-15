@@ -45,22 +45,29 @@
                     </v-menu>
                 </v-col>
 
-                <v-radio-group
-                        row
-                        v-on:change="handleRadio"
-                        v-model="param.optionType"
-                    >
-                        <v-radio
-                            label="로그인"
-                            value="login"
-                        ></v-radio>
-                        <v-radio
-                            label="로그아웃"
-                            value="logout"
-                        ></v-radio>                        
-                    </v-radio-group>
+                <v-col cols="12" sm="6" md="2">
+                    <v-switch
+                        v-model="param.date_yn"                    
+                        :label="`날짜검색(Y/N)`"
+                        color="secondary"
+                    ></v-switch>
+                </v-col>
+      </v-row>
 
-        <v-col cols="12" sm="6" md="2">
+      <v-row>
+        <v-radio-group
+           row
+           v-on:change="handleRadio"
+           v-model="param.optionType">
+            <v-radio
+              label="로그인"
+              value="login"></v-radio>
+            <v-radio
+              label="로그아웃"
+              value="logout"></v-radio>                        
+        </v-radio-group>
+
+        <v-col cols="4">
           <v-select
             v-model="param.os_type"
             :items="items"

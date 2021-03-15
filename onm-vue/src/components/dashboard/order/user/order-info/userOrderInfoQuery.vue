@@ -51,6 +51,15 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+
+                 <v-col cols="3">
+                    <v-switch
+                        v-model="param.date_yn"                    
+                        :label="`날짜검색(Y/N)`"
+                        color="secondary"
+                    ></v-switch>
+                </v-col>
+
             </v-row>
 
             <v-row>

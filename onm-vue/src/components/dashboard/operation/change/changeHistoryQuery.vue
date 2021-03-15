@@ -51,7 +51,7 @@
                     </v-menu>
                 </v-col>
                 
-              <v-col cols="12" sm="6" md="3">
+              <v-col cols="3">
                     <v-radio-group
                         row
                         v-on:change="handleRadio"
@@ -67,7 +67,15 @@
                         ></v-radio>                        
                     </v-radio-group>
                 </v-col>
-                </v-row>
+
+                <v-col cols="3">
+                    <v-switch
+                        v-model="param.date_yn"                    
+                        :label="`날짜검색(Y/N)`"
+                        color="secondary"
+                    ></v-switch>
+                </v-col>
+            </v-row>
             <v-row>
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 

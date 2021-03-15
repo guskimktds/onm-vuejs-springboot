@@ -50,8 +50,45 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+
+                <v-col cols="3">
+                    <v-switch
+                        v-model="param.is_masking"                    
+                        :label="`마스킹(Y/N)`"
+                        color="secondary"
+                        v-show="showMasking()"
+                    ></v-switch>
+                </v-col>
                 
-              <v-col cols="12" sm="6" md="3">
+                <v-col cols="3">
+                    <v-switch
+                        v-model="param.date_yn"                    
+                        :label="`날짜검색(Y/N)`"
+                        color="secondary"
+                    ></v-switch>
+                </v-col>
+            </v-row>
+
+            <v-row>
+                <v-col cols="4">
+                    <v-text-field 
+                        dense 
+                        label="관리자ID" 
+                        v-model="param.admin_id"
+                        placeholder=" " 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                <v-col cols="4">
+                    <v-text-field 
+                        dense 
+                        label="매장ID" 
+                        v-model="param.user_id"
+                        placeholder=" " 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                <v-col cols="3">
                     <v-radio-group
                         row
                         v-on:change="handleRadio"
@@ -66,36 +103,6 @@
                             value="O"
                         ></v-radio>                        
                     </v-radio-group>
-                </v-col>
-
-                <v-col cols="12" sm="6" md="2">
-                    <v-switch
-                        v-model="param.is_masking"                    
-                        :label="`마스킹(Y/N)`"
-                        color="secondary"
-                        v-show="showMasking()"
-                    ></v-switch>
-                </v-col>   
-                
-                </v-row>
-            <v-row>
-                <v-col cols="12" sm="6" md="4">
-                    <v-text-field 
-                        dense 
-                        label="관리자ID" 
-                        v-model="param.admin_id"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
-                </v-col> 
-                <v-col cols="12" sm="6" md="4">
-                    <v-text-field 
-                        dense 
-                        label="매장ID" 
-                        v-model="param.user_id"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
                 </v-col>
                 </v-row> 
                 <v-row>

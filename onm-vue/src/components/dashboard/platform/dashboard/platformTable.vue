@@ -157,7 +157,7 @@ export default {
                 this.pList=[];
                 this.cList=[];
             }
-          }, 6000);
+          }, 60000);
     },
 }
 </script>

@@ -35,6 +35,7 @@ export default {
       reqPagingInfo: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
+        date_yn: true,
         page_no: 1,
         view_cnt: 10,
         status_code: '',
@@ -44,6 +45,7 @@ export default {
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
+        date_yn: true,
         user_id: '',
         status_code: '',
         order_category: 'S'
@@ -160,6 +162,10 @@ export default {
 
     handleParams: function(params){
       let newParams = {}
+      if(params.date_yn==undefined){
+        params.date_yn=this.searchParam.date_yn
+      }
+
       if(params.page_no === undefined || params.page_no === ''){
         newParams.page_no = this.reqPagingInfo.page_no
       }else{
@@ -172,22 +178,24 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date.replace(/-/g,"")
-      }else if(
-        this.searchParam.start_date!==undefined&&
-        this.searchParam.start_date!==""
-      ){
-        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
-      }
+      if(params.date_yn==true){
+        if(params.start_date !== undefined && params.start_date !== ''){
+          newParams.start_date = params.start_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+        }
 
-      if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date.replace(/-/g,"")
-      }else if(
-        this.searchParam.end_date!==undefined&&
-        this.searchParam.end_date!==""
-      ){
-        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.end_date = params.end_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        }
       }
 
       if(params.user_id !== undefined && params.user_id !== ''){

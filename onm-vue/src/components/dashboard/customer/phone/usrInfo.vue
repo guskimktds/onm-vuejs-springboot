@@ -3,13 +3,13 @@
       <v-card>
         <query 
           v-on:search="searchToProcess"
-          v-bind:param="searchParam"
+          v-bind:param=searchParam
         ></query>
 
         <list 
           v-bind:pList=pList
           v-bind:resPagingInfo="resPagingInfo"
-          @pagination="searchToProcess"
+          @pagination="setToSearchParams"
         ></list>
       </v-card>
     </v-container>
@@ -46,9 +46,10 @@ export default {
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
-        user_name: "",
-        user_id: "",
-        tel_no: "",
+        date_yn: true,
+        user_name: '',
+        user_id: '',
+        tel_no: ''
       },
       
     }
@@ -57,7 +58,7 @@ export default {
     searchToProcess: function(params){
 
       var reqParams = this.handleParams(params);
-
+      console.log(reqParams)
       axios
       .post(url, reqParams, headers)
       .then( (response) => {
@@ -84,9 +85,24 @@ export default {
 
     },
 
+    setToSearchParams: function(values){
+      console.log(values)
+      var params = {
+        page: values.page,
+        itemsPerPage: values.itemsPerPage
+      }
+
+      this.searchToProcess(params)
+    },
+
     handleParams: function (params) {
       console.log(params);
       let newParams = {};
+      if(params.date_yn==undefined){
+        params.date_yn=this.searchParam.date_yn
+      }
+      console.log(this.searchParam.date_yn)
+
       if (params.page === undefined || params.page === "") {
         newParams.page_no = this.reqPagingInfo.page_no;
       } else {
@@ -99,22 +115,24 @@ export default {
         newParams.view_cnt = params.itemsPerPage;
       }
       
-      if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date.replace(/-/g,"")
-      }else if(
-        this.searchParam.start_date!==undefined&&
-        this.searchParam.start_date!==""
-      ){
-        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
-      }
+      if(params.date_yn==true){
+        if(params.start_date !== undefined && params.start_date !== ''){
+          newParams.start_date = params.start_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+        }
 
-      if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date.replace(/-/g,"")
-      }else if(
-        this.searchParam.end_date!==undefined&&
-        this.searchParam.end_date!==""
-      ){
-        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.end_date = params.end_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        }
       }
 
       if (params.user_name !== undefined && params.user_name !== "") {

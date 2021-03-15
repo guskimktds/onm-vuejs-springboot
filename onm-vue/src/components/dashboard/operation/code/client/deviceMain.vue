@@ -3,8 +3,7 @@
       <v-card>
         <!-- <device-query v-on:search="searchToButton"></device-query> -->
         <device-query
-        @search="searchDate"
-        @Items="saveItems"></device-query>
+        @search="searchDate"></device-query>
         <device-list v-bind:pList=pList></device-list>
       </v-card>
     </v-container>
@@ -34,7 +33,8 @@ export default {
       searchParam:{
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
-        order_category:''
+        date_yn: true,
+        order_category:'R'
       }
       // searchParam: { 
       //   app_version_id: '',
@@ -52,7 +52,7 @@ export default {
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15010/get_app_info`
     
     var reqParam=this.handleParams(params)
-   
+    console.log(reqParam)
     axios
         .post(url, reqParam, this.$store.state.headers)
         .then((response) => {
@@ -75,24 +75,28 @@ export default {
 
     handleParams: function(params){
       let newParams = {}
-      if(params.start_date !== undefined && params.start_date !== ''){
-          newParams.start_date = params.start_date.replace(/-/g,"")
-        }else if(
-          this.searchParam.start_date!==undefined&&
-          this.searchParam.start_date!==""
-        ){
-          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
-        }
+      console.log(params.date_yn)
 
-        if(params.end_date !== undefined && params.end_date !== ''){
-          newParams.end_date = params.end_date.replace(/-/g,"")
-        }else if(
-          this.searchParam.end_date!==undefined&&
-          this.searchParam.end_date!==""
-        ){
-          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
-        }
+      if(params.date_yn==true){
+        if(params.start_date !== undefined && params.start_date !== ''){
+            newParams.start_date = params.start_date.replace(/-/g,"")
+          }else if(
+            this.searchParam.start_date!==undefined&&
+            this.searchParam.start_date!==""
+          ){
+            newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+          }
 
+          if(params.end_date !== undefined && params.end_date !== ''){
+            newParams.end_date = params.end_date.replace(/-/g,"")
+          }else if(
+            this.searchParam.end_date!==undefined&&
+            this.searchParam.end_date!==""
+          ){
+            newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+          }
+      }
+      
         if (params.order_category !== undefined && params.order_category !== "") {
         newParams.order_category = params.order_category;
       } else if (

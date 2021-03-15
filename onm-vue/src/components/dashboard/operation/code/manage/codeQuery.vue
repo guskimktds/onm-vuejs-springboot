@@ -66,6 +66,7 @@
                     <v-dialog
                         v-model="dialog"
                         max-width="500px"
+                        v-show="showAuth()"
                     >
                         <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -260,6 +261,15 @@ export default {
       },
     },
     methods: {
+        showAuth(){
+            var auth=this.$store.state.authGroupId
+            if(auth=='G100'){
+            return true;
+            }else{
+            alert('접근권한이 없습니다.')
+            return false;
+            }
+        },
         searchMethod: function() {
             this.$emit('search', this.param)
         },

@@ -12,7 +12,7 @@
       <sessLiveInfo-list
         v-bind:pList="pList"
         v-bind:resPagingInfo="resPagingInfo"
-        @pagination="searchToSessLiveInfo"
+        @pagination="setToSearchParams"
       ></sessLiveInfo-list>
 
     </v-card>
@@ -54,6 +54,7 @@ export default {
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
+        date_yn: true,
         tel_no: "",
         user_id: "",
         device_type: "",
@@ -90,8 +91,22 @@ export default {
         });
     },
 
+    setToSearchParams: function(values){
+      console.log(values)
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+
+      this.searchToSessLiveInfo(params)
+    },
+
     handleParams: function (params) {
       let newParams = {};
+      if(params.date_yn==undefined){
+        params.date_yn=this.searchParam.date_yn
+      }
+
       if (params.page === undefined || params.page === "") {
         newParams.page_no = this.reqPagingInfo.page_no;
       } else {
@@ -104,22 +119,24 @@ export default {
         newParams.view_cnt = params.itemsPerPage;
       }
 
-      if(params.start_date !== undefined && params.start_date !== ''){
-        newParams.start_date = params.start_date.replace(/-/g,"")
-      }else if(
-        this.searchParam.start_date!==undefined&&
-        this.searchParam.start_date!==""
-      ){
-        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
-      }
+      if(params.date_yn==true){
+        if(params.start_date !== undefined && params.start_date !== ''){
+          newParams.start_date = params.start_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+        }
 
-      if(params.end_date !== undefined && params.end_date !== ''){
-        newParams.end_date = params.end_date.replace(/-/g,"")
-      }else if(
-        this.searchParam.end_date!==undefined&&
-        this.searchParam.end_date!==""
-      ){
-        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.end_date = params.end_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        }
       }
 
       if (params.tel_no !== undefined && params.tel_no !== "") {

@@ -33,12 +33,11 @@ export default {
   props: ['pList','resPagingInfo'],
   data() {
     return {
-      page_no: 0,
+      last:0,
       dialog:false,
       dialogDelete:false,
       editedIndex:-1,
       options:{},
-      totalList: 0,
       loading: true,
       headers:[
         {
@@ -59,16 +58,24 @@ export default {
       ]
     }
   },
-
+  
   methods: {
     getDataFromApi() {
       this.loading = true;
-      if(this.options.page==1){
-      this.page_no=this.options.page
-      this.$emit("pagination", this.options);
-      }else if(this.page_no>=this.optios.page){
-      this.options.page=1
-      this.$emit("pagination", this.options);
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+        console.log('----------페이지 정보 ----------------')
+        console.log(this.last)
+        console.log(this.options)
+        console.log(this.pList)
+        console.log(this.resPagingInfo.total_cnt)
+        console.log('----------------')
+        this.$emit("pagination", this.options);
+      }else{
+        this.$emit("pagination", this.options);
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
       }
     },
     switchString(values){

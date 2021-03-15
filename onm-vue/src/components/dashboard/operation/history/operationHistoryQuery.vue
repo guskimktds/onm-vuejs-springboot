@@ -55,7 +55,26 @@
                     </v-date-picker>
                     </v-menu>
                  </v-col>
-                   
+                
+                 <v-col cols="3">
+                    <v-switch
+                        v-model="param.is_masking"                    
+                        :label="`마스킹(Y/N)`"
+                        color="secondary"
+                        v-show="showMasking()"
+                    ></v-switch>
+                </v-col>
+
+                 <v-col cols="3">
+                    <v-switch
+                        v-model="param.date_yn"                    
+                        :label="`날짜검색(Y/N)`"
+                        color="secondary"
+                    ></v-switch>
+                </v-col>
+            </v-row>
+
+            <v-row>
                 <v-col cols="12" sm="6" md="12">
                     <v-radio-group
                         v-model="param.cmd_type"
@@ -111,15 +130,7 @@
                     >
                         검색
                     </v-btn>
-                </v-col>    
-                <v-col cols="12" sm="6" md="2">
-                    <v-switch
-                        v-model="param.is_masking"                    
-                        :label="`마스킹(Y/N)`"
-                        color="secondary"
-                        v-show="showMasking()"
-                    ></v-switch>
-                </v-col>            
+                </v-col>                
             </v-row>
         </base-material-card>       
     </v-container>
