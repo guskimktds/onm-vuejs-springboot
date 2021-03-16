@@ -4,9 +4,12 @@
         <code-query 
           v-on:search="searchToButton"
           v-bind:param=searchParam
+          v-bind:localGwOptions="localGwOptions"
           @Items="saveItems"
         ></code-query>
-        <code-list v-bind:pList=pList></code-list>
+        <code-list 
+        v-bind:pList=pList
+        v-bind:gw_id="gw_id"></code-list>
       </v-card>
 
     </v-container>
@@ -33,6 +36,7 @@ export default {
   data () {
     return {
       title: '코드관리',
+      gw_id: '',
       pList: [],
       reqPagingInfo: {
         page_no: 1,
@@ -40,12 +44,34 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
+        local_gw_id:'',
         code_master_id: '',
         code_id: '',
         code_name: '',
         code_type: ''
+      },
+      localGwOptions:[],
+      centerOptions:{
+        server_name:'센터',
+        local_gw_id:''
       }
     }
+  },
+
+  beforeCreate() {  
+    axios
+    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
+    .then((response) => {
+      this.localGwOptions = response.data.data.local_gw_list;
+      this.localGwOptions.unshift(this.centerOptions);
+    })
+    .catch(function (error) {
+        console.log(error);
+        alert("국사정보 조회실패")
+      })
+      .finally(function () {
+        // always executed
+      });
   },
   created: function() {
     // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15006/get_code'
@@ -100,7 +126,9 @@ export default {
               if(resCode == 200){
                 this.pList = response.data.data.list;
                 this.resPagingInfo = response.data.data.paging_info
-
+                this.gw_id=reqParams.local_gw_id
+                console.log('gwid')
+                console.log(this.gw_id)
               }else{
                 this.pList = [];
                 this.resPagingInfo = {};
@@ -128,7 +156,8 @@ export default {
     // }
     saveItems(params){
            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15007/set_code`
-
+           console.log('서버에 전송되는 값') 
+           console.log(params)
            axios.post(url, params, this.$store.state.headers)
             .then((response)=>{
                 var resCode=response.data.res_code;
@@ -169,6 +198,14 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
+      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
+        newParams.local_gw_id = params.local_gw_id;
+      } else if (
+        this.searchParam.local_gw_id !== undefined &&
+        this.searchParam.local_gw_id !== ""
+      ) {
+        newParams.local_gw_id = this.searchParam.local_gw_id;
+      }
 
       if(params.code_master_id !== undefined && params.code_master_id !== ''){
         newParams.code_master_id = params.code_master_id

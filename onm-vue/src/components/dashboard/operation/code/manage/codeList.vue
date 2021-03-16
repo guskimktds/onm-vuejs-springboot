@@ -45,6 +45,13 @@
                   <v-card-text>
                     <v-container>
                       <v-row>
+                         <v-col cols="12">
+                          <v-text-field
+                            v-model="gw_id"
+                            label="국사코드"
+                            readonly
+                          ></v-text-field>
+                        </v-col>
                         <v-col
                           cols="12"
                           sm="6"
@@ -202,7 +209,7 @@ const headers = {
 }
 
 export default {
-    props: ['pList'],
+    props: ['pList','gw_id'],
     data() {
       return {
         dialog: false,
@@ -279,7 +286,11 @@ export default {
         this.editedItem = Object.assign({}, item)
         // 수정
         this.editedItem.cmd_type = 'U'
-        this.editedItem.local_gw_id = '0'    
+        if(this.gw_id==''){
+          delete this.editedItem.local_gw_id
+        }else{
+        this.editedItem.local_gw_id = this.gw_id    
+        }
         // this.editedItem.mod_date = getDate 
         // this.editedItem.reg_date = getDate     
 
@@ -295,7 +306,11 @@ export default {
         this.editedItem = Object.assign({}, item)
         // 삭제
         this.editedItem.cmd_type = 'D'
-        this.editedItem.local_gw_id = '0' 
+         if(this.gw_id==''){
+          delete this.editedItem.local_gw_id
+        }else{
+        this.editedItem.local_gw_id = this.gw_id    
+        }
         this.dialogDelete = true
       },
 
