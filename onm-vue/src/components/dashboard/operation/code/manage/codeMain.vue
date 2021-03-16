@@ -9,7 +9,9 @@
         ></code-query>
         <code-list 
         v-bind:pList=pList
-        v-bind:gw_id="gw_id"></code-list>
+        v-bind:gw_id="gw_id"
+        v-bind:resPagingInfo="resPagingInfo"
+        @pagination="setToSearchParams"></code-list>
       </v-card>
 
     </v-container>
@@ -112,12 +114,12 @@ export default {
   
   methods: {
     searchToButton: function(params){
-    console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15006/get_code`
 
     //params : 페이징 + 검색조건
     var reqParams = this.handleParams(params)  
-
+    console.log('보내는 값')
+    console.log(reqParams)
         axios.post(url, reqParams, this.$store.state.headers)
             .then((response) => {
               console.log(response)
@@ -127,8 +129,8 @@ export default {
                 this.pList = response.data.data.list;
                 this.resPagingInfo = response.data.data.paging_info
                 this.gw_id=reqParams.local_gw_id
-                console.log('gwid')
-                console.log(this.gw_id)
+                console.log('paging')
+                console.log(this.resPagingInfo)
               }else{
                 this.pList = [];
                 this.resPagingInfo = {};
@@ -183,6 +185,17 @@ export default {
             })
 
         },
+
+    setToSearchParams(values) {
+      console.log('전달값')
+      console.log(values)
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage,
+      };
+
+      this.searchToButton(params);
+    },
 
     handleParams: function(params){
       let newParams = {}

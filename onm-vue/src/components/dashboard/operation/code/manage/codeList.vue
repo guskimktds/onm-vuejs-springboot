@@ -15,6 +15,8 @@
           :headers="headers"
           :items="pList"
           class="elevation-1"
+          :options.sync="options"
+          :server-items-length="resPagingInfo.total_cnt"
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
           v-show="showAuth()"
         >
@@ -209,12 +211,15 @@ const headers = {
 }
 
 export default {
-    props: ['pList','gw_id'],
+    props: ['pList','resPagingInfo','gw_id'],
     data() {
       return {
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
         headers: [
           {
             text: '코드구분',
@@ -271,6 +276,9 @@ export default {
       },
     },
     methods: {
+      getDataFromApi(){
+        this.$emit("pagination",this.options)
+      },
       showAuth(){
         var auth=this.$store.state.authGroupId
         if(auth=='G100'){
@@ -395,23 +403,21 @@ export default {
         //   EventBus.$emit('createItem', createItem)
         // }
         this.close()
-      }
+      },
 
-          // saveToData: function(){
-    //   console.log('saveToData Method call : ',process.env);
-    //   axios
-    //         .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-phone/query`, {       
-    //               params
-    //         })
-    //         .then((result) => {
-    //           console.log(result)
-    //           // this.list = JSON.parse(result.data.menu)
-    //           this.list = result.data
-    //         })
-    //         .catch((ex) => {
-    //           console.log('조회 실패',ex)
-    //         })
-    }
+    },
+    watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+
+  mounted() {
+    this.getDataFromApi();
+  },
 
 }
 </script>
