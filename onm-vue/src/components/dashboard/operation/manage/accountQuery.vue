@@ -67,7 +67,7 @@
                         ></v-radio>                        
                     </v-radio-group>
                 </v-col>
-                
+
                 <v-col cols="3">
                     <v-switch
                         v-model="param.date_yn"                    

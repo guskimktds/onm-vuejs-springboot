@@ -26,7 +26,7 @@
 
 <script>
 export default {
-    props: ['pList', 'resPagingInfo'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
         dialog: false,

@@ -195,8 +195,7 @@ export default {
     },
     methods: {
       getDataFromApi(){
-        this.loading=true;
-        this.$emit("pagination",this.options);
+        this.$emit("pagination",this.options)
       },
       editItem (item) {
         this.editedIndex = this.pList.indexOf(item)
@@ -222,7 +221,7 @@ export default {
         this.editedItem.cmd_type = 'D'
         this.editedItem.mod_date = dateInfo().current
         this.editedItem.modifier = this.$store.state.onm_user_id
-
+        delete this.editedItem.accept_ip
         this.dialogDelete = true
       },
 
@@ -312,8 +311,19 @@ export default {
 
             return newParams
         },
+    },
+    watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
 
-    }
+  mounted() {
+    this.getDataFromApi();
+  },
 }
 </script>
 
