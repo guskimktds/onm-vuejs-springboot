@@ -32,6 +32,7 @@ export default {
     props: ['dorList', 'dorPagingInfo'],
     data() {
       return {
+        last: 0,
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
@@ -80,6 +81,14 @@ export default {
         deep: true,
       },
     },
+    updated() {
+      if(this.last!==this.dorPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.dorPagingInfo.total_cnt!==undefined){
+      this.last=this.dorPagingInfo.total_cnt
+      }
+  },
     mounted () {
       this.getDataFromApi()
     }

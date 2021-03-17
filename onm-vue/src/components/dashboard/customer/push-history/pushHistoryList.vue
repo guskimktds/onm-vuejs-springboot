@@ -29,6 +29,7 @@ export default {
   //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
   data() {
     return {
+      last: 0,
       loading:false,
       editedIndex: -1,
       options: {},
@@ -58,6 +59,14 @@ export default {
       this.$emit("pagination", this.options);
     }
    },
+   updated() {
+      if(this.last!==this.pushPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.pushPagingInfo.total_cnt!==undefined){
+      this.last=this.pushPagingInfo.total_cnt
+      }
+  },
 watch: {
     options: {
       handler() {

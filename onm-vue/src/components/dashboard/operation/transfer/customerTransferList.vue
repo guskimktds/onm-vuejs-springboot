@@ -41,6 +41,7 @@ export default {
     props: ['pList','resPagingInfo'],
     data() {
       return {
+        last: 0,
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
@@ -85,7 +86,23 @@ export default {
           return '등록'
         }
       }
-    }
+    },
+    updated() {
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
+      }
+  },
+   watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
    
     //   EventBus.$on('createItemTransfer', params => {
     //     console.log(params)

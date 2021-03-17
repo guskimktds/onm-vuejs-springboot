@@ -32,6 +32,7 @@ export default {
   props: ["dcList", "dcPagingInfo"],
   data() {
     return {
+      last: 0,
       dialog: false,
       dialogDelete: false,
       editedIndex: -1,
@@ -108,7 +109,14 @@ export default {
       deep: true,
     },
   },
-
+  updated() {
+      if(this.last!==this.dcPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.dcPagingInfo.total_cnt!==undefined){
+      this.last=this.dcPagingInfo.total_cnt
+      }
+  },
   mounted() {
     this.getDataFromApi();
   },

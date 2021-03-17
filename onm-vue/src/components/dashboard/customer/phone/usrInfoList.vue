@@ -40,7 +40,6 @@ export default {
   data() {
     return {
       headers: [
-
         { text: '사용자 ID', value: 'user_id' },
         { text: '사용자 이름', value: 'user_name' },
         { text: '전화번호', value: 'tel_no' },
@@ -54,6 +53,7 @@ export default {
         { text: '비고', value: 'memo' },
 
       ],
+        last: 0,
         options: {},
         totalList: 0,
         loading: true,
@@ -94,6 +94,14 @@ export default {
       },
       deep: true,
     },
+  },
+  updated() {
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
+      }
   },
     mounted() {
     this.getDataFromApi();

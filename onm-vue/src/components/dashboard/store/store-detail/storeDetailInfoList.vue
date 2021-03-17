@@ -62,21 +62,7 @@ export default {
   methods: {
     getDataFromApi() {
       this.loading = true;
-      if(this.last!==this.resPagingInfo.total_cnt){
-        this.options.page=1
-        console.log('----------페이지 정보 ----------------')
-        console.log(this.last)
-        console.log(this.options)
-        console.log(this.pList)
-        console.log(this.resPagingInfo.total_cnt)
-        console.log('----------------')
-        this.$emit("pagination", this.options);
-      }else{
-        this.$emit("pagination", this.options);
-      }
-      if(this.resPagingInfo.total_cnt!==undefined){
-      this.last=this.resPagingInfo.total_cnt
-      }
+      this.$emit("pagination", this.options);
     },
     switchString(values){
       if(values==='S'){
@@ -99,7 +85,14 @@ export default {
       deep: true,
     },
   },
-
+  updated() {
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
+      }
+  },
   mounted() {
     this.getDataFromApi();
   },

@@ -47,6 +47,7 @@ export default {
         { text: '삭제일시', value: 'close_date' },
         { text: '등록일', value: 'reg_date' },
       ],
+        last: 0,
         options: {},
         totalList: 0,
         loading: true,
@@ -74,6 +75,14 @@ export default {
         deep: true,
       },
     },
+    updated() {
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
+      }
+  },
     mounted () {
       this.getDataFromApi()
     }

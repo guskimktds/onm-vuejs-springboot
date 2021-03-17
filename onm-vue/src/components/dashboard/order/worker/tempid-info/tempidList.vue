@@ -48,6 +48,7 @@ export default {
         { text: '처리결과 메세지', value: 'resultmsg' },
         { text: '등록일', value: 'reg_date' },
       ],
+        last: 0,
         options: {},
         totalList: 0,
         loading: true,
@@ -77,6 +78,14 @@ export default {
         deep: true,
       },
     },
+    updated() {
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
+      }
+  },
     mounted () {
       this.getDataFromApi()
     }

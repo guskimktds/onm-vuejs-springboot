@@ -32,6 +32,7 @@ export default {
   props: ["soList",'soPagingInfo'],
   data() {
     return {
+      last: 0,
       dialog: false,
       dialogDelete: false,
       editedIndex: -1,
@@ -77,7 +78,14 @@ export default {
       deep: true,
     },
   },
-
+  updated() {
+      if(this.last!==this.soPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.soPagingInfo.total_cnt!==undefined){
+      this.last=this.soPagingInfo.total_cnt
+      }
+  },
   mounted() {
     this.getDataFromApi();
   },

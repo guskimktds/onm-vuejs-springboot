@@ -37,6 +37,7 @@ export default {
   props: ["pList", "resPagingInfo"],
   data() {
     return {
+      last:0,
       listSize : [
         10, 100, 200
       ],
@@ -81,7 +82,14 @@ export default {
       deep: true,
     },
   },
-
+  updated() {
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
+      }
+  },
   mounted() {
     this.getDataFromApi();
   },

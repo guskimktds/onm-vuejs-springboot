@@ -38,6 +38,7 @@ export default {
         { text: '시스템ID', value: 'system_id' },
         { text: 'KTT 계약 ID', value: 'contract_id' },
       ],
+        last:0,
         options: {},
         totalList: 0,
         loading: true,
@@ -58,7 +59,14 @@ export default {
       deep: true,
     },
   },
-
+  updated() {
+      if(this.last!==this.kttPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.kttPagingInfo.total_cnt!==undefined){
+      this.last=this.kttPagingInfo.total_cnt
+      }
+  },
   mounted() {
     this.getDataFromApi();
   },

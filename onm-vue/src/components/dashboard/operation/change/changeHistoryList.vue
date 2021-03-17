@@ -29,6 +29,7 @@ export default {
     props: ['pList','resPaginginfo'],
     data() {
       return {
+        last: 0,
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
@@ -69,6 +70,14 @@ export default {
         deep: true
       }
     },
+    updated() {
+      if(this.last!==this.resPaginginfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPaginginfo.total_cnt!==undefined){
+      this.last=this.resPaginginfo.total_cnt
+      }
+  },
     mounted(){
       this.getDataFromApi();
     }

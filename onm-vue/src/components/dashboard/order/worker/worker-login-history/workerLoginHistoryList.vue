@@ -33,7 +33,6 @@ export default {
   props: ["pList", "resPagingInfo"],
   data() {
     return {
-
       headers: [
         { text: '관리자ID', value: 'admin_id' },
         { text: '매장ID', value: 'user_id' },
@@ -44,6 +43,7 @@ export default {
         { text: '로그아웃 날짜', value: 'logout_date' },
 
       ],
+      last: 0,
       options: {},
       totalList: 0,
       loading: true,
@@ -65,6 +65,14 @@ export default {
         deep: true,
       },
     },
+    updated() {
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
+      }
+  },
     mounted () {
       this.getDataFromApi()
     }

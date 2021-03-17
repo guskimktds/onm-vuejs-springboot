@@ -29,6 +29,7 @@ export default {
   props: ['kList','kttPagingInfo'],
   data() {
     return {
+      last: 0,
       dialog: false,
       dialogDelete: false,
       editedIndex: -1,
@@ -66,7 +67,14 @@ export default {
       deep: true,
     },
   },
-
+  updated() {
+      if(this.last!==this.kttPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.kttPagingInfo.total_cnt!==undefined){
+      this.last=this.kttPagingInfo.total_cnt
+      }
+  },
   mounted() {
     this.getDataFromApi();
   },
