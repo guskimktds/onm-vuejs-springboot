@@ -16,6 +16,16 @@
                 </v-col>
             </v-row>
             <v-row>
+                <v-col cols="12" sm="6" md="3">
+                 <v-select 
+                  item-text="server_name" 
+                  item-value="local_gw_id" 
+                  :items="localGwOptions"
+                  label="국사코드" 
+                  v-model="param.local_gw_id" 
+                  v-on:change="searchMethod"
+                  ></v-select>
+                </v-col>                
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
                         dense 
@@ -68,6 +78,27 @@
                         <v-card-text>
                             <v-container>
                             <v-row>
+                                <v-col cols="12" sm="6" md="6">
+                                <v-select 
+                                item-text="server_name" 
+                                item-value="local_gw_id" 
+                                :items="localGwOptions"
+                                label="국사코드" 
+                                v-model="editedItem.local_gw_id" 
+                                v-on:change="searchMethod"
+                                ></v-select>
+                                </v-col>
+                                <!-- <v-col
+                                cols="12"
+                                sm="6"
+                                md="6"
+                                >
+                                <v-text-field
+                                    v-model="editedItem.local_gw_id"
+                                    label="국사코드"
+                                    valvue=""
+                                ></v-text-field>
+                                </v-col> -->
                                 <v-col
                                 cols="12"
                                 sm="6"
@@ -155,7 +186,7 @@
 import dateInfo from '../../../../utils/common';
 
 export default {
-    props:['param'],
+    props:['param','localGwOptions'],
     data() {
         return{            
             dialog: false,    
@@ -165,7 +196,7 @@ export default {
                 use_yn: '',
                 description: '',
                 cmd_type: '',
-                local_gw_id: '0',
+                local_gw_id: '',
                 reg_date:'',
                 mod_date:''
             },
@@ -206,7 +237,7 @@ export default {
             console.log('save method call : ',this.editedItem)     
             // 등록
             this.editedItem.cmd_type = 'I'
-            this.editedItem.local_gw_id = '0'  
+            //this.editedItem.local_gw_id = '0'  
             // console.log(dateInfo().current)
             // this.editedItem.mod_date = dateInfo().current 
             this.editedItem.reg_date = dateInfo().current 

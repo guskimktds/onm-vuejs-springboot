@@ -4,6 +4,7 @@
         <code-query 
           v-on:search="searchToButton"
           v-bind:param=searchParam
+          v-bind:localGwOptions="localGwOptions"
           @Items="saveItem"
         ></code-query>
         <code-list v-bind:pList=pList></code-list>
@@ -35,10 +36,34 @@ export default {
       resPagingInfo: {},
       searchParam: {
         code_master_id: '',
-        code_master_name: ''
+        code_master_name: '',
+        local_gw_id : ''
+      },
+      localGwOptions : [],
+      allOptions:{
+        server_name:"센터",
+        local_gw_id: "0"
       }
     }
   },
+
+  beforeCreate() {  
+    axios
+    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
+    .then((response) => {
+      this.localGwOptions = response.data.data.local_gw_list;
+      this.localGwOptions.unshift(this.allOptions);
+    
+    })
+    .catch(function (error) {
+        console.log(error);
+        alert("국사정보 조회실패")
+      })
+      .finally(function () {
+        // always executed
+      });
+  },
+
   created: function() {
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15015/get_code_master`
 
@@ -143,6 +168,17 @@ export default {
       if(params.code_master_name !== undefined && params.code_master_name !== ''){
         newParams.code_master_name = params.code_master_name
       }
+
+      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
+        newParams.local_gw_id = params.local_gw_id;
+      } else if (
+        this.searchParam.local_gw_id !== undefined &&
+        this.searchParam.local_gw_id !== ""
+      ) {
+        newParams.local_gw_id = this.searchParam.local_gw_id;
+      }
+
+
 
       return newParams
     }

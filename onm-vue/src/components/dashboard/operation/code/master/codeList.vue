@@ -49,6 +49,17 @@
                           md="6"
                         >
                           <v-text-field
+                            v-model="editedItem.local_gw_id"
+                            label="국사코드"
+                            readonly
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                          cols="12"
+                          sm="6"
+                          md="6"
+                        >
+                          <v-text-field
                             v-model="editedItem.code_master_id"
                             label="코드구분"
                             readonly

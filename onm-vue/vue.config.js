@@ -6,4 +6,3 @@ module.exports = {
     https: true
   }
 }
-
