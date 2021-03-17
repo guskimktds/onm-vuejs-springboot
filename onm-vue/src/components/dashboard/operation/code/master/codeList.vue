@@ -15,6 +15,8 @@
           :headers="headers"
           :items="pList"
           class="elevation-1"
+          :options.sync="options"
+          :server-items-length="resPagingInfo.total_cnt"
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
           v-show="showAuth()"
         >
@@ -172,12 +174,15 @@ import axios from "axios"
 // }
 
 export default {
-    props: ['pList'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
         headers: [
           {
             text: '코드구분',
@@ -221,6 +226,9 @@ export default {
       },
     },
     methods: {
+      getDataFromApi(){
+        this.$emit("pagination",this.options)
+      },
       showAuth(){
         var auth=this.$store.state.authGroupId
         if(auth=='G100'){
@@ -354,7 +362,19 @@ export default {
     //         .catch((ex) => {
     //           console.log('조회 실패',ex)
     //         })
-    }
+    },
+    watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+
+  mounted() {
+    this.getDataFromApi();
+  },
 
 }
 </script>

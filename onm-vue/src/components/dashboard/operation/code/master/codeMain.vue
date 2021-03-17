@@ -7,7 +7,9 @@
           v-bind:localGwOptions="localGwOptions"
           @Items="saveItem"
         ></code-query>
-        <code-list v-bind:pList=pList></code-list>
+        <code-list v-bind:pList=pList
+        v-bind:resPagingInfo="resPagingInfo"
+        @pagination="setToSearchParams"></code-list>
       </v-card>
 
     </v-container>
@@ -96,7 +98,8 @@ export default {
 
     //params : 페이징 + 검색조건
     var reqParams = this.handleParams(params)  
-
+    console.log('보내는 값')
+    console.log(reqParams)
       axios.post(url, reqParams, this.$store.state.headers)
       .then((response) => {
         console.log(response)
@@ -105,7 +108,8 @@ export default {
         if(resCode == 200){
           this.pList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info
-
+          console.log('paging')
+          console.log(this.resPagingInfo)
         }else{
           this.pList = [];
           this.resPagingInfo = {};
@@ -145,6 +149,16 @@ export default {
                        type : "error"})
             })
 
+    },
+    setToSearchParams(values) {
+      console.log('전달값')
+      console.log(values)
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage,
+      };
+
+      this.searchToButton(params);
     },
 
     handleParams: function(params){
