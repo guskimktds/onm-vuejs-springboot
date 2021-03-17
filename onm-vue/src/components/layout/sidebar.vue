@@ -69,6 +69,7 @@
           v-for="subItem in item.children"
           :key="subItem.component"
           :to="subItem.path"
+          v-show="authShow(subItem.name)"
         >
           <v-list-item-content>
             <v-list-item-title 
@@ -151,6 +152,16 @@ export default {
     }),
   },
   methods: {
+    authShow(values){
+      var auth=this.$store.state.authGroupId
+      if(values=='코드 관리'&&auth!=='G100'){
+        return false;
+      }else if(values=='코드 마스터 관리'&&auth!=='G100'){
+        return false;
+      }else{
+        return true;
+      }
+    },
     mapItem (item) {
         return {
           ...item,
