@@ -249,8 +249,6 @@ export default {
                 description: '',
                 cmd_type: '',
                 local_gw_id: '0',
-                reg_date:'',
-                mod_date:''
             },
             defaultItem: {
                 code_master_id: '',
@@ -262,8 +260,6 @@ export default {
                 description: '',
                 cmd_type: 'I',
                 local_gw_id: '0',
-                reg_date:'',
-                mod_date:''
             },
         }
     },
@@ -296,7 +292,9 @@ export default {
             console.log('save method call : ',this.editedItem)     
             // 수정
             this.editedItem.cmd_type = 'I'
-            this.editedItem.local_gw_id = this.status
+            if(this.editedItem.local_gw_id==''){
+                delete this.editedItem.local_gw_id
+            }
             // console.log(dateInfo().current)
             // this.editedItem.mod_date = getDate 
             // this.editedItem.reg_date = getDate 

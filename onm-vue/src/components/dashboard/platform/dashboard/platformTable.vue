@@ -147,17 +147,9 @@ export default {
         },
     },
     mounted() {
-        var count=0
         setInterval(() => {
-            count=count+1
-            if(count%2==0){
             this.getDataFromApi();
-            }
-            else{
-                this.pList=[];
-                this.cList=[];
-            }
-          }, 60000);
+          }, 600000);
     },
 }
 </script>
