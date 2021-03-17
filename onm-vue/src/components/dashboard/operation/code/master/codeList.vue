@@ -51,7 +51,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.local_gw_id"
+                            v-model="gw_id"
                             label="국사코드"
                             readonly
                           ></v-text-field>
@@ -174,7 +174,7 @@ import axios from "axios"
 // }
 
 export default {
-    props: ['pList','resPagingInfo'],
+    props: ['pList','resPagingInfo','gw_id'],
     data() {
       return {
         dialog: false,
@@ -212,7 +212,7 @@ export default {
           code_master_name: '',
           description: '',
           use_yn: '',
-          cmd_type: 'U',
+          cmd_type: '',
           local_gw_id: '0',
           reg_date:'',
           mod_date:''
@@ -238,13 +238,19 @@ export default {
           return false;
         }
       },
-      editItem (item) {
+      editItem (item) { 
         this.editedIndex = this.pList.indexOf(item)
         console.log('update Item Index : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
         // 수정
         this.editedItem.cmd_type = 'U'
-        this.editedItem.local_gw_id = '0'    
+        
+        if(this.gw_id==''){
+          delete this.editedItem.local_gw_id
+        }else{
+        this.editedItem.local_gw_id = this.gw_id    
+        }
+
         // this.editedItem.mod_date = getDate 
         // this.editedItem.reg_date = getDate     
 
@@ -254,13 +260,20 @@ export default {
       },
 
       deleteItem (item) {
+        console.log(this.gw_id)
         // console.log('deleteItem method call : ',item)
         this.editedIndex = this.pList.indexOf(item)
         console.log('Delte Item Index : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
         // 삭제
         this.editedItem.cmd_type = 'D'
-        this.editedItem.local_gw_id = '0' 
+
+        if(this.gw_id==''){
+          delete this.editedItem.local_gw_id
+        }else{
+        this.editedItem.local_gw_id = this.gw_id    
+        }
+
         this.dialogDelete = true
       },
 

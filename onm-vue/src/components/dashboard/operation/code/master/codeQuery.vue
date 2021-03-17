@@ -85,20 +85,8 @@
                                 :items="localGwOptions"
                                 label="국사코드" 
                                 v-model="editedItem.local_gw_id" 
-                                v-on:change="searchMethod"
                                 ></v-select>
                                 </v-col>
-                                <!-- <v-col
-                                cols="12"
-                                sm="6"
-                                md="6"
-                                >
-                                <v-text-field
-                                    v-model="editedItem.local_gw_id"
-                                    label="국사코드"
-                                    valvue=""
-                                ></v-text-field>
-                                </v-col> -->
                                 <v-col
                                 cols="12"
                                 sm="6"
@@ -188,7 +176,9 @@ import dateInfo from '../../../../utils/common';
 export default {
     props:['param','localGwOptions'],
     data() {
-        return{            
+        return{
+            status: '센터',
+            status_text:'',       
             dialog: false,    
             editedItem: {
                 code_master_id: '',     
@@ -196,7 +186,7 @@ export default {
                 use_yn: '',
                 description: '',
                 cmd_type: '',
-                local_gw_id: '',
+                local_gw_id: '0',
                 reg_date:'',
                 mod_date:''
             },
@@ -230,6 +220,11 @@ export default {
         },
 
         searchMethod: function() {
+            if(this.status=="센터"){
+                this.param.process_status=''
+            }else{
+                this.param.process_status=this.status
+            }
             this.$emit('search', this.param)
         },
 
@@ -237,6 +232,7 @@ export default {
             console.log('save method call : ',this.editedItem)     
             // 등록
             this.editedItem.cmd_type = 'I'
+            //this.editedItem.local_gw_id = this.status
             //this.editedItem.local_gw_id = '0'  
             // console.log(dateInfo().current)
             // this.editedItem.mod_date = dateInfo().current 
@@ -248,6 +244,10 @@ export default {
         },
 
         saveSure(){
+            var index=this.editedItem.local_gw_id
+            if(index==undefined){
+                index=0
+            }
             this.$fire({
             title: "정말 등록 하시겠습니까?",
             type: "question",
@@ -256,7 +256,7 @@ export default {
             cancelButtonColor: '#d33',
             confirmButtonText: '예',
             cancelButtonText: '아니오',
-            html: "코드구분 :"+this.editedItem.code_master_id+"<br>코드구분코드명 : "+this.editedItem.code_master_name+
+            html: "국사코드 : "+this.editedItem.local_gw_id+"<br/>코드구분 :"+this.editedItem.code_master_id+"<br>코드구분코드명 : "+this.editedItem.code_master_name+
             "<br>설명 : "+this.editedItem.description+"<br>사용여부 : "+this.editedItem.use_yn
             }).then(result => {
                if(result.value){
@@ -276,11 +276,15 @@ export default {
         },
 
         closeSure(){
+            var index=this.editedItem.local_gw_id
+            if(index==undefined){
+                index=0
+            }
             this.close()
             this.$fire({
                        title: "등록이 취소되었습니다.",
                        type : "error",
-                       html: "코드구분 :"+this.editedItem.code_master_id+"<br>코드구분코드명 : "+this.editedItem.code_master_name+
+                       html: "국사코드 : "+this.editedItem.local_gw_id+"<br/>코드구분 :"+this.editedItem.code_master_id+"<br>코드구분코드명 : "+this.editedItem.code_master_name+
                        "<br>설명 : "+this.editedItem.description+"<br>사용여부 : "+this.editedItem.use_yn
                    })
         }  

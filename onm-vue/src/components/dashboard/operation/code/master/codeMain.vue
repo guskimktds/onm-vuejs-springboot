@@ -7,8 +7,10 @@
           v-bind:localGwOptions="localGwOptions"
           @Items="saveItem"
         ></code-query>
-        <code-list v-bind:pList=pList
-        v-bind:resPagingInfo="resPagingInfo"
+        <code-list 
+          v-bind:pList=pList
+          v-bind:gw_id="gw_id"
+          v-bind:resPagingInfo="resPagingInfo"
         @pagination="setToSearchParams"></code-list>
       </v-card>
 
@@ -30,6 +32,7 @@ export default {
   data () {
     return {
       title: '코드 마스터 관리',
+      gw_id: '',
       pList: [],
       reqPagingInfo: {
         page_no: 1,
@@ -42,9 +45,9 @@ export default {
         local_gw_id : ''
       },
       localGwOptions : [],
-      allOptions:{
-        server_name:"센터",
-        local_gw_id: "0"
+      centerOptions:{
+        server_name: '센터',
+        local_gw_id: ''
       }
     }
   },
@@ -54,7 +57,7 @@ export default {
     .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
     .then((response) => {
       this.localGwOptions = response.data.data.local_gw_list;
-      this.localGwOptions.unshift(this.allOptions);
+      this.localGwOptions.unshift(this.centerOptions);
     
     })
     .catch(function (error) {
@@ -108,6 +111,8 @@ export default {
         if(resCode == 200){
           this.pList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info
+          this.gw_id = reqParams.local_gw_id
+          
           console.log('paging')
           console.log(this.resPagingInfo)
         }else{
