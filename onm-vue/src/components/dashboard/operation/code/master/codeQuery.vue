@@ -248,6 +248,12 @@ export default {
             if(index==undefined){
                 index=0
             }
+            var indexNum = ''
+            for(var i=0;i<this.localGwOptions.length;i++){
+               if(this.localGwOptions[i].local_gw_id==index){
+                   indexNum=i
+               }
+            }
             this.$fire({
             title: "정말 등록 하시겠습니까?",
             type: "question",
@@ -256,7 +262,7 @@ export default {
             cancelButtonColor: '#d33',
             confirmButtonText: '예',
             cancelButtonText: '아니오',
-            html: "국사코드 : "+this.editedItem.local_gw_id+"<br/>코드구분 :"+this.editedItem.code_master_id+"<br>코드구분코드명 : "+this.editedItem.code_master_name+
+            html: "국사코드 : "+this.localGwOptions[indexNum].server_name+"<br/>코드구분 :"+this.editedItem.code_master_id+"<br>코드구분코드명 : "+this.editedItem.code_master_name+
             "<br>설명 : "+this.editedItem.description+"<br>사용여부 : "+this.editedItem.use_yn
             }).then(result => {
                if(result.value){
@@ -280,11 +286,17 @@ export default {
             if(index==undefined){
                 index=0
             }
+            var indexNum = ''
+            for(var i=0;i<this.localGwOptions.length;i++){
+               if(this.localGwOptions[i].local_gw_id==index){
+                   indexNum=i
+               }
+            }
             this.close()
             this.$fire({
                        title: "등록이 취소되었습니다.",
                        type : "error",
-                       html: "국사코드 : "+this.editedItem.local_gw_id+"<br/>코드구분 :"+this.editedItem.code_master_id+"<br>코드구분코드명 : "+this.editedItem.code_master_name+
+                       html: "국사코드 : "+this.localGwOptions[indexNum].server_name+"<br/>코드구분 :"+this.editedItem.code_master_id+"<br>코드구분코드명 : "+this.editedItem.code_master_name+
                        "<br>설명 : "+this.editedItem.description+"<br>사용여부 : "+this.editedItem.use_yn
                    })
         }  
