@@ -270,7 +270,7 @@ export default {
     computed: {
       formTitle () {
         // return this.editedIndex === -1 ? '등록' : '수정'
-        return '등록'
+        return '등록1'
       },
     },
     methods: {
@@ -313,11 +313,16 @@ export default {
             if(index==undefined){
                 index=0
             }
-            // console.log(this.localGwOptions[index].server_name)
+            var indexNum
+            for(var i=0;i<this.localGwOptions.length;i++){
+               if(this.localGwOptions[i].local_gw_id==index){
+                   indexNum=i
+               }
+            }
             this.$fire({
             title: "정말 등록 하시겠습니까?",
             type: "question",
-            html: "국사코드 : "+this.editedItem.local_gw_id+"<br/>코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
+            html: "국사코드 : "+this.localGwOptions[indexNum].server_name+"<br/>코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
             "<br/>코드명 : "+this.editedItem.code_name+"<br/>코드타입 : "+this.editedItem.code_type+
             "<br/>사용여부 : "+this.editedItem.use_yn+"<br/>정렬순서 : "+this.editedItem.orderby_no+
             "<br/>설명 : "+this.editedItem.description,
@@ -345,14 +350,20 @@ export default {
         },
 
         closeSure(){
-            var index=this.editedItem.local_gw_id
+           var index=this.editedItem.local_gw_id
             if(index==undefined){
                 index=0
+            }
+            var indexNum
+            for(var i=0;i<this.localGwOptions.length;i++){
+               if(this.localGwOptions[i].local_gw_id==index){
+                   indexNum=i
+               }
             }
             this.close()
             this.$fire({
                        title: "등록이 취소되었습니다.",
-                       html: "국사코드 : "+this.editedItem.local_gw_id+"<br/>코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
+                       html: "국사코드 : "+this.localGwOptions[indexNum].server_name+"<br/>코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
             "<br/>코드명 : "+this.editedItem.code_name+"<br/>코드타입 : "+this.editedItem.code_type+
             "<br/>사용여부 : "+this.editedItem.use_yn+"<br/>정렬순서 : "+this.editedItem.orderby_no+
             "<br/>설명 : "+this.editedItem.description,
