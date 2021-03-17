@@ -15,6 +15,8 @@
           :headers="headers"
           :items="pList"
           class="elevation-1"
+          :options.sync="options"
+          :server-items-length="resPagingInfo.total_cnt"
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
           v-show="showAuth()"
         >
@@ -45,6 +47,13 @@
                   <v-card-text>
                     <v-container>
                       <v-row>
+                         <v-col cols="12">
+                          <v-text-field
+                            v-model="gw_id"
+                            label="국사코드"
+                            readonly
+                          ></v-text-field>
+                        </v-col>
                         <v-col
                           cols="12"
                           sm="6"
@@ -202,12 +211,15 @@ const headers = {
 }
 
 export default {
-    props: ['pList'],
+    props: ['pList','resPagingInfo','gw_id'],
     data() {
       return {
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
         headers: [
           {
             text: '코드구분',
@@ -264,6 +276,9 @@ export default {
       },
     },
     methods: {
+      getDataFromApi(){
+        this.$emit("pagination",this.options)
+      },
       showAuth(){
         var auth=this.$store.state.authGroupId
         if(auth=='G100'){
@@ -279,7 +294,11 @@ export default {
         this.editedItem = Object.assign({}, item)
         // 수정
         this.editedItem.cmd_type = 'U'
-        this.editedItem.local_gw_id = '0'    
+        if(this.gw_id==''){
+          delete this.editedItem.local_gw_id
+        }else{
+        this.editedItem.local_gw_id = this.gw_id    
+        }
         // this.editedItem.mod_date = getDate 
         // this.editedItem.reg_date = getDate     
 
@@ -295,7 +314,11 @@ export default {
         this.editedItem = Object.assign({}, item)
         // 삭제
         this.editedItem.cmd_type = 'D'
-        this.editedItem.local_gw_id = '0' 
+         if(this.gw_id==''){
+          delete this.editedItem.local_gw_id
+        }else{
+        this.editedItem.local_gw_id = this.gw_id    
+        }
         this.dialogDelete = true
       },
 
@@ -380,23 +403,21 @@ export default {
         //   EventBus.$emit('createItem', createItem)
         // }
         this.close()
-      }
+      },
 
-          // saveToData: function(){
-    //   console.log('saveToData Method call : ',process.env);
-    //   axios
-    //         .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-phone/query`, {       
-    //               params
-    //         })
-    //         .then((result) => {
-    //           console.log(result)
-    //           // this.list = JSON.parse(result.data.menu)
-    //           this.list = result.data
-    //         })
-    //         .catch((ex) => {
-    //           console.log('조회 실패',ex)
-    //         })
-    }
+    },
+    watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+
+  mounted() {
+    this.getDataFromApi();
+  },
 
 }
 </script>

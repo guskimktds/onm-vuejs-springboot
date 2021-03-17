@@ -10,9 +10,17 @@
             title="코드 조회"
             class="px-5 py-3"
         >
+
             <v-row>
-                <v-col>
-                    <!-- 디자인을 위한 공백 처리 -->
+                <v-col cols="12" sm="6" md="3">
+                 <v-select 
+                  item-text="server_name" 
+                  item-value="local_gw_id" 
+                  :items="localGwOptions"
+                  label="국사코드" 
+                  v-model="param.local_gw_id" 
+                  v-on:change="searchMethod"
+                  ></v-select>
                 </v-col>
             </v-row>
             
@@ -87,6 +95,15 @@
                         <v-card-text>
                             <v-container>
                             <v-row>
+                                <v-col cols="12">
+                                    <v-select 
+                                    item-text="server_name" 
+                                    item-value="local_gw_id" 
+                                    :items="localGwOptions"
+                                    label="국사코드" 
+                                    v-model="editedItem.local_gw_id"
+                                    ></v-select>
+                                </v-col>
                                 <v-col
                                 cols="12"
                                 sm="6"
@@ -215,15 +232,11 @@
 // import dateInfo from '../../../../utils/common';
 
 export default {
-    props:['param'],
+    props:['param','localGwOptions'],
     data() {
         return{            
-            // param: {
-            //     codeClass: '',
-            //     code: '',
-            //     name: '',
-            //     type: ''
-            // },
+            status: '센터',
+            status_text:'',
             dialog: false,
             dialogDelete: false,        
             editedItem: {
@@ -271,6 +284,11 @@ export default {
             }
         },
         searchMethod: function() {
+            if(this.status=="센터"){
+                this.param.process_status=''
+            }else{
+                this.param.process_status=this.status
+            }
             this.$emit('search', this.param)
         },
 
@@ -278,7 +296,7 @@ export default {
             console.log('save method call : ',this.editedItem)     
             // 수정
             this.editedItem.cmd_type = 'I'
-            this.editedItem.local_gw_id = '0'  
+            this.editedItem.local_gw_id = this.status
             // console.log(dateInfo().current)
             // this.editedItem.mod_date = getDate 
             // this.editedItem.reg_date = getDate 
@@ -291,10 +309,15 @@ export default {
         },
 
         saveSure(){
+            var index=this.editedItem.local_gw_id
+            if(index==undefined){
+                index=0
+            }
+            // console.log(this.localGwOptions[index].server_name)
             this.$fire({
             title: "정말 등록 하시겠습니까?",
             type: "question",
-            html: "코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
+            html: "국사코드 : "+this.editedItem.local_gw_id+"<br/>코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
             "<br/>코드명 : "+this.editedItem.code_name+"<br/>코드타입 : "+this.editedItem.code_type+
             "<br/>사용여부 : "+this.editedItem.use_yn+"<br/>정렬순서 : "+this.editedItem.orderby_no+
             "<br/>설명 : "+this.editedItem.description,
@@ -322,10 +345,14 @@ export default {
         },
 
         closeSure(){
+            var index=this.editedItem.local_gw_id
+            if(index==undefined){
+                index=0
+            }
             this.close()
             this.$fire({
                        title: "등록이 취소되었습니다.",
-                       html: "코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
+                       html: "국사코드 : "+this.editedItem.local_gw_id+"<br/>코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
             "<br/>코드명 : "+this.editedItem.code_name+"<br/>코드타입 : "+this.editedItem.code_type+
             "<br/>사용여부 : "+this.editedItem.use_yn+"<br/>정렬순서 : "+this.editedItem.orderby_no+
             "<br/>설명 : "+this.editedItem.description,
