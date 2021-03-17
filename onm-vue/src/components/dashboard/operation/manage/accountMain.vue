@@ -44,6 +44,7 @@ export default {
         view_cnt: 10,
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
+        date_yn:true,
         onm_user_id: '',
         name: '',
         auth_group_id: '',
@@ -63,9 +64,9 @@ export default {
       isAuthMenu: false
     }
   },
-  mounted() {
-    this.searchToButton(this.searchParam)
-  },
+  // mounted() {
+  //   this.searchToButton(this.searchParam)
+  // },
   methods: {
     searchToButton: function(params){
       console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
@@ -86,7 +87,7 @@ export default {
             // this.isAuthMenu = true
             this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info
-            console.log(this.pList)
+            console.log(this.resPagingInfo)
           }else{
             // this.authGroupList = [];
             // this.isAuthMenu = false
@@ -122,7 +123,7 @@ export default {
             this.isAuthMenu = true
             // this.pList = response.data.data.account_list;
             this.resPagingInfo = response.data.data.paging_info
-            this.searchToButton(this.reqPagingInfo)
+            this.searchToButton(this.resPagingInfo)
           }else{
             // this.pList = [];
             this.authGroupList = [];
@@ -179,20 +180,16 @@ export default {
             newParams.accept_ip=values.accept_ip.replace(" ","").split(',')
             return newParams
         },
-
-    setToSearchParams: function(values){
+    setToSearchParams(values) {
       console.log(values)
-
       var params = {
         page_no: values.page,
-        view_cnt: values.itemsPerPage
-      }
+        view_cnt: values.itemsPerPage,
+      };
 
-      console.log(params)
-
-      this.searchToButton(params)
+      this.searchToButton(params);
     },
-
+        
     handleParams: function(params){
       let newParams = {}
       if(params.date_yn==undefined){

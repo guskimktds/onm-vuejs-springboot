@@ -9,7 +9,6 @@
         v-bind:pList=pList
         v-bind:resPagingInfo="resPagingInfo"
         @pagination="setToSearchParams"></admin-history-list>
-            
       </v-card>
     </v-container>
 </template>
@@ -81,35 +80,34 @@ export default {
       })
     },
 
-    setToSearchParams: function(values){
+    setToSearchParams(values) {
+      console.log('페이지값')
       console.log(values)
-
       var params = {
         page_no: values.page,
-        view_cnt: values.itemsPerPage
-      }
+        view_cnt: values.itemsPerPage,
+      };
 
-      console.log(params)
-
-      this.searchToButton(params)
+      this.searchToButton(params);
     },
 
     handleParams: function(params){
+      console.log(params)
       let newParams = {}
       if(params.date_yn==undefined){
         params.date_yn=this.searchParam.date_yn
       }
 
-      if (params.page === undefined || params.page === "") {
+      if (params.page_no === undefined || params.page_no === "") {
         newParams.page_no = this.reqPagingInfo.page_no;
       } else {
-        newParams.page_no = params.page;
+        newParams.page_no = params.page_no;
       }
 
-      if (params.itemsPerPage === undefined || params.itemsPerPage === "") {
+      if (params.view_cnt === undefined || params.view_cnt === "") {
         newParams.view_cnt = this.reqPagingInfo.view_cnt;
       } else {
-        newParams.view_cnt = params.itemsPerPage;
+        newParams.view_cnt = params.view_cnt;
       }
 
       if(params.date_yn==true){
@@ -187,7 +185,7 @@ export default {
       }
 
       newParams.admin_type = 'N'
-
+      console.log(newParams)
       return newParams
     }
 
