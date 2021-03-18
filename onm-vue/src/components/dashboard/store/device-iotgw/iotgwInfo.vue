@@ -80,7 +80,11 @@ export default {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13009/get_iotgw_list`;
 
       var reqParams = this.handleParams(params);
-
+      if(!reqParams.start_date&&!reqParams.gw_id&&!reqParams.gw_name&&!reqParams.gw_model_code){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       axios
         .post(url, reqParams, headers)
         .then((response) => {
@@ -99,6 +103,7 @@ export default {
         .catch((ex) => {
           console.log("조회 실패", ex);
         });
+      }
     },
 
     changeColor(values){

@@ -26,7 +26,7 @@
                  <v-col cols="12" md="2">
                     <v-switch
                         v-model="param.is_masking"                    
-                        :label="`마스킹(Y/N)`"
+                        :label="`마스킹 해제`"
                         color="secondary"
                         v-show="showMasking()"
                     ></v-switch>

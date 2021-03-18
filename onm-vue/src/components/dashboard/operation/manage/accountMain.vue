@@ -76,6 +76,11 @@ export default {
       var reqParams = this.handleParams(params)
       console.log('요청하는 값')  
       console.log(reqParams)
+      if(!reqParams.date_yn&&!reqParams.onm_user_id&&!reqParams.name&&!reqParams.auth_group_id){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       axios
         .post(url, reqParams, this.$store.state.headers)
         .then((response) => {
@@ -99,6 +104,7 @@ export default {
         .catch((ex) => {
           console.log('조회 실패',ex)
         })
+      }
     },
 
     searchToAuthMenuButton: function(params){
@@ -248,6 +254,7 @@ export default {
       ) {
         newParams.order_category = this.searchParam.order_category;
       }
+      newParams.date_yn=this.searchParam.date_yn
 
       return newParams
     },

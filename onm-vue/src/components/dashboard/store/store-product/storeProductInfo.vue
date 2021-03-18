@@ -58,8 +58,11 @@ export default {
    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13002/get_user_detail`
 
    var reqParams=this.handleParams(params)
-    console.log("상품코드1")
-      console.log(params.prod_code)
+    if(!reqParams.start_date&&!reqParams.prod_code&&!reqParams.user_id){
+      this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+    }else{
       axios.post(url, reqParams, headers)
       .then((response) => {
         console.log(response)
@@ -79,6 +82,7 @@ export default {
       .catch((ex) => {
         console.log('조회 실패',ex)
       })
+    }
     },
 
     setToSearchParams: function(values){

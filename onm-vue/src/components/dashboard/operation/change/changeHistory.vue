@@ -55,7 +55,11 @@ export default {
 
         //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)  
-
+      if(!reqParams.date_yn&&!reqParams.user_id&&!reqParams.tel_no&&!reqParams.admin_type){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
         axios.post(url, reqParams, this.$store.state.headers)
         .then((response) => {
           console.log(response)
@@ -74,6 +78,7 @@ export default {
         .catch((ex) => {
           console.log('조회 실패',ex)
         })
+      }
     },
 
     setToSearchParams: function(values){
@@ -171,7 +176,7 @@ export default {
       ){
         newParams.order_category=this.searchParam.order_category
       }
-
+      newParams.date_yn=this.searchParam.date_yn
       return newParams
     }
 

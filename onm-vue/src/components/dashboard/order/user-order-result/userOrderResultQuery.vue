@@ -55,7 +55,7 @@
                 <v-col cols="12" sm="6" md="2">
                     <v-switch
                         v-model="param.date_yn"                    
-                        :label="`날짜검색(Y/N)`"
+                        :label="`날짜검색`"
                         color="secondary"
                     ></v-switch>
                 </v-col>

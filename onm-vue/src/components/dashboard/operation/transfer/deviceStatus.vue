@@ -57,7 +57,11 @@ export default {
       var reqParams = this.handleParams(params) 
         console.log('전달값')
         console.log(reqParams) 
-
+      if(!reqParams.date_yn&&!reqParams.mig_seq&&!reqParams.device_type&&!reqParams.device_id&&!reqParams.status_code){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       axios.post(url, reqParams, this.$store.state.headers)
         .then((response) => {
           console.log(response)
@@ -77,6 +81,7 @@ export default {
         .catch((ex) => {
           console.log('조회 실패',ex)
         })
+      }
     },
     setToSearchParams: function(values){
       console.log(values)
@@ -172,7 +177,8 @@ export default {
       ){
         newParams.order_category=this.searchParam.order_category
       }
-
+      
+      newParams.date_yn=this.searchParam.date_yn
       return newParams
     }
   }

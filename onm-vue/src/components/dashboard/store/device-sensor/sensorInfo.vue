@@ -79,7 +79,11 @@ export default {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13010/get_sensor_list`;
 
       var reqParams = this.handleParams(params);
-
+      if(!reqParams.start_date&&!reqParams.user_id&&!reqParams.sensor_name){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       axios
         .post(url, reqParams, headers)
         .then((response) => {
@@ -98,6 +102,7 @@ export default {
         .catch((ex) => {
           console.log("조회 실패", ex);
         });
+      }
     },
 
     changeColor(values){

@@ -58,6 +58,11 @@ export default {
       var reqParams = this.handleParams(params)    
       console.log('요청하는 파람')
       console.log(reqParams)
+      if(!reqParams.start_date&&!reqParams.telno&&!reqParams.guid){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       axios.post(url, reqParams, headers)
       // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
       //   params
@@ -80,6 +85,7 @@ export default {
       .catch((ex) => {
         console.log('조회 실패',ex)
       })
+      }
     },
 
     setToSearchParams:function(values){

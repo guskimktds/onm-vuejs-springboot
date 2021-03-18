@@ -2,15 +2,15 @@
     <v-container fluid>
       <v-card>
         <!-- <device-query v-on:search="searchToButton"></device-query> -->
-        <device-query
-        @search="searchDate"></device-query>
+        <!-- <device-query
+        @search="searchDate"></device-query> -->
         <device-list v-bind:pList=pList></device-list>
       </v-card>
     </v-container>
 </template>
 
 <script>
-import deviceQuery from './deviceQuery'
+// import deviceQuery from './deviceQuery'
 import deviceList from './deviceList'
 import dateInfo from '../../../../utils/common'
 
@@ -18,7 +18,7 @@ import axios from "axios"
 
 export default {
   components:{
-    deviceQuery,
+    // deviceQuery,
     deviceList
   },
   data () {
@@ -45,7 +45,8 @@ export default {
     }
   },
   mounted() {
-    this.searchDate(this.searchParam)
+    // this.searchDate(this.searchParam)
+    this.searchDate(this.reqPagingInfo)
   },
   methods: {
     searchDate:function(params){

@@ -59,7 +59,11 @@ export default {
       
       console.log('검색값')
       console.log(reqParams)
-
+      if(!reqParams.date_yn&&!reqParams.user_id&&!reqParams.admin_id&&!reqParams.tel_no&&!reqParams.login_key){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       axios.post(url, reqParams, this.$store.state.headers)
       .then((response) => {
         console.log(response)
@@ -78,6 +82,7 @@ export default {
       .catch((ex) => {
         console.log('조회 실패',ex)
       })
+      }
     },
 
     setToSearchParams(values) {
@@ -185,7 +190,7 @@ export default {
       }
 
       newParams.admin_type = 'N'
-      console.log(newParams)
+      newParams.date_yn=this.searchParam.date_yn
       return newParams
     }
 

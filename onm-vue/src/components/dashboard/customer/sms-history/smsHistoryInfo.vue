@@ -62,7 +62,11 @@ export default {
         "부모 메소드 searchToSmsHistoryInfo 호출: " + JSON.stringify(params)
       );
       var reqParams = this.handleParams(params);
-
+      if(!reqParams.start_date&&!reqParams.tel_number&&!reqParams.otp){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       console.log(reqParams);
       axios
         .post(url, reqParams, headers)
@@ -82,6 +86,7 @@ export default {
         .catch((ex) => {
           console.log("조회 실패", ex);
         });
+      }
     },
 
     setToSearchParams: function(values){

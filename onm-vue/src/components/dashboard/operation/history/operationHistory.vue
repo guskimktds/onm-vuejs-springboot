@@ -64,7 +64,11 @@ export default {
       }  
       console.log('전달값')
       console.log(reqParams)
-
+      if(!reqParams.start_date&&!reqParams.onm_user_id&&!reqParams.cmd_type&&!reqParams.uri){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       axios.post(url, reqParams, this.$store.state.headers)
         .then((response) => {
           var resCode = response.data.res_code;
@@ -82,6 +86,7 @@ export default {
         .catch((ex) => {
           console.log('조회 실패',ex)
         })        
+      }
     },
     setToSearchParams: function(values){
       console.log(values)

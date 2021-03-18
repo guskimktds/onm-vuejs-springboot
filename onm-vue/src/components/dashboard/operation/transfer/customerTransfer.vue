@@ -99,7 +99,11 @@ export default {
 
       console.log('전달값')
       console.log(reqParams)
-
+      if(!reqParams.date_yn&&!reqParams.user_id&&!reqParams.status_code){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       axios.post(url, reqParams, this.$store.state.headers)
           .then((response) => {
             console.log(response)
@@ -117,6 +121,7 @@ export default {
           .catch((ex) => {
             console.log('조회 실패',ex)
           })
+      }
     },
 
   saveItem(params){
@@ -209,7 +214,7 @@ export default {
       if(params.order_category !== undefined && params.order_category !== ''){
         newParams.order_category = params.order_category
       }
-
+      newParams.date_yn=this.searchParam.date_yn
       return newParams
     }
   }

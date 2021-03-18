@@ -119,7 +119,11 @@ export default {
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12006/get_device_order`
      
       var reqParams=this.handleParams(params)
-
+      if(!reqParams.start_date&&!reqParams.guid&&!reqParams.oderno&&!reqParams.said){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
         axios.post(url, reqParams, headers)
             .then((response) => {
              console.log(response)
@@ -138,6 +142,7 @@ export default {
               console.log('조회 실패',ex)
             })
             .finally(function(){})
+      }
     },
 
     changeColor(values){

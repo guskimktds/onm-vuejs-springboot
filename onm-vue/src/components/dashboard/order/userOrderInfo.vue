@@ -128,6 +128,11 @@ export default {
       var reqParams = this.handleParams(params)      
       console.log('넣어지는 값')
       console.log(reqParams)
+      if(!reqParams.said&&!reqParams.start_date&&!reqParams.guid&&!reqParams.oderno){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       axios.post(url, reqParams, headers)
       .then((response) => {
         //this.list = JSON.parse(result.data.menu)
@@ -146,6 +151,7 @@ export default {
       .catch((ex) => {
         console.log('조회 실패',ex)
       })
+      }
     },
 
     changeColor(values){

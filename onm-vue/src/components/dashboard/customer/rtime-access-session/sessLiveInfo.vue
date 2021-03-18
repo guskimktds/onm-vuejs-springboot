@@ -71,6 +71,11 @@ export default {
 
       console.log('호출파라미터')
       console.log(reqParams);
+      if(!reqParams.start_date&&!reqParams.tel_no&&!reqParams.user_id&&!reqParams.device_type){
+        this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       axios
         .post(url, reqParams, headers)
         .then((response) => {
@@ -89,6 +94,7 @@ export default {
         .catch((ex) => {
           console.log("조회 실패", ex);
         });
+      }
     },
 
     setToSearchParams: function(values){

@@ -59,7 +59,11 @@ methods: {
 
     console.log('요구하는 페이지 정보')
     console.log(reqParams)
-  
+    if(!reqParams.start_date&&!reqParams.user_id&&!reqParams.service_no&&!reqParams.system_id){
+      this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+    }else{
       axios.post(url, reqParams, headers)
       .then((response) => {
         console.log(response)
@@ -79,6 +83,7 @@ methods: {
         console.log('조회 실패',ex)
       })
       .finally(function(){})
+    }
     },
     
     setToSearchParams: function(values){
