@@ -129,7 +129,7 @@ export default new Router({
         },{
             path: "/",
             name: 'Home',
-            component: PlatformMain,
+            component: GoHome,
             //beforeEnter: requireAuth()
             // 인증 여부를 체크하는 requreAuth를 beforeEnter 속성에 추가했다
             beforeEnter: requireAuth()

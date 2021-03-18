@@ -156,7 +156,6 @@ export default {
           //   value: 'name',
           // },
           { text: '접속IP', value: 'accept_ip' },
-          { text: '이름', value: 'name' },
           { text: '권한그룹ID', value: 'auth_group_id' },
           { text: '권한그룹명', value: 'auth_group_name' },
           { text: '생성일', value: 'reg_date' },

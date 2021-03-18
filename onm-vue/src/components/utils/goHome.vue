@@ -10,11 +10,20 @@ import EventBus from '../../EventBus';
 export default {
 
   updated(){
+    this.goHome();
+  },
 
-    var auth=this.$store.state.authGroupId
+  mounted(){
+    this.goHome();
+  },
+
+  methods: {
+
+    goHome(){
+      var auth=this.$store.state.authGroupId
 
     if(auth==''||auth==undefined){
-      this.$router.push({name:'SignOut'})
+      return;
     }else if(auth=='G100'||auth=='G200'){
       this.$router.push({name:'PlatformDashboard'})
     }else if(auth=='G300'){
@@ -22,10 +31,7 @@ export default {
     }
 
     this.changeTap('M100')
-
-  },
-
-  methods: {
+    },
 
     changeTap(id){
       var selectMenu = this.$store.state.menu.filter(obj => { return obj['menu_id'] === id})
