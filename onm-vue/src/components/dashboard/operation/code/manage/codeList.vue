@@ -376,7 +376,6 @@ export default {
 
           // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
           var params = this.editedItem
-          var updateIndex = this.editedIndex
           console.log(params)
 
           axios.post(url, params, headers)
@@ -386,7 +385,7 @@ export default {
               var resMsg = response.data.res_msg;
               if(resCode == 200){
                 //현재 목록에서 선택한 item 을 변경해준다.
-                this.pList.splice(updateIndex, 1, params)
+                this.$emit('reset')
               }else{
                 alert(resCode + " / " + resMsg);
               }
@@ -413,10 +412,6 @@ export default {
       },
       deep: true,
     },
-  },
-
-  mounted() {
-    this.getDataFromApi();
   },
 
 }

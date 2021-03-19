@@ -87,15 +87,7 @@ export default {
         }
       }
     },
-    updated() {
-      if(this.last!==this.resPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.resPagingInfo.total_cnt!==undefined){
-      this.last=this.resPagingInfo.total_cnt
-      }
-  },
-   watch: {
+  watch: {
     options: {
       handler() {
         this.getDataFromApi();
@@ -103,6 +95,15 @@ export default {
       deep: true,
     },
   },
+  updated() {
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
+      }
+  },
+
    
     //   EventBus.$on('createItemTransfer', params => {
     //     console.log(params)

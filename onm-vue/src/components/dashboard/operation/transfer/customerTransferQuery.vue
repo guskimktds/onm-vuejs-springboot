@@ -267,8 +267,6 @@ export default {
             }else{
             this.param.status_code=this.selected
             }
-            console.log('검색값')
-            console.log(this.select)
             this.$emit('search', this.param)
         },
         handleRadio:function(value){

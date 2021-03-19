@@ -78,9 +78,6 @@ export default {
       this.last=this.psPagingInfo.total_cnt
       }
   },
-  mounted() {
-    this.getDataFromApi();
-  },
     
 }
 </script>

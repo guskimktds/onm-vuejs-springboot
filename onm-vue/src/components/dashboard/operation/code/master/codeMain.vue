@@ -11,6 +11,7 @@
           v-bind:pList=pList
           v-bind:gw_id="gw_id"
           v-bind:resPagingInfo="resPagingInfo"
+          @reset="reset"
         @pagination="setToSearchParams"></code-list>
       </v-card>
 
@@ -68,22 +69,28 @@ export default {
         // always executed
       });
   },
+ 
+  methods: {
+    reset: function(){
+      console.log(this.searchParam)
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15015/get_code_master`
+      var reqParams = this.handleParams(this.searchParam)
 
-  created: function() {
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15015/get_code_master`
-
-    // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
-    var params = this.reqPagingInfo
-
-    axios
-        .post(url, params, this.$store.state.headers)
+      axios
+        .post(url, reqParams, this.$store.state.headers)
         .then((response) => {
+          console.log(response)
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.pList = response.data.data.list
+            // this.authGroupList = response.data.data.auth_group_list
+            // this.isAuthMenu = true
+            this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info
+            console.log(this.resPagingInfo)
           }else{
+            // this.authGroupList = [];
+            // this.isAuthMenu = false
             this.pList = [];
             this.resPagingInfo = {};
             alert(resCode + " / " + resMsg);
@@ -92,9 +99,7 @@ export default {
         .catch((ex) => {
           console.log('조회 실패',ex)
         })
-  },
- 
-  methods: {
+    },
     searchToButton: function(params){
     console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15015/get_code_master`

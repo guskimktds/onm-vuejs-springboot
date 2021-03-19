@@ -96,9 +96,6 @@ export default {
       this.last=this.dsPagingInfo.total_cnt
       }
   },
-  mounted() {
-    this.getDataFromApi();
-  },
     
 }
 </script>

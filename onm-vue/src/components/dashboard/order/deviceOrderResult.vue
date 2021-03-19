@@ -51,6 +51,7 @@ export default {
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12012/get_device_order_result_list`
 
     var reqParams=this.handleParams(params)
+    console.log(reqParams)
       if(!reqParams.start_date&&!reqParams.oderno&&!reqParams.guid){
         this.$fire({
               title: "검색값을 입력해주세요.",
@@ -123,10 +124,13 @@ export default {
         ){
           newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
         }
-        if(params.oderno !== undefined && params.oderno !== ''){
-          newParams.oderno = params.oderno
-        }     
       }
+      
+      if(params.oderno !== undefined && params.oderno !== ''){
+          newParams.oderno = params.oderno
+        }else{
+          newParams.oderno=params.oderno
+        }
 
       if(params.guid !== undefined && params.guid !== ''){
         newParams.guid = params.guid

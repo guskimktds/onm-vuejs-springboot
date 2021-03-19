@@ -86,9 +86,6 @@ export default {
       this.last=this.soPagingInfo.total_cnt
       }
   },
-  mounted() {
-    this.getDataFromApi();
-  },
     
 }
 </script>

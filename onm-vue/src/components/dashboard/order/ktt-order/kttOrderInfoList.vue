@@ -67,9 +67,6 @@ export default {
       this.last=this.kttPagingInfo.total_cnt
       }
   },
-  mounted() {
-    this.getDataFromApi();
-  },
     
 }
 </script>

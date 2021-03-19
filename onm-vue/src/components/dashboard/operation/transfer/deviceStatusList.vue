@@ -114,9 +114,6 @@ export default {
       this.last=this.resPagingInfo.total_cnt
       }
   },
-  mounted() {
-    this.getDataFromApi();
-  },
     
 }
 </script>

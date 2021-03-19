@@ -52,7 +52,7 @@ export default {
       localGwOptions:[]
     }
   },
-  mounted() {  
+beforeCreate() {  
     axios
     .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
     .then((response) => {

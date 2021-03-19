@@ -33,11 +33,12 @@ export default {
       title: '고객이전 조회',
       pList: [],
       reqPagingInfo: {
+        page_no: 1,
+        view_cnt: 10,
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
         date_yn: true,
-        page_no: 1,
-        view_cnt: 10,
+        user_id: '',
         status_code: '',
         order_category: 'S'
       },
@@ -86,19 +87,13 @@ export default {
   //           })
   //   })
   // },
-  mounted:function(){
-    var params=this.reqPagingInfo
-    this.searchToButton(params);
-  },
   methods: {
     searchToButton: function(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15012/get_user_mig_info`
-
+      
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)  
 
-      console.log('전달값')
-      console.log(reqParams)
       if(!reqParams.date_yn&&!reqParams.user_id&&!reqParams.status_code){
         this.$fire({
               title: "검색값을 입력해주세요.",
@@ -166,17 +161,18 @@ export default {
     },
 
     handleParams: function(params){
-      let newParams = {}
-      if(params.date_yn==undefined){
+    let newParams = {}
+    newParams.date_yn=this.searchParam.date_yn
+    
+    if(params.date_yn==undefined){
         params.date_yn=this.searchParam.date_yn
       }
 
-      if(params.page_no === undefined || params.page_no === ''){
+    if(params.page_no === undefined || params.page_no === ''){
         newParams.page_no = this.reqPagingInfo.page_no
       }else{
         newParams.page_no = params.page_no
       }
-
       if(params.view_cnt === undefined || params.view_cnt === ''){
         newParams.view_cnt = this.reqPagingInfo.view_cnt
       }else{
@@ -203,18 +199,33 @@ export default {
         }
       }
 
-      if(params.user_id !== undefined && params.user_id !== ''){
+    if(params.user_id !== undefined && params.user_id !== ''){
         newParams.user_id = params.user_id
+      }else if(
+        this.searchParam.user_id!==undefined&&
+        this.searchParam.user_id!==""
+      ){
+        newParams.user_id=this.searchParam.user_id
       }
 
-      if(params.status_code !== undefined && params.status_code !== ''){
+    if(params.status_code !== undefined && params.status_code !== ''){
         newParams.status_code = params.status_code
+      }else if(
+        this.searchParam.status_code!==undefined&&
+        this.searchParam.status_code!==""
+      ){
+        newParams.status_code=this.searchParam.status_code
       }
 
       if(params.order_category !== undefined && params.order_category !== ''){
         newParams.order_category = params.order_category
+      }else if(
+        this.searchParam.order_category!==undefined&&
+        this.searchParam.order_category!==""
+      ){
+        newParams.order_category=this.searchParam.order_category
       }
-      newParams.date_yn=this.searchParam.date_yn
+     
       return newParams
     }
   }

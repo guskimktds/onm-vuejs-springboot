@@ -117,9 +117,6 @@ export default {
       this.last=this.dcPagingInfo.total_cnt
       }
   },
-  mounted() {
-    this.getDataFromApi();
-  },
 };
 </script>
 <style>

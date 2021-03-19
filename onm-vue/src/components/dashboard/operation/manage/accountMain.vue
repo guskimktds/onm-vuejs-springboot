@@ -10,7 +10,8 @@
         <account-list 
         v-bind:pList=pList
         v-bind:resPagingInfo="resPagingInfo"
-        @pagination="setToSearchParams"></account-list>
+        @pagination="setToSearchParams"
+        @reset="reset"></account-list>
         <auth-menu-list v-if=isAuthMenu v-bind:authGroupList=authGroupList></auth-menu-list>
        </v-card>
     </v-container>
@@ -68,6 +69,35 @@ export default {
   //   this.searchToButton(this.searchParam)
   // },
   methods: {
+      reset: function(){
+      console.log(this.searchParam)
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15001/get_account`
+      var reqParams = this.handleParams(this.searchParam)
+
+      axios
+        .post(url, reqParams, this.$store.state.headers)
+        .then((response) => {
+          console.log(response)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            // this.authGroupList = response.data.data.auth_group_list
+            // this.isAuthMenu = true
+            this.pList = response.data.data.list;
+            this.resPagingInfo = response.data.data.paging_info
+            console.log(this.resPagingInfo)
+          }else{
+            // this.authGroupList = [];
+            // this.isAuthMenu = false
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패',ex)
+        })
+    },
     searchToButton: function(params){
       console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15001/get_account`
@@ -129,7 +159,6 @@ export default {
             this.isAuthMenu = true
             // this.pList = response.data.data.account_list;
             this.resPagingInfo = response.data.data.paging_info
-            this.searchToButton(this.resPagingInfo)
           }else{
             // this.pList = [];
             this.authGroupList = [];

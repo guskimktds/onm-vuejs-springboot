@@ -11,7 +11,8 @@
         v-bind:pList=pList
         v-bind:gw_id="gw_id"
         v-bind:resPagingInfo="resPagingInfo"
-        @pagination="setToSearchParams"></code-list>
+        @pagination="setToSearchParams"
+        @reset="reset"></code-list>
       </v-card>
 
     </v-container>
@@ -75,33 +76,27 @@ export default {
         // always executed
       });
   },
-  created: function() {
-    // var url = 'https://test-onm.ktvsaas.co.kr/V110/ONM_15006/get_code'
-    // // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL_TB}/ONM_12006/get_device_order`
-    // var params = {
-    //   page_no: 1,
-    //   view_cnt: 5
-    // }
-
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15006/get_code`
-
-    // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
-    var params = this.reqPagingInfo
-
-    // var headers = {
-    //   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-    //   'Content-Type': 'application/json'
-    // }
-
-    axios
-        .post(url, params, this.$store.state.headers)
+  
+  methods: {
+    reset: function(){
+      console.log(this.searchParam)
+       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15006/get_code`
+       var reqParams = this.handleParams(this.searchParam)
+      axios
+        .post(url, reqParams, this.$store.state.headers)
         .then((response) => {
+          console.log(response)
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.pList = response.data.data.list
+            // this.authGroupList = response.data.data.auth_group_list
+            // this.isAuthMenu = true
+            this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info
+            console.log(this.resPagingInfo)
           }else{
+            // this.authGroupList = [];
+            // this.isAuthMenu = false
             this.pList = [];
             this.resPagingInfo = {};
             alert(resCode + " / " + resMsg);
@@ -110,9 +105,7 @@ export default {
         .catch((ex) => {
           console.log('조회 실패',ex)
         })
-  },
-  
-  methods: {
+    },
     searchToButton: function(params){
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15006/get_code`
 

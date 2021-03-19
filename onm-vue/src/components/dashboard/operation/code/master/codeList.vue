@@ -342,7 +342,7 @@ export default {
               var resMsg = response.data.res_msg;
               if(resCode == 200){
                 //현재 목록에서 선택한 item 을 변경해준다.
-                this.pList.splice(updateIndex, 1, params)
+                this.$emit('reset')
               }else{
                 alert(resCode + " / " + resMsg);
               }
@@ -385,9 +385,6 @@ export default {
     },
   },
 
-  mounted() {
-    this.getDataFromApi();
-  },
 
 }
 </script>

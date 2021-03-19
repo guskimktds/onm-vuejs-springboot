@@ -75,9 +75,6 @@ export default {
       this.last=this.vaPagingInfo.total_cnt
       }
   },
-  mounted() {
-    this.getDataFromApi();
-  },
     
 }
 </script>

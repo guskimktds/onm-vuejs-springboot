@@ -103,9 +103,6 @@ export default {
       this.last=this.iotPagingInfo.total_cnt
       }
   },
-  mounted() {
-    this.getDataFromApi();
-  },
 };
 </script>
 <style>
