@@ -66,6 +66,10 @@ export default {
         if (resCode == 200) {
           this.kttList = response.data.data.list;
           this.kttPagingInfo = response.data.data.paging_info;
+        }else if(resCode==204){
+            this.kttList = [];
+            this.kttPagingInfo = {};
+            alert("KTT 청약정보 데이터가 없습니다.");
         } else {
           this.kttList = [];
           this.kttPagingInfo = {};

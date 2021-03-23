@@ -59,6 +59,10 @@ export default {
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
           this.pList = response.data.data.subs_stat_list;
+        }else if(resCode==204){
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert("청약통계 데이터가 없습니다.");
         } else {
           this.pList = [];
           alert(resCode + " / " + resMsg);

@@ -76,6 +76,10 @@ export default {
           this.pList = response.data.data.order_detail_list;
           this.dodPagingInfo = response.data.data.paging_info
 
+        }else if(resCode==204){
+            this.pList = [];
+            this.dodPagingInfo = {};
+            alert("사용자 청약 오더 상세 데이터가 없습니다.");
         }else{
           this.pList = [];
           this.dodPagingInfo = {};

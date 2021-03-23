@@ -141,7 +141,10 @@ export default {
         if(resCode == 200){
           this.pList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info
-
+        }else if(resCode==204){
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert("사용자 청약 오더 정보 데이터가 없습니다.");
         }else{
           this.pList = [];
           this.resPagingInfo = {};
@@ -185,6 +188,11 @@ export default {
               this.showDetailObject = true
               this.isReloadDetailObject = true
               this.orderBtn=!this.orderBtn
+            }else if(resCode==204){
+              this.pObject = {};
+              this.showDetailObject = false
+              this.isReloadDetailObject = false
+            alert("사용자 청약오더 상세 데이터가 없습니다.");
             }else{
               this.pObject = {};
               this.showDetailObject = false
@@ -224,6 +232,10 @@ export default {
             this.sdList = response.data.data.order_detail_list;
             this.showSubDetailList=!this.showSubDetailList;
             this.subBtn=!this.subBtn
+          }else if(resCode==204){
+           this.sdList = [];
+            this.showSubDetailList=false
+            alert("사용자청약 오더 List 데이터가 없습니다.");
           }else{
             this.sdList = [];
             this.showSubDetailList=false
@@ -253,6 +265,10 @@ export default {
 
             this.showKttList =!this.showKttList
             this.kttBtn=!this.kttBtn
+          }else if(resCode==204){
+            this.kttList = [];
+            alert('사용자-KTT 데이터가 없습니다.');
+            this.showKttList=false
           }else{
             this.kttList = [];
             alert(resCode + " / " + resMsg);

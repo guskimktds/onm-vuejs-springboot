@@ -19,6 +19,7 @@
         class="elevation-1"
         @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+        :header-props="{ sortIcon: null }"
       >
       <template v-slot:item.status_code="{item}">
               <span>{{ switchString(item.status_code) }}</span>

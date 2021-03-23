@@ -72,6 +72,10 @@ export default {
       .then( (response) => {
         if(response.data.res_code == 200){
           this.pList = response.data.data.list;
+        }else if(response.data.res_code==204){
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert("IoT GW 상태현황 데이터가 없습니다.");
         }else{
           this.pList = [];
           alert(response.data.res_code + " / " + response.data.res_msg);

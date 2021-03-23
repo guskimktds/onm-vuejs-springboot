@@ -66,6 +66,10 @@ export default {
             console.log(response.data.data.device_order_result_list);
             this.dorList = response.data.data.device_order_result_list;
             this.dorPagingInfo=response.data.data.paging_info;
+          }else if(resCode==204){
+            this.dorList = [];
+            this.dorPagingInfo={};
+            alert('단말 청약오더 처리 결과 데이터가 없습니다.');
           }else{
             this.dorList = [];
             this.dorPagingInfo={};

@@ -33,7 +33,7 @@
                         v-model="param.is_masking"                    
                         :label="`마스킹 해제`"
                         color="secondary"
-                        v-show="showMasking()"
+ 
                     ></v-switch>
                 </v-col>        
             </v-row>
@@ -52,14 +52,6 @@ export default {
     searchMethod: function() {
             this.$emit('search', this.param)
         },
-        showMasking(){
-        var auth=this.$store.state.authGroupId
-        if(auth=='G100'||auth=='G200'){
-            return true;
-        }else{
-            return false;
-        }
-    }
     },  
 }
 </script>

@@ -19,6 +19,7 @@
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+        :header-props="{ sortIcon: null }"
         class="elevation-1"
       >
       <template v-slot:item.proc_status="{item}">

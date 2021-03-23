@@ -20,6 +20,7 @@
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+        :header-props="{ sortIcon: null }"
       >
       <template v-slot:item.resultcode="{item}">
               <span>{{ switchString(item.resultcode) }}</span>

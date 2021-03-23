@@ -51,7 +51,7 @@ export default {
             { text: '국사코드', value: 'local_gw_id' },
             { text: '서버명', value: 'hostname' },
             { text: '프로세스 종류', value: 'proc_type' },
-            { text: '프로세스 명', value: 'proc_status' },
+            { text: '상태', value: 'proc_status' },
             { text: '마지막 보고 일시', value: 'last_upd_date' },
         ],
         cHeaders: [
@@ -114,6 +114,8 @@ export default {
                     var resMsg = response.data.res_msg;
                     if(resCode == 200){
                     this.cList = response.data.data.list;
+                    }else if(resCode==204){
+                    alert('카메라 상태 현황 데이터가 없습니다.')
                     }else{
                     console.log(resCode + " / " + resMsg);
                     }

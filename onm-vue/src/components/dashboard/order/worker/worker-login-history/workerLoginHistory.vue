@@ -68,6 +68,10 @@ export default {
         if (resCode == 200) {
           this.pList = response.data.data.mng_access_history_list;
           this.resPagingInfo = response.data.data.paging_info;
+        }else if(resCode==204){
+          this.pList = [];
+          this.resPagingInfo = {};
+          alert('현장작업자 로그인이력 데이터가 없습니다.');
         } else {
           this.pList = [];
           this.resPagingInfo = {};

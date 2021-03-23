@@ -110,7 +110,13 @@
             </v-row>
             <v-card>
                 <platform-graph v-bind:param=param></platform-graph>
+                <div><br></div>
+                <div><hr color="white"></div>
+                <div><br></div>
                 <platform-result></platform-result>
+                <div><br></div>
+                <div><hr color="white"></div>
+                <div><br></div>
                 <platform-table></platform-table>
             </v-card>
         </base-material-card> 
@@ -173,5 +179,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

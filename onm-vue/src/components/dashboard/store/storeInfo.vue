@@ -273,6 +273,10 @@ export default {
             this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info;
             console.log(this.pList)
+          }else if(resCode==204){
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert('매장정보 조회 데이터가 없습니다.');
           } else {
             this.pList = [];
             this.resPagingInfo = {};
@@ -302,7 +306,7 @@ export default {
         var params = {
           said: values,
           page_no: "1",
-          view_cnt: "5",
+          view_cnt: "999999",
           is_masking: this.searchParam.is_masking? "N" : "Y"
         };
 
@@ -313,6 +317,9 @@ export default {
             var resMsg = response.data.res_msg;
             if (resCode == 200) {
               this.pObject = response.data.data.user_detail_list[0];
+            }else if(resCode==204){
+              this.pObject = {};
+              alert("매장 상세 데이터가 없습니다.");
             } else {
               this.pObject = {};
               alert(resCode + " / " + resMsg);
@@ -342,7 +349,7 @@ export default {
       var params = {
         user_id: this.pObject.user_id,
         page_no: "1",
-        view_cnt: "5",
+        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -357,6 +364,10 @@ export default {
             this.kttPagingInfo = response.data.data.paging_info;
 
             this.showKttList = !this.showKttList;
+          }else if(resCode==204){
+            this.kList = [];
+            this.kttPagingInfo = {};
+            alert('사용자-KTT 데이터가 없습니다.');
           } else {
             this.kList = [];
             this.kttPagingInfo = {};
@@ -372,7 +383,7 @@ export default {
       var params = {
         user_id: this.pObject.user_id,
         page_no: "1",
-        view_cnt: "5",
+        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -385,6 +396,10 @@ export default {
             this.psList = response.data.data.prod_summary_list;
             this.psPagingInfo = response.data.data.paging_info;
             this.showProdSummaryList = !this.showProdSummaryList;
+          }else if(resCode==204){
+            this.psList = [];
+            this.psPagingInfo = {};
+            alert('상품 요약 정보 데이터가 없습니다.');
           } else {
             this.psList = [];
             this.psPagingInfo = {};
@@ -401,7 +416,7 @@ export default {
       var params = {
         user_id: this.pObject.user_id,
         page_no: "1",
-        view_cnt: "5",
+        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -413,6 +428,10 @@ export default {
             this.vaList = response.data.data.va_prod_list;
             this.vaPagingInfo = response.data.data.paging_info;
             this.showVACountList = !this.showVACountList;
+          } else if(resCode==204){
+            this.vaList = [];
+            this.vaPagingInfo = {};
+            alert('VA 정보 데이터가 없습니다.');
           } else {
             this.vaList = [];
             this.vaPagingInfo = {};
@@ -430,7 +449,7 @@ export default {
       var params = {
         user_id: this.pObject.user_id,
         page_no: "1",
-        view_cnt: "5",
+        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -444,9 +463,11 @@ export default {
             this.showSensorOrderList = !this.showSensorOrderList;
             console.log("resCode");
             console.log(resCode);
+          } else if(resCode==204){
+            this.soList = [];
+            this.soPagingInfo = {};
+            alert('센서 정보 데이터가 없습니다.');
           } else {
-            console.log("resCode");
-            console.log(resCode);
             this.soList = [];
             this.soPagingInfo = {};
             alert(resCode + " / " + resMsg);
@@ -463,7 +484,7 @@ export default {
       var params = {
         user_id: this.pObject.user_id,
         page_no: "1",
-        view_cnt: "5",
+        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -492,7 +513,7 @@ export default {
       var params = {
         user_id: this.pObject.user_id,
         page_no: "1",
-        view_cnt: "5",
+        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -521,7 +542,7 @@ export default {
       var params = {
         user_id: this.pObject.user_id,
         page_no: "1",
-        view_cnt: "5",
+        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -549,7 +570,7 @@ export default {
       var params = {
         user_id: this.pObject.user_id,
         page_no: "1",
-        view_cnt: "5",
+        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios

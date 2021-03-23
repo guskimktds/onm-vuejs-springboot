@@ -19,6 +19,7 @@
           item-key="id"
           class="elevation-1"
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+          :header-props="{ sortIcon: null }"
         >
         </v-data-table>
 

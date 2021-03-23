@@ -132,6 +132,10 @@ export default {
               if(resCode==200){
                 this.pList=response.data.data.device_order_list;
                 this.resPagingInfo=response.data.data.paging_info;
+              }else if(resCode==204){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert("단말 청약 오더 정보 데이터가 없습니다.");
               }else{
                 this.pList=[];
                 this.resPagingInfo={};
@@ -172,6 +176,11 @@ export default {
                console.log(this.pObject)
               this.showDetailObject = true
               this.isReloadDetailObject = true
+            }else if(resCode==204){
+              this.pObject = {};
+              alert('단말 청약 오더 정보 상세 데이터가 없습니다.');
+              this.showDetailObject = false
+              this.isReloadDetailObject = false
             }else{
               this.pObject = {};
               alert(resCode + " / " + resMsg);
@@ -217,6 +226,11 @@ export default {
               this.showDetailList=!this.showDetailList;
               console.log('$$$$')
               console.log(this.dodList)
+            }else if(resCode==204){
+              this.dodList=[];
+           
+              alert('단말오더 상세 내역 데이터가 없습니다.');
+              this.showDetailList=false
             }else{
               this.dodList=[];
            
@@ -246,6 +260,11 @@ export default {
               this.dorList=response.data.data.device_order_result_list;
              
               this.showResultList=!this.showResultList;
+            }else if(resCode==204){
+              this.dorList=[];
+             
+              alert('단말오더 처리결과 데이터가 없습니다.');
+              this.showResultList=false
             }else{
               this.dorList=[];
              

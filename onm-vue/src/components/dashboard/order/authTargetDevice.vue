@@ -62,6 +62,10 @@ export default {
             console.log('전달리스트')
             console.log(this.pList)
             
+          }else if(resCode==204){
+            this.pList = [];
+            this.resPaingInfo={};
+            alert('인증 대상 단말 정보 데이터가 없습니다.');
           }else{
             this.pList = [];
             this.resPaingInfo={};

@@ -84,6 +84,10 @@ export default {
         if (resCode == 200) {
           this.pList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info;
+        }else if(resCode==204){
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert("카메라상태 현황 데이터가 없습니다.");
         } else {
           this.pList = [];
           this.resPagingInfo = {};

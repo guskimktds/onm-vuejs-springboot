@@ -63,6 +63,10 @@ export default {
         if (resCode == 200) {
           this.pHeader=response.data.data.header_list;
           this.pList = response.data.data.prod_list;
+        }else if(resCode==204){
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert("상품 통계 데이터가 없습니다.");
         } else {
           this.pHeader=[];
           this.pList = [];
