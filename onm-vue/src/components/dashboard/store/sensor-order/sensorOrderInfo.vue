@@ -42,7 +42,8 @@ export default {
         sensor_prod_id:'',
         status_code:'',
         sensor_prod_name:''
-      }
+      },
+      start: true
     }
   },
 
@@ -89,8 +90,12 @@ export default {
       }
 
       console.log(params)
-
+      if(this.start==true){
+        this.soList=[]
+      }else{
       this.searchSensorOrderInfo(params)
+      }
+      this.start=false
     },
 
     handleParams:function(params){

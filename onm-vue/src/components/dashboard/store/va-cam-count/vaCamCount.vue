@@ -41,7 +41,8 @@ export default {
       searchParam:{
         va_name:'',
         user_id:''
-      }
+      },
+      start: true
     }
   },
   
@@ -84,8 +85,12 @@ export default {
       }
 
       console.log(params)
-
+      if(this.start==true){
+        this.vaList=[]
+      }else{
       this.searchToVaCamCount(params)
+      }
+      this.start=false
     },
 
     handleParams:function(params){

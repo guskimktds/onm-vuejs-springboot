@@ -42,7 +42,8 @@ export default {
         oderno:'',
         mac_id:'',
         open_oderno:''
-      }
+      },
+      start: true
     }
   },  
 
@@ -81,9 +82,12 @@ export default {
         page_no: values.page,
         view_cnt: values.itemsPerPage
       }
-
+      if(this.start==true){
+        this.pList=[];
+      }else{
       this.searchToAuthTargetDevice(params)
-
+      }
+      this.start=false;
     },
 
     handleParams:function(params){
