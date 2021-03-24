@@ -76,6 +76,10 @@ export default {
           this.psList = response.data.data.prod_summary_list;
           this.psPagingInfo = response.data.data.paging_info
    
+        }else if(resCode==204){
+          this.psList = [];
+          this.psPagingInfo = {};
+          alert('상품 요약정보 데이터가 없습니다.');
         }else{
           this.psList = [];
           this.psPagingInfo = {};

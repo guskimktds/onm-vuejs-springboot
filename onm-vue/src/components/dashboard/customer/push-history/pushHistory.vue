@@ -85,6 +85,10 @@ beforeCreate() {
             this.pList=response.data.data.list;
             this.pushPagingInfo=response.data.data.paging_info;
             console.log(this.pList)
+          }else if(resCode==204){
+            this.pList=[];
+            this.pushPagingInfo={};
+             alert('푸시발송 데이터가 없습니다.');
           }else{
             this.pList=[];
             this.pushPagingInfo={};

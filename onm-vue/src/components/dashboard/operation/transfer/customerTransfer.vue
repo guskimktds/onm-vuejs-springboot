@@ -107,6 +107,10 @@ export default {
             if(resCode == 200){
               this.pList = response.data.data.user_mig_info_list;
               this.resPagingInfo = response.data.data.paging_info
+            }else if(resCode==204){
+              this.pList = [];
+              this.resPagingInfo = {};
+              alert('고객이전 데이터가 없습니다.');
             }else{
               this.pList = [];
               this.resPagingInfo = {};

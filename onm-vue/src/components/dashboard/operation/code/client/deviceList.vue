@@ -148,18 +148,7 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog>
-              <v-dialog v-model="dialogDelete" max-width="500px">
-                <v-card>
-                  <v-card-title class="headline">삭제 하시겠습니까?</v-card-title>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-                    <v-spacer></v-spacer>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            <!-- </v-toolbar> -->
+       
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon
@@ -168,12 +157,6 @@
               @click="editItem(item)"
             >
               mdi-pencil
-            </v-icon>
-            <v-icon
-              small
-              @click="deleteItem(item)"
-            >
-              mdi-delete
             </v-icon>
           </template>
         </v-data-table>
@@ -262,50 +245,6 @@ export default {
         this.dialog = true
       },
 
-      deleteItem (item) {
-        console.log('deleteItem method call : ',item)
-        this.editedIndex = this.pList.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-
-        this.editedItem.cmd_type = 'D'
-        this.editedItem.local_gw_id = '0' 
-        this.dialogDelete = true
-      },
-
-      deleteItemConfirm () {
-        //서버 측 delete 처리
-
-        if (this.editedIndex > -1) {
-
-          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15011/set_app_info`
-
-          // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
-          var params = this.editedItem
-          var deleteIndex = this.editedIndex
-
-          console.log('삭제 파라미터')
-          console.log(params)
-
-          axios.post(url, params, headers)
-            .then((response) => {
-              console.log(response)
-              var resCode = response.data.res_code;
-              var resMsg = response.data.res_msg;
-              if(resCode == 200){
-                //현재 목록에서 선택한 Item을 삭제한다.
-                this.pList.splice(deleteIndex, 1)
-              }else{
-                alert(resCode + " / " + resMsg);
-              }
-            })
-            .catch((ex) => {
-              console.log('변경 실패',ex)
-            })
-        
-        }
-        this.closeDelete() //다이얼로그를 닫는다.
-      },
-
       close () {
         this.dialog = false
         this.$nextTick(() => {
@@ -325,58 +264,60 @@ export default {
       save () {
         console.log('save method call : ',this.editedIndex)
         if (this.editedIndex > -1) {
-          // Object.assign(this.desserts[this.editedIndex], this.editedItem)
-          console.log("111111111 : ", this.editedItem)
-          
-          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15011/set_app_info`
           var params=this.editedItem
           var updateIndex=this.editedIndex
-
-          axios.post(url,params,headers)
-            .then((response)=>{
-              var resCode=response.data.res_code;
-              var resMsg=response.data.res_msg;
-              if(resCode==200){
-                this.pList.splice(updateIndex,1,params)
-              }else{
-                alert(resCode+" / "+resMsg);
+           this.$fire({
+            title: "비밀번호를 입력해주세요.",
+            input: 'password',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText: '아니오',
+            inputPlaceholder: 'Enter your password',
+            inputAttributes: {
+                maxlength: 20,
+                autocapitalize: 'off',
+                autocorrect: 'off'
               }
-            })
-            .catch((ex)=>{
-              console.log('변경 실패', ex)
-            })
+            }).then(result => {
+               if(result.value){
+                  var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
+                  var login = {
+                    login_id: this.$store.state.onmUserId,
+                    login_pwd: result.value
+                  }
+                  axios.post(url, login, this.$store.state.headers)
+                    .then((response) => {
+                      console.log(response)
+                      var resCode = response.data.res_code;
+                      if(resCode == 200){
+                          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15011/set_app_info`
+                          axios.post(url,params,headers)
+                            .then((response)=>{
+                              var resCode=response.data.res_code;
+                              var resMsg=response.data.res_msg;
+                              if(resCode==200){
+                                this.pList.splice(updateIndex,1,params)
+                              }else{
+                                alert(resCode+" / "+resMsg);
+                              }
+                            })
+                            .catch((ex)=>{
+                              console.log('변경 실패', ex)
+                            })
+                      }else{
+                        alert('서버와 통신이 안되었거나 비밀번호가 맞지 않습니다.');
+                      }
+                    })
+                
+               }else{
+                alert('비밀번호를 입력해주세요.')
+               }
+            });
+          
         }
-        //   // update 
-        //     // axios
-        //     // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/localcode/update`, editedItem )
-        //     // .then((result) => {
-        //     //   console.log(result)
-        //     //   // this.list = JSON.parse(result.data.menu)
-        //     //   // this.list = result.data
-        //     //   // Object.assign(this.pList[this.editedIndex], this.editedItem)
-        //     // })
-        //     // .catch((ex) => {
-        //     //   console.log('조회 실패',ex)
-        //     // })
-        // } else {
-        //   // this.desserts.push(this.editedItem)
-        //   // create
-        //   const createItem = this.editedItem
-        //   console.log("2222222222222")
-        //   EventBus.$emit('createItem', createItem)
 
-        //   // axios
-        //   //   .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code`, createItem)
-        //   //   .then((result) => {
-        //   //     console.log(result)
-        //   //     // this.list = JSON.parse(result.data.menu)
-        //   //     // this.list = result.data
-        //   //   })
-        //   //   .catch((ex) => {
-        //   //     console.log('조회 실패',ex)
-        //   //   })
-
-        // }
         this.close()
       }
 

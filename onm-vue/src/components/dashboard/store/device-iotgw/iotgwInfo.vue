@@ -94,6 +94,10 @@ export default {
           if (resCode == 200) {
             this.iotList = response.data.data.iotgw_list;
             this.iotPagingInfo = response.data.data.paging_info;
+          }else if(resCode==204){
+             this.iotList = [];
+            this.iotPagingInfo = {};
+            alert('IoT GW 정보 데이터가 없습니다.');
           } else {
             this.iotList = [];
             this.iotPagingInfo = {};

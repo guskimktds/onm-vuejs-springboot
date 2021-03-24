@@ -60,6 +60,10 @@ export default {
         if(resCode == 200){
           this.vaList = response.data.data.va_prod_list;
           this.vaPagingInfo = response.data.data.paging_info
+        }else if(resCode==204){
+          this.vaList = [];
+          this.vaPagingInfo = {};
+          alert('VA 상품 및 카메라 대수 확인');
         }else{
           this.vaList = [];
           this.vaPagingInfo = {};

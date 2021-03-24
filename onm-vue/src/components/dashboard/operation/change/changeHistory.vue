@@ -69,6 +69,10 @@ export default {
             this.pList = response.data.data.mng_regi_history_list;
             this.resPagingInfo = response.data.data.paging_info
 
+          }else if(resCode==204){
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert('[매장]관리자 변경 이력 데이터가 없습니다.');
           }else{
             this.pList = [];
             this.resPagingInfo = {};

@@ -1,18 +1,13 @@
 <template>
     <v-container fluid>
       <v-card>
-        <local-code-query 
-          v-on:search="searchToButton"
-          v-bind:param=searchParam
-          @Items="saveItems"
-        ></local-code-query>
         <local-code-list v-bind:pList=pList></local-code-list>
       </v-card>
     </v-container>
 </template>
 
 <script>
-import localCodeQuery from './localCodeQuery'
+
 import localCodeList from './localCodeList'
 
 //로그인 시 서버에서 불러오면 수정해야함
@@ -27,7 +22,6 @@ import axios from "axios"
 
 export default {
   components:{
-    localCodeQuery,
     localCodeList
   },
   data () {

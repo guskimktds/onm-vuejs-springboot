@@ -93,6 +93,10 @@ export default {
           if (resCode == 200) {
             this.dsList = response.data.data.sensor_list;
             this.dsPagingInfo = response.data.data.paging_info;
+          }else if(resCode==204){
+            this.dsList = [];
+            this.dsPagingInfo = {};
+            alert('센서 정보 데이터가 없습니다.');
           } else {
             this.dsList = [];
             this.dsPagingInfo = {};

@@ -87,6 +87,10 @@ export default {
               this.mobilePagingInfo=response.data.data.paging_info
               console.log('보내준 List')
               console.log(this.pList)
+            }else if(resCode==204){
+              this.pList=[];
+              this.mobilePagingInfo={};
+              alert('모바일 단말 목록 데이터가 없습니다.');
             }else{
               this.pList=[];
               this.mobilePagingInfo={};

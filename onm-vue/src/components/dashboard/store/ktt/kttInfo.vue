@@ -73,6 +73,10 @@ methods: {
           this.kList = response.data.data.ktt_info_list;
           this.kttPagingInfo = response.data.data.paging_info
     
+        }else if(resCode==204){
+          this.kList = [];
+          this.kttPagingInfo = {};
+          alert('KTT 정보 데이터가 없습니다.');
         }else{
           this.kList = [];
           this.kttPagingInfo = {};

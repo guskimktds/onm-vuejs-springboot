@@ -94,6 +94,10 @@ export default {
           if (resCode == 200) {
             this.dcList = response.data.data.cam_list;
             this.dcPagingInfo = response.data.data.paging_info;
+          }else if(resCode==204){
+            this.dcList = [];
+            this.dcPagingInfo = {};
+            alert('카메라 정보 조회 데이터가 없습니다.');
           } else {
             this.dcList = [];
             this.dcPagingInfo = {};

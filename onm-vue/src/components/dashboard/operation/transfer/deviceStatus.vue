@@ -72,6 +72,10 @@ export default {
             this.resPagingInfo = response.data.data.paging_info;
             console.log('페이지 정보')
             console.log(this.resPagingInfo)
+          }else if(resCode==204){
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert('고객이전 단말 상태 데이터가 없습니다.');
           }else{
             this.pList = [];
             this.resPagingInfo = {};

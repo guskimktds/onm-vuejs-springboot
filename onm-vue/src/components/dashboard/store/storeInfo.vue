@@ -496,7 +496,11 @@ export default {
             this.dcList = response.data.data.cam_list;
             this.dcPagingInfo = response.data.data.paging_info;
             this.showDeviceCameraList = !this.showDeviceCameraList;
-          } else {
+          } else if(resCode==204){
+            this.dcList = [];
+            this.dcPagingInfo = {};
+            alert('단말 카메라 정보 데이터가 없습니다.');
+          }else {
             this.dcList = [];
             this.dcPagingInfo = {};
             alert(resCode + " / " + resMsg);
@@ -525,7 +529,11 @@ export default {
             this.iotList = response.data.data.iotgw_list;
             this.iotPagingInfo = response.data.data.paging_info;
             this.showIotGwList = !this.showIotGwList;
-          } else {
+          }else if(resCode==204){
+            this.iotList = [];
+            this.iotPagingInfo = {};
+            alert('단말 IOT GW 정보 데이터가 없습니다.');
+          }else {
             this.iotList = [];
             this.iotPagingInfo = {};
             alert(resCode + " / " + resMsg);
@@ -554,6 +562,10 @@ export default {
             this.dsList = response.data.data.sensor_list;
             this.dsPagingInfo = response.data.data.paging_info;
             this.showDeviceSensorList = !this.showDeviceSensorList;
+          } else if(resCode==204){
+            this.dsList = [];
+            this.dsPagingInfo = {};
+            alert('단말 센서 정보 데이터가 없습니다.');
           } else {
             this.dsList = [];
             this.dsPagingInfo = {};
@@ -582,6 +594,10 @@ export default {
             this.pnList = response.data.data.tel_no_list;
             this.pnPagingInfo = response.data.data.paging_info;
             this.showPhoneList = !this.showPhoneList;
+          } else if(resCode==204){
+            this.pnList = [];
+            this.pnPagingInfo = {};
+            alert('사용자 전화번호 데이터가 없습니다.');
           } else {
             this.pnList = [];
             this.pnPagingInfo = {};

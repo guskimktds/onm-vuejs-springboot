@@ -73,6 +73,10 @@ export default {
         if (resCode == 200) {
           this.pList = response.data.data.tel_no_list;
           this.resPagingInfo = response.data.data.paging_info;
+        }else if(resCode==204){
+          this.pList = [];
+          this.resPagingInfo = {};
+          alert('사용자 전화번호 데이터가 없습니다.');
         } else {
           this.pList = [];
           this.resPagingInfo = {};

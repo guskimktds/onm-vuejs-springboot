@@ -65,6 +65,10 @@ export default {
           this.soList = response.data.data.sensor_list;
           this.soPagingInfo = response.data.data.paging_info
     
+        }else if(resCode==204){
+          this.soList = [];
+          this.soPagingInfo = {};
+          alert('센서 신청 현황 데이터가 없습니다.');
         }else{
           this.soList = [];
           this.soPagingInfo = {};

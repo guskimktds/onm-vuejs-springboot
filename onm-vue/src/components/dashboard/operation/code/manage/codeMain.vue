@@ -124,6 +124,10 @@ export default {
                 this.gw_id=reqParams.local_gw_id
                 console.log('paging')
                 console.log(this.resPagingInfo)
+              }else if(resCode==204){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert('코드 관리 데이터가 없습니다.');
               }else{
                 this.pList = [];
                 this.resPagingInfo = {};

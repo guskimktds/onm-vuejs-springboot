@@ -123,6 +123,10 @@ export default {
             this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info
             console.log(this.resPagingInfo)
+          }else if(resCode==204){
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert('계정 정보 데이터가 없습니다.');
           }else{
             // this.authGroupList = [];
             // this.isAuthMenu = false

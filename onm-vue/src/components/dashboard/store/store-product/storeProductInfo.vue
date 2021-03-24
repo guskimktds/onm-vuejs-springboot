@@ -73,6 +73,10 @@ export default {
           this.resPagingInfo = response.data.data.paging_info
           console.log("상품코드")
           console.log(this.List)
+        }else if(resCode==204){
+           this.List = [];
+          this.resPagingInfo = {};
+          alert('매장상품정보 데이터가 없습니다.');
         }else{
           this.List = [];
           this.resPagingInfo = {};

@@ -151,7 +151,7 @@ export default {
     mounted() {
         setInterval(() => {
             this.getDataFromApi();
-          }, 600000);
+          }, 60000);
     },
 }
 </script>

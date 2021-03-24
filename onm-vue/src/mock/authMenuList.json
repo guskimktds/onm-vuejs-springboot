@@ -150,8 +150,7 @@
                 "icon":"mdi-desktop-mac",
                 "component": "operation",
                 "children": [
-                    { "name": "계정/권한 관리", "path": "/operation/account", "component": "account" },
-                    { "name": "[O&M]처리 이력 조회", "path": "/operation/process-history", "component": "process-history" }
+                    { "name": "계정/권한 관리", "path": "/operation/account", "component": "account" }
                 ]
             },
             {

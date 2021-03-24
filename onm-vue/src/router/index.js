@@ -77,7 +77,7 @@ import WorkerLoginHistory from '@/components/dashboard/order/worker/worker-login
 //운영관리
 import AccountMain from '../components/dashboard/operation/manage/accountMain'
 import OperationMain from '../components/dashboard/operationMain'
-import OperationHistory from '../components/dashboard/operation/history/operationHistory'
+//import OperationHistory from '../components/dashboard/operation/history/operationHistory'
 import AdminHistory from '../components/dashboard/operation/admin/adminHistory'
 import ChangeHistory from '../components/dashboard/operation/change/changeHistory'
 
@@ -409,11 +409,7 @@ export default new Router({
             path: "/operation",
             name: 'OperationMain',
             component: OperationMain,
-            children: [{
-                    path: "process-history",
-                    name: 'OperationHistory',
-                    component: OperationHistory
-                },
+            children: [
                 {
                     path: "account",
                     name: 'AccountMain',
