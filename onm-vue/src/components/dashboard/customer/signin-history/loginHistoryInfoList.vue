@@ -45,6 +45,7 @@ export default {
         { text: "로그인일시", value: "login_date" },
         { text: "로그아웃일시", value: "logout_date" },
         { text: "OS타입", value: "os_type" },
+        { text: "브라우저 타입", value: ""}
       ],
     };
   },

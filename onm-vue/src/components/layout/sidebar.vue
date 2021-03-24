@@ -57,6 +57,7 @@
         v-model="item.active"
         :prepend-icon="item.icon"
         v-on:click="saveSubMenu(i)"
+        v-show="tabAuthShow(item.name)"
         no-action
       >
         <template v-slot:activator>
@@ -152,6 +153,14 @@ export default {
     }),
   },
   methods: {
+    tabAuthShow(values){
+      var auth=this.$store.state.authGroupId
+      if(values=='고객이전'&&auth!=='G100'){
+        return false;
+      }else{
+        return true;
+      }
+    },
     authShow(values){
       var auth=this.$store.state.authGroupId
       if(values=='코드 관리'&&auth!=='G100'){
