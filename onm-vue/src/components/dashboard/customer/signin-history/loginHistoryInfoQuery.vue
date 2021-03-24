@@ -78,7 +78,7 @@
       </v-row>
       
       <v-row>
-        <v-col cols="12" sm="6" md="6">
+        <v-col cols="12" sm="6" md="4">
           <v-text-field
             dense
             label="로그인 ID"
@@ -87,6 +87,15 @@
           >
           </v-text-field>
         </v-col>
+            <v-col cols="12" sm="6" md="4">
+            <v-text-field
+              dense
+              label="로그인 키"
+              
+              placeholder=" "
+            >
+            </v-text-field>
+          </v-col>
 
         <v-col cols="auto">
           <v-btn v-on:click="searchMethod">검색</v-btn>
