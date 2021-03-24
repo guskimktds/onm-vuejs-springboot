@@ -67,7 +67,7 @@
               value="logout"></v-radio>                        
         </v-radio-group>
 
-        <v-col cols="4">
+        <v-col cols="2">
           <v-select
             v-model="param.os_type"
             :items="items"

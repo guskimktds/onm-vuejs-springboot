@@ -46,7 +46,7 @@ export default {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
         date_yn: true,
-        prod_code:'',
+        prod_info_id:'',
         user_id:''
       }
     }
@@ -58,7 +58,7 @@ export default {
    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13002/get_user_detail`
 
    var reqParams=this.handleParams(params)
-    if(!reqParams.start_date&&!reqParams.prod_code&&!reqParams.user_id){
+    if(!reqParams.start_date&&!reqParams.prod_info_id&&!reqParams.user_id){
       this.$fire({
               title: "검색값을 입력해주세요.",
               type: "error"})
