@@ -85,12 +85,13 @@ export default {
       });
 
     },
-    setToSearchParams:function(params){
+    setToSearchParams:function(values){
       if(this.start==true){
         this.pList=[];
       }else{
-      this.searchToProcess(params)
+      this.searchToProcess(values)
       }
+      this.start=false;
     },
 
     handleParams: function (params) {

@@ -9,7 +9,7 @@
         <list 
           v-bind:pList=pList
           v-bind:resPagingInfo="resPagingInfo"
-          @pagination="searchToProcess"
+          @pagination="setToSearchParams"
         ></list>
       </v-card>
 
@@ -49,8 +49,8 @@ export default {
         tel_no: "",
         login_key: "",
         admin_type: "O" // 고정
-
       },
+      start:true
       
     }
   },
@@ -87,6 +87,14 @@ export default {
         // always executed
       });
 
+    },
+    setToSearchParams:function(values){
+      if(this.start==true){
+        this.pList=[];
+      }else{
+      this.searchToProcess(values)
+      }
+      this.start=false;
     },
 
     handleParams: function (params) {

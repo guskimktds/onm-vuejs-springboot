@@ -73,10 +73,7 @@ export default {
       if(this.resPagingInfo.total_cnt!==undefined){
       this.last=this.resPagingInfo.total_cnt
       }
-  },
-    mounted () {
-      this.getDataFromApi()
-    }
+  }
 }
 </script>
 
