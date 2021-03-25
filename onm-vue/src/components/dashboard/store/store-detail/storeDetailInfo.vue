@@ -74,6 +74,8 @@ export default{
         if(resCode == 200){
           this.pList = response.data.data.user_detail_list;
           this.resPagingInfo = response.data.data.paging_info
+           console.log('페이지값')
+            console.log(this.resPagingInfo)
         }else if(resCode==204){
           this.pList = [];
           this.resPagingInfo = {};

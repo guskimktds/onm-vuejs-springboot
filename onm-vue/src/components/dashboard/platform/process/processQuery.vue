@@ -6,7 +6,7 @@
     >
         <base-material-card
             icon="mdi-magnify"
-            title="Process 현황 조회"
+            title="Process 현황 조회 (Cloud LVSaaS만 조회 가능)"
             class="px-5 py-3"
         >
 

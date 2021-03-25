@@ -6,7 +6,7 @@
     >
         <base-material-card
             icon="mdi-magnify"
-            title="스트리머 설정현황 조회"
+            title="스트리머 설정현황 조회 (Cloud LVSaaS만 조회 가능)"
             class="px-5 py-3"
         >
 

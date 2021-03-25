@@ -282,6 +282,8 @@ export default {
             this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info;
             console.log(this.pList)
+            console.log('페이지값')
+            console.log(this.resPagingInfo)
           }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
