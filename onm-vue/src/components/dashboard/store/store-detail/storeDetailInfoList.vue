@@ -51,10 +51,9 @@ export default {
         { text: "주문번호", value: "order_no" },
         { text: "IoT TARGET SEQ", value: "iot_target_seq" },
         { text: "IoT MEMBER SEQ", value: "iot_member_seq" },
-        { text: "수정일시", value: "mod_date" },
         { text: "로컬융함GW아이디", value: "local_gw_id" },
-        { text: " ", value: " " },
-        { text: "/", value: " " },
+        { text: "등록일", value: "reg_date" },
+        { text: "수정일", value: "mod_date" },
         { text: "희망처리일자", value: "appoint_date" },
       ]
     }

@@ -75,7 +75,7 @@ export default{
           this.pList = response.data.data.user_detail_list;
           this.resPagingInfo = response.data.data.paging_info
            console.log('페이지값')
-            console.log(this.resPagingInfo)
+          console.log(this.pList)
         }else if(resCode==204){
           this.pList = [];
           this.resPagingInfo = {};
