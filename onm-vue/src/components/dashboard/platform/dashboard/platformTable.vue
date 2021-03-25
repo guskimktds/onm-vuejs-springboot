@@ -11,6 +11,7 @@
                         :server-items-length="resPagingInfo.total_cnt"
                         class="elevation-1"
                         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+                        :header-props="{ sortIcon: null }"
                         >
                         </v-data-table>
                     </div>
@@ -26,6 +27,7 @@
                             :items-per-page="10"
                             class="elevation-1"
                             :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+                            :header-props="{ sortIcon: null }"
                             ></v-data-table>
                     </div>
                 </div>

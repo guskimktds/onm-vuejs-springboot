@@ -160,6 +160,7 @@ import IotGwList from "./device-iotgw/iotgwInfoList";
 import DeviceSensorList from "./device-sensor/sensorInfoList";
 import PhoneList from "./info/storePhoneList";
 
+import dateInfo from '../../utils/common'
 import axios from "axios";
 
 const headers = {
@@ -246,11 +247,14 @@ export default {
       pnPagingInfo: {},
       oldValue:'',
       searchParam: {
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
         said: "",
         user_name: "",
         user_id: "",
         tel_no: "",
-        is_masking:""
+        is_masking:"",
+        date_yn: true
       },
     };
   },
@@ -263,6 +267,11 @@ export default {
 
       var reqParams = this.handleParams(params);
       console.log(reqParams)
+      if(!reqParams.start_date&&!reqParams.said&&!reqParams.user_name&&!reqParams.user_id&&!reqParams.tel_no){
+             this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+      }else{
       axios
         .post(url, reqParams, headers)
         .then((response) => {
@@ -286,6 +295,7 @@ export default {
         .catch((ex) => {
           console.log("조회 실패", ex);
         });
+      }
     },
 
     changeColor(values){
@@ -629,6 +639,30 @@ export default {
         newParams.view_cnt = this.reqPagingInfo.view_cnt;
       } else {
         newParams.view_cnt = params.view_cnt;
+      }
+
+      if(params.date_yn==undefined){
+          params.date_yn=this.searchParam.date_yn
+      }
+
+      if(params.date_yn==true){
+        if(params.start_date !== undefined && params.start_date !== ''){
+          newParams.start_date = params.start_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+        }
+
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.end_date = params.end_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        }
       }
 
       if (params.said !== undefined && params.said !== "") {
