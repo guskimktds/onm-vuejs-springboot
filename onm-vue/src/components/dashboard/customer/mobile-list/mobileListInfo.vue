@@ -44,6 +44,7 @@ export default {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
         date_yn: true,
+        login_key:'',
         tel_no_id:'',
         user_id:'',
         local_gw_id:''
@@ -156,6 +157,15 @@ export default {
         this.searchParam.local_gw_id !== ""
       ) {
         newParams.local_gw_id = this.searchParam.local_gw_id;
+      }
+      
+      if (params.login_key !== undefined && params.login_key !== "") {
+        newParams.login_key = params.login_key;
+      } else if (
+        this.searchParam.login_key !== undefined &&
+        this.searchParam.login_key !== ""
+      ) {
+        newParams.login_key = this.searchParam.login_key;
       }
 
      if(params.tel_no_id !== undefined && params.tel_no_id !== ''){

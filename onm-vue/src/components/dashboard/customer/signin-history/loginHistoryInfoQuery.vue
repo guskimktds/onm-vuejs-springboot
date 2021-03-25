@@ -78,7 +78,7 @@
       </v-row>
       
       <v-row>
-        <v-col cols="12" sm="6" md="4">
+        <v-col cols="12" sm="6" md="3">
           <v-text-field
             dense
             label="로그인 ID"
@@ -87,15 +87,26 @@
           >
           </v-text-field>
         </v-col>
-            <v-col cols="12" sm="6" md="4">
+
+        <v-col cols="12" sm="6" md="3">
             <v-text-field
               dense
               label="로그인 키"
-              
+              v-model="param.login_key"
               placeholder=" "
             >
             </v-text-field>
-          </v-col>
+        </v-col>
+
+        <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              dense
+              label="브라우저 타입"
+              v-model="param.user_agent"
+              placeholder=" "
+            >
+            </v-text-field>
+        </v-col>
 
         <v-col cols="auto">
           <v-btn v-on:click="searchMethod">검색</v-btn>

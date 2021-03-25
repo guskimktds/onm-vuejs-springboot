@@ -107,7 +107,7 @@
             <v-text-field
               dense
               label="로그인 키"
-              
+              v-model="param.login_key"
               placeholder=" "
             >
             </v-text-field>

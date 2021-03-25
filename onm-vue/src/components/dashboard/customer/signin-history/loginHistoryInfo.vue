@@ -50,6 +50,8 @@ export default {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
         date_yn: true,
+        user_agent:"",
+        login_key:"",
         login_id: "",
         os_type: "",
         optionType:"login"
@@ -75,7 +77,8 @@ export default {
           if (resCode == 200) {
             this.pList = response.data.data.login_history_list;
             this.resPagingInfo = response.data.data.paging_info;
-          }else if(resCode==204){
+            console.log(response)
+         }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
             alert('로그인 이력 데이터가 없습니다.');
@@ -186,6 +189,24 @@ export default {
             delete newParams.login_end_date
           }
         }
+      }
+
+      if (params.user_agent !== undefined && params.user_agent !== "") {
+        newParams.user_agent = params.user_agent;
+      } else if (
+        this.searchParam.user_agent !== undefined &&
+        this.searchParam.user_agent !== ""
+      ) {
+        newParams.user_agent = this.searchParam.user_agent;
+      }
+
+      if (params.login_key !== undefined && params.login_key !== "") {
+        newParams.login_key = params.login_key;
+      } else if (
+        this.searchParam.login_key !== undefined &&
+        this.searchParam.login_key !== ""
+      ) {
+        newParams.login_key = this.searchParam.login_key;
       }
 
       if (params.login_id !== undefined && params.login_id !== "") {
