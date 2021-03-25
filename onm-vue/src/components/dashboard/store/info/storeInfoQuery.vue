@@ -45,14 +45,7 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-                  <v-col cols="12" md="2">
-                    <v-switch
-                        v-model="param.is_masking"                    
-                        :label="`마스킹 해제`"
-                        color="secondary"
-                    ></v-switch>
-                </v-col>
-                
+
                 <v-col cols="12" sm="6" md="2">
                     <v-switch
                         v-model="param.date_yn"                    
@@ -60,6 +53,15 @@
                         color="secondary"
                     ></v-switch>
                 </v-col>
+
+                <v-col cols="12" md="2">
+                    <v-switch
+                        v-model="param.is_masking"                    
+                        :label="`마스킹 해제`"
+                        color="secondary"
+                    ></v-switch>
+                </v-col>
+                
         </v-row>
 
         <v-row>

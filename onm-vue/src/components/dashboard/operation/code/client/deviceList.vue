@@ -190,8 +190,8 @@ export default {
           { text: '버전코드', value: 'version_code'},
           { text: '다운로드URL', value: 'download_url' },
           { text: '필수업데이트', value: 'required_yn' },
-          { text: '등록일시', value: 'reg_date' },
-          { text: '수정일시', value: 'mod_date' },
+          { text: '등록일', value: 'reg_date' },
+          { text: '수정일', value: 'mod_date' },
           { text: '타이틀', value: 'title' },
           { text: '내용', value: 'content' },
           { text: '변경', value: 'actions', sortable: false }

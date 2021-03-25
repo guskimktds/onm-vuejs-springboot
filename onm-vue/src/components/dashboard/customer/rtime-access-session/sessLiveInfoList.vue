@@ -42,7 +42,7 @@ export default {
         { text: "사용자 ID", value: "user_id" },
         { text: "전화번호", value: "tel_no" },
         // { text: '전화번호 타입', value: 'numberType' },
-        { text: "ip", value: "ip" },
+        { text: "IP", value: "ip" },
         { text: "만료일", value: "expired_date" },
         { text: "장치타입", value: "device_type" },
       ],

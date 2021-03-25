@@ -48,7 +48,7 @@ export default {
         { text: "시스템ID", value: "system_id" },
         { text: "단말설치여부", value: "device_yn" },
         { text: "상태 코드", value: "status_code" },
-        { text: "등록일시", value: "reg_date" },
+        { text: "등록일", value: "reg_date" },
       ],
     };
   },

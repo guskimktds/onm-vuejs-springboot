@@ -61,12 +61,12 @@ export default {
           { text: '상태코드', value: 'status_code' },
           { text: '국사ID', value: 'local_gw_id' },
           { text: '이전국사ID', value: 'pre_local_gw_id' },
-          { text: '이전iot_member', value: 'per_iot_member_seq' },
-          { text: '이전iot_target', value: 'per_iot_target_seq' },
+          { text: '이전IoT MEMBER', value: 'per_iot_member_seq' },
+          { text: '이전IoT TARGET', value: 'per_iot_target_seq' },
           { text: '이전시작일시', value: 'mig_start_date' },
           { text: '이전종료일시', value: 'mig_end_date' },
           { text: 'Data삭제일시', value: 'data_clean_date' },
-          { text: 'Iot이전상태코드', value: 'iot_status' },
+          { text: 'IoT이전상태코드', value: 'iot_status' },
         ],
   
       }

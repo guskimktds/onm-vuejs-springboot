@@ -48,7 +48,7 @@ export default {
         { text: 'Sub ID(전화번호 ID)', value: 'tel_no_id' },
         { text: '알림설정권한(Y/N)', value: 'alim_auth_yn' },
         { text: '승인여부', value: 'confirm_yn' },
-        { text: '승인날짜', value: 'confirm_date' },
+        { text: '승인일', value: 'confirm_date' },
         { text: '상태코드', value: 'status_code' },
         { text: 'Mgt 상태코드', value: 'mgt_status' },
         { text: '비고', value: 'memo' },

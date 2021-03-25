@@ -51,7 +51,7 @@ export default {
         { text: "카메라 아이디", value: "cam_id" },
         { text: "매장명", value: "store_name" },
         { text: "푸시 발송 안드로이드 수", value: "android_count" },
-        { text: "푸시 발송 ios 수", value: "ios_count" }
+        { text: "푸시 발송 IOS 수", value: "ios_count" }
       ],
     };
   },

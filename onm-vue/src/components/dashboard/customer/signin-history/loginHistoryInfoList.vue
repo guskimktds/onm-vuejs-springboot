@@ -41,7 +41,7 @@ export default {
         },
         { text: "로그인 ID", value: "login_id" },
         { text: "로그인 타입", value: "login_type" },
-        { text: "만료일시", value: "expire_date" },
+        { text: "만료일", value: "expire_date" },
         { text: "로그인일시", value: "login_date" },
         { text: "로그아웃일시", value: "logout_date" },
         { text: "OS 타입", value: "os_type" },

@@ -49,8 +49,8 @@ export default {
         { text: "상품이름", value: "prodnm" },
         { text: "상품유형", value: "prodtype" },
         { text: "상품개수", value: "prodcnt" },
-        { text: "등록일시", value: "reg_date" },
-        { text: "수정일시", value: "mod_date" },
+        { text: "등록일", value: "reg_date" },
+        { text: "수정일", value: "mod_date" },
       ],
     };
   },

@@ -53,7 +53,7 @@ export default {
         { text: "서브ID 개수", value: "subid_cnt" },
         { text: "해상도", value: "resolution" },
         { text: "IoTGW 대수", value: "iotgw_cnt" },
-        { text: "수정일시", value: "mod_date" },
+        { text: "수정일", value: "mod_date" },
       ],
     };
   },

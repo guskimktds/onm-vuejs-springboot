@@ -46,7 +46,7 @@ export default {
           { text: '3rd 분석 카메라', value: 'proc_3rd' },
           { text: '요약영상 처리', value: 'va_summary' },
           { text: '가중치', value: 'load_va' },
-          { text: '객체분석 va 수', value: 'va_oc' },
+          { text: '객체분석 VA 수', value: 'va_oc' },
         ]
       }
     },

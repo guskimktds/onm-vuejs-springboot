@@ -50,9 +50,9 @@ export default {
           { text: '모델명', value: 'modelname' },          
           { text: '단말인증결과코드', value: 'termauthcode' },
           { text: '개통오더번호', value: 'open_oderno' },
-          { text: '인증일시', value: 'auth_date' },
-          { text: '삭제일시', value: 'close_date' },
-          { text: '등록일시', value: 'reg_date'} 
+          { text: '인증일', value: 'auth_date' },
+          { text: '삭제일', value: 'close_date' },
+          { text: '등록일', value: 'reg_date'} 
         ]
       }
     },

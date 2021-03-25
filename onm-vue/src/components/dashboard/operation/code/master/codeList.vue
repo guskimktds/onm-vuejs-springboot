@@ -195,7 +195,7 @@ export default {
           { text: '설명', value: 'description' },
           { text: '사용여부', value: 'use_yn' },
           // { text: '등록일시', value: 'reg_date' },
-          { text: '수정일시', value: 'mod_date' },
+          { text: '수정일', value: 'mod_date' },
           { text: '변경', value: 'actions', sortable: false }
         ],
         editedItem: {

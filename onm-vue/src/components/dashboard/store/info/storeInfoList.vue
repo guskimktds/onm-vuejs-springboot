@@ -54,7 +54,7 @@ export default {
         { text: "전체카메라대수", value: "total_cnt" },
         { text: "정상카메라대수", value: "normal_cnt" },
         { text: "상품코드", value: "prod_code" },
-        { text: "등록일시", value: "reg_date" },
+        { text: "등록일", value: "reg_date" },
       ],
     };
   },
