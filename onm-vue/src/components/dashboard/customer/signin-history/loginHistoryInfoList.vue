@@ -61,12 +61,15 @@ export default {
     switchString(values){
       var safari=values.indexOf('Safari')
       var chrome=values.indexOf('Chrome')
+      var firefox=values.indexOf('FireFox')
       var ie8=values.indexOf('Trident')
 
       if(safari>-1){
         return 'Safari'
       }else if(chrome>-1){
         return 'Chrome'
+      }else if(firefox>-1){
+        return 'FireFox'
       }else if(ie8>-1){
         return 'IE 8.0 이상'
       }else{
