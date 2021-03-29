@@ -59,10 +59,11 @@ export default {
       this.$emit("pagination", this.options);
     },
     switchString(values){
-      var safari=values.indexOf('Safari')
-      var chrome=values.indexOf('Chrome')
-      var firefox=values.indexOf('FireFox')
-      var ie8=values.indexOf('Trident')
+      var agent=values.toLowerCase();
+      var safari=agent.indexOf('safari')
+      var chrome=agent.indexOf('chrome')
+      var firefox=agent.indexOf('firefox')
+      var ie8=agent.indexOf('trident')
 
       if(safari>-1){
         return 'Safari'
