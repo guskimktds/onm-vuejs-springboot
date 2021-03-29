@@ -63,7 +63,7 @@ export default {
       var reqParams = this.handleParams(params);
       console.log('검색값')
       console.log(reqParams)
-      if(!reqParams.date_yn&&!reqParams.login_id&&!reqParams.os_type){
+      if(!reqParams.date_yn&&!reqParams.login_id&&!reqParams.os_type&&!reqParams.user_agent){
         this.$fire({
               title: "검색값을 입력해주세요.",
               type: "error"})

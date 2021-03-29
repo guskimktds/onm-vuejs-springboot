@@ -16,6 +16,9 @@
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       >
+       <template v-slot:item.user_agent="{item}">
+              <span>{{ switchString(item.user_agent) }}</span>
+      </template>
       </v-data-table>
     </base-material-card>
   </v-container>
@@ -54,6 +57,21 @@ export default {
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
+    },
+    switchString(values){
+      var safari=values.indexOf('Safari')
+      var chrome=values.indexOf('Chrome')
+      var ie8=values.indexOf('Trident')
+
+      if(safari>-1){
+        return 'Safari'
+      }else if(chrome>-1){
+        return 'Chrome'
+      }else if(ie8>-1){
+        return 'IE 8.0 이상'
+      }else{
+        return 'IE'
+      }
     },
   },
   watch: {
