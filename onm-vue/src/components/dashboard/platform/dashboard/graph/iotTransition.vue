@@ -28,9 +28,7 @@ export default {
             loaded: false           
         }
     },
-    mounted () {
-      this.fillData()
-    },
+
     computed: {
       formTitle () {
         this.fillData()
