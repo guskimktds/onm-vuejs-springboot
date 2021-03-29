@@ -310,13 +310,10 @@ export default {
 
     clickToSearchDetailObject: function (values) {
       if (values) {
-        this.showDetailObject = true;
-        this.isReloadDetailObject = true;
-        
         var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13002/get_user_detail`;
 
         var params = {
-          said: values,
+          user_id: values,
           page_no: "1",
           view_cnt: "999999",
           is_masking: this.searchParam.is_masking? "N" : "Y"
@@ -328,11 +325,18 @@ export default {
             var resCode = response.data.res_code;
             var resMsg = response.data.res_msg;
             if (resCode == 200) {
+              this.showDetailObject = true;
+              this.isReloadDetailObject = true;
               this.pObject = response.data.data.user_detail_list[0];
+              console.log(response)
             }else if(resCode==204){
+              this.showDetailObject = false;
+              this.isReloadDetailObject = false;
               this.pObject = {};
               alert("매장 상세 데이터가 없습니다.");
+              console.log(response)
             } else {
+              console.log(response)
               this.pObject = {};
               alert(resCode + " / " + resMsg);
             }

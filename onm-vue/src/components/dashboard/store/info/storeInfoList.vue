@@ -61,7 +61,7 @@ export default {
 
   methods: {
     handleClick: function (value) {
-      this.$emit("child", value.said);
+      this.$emit("child", value.user_id);
     },
     getDataFromApi() {
       this.loading = true;
