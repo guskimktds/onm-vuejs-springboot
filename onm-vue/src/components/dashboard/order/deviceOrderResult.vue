@@ -132,13 +132,21 @@ export default {
       
       if(params.oderno !== undefined && params.oderno !== ''){
           newParams.oderno = params.oderno
-        }else{
-          newParams.oderno=params.oderno
+        }else if(
+          this.searchParam.oderno!==undefined&&
+          this.searchParam.oderno!==""
+        ){
+          newParams.oderno=this.searchParam.oderno
         }
 
-      if(params.guid !== undefined && params.guid !== ''){
-        newParams.guid = params.guid
-      }
+       if(params.guid !== undefined && params.guid !== ''){
+          newParams.guid = params.guid
+        }else if(
+          this.searchParam.guid!==undefined&&
+          this.searchParam.guid!==""
+        ){
+          newParams.guid=this.searchParam.guid
+        }
       return newParams
     }
 

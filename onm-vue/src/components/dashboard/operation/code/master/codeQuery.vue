@@ -38,7 +38,7 @@
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
                         dense 
-                        label="코드구분코드명" 
+                        label="구분코드명" 
                         v-model="param.code_master_name"
                         placeholder=" " 
                     >                        
