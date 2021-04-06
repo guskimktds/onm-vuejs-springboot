@@ -1,6 +1,8 @@
 <template>
 
         <div class="chart-board">
+          <div class="text-area">{{ formTitle }}</div>
+            <div><br></div>
             <div class="chart-area">
                 <!-- <line-chart :chart-data="chartData" :options="labels" :styles="myStyles"
                 ></line-chart> -->
@@ -8,7 +10,7 @@
                     :chart-data="datacollection" :options="labels"
                 ></line-chart>
             </div>
-            <div class="text-area">{{ formTitle }}</div>
+         
             <!-- <div class="board-footer">updated 10 minutes ago</div> -->
         </div>
 </template>
