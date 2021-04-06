@@ -9,7 +9,27 @@ export default {
   mounted () {
     // this.chartData is created in the mixin.
     // If you want to pass options please create a local options object
-    this.renderChart(this.chartData, this.options)
+    this.renderChart(this.chartData, {
+          scales: {
+            yAxes: [{
+              ticks: {
+                fontColor: "white"
+              }
+            }],
+        
+            xAxes: [{
+              ticks: {
+                fontColor: "white"
+              }
+            }]
+          },
+      legend:{
+        labels:{
+          fontColor: 'white'
+        }
+      },
+    })
+
   }
 }
 </script>
