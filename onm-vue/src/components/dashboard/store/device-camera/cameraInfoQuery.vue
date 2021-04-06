@@ -1,5 +1,8 @@
 <template>
-      <v-container>
+      <v-container
+        id="regular-tables"
+        fluid
+        tag="section">
         <base-material-card
         icon="mdi-magnify"
         title="카메라 정보 조회"

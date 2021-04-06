@@ -1,5 +1,8 @@
 <template>
-      <v-container>
+      <v-container
+        id="regular-tables"
+        fluid
+        tag="section">
         <base-material-card
         icon="mdi-magnify"
         title="VA 상품 및 카메라 대수 확인"

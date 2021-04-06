@@ -1,7 +1,10 @@
 <template>
   <div>
     <v-form>
-      <v-container>
+      <v-container
+        id="regular-tables"
+        fluid
+        tag="section">
         <base-material-card
         icon="mdi-magnify"
         title="상품 요약정보 조회"

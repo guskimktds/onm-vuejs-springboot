@@ -1,5 +1,7 @@
 <template>
-  <v-container id="regular-tables" fluid tag="section">
+  <v-container id="regular-tables" 
+  fluid 
+  tag="section">
     <base-material-card
       color="orange"
       dark
@@ -22,6 +24,7 @@
       </template>
       </v-data-table>
     </base-material-card>
+    
   </v-container>
 </template>
 
