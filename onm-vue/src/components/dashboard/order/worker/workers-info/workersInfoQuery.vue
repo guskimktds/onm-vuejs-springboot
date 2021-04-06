@@ -16,11 +16,11 @@
             </v-row>
             <v-row>
                 <v-col cols="12" md="2">
-                    <v-text-field dense label="전화번호" placeholder=" " v-model="param.tel_no">                        
+                    <v-text-field label="전화번호" placeholder=" " v-model="param.tel_no">                        
                     </v-text-field>
                 </v-col>         
                 <v-col cols="12" md="2">
-                    <v-text-field dense label="서비스계약ID" placeholder=" " v-model="param.said">                        
+                    <v-text-field label="서비스계약ID" placeholder=" " v-model="param.said">                        
                     </v-text-field>
                 </v-col> 
                 

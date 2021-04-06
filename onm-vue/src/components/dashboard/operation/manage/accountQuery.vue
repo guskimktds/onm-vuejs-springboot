@@ -78,8 +78,7 @@
                 </v-row>
                 <v-row >
                     <v-col cols="12" sm="6" md="2">
-                        <v-text-field 
-                        dense 
+                        <v-text-field
                         label="사번" 
                         v-model="param.onm_user_id" 
                         placeholder=" " >                        
@@ -87,7 +86,6 @@
                     </v-col>         
                     <!-- <v-col cols="12" sm="6" md="2">
                         <v-text-field 
-                        dense 
                         label="이름" 
                         v-model="param.name" 
                         placeholder="Placeholder" >                        
@@ -95,7 +93,6 @@
                     </v-col>  -->
                     <v-col cols="12" sm="6" md="2">
                         <v-text-field 
-                        dense 
                         label="권한그룹ID" 
                         v-model="param.auth_group_id" 
                         placeholder=" " >                        

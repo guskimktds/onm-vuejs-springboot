@@ -70,7 +70,6 @@
         <v-row>
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="카메라 ID"
               v-model="param.cam_id"
               placeholder=" "
@@ -80,7 +79,6 @@
           </v-col>
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="카메라명 "
               v-model="param.cam_name"
               placeholder=" "
@@ -90,7 +88,6 @@
           </v-col>
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="MAC ID"
               v-model="param.mac_id"
               placeholder=" "

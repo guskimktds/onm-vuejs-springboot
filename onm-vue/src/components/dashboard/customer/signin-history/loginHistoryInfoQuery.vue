@@ -80,7 +80,6 @@
       <v-row>
         <v-col cols="12" sm="6" md="3">
           <v-text-field
-            dense
             label="로그인 ID"
             v-model="param.login_id"
             placeholder=" "
@@ -90,7 +89,6 @@
 
         <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="로그인 키"
               v-model="param.login_key"
               placeholder=" "
@@ -100,7 +98,6 @@
 
         <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="브라우저 타입"
               v-model="param.user_agent"
               placeholder=" "

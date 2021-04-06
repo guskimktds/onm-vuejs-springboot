@@ -6,7 +6,6 @@
     >
         <base-material-card
             color="orange"
-            dense
             dark
             icon="mdi-keyboard"
             title="권한 메뉴 LIST"

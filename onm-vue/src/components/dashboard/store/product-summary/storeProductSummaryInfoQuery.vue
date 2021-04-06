@@ -63,7 +63,7 @@
 
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
+              
               label="상품이름"
               v-model="param.product_name"
               placeholder=" "
@@ -73,7 +73,7 @@
           </v-col>
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
+              
               label="사용자 ID"
               v-model="param.user_id"
               placeholder=" "
@@ -83,7 +83,7 @@
           </v-col>
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
+              
               label="상품코드"
               v-model="param.prodcd"
               placeholder=" "

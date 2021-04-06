@@ -11,34 +11,7 @@
             class="px-5 py-3"
         >
             <v-row>
-                <!-- <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
-                        label="국사코드" 
-                        v-model="param.local_gw_id"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col>         
-                <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
-                        label="서버명" 
-                        v-model="param.server_name"
-                        placeholder="Placeholder" 
-                    >                        
-                    </v-text-field>
-                </v-col> 
-                           
-                <v-col cols="12" sm="6" md="2">
-                    <v-btn 
-                        elevation="2" 
-                        medium
-                        v-on:click="searchMethod"
-                    >
-                        검색
-                    </v-btn>
-                </v-col> -->
+
                 <v-col cols="12" sm="6" md="10"></v-col>
                 <v-col cols="12" sm="6" md="2">
                 <v-dialog

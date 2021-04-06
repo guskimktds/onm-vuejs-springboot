@@ -80,7 +80,6 @@
             <v-row>
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
-                        dense 
                         label="매장ID" 
                         v-model="param.user_id"
                         placeholder=" " 

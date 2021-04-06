@@ -16,22 +16,22 @@
             </v-row>
             <v-row>
                 <v-col cols="12" sm="6" md="4">
-                    <v-text-field dense label="거래고유번호" placeholder="" v-model="param.guid">                        
+                    <v-text-field  label="거래고유번호" placeholder="" v-model="param.guid">                        
                     </v-text-field>
                 </v-col>         
                 <v-col cols="12" sm="6" md="4">
-                    <v-text-field dense label="계약 ID" placeholder="" v-model="param.said">                        
+                    <v-text-field  label="계약 ID" placeholder="" v-model="param.said">                        
                     </v-text-field>
                 </v-col>
             </v-row>
 
             <v-row>
                 <v-col cols="12" sm="6" md="4">
-                    <v-text-field dense label="서비스번호" placeholder="" v-model="param.service_no">                        
+                    <v-text-field  label="서비스번호" placeholder="" v-model="param.service_no">                        
                     </v-text-field>
                 </v-col>         
                 <v-col cols="12" sm="6" md="4">
-                    <v-text-field dense label="KTT계약ID" placeholder="" v-model="param.contract_id">                        
+                    <v-text-field  label="KTT계약ID" placeholder="" v-model="param.contract_id">                        
                     </v-text-field>
                 </v-col> 
                 <v-col cols="12" sm="6" md="2">

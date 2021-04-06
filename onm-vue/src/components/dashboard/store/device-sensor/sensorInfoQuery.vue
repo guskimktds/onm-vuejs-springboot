@@ -61,7 +61,6 @@
         <v-row>
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="단말 GWID"
               v-model="param.terminal_gw_id"
               placeholder=" "
@@ -71,7 +70,6 @@
           </v-col>
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="사용자 ID"
               v-model="param.user_id"
               placeholder=" "
@@ -81,7 +79,6 @@
           </v-col>
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="센서 이름"
               v-model="param.sensor_name"
               placeholder=" "

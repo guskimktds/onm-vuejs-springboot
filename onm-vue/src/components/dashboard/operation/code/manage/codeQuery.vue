@@ -27,7 +27,6 @@
             <v-row>
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
-                        dense 
                         label="코드구분" 
                         v-model="param.code_master_id"
                         placeholder=" " 
@@ -36,7 +35,6 @@
                 </v-col>         
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
-                        dense 
                         label="코드" 
                         v-model="param.code_id"
                         placeholder=" " 
@@ -45,7 +43,6 @@
                 </v-col> 
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
-                        dense 
                         label="코드명" 
                         v-model="param.code_name"
                         placeholder=" " 
@@ -53,8 +50,7 @@
                     </v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
+                    <v-text-field
                         label="코드타입" 
                         v-model="param.code_type"
                         placeholder=" " 

@@ -74,7 +74,6 @@
 
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="알림 ID"
               v-model="param.alim_id"
               placeholder=" "
@@ -84,7 +83,6 @@
 
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="사용자 ID"
               v-model="param.user_id"
               placeholder=" "
@@ -94,7 +92,6 @@
 
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="카메라 ID"
               v-model="param.cam_id"
               placeholder=" "

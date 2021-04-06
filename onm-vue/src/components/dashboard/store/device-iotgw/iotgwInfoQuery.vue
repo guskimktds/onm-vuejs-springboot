@@ -70,7 +70,6 @@
 
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="GWID(청약)"
               v-model="param.gw_id"
               placeholder=" "
@@ -80,7 +79,6 @@
           </v-col>
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="단말GW명 "
               v-model="param.gw_name"
               placeholder=" "
@@ -90,7 +88,6 @@
           </v-col>
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
               label="단말모델코드 "
               v-model="param.gw_model_code"
               placeholder=" "

@@ -16,7 +16,7 @@
         <v-row>
           <v-col cols="12" sm="6" md="2">
             <v-text-field
-              dense
+              
               label="사용자 ID"
               v-model="param.user_id"
               placeholder=" "
@@ -27,7 +27,7 @@
 
           <v-col cols="12" sm="6" md="2">
             <v-text-field
-              dense
+              
               label="VA 명"
               v-model="param.va_name"
               placeholder=" "

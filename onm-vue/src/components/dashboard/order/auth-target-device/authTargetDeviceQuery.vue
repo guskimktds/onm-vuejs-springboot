@@ -18,8 +18,7 @@
             <v-row>
 
                 <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
+                    <v-text-field
                         label="오더번호" 
                         v-model="param.oderno"
                         placeholder=" " 
@@ -28,7 +27,6 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
-                        dense 
                         label="MAC ID" 
                         v-model="param.mac_id"
                         placeholder=" " 
@@ -36,8 +34,7 @@
                     </v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
+                    <v-text-field
                         label="개통 오더번호" 
                         v-model="param.open_oderno"
                         placeholder=" " 

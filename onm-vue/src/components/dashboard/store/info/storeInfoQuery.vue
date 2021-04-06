@@ -71,7 +71,7 @@
         
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-              dense
+              
               label="계약 ID"
               v-model="param.said"
               placeholder=" "
@@ -81,7 +81,7 @@
 
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-              dense
+              
               label="매장명"
               v-model="param.user_name"
               placeholder=" "
@@ -94,7 +94,7 @@
 
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-              dense
+              
               label="매장ID"
               v-model="param.user_id"
               placeholder=" "
@@ -104,7 +104,7 @@
 
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-              dense
+              
               label="매장 전화번호"
               v-model="param.tel_no"
               placeholder=" "

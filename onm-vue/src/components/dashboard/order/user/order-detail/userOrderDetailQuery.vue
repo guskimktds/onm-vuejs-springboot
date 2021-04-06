@@ -64,7 +64,6 @@
         <v-row>
                 <v-col cols="12" sm="6" md="3">
                     <v-text-field 
-                        dense 
                         label="오더번호" 
                         v-model="param.oderno"
                         placeholder=" " 
@@ -74,7 +73,6 @@
 
                  <v-col cols="12" sm="6" md="3">
                     <v-text-field 
-                        dense 
                         label="거래고유번호" 
                         v-model="param.guid"
                         placeholder=" " 
@@ -84,7 +82,6 @@
 
                 <v-col cols="12" sm="6" md="3">
                     <v-text-field 
-                        dense 
                         label="사업장명" 
                         v-model="param.user_id"
                         placeholder=" " 

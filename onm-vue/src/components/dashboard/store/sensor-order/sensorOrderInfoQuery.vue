@@ -16,7 +16,7 @@
         <v-row>
           <v-col cols="12" sm="6" md="2">
             <v-text-field
-              dense
+              
               label="센서 ID"
               v-model="param.sensor_prod_id"
               placeholder=" "
@@ -27,7 +27,7 @@
 
           <v-col cols="12" sm="6" md="2">
             <v-text-field
-              dense
+              
               label="센서 제품명"
               v-model="param.sensor_prod_name"
               placeholder=" "

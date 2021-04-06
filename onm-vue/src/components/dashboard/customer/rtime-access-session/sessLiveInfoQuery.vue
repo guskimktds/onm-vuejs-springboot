@@ -76,7 +76,6 @@
       <v-row>
         <v-col cols="12" sm="6" md="4">
           <v-text-field
-            dense
             label="전화번호"
             v-model="param.tel_no"
             placeholder=""
@@ -87,7 +86,6 @@
 
         <v-col cols="12" sm="6" md="4">
           <v-text-field
-            dense
             label="사용자 ID"
             v-model="param.user_id"
             placeholder=" "

@@ -105,8 +105,7 @@
             </v-row>
             <v-row>
                 <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
+                    <v-text-field
                         label="ONM 처리자ID(사번)" 
                         v-model="param.onm_user_id"
                         placeholder=" " 
@@ -114,8 +113,7 @@
                     </v-text-field>
                 </v-col> 
                 <v-col cols="12" sm="6" md="3">
-                    <v-text-field 
-                        dense 
+                    <v-text-field
                         label="호출 URI" 
                         v-model="param.uri"
                         placeholder=" " 

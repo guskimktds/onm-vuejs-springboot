@@ -77,8 +77,7 @@
             </v-row>
             <v-row>
                 <v-col cols="12" sm="6" md="2">
-                    <v-text-field 
-                        dense 
+                    <v-text-field
                         label="이전 일련번호" 
                         v-model="param.mig_seq"
                         placeholder=" " 
@@ -87,7 +86,6 @@
                 </v-col>       
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
-                        dense 
                         label="단말종류" 
                         v-model="param.device_type"
                         placeholder=" " 
@@ -96,7 +94,6 @@
                 </v-col> 
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
-                        dense 
                         label="장치ID" 
                         v-model="param.device_id"
                         placeholder=" " 

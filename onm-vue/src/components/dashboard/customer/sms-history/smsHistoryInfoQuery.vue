@@ -66,7 +66,6 @@
       <v-row>
         <v-col cols="12" sm="3" md="3">
           <v-text-field
-            dense
             label="발송 전화번호"
             v-model="param.tel_number"
             placeholder=" "
@@ -76,7 +75,6 @@
 
         <v-col cols="12" sm="3" md="3">
           <v-text-field
-            dense
             label="OTP 번호"
             v-model="param.otp"
             placeholder=" "

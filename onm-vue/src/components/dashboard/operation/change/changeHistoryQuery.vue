@@ -79,7 +79,6 @@
             <v-row>
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
-                        dense 
                         label="매장ID" 
                         v-model="param.user_id"
                         placeholder=" " 
@@ -88,7 +87,6 @@
                 </v-col>   
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
-                        dense 
                         label="전화번호" 
                         v-model="param.tel_no"
                         placeholder=" " 
@@ -97,7 +95,6 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
-                        dense 
                         label="관리자구분" 
                         v-model="param.admin_type"
                         placeholder=" " 

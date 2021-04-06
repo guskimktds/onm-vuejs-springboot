@@ -64,7 +64,7 @@
 
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
+            
               label="사용자 ID"
               v-model="param.user_id"
               placeholder=" "
@@ -75,7 +75,7 @@
 
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
+              
               label="서비스 번호"
               v-model="param.service_no"
               placeholder=" "
@@ -86,7 +86,7 @@
 
           <v-col cols="12" sm="6" md="3">
             <v-text-field
-              dense
+              
               label="시스템 ID"
               v-model="param.system_id"
               placeholder=" "
