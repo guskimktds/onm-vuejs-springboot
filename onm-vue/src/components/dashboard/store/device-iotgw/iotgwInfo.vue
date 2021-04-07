@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card>
       <iotgwInfo-query
         v-on:search="searchToIotGWInfo"

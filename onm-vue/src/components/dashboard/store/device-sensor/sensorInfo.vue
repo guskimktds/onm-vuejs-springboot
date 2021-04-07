@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card>
       <sensorInfo-query
         v-on:search="searchToSensorInfo"
