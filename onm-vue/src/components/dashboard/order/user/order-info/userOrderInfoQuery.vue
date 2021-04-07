@@ -63,7 +63,7 @@
             </v-row>
 
             <v-row>
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="3">
                     <v-text-field 
                         label="계약 ID" 
                         v-model="param.said"
@@ -71,7 +71,7 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="3">
                     <v-text-field 
                         label="거래고유번호" 
                         v-model="param.guid"
@@ -79,7 +79,7 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="3">
                     <v-text-field
                         label="오더번호" 
                         v-model="param.oderno"
@@ -87,7 +87,7 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="2">
                     <v-btn 
                         elevation="2" 
                         medium

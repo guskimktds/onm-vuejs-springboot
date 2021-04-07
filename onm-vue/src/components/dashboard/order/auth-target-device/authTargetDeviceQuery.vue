@@ -17,7 +17,7 @@
             </v-row>
             <v-row>
 
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="2">
                     <v-text-field
                         label="오더번호" 
                         v-model="param.oderno"
@@ -25,7 +25,7 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="2">
                     <v-text-field 
                         label="MAC ID" 
                         v-model="param.mac_id"
@@ -33,7 +33,7 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="2">
                     <v-text-field
                         label="개통 오더번호" 
                         v-model="param.open_oderno"
@@ -42,7 +42,7 @@
                     </v-text-field>
                 </v-col>
                 
-                <v-col cols="12" sm="6" md="2">
+                  <v-col cols="2">
                     <v-btn 
                         elevation="2" 
                         medium
@@ -51,8 +51,9 @@
                         검색
                     </v-btn>
                 </v-col>
+            
 
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="2">
                     <v-switch
                         v-model="param.is_masking"                    
                         :label="`마스킹 해제`"

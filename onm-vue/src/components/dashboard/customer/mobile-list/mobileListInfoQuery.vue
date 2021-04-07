@@ -72,7 +72,7 @@
           </v-col>
 
           
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="3">
             <v-select
             v-model="param.os_type"
             :items="items"
@@ -84,7 +84,7 @@
         
         <v-row>
 
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="3">
             <v-text-field
               label="전화번호 ID"
               v-model="param.tel_no_id"
@@ -92,7 +92,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="3">
             <v-text-field
               label="사용자 ID"
               v-model="param.user_id"
@@ -101,7 +101,7 @@
             </v-text-field>
           </v-col>
 
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="3">
             <v-text-field
     
               label="로그인 키"

@@ -16,7 +16,7 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="2">
                  <v-select 
                   item-text="server_name" 
                   item-value="local_gw_id" 
@@ -26,7 +26,7 @@
                   v-on:change="searchMethod"
                   ></v-select>
                 </v-col>                
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="3">
                     <v-text-field 
                         label="코드구분" 
                         v-model="param.code_master_id"
@@ -34,7 +34,7 @@
                     >                        
                     </v-text-field>
                 </v-col>         
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="32">
                     <v-text-field 
                         label="구분코드명" 
                         v-model="param.code_master_name"
@@ -42,7 +42,7 @@
                     >                        
                     </v-text-field>
                 </v-col>                 
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="2">
                     <v-btn 
                         elevation="2" 
                         medium
@@ -51,7 +51,7 @@
                         검색
                     </v-btn>
                 </v-col>
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="2">
                     <v-dialog
                         v-model="dialog"
                         max-width="500px"

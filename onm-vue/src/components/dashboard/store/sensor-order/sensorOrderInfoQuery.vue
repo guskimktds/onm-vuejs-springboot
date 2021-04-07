@@ -14,7 +14,7 @@
                 </v-col>
             </v-row>
         <v-row>
-          <v-col cols="12" sm="6" md="2">
+          <v-col cols="3">
             <v-text-field
               
               label="센서 ID"
@@ -25,7 +25,7 @@
             </v-text-field>
           </v-col>
 
-          <v-col cols="12" sm="6" md="2">
+          <v-col cols="3">
             <v-text-field
               
               label="센서 제품명"
@@ -36,7 +36,7 @@
             </v-text-field>
           </v-col>
           
-          <v-col cols="12" sm="6" md="2">
+          <v-col cols="3">
             <v-select 
                 label="상태코드" 
                 v-model="selected"

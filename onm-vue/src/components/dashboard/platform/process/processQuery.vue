@@ -11,25 +11,7 @@
         >
 
             <v-row>
-                <v-col cols="12" sm="6" md="3">
-                 <v-select 
-                  item-text="server_name" 
-                  item-value="local_gw_id" 
-                  :items="localGwOptions"
-                  label="국사코드" 
-                  v-model="param.local_gw_id" 
-                  v-on:change="searchMethod"
-                  ></v-select>
-                </v-col>
-                
-            </v-row>
-
-            <v-row>
-                <v-col cols="12" sm="6" md="3">
-                    <v-text-field label="프로세스 타입" placeholder=" " v-model="param.process_type">                        
-                    </v-text-field>
-                </v-col> 
-                <v-radio-group
+                  <v-radio-group
                     v-model="status"
                     row>
                 <v-radio
@@ -45,7 +27,26 @@
                     value="U">
                 </v-radio>
                 </v-radio-group>
-                <v-col cols="12" sm="6" md="3">
+            </v-row>
+
+            <v-row>
+                <v-col cols="3">
+                 <v-select 
+                  item-text="server_name" 
+                  item-value="local_gw_id" 
+                  :items="localGwOptions"
+                  label="국사코드" 
+                  v-model="param.local_gw_id" 
+                  v-on:change="searchMethod"
+                  ></v-select>
+                </v-col>
+                
+                <v-col cols="3">
+                    <v-text-field label="프로세스 타입" placeholder=" " v-model="param.process_type">                        
+                    </v-text-field>
+                </v-col> 
+
+                <v-col cols="3">
                     <v-btn elevation="2" medium v-on:click="searchMethod">
                         검색
                     </v-btn>

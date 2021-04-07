@@ -59,7 +59,7 @@
         </v-row>
 
         <v-row>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="3">
             <v-text-field
               label="단말 GWID"
               v-model="param.terminal_gw_id"
@@ -68,7 +68,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="3">
             <v-text-field
               label="사용자 ID"
               v-model="param.user_id"
@@ -77,7 +77,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="3">
             <v-text-field
               label="센서 이름"
               v-model="param.sensor_name"

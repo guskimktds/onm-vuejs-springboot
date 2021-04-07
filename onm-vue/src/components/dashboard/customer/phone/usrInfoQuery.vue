@@ -51,7 +51,7 @@
                     </v-menu>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="2">
                     <v-switch
                         v-model="param.date_yn"                    
                         :label="`날짜검색`"
@@ -71,20 +71,20 @@
 
             <v-row>
 
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="3">
                     <v-text-field label="사용자명" placeholder=" " v-model="param.user_name">                        
                     </v-text-field>
                 </v-col>         
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="3">
                     <v-text-field  label="사용자ID" placeholder=" " v-model="param.user_id">                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="3">
                     <v-text-field  label="전화번호" placeholder=" " v-model="param.tel_no">                        
                     </v-text-field>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="2">
                     <v-btn elevation="2" medium v-on:click="searchMethod">
                         검색
                     </v-btn>

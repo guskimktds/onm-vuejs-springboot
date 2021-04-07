@@ -50,16 +50,6 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-        
-                  <v-col cols="3">
-              <v-select 
-                  item-text="server_name" 
-                  item-value="local_gw_id" 
-                  :items="localGwOptions" 
-                  v-model="param.local_gw_id" 
-                  v-on:change="searchMethod"
-                  ></v-select>
-          </v-col>
 
           <v-col cols="3">
                     <v-switch
@@ -71,8 +61,17 @@
         </v-row>
 
         <v-row>
+          <v-col cols="2">
+              <v-select 
+                  item-text="server_name" 
+                  item-value="local_gw_id" 
+                  :items="localGwOptions" 
+                  v-model="param.local_gw_id" 
+                  v-on:change="searchMethod">
+              </v-select>
+          </v-col>
 
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="2">
             <v-text-field
               label="알림 ID"
               v-model="param.alim_id"
@@ -81,7 +80,7 @@
             </v-text-field>
           </v-col>
 
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="2">
             <v-text-field
               label="사용자 ID"
               v-model="param.user_id"
@@ -90,7 +89,7 @@
             </v-text-field>
           </v-col>
 
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="2">
             <v-text-field
               label="카메라 ID"
               v-model="param.cam_id"

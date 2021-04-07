@@ -51,7 +51,7 @@
                     </v-menu>
                 </v-col>
 
-                <v-col cols="3">
+                <v-col cols="2">
                     <v-switch
                         v-model="param.date_yn"                    
                         :label="`날짜검색`"

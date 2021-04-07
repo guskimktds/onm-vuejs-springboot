@@ -15,16 +15,7 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols="12" md="2">
-                    <v-text-field label="전화번호" placeholder=" " v-model="param.tel_no">                        
-                    </v-text-field>
-                </v-col>         
-                <v-col cols="12" md="2">
-                    <v-text-field label="서비스계약ID" placeholder=" " v-model="param.said">                        
-                    </v-text-field>
-                </v-col> 
-                
-                   <v-radio-group
+                <v-radio-group
                     v-model="status"
                     row>
                 <v-radio
@@ -40,21 +31,30 @@
                     value="D">
                 </v-radio>
                 </v-radio-group>
-              
-                <v-col cols="12" md="2">
-                    <v-btn elevation="2" medium v-on:click="searchMethod">
-                        검색
-                    </v-btn>
-                </v-col>    
-
-                <v-col cols="12" md="2">
+                  <v-col cols="3">
                     <v-switch
                         v-model="param.is_masking"                    
                         :label="`마스킹 해제`"
                         color="secondary"
-
                     ></v-switch>
-                </v-col>                 
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="3">
+                    <v-text-field label="전화번호" placeholder=" " v-model="param.tel_no">                        
+                    </v-text-field>
+                </v-col>         
+                <v-col cols="3">
+                    <v-text-field label="서비스계약ID" placeholder=" " v-model="param.said">                        
+                    </v-text-field>
+                </v-col> 
+              
+                <v-col cols="2">
+                    <v-btn elevation="2" medium v-on:click="searchMethod">
+                        검색
+                    </v-btn>
+                </v-col>    
+                 
             </v-row>
    
         </base-material-card>

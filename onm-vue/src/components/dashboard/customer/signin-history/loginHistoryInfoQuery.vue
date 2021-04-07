@@ -45,7 +45,19 @@
                     </v-menu>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="2">
+                <v-radio-group
+                  row
+                  v-on:change="handleRadio"
+                  v-model="param.optionType">
+                    <v-radio
+                      label="로그인"
+                      value="login"></v-radio>
+                    <v-radio
+                      label="로그아웃"
+                      value="logout"></v-radio>                        
+                </v-radio-group>
+
+                <v-col cols="2">
                     <v-switch
                         v-model="param.date_yn"                    
                         :label="`날짜검색`"
@@ -53,20 +65,8 @@
                     ></v-switch>
                 </v-col>
       </v-row>
-
       <v-row>
-        <v-radio-group
-           row
-           v-on:change="handleRadio"
-           v-model="param.optionType">
-            <v-radio
-              label="로그인"
-              value="login"></v-radio>
-            <v-radio
-              label="로그아웃"
-              value="logout"></v-radio>                        
-        </v-radio-group>
-
+        
         <v-col cols="2">
           <v-select
             v-model="param.os_type"
@@ -75,10 +75,8 @@
             attach
           ></v-select>
         </v-col>
-      </v-row>
-      
-      <v-row>
-        <v-col cols="12" sm="6" md="3">
+
+        <v-col cols="2">
           <v-text-field
             label="로그인 ID"
             v-model="param.login_id"
@@ -87,7 +85,7 @@
           </v-text-field>
         </v-col>
 
-        <v-col cols="12" sm="6" md="3">
+        <v-col cols="2">
             <v-text-field
               label="로그인 키"
               v-model="param.login_key"
@@ -96,7 +94,7 @@
             </v-text-field>
         </v-col>
 
-        <v-col cols="12" sm="6" md="3">
+        <v-col cols="2">
             <v-text-field
               label="브라우저 타입"
               v-model="param.user_agent"

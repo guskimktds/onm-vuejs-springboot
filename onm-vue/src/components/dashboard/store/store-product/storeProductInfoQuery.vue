@@ -50,7 +50,7 @@
                     </v-menu>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="2">
                     <v-switch
                         v-model="param.date_yn"                    
                         :label="`날짜검색`"
@@ -60,7 +60,7 @@
         </v-row>
 
         <v-row>
-          <v-col cols="12" sm="6" md="4">
+          <v-col cols="4">
             <v-text-field
               
               label="상품번호"
@@ -71,7 +71,7 @@
             </v-text-field>
           </v-col>
 
-          <v-col cols="12" sm="6" md="4">
+          <v-col cols="4">
             <v-text-field
               
               label="사용자 ID"

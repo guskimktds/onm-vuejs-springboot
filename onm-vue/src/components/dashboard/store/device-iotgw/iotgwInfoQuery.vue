@@ -48,7 +48,7 @@
                     </v-menu>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="2">
                     <v-switch
                         v-model="param.date_yn"                    
                         :label="`날짜검색`"
@@ -56,7 +56,7 @@
                     ></v-switch>
                 </v-col>
 
-                <v-col cols="12" md="2">
+                <v-col cols="3">
                     <v-switch
                         v-model="param.is_masking"                    
                         :label="`마스킹 해제`"
@@ -68,7 +68,7 @@
         
         <v-row>
 
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="3">
             <v-text-field
               label="GWID(청약)"
               v-model="param.gw_id"
@@ -77,7 +77,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="3">
             <v-text-field
               label="단말GW명 "
               v-model="param.gw_name"
@@ -86,7 +86,7 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="3">
             <v-text-field
               label="단말모델코드 "
               v-model="param.gw_model_code"

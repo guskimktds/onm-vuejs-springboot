@@ -15,15 +15,15 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols="12" sm="6" md="5">
+                <v-col cols="4">
                     <v-text-field label="관리자ID" placeholder=" " v-model="param.admin_id">                        
                     </v-text-field>
                 </v-col>         
-                <v-col cols="12" sm="6" md="5">
+                <v-col cols="4">
                     <v-text-field label="매장ID" placeholder=" " v-model="param.user_id">                        
                     </v-text-field>
                 </v-col> 
-                 <v-col cols="12" md="2">
+                 <v-col cols="3">
                     <v-switch
                         v-model="param.is_masking"                    
                         :label="`마스킹 해제`"
@@ -31,15 +31,15 @@
 
                     ></v-switch>
                 </v-col> 
-                <v-col cols="12" sm="6" md="5">
+                <v-col cols="4">
                     <v-text-field label="전화번호" placeholder=" " v-model="param.tel_no">                        
                     </v-text-field>
                 </v-col>         
-                <v-col cols="12" sm="6" md="5">
+                <v-col cols="4">
                     <v-text-field label="로그인키" placeholder=" " v-model="param.login_key">                        
                     </v-text-field>
                 </v-col> 
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="2">
                     <v-btn elevation="2" medium v-on:click="searchMethod">
                         검색
                     </v-btn>

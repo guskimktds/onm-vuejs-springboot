@@ -77,21 +77,15 @@
                 </v-col>
                 </v-row>
                 <v-row >
-                    <v-col cols="12" sm="6" md="2">
+                    <v-col cols="3">
                         <v-text-field
                         label="사번" 
                         v-model="param.onm_user_id" 
                         placeholder=" " >                        
                         </v-text-field>
                     </v-col>         
-                    <!-- <v-col cols="12" sm="6" md="2">
-                        <v-text-field 
-                        label="이름" 
-                        v-model="param.name" 
-                        placeholder="Placeholder" >                        
-                        </v-text-field>
-                    </v-col>  -->
-                    <v-col cols="12" sm="6" md="2">
+        
+                    <v-col cols="3">
                         <v-text-field 
                         label="권한그룹ID" 
                         v-model="param.auth_group_id" 
@@ -108,7 +102,7 @@
                         </v-btn>
                     </v-col>  
                     
-                    <v-col cols="12" sm="6" md="2">
+                    <v-col cols="2">
                         <v-dialog
                             v-model="dialog"
                             max-width="400px"
