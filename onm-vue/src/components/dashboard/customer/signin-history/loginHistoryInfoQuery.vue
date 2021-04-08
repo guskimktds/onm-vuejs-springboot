@@ -75,6 +75,15 @@
             attach
           ></v-select>
         </v-col>
+           
+        <v-col cols="2">
+          <v-select
+            v-model="param.user_agent"
+            :items="b_items"
+            label="브라우저 타입"
+            attach
+          ></v-select>
+        </v-col>
 
         <v-col cols="2">
           <v-text-field
@@ -94,15 +103,6 @@
             </v-text-field>
         </v-col>
 
-        <v-col cols="2">
-            <v-text-field
-              label="브라우저 타입"
-              v-model="param.user_agent"
-              placeholder=" "
-            >
-            </v-text-field>
-        </v-col>
-
         <v-col cols="auto">
           <v-btn v-on:click="searchMethod">검색</v-btn>
         </v-col>
@@ -116,6 +116,7 @@ export default {
   data() {
     return {
       items: ["선택안함","PC", "iOS", "Android"],
+      b_items:["선택안함","Chrome","IE","FireFox","Safari"]
     };
   },
 
@@ -123,6 +124,9 @@ export default {
     searchMethod: function () {
       if (this.param.os_type === "선택안함") {
         this.param.os_type = "";
+      }
+      if(this.param.user_agent==="선택안함"){
+        this.param.user_agent="";
       }
       this.$emit("search", this.param);
     },
