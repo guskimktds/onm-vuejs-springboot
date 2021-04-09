@@ -151,14 +151,13 @@ export default {
         },
     },
     mounted() {
-        var menu=this.$store.state.menuIndex
-        var submenu=this.$store.state.subMenuIndex
-        if(menu==0&&submenu==0){
         setInterval(() => {
+            var url=window.location.pathname
+            if(url=='/platform/dashboard'){
             this.getDataFromApi();
             console.log('갱신')
+            }
           }, 60000);
-        }
     },
 }
 </script>
