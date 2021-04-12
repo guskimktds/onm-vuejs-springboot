@@ -118,6 +118,7 @@
 <script>
 
 import axios from "axios"
+import EventBus from '../../../EventBus'
 
 export default {
   data(){
@@ -144,6 +145,14 @@ export default {
       var resMsg = response.data.res_msg;
       if(resCode == 200){
         this.userInfo = response.data.data.list[0];
+      }else if(resCode==410){
+        alert(resCode + " / " + resMsg);
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
       }else{
         this.userInfo = [];
         alert(resCode + " / " + resMsg);
