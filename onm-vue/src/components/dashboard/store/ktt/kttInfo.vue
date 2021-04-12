@@ -18,6 +18,7 @@ import KttInfoList from "./kttInfoList";
 import KttInfoQuery from "./kttInfoQuery";
 import dateInfo from "../../../utils/common"
 
+import EventBus from '../../../../EventBus'
 import axios from "axios";
 
 const headers={
@@ -77,6 +78,14 @@ methods: {
           this.kList = [];
           this.kttPagingInfo = {};
           alert('KTT 정보 데이터가 없습니다.');
+        }else if(resCode==410){
+          alert(resCode + " / " + resMsg);
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
         }else{
           this.kList = [];
           this.kttPagingInfo = {};

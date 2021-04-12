@@ -17,6 +17,7 @@
 import List from './iotgw/iotgwList'
 import Query from './iotgw/iotgwQuery'
 
+import EventBus from '../../../EventBus'
 import axios from "axios"
 
 const headers = {
@@ -76,6 +77,14 @@ export default {
             this.pList = [];
             this.resPagingInfo = {};
             alert("IoT GW 상태현황 데이터가 없습니다.");
+        }else if(response.data.res_code==410){
+          alert(response.data.res_code + " / " + response.data.res_msg);
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
         }else{
           this.pList = [];
           alert(response.data.res_code + " / " + response.data.res_msg);

@@ -15,6 +15,7 @@ import List from './camRegList'
 import Chart from './camRegChart'
 import dateInfo from '../../../utils/common'
 
+import EventBus from '../../../../EventBus'
 import axios from "axios";
 
 const headers={
@@ -66,6 +67,14 @@ export default {
           this.pList = response.data.data.date_list;
           console.log('전달된 개통 해지추이 리스트')
           console.log(this.pList)
+        }else if(resCode==410){
+          alert(resCode + " / " + resMsg);
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
         }else{
           this.pList = [];
           alert(resCode + " / " + resMsg);

@@ -23,6 +23,7 @@ import List from './camera/cameraList'
 import Query from './camera/cameraQuery'
 
 import axios from "axios"
+import EventBus from '../../../EventBus'
 
 const headers = {
   "User-Agent": "GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)",
@@ -88,7 +89,15 @@ export default {
             this.pList = [];
             this.resPagingInfo = {};
             alert("카메라상태 현황 데이터가 없습니다.");
-        } else {
+        }else if(resCode==410){
+          alert(resCode + " / " + resMsg);
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+        }else {
           this.pList = [];
           this.resPagingInfo = {};
           alert(resCode + " / " + resMsg);

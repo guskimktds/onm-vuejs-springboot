@@ -20,6 +20,7 @@ import UserOrderResultList from './user-order-result/userOrderResultList'
 import UserOrderResultQuery from './user-order-result/userOrderResultQuery'
 import dateInfo from '../../utils/common'
 
+import EventBus from '../../../EventBus'
 import axios from "axios"
 
 const headers = {
@@ -77,6 +78,14 @@ export default {
             this.pList = [];
             this.resPagingInfo = {};
             alert("사용자 청약 오더 처리 결과 데이터가 없습니다.");
+        }else if(resCode==410){
+          alert(resCode + " / " + resMsg);
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
         }else{
           this.pList = [];
           this.resPagingInfo = {};

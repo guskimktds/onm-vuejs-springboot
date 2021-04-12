@@ -40,6 +40,7 @@
 
 <script>
 import axios from "axios"
+import EventBus from '../../../../EventBus'
 
 const headers={
   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
@@ -94,6 +95,14 @@ export default {
                     if(resCode == 200){
                     this.pList = response.data.data.process_list;
                     this.resPagingInfo=response.data.data.paging_info;
+                    }else if(resCode==410){
+                    alert(resCode + " / " + resMsg);
+                    EventBus.$emit('top-path-logout');
+                    this.$store
+                    .dispatch("LOGOUT")
+                    .then( res => { 
+                    console.log(res.status)}).catch(({ message }) => (this.msg = message))
+                    this.$router.replace('/signin')
                     }else{
                     this.pList = [];
                     this.resPagingInfo = {};

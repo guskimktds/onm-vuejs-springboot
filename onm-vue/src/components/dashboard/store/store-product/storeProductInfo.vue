@@ -20,6 +20,7 @@ import StoreProductInfoList from "./storeProductInfoList";
 import StoreProductInfoQuery from "./storeProductInfoQuery";
 import dateInfo from "../../../utils/common"
 
+import EventBus from '../../../../EventBus'
 import axios from "axios";
 
 const headers={
@@ -77,6 +78,14 @@ export default {
            this.List = [];
           this.resPagingInfo = {};
           alert('매장상품정보 데이터가 없습니다.');
+        }else if(resCode==410){
+          alert(resCode + " / " + resMsg);
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
         }else{
           this.List = [];
           this.resPagingInfo = {};

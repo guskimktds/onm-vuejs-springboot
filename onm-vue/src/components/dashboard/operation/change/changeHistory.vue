@@ -20,6 +20,7 @@ import ChangeHistoryQuery from './changeHistoryQuery'
 import ChangeHistoryList from './changeHistoryList'
 import dateInfo from '../../../utils/common'
 //로그인 시 서버에서 불러오면 수정해야함
+import EventBus from '../../../../EventBus'
 import axios from "axios"
 
 export default {
@@ -73,6 +74,14 @@ export default {
             this.pList = [];
             this.resPagingInfo = {};
             alert('[매장]관리자 변경 이력 데이터가 없습니다.');
+          }else if(resCode==410){
+            alert(resCode + " / " + resMsg);
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
           }else{
             this.pList = [];
             this.resPagingInfo = {};

@@ -16,6 +16,7 @@
 import List from './va/vaList'
 import Query from './va/vaQuery'
 
+import EventBus from '../../../EventBus'
 import axios from "axios"
 
 
@@ -68,6 +69,14 @@ export default {
           console.log(response)
           if(response.data.res_code == 200){
             this.pList = response.data.data.list;
+          }else if(response.data.res_code==410){
+            alert(response.data.res_code + " / " + response.data.res_msg);
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
           }else{
             this.pList = [];
             alert(response.data.res_code + " / " + response.data.res_msg);

@@ -20,6 +20,7 @@
 import List from './tempidList'
 import Query from './tempidQuery'
 
+import EventBus from '../../../../../EventBus'
 import axios from "axios"
 
 const headers = {
@@ -69,7 +70,15 @@ export default {
           this.pList = [];
           this.resPagingInfo = {};
           alert('TEMP ID 정보 데이터가 없습니다.');
-        } else {
+        }else if(resCode==410){
+          alert(resCode + " / " + resMsg);
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+        }else{
           this.pList = [];
           this.resPagingInfo = {};
           alert(resCode + " / " + resMsg);

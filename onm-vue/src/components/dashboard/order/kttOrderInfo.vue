@@ -19,6 +19,7 @@
 import List from './ktt-order/kttOrderInfoList'
 import Query from './ktt-order/kttOrderInfoQuery'
 
+import EventBus from '../../../EventBus'
 import axios from "axios"
 
 const headers = {
@@ -70,7 +71,15 @@ export default {
             this.kttList = [];
             this.kttPagingInfo = {};
             alert("KTT 청약정보 데이터가 없습니다.");
-        } else {
+        }else if(resCode==410){
+          alert(resCode + " / " + resMsg);
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+        }else{
           this.kttList = [];
           this.kttPagingInfo = {};
           alert(resCode + " / " + resMsg);

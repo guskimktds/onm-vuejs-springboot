@@ -17,6 +17,7 @@
 import SensorOrderInfoList from "./sensorOrderInfoList";
 import SensorOrderInfoQuery from "./sensorOrderInfoQuery";
 
+import EventBus from '../../../../EventBus'
 import axios from "axios";
 
 const headers={
@@ -70,6 +71,14 @@ export default {
           this.soList = [];
           this.soPagingInfo = {};
           alert('센서 신청 현황 데이터가 없습니다.');
+        }else if(resCode==410){
+          alert(resCode + " / " + resMsg);
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
         }else{
           this.soList = [];
           this.soPagingInfo = {};
