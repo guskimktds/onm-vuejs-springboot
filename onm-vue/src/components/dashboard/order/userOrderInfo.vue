@@ -114,7 +114,8 @@ export default {
         date_yn: true,
         said: '',
         guid: '',
-        oderno: ''
+        oderno: '',
+        is_masking:''
       }
     }
   },
@@ -179,7 +180,8 @@ export default {
       if(values) {
         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12002/get_user_subs_detail`
         var params = {
-          guid: values
+          guid: values,
+          is_masking: this.searchParam.is_masking? "N" : "Y"
         }
 
         axios.post(url, params, headers)
@@ -372,8 +374,14 @@ export default {
         newParams.date_yn=this.searchParam.date_yn
       } 
 
-   
-
+      if(params.is_masking !== undefined && params.is_masking !== ''){
+        newParams.is_masking = params.is_masking ? "N" : "Y";
+      }else if(
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
+      }
       return newParams
     }
   }

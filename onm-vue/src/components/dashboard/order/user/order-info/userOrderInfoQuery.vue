@@ -52,10 +52,18 @@
                     </v-menu>
                 </v-col>
 
-                 <v-col cols="3">
+                 <v-col cols="2">
                     <v-switch
                         v-model="param.date_yn"                    
                         :label="`날짜검색`"
+                        color="secondary"
+                    ></v-switch>
+                </v-col>
+
+                <v-col cols="3">
+                    <v-switch
+                        v-model="param.is_masking"                    
+                        :label="`마스킹 해제`"
                         color="secondary"
                     ></v-switch>
                 </v-col>
