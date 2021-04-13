@@ -24,7 +24,7 @@
                         v-show=dateOption
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.start_date" no-title scrollable type="date">
+                    <v-date-picker v-model="param.start_date" no-title scrollable type="date" @click:date="change()">
                     </v-date-picker>
                     </v-menu>
 
@@ -64,7 +64,7 @@
                         v-show=dateOption
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.end_date" no-title scrollable type="date">
+                    <v-date-picker v-model="param.end_date" no-title scrollable type="date" @click:date="change()">
                     </v-date-picker>
                     </v-menu>
                     
@@ -121,7 +121,6 @@ import PlatformGraph from '../dashboard/platformGraph'
 import dateInfo from '../../../utils/common'
 
 export default{
-
   components:{
     PlatformGraph
   },
@@ -133,16 +132,18 @@ export default{
                 search_type:'D',
                 start_date: dateInfo().lastWeekDashFormat,
                 end_date: dateInfo().currentDateDashFormat
-            }
+            },
+            datepick:{  
+                search_type:'D',
+                start_date: dateInfo().lastWeekDashFormat,
+                end_date: dateInfo().currentDateDashFormat
+            },
         }
     },
    
     methods: {
         handleRadio: function(value) {
-            console.log(value)
             this.param.search_type = value
-            console.log(this.param)
-
             if(value==='D'){
                 this.dateOption=true
                 this.monthOption=false
@@ -155,7 +156,10 @@ export default{
                 this.param.start_date=dateInfo().lastMonthDefault
                 this.param.end_date=dateInfo().currentMonthDefault
             }
-
+         
+        },
+        change:function(){
+            this.$emit('datepick',this.param)
         }
     },
 

@@ -46,6 +46,7 @@ export default {
         { text: '개통진행', value: 'proc_cnt' },
         { text: '개통실패', value: 'fail_cnt' },
         { text: '네트워크장애', value: 'disconn_cnt' },
+        { text: '일시정지', value : 'pause_cnt'}
       ],
     }
   },

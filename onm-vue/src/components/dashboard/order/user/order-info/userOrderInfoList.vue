@@ -53,8 +53,8 @@ export default {
           { text: '오더번호', value: 'oderno' , align: 'left'},
           { text: '오더순번', value: 'oderseq' , align: 'left'},
           { text: '처리희망일자', value: 'appointdate' , align: 'left'},
-          { text: '사용여부', value: 'use_yn' , align: 'left'},
-          { text: '생성일시', value: 'cdate' , align: 'left' },
+          { text: '처리여부', value: 'use_yn' , align: 'left'},
+          { text: '등록일시', value: 'cdate' , align: 'left' },
           { text: 'OSS 통보', value: 'notice_yn' , align: 'left' },
           { text: 'KTT 고객', value: 'ktt_user_yn' , align: 'left' }
         ]

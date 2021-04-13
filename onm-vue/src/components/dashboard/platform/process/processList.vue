@@ -44,6 +44,7 @@ export default {
       ],
       headers: [
         { text: '국사코드', value: 'local_gw_id' },
+        { text: '서버명', value: 'hostname'},
         { text: '프로세스타입', value: 'proc_type' },
         { text: '프로세스명', value: 'proc_name' },
         { text: '상태', value: 'proc_status' },

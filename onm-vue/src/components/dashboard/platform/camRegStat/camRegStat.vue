@@ -2,7 +2,7 @@
     <v-container fluid>
       <v-card>
         <cam-reg-chart
-        v-on:datepick="searchCamRegStat"></cam-reg-chart>
+        @datepick="getDataFromApi"></cam-reg-chart>
         <cam-reg-list 
         v-bind:pList="pList"
         ></cam-reg-list>
@@ -47,26 +47,13 @@ export default {
   methods: {
     searchCamRegStat: function(datepick){
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_11014/get_transition`
-    let params={}
-    console.log('데이트픽')
-    console.log(datepick)
-    if(datepick.end_date===''||datepick.start_date===''){
-      params=this.startpick
-      console.log('파라미터 값')
-      console.log(params)
-    }else{
-      params=datepick
-    }
 
-      axios.post(url, params, headers)
+      axios.post(url, datepick, headers)
       .then((response) => {
-        console.log(response)
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if(resCode == 200){
           this.pList = response.data.data.date_list;
-          console.log('전달된 개통 해지추이 리스트')
-          console.log(this.pList)
         }else if(resCode==410){
           alert(resCode + " / " + resMsg);
           EventBus.$emit('top-path-logout');
@@ -85,8 +72,16 @@ export default {
       })
       .finally(function(){})
     },
-    getDataFromApi() {
+    getDataFromApi(values) {
+        if(values==undefined){
+          this.datepick=this.startpick
+        }else{
+          this.datepick.start_date=values.start_date.replace(/-/g,"")
+          this.datepick.end_date=values.end_date.replace(/-/g,"")
+          this.datepick.search_type=values.search_type
+        }
         this.loading = true;
+        console.log(this.datepick)
         this.searchCamRegStat(this.datepick)
     },
   },

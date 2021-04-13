@@ -42,19 +42,27 @@ export default {
       loading: true,
       headers:[
         {
-          text: "매장ID", align: "start",
-          sortable: false, value: "user_id"
+          text: "계약ID", align: "start",
+          sortable: false, value: "said"
         },
+        { text: "매장ID", value: "user_id" },
         { text: "매장명", value: "user_name" },
-        { text: "상품코드", value: "prod_code" },
+        { text: "로컬 GW 아이디", value: "local_gw_id" },
+        { text: "전화번호", value: "tel_no" },
         { text: "상태코드", value: "status_code" },
-        { text: "주문번호", value: "order_no" },
+        { text: "상품코드", value: "prod_code" },
+        { text: "해상도", value: "resolution" },
+        { text: "서브ID개수", value: "subid_cnt" },
+        { text: "영상저장기간", value: "storage_chg_day" },
         { text: "IoT TARGET SEQ", value: "iot_target_seq" },
         { text: "IoT MEMBER SEQ", value: "iot_member_seq" },
-        { text: "로컬융함GW아이디", value: "local_gw_id" },
+        { text: "주문번호", value: "order_no" },
+        { text: "희망처리일시", value: "appoint_date"},
         { text: "등록일", value: "reg_date" },
         { text: "수정일", value: "mod_date" },
-        { text: "희망처리일자", value: "appoint_date" },
+        { text: "IP 카메라 대수", value: "ip_cam_cnt"},
+        { text: "POS 카메라 대수", value: "pos_cam_cnt"},
+        { text: "IoT GW 대수", value: "iotgw_cnt"},
       ]
     }
   },

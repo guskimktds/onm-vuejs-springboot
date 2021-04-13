@@ -43,11 +43,12 @@ export default {
       loading: true,
       headers: [
         {
-          text: "센서 ID",
+          text: "매장 ID",
           align: "start",
           sortable: false,
-          value: "sensor_id",
+          value: "user_id",
         },
+        { text: "센서 ID", value: "sensor_id" },
         { text: "단말 GW ID", value: "terminal_gw_id" },
         { text: "센서 제품 ID", value: "sensor_prod_id" },
         { text: "사용자 ID", value: "user_id" },

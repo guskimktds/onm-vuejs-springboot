@@ -42,11 +42,12 @@ export default {
       loading: true,
       headers: [
         {
-          text: "카메라 ID",
+          text: "매장 ID",
           align: "start",
           sortable: false,
-          value: "cam_id",
+          value: "user_id",
         },
+        { text: "카메라 ID", value: "cam_id" },
         { text: "카메라 IP", value: "cam_ip" },
         { text: "카메라명", value: "cam_name" },
         { text: "MAC ID", value: "mac_id" },

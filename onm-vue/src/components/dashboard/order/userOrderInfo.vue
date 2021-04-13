@@ -182,21 +182,16 @@ export default {
           guid: values
         }
 
-        console.log(params)
-
         axios.post(url, params, headers)
         .then((response) => {
-          console.log(response)
-          console.log(response.data.data)
-          
            var resCode = response.data.res_code;
             var resMsg = response.data.res_msg;
             if(resCode == 200){
               this.pObject = response.data.data
-              
               this.showDetailObject = true
               this.isReloadDetailObject = true
               this.orderBtn=!this.orderBtn
+              console.log(this.pObject)
             }else if(resCode==204){
               this.pObject = {};
               this.showDetailObject = false
