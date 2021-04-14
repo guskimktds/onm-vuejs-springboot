@@ -178,7 +178,7 @@
           md="6">
             <v-text-field
               v-model="pObject.notice_result"
-              label="청약결과 통보번호"
+              label="청약처리결과 통보번호"
               required>
             </v-text-field>
           </v-col>
