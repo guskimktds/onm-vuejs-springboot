@@ -43,7 +43,7 @@
                         v-show=monthOption
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.start_date" no-title scrollable type="month">
+                    <v-date-picker v-model="param.start_date" no-title scrollable type="month" @click:month="change()">
                     </v-date-picker>
                     </v-menu>
 
@@ -83,7 +83,7 @@
                         v-show=monthOption
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.end_date" no-title scrollable type="month">
+                    <v-date-picker v-model="param.end_date" no-title scrollable type="month" @click:month="change()">
                     </v-date-picker>
                     </v-menu>
                 </v-col>

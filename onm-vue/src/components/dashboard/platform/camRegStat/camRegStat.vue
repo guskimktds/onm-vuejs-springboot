@@ -75,13 +75,19 @@ export default {
     getDataFromApi(values) {
         if(values==undefined){
           this.datepick=this.startpick
-        }else{
+        }else if(values.search_type=='D'){
           this.datepick.start_date=values.start_date.replace(/-/g,"")
           this.datepick.end_date=values.end_date.replace(/-/g,"")
-          this.datepick.search_type=values.search_type
+        }else if(values.search_type=='M'){
+          var ey=values.end_date.replace(/-/g,"").substring(0,4)
+          var em=values.end_date.replace(/-/g,"").substring(4,6)
+          var last=new Date(ey,em,0)
+          var lastdate=last.toString().substring(8,10)
+         
+          this.datepick.start_date=values.start_date.replace(/-/g,"")+'01'
+          this.datepick.end_date=values.end_date.replace(/-/g,"")+lastdate
         }
         this.loading = true;
-        console.log(this.datepick)
         this.searchCamRegStat(this.datepick)
     },
   },
