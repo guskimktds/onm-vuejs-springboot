@@ -113,7 +113,16 @@
         "menu_id": "M400",
         "path": "/customer",
         "component": "customer",
-        "children": [
+        "children": [{
+                "name": "사용자 정보",
+                "path": "/customer",
+                "active": true,
+                "icon":"mdi-account-box",
+                "component": "customer",
+                "children": [
+                    { "name": "사용자 전화번호", "path": "/customer/phone", "component": "phone" }
+                ]
+            },
             {
                 "name": "사용자 활동 정보 관리",
                 "path": "/customer/activity",

@@ -101,14 +101,14 @@
         "name": "사용자정보 관리",
         "path": "/customer",
         "component": "customer",
-        "children": [{
-                "name": "사용자 정보",
-                "path": "/customer",
-                "component": "customer",
-                "children": [
-                    { "name": "사용자 전화번호", "path": "/customer/phone", "component": "phone" }
-                ]
-            },
+        "children": [ {
+            "name": "사용자 정보",
+            "path": "/customer",
+            "component": "customer",
+            "children": [
+                { "name": "사용자 전화번호", "path": "/customer/phone", "component": "phone" }
+            ]
+        },
             {
                 "name": "사용자 활동 정보 관리",
                 "path": "/customer/activity",
