@@ -125,6 +125,8 @@ export default {
         // .then(this.$router.replace('/account'))
         // //.then(() => this.redirect())
         // .catch(({ data }) => (this.msg = data))
+        id=id.replace(/ /gi,"")
+        console.log(id)
         this.$store
           .dispatch("LOGIN", { id, password })
 
