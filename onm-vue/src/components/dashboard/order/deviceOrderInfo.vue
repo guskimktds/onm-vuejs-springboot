@@ -106,7 +106,8 @@ export default {
         date_yn: true,
         guid:'',
         oderno:'',
-        said:''
+        said:'',
+        status_code:''
       }
     }
   },
@@ -359,6 +360,15 @@ export default {
         this.searchParam.said!==""
       ){
         newParams.said=this.searchParam.said
+      }
+
+      if(params.status_code !== undefined && params.status_code !== ''){
+        newParams.status_code = params.status_code
+      }else if(
+        this.searchParam.status_code!==undefined&&
+        this.searchParam.status_code!==""
+      ){
+        newParams.status_code=this.searchParam.status_code
       }
 
       return newParams

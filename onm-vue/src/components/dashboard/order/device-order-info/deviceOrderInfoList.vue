@@ -65,11 +65,11 @@ export default {
       this.$emit("pagination", this.options);
     },
     switchString(values){
-      if(values==='T'){
+      if(values=='T'){
         return '청약취소'
-      }else if(values==='Y'){
+      }else if(values=='Y'){
         return '통보완료'
-      }else if(values==='N'){
+      }else if(values=='N'){
         return '미통보'
       }
     }

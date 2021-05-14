@@ -61,7 +61,7 @@
             </v-row>
 
             <v-row>
-                <v-col cols="3">
+                <v-col cols="2">
                     <v-text-field
                         label="오더번호" 
                         v-model="param.oderno"
@@ -69,7 +69,7 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="3">
+                <v-col cols="2">
                     <v-text-field
                         label="계약 ID" 
                         v-model="param.said"
@@ -77,13 +77,23 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="3">
+                <v-col cols="2">
                     <v-text-field
                         label="거래고유번호" 
                         v-model="param.guid"
                         placeholder=" " 
                     >                        
                     </v-text-field>
+                </v-col>
+
+                <v-col cols="2">
+                <v-select 
+                        label="상태코드" 
+                        v-model="selected"
+                        :items="items"
+                        item-text="state"
+                        item-value="abbr"
+                    ></v-select>
                 </v-col>
                 
             <v-col cols="auto">
@@ -105,11 +115,22 @@ export default {
     props: ['param'],
     data() {
         return {
+          selected:'All',
+          items:[
+                    {state:'전체', abbr:'All'},
+                    {state:'청약취소', abbr: 'T'},
+                    {state:'통보완료', abbr:'Y'},
+                    {state:'미통보', abbr:'N'}]
         }
     },
 
   methods: {
     searchMethod: function () {
+      if(this.selected=='All'){
+        this.param.status_code=''
+      }else{
+      this.param.status_code=this.selected
+      }
       this.$emit("search", this.param);
     },
   },
