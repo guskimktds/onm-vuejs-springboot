@@ -127,9 +127,9 @@ export default {
   methods: {
     searchMethod: function () {
       if(this.selected=='All'){
-        this.param.status_code=''
+        this.param.notice_yn=''
       }else{
-      this.param.status_code=this.selected
+      this.param.notice_yn=this.selected
       }
       this.$emit("search", this.param);
     },
