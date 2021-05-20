@@ -44,7 +44,7 @@ export default {
             text: '거래고유번호', align: 'start',
             sortable: false, value: 'guid',
           },
-          { text: '오더유형', value: 'type' },   
+          { text: '오더유형', value: 'ordertype' },   
           { text: '오더번호', value: 'oderno' },
           { text: '청약처리결과코드', value: 'resultcode' },
           { text: '청약처리결과메시지', value: 'resultmsg' },
