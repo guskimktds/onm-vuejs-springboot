@@ -95,7 +95,7 @@ export default {
                     if(resCode == 200){
                     this.pList = response.data.data.process_list;
                     this.resPagingInfo=response.data.data.paging_info;
-                    }else if(resCode==410){
+                    }else if(resCode==401){
                     alert(resCode + " / " + resMsg);
                     EventBus.$emit('top-path-logout');
                     this.$store

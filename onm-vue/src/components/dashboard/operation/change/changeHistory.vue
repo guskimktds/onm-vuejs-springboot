@@ -189,6 +189,15 @@ export default {
       ){
         newParams.order_category=this.searchParam.order_category
       }
+
+      if(Number(newParams.start_date)-Number(newParams.end_date)>0){
+        alert('형식에 맞는 날짜 검색값을 입력해주세요')
+        newParams.start_date=dateInfo().lastWeekDashFormat.replace(/-/g,"")
+        newParams.end_date=dateInfo().currentDateDashFormat.replace(/-/g,"")
+        this.searchParam.start_date=dateInfo().lastWeekDashFormat
+        this.searchParam.end_date=dateInfo().currentDateDashFormat
+      }
+      
       newParams.date_yn=this.searchParam.date_yn
       return newParams
     }

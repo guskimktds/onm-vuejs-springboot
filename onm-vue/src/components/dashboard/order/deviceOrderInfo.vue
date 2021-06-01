@@ -106,7 +106,8 @@ export default {
         date_yn: true,
         guid:'',
         oderno:'',
-        said:''
+        said:'',
+        notice_yn:''
       }
     }
   },
@@ -359,6 +360,22 @@ export default {
         this.searchParam.said!==""
       ){
         newParams.said=this.searchParam.said
+      }
+
+      if(params.notice_yn !== undefined && params.notice_yn !== ''){
+        newParams.notice_yn = params.notice_yn
+      }else if(
+        this.searchParam.notice_yn!==undefined&&
+        this.searchParam.notice_yn!==""
+      ){
+        newParams.notice_yn=this.searchParam.notice_yn
+      }
+      if(Number(newParams.start_date)-Number(newParams.end_date)>0){
+        alert('형식에 맞는 날짜 검색값을 입력해주세요')
+        newParams.start_date=dateInfo().lastWeekDashFormat.replace(/-/g,"")
+        newParams.end_date=dateInfo().currentDateDashFormat.replace(/-/g,"")
+        this.searchParam.start_date=dateInfo().lastWeekDashFormat
+        this.searchParam.end_date=dateInfo().currentDateDashFormat
       }
 
       return newParams
