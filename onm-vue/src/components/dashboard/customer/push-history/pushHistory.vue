@@ -58,9 +58,18 @@ beforeCreate() {
     .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
     .then((response) => {
         this.localGwOptions = response.data.data.local_gw_list;
-        this.searchParam.local_gw_id=this.localGwOptions[0].local_gw_id;
-        console.log('%%%%')
-        console.log(this.searchParam)
+        // version_code가 1302이상인 국사를 조회하도록 파라미터 세팅(21.06.03)
+        for(var idx in this.localGwOptions){
+           if(this.localGwOptions[idx].version_code > 1301){
+             var local_gw_id = this.localGwOptions[idx].local_gw_id;
+           }
+        }
+        this.searchParam.local_gw_id = local_gw_id;
+        //
+        
+        // this.searchParam.local_gw_id=this.localGwOptions[0].local_gw_id;
+        // console.log('%%%%')
+        // console.log(this.searchParam)
         this.searchToPushHistory(this.searchParam);
     })
     .catch(function (error) {
