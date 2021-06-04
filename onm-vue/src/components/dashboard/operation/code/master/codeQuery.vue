@@ -20,7 +20,7 @@
                  <v-select 
                   item-text="server_name" 
                   item-value="local_gw_id" 
-                  :items="localGwOptions"
+                  :items="filteredData"
                   label="국사코드" 
                   v-model="param.local_gw_id" 
                   v-on:change="searchMethod"
@@ -201,6 +201,14 @@ export default {
         // return this.editedIndex === -1 ? '등록' : '수정'
         return '등록'
       },
+      // select box => center 국사정보와 version_code가 1302이상인 
+      // 국사정보만 노출하도록 추가(21.06.03)
+      filteredData(){
+        return this.localGwOptions.filter(function(param){
+            return (Number(param.version_code) > 1301 || param.local_gw_id == '');
+        });
+      }
+      //
     },
     methods: {
         showAuth(){
