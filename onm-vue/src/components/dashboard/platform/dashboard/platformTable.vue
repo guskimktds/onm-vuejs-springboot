@@ -143,27 +143,37 @@ export default {
             return values;
         },
         
-        getDataFromApi() {
-        this.loading = true;
-        this.processList(this.options)
-        this.cameraList(this.options2)
+        getProcessApi() {
+            this.loading = true;
+            this.processList(this.options)
         },
+        getCameraApi(){
+            this.loading=true;
+            this.cameraList(this.options2)
+        }
         
     },
 
     watch: {
         options: {
-        handler() {
-         this.getDataFromApi();
-        },
-        deep: true,
-        },
+            handler() {
+                this.getProcessApi();
+            },
+            deep: true,
+            },
+        options2:{
+            handler(){
+                this.getCameraApi();
+            },
+            deep:true
+        }
     },
     mounted() {
         setInterval(() => {
             var url=window.location.pathname
             if(url=='/platform/dashboard'){
-            this.getDataFromApi();
+            this.getProcessApi();
+            this.getCameraApi();
             console.log('갱신')
             }
           }, 60000);
