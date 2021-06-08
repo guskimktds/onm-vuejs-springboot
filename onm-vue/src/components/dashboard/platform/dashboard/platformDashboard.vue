@@ -171,6 +171,25 @@ export default {
                 this.param.end_date=dateInfo().currentMonthDefault
             }
 
+            if(Number(this.param.start_date)-Number(this.param.end_date)>0){
+                alert('형식에 맞는 날짜 검색값을 입력해주세요')
+                
+                if(value==='D'){
+                this.dateOption=true
+                this.monthOption=false
+                this.param.start_date=dateInfo().lastWeekDashFormat
+                this.param.end_date=dateInfo().currentDateDashFormat
+                }
+                
+                if(value==='M'){
+                this.dateOption=false
+                this.monthOption=true
+                this.param.start_date=dateInfo().lastMonthDefault
+                this.param.end_date=dateInfo().currentMonthDefault
+                }
+               
+            }
+
             
         }
     },

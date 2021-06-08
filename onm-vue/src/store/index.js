@@ -99,7 +99,7 @@ export default new Vuex.Store({
                 login_id: id,
                 login_pwd: password
             }
-            console.log(params)
+            //console.log(params)
             return axios.post(url, params, this.headers)
                 .then((response) => {
                     console.log("####  Cookie 1####");
