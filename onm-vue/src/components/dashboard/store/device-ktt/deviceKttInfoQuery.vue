@@ -73,7 +73,7 @@ export default {
          selected:'All',
          items:[
              {state:'전체', abbr:'All'},
-             {state:'정상', abbr: 'S'},
+             {state:'정상', abbr:'S'},
              {state:'삭제', abbr:'D'},
          ]
      }
