@@ -156,6 +156,8 @@ export default{
                 this.param.start_date=dateInfo().lastMonthDefault
                 this.param.end_date=dateInfo().currentMonthDefault
             }
+            
+        
          
         },
         change:function(){

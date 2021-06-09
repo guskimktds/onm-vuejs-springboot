@@ -169,9 +169,7 @@ export default {
                 this.monthOption=true
                 this.param.start_date=dateInfo().lastMonthDefault
                 this.param.end_date=dateInfo().currentMonthDefault
-            }
-
-            
+            }  
         }
     },
 

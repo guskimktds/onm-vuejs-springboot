@@ -237,6 +237,21 @@ export default {
       }
       newParams.date_yn=this.searchParam.date_yn
 
+      if(Number(newParams.login_start_date)-Number(newParams.login_end_date)>0){
+        alert('형식에 맞는 날짜 검색값을 입력해주세요')
+        newParams.login_start_date=dateInfo().lastWeekDashFormat.replace(/-/g,"")
+        newParams.login_end_date=dateInfo().currentDateDashFormat.replace(/-/g,"")
+        this.searchParam.start_date=dateInfo().lastWeekDashFormat
+        this.searchParam.end_date=dateInfo().currentDateDashFormat
+      }
+      else if(Number(newParams.logout_start_date)-Number(newParams.logout_end_date)>0){
+        alert('형식에 맞는 날짜 검색값을 입력해주세요')
+        newParams.logout_start_date=dateInfo().lastWeekDashFormat.replace(/-/g,"")
+        newParams.logout_end_date=dateInfo().currentDateDashFormat.replace(/-/g,"")
+        this.searchParam.start_date=dateInfo().lastWeekDashFormat
+        this.searchParam.end_date=dateInfo().currentDateDashFormat
+      }
+
       return newParams;
     },
   },
