@@ -35,11 +35,11 @@ export default{
         return{
             title: "KTT 단말정보 조회",
             dkList:[],
-            reqpagingInfo:{
+            dkttPagingInfo:{},
+            reqPagingInfo:{
                 page_no:1,
                 view_cnt:10
             },
-            dkttPagingInfo:{},
             searchParam:{
                 cam_id:'',
                 user_id:'',
@@ -53,7 +53,7 @@ export default{
             var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13011/get_ktt_cam_list`
 
             var reqParams=this.handleParams(params)
-
+            console.log(reqParams)
             axios.post(url,reqParams,headers)
                 .then((response)=>{
                     var resCode=response.data.res_code;
@@ -82,73 +82,69 @@ export default{
                     console.log('조회 실패',ex)
                 })
                 .finally(function(){})
+        },
+        setToSearchParams: function(values){
+
+        var params = {
+            page_no: values.page,
+            view_cnt: values.itemsPerPage
         }
-    },
 
-    setToSearchParams: function(values){
-      console.log(values)
+        this.searchdKTTInfo(params)
+        },
 
-      var params = {
-        page_no: values.page,
-        view_cnt: values.itemsPerPage
-      }
+        handleParams:function(params){
+        let newParams={}
 
-      console.log(params)
+        if(params.page_no === undefined || params.page_no === ''){
+            newParams.page_no = this.reqPagingInfo.page_no
+        }else{
+            newParams.page_no = params.page_no
+        }
+        if(params.view_cnt === undefined || params.view_cnt === ''){
+            newParams.view_cnt = this.reqPagingInfo.view_cnt
+        }else{
+            newParams.view_cnt = params.view_cnt
+        } 
 
-      this.searchdKTTInfo(params)
-    },
+        if(params.cam_id !== undefined && params.cam_id !== ''){
+            newParams.cam_id = params.cam_id
+        }else if(
+            this.searchParam.cam_id!==undefined&&
+            this.searchParam.cam_id!==""
+        ){
+            newParams.cam_id=this.searchParam.cam_id
+        }
 
-    handleParams:function(params){
-      let newParams={}
+        if(params.user_id !== undefined && params.user_id !== ''){
+            newParams.user_id = params.user_id
+        }else if(
+            this.searchParam.user_id!==undefined&&
+            this.searchParam.user_id!==""
+        ){
+            newParams.user_id=this.searchParam.user_id
+        }
 
-      if(params.page_no === undefined || params.page_no === ''){
-        newParams.page_no = this.reqPagingInfo.page_no
-      }else{
-        newParams.page_no = params.page_no
-      }
-      if(params.view_cnt === undefined || params.view_cnt === ''){
-        newParams.view_cnt = this.reqPagingInfo.view_cnt
-      }else{
-        newParams.view_cnt = params.view_cnt
-      } 
+        if(params.status_code !== undefined && params.status_code !== ''){
+            newParams.status_code = params.status_code
+        }else if(
+            this.searchParam.status_code!==undefined&&
+            this.searchParam.status_code!==""
+        ){
+            newParams.status_code=this.searchParam.status_code
+        }
 
-      if(params.cam_id !== undefined && params.cam_id !== ''){
-        newParams.cam_id = params.cam_id
-      }else if(
-        this.searchParam.cam_id!==undefined&&
-        this.searchParam.cam_id!==""
-      ){
-        newParams.cam_id=this.searchParam.cam_id
-      }
-
-      if(params.user_id !== undefined && params.user_id !== ''){
-        newParams.user_id = params.user_id
-      }else if(
-        this.searchParam.user_id!==undefined&&
-        this.searchParam.user_id!==""
-      ){
-        newParams.user_id=this.searchParam.user_id
-      }
-
-      if(params.status_code !== undefined && params.status_code !== ''){
-        newParams.status_code = params.status_code
-      }else if(
-        this.searchParam.status_code!==undefined&&
-        this.searchParam.status_code!==""
-      ){
-        newParams.status_code=this.searchParam.status_code
-      }
-
-      if(params.service_no !== undefined && params.service_no !== ''){
-        newParams.service_no = params.service_no
-      }else if(
-        this.searchParam.service_no!==undefined&&
-        this.searchParam.service_no!==""
-      ){
-        newParams.service_no=this.searchParam.service_no
-      }
-
-      return newParams
+        if(params.service_no !== undefined && params.service_no !== ''){
+            newParams.service_no = params.service_no
+        }else if(
+            this.searchParam.service_no!==undefined&&
+            this.searchParam.service_no!==""
+        ){
+            newParams.service_no=this.searchParam.service_no
+        }
+        
+        return newParams;
+        }
     }
 }
 </script>
