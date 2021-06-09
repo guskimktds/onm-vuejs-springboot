@@ -17,6 +17,7 @@
 <script>
 import DeviceKttInfoList from './deviceKttInfoList.vue'
 import DeviceKttInfoQuery from './deviceKttInfoQuery.vue'
+import dateInfo from '../../../utils/common'
 
 import EventBus from '../../../utils/common'
 import axios from "axios";
@@ -41,6 +42,9 @@ export default{
                 view_cnt:10
             },
             searchParam:{
+                start_date: dateInfo().lastWeekDashFormat,
+                end_date: dateInfo().currentDateDashFormat,
+                date_yn:true,
                 cam_id:'',
                 user_id:'',
                 service_no:'',
@@ -54,6 +58,11 @@ export default{
 
             var reqParams=this.handleParams(params)
             console.log(reqParams)
+            if(!reqParams.start_date&&!reqParams.cam_id&&!reqParams.user_id&&!reqParams.servvice_no&&!reqParams.status_code){
+              this.$fire({
+              title: "검색값을 입력해주세요.",
+              type: "error"})
+            }else{
             axios.post(url,reqParams,headers)
                 .then((response)=>{
                     var resCode=response.data.res_code;
@@ -82,12 +91,13 @@ export default{
                     console.log('조회 실패',ex)
                 })
                 .finally(function(){})
+            }
         },
         setToSearchParams: function(values){
 
         var params = {
-            page_no: values.page,
-            view_cnt: values.itemsPerPage
+            page_no: values.page_no,
+            view_cnt: values.view_cnt
         }
 
         this.searchdKTTInfo(params)
@@ -95,6 +105,10 @@ export default{
 
         handleParams:function(params){
         let newParams={}
+
+        if(params.date_yn==undefined){
+        params.date_yn=this.searchParam.date_yn
+      }
 
         if(params.page_no === undefined || params.page_no === ''){
             newParams.page_no = this.reqPagingInfo.page_no
@@ -106,6 +120,26 @@ export default{
         }else{
             newParams.view_cnt = params.view_cnt
         } 
+
+         if(params.date_yn==true){
+        if(params.start_date !== undefined && params.start_date !== ''){
+          newParams.start_date = params.start_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+        }
+
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.end_date = params.end_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        }
+      }
 
         if(params.cam_id !== undefined && params.cam_id !== ''){
             newParams.cam_id = params.cam_id
@@ -143,6 +177,15 @@ export default{
             newParams.service_no=this.searchParam.service_no
         }
         
+        
+      if(Number(newParams.start_date)-Number(newParams.end_date)>0){
+        alert('형식에 맞는 날짜 검색값을 입력해주세요')
+        newParams.start_date=dateInfo().lastWeekDashFormat.replace(/-/g,"")
+        newParams.end_date=dateInfo().currentDateDashFormat.replace(/-/g,"")
+        this.searchParam.start_date=dateInfo().lastWeekDashFormat
+        this.searchParam.end_date=dateInfo().currentDateDashFormat
+      }
+      
         return newParams;
         }
     }
