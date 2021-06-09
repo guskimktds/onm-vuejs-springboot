@@ -65,11 +65,12 @@ export default{
             }else{
             axios.post(url,reqParams,headers)
                 .then((response)=>{
+                    console.log(response)
                     var resCode=response.data.res_code;
                     var resMsg=response.data.res_msg;
                     if(resCode==200){
-                        this.dkList=response.data.cam_list;
-                        this.dkttPagingInfo=response.data.paging_info
+                        this.dkList=response.data.data.cam_list;
+                        this.dkttPagingInfo=response.data.data.paging_info
                     }else if(resCode==204){
                         this.dkList=[];
                         this.dkttPagingInfo={};
