@@ -41,6 +41,7 @@ import KTTInfo from '../components/dashboard/store/ktt/kttInfo'
 import CameraInfo from '../components/dashboard/store/device-camera/cameraInfo'
 import IotGWInfo from '../components/dashboard/store/device-iotgw/iotgwInfo'
 import SensorInfo from '../components/dashboard/store/device-sensor/sensorInfo'
+import DeviceKttInfo from '../components/dashboard/store/device-ktt/deviceKttInfo'
 
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
@@ -92,6 +93,7 @@ import CodeMaster from '../components/dashboard/operation/code/master/codeMain'
 //운영관리 / 고객이전
 import CustomerTransfer from '../components/dashboard/operation/transfer/customerTransfer'
 import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatus'
+import GwChange from '../components/dashboard/operation/transfer/gwChange'
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -360,6 +362,11 @@ export default new Router({
                     path: "device-sensor",
                     name: "device-sensor",
                     component: SensorInfo
+                },
+                {
+                    path: "device-ktt",
+                    name: "device-ktt",
+                    component: DeviceKttInfo
                 }
             ]
         },
@@ -454,6 +461,11 @@ export default new Router({
                     path: "device-status",
                     name: 'DeviceStatus',
                     component: DeviceStatus
+                },
+                {
+                    path: "gw-change",
+                    name: 'GwChange',
+                    component: GwChange
                 }
             ]
         },

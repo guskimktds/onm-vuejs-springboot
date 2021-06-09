@@ -20,11 +20,11 @@
                 ></v-radio>
                 <v-radio
                     label="정상"
-                    value="D"
+                    value="U"
                     ></v-radio>
                 <v-radio
                     label="미가동"
-                    value="U">
+                    value="D">
                 </v-radio>
                 </v-radio-group>
             </v-row>

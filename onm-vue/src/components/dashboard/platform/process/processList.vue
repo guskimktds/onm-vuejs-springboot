@@ -67,9 +67,9 @@ export default {
     },
     
     switchString(values){
-      if(values==='U'){
+      if(values=='D'){
         return '미가동'
-      }else if(values==='D'){
+      }else if(values=='U'){
         return '정상'
       }
     }

@@ -39,6 +39,15 @@
           </v-icon>
           {{ link.text }}
         </v-btn> -->
+        
+        <!-- <v-btn text 
+          v-if="this.$store.state.isAuthenticated" 
+          :to="'/notice'"
+        >
+        <v-icon>mdi-antenna</v-icon>
+          Notice
+        </v-btn> -->
+
         <v-btn text 
           v-if="this.$store.state.isAuthenticated" 
           :to="'/account'"
@@ -46,6 +55,7 @@
           <v-icon>mdi-account</v-icon>
           My Page
         </v-btn>
+        
         <v-btn text 
           v-if="!this.$store.state.isAuthenticated" 
           :to="'/signin'"
