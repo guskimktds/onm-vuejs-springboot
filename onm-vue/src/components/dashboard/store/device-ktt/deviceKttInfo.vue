@@ -58,7 +58,7 @@ export default{
 
             var reqParams=this.handleParams(params)
             console.log(reqParams)
-            if(!reqParams.start_date&&!reqParams.cam_id&&!reqParams.user_id&&!reqParams.servvice_no&&!reqParams.status_code){
+            if(!reqParams.start_date&&!reqParams.cam_id&&!reqParams.user_id&&!reqParams.service_no&&!reqParams.status_code){
               this.$fire({
               title: "검색값을 입력해주세요.",
               type: "error"})

@@ -51,7 +51,7 @@ export default {
         { text: "매장ID", value: "user_id" },
         { text: "서비스번호", value: "service_no" },
         { text: "상태 코드", value: "status_code" },
-        { text: "KTT 계약 ID", value: "reg_date" },
+        { text: "등록일", value: "reg_date" },
       ],
     };
   },
