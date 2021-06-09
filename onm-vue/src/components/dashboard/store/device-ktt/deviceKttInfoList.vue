@@ -79,11 +79,11 @@ export default {
     },
   },
   updated() {
-      if(this.last!==this.kttPagingInfo.total_cnt){
+      if(this.last!==this.dkttPagingInfo.total_cnt){
         this.options.page=1
       }
-      if(this.kttPagingInfo.total_cnt!==undefined){
-      this.last=this.kttPagingInfo.total_cnt
+      if(this.dkttPagingInfo.total_cnt!==undefined){
+      this.last=this.dkttPagingInfo.total_cnt
       }
   },
     

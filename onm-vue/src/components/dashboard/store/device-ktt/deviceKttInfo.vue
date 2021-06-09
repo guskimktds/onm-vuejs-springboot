@@ -97,10 +97,11 @@ export default{
         setToSearchParams: function(values){
 
         var params = {
-            page_no: values.page_no,
-            view_cnt: values.view_cnt
+            page_no: values.page,
+            view_cnt: values.itemsPerPage
         }
-
+        console.log('페이지 값')
+        console.log(params)
         this.searchdKTTInfo(params)
         },
 
