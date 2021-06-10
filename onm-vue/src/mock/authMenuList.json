@@ -183,8 +183,7 @@
                 "component": "customer-transfer",
                 "children": [
                     { "name": "실행관리", "path": "/operation/customer-transfer", "component": "customer-transfer" },
-                    { "name": "단말상태", "path": "/operation/device-status", "component": "device-status" },
-                    { "name": "로컬국사변경", "path": "/operation/gw-change", "component": "gw-change" }
+                    { "name": "단말상태", "path": "/operation/device-status", "component": "device-status" }
                 ]
             }
         ]

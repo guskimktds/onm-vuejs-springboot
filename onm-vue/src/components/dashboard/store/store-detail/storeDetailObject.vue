@@ -226,6 +226,16 @@
               readonly>
             </v-text-field>
         </v-col>
+
+        <v-col
+          cols="6"
+          md="6">
+            <v-text-field
+              v-model="save_method"
+              label="영상저장방식"
+              readonly>
+            </v-text-field>
+        </v-col>
       </v-row>
 
     </base-material-card>
@@ -238,7 +248,8 @@ export default {
     props: ['pObject'],
     data() {
       return {
-        status_code:''
+        status_code:'',
+        save_mehod: ''
       }
     },
     created() {
@@ -259,6 +270,16 @@ export default {
       }else if(status=='P'){
         this.status_code='사용자 생성 대기중'
       }
+
+        var method=this.pObject.save_method
+        if(method=='A'){
+          this.save_method='상시'
+        }
+        else if(method=='E'){
+          this.save_mehod='스마트'
+        }else{
+          this.save_method='-'
+        }
       }
     },
 

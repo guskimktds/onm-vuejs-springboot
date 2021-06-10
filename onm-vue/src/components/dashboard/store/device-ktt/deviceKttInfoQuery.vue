@@ -85,7 +85,7 @@
                 </v-col>
                 <v-col cols="2">
                     <v-text-field 
-                        label="거래고유번호" 
+                        label="매장 ID" 
                         v-model="param.user_id"
                         placeholder=" " 
                     >                        

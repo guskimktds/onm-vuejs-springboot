@@ -337,6 +337,7 @@ export default {
               this.showDetailObject = true;
               this.isReloadDetailObject = true;
               this.pObject = response.data.data.user_detail_list[0];
+              console.log(this.pObject)
               console.log(response)
             }else if(resCode==204){
               this.showDetailObject = false;
