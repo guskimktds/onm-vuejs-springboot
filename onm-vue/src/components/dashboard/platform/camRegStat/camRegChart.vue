@@ -109,7 +109,7 @@
                 </v-col>
             </v-row>
             <v-card>
-                <platform-graph v-bind:param=param></platform-graph>
+                <platform-graph v-bind:param="checkDate(param)"></platform-graph>
             </v-card>
         </base-material-card> 
 
@@ -156,12 +156,34 @@ export default{
                 this.param.start_date=dateInfo().lastMonthDefault
                 this.param.end_date=dateInfo().currentMonthDefault
             }
-            
-        
-         
         },
         change:function(){
             this.$emit('datepick',this.param)
+        },
+        checkDate: function(value){
+            let newParams={}
+            if(Number(value.start_date.replace(/-/g,""))-Number(value.end_date.replace(/-/g,""))>0){
+                alert('형식에 맞는 날짜 검색값을 입력해주세요')
+                if(value.search_type=='D'){
+                this.dateOption=true
+                this.monthOption=false
+                newParams.start_date=dateInfo().lastWeekDashFormat
+                newParams.end_date=dateInfo().currentDateDashFormat
+                this.param.start_date=dateInfo().lastWeekDashFormat
+                this.param.end_date=dateInfo().currentDateDashFormat
+                }
+                else if(value.search_type=='M'){
+                this.dateOption=false
+                this.monthOption=true
+                newParams.start_date=dateInfo().lastMonthDefault
+                newParams.end_date=dateInfo().currentMonthDefault
+                this.param.start_date=dateInfo().lastMonthDefault
+                this.param.end_date=dateInfo().currentMonthDefault
+                }
+            }else{
+                newParams=value
+            }
+            return newParams;
         }
     },
 
