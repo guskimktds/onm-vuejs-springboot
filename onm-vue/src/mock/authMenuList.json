@@ -103,7 +103,8 @@
                 "children": [
                     { "name": "카메라 정보 조회", "path": "/store/device-camera", "component": "device-camera" },
                     { "name": "IoT GW 정보 조회", "path": "/store/device-iotgw", "component": "device-iotgw" },
-                    { "name": "센서 정보 조회", "path": "/store/device-sensor", "component": "device-sensor" }
+                    { "name": "센서 정보 조회", "path": "/store/device-sensor", "component": "device-sensor" },
+                    { "name": "KTT 단말 정보 조회", "path": "/store/device-ktt", "component": "device-ktt" }
                 ]
             }
         ]
@@ -182,7 +183,8 @@
                 "component": "customer-transfer",
                 "children": [
                     { "name": "실행관리", "path": "/operation/customer-transfer", "component": "customer-transfer" },
-                    { "name": "단말상태", "path": "/operation/device-status", "component": "device-status" }
+                    { "name": "단말상태", "path": "/operation/device-status", "component": "device-status" },
+                    { "name": "로컬국사변경", "path": "/operation/gw-change", "component": "gw-change" }
                 ]
             }
         ]
