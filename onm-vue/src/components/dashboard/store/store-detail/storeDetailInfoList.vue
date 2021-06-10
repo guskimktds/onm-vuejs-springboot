@@ -23,6 +23,9 @@
       <template v-slot:item.status_code="{item}">
               <span>{{ switchString(item.status_code) }}</span>
       </template>
+      <template v-slot:item.save_method="{item}">
+              <span>{{ switchString2(item.save_method) }}</span>
+      </template>
       </v-data-table>
     </base-material-card>
 
@@ -63,6 +66,7 @@ export default {
         { text: "IP 카메라 대수", value: "ip_cam_cnt"},
         { text: "POS 카메라 대수", value: "pos_cam_cnt"},
         { text: "IoT GW 대수", value: "iotgw_cnt"},
+        { text: "영상저장방식", value: "save_method"}
       ]
     }
   },
@@ -81,6 +85,15 @@ export default {
         return '일시정지'
       }else if(values==='P'){
         return '사용자 생성 대기중'
+      }
+    },
+    switchString2(values){
+      if(values==='A'){
+        return '전체'
+      }else if(values==='E'){
+        return '스마트저장'
+      }else{
+        return '-'
       }
     }
   },

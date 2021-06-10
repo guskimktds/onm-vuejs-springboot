@@ -23,6 +23,9 @@
       <template v-slot:item.mgt_status="{item}">
               <span>{{ switchString2(item.mgt_status) }}</span>
       </template>
+      <template v-slot:item.save_method="{item}">
+              <span>{{ switchString3(item.save_method) }}</span>
+      </template>
       </v-data-table>
     </base-material-card>
   </v-container>
@@ -60,6 +63,7 @@ export default {
         { text: "카메라 수정일자", value: "mod_date" },
         { text: "개통일", value: "open_date" },
         { text: "해지일", value: "close_date" },
+        { text: "영상저장방식", value: "save_method" } 
       ],
     };
   },
@@ -100,7 +104,16 @@ export default {
       }else if(values==='Z'){
         return '카메라 장애'
       }
-    }
+    },
+    switchString3(values){
+      if(values==='A'){
+        return '전체'
+      }else if(values==='E'){
+        return '스마트저장'
+      }else{
+        return '-'
+      }
+    },
   },
 
   watch: {
