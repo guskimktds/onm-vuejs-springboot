@@ -56,7 +56,8 @@ export default {
           { text: '처리여부', value: 'use_yn' , align: 'left'},
           { text: '등록일시', value: 'cdate' , align: 'left' },
           { text: 'OSS 통보', value: 'notice_yn' , align: 'left' },
-          { text: 'KTT 고객', value: 'ktt_user_yn' , align: 'left' }
+          { text: 'KTT 고객', value: 'ktt_user_yn' , align: 'left' },
+          { text: '변경유형모듬', value:'accumupdatetype', align:'left'}
         ]
       }
     },
