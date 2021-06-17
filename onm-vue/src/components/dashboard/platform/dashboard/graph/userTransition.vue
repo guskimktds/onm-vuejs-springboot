@@ -76,13 +76,13 @@ export default {
                     label:'신규', 
                     // backgroundColor: '#f87979',
                     borderColor:'#f87979',
-                    data: this.getCloseCnt(response.data.data.date_list)
+                    data: this.getNewCnt(response.data.data.date_list)
                   },
                   {
                     label:"해지", 
                     // backgroundColor: 'white',
                     borderColor:'white',
-                    data: this.getNewCnt(response.data.data.date_list)
+                    data: this.getCloseCnt(response.data.data.date_list)
                   }
                 ]
               }
