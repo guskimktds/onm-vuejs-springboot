@@ -75,7 +75,7 @@ export default {
             this.resPagingInfo = {};
             alert('[매장]관리자 변경 이력 데이터가 없습니다.');
           }else if(resCode==410){
-            alert(resCode + " / " + resMsg);
+            alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")

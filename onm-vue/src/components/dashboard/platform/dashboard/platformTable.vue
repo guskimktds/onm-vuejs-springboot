@@ -96,7 +96,7 @@ export default {
                     this.pList = response.data.data.process_list;
                     this.resPagingInfo=response.data.data.paging_info;
                     }else if(resCode==410){
-                    alert(resCode + " / " + resMsg);
+                    alert("로그인 세션이 만료되었습니다.");
                     EventBus.$emit('top-path-logout');
                     this.$store
                     .dispatch("LOGOUT")

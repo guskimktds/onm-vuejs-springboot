@@ -55,7 +55,7 @@ export default {
         if(resCode == 200){
           this.pList = response.data.data.date_list;
         }else if(resCode==410){
-          alert(resCode + " / " + resMsg);
+          alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -64,7 +64,7 @@ export default {
             this.$router.replace('/signin')
         }else{
           this.pList = [];
-          alert(resCode + " / " + resMsg);
+          console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
