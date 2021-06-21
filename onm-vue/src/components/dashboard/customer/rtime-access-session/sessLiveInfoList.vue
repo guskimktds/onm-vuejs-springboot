@@ -63,7 +63,7 @@ export default {
     },
   },
   updated() {
-      if(this.last!==this.resPagingInfo.total_cnt){
+      if(this.last>this.resPagingInfo.total_cnt){
         this.options.page=1
       }
       if(this.resPagingInfo.total_cnt!==undefined){
