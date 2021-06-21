@@ -85,7 +85,7 @@ export default {
         if(response.data.res_code == 200){
           this.pList = response.data.data.stm_list;
         }else if(response.data.res_code==410){
-          alert(response.data.res_code + " / " + response.data.res_msg);
+          alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")

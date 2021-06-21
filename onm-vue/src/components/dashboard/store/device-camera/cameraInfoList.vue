@@ -107,9 +107,9 @@ export default {
     },
     switchString3(values){
       if(values==='A'){
-        return '전체'
+        return '상시'
       }else if(values==='E'){
-        return '스마트저장'
+        return '스마트'
       }else{
         return '-'
       }

@@ -93,7 +93,7 @@ import CodeMaster from '../components/dashboard/operation/code/master/codeMain'
 //운영관리 / 고객이전
 import CustomerTransfer from '../components/dashboard/operation/transfer/customerTransfer'
 import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatus'
-import GwChange from '../components/dashboard/operation/transfer/gwChange'
+// import GwChange from '../components/dashboard/operation/transfer/gwChange'
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -462,11 +462,11 @@ export default new Router({
                     name: 'DeviceStatus',
                     component: DeviceStatus
                 },
-                {
-                    path: "gw-change",
-                    name: 'GwChange',
-                    component: GwChange
-                }
+                // {
+                //     path: "gw-change",
+                //     name: 'GwChange',
+                //     component: GwChange
+                // }
             ]
         },
 

@@ -122,7 +122,7 @@ export default {
           console.log('paging')
           console.log(this.resPagingInfo)
         }else if(resCode==410){
-          alert(resCode + " / " + resMsg);
+          alert("로그인 세션이 만료되었습니다.");
            EventBus.$emit('top-path-logout');
                 this.$store
                 .dispatch("LOGOUT")

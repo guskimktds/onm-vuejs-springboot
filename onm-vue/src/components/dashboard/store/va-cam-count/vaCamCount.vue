@@ -67,7 +67,7 @@ export default {
           this.vaPagingInfo = {};
           alert('VA 상품 및 카메라 대수 확인');
         }else if(resCode==410){
-          alert(resCode + " / " + resMsg);
+          alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")

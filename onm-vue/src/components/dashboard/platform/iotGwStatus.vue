@@ -78,7 +78,7 @@ export default {
             this.resPagingInfo = {};
             alert("IoT GW 상태현황 데이터가 없습니다.");
         }else if(response.data.res_code==410){
-          alert(response.data.res_code + " / " + response.data.res_msg);
+          alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")

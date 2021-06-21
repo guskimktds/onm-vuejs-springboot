@@ -75,18 +75,18 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="2">
+                 <v-col cols="2">
                     <v-text-field 
-                        label="서비스번호" 
-                        v-model="param.service_no"
+                        label="매장 ID" 
+                        v-model="param.user_id"
                         placeholder=" " 
                     >                        
                     </v-text-field>
                 </v-col>
                 <v-col cols="2">
                     <v-text-field 
-                        label="거래고유번호" 
-                        v-model="param.user_id"
+                        label="서비스번호" 
+                        v-model="param.service_no"
                         placeholder=" " 
                     >                        
                     </v-text-field>

@@ -383,6 +383,19 @@
             </v-col>
           </v-row>
           
+          <v-row>
+          <v-col
+              cols="12"
+              md="6"
+            >
+              <v-text-field
+                v-model="pObject.accumupdatetype"
+                label="변경유형모듬"
+                readonly
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          
       </base-material-card>
     </v-container>
 </template>

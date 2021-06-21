@@ -290,7 +290,7 @@ export default {
             this.resPagingInfo = {};
             alert('매장정보 조회 데이터가 없습니다.');
           }else if(resCode==410){
-            alert(resCode + " / " + resMsg);
+            alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -337,6 +337,7 @@ export default {
               this.showDetailObject = true;
               this.isReloadDetailObject = true;
               this.pObject = response.data.data.user_detail_list[0];
+              console.log(this.pObject)
               console.log(response)
             }else if(resCode==204){
               this.showDetailObject = false;
