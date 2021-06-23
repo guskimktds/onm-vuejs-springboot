@@ -1,19 +1,20 @@
 <template>
-  <v-container id="regular-tables" fluid tag="section">
-    <base-material-card
-      color="orange"
-      dark
-      icon="mdi-keyboard"
-      title="카메라 정보 조회 LIST"
-      class="px-5 py-3"
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
     >
+    <base-material-card
+        color="orange"
+        dark
+        icon="mdi-keyboard"
+        title="카메라 정보 조회 LIST"
+        class="px-5 py-3"
+      >
       <v-data-table
         :headers="headers"
         :items="dcList"
-        :options.sync="options"
-        :server-items-length="dcPagingInfo.total_cnt"
         class="elevation-1"
-        @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       >
@@ -33,16 +34,9 @@
 
 <script>
 export default {
-  props: ["dcList", "dcPagingInfo"],
+  props: ['dcList'],
   data() {
     return {
-      last: 0,
-      dialog: false,
-      dialogDelete: false,
-      editedIndex: -1,
-      options: {},
-      totalList: 0,
-      loading: true,
       headers: [
         {
           text: "매장 ID",
@@ -68,13 +62,6 @@ export default {
     };
   },
   methods: {
-    handleClick: function (value) {
-      this.$emit("child", value);
-    },
-    getDataFromApi() {
-      this.loading = true;
-      this.$emit("pagination", this.options);
-    },
     switchString(values){
       if(values==='A'){
         return '접수'
@@ -109,26 +96,10 @@ export default {
       }else{
         return '-'
       }
-    },
+    }
   },
-
-  watch: {
-    options: {
-      handler() {
-        this.getDataFromApi();
-      },
-      deep: true,
-    },
-  },
-  updated() {
-      if(this.last!==this.dcPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.dcPagingInfo.total_cnt!==undefined){
-      this.last=this.dcPagingInfo.total_cnt
-      }
-  },
-};
+    
+}
 </script>
 <style>
 </style>

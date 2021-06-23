@@ -225,8 +225,6 @@ export default {
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12003/get_subs_order_details_list`
     var params={
       guid: this.pObject.guid,
-      page_no: '1',
-      view_cnt: '999999'
     }
 
     axios
@@ -257,8 +255,6 @@ export default {
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12005/get_user_ktt_subs`
     var params={
       guid: this.pObject.guid,
-      page_no: '1',
-      view_cnt: '999999'
     }
     axios
         .post(url, params, headers)

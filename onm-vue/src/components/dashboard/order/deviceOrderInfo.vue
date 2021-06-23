@@ -41,7 +41,6 @@
         
         <device-order-result-list v-if=showResultList
         v-bind:dorList="dorList"
-        v-bind:dorPagingInfo="dorPagingInfo"
         ></device-order-result-list>
       
       </v-container>
@@ -97,7 +96,6 @@ export default {
         view_cnt:10
       },
       resPagingInfo:{},
-      dorPagingInfo:{},
       oldValue:'',
 
       searchParam:{

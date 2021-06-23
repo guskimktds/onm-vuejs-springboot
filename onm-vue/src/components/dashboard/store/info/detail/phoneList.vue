@@ -14,10 +14,9 @@
       <v-data-table
         :headers="headers"
         :items="pnList"
-        :options.sync="options"
-        :server-items-length="pnPagingInfo.total_cnt"
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+        :header-props="{ sortIcon: null }"
       >
       <template v-slot:item.status_code="{item}">
               <span>{{ switchString(item.status_code) }}</span>
@@ -33,16 +32,10 @@
 
 <script>
 export default {
-    props: ['pnList','pnPagingInfo'],
+    props: ['pnList'],
     //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
     data() {
     return {
-        dialog: false,
-        dialogDelete: false,
-        editedIndex: -1,
-        options: {},
-        totalList: 0,
-        loading: true,
         headers: [
         {
           text: "매장ID", align: "start",
@@ -63,15 +56,6 @@ export default {
   },
 
  methods: {
-
-      getDataFromApi () {
-        console.log(this.pnPagingInfo)
-        this.loading = true
-
-        const { page, itemsPerPage } = this.options
-        console.log(page, itemsPerPage)
-        this.$emit("pagination", this.options)
-      },
       switchString(value){
         if(value=='S'){
           return '정상'
@@ -91,18 +75,8 @@ export default {
         }
       }
       
-    },
-    watch: {
-      options: {
-        handler () {
-          this.getDataFromApi()
-        },
-        deep: true,
-      },
-    },
-    mounted () {
-      this.getDataFromApi()
     }
+ 
 
 }
 
