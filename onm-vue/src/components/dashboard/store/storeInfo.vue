@@ -97,49 +97,41 @@
         <ktt-list
           v-if="showKttList"
           v-bind:kList="kList"
-          v-bind:kttPagingInfo="kttPagingInfo"
         ></ktt-list>
 
         <prod-summary-list
           v-if="showProdSummaryList"
           v-bind:psList="psList"
-          v-bind:psPagingInfo="psPagingInfo"
         ></prod-summary-list>
 
         <va-cam-count
           v-if="showVACountList"
           v-bind:vaList="vaList"
-          v-bind:vaPagingInfo="vaPagingInfo"
         ></va-cam-count>
 
         <sensor-order-list
           v-if="showSensorOrderList"
           v-bind:soList="soList"
-          v-bind:soPagingInfo="soPagingInfo"
         ></sensor-order-list>
 
         <device-camera-list
           v-if="showDeviceCameraList"
           v-bind:dcList="dcList"
-          v-bind:dcPagingInfo="dcPagingInfo"
         ></device-camera-list>
 
         <iot-gw-list
           v-if="showIotGwList"
           v-bind:iotList="iotList"
-          v-bind:iotPagingInfo="iotPagingInfo"
         ></iot-gw-list>
 
         <device-sensor-list
           v-if="showDeviceSensorList"
           v-bind:dsList="dsList"
-          v-bind:dsPagingInfo="dsPagingInfo"
         ></device-sensor-list>
 
         <phone-list
           v-if="showPhoneList"
           v-bind:pnList="pnList"
-          v-bind:pnPagingInfo="pnPagingInfo"
         ></phone-list>
       </v-container>
     </v-card>
@@ -151,14 +143,14 @@ import StoreInfoList from "./info/storeInfoList";
 import StoreInfoQuery from "./info/storeInfoQuery";
 import StoreInfoDetailObject from "./store-detail/storeDetailObject";
 
-import KttList from "./ktt/kttInfoList";
-import ProdSummaryList from "./product-summary/storeProductSummaryInfoList";
-import VaCamCount from "./va-cam-count/vaCamCountList";
-import SensorOrderList from "./sensor-order/sensorOrderInfoList";
-import DeviceCameraList from "./device-camera/cameraInfoList";
-import IotGwList from "./device-iotgw/iotgwInfoList";
-import DeviceSensorList from "./device-sensor/sensorInfoList";
-import PhoneList from "./info/storePhoneList";
+import KttList from "./info/detail/kttList.vue"
+import ProdSummaryList from "./info/detail/productSummaryList.vue";
+import VaCamCount from "./info/detail/vaCamCountList.vue";
+import SensorOrderList from "./info/detail/sensorOrderList.vue";
+import DeviceCameraList from "./info/detail/deviceCameraList.vue";
+import IotGwList from "./info/detail/iotGwList.vue";
+import DeviceSensorList from "./info/detail/deviceSensorList.vue";
+import PhoneList from "./info/detail/phoneList.vue";
 
 import dateInfo from '../../utils/common'
 import EventBus from '../../../EventBus'
@@ -237,15 +229,9 @@ export default {
         page_no: 1,
         view_cnt: 10,
       },
+
       resPagingInfo: {},
-      kttPagingInfo: {},
-      psPagingInfo: {},
-      vaPagingInfo: {},
-      soPagingInfo: {},
-      dcPagingInfo: {},
-      iotPagingInfo: {},
-      dsPagingInfo: {},
-      pnPagingInfo: {},
+
       oldValue:'',
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
@@ -324,7 +310,7 @@ export default {
         var params = {
           user_id: values,
           page_no: "1",
-          view_cnt: "999999",
+          view_cnt: "10",
           is_masking: this.searchParam.is_masking? "N" : "Y"
         };
 
@@ -357,7 +343,6 @@ export default {
       }
       
       if(values!==this.oldValue){
-          console.log('실행')
           this.showKttList=false
           this.showProdSummaryList=false
           this.showVACountList=false
@@ -374,8 +359,6 @@ export default {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13003/get_user_ktt_info_list`;
       var params = {
         user_id: this.pObject.user_id,
-        page_no: "1",
-        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -387,16 +370,12 @@ export default {
           console.log(resCode);
           if (resCode == 200) {
             this.kList = response.data.data.ktt_info_list;
-            this.kttPagingInfo = response.data.data.paging_info;
-
             this.showKttList = !this.showKttList;
           }else if(resCode==204){
             this.kList = [];
-            this.kttPagingInfo = {};
             alert('사용자-KTT 데이터가 없습니다.');
           } else {
             this.kList = [];
-            this.kttPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -408,8 +387,6 @@ export default {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13005/get_prod_summary_list`;
       var params = {
         user_id: this.pObject.user_id,
-        page_no: "1",
-        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -420,15 +397,12 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.psList = response.data.data.prod_summary_list;
-            this.psPagingInfo = response.data.data.paging_info;
             this.showProdSummaryList = !this.showProdSummaryList;
           }else if(resCode==204){
             this.psList = [];
-            this.psPagingInfo = {};
             alert('상품 요약 정보 데이터가 없습니다.');
           } else {
             this.psList = [];
-            this.psPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -441,8 +415,6 @@ export default {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13006/get_user_va_list`;
       var params = {
         user_id: this.pObject.user_id,
-        page_no: "1",
-        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -452,15 +424,12 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.vaList = response.data.data.va_prod_list;
-            this.vaPagingInfo = response.data.data.paging_info;
             this.showVACountList = !this.showVACountList;
           } else if(resCode==204){
             this.vaList = [];
-            this.vaPagingInfo = {};
             alert('VA 정보 데이터가 없습니다.');
           } else {
             this.vaList = [];
-            this.vaPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -474,8 +443,6 @@ export default {
 
       var params = {
         user_id: this.pObject.user_id,
-        page_no: "1",
-        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -485,17 +452,14 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.soList = response.data.data.sensor_list;
-            this.soPagingInfo = response.data.data.paging_info;
             this.showSensorOrderList = !this.showSensorOrderList;
             console.log("resCode");
             console.log(resCode);
           } else if(resCode==204){
             this.soList = [];
-            this.soPagingInfo = {};
             alert('센서 정보 데이터가 없습니다.');
           } else {
             this.soList = [];
-            this.soPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -509,8 +473,6 @@ export default {
 
       var params = {
         user_id: this.pObject.user_id,
-        page_no: "1",
-        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -520,15 +482,12 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.dcList = response.data.data.cam_list;
-            this.dcPagingInfo = response.data.data.paging_info;
             this.showDeviceCameraList = !this.showDeviceCameraList;
           } else if(resCode==204){
             this.dcList = [];
-            this.dcPagingInfo = {};
             alert('단말 카메라 정보 데이터가 없습니다.');
           }else {
             this.dcList = [];
-            this.dcPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -542,8 +501,6 @@ export default {
 
       var params = {
         user_id: this.pObject.user_id,
-        page_no: "1",
-        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -553,15 +510,12 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.iotList = response.data.data.iotgw_list;
-            this.iotPagingInfo = response.data.data.paging_info;
             this.showIotGwList = !this.showIotGwList;
           }else if(resCode==204){
             this.iotList = [];
-            this.iotPagingInfo = {};
             alert('단말 IOT GW 정보 데이터가 없습니다.');
           }else {
             this.iotList = [];
-            this.iotPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -575,8 +529,6 @@ export default {
 
       var params = {
         user_id: this.pObject.user_id,
-        page_no: "1",
-        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -586,15 +538,12 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.dsList = response.data.data.sensor_list;
-            this.dsPagingInfo = response.data.data.paging_info;
             this.showDeviceSensorList = !this.showDeviceSensorList;
           } else if(resCode==204){
             this.dsList = [];
-            this.dsPagingInfo = {};
             alert('단말 센서 정보 데이터가 없습니다.');
           } else {
             this.dsList = [];
-            this.dsPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
@@ -607,8 +556,6 @@ export default {
 
       var params = {
         user_id: this.pObject.user_id,
-        page_no: "1",
-        view_cnt: "999999",
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
       axios
@@ -618,15 +565,12 @@ export default {
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
             this.pnList = response.data.data.tel_no_list;
-            this.pnPagingInfo = response.data.data.paging_info;
             this.showPhoneList = !this.showPhoneList;
           } else if(resCode==204){
             this.pnList = [];
-            this.pnPagingInfo = {};
             alert('사용자 전화번호 데이터가 없습니다.');
           } else {
             this.pnList = [];
-            this.pnPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
