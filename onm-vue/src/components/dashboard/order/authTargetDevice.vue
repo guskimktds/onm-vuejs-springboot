@@ -40,6 +40,7 @@ export default {
       searchParam: {
         start_date: '',
         end_date: '',
+        said:'',
         oderno:'',
         mac_id:'',
         open_oderno:''
@@ -53,7 +54,7 @@ export default {
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
 
       var reqParams=this.handleParams(params)
-
+      console.log(reqParams)
         axios.post(url, reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code;
@@ -113,7 +114,14 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-
+       if (params.said !== undefined && params.said !== "") {
+        newParams.said = params.said;
+      } else if (
+        this.searchParam.said !== undefined &&
+        this.searchParam.said !== ""
+      ) {
+        newParams.said = this.searchParam.said;
+      }
       if (params.oderno !== undefined && params.oderno !== "") {
         newParams.oderno = params.oderno;
       } else if (

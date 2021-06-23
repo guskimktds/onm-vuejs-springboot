@@ -16,7 +16,15 @@
                 </v-col>
             </v-row>
             <v-row>
-
+                <v-col cols="2">
+                    <v-text-field
+                        label="계약 ID" 
+                        v-model="param.said"
+                        placeholder=" " 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                
                 <v-col cols="2">
                     <v-text-field
                         label="오더번호" 
