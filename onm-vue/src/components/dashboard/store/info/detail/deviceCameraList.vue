@@ -17,6 +17,7 @@
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
+        :item-class="rowColor"
       >
       <template v-slot:item.status_code="{item}">
               <span>{{ switchString(item.status_code) }}</span>
@@ -96,10 +97,22 @@ export default {
       }else{
         return '-'
       }
+    },
+
+    rowColor:function(value){
+      console.log(value.close_date)
+      if(value.close_date==null){
+        return 'change';
+      }
     }
   },
     
 }
+
 </script>
 <style>
+.change {
+  background-color: #000;
+  color:darkgrey;
+}
 </style>
