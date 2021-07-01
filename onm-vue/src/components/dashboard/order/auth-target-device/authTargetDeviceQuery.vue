@@ -16,7 +16,7 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-text-field
                         label="계약 ID" 
                         v-model="param.said"
@@ -24,8 +24,9 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                
-                <v-col cols="2">
+                <v-col cols="1">
+                </v-col>
+                <v-col cols="3">
                     <v-text-field
                         label="오더번호" 
                         v-model="param.oderno"
@@ -33,7 +34,9 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="2">
+                <v-col cols="1">
+                </v-col>
+                <v-col cols="3">
                     <v-text-field 
                         label="MAC ID" 
                         v-model="param.mac_id"
@@ -41,7 +44,7 @@
                     >                        
                     </v-text-field>
                 </v-col>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-text-field
                         label="개통 오더번호" 
                         v-model="param.open_oderno"
@@ -49,8 +52,24 @@
                     >                        
                     </v-text-field>
                 </v-col>
+
+                <v-col cols="1">
+                </v-col>
+
+                <v-col cols="3">
+                    <v-select
+                            label="관리상태코드" 
+                            v-model="selected"
+                            :items="items"
+                            item-text="state"
+                            item-value="abbr"
+                    ></v-select>
+                </v-col>
                 
-                  <v-col cols="2">
+                <v-col cols="1">
+                </v-col>
+
+                <v-col cols="2">
                     <v-btn 
                         elevation="2" 
                         medium
@@ -59,7 +78,8 @@
                         검색
                     </v-btn>
                 </v-col>
-            
+                <!-- <v-col cols="1">
+                </v-col> -->
 
                 <v-col cols="2">
                     <v-switch
@@ -76,12 +96,33 @@
 <script>
 export default {
  props:['param'],
+  data() {
+      return {
+          selected:'All',
+          items:[
+              {state: '전체'     , abbr: 'All'},
+              {state: '정상'     , abbr: 'S'},
+              {state: '삭제'     , abbr: 'D'},
+              {state: '삭제대기' , abbr: 'X'},
+              {state: '등록'     , abbr: 'A'}]
+      }
+  },
   methods: {
-    searchMethod: function () {
+      searchMethod: function () {
+      if(this.selected=='All'){
+        this.param.mgt_status=''
+      }else{
+      this.param.mgt_status=this.selected
+      }
       this.$emit("search", this.param);
     },
   },
 };
+//     searchMethod: function () {
+//       this.$emit("search", this.param);
+//     },
+//   },
+// };
 </script>
 <style>
     

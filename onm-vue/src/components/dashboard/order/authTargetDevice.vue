@@ -43,7 +43,8 @@ export default {
         said:'',
         oderno:'',
         mac_id:'',
-        open_oderno:''
+        open_oderno:'',
+        mgt_status:''
       },
       start: true
     }
@@ -158,6 +159,14 @@ export default {
         newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
 
+      if(params.mgt_status !== undefined && params.mgt_status !== ''){
+        newParams.mgt_status = params.mgt_status;
+      }else if (
+        this.searchParam.mgt_status !== undefined &&
+        this.searchParam.mgt_status !== ""
+      ) {
+        newParams.mgt_status = this.searchParam.mgt_status;
+      }
       return newParams
     }
   }
