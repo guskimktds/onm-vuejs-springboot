@@ -1,0 +1,96 @@
+<template>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+        <base-material-card
+            color="orange"
+            dark
+            icon="mdi-keyboard"
+            title="단말오더 처리 결과 LIST"
+            class="px-5 py-3"
+            >
+            <v-data-table
+                :headers="headers"
+                :items="dorList"
+                class="elevation-1"
+                :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+                :header-props="{ sortIcon: null }"
+            >          
+            <template v-slot:item.notice_yn="{item}">
+              <span>{{ switchString(item.notice_yn) }}</span>
+            </template>  
+
+            </v-data-table>
+        </base-material-card>
+    </v-container>
+</template>
+<script>
+export default {
+    props: ['dorList'],
+    data() {
+      return {
+        dialog: false,
+        dialogDelete: false,
+        editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
+        headers: [
+          {
+            text: '거래고유번호', align: 'start',
+            sortable: false, value: 'guid',
+          },
+          { text: '오더유형', value: 'ordertype' },   
+          { text: '오더번호', value: 'oderno' },
+          { text: '청약처리결과코드', value: 'resultcode' },
+          { text: '청약처리결과메시지', value: 'resultmsg' },
+          { text: '청약상태 통보여부', value: 'notice_yn' },
+          { text: '오더처리 통보일시', value: 'notice_date' },
+          { text: '청약결과 통보결과', value: 'notice_result' }
+          
+        ]
+      }
+    },
+    methods: {
+      getDataFromApi () {
+        this.loading = true     
+        this.$emit("pagination", this.options)
+      },
+
+       switchString(values){
+      if(values==='T'){
+        return '청약취소'
+      }else if(values==='Y'){
+        return '통보완료'
+      }else if(values==='N'){
+        return '미통보'
+      }
+    }
+    
+    },
+    watch: {
+      options: {
+        handler () {
+          this.getDataFromApi()
+        },
+        deep: true,
+      },
+    },
+    updated() {
+      if(this.last!==this.dorPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.dorPagingInfo.total_cnt!==undefined){
+      this.last=this.dorPagingInfo.total_cnt
+      }
+  },
+    mounted () {
+      this.getDataFromApi()
+    }
+}
+</script>
+<style>
+    
+</style>
