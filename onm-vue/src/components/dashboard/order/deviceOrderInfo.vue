@@ -53,7 +53,7 @@ import DeviceOrderInfoList from './device-order-info/deviceOrderInfoList'
 import DeviceOrderInfoQuery from './device-order-info/deviceOrderInfoQuery'
 import DeviceOrderObject from './device-order-info/deviceOrderObject'
 import DeviceOrderDetailList from './device-order-info/deviceOrderDetailList'
-import DeviceOrderResultList from './device-order-result/deviceOrderResultList'
+import DeviceOrderResultList from './device-order-info/deviceOrderResultList'
 import dateInfo from '../../utils/common'
 
 import EventBus from '../../../EventBus'
