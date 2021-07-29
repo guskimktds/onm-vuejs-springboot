@@ -64,9 +64,9 @@
                             <v-btn
                             color="blue darken-1"
                             text
-                            @click="saveSure"
+                            @click="changeSure"
                             >
-                            저장
+                            변경
                             </v-btn>
                             <v-btn
                             color="blue darken-1"
@@ -86,11 +86,38 @@
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
-
-export default defineComponent({
-    setup() {
-        
-    },
-})
+    export default{
+     
+     methods: {
+         changeSure(){
+           this.$fire({
+            title: "수용국사를 정말 변경하시겠습니까?",
+            type: "question",
+            showcancleButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText: '아니오',
+            html: "수용국사코드 : "
+           }).then(result=>{
+               if(result.value){
+                   this.change()
+               }else{
+                   this.closeSure()
+               }
+           });  
+         }
+     },
+     close(){
+         this.dialog=false
+     },
+     closeSure(){
+         this.close()
+         this.$fire({
+             title:"변경이 취소되었습니다.",
+             type: "error",
+             html: "수용국사코드 : "
+         })
+     }
+    }
 </script>
