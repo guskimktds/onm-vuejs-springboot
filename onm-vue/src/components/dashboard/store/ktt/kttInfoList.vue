@@ -8,7 +8,7 @@
         color="orange"
         dark
         icon="mdi-keyboard"
-        title="KTT 정보 LIST"
+        title="KTT 정보 LIST(커밋테스트)"
         class="px-5 py-3"
       >
       <v-data-table
@@ -44,7 +44,7 @@ export default {
           sortable: false,
           value: "user_id",
         },
-        { text: "서비스 번호", value: "service_no" },
+        { text: "서비스번호", value: "service_no" },
         { text: "시스템ID", value: "system_id" },
         { text: "단말설치여부", value: "device_yn" },
         { text: "상태 코드", value: "status_code" },
