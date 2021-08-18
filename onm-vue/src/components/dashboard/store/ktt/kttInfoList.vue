@@ -44,7 +44,7 @@ export default {
           sortable: false,
           value: "user_id",
         },
-        { text: "서비스번호", value: "service_no" },
+        { text: "서비스 번호", value: "service_no" },
         { text: "시스템ID", value: "system_id" },
         { text: "단말설치여부", value: "device_yn" },
         { text: "상태 코드", value: "status_code" },
