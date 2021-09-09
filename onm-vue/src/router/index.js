@@ -206,7 +206,6 @@ export default new Router({
                     path: "user/order-info",
                     name: 'UserOrderInfo',
                     component: UserOrderInfo
-
                 },
                 {
                     path: "user/order-detail",
@@ -224,7 +223,7 @@ export default new Router({
                     component: UserOrderPhone
                 },
                 {
-                    path: "ktt-order",
+                    path: "ktt-order", 
                     name: 'KTTOrderInfo',
                     component: KTTOrderInfo
                 },
