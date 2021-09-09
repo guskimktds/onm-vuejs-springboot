@@ -209,6 +209,12 @@ export default new Router({
 
                 },
                 {
+                    path: "user/order-info1",
+                    name: 'UserOrderInfo1',
+                    component: UserOrderInfo
+
+                },
+                {
                     path: "user/order-detail",
                     name: 'UserOrderDetail',
                     component: UserOrderDetail
