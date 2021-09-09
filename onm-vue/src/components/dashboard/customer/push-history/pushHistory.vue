@@ -48,7 +48,8 @@ export default {
         alim_id:'',
         user_id:'',
         cam_id:'',
-        local_gw_id:''
+        local_gw_id:'',
+        is_masking:''
       },
       localGwOptions:[]
     }
@@ -199,6 +200,15 @@ beforeCreate() {
         this.searchParam.cam_id!==""
       ){
         newParams.cam_id=this.searchParam.user_id
+      }
+
+      if(params.is_masking !== undefined && params.is_masking !== ''){
+        newParams.is_masking = params.is_masking ? "N" : "Y";
+      }else if(
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
       
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){
