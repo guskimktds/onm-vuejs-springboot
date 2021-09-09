@@ -52,7 +52,8 @@ export default {
         date_yn: true,
         oderno:'',
         guid: '',
-        user_id:''
+        user_id:'',
+        is_masking:''
       }
     }
   },
@@ -172,6 +173,15 @@ export default {
         this.searchParam.user_id!==""
       ){
         newParams.user_id=this.searchParam.user_id
+      }
+
+      if(params.is_masking !== undefined && params.is_masking !== ''){
+        newParams.is_masking = params.is_masking ? "N" : "Y";
+      }else if(
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
 
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){

@@ -48,7 +48,8 @@ export default {
         end_date: dateInfo().currentDateDashFormat,
         date_yn: true,
         said: '',
-        guid: ''
+        guid: '',
+        is_masking: ''
       }
     }
   },
@@ -164,6 +165,15 @@ export default {
         this.searchParam.guid!==""
       ){
         newParams.guid=this.searchParam.guid
+      }
+
+      if(params.is_masking !== undefined && params.is_masking !== ''){
+        newParams.is_masking = params.is_masking ? "N" : "Y";
+      }else if(
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
 
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){
