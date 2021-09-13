@@ -5,7 +5,7 @@ import GoHome from '../components/utils/goHome'
 
 import PlatformMain from '../components/dashboard/platformMain'
 import ServiceMain from '../components/dashboard/serviceMain'
-import VocMain from '../components/dashboard/vocMain'
+import VocMain from '../components/dashboard/operation/voc/vocMain.vue'
 import OrderMain from '../components/dashboard/orderMain'
 import StoreMain from '../components/dashboard/storeMain'
 import CustomerMain from '../components/dashboard/customerMain'
@@ -289,11 +289,11 @@ export default new Router({
                 component: AccountInquiry
             }]
         },
-        {
-            path: "/voc",
-            name: 'VocMain',
-            component: VocMain
-        },
+        // {
+        //     path: "/voc",
+        //     name: 'VocMain',
+        //     component: VocMain
+        // },
         {
             path: "/biz",
             name: 'BizMain',
@@ -468,6 +468,12 @@ export default new Router({
                     name: 'DeviceStatus',
                     component: DeviceStatus
                 },
+                {
+                    path: "voc",
+                    name: 'voc',
+                    component: VocMain
+                },
+
                 // {
                 //     path: "gw-change",
                 //     name: 'GwChange',

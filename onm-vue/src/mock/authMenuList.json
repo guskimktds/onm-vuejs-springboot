@@ -44,7 +44,7 @@
                 "component": "order-user",
                 "children": [
                     { "name": "사용자 청약 오더 정보", "path": "/order/user/order-info", "component": "order-info" },
-                    { "name": "사용자 청약 오더 정보1", "path": "/order/user/order-info1", "component": "order-info" },
+                    { "name": "사용자 청약 오더 정보2", "path": "/order/user/order-info1", "component": "order-info" },
                     { "name": "사용자 청약 오더 상세", "path": "/order/user/order-detail", "component": "order-detail" },
                     { "name": "사용자 청약 오더 처리 결과", "path": "/order/user-order-result", "component": "user-order-result" },
                     { "name": "사용자 청약 전화번호", "path": "/order/user-order-phone", "component": "user-order-phone" },
@@ -184,6 +184,16 @@
                 "component": "customer-transfer",
                 "children": [
                     { "name": "실행관리", "path": "/operation/customer-transfer", "component": "customer-transfer" },
+                    { "name": "단말상태", "path": "/operation/device-status", "component": "device-status" }
+                ]
+            },
+            {
+                "name": "voc관리",
+                "path": "/operation/voc",
+                "icon":"mdi-desktop-mac",
+                "component": "customer-transfer",
+                "children": [
+                    { "name": "단말 인증 정보 조회", "path": "/operation/voc", "component": "VocMain" },
                     { "name": "단말상태", "path": "/operation/device-status", "component": "device-status" }
                 ]
             }
