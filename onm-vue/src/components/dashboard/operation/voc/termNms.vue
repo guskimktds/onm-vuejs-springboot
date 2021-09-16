@@ -1,21 +1,26 @@
 <template>
     <v-container fluid>
       <v-card>
-        <term-auth-query 
+        <term-nms-query
           v-on:search="searchToButton"
           v-bind:param=searchParam
-        ></term-auth-query>
-        <term-auth-list
+        ></term-nms-query>
+        <term-nms-list
         v-bind:pList=pList
         v-bind:resPagingInfo="resPagingInfo"
-        @pagination="setToSearchParams"></term-auth-list>
+        @pagination="setToSearchParams"></term-nms-list>
+        <term-nms-sub-list
+         v-bind:pList=pList
+        ></term-nms-sub-list>
       </v-card>
     </v-container>
 </template>
 
 <script>
-import termAuthQuery from './termAuthQuery'
-import termAuthList from './termAuthList'
+import termNmsQuery from './termNmsQuery'
+import termNmsList from './termNmsList'
+import termNmsSubList from './termNmsSubList.vue'
+
 
 //로그인 시 서버에서 불러오면 수정해야함
 import EventBus from '../../../../EventBus'
@@ -24,12 +29,13 @@ import axios from "axios"
 
 export default {
   components:{
-    termAuthQuery,
-    termAuthList
-  },
+    termNmsQuery,
+    termNmsList,
+    termNmsSubList
+    },
   data () {
-   return{
-      title: '고객이전 단말상태 조회',
+    return {
+      title: '단말오더 nms전송',
       pList: [],
       reqPagingInfo: {
         page_no: 1,
@@ -37,7 +43,7 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        mac_id: '',
+        guid: '',
 
       }
     }
@@ -46,12 +52,12 @@ export default {
   methods: {
     searchToButton: function(params){
       
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13012/get_term_auth_hist`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15023/send_term_to_nms`
 
       var reqParams = this.handleParams(params) 
         console.log('전달값')
         console.log(reqParams) 
-      if(!reqParams.mac_id){
+      if(!reqParams.guid){
         this.$fire({
               title: "검색값을 입력해주세요.",
               type: "error"})
@@ -61,7 +67,6 @@ export default {
           console.log(response)
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
-
           if(resCode == 200){
             this.pList = response.data.data.user_mig_device_list;
             this.resPagingInfo = response.data.data.paging_info;
@@ -70,7 +75,7 @@ export default {
           }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
-            alert('단말 인증 정보 데이터가 없습니다.');
+            alert('고객이전 단말 상태 데이터가 없습니다.');
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
              EventBus.$emit('top-path-logout');
@@ -106,24 +111,14 @@ export default {
     handleParams: function(params){
       let newParams = {}
 
-      if(params.mac_id !== undefined && params.mac_id !== ''){
-        newParams.mac_id = params.mac_id
+      if(params.guid !== undefined && params.guid !== ''){
+        newParams.guid = params.guid
       }else if(
-        this.searchParam.mac_id!==undefined&&
-        this.searchParam.mac_id!==""
+        this.searchParam.guid!==undefined&&
+        this.searchParam.guid!==""
       ){
-        newParams.mac_id=this.searchParam.mac_id
+        newParams.guid=this.searchParam.guid
       }
-      if(params.page_no === undefined || params.page_no === ''){
-        newParams.page_no = this.reqPagingInfo.page_no
-      }else{
-        newParams.page_no = params.page_no
-      }
-      if(params.view_cnt === undefined || params.view_cnt === ''){
-        newParams.view_cnt = this.reqPagingInfo.view_cnt
-      }else{
-        newParams.view_cnt = params.view_cnt
-      } 
       return newParams
     }
   }

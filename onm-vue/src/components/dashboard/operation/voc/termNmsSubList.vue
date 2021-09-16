@@ -8,7 +8,7 @@
       color="orange"
       dark
       icon="mdi-keyboard"
-      title="단말 인증 정보 LIST"
+      title="단말 오더 nms 전송 LIST"
       class="px-5 py-3"
     >
         <v-data-table
@@ -40,17 +40,14 @@ export default {
       totalList: 0,
       loading: true,
         headers: [
-          {
-            text: '인증요청일련번호',
-            align: 'start',
-            sortable: false,
-            value: 'term_auth_seq',
-          },
-          { text: '단말타입', value: 'Termtype'},
-          { text: 'mac_id', value: 'mac_id'},
-          { text: '인증결과코드', value: 'auth_resultcode' },
-          { text: '인증결과메세지', value: 'auth_resultmsg' },
-          { text: '인증일시', value: 'auth_date' },
+          { text: 'Mac_id', align: 'start', sortable: false, value: 'Term_mac_addr' },
+          { text: '단말타입', value: 'Termtype' },
+          { text: '단말변경유형코드', value: 'Term_change_code' },
+          { text: '모델명', value: 'Model_name' },
+          { text: '제품코드', value: 'product_code' },
+          { text: '바코드번호', value: 'term_barcode' },
+          { text: '제조사명', value: 'Mfc_name' },
+          { text: '단말별칭', value: 'Term_alias' },
         ]
       }
     },

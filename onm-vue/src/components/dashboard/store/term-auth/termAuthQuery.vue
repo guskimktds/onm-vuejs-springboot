@@ -11,7 +11,7 @@
             <v-row>
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field 
-                        label="MAC ID" 
+                        label="mac id" 
                         v-model="param.mac_id"
                         placeholder=" ">                        
                     </v-text-field>

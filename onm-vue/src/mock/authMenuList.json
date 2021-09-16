@@ -105,7 +105,8 @@
                     { "name": "카메라 정보 조회", "path": "/store/device-camera", "component": "device-camera" },
                     { "name": "IoT GW 정보 조회", "path": "/store/device-iotgw", "component": "device-iotgw" },
                     { "name": "센서 정보 조회", "path": "/store/device-sensor", "component": "device-sensor" },
-                    { "name": "KTT 단말 정보 조회", "path": "/store/device-ktt", "component": "device-ktt" }
+                    { "name": "KTT 단말 정보 조회", "path": "/store/device-ktt", "component": "device-ktt" },
+                    { "name": "단말 인증 정보 조회", "path": "/operation/term-auth", "component": "termAuth" }
                 ]
             }
         ]
@@ -189,12 +190,12 @@
             },
             {
                 "name": "voc관리",
-                "path": "/operation/voc",
+                "path": "/operation/term-order",
                 "icon":"mdi-desktop-mac",
                 "component": "customer-transfer",
                 "children": [
-                    { "name": "단말 인증 정보 조회", "path": "/operation/voc", "component": "VocMain" },
-                    { "name": "단말상태", "path": "/operation/device-status", "component": "device-status" }
+                    { "name": "청약 정보조회", "path": "/operation/term-order", "component": "termOrderInfo" },
+                    { "name": "단말오더 mns 전송", "path": "/operation/term-nms", "component": "termNms" }
                 ]
             }
         ]

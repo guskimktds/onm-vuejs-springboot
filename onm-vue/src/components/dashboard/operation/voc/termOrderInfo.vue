@@ -1,10 +1,10 @@
 <template>
     <v-container fluid>
       <v-card>
-        <user-order-info-query 
+        <term-order-info-query 
           v-on:search="searchToUserOrderInfo"
           v-bind:param=searchParam
-        ></user-order-info-query>
+        ></term-order-info-query>
         <user-order-info-list 
           v-bind:pList=pList 
           v-bind:resPagingInfo=resPagingInfo 
@@ -36,6 +36,9 @@
             사용자-KTT{{showKttList?" Close":" Open"}}
           </v-btn>
 
+          <v-btn v-bind:color="changeColor(showUserOrderPhone)" v-if=showDetailObject v-on:click="searchToUserOrderPhone()" >
+            사용자 청약 전화번호{{showUserOrderPhone?" Close":" Open"}}
+          </v-btn>
 
         </v-container>
 
@@ -52,6 +55,12 @@
           v-if=showKttList 
           v-bind:kttList=kttList
         ></ktt-list>
+        
+        <user-order-phone-list
+          v-if=showUserOrderPhone 
+          v-bind:UserOrderPhone=UserOrderPhone
+        >  
+        </user-order-phone-list>
 
       </v-container>
       </v-card>
@@ -59,14 +68,14 @@
 </template>
 
 <script>
-import UserOrderInfoList from './user/order-info/userOrderInfoList'
-import UserOrderInfoQuery from './user/order-info/userOrderInfoQuery'
-import UserOrderDetailObject from './user/order-detail/userOrderDetailObject'
-import UserOrderSubDetailList from './user/order-detail/userOrderSubDetailList'
-import KttList from './ktt-order/kttOrderInfoList'
-import dateInfo from '../../utils/common'
-
-import EventBus from '../../../EventBus'
+import UserOrderInfoList from '../../order/user/order-info/userOrderInfoList'
+import termOrderInfoQuery from './termOrderInfoQuery'
+import UserOrderDetailObject from '../../order/user/order-detail/userOrderDetailObject'
+import UserOrderSubDetailList from '../../order/user/order-detail/userOrderSubDetailList'
+import KttList from '../../../dashboard/order/ktt-order/kttOrderInfoList.vue'
+import dateInfo from '../../../utils/common'
+import UserOrderPhoneList from '../../order/user-order-phone/userOrderPhoneList'
+import EventBus from '../../../../EventBus'
 import axios from "axios"
 
 const headers = {
@@ -77,10 +86,11 @@ const headers = {
 export default {
   components: {
     UserOrderInfoList,
-    UserOrderInfoQuery,
+   termOrderInfoQuery,
     UserOrderDetailObject,
     UserOrderSubDetailList,
     KttList,
+    UserOrderPhoneList
   },
   data () {
     return {
@@ -143,6 +153,7 @@ export default {
         if(resCode == 200){
           this.pList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info
+     
         }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
@@ -249,7 +260,7 @@ export default {
         .catch((ex) => {
           console.log('조회 실패', ex)
         })
-    },  
+    },
     searchToUserOrderPhone: function(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
       //params : 페이징 + 검색조건
@@ -274,6 +285,7 @@ export default {
         if(resCode == 200){
           this.pList = response.data.data.tel_no_list;
           this.resPagingInfo = response.data.data.paging_info
+               console.log(this.pList, this.resPaging);
         }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
