@@ -5,7 +5,6 @@ import GoHome from '../components/utils/goHome'
 
 import PlatformMain from '../components/dashboard/platformMain'
 import ServiceMain from '../components/dashboard/serviceMain'
-import VocMain from '../components/dashboard/vocMain'
 import OrderMain from '../components/dashboard/orderMain'
 import StoreMain from '../components/dashboard/storeMain'
 import CustomerMain from '../components/dashboard/customerMain'
@@ -42,6 +41,7 @@ import CameraInfo from '../components/dashboard/store/device-camera/cameraInfo'
 import IotGWInfo from '../components/dashboard/store/device-iotgw/iotgwInfo'
 import SensorInfo from '../components/dashboard/store/device-sensor/sensorInfo'
 import DeviceKttInfo from '../components/dashboard/store/device-ktt/deviceKttInfo'
+import termAuth from '../components/dashboard/store/term-auth/termAuth'
 
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
@@ -81,8 +81,8 @@ import OperationMain from '../components/dashboard/operationMain'
 //import OperationHistory from '../components/dashboard/operation/history/operationHistory'
 import AdminHistory from '../components/dashboard/operation/admin/adminHistory'
 import ChangeHistory from '../components/dashboard/operation/change/changeHistory'
-
-//운영관리 / 관리자 이력 조회
+import termNms from '../components/dashboard/operation/voc/termNms.vue'
+import termOrderInfo from '../components/dashboard/operation/voc/termOrderInfo.vue'
 
 //운영관리 / 코드 설정 관리 
 import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
@@ -288,11 +288,11 @@ export default new Router({
                 component: AccountInquiry
             }]
         },
-        {
-            path: "/voc",
-            name: 'VocMain',
-            component: VocMain
-        },
+        // {
+        //     path: "/voc",
+        //     name: 'VocMain',
+        //     component: VocMain
+        // },
         {
             path: "/biz",
             name: 'BizMain',
@@ -466,6 +466,21 @@ export default new Router({
                     path: "device-status",
                     name: 'DeviceStatus',
                     component: DeviceStatus
+                },
+                {
+                    path: "term-auth",
+                    name: 'termAuth',
+                    component: termAuth
+                },
+                {
+                    path: "term-nms",
+                    name: 'termNms',
+                    component: termNms
+                },
+                {
+                    path: "term-order",
+                    name: 'termOrderInfo',
+                    component: termOrderInfo
                 },
                 // {
                 //     path: "gw-change",

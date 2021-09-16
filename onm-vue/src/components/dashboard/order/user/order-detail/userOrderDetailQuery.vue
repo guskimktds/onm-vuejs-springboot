@@ -59,7 +59,6 @@
                         color="secondary"
                     ></v-switch>
                 </v-col>
-
                 <v-col cols="3">
                     <v-switch
                         v-model="param.is_masking"                    
@@ -67,7 +66,6 @@
                         color="secondary"
                     ></v-switch>
                 </v-col>
-                
         </v-row>
         
         <v-row>
