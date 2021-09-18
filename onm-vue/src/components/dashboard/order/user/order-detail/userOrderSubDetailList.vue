@@ -26,7 +26,7 @@
 export default {
     props: ['sdList'],
     data() {
-      return {
+      return { 
         editedIndex: -1,
         headers: [
           {

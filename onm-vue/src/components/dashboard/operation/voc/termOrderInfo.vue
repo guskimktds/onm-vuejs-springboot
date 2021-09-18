@@ -73,7 +73,7 @@ import termOrderInfoQuery from './termOrderInfoQuery'
 import UserOrderDetailObject from '../../order/user/order-detail/userOrderDetailObject'
 import UserOrderSubDetailList from '../../order/user/order-detail/userOrderSubDetailList'
 import KttList from '../../../dashboard/order/ktt-order/kttOrderInfoList.vue'
-import UserOrderPhoneList from '../../order/user-order-phone/userOrderPhoneList'
+import UserOrderPhoneList from './userOrderPhoneList'
 import EventBus from '../../../../EventBus'
 import axios from "axios"
 
@@ -116,8 +116,8 @@ export default {
       btnTitle3: '사용자-KTT open',
       
       title4: '사용자 청약 전화번호',
-      telNoList:[],
-      showPhonelList:false,
+      UserOrderPhone:[],
+      showUserOrderPhone:false,
       btnTitle4: '사용자 청약 전화번호 조회',
 
       resPagingInfo: {},
@@ -237,6 +237,7 @@ export default {
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12003/get_subs_order_details_list`
     var params={
       said: this.pObject.said,
+      
     }
 
     axios
@@ -262,22 +263,27 @@ export default {
           console.log('조회 실패', ex)
         })
     },
-    searchToUserOrderPhone: function(params){
-      console.log('허스경');
+    searchToUserOrderPhone: function(){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
       //params : 페이징 + 검색조건
-      var reqParams = this.handleParams(params)    
-      console.log('요청하는 파람')
-      console.log(reqParams)
-      if(!reqParams.start_date&&!reqParams.telno&&!reqParams.guid){
-        this.$fire({
-              title: "검색값을 입력해주세요.",
-              type: "error"})
-      }else{
-      axios.post(url, reqParams, headers)
+      // var reqParams = this.handleParams(params)    
+      // console.log('요청하는 파람')
+      // console.log(reqParams)
+      // if(!reqParams.start_date&&!reqParams.telno&&!reqParams.guid){
+        // this.$fire({
+        //       title: "검색값을 입력해주세요.",
+        //       type: "error"})
+      // }else{
+      var params = {
+        guid: this.pObject.guid,
+        page_no: 1,
+        view_cnt: 10
+      }
+      axios.post(url, params, headers)
       // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
       //   params
       // })
+
       .then((response) => {
         
         console.log(response.data)
@@ -285,11 +291,11 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if(resCode == 200){
-          this.telNoList = response.data.data.tel_no_list;
+          this.UserOrderPhoe = response.data.data.tel_no_list;
           this.resPagingInfo = response.data.data.paging_info
-               console.log(this.pList, this.resPaging);
+          this.showUserOrderPhone=!this.showUserOrderPhone;
         }else if(resCode==204){
-            this.pList = [];
+            this.UserOrderPhone = [];
             this.resPagingInfo = {};
             alert("사용자 청약 전화번호 데이터가 없습니다.");
         }else if(resCode==410){
@@ -301,7 +307,7 @@ export default {
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
             this.$router.replace('/signin')
         }else{
-          this.pList = [];
+          this.UserOrderPhone = [];
           this.resPagingInfo = {};
           alert(resCode + " / " + resMsg);
         }
@@ -309,7 +315,7 @@ export default {
       .catch((ex) => {
         console.log('조회 실패',ex)
       })
-      }
+      // }
     },
 
     clickToSearchKTT: function(){
