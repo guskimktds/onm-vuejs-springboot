@@ -55,7 +55,7 @@
           v-if=showKttList 
           v-bind:kttList=kttList
         ></ktt-list>
-        
+
         <user-order-phone-list
           v-if=showUserOrderPhone 
           v-bind:UserOrderPhone=UserOrderPhone
@@ -73,7 +73,6 @@ import termOrderInfoQuery from './termOrderInfoQuery'
 import UserOrderDetailObject from '../../order/user/order-detail/userOrderDetailObject'
 import UserOrderSubDetailList from '../../order/user/order-detail/userOrderSubDetailList'
 import KttList from '../../../dashboard/order/ktt-order/kttOrderInfoList.vue'
-import dateInfo from '../../../utils/common'
 import UserOrderPhoneList from '../../order/user-order-phone/userOrderPhoneList'
 import EventBus from '../../../../EventBus'
 import axios from "axios"
@@ -115,17 +114,19 @@ export default {
       kttList:[],
       showKttList:false,
       btnTitle3: '사용자-KTT open',
+      
+      title4: '사용자 청약 전화번호',
+      telNoList:[],
+      showPhonelList:false,
+      btnTitle4: '사용자 청약 전화번호 조회',
 
       resPagingInfo: {},
       oldValue:'',
       searchParam: {
-        start_date: dateInfo().lastWeekDashFormat,
-        end_date: dateInfo().currentDateDashFormat,
-        date_yn: true,
+    
         said: '',
-        guid: '',
-        oderno: '',
-        is_masking:''
+      
+        // is_masking:''
       }
     }
   },
@@ -135,17 +136,17 @@ export default {
       this.showDetailObject=false
       this.isReloadDetailObject=false
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
-
+  
       //params : 페이징 + 검색조건
-      var reqParams = this.handleParams(params)      
-      console.log('넣어지는 값')
-      console.log(reqParams)
-      if(!reqParams.said&&!reqParams.start_date&&!reqParams.guid&&!reqParams.oderno){
-        this.$fire({
-              title: "검색값을 입력해주세요.",
-              type: "error"})
-      }else{
-      axios.post(url, reqParams, headers)
+      // var reqParams = this.handleParams(params)      
+      // console.log('넣어지는 값')
+      // console.log(reqParams)
+      // if(!reqParams.said&&!reqParams.start_date&&!reqParams.guid&&!reqParams.oderno){
+      //   this.$fire({
+      //         title: "검색값을 입력해주세요.",
+      //         type: "error"})
+      // }else{
+      axios.post(url, params, headers)
       .then((response) => {
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
@@ -175,7 +176,7 @@ export default {
       .catch((ex) => {
         console.log('조회 실패',ex)
       })
-      }
+      // }
     },
 
     changeColor(values){
@@ -191,7 +192,7 @@ export default {
       if(values) {
         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12002/get_user_subs_detail`
         var params = {
-          guid: values,
+          guid:values.guid,
           is_masking: this.searchParam.is_masking? "N" : "Y"
         }
 
@@ -235,7 +236,7 @@ export default {
     clickToSearchSubDetailList:function(){
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12003/get_subs_order_details_list`
     var params={
-      guid: this.pObject.guid,
+      said: this.pObject.said,
     }
 
     axios
@@ -262,6 +263,7 @@ export default {
         })
     },
     searchToUserOrderPhone: function(params){
+      console.log('허스경');
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)    
@@ -283,7 +285,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if(resCode == 200){
-          this.pList = response.data.data.tel_no_list;
+          this.telNoList = response.data.data.tel_no_list;
           this.resPagingInfo = response.data.data.paging_info
                console.log(this.pList, this.resPaging);
         }else if(resCode==204){
@@ -356,11 +358,6 @@ export default {
 
     handleParams: function(params){
       let newParams = {}
-      console.log(this.searchParam.date_yn)
-      if(params.date_yn==undefined){
-        params.date_yn=this.searchParam.date_yn
-      }
-
       if(params.page_no === undefined || params.page_no === ''){
         newParams.page_no = this.reqPagingInfo.page_no
       }else{
@@ -372,80 +369,12 @@ export default {
       }else{
         newParams.view_cnt = params.view_cnt
       }
-
-     if(params.date_yn==true){
-        if(params.start_date !== undefined && params.start_date !== ''){
-          newParams.start_date = params.start_date.replace(/-/g,"")
-        }else if(
-          this.searchParam.start_date!==undefined&&
-          this.searchParam.start_date!==""
-        ){
-          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
-        }
-
-        if(params.end_date !== undefined && params.end_date !== ''){
-          newParams.end_date = params.end_date.replace(/-/g,"")
-        }else if(
-          this.searchParam.end_date!==undefined&&
-          this.searchParam.end_date!==""
-        ){
-          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
-        }
-     }
-      
       if(params.said !== undefined && params.said !== ''){
         newParams.said = params.said
       }else if(
         this.searchParam.said!==undefined&&
         this.searchParam.said!==""
-      ){
-        newParams.said=this.searchParam.said
-      }
-
-      if(params.guid !== undefined && params.guid !== ''){
-        newParams.guid = params.guid
-      }else if(
-        this.searchParam.guid!==undefined&&
-        this.searchParam.guid!==""
-      ){
-        newParams.guid=this.searchParam.guid
-      }
-
-      if(params.oderno !== undefined && params.oderno !== ''){
-        newParams.oderno = params.oderno
-      }else if(
-        this.searchParam.oderno!==undefined&&
-        this.searchParam.oderno!==""
-      ){
-        newParams.oderno=this.searchParam.oderno
-      } 
-
-      if(params.date_yn !== undefined && params.date_yn !== ''){
-        newParams.date_yn = params.date_yn
-      }else if(
-        this.searchParam.date_yn!==undefined&&
-        this.searchParam.date_yn!==""
-      ){
-        newParams.date_yn=this.searchParam.date_yn
-      } 
-
-      if(params.is_masking !== undefined && params.is_masking !== ''){
-        newParams.is_masking = params.is_masking ? "N" : "Y";
-      }else if(
-        this.searchParam.is_masking!==undefined&&
-        this.searchParam.is_masking!==""
-      ){
-        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
-      }
-
-      if(Number(newParams.start_date)-Number(newParams.end_date)>0){
-        alert('형식에 맞는 날짜 검색값을 입력해주세요')
-        newParams.start_date=dateInfo().lastWeekDashFormat.replace(/-/g,"")
-        newParams.end_date=dateInfo().currentDateDashFormat.replace(/-/g,"")
-        this.searchParam.start_date=dateInfo().lastWeekDashFormat
-        this.searchParam.end_date=dateInfo().currentDateDashFormat
-      }
-      
+      )
       return newParams
     }
   }

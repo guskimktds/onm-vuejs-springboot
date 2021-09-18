@@ -131,9 +131,9 @@ export default {
       console.log('넣어지는 값')
       console.log(reqParams)
       if(!reqParams.said&&!reqParams.start_date&&!reqParams.guid&&!reqParams.oderno){
-        this.$fire({
-              title: "검색값을 입력해주세요.",
-              type: "error"})
+        // this.$fire({
+        //       title: "검색값을 입력해주세요.",
+        //       type: "error"})
       }else{
       axios.post(url, reqParams, headers)
       .then((response) => {
@@ -180,7 +180,7 @@ export default {
       if(values) {
         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12002/get_user_subs_detail`
         var params = {
-          guid: values,
+          guid: values.guid,
           is_masking: this.searchParam.is_masking? "N" : "Y"
         }
 
@@ -249,54 +249,7 @@ export default {
         .catch((ex) => {
           console.log('조회 실패', ex)
         })
-    },  
-    searchToUserOrderPhone: function(params){
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
-      //params : 페이징 + 검색조건
-      var reqParams = this.handleParams(params)    
-      console.log('요청하는 파람')
-      console.log(reqParams)
-      if(!reqParams.start_date&&!reqParams.telno&&!reqParams.guid){
-        this.$fire({
-              title: "검색값을 입력해주세요.",
-              type: "error"})
-      }else{
-      axios.post(url, reqParams, headers)
-      // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
-      //   params
-      // })
-      .then((response) => {
-        
-        console.log(response.data)
-        //this.list = JSON.parse(result.data.menu)
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if(resCode == 200){
-          this.pList = response.data.data.tel_no_list;
-          this.resPagingInfo = response.data.data.paging_info
-        }else if(resCode==204){
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert("사용자 청약 전화번호 데이터가 없습니다.");
-        }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
-          EventBus.$emit('top-path-logout');
-            this.$store
-            .dispatch("LOGOUT")
-            .then( res => { 
-            console.log(res.status)}).catch(({ message }) => (this.msg = message))
-            this.$router.replace('/signin')
-        }else{
-          this.pList = [];
-          this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
-        }
-      })
-      .catch((ex) => {
-        console.log('조회 실패',ex)
-      })
-      }
-    },
+    }, 
 
     clickToSearchKTT: function(){
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12005/get_user_ktt_subs`
