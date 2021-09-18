@@ -37,17 +37,14 @@
 
 export default {
     props:['param'],
+       data() {
+        return {
+    
+        }
+    },
     methods: {
         searchMethod: function() {
             this.$emit('search', this.param)
-        },
-
-        handleRadio:function(value){
-            if(value=='등록일'){
-                this.param.order_category="R"
-            }else if(value=='mod_date'){
-                this.param.order_category="M"
-            }
         }
     }, 
 }
