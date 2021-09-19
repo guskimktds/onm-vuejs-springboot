@@ -59,8 +59,7 @@
         <user-order-phone-list
           v-if=showUserOrderPhone 
           v-bind:UserOrderPhone=UserOrderPhone
-        >  
-        </user-order-phone-list>
+        ></user-order-phone-list>
 
       </v-container>
       </v-card>
@@ -291,7 +290,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if(resCode == 200){
-          this.UserOrderPhoe = response.data.data.tel_no_list;
+          this.UserOrderPhone = response.data.data.tel_no_list;
           this.resPagingInfo = response.data.data.paging_info
           this.showUserOrderPhone=!this.showUserOrderPhone;
         }else if(resCode==204){
