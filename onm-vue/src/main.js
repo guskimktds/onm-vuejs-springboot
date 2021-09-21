@@ -4,7 +4,6 @@ import router from './router'
 import store from './store'
 import './plugins/base'
 import VueSimpleAlert from "vue-simple-alert"
-import ChartPlugin from './plugins/ChartPlugin.js'
 
 import ('./assets/css/font-awesome.min.css')
 import ('./assets/css/materialdesignicons.min.css')

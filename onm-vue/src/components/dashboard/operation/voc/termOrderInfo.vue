@@ -36,8 +36,8 @@
             사용자-KTT{{showKttList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn v-bind:color="changeColor(showUserOrderPhone)" v-if=showDetailObject v-on:click="searchToUserOrderPhone()" >
-            사용자 청약 전화번호{{showUserOrderPhone?" Close":" Open"}}
+          <v-btn v-bind:color="changeColor(showPhonelList)" v-if=showDetailObject v-on:click="searchToUserOrderPhone()" >
+            사용자 청약 전화번호{{showPhonelList?" Close":" Open"}}
           </v-btn>
 
         </v-container>
@@ -57,8 +57,8 @@
         ></ktt-list>
 
         <user-order-phone-list
-          v-if=showUserOrderPhone 
-          v-bind:UserOrderPhone=UserOrderPhone
+          v-if=showPhonelList 
+          v-bind:telNoList=telNoList
         >  
         </user-order-phone-list>
 
@@ -247,7 +247,7 @@ export default {
           if(resCode == 200){
             this.sdList = response.data.data.order_detail_list;
             this.showSubDetailList=!this.showSubDetailList;
-            this.subBtn=!this.subBtn
+            // this.subBtn=!this.subBtn
           }else if(resCode==204){
            this.sdList = [];
             this.showSubDetailList=false
@@ -262,36 +262,31 @@ export default {
           console.log('조회 실패', ex)
         })
     },
-    searchToUserOrderPhone: function(params){
-      console.log('허스경');
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
-      //params : 페이징 + 검색조건
-      var reqParams = this.handleParams(params)    
-      console.log('요청하는 파람')
-      console.log(reqParams)
-      if(!reqParams.start_date&&!reqParams.telno&&!reqParams.guid){
-        this.$fire({
-              title: "검색값을 입력해주세요.",
-              type: "error"})
-      }else{
-      axios.post(url, reqParams, headers)
-      // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
-      //   params
-      // })
+
+    searchToUserOrderPhone: function(){
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12004/get_user_subs_telno`
+      var params = {
+        page_no: 1,
+        view_cnt: 10,
+        guid: this.pObject.guid,
+      }
+      axios
+      .post(url, params, headers)
       .then((response) => {
-        
         console.log(response.data)
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if(resCode == 200){
+          this.showPhonelList != this.showPhonelList;
           this.telNoList = response.data.data.tel_no_list;
-          this.resPagingInfo = response.data.data.paging_info
-               console.log(this.pList, this.resPaging);
+          // this.resPagingInfo = response.data.data.paging_info
+          // console.log(this.telNoList, this.resPagingInfo);
         }else if(resCode==204){
-            this.pList = [];
-            this.resPagingInfo = {};
+            this.telNoList = [];
+            // this.resPagingInfo = {};
             alert("사용자 청약 전화번호 데이터가 없습니다.");
+            this.showPhonelList=false;
         }else if(resCode==410){
           alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
@@ -300,6 +295,7 @@ export default {
             .then( res => { 
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
             this.$router.replace('/signin')
+            this.showPhonelList=false;
         }else{
           this.pList = [];
           this.resPagingInfo = {};
@@ -309,7 +305,7 @@ export default {
       .catch((ex) => {
         console.log('조회 실패',ex)
       })
-      }
+      // }
     },
 
     clickToSearchKTT: function(){
