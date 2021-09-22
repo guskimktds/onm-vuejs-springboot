@@ -4,8 +4,8 @@
       <v-card>
         <user-order-phone-query v-on:search="searchToUserOrderPhone"
         v-bind:param=searchParam></user-order-phone-query>
-        <user-order-phone-list v-bind:pList=pList
-        v-bind:resPagingInfo=resPagingInfo
+        <user-order-phone-list v-bind:phList=phList
+        v-bind:phPagingInfo=phPagingInfo
         @pagination="setToSearchParams"
         ></user-order-phone-list>
       </v-card>
@@ -35,12 +35,12 @@ export default {
   data () {
     return {
       title: '사용자 청약 전화번호',
-      pList: [],
+      phList: [],
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10
       },
-      resPagingInfo: {},
+      phPagingInfo: {},
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
@@ -75,11 +75,11 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if(resCode == 200){
-          this.pList = response.data.data.tel_no_list;
-          this.resPagingInfo = response.data.data.paging_info
+          this.phList = response.data.data.tel_no_list;
+          this.phPagingInfo = response.data.data.paging_info
         }else if(resCode==204){
-            this.pList = [];
-            this.resPagingInfo = {};
+            this.phList = [];
+            this.phPagingInfo = {};
             alert("사용자 청약 전화번호 데이터가 없습니다.");
         }else if(resCode==410){
           alert("로그인 세션이 만료되었습니다.");
@@ -90,8 +90,8 @@ export default {
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
             this.$router.replace('/signin')
         }else{
-          this.pList = [];
-          this.resPagingInfo = {};
+          this.phList = [];
+          this.phPagingInfo = {};
           alert(resCode + " / " + resMsg);
         }
       })

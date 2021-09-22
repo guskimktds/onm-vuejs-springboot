@@ -13,9 +13,9 @@
             >
             <v-data-table
                 :headers="headers"
-                :items="pList"
+                :items="phList"
                 :options.sync="options"
-                :server-items-length="resPagingInfo.total_cnt"
+                :server-items-length="phPagingInfo.total_cnt"
                 class="elevation-1"
                 :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
                 :header-props="{ sortIcon: null }"
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-    props: ['pList', 'resPagingInfo'],
+    props: ['phList', 'phPagingInfo'],
     //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
     data() {
       return {
@@ -62,11 +62,11 @@ export default {
       },
     },
     updated() {
-      if(this.last!==this.resPagingInfo.total_cnt){
+      if(this.last!==this.phPagingInfo.total_cnt){
         this.options.page=1
       }
-      if(this.resPagingInfo.total_cnt!==undefined){
-      this.last=this.resPagingInfo.total_cnt
+      if(this.phPagingInfo.total_cnt!==undefined){
+      this.last=this.phPagingInfo.total_cnt
       }
   },
     mounted () {
