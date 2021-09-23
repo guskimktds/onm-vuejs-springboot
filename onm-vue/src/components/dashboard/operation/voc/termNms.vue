@@ -5,13 +5,30 @@
           v-on:search="searchToButton"
           v-bind:param=searchParam
         ></term-nms-query>
+
         <term-nms-list
         v-bind:pList=pList
         v-bind:resPagingInfo="resPagingInfo"
+        @child="clickToSearchDetailObject"
         @pagination="setToSearchParams"></term-nms-list>
-        <term-nms-sub-list
-         v-bind:pList=pList
-        ></term-nms-sub-list>
+
+         <v-container
+            id="regular-tables"
+            fluid 
+            tag="section"
+        >
+         <v-btn v-bind:color="changeColor(showDetailObject)"  v-if=showTermNmsSubList v-on:click="showDetailObject=!showDetailObject">
+            단말 nms 상세 리스트 {{showDetailObject?" Close":" Open"}}
+         </v-btn>   
+
+        </v-container>
+
+        <v-container v-if=showDetailObject>
+          <term-nms-sub-list
+          v-bind:termSubList=termSubList
+          v-bind:authPagingInfo=authPagingInfo
+          ></term-nms-sub-list>
+          </v-container>
       </v-card>
     </v-container>
 </template>
@@ -37,21 +54,30 @@ export default {
     return {
       title: '단말오더 nms전송',
       pList: [],
+      showDetailObject: false,
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10
       },
       resPagingInfo: {},
+      authPagingInfo: {},
       searchParam: {
         guid: '',
+      },
 
-      }
+      title2: '단말nms 상세',
+      termSubList: [],
+      showTermNmsSubList: false,
+      btnTitle: '단말 nms 상세'
+
+
     }
   },
  
   methods: {
     searchToButton: function(params){
-      
+      this.showDetailObject=false
+      this.isReloadDetailObject=false
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15023/send_term_to_nms`
 
       var reqParams = this.handleParams(params) 
@@ -69,7 +95,9 @@ export default {
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.pList = response.data.data.user_mig_device_list;
+            this.termSubList = response.data.data.user_mig_device_list;  //데이터 바꿀것
             this.resPagingInfo = response.data.data.paging_info;
+            this.authPagingInfo = response.data.data.paging_info; //sub페이징
             console.log('페이지 정보')
             console.log(this.resPagingInfo)
           }else if(resCode==204){
@@ -95,6 +123,9 @@ export default {
         })
       }
     },
+    clickToSearchDetailObject: function(){
+      this.showTermNmsSubList != this.showTermNmsSubList
+    },
     setToSearchParams: function(values){
       console.log(values)
       console.log('검색 정보')
@@ -105,9 +136,15 @@ export default {
 
       console.log(params)
 
-      this.searchToButton(params)
+      // this.searchToButton(params)
     },
-
+    changeColor(values){
+      if(values===true){
+        return 'green';
+      }else{
+        return "indigo";
+      }
+    },
     handleParams: function(params){
       let newParams = {}
 

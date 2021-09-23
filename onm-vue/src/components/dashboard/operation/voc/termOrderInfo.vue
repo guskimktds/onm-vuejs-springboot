@@ -14,7 +14,7 @@
         </user-order-info-list>
         <v-container
             id="regular-tables"
-            fluid
+            fluid 
             tag="section"
         >
           <v-btn v-bind:color="changeColor(showDetailObject)"  v-if=isReloadDetailObject v-on:click="showDetailObject=!showDetailObject">
@@ -40,6 +40,37 @@
             사용자 청약 전화번호{{showPhonelList?" Close":" Open"}}
           </v-btn>
 
+          <v-btn v-bind:color="changeColor(showAuthDevice)" v-if=showDetailObject v-on:click="searchToAuthTargetDevice()" >
+            인증대상 단말 정보 확인{{showAuthDevice?" Close":" Open"}}
+          </v-btn>
+
+          <v-btn v-bind:color="changeColor(showDeviceOrderResult)" v-if=showDetailObject v-on:click="searchToDeviceOrderResult()" >
+            단말 오더 처리결과 확인{{showDeviceOrderResult?" Close":" Open"}}
+          </v-btn>
+
+          <v-btn v-bind:color="changeColor(showKttInfoList)" v-if=showDetailObject v-on:click="searchKTTInfo()" >
+            사용자 ktt정보{{showKttInfoList?" Close":" Open"}}
+          </v-btn>
+
+          <v-btn v-bind:color="changeColor(showStoreProductSummaryInfo)" v-if=showDetailObject v-on:click="searchToStoreProductSummaryInfo()" >
+            상품 요약정보{{showStoreProductSummaryInfo?" Close":" Open"}}
+          </v-btn>
+
+          <v-btn v-bind:color="changeColor(showVaCamCountList)" v-if=showDetailObject v-on:click="searchToVaCamCount()" >
+            사용자별 센서 신청 현황{{showVaCamCountList?" Close":" Open"}}
+          </v-btn>
+
+          <v-btn v-bind:color="changeColor(showCameraInfoList)" v-if=showDetailObject v-on:click="searchToCameraInfo()" >
+            카메라정보{{showCameraInfoList?" Close":" Open"}}
+          </v-btn>
+
+          <v-btn v-bind:color="changeColor(showIotGwList)" v-if=showDetailObject v-on:click="searchToIotGWInfo()" >
+            IOT GW{{showIotGwList?" Close":" Open"}}
+          </v-btn>
+
+          <v-btn v-bind:color="changeColor(showSensorInfoList)" v-if=showDetailObject v-on:click="searchToSensorInfo()" >
+            Sensor 정보{{showSensorInfoList?" Close":" Open"}}
+          </v-btn>
         </v-container>
 
       <user-order-detail-object v-if=showDetailObject v-bind:pObject=pObject></user-order-detail-object>
@@ -57,10 +88,74 @@
         ></ktt-list>
 
         <user-order-phone-list
+<<<<<<< HEAD
           v-if=showPhonelList 
           v-bind:telNoList=telNoList
         >  
         </user-order-phone-list>
+=======
+          v-if=showUserOrderPhone 
+          v-bind:phList=phList
+          v-bind:phPagingInfo=phPagingInfo
+        ></user-order-phone-list>
+       
+        <auth-target-device-list
+          v-if=showAuthDevice
+          v-bind:authList=authList
+          v-bind:authPagingInfo=authPagingInfo
+        >
+        </auth-target-device-list>
+
+        <device-order-result-list
+          v-if=showDeviceOrderResult
+          v-bind:dorList=dorList
+        >
+        </device-order-result-list>
+
+        <ktt-info-list
+        v-if=showKttInfoList
+        v-bind:kList=kList
+        v-bind:kttPagingInfo="kttPagingInfo"
+        >
+        </ktt-info-list>
+
+      <store-product-summary-info-list
+        v-if=showStoreProductSummaryInfo
+        v-bind:psList=psList
+        v-bind:psPagingInfo=psPagingInfo
+      >
+      </store-product-summary-info-list>
+
+      <va-cam-count-list
+        v-if=showVaCamCountList
+        v-bind:vaList=vaList
+        v-bind:vaPagingInfo=vaPagingInfo
+      >
+      </va-cam-count-list>
+
+      <camera-info-list
+      v-if=showCameraInfoList
+      v-bind:dcList=dcList
+      v-bind:dcPagingInfo=dcPagingInfo
+      >
+      </camera-info-list>
+      
+      <iot-gw-list
+        v-if=showIotGwList
+        v-bind:iotList=iotList
+        v-bind:iotPagingInfo=iotPagingInfo
+      >
+      </iot-gw-list>
+
+    <sensor-info-list
+        v-if=showSensorInfoList
+        v-bind:dsList=dsList
+        v-bind:dsPagingInfo=dsPagingInfo
+    >
+    </sensor-info-list>
+      
+
+>>>>>>> develop
 
       </v-container>
       </v-card>
@@ -69,13 +164,23 @@
 
 <script>
 import UserOrderInfoList from '../../order/user/order-info/userOrderInfoList'
-import termOrderInfoQuery from './termOrderInfoQuery'
+import TermOrderInfoQuery from './termOrderInfoQuery'
 import UserOrderDetailObject from '../../order/user/order-detail/userOrderDetailObject'
 import UserOrderSubDetailList from '../../order/user/order-detail/userOrderSubDetailList'
 import KttList from '../../../dashboard/order/ktt-order/kttOrderInfoList.vue'
 import UserOrderPhoneList from '../../order/user-order-phone/userOrderPhoneList'
+import AuthTargetDeviceList from '../../order/auth-target-device/authTargetDeviceList'
+import DeviceOrderResultList from '../../order/device-order-result/deviceOrderResultList'
+import KttInfoList from '../../store/ktt/kttInfoList.vue'
+import StoreProductSummaryInfoList from '../../store/product-summary/storeProductSummaryInfoList.vue'
+import VaCamCountList from '../../store/va-cam-count/vaCamCountList.vue'
+import CameraInfoList from '../../store/device-camera/cameraInfoList.vue'
+import IotGwList from '../../store/device-iotgw/iotgwInfoList.vue'
+import SensorInfoList from '../../store/device-sensor/sensorInfoList'
+
 import EventBus from '../../../../EventBus'
 import axios from "axios"
+
 
 const headers = {
   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
@@ -85,11 +190,19 @@ const headers = {
 export default {
   components: {
     UserOrderInfoList,
-   termOrderInfoQuery,
+    TermOrderInfoQuery,
     UserOrderDetailObject,
     UserOrderSubDetailList,
     KttList,
-    UserOrderPhoneList
+    UserOrderPhoneList,
+    AuthTargetDeviceList,
+    DeviceOrderResultList,
+    KttInfoList,
+    StoreProductSummaryInfoList,
+    VaCamCountList,
+    CameraInfoList,
+    IotGwList,
+    SensorInfoList
   },
   data () {
     return {
@@ -116,17 +229,66 @@ export default {
       btnTitle3: '사용자-KTT open',
       
       title4: '사용자 청약 전화번호',
-      telNoList:[],
-      showPhonelList:false,
+      phList:[],
+      showUserOrderPhone:false,
       btnTitle4: '사용자 청약 전화번호 조회',
 
-      resPagingInfo: {},
-      oldValue:'',
-      searchParam: {
-    
-        said: '',
+     title5: '인증 대상 단말',
+      authList:[],
+      showAuthDevice:false,
+      btnTitle5: '인증 대상 단말',
       
-        // is_masking:''
+      title6: '단말오더 처리결과',
+      dorList:[],
+      showDeviceOrderResult:false,
+      btnTitle6: '단말오더 처리결과',
+
+      title7: '사용자 ktt정보 ',
+      kList :[],
+      showKttInfoList:false,
+      btnTitle7: '사용자 ktt 정보',
+
+      title8: '상품 요약정보 ',
+      psList: [],
+      showStoreProductSummaryInfo:false,
+      btnTitle8: '상품 요약정보',
+
+      title9: '사용자별 센서 신청 현황',
+      vaList: [],
+      showVaCamCountList:false,
+      btnTitle9: '사용자별 센서 신청 현황',
+
+      title10: '카메라정보',
+      dcList: [],
+      showCameraInfoList:false,
+      btnTitle10: '카메라정보',
+
+      title11: 'IOT GW',
+      iotList: [],
+      showIotGwList:false,
+      btnTitle11: 'IOT GW',
+
+      title12: 'Sensor 정보',
+      dsList: [],
+      showSensorInfoList:false,
+      btnTitle12: 'Sensor 정보',
+
+      resPagingInfo: {},
+      kttPagingInfo:{},
+      phPagingInfo:{},
+      authPagingInfo:{},
+      dorPagingInfo:{},
+      psPagingInfo: {},
+      vaPagingInfo:{},
+      dcPagingInfo: {},
+      iotPagingInfo: {},
+      dsPagingInfo: {},
+
+      oldValue:'',
+
+      searchParam: {
+        said: '',
+        is_masking:''
       }
     }
   },
@@ -137,8 +299,9 @@ export default {
       this.isReloadDetailObject=false
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12001/get_user_subs_order_info`
   
+      console.log(params)
       //params : 페이징 + 검색조건
-      // var reqParams = this.handleParams(params)      
+      var reqParams = this.handleParams(params)      
       // console.log('넣어지는 값')
       // console.log(reqParams)
       // if(!reqParams.said&&!reqParams.start_date&&!reqParams.guid&&!reqParams.oderno){
@@ -146,11 +309,14 @@ export default {
       //         title: "검색값을 입력해주세요.",
       //         type: "error"})
       // }else{
-      axios.post(url, params, headers)
+        console.log(reqParams)
+        // this.said = reqParams.said
+      axios.post(url, reqParams, headers)
       .then((response) => {
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
+        this.is_masking = reqParams.is_masking;
         if(resCode == 200){
           this.pList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info
@@ -237,6 +403,7 @@ export default {
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12003/get_subs_order_details_list`
     var params={
       said: this.pObject.said,
+      
     }
 
     axios
@@ -262,6 +429,7 @@ export default {
           console.log('조회 실패', ex)
         })
     },
+<<<<<<< HEAD
 
     searchToUserOrderPhone: function(){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12004/get_user_subs_telno`
@@ -272,12 +440,29 @@ export default {
       }
       axios
       .post(url, params, headers)
+=======
+    searchToUserOrderPhone: function(){
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
+
+      var params = {
+        guid: this.pObject.guid,
+        page_no: 1,
+        view_cnt: 10,
+        is_masking: this.is_masking
+      }
+      axios.post(url, params, headers)
+      // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
+      //   params
+      // })
+
+>>>>>>> develop
       .then((response) => {
         console.log(response.data)
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if(resCode == 200){
+<<<<<<< HEAD
           this.showPhonelList != this.showPhonelList;
           this.telNoList = response.data.data.tel_no_list;
           // this.resPagingInfo = response.data.data.paging_info
@@ -285,6 +470,14 @@ export default {
         }else if(resCode==204){
             this.telNoList = [];
             // this.resPagingInfo = {};
+=======
+          this.phList = response.data.data.tel_no_list;
+          this.phPagingInfo = response.data.data.paging_info
+          this.showUserOrderPhone=!this.showUserOrderPhone;
+        }else if(resCode==204){
+            this.phList = [];
+            this.phPagingInfo = {};
+>>>>>>> develop
             alert("사용자 청약 전화번호 데이터가 없습니다.");
             this.showPhonelList=false;
         }else if(resCode==410){
@@ -297,8 +490,8 @@ export default {
             this.$router.replace('/signin')
             this.showPhonelList=false;
         }else{
-          this.pList = [];
-          this.resPagingInfo = {};
+          this.phList = [];
+          this.phPagingInfo = {};
           alert(resCode + " / " + resMsg);
         }
       })
@@ -312,6 +505,7 @@ export default {
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12005/get_user_ktt_subs`
     var params={
       guid: this.pObject.guid,
+      is_masking: this.is_masking
     }
     axios
         .post(url, params, headers)
@@ -321,7 +515,6 @@ export default {
           console.log(resCode)
           if(resCode == 200){
             this.kttList = response.data.data.list;
-
             this.showKttList =!this.showKttList
             this.kttBtn=!this.kttBtn
           }else if(resCode==204){
@@ -336,9 +529,359 @@ export default {
         })
         .catch((ex) => {
           console.log('조회 실패', ex)
+          
         })
     },
+    searchToAuthTargetDevice: function(){
 
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
+      var params = {
+        said: this.pObject.said,
+        page_no: 1,
+        view_cnt: 10,
+        is_masking: this.is_masking
+      }
+      console.log(params)
+      // var reqParams=this.handleParams(params)
+
+        axios.post(url, params, headers)
+        .then((response) => {
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.authList = response.data.data.auth_device_list;
+            this.authPagingnfo=response.data.data.paging_info;
+            this.showAuthDevice=!this.showAuthDevice;
+            console.log('전달리스트')
+            console.log(this.authList)
+            
+          }else if(resCode==204){
+            this.authList = [];
+            this.authPaingInfo={};
+            alert('인증 대상 단말 정보 데이터가 없습니다.');
+          }else if(resCode==410){
+            alert("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else{
+            this.authList = [];
+            this.authPaingInfo={};
+            alert(resCode + " / " + resMsg);
+          }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
+    },
+     searchToDeviceOrderResult: function(){
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12012/get_device_order_result_list`
+     var params = {
+      guid: this.pObject.guid,
+        page_no: 1,
+        view_cnt: 10
+      }
+      console.log(params)
+        axios.post(url, params, headers)
+        .then((response) => {
+              console.log(response)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            console.log(response.data.data.device_order_result_list);
+            this.dorList = response.data.data.device_order_result_list;
+            this.dorPagingInfo=response.data.data.paging_info;
+            this.showDeviceOrderResult =!this.showDeviceOrderResult
+    
+          }else if(resCode==204){
+            this.dorList = [];
+            this.dorPagingInfo={};
+            alert('단말 청약오더 처리 결과 데이터가 없습니다.');
+          }else if(resCode==410){
+            alert("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else{
+            this.dorList = [];
+            this.dorPagingInfo={};
+            alert(resCode + " / " + resMsg);
+          }
+            })
+            .catch((ex) => {
+              console.log('조회 실패',ex)
+            })
+    },
+   searchKTTInfo: function () {
+     var params ={
+          page_no: 1,
+         view_cnt: 10,
+         user_id: this.pObject.user_id
+     }
+    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13003/get_user_ktt_info_list`
+
+  console.log(params)
+    var reqParams=this.handleParams(params)
+
+    console.log('요구하는 페이지 정보')
+    console.log(reqParams)
+
+      axios.post(url, reqParams, headers)
+      .then((response) => {
+        console.log(response)
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.kList = response.data.data.ktt_info_list;
+          this.kttPagingInfo = response.data.data.paging_info
+          this.showKttInfoList =! this.showKttInfoList
+        }else if(resCode==204){
+          this.kList = [];
+          this.kttPagingInfo = {};
+          alert('KTT 정보 데이터가 없습니다.');
+        }else if(resCode==410){
+          alert("로그인 세션이 만료되었습니다.");
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+        }else{
+          this.kList = [];
+          this.kttPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
+      .finally(function(){})
+    
+    },
+  searchToStoreProductSummaryInfo: function () {
+  
+  var params = {
+     page_no: 1,
+      view_cnt: 10,
+      user_id: this.pObject.user_id
+  }
+
+  
+  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13005/get_prod_summary_list`
+
+  var reqParams=this.handleParams(params)
+
+  console.log(params.prodnm)
+
+      axios.post(url, reqParams, headers)
+      .then((response) => {
+        console.log(response)
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.psList = response.data.data.prod_summary_list;
+          this.psPagingInfo = response.data.data.paging_info;
+          this.showStoreProductSummaryInfo =! this.showStoreProductSummaryInfo
+   
+        }else if(resCode==204){
+          this.psList = [];
+          this.psPagingInfo = {};
+          alert('상품 요약정보 데이터가 없습니다.');
+        }else if(resCode==410){
+          alert("로그인 세션이 만료되었습니다.");
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+        }else{
+          this.psList = [];
+          this.psPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
+  
+    },
+  searchToVaCamCount: function () {
+   var params ={
+      page_no: 1,
+      view_cnt: 10,
+      user_id: this.pObject.user_id
+   }
+   var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13006/get_user_va_list`
+
+   var reqParams=this.handleParams(params)
+  
+      axios.post(url, reqParams, headers)
+      .then((response) => {
+        console.log(response)
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if(resCode == 200){
+          this.vaList = response.data.data.va_prod_list;
+          this.vaPagingInfo = response.data.data.paging_info
+          this.showVaCamCountList =! this.showVaCamCountList;
+        }else if(resCode==204){
+          this.vaList = [];
+          this.vaPagingInfo = {};
+          alert('VA 상품 및 카메라 대수 확인');
+        }else if(resCode==410){
+          alert("로그인 세션이 만료되었습니다.");
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+        }else{
+          this.vaList = [];
+          this.vaPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
+    },
+       searchToCameraInfo: function () {
+      var params = {
+      page_no: 1,
+      view_cnt: 10,
+      user_id: this.pObject.user_id
+      }
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
+
+      var reqParams = this.handleParams(params);
+
+      axios
+        .post(url, reqParams, headers)
+        .then((response) => {
+          console.log(response);
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if (resCode == 200) {
+            this.dcList = response.data.data.cam_list;
+            this.dcPagingInfo = response.data.data.paging_info;
+            this.showCameraInfoList =! this.showCameraInfoList;
+          }else if(resCode==204){
+            this.dcList = [];
+            this.dcPagingInfo = {};
+            alert('카메라 정보 조회 데이터가 없습니다.');
+          }else if(resCode==410){
+            alert("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else{
+            this.dcList = [];
+            this.dcPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log("조회 실패", ex);
+        });
+      
+    },
+   searchToIotGWInfo: function () {
+     var params = {
+        page_no: 1,
+        view_cnt: 10,
+        user_id: this.pObject.user_id
+    }
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13009/get_iotgw_list`;
+
+      var reqParams = this.handleParams(params);
+
+      axios
+        .post(url, reqParams, headers)
+        .then((response) => {
+          console.log(response);
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if (resCode == 200) {
+            this.iotList = response.data.data.iotgw_list;
+            this.iotPagingInfo = response.data.data.paging_info;
+          }else if(resCode==204){
+             this.iotList = [];
+            this.iotPagingInfo = {};
+            alert('IoT GW 정보 데이터가 없습니다.');
+          }else if(resCode==410){
+            alert("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else {
+            this.iotList = [];
+            this.iotPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log("조회 실패", ex);
+        });
+      
+    },
+
+   searchToSensorInfo: function () {
+      var params = {
+        page_no: 1,
+        view_cnt: 10,
+        user_id: this.pObject.user_id
+      }
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13010/get_sensor_list`;
+
+      var reqParams = this.handleParams(params)
+  
+      axios
+        .post(url, reqParams, headers)
+        .then((response) => {
+          console.log(response);
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if (resCode == 200) {
+            this.dsList = response.data.data.sensor_list;
+            this.dsPagingInfo = response.data.data.paging_info;
+          }else if(resCode==204){
+            this.dsList = [];
+            this.dsPagingInfo = {};
+            alert('센서 정보 데이터가 없습니다.');
+          }else if(resCode==410){
+            alert("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else {
+            this.dsList = [];
+            this.dsPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log("조회 실패", ex);
+        });
+      
+    },
     setToSearchParams: function(values){
       console.log(values)
       
@@ -350,6 +893,7 @@ export default {
       console.log(params)
 
       this.searchToUserOrderInfo(params)
+ 
     },
 
     handleParams: function(params){
@@ -359,18 +903,36 @@ export default {
       }else{
         newParams.page_no = params.page_no
       }
-
+     
       if(params.view_cnt === undefined || params.view_cnt === ''){
         newParams.view_cnt = this.reqPagingInfo.view_cnt
       }else{
         newParams.view_cnt = params.view_cnt
       }
-      if(params.said !== undefined && params.said !== ''){
-        newParams.said = params.said
+      if(params.is_masking !== undefined && params.is_masking !== ''){
+        newParams.is_masking = params.is_masking ? "N" : "Y";
       }else if(
-        this.searchParam.said!==undefined&&
-        this.searchParam.said!==""
-      )
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
+      }
+      if (params.said !== undefined && params.said !== "") {
+        newParams.said = params.said;
+      } else if (
+        this.searchParam.said !== undefined &&
+        this.searchParam.said !== ""
+      ) {
+        newParams.said = this.searchParam.said;
+      }
+         if(params.user_id !== undefined && params.user_id !== ''){
+        newParams.user_id = params.user_id
+      }else if(
+        this.searchParam.user_id!==undefined&&
+        this.searchParam.user_id!==""
+      ){
+        newParams.user_id=this.searchParam.user_id
+      }
       return newParams
     }
   }

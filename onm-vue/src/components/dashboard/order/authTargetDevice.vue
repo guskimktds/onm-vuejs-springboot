@@ -3,8 +3,8 @@
       <v-card>
         <auth-target-device-query v-on:search="searchToAuthTargetDevice"
         v-bind:param=searchParam></auth-target-device-query>
-        <auth-target-device-list v-bind:pList=pList
-        v-bind:resPagingInfo=resPagingInfo
+        <auth-target-device-list v-bind:authList=authList
+        v-bind:authPagingInfo=authPagingInfo
         @pagination="setToSearchParams"></auth-target-device-list>
       </v-card>
 
@@ -31,12 +31,12 @@ export default {
   data () {
     return {
       title: '인증 대상 단말 정보',
-      pList: [],
+      authList: [],
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10
       },
-      resPagingInfo: {},
+      authPagingInfo: {},
       searchParam: {
         start_date: '',
         end_date: '',
@@ -61,14 +61,14 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.pList = response.data.data.auth_device_list;
-            this.resPagingInfo=response.data.data.paging_info;
+            this.authList = response.data.data.auth_device_list;
+            this.authPagingInfo=response.data.data.paging_info;
             console.log('전달리스트')
             console.log(this.pList)
             
           }else if(resCode==204){
-            this.pList = [];
-            this.resPaingInfo={};
+            this.authList = [];
+            this.authPaingInfo={};
             alert('인증 대상 단말 정보 데이터가 없습니다.');
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
@@ -79,8 +79,8 @@ export default {
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
             this.$router.replace('/signin')
           }else{
-            this.pList = [];
-            this.resPaingInfo={};
+            this.authList = [];
+            this.authPaingInfo={};
             alert(resCode + " / " + resMsg);
           }
       })
@@ -94,7 +94,7 @@ export default {
         view_cnt: values.itemsPerPage
       }
       if(this.start==true){
-        this.pList=[];
+        this.authList=[];
       }else{
       this.searchToAuthTargetDevice(params)
       }

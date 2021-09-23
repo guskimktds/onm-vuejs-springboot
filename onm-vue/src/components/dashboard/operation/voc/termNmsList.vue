@@ -17,13 +17,12 @@
           :options.sync="options"
           :server-items-length="resPagingInfo.total_cnt"
           class="elevation-1"
+          @click:row="handleClick"
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
           :header-props="{ sortIcon: null }"
         >    
         </v-data-table>
-                  <v-btn  >
-            order list{{showSubDetailList?" Close":" Open"}}
-          </v-btn>    
+         
 
     </base-material-card>
   </v-container>
@@ -75,32 +74,31 @@ export default {
       }
     },
     methods:{
-       switchString(values){
-        if(values==='P'){
-          return '진행'
-        }else if(values==='S'){
-          return '성공'
-        }else if(values==='F'){
-          return '실패'
-        }else if(values==='A'){
-          return '등록'
-        }
-      },
-      switchString2(values){
-        if(values==='P'){
-          return '진행'
-        }else if(values==='S'){
-          return '성공'
-        }else if(values==='F'){
-          return '실패'
-        }else if(values==='A'){
-          return '등록'
-        }
-      },
+     handleClick: function(value){
+      this.$emit("child", value);
+    },
       getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
+      switchString(values){
+      if(values==='S'){
+        return '정상'
+      }else if(values==='D'){
+        return '삭제'
+      }else if(values==='A'){
+        return '접수/등록'
+      }
+    },
+    switchString2(values){
+      if(values==='X'){
+        return '삭제대기'
+      }else if(values==='S'){
+        return '정상'
+      }else if(values==='D'){
+        return '삭제'
+      }
+    }
   },
 
   watch: {

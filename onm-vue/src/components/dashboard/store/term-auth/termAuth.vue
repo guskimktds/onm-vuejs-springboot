@@ -101,7 +101,7 @@ export default {
 
       console.log(params)
 
-      this.searchToButton(params)
+      // this.searchToButton(params)
     },
 
     handleParams: function(params){

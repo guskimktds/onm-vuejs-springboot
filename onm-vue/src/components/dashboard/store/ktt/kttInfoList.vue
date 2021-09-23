@@ -8,7 +8,7 @@
         color="orange"
         dark
         icon="mdi-keyboard"
-        title="KTT 정보 LIST(커밋테스트)"
+        title="KTT 정보 LIST"
         class="px-5 py-3"
       >
       <v-data-table

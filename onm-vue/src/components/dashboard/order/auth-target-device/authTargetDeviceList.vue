@@ -13,9 +13,9 @@
             >
             <v-data-table
                 :headers="headers"
-                :items="pList"
+                :items="authList"
                 :options.sync="options"
-                :server-items-length="resPagingInfo.total_cnt"
+                :server-items-length="authPagingInfo.total_cnt"
                 class="elevation-1"
                 :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
                 :header-props="{ sortIcon: null }"
@@ -30,7 +30,7 @@
 
 <script>
 export default {
-    props: ['pList', 'resPagingInfo'],
+    props: ['authList', 'authPagingInfo'],
     data() {
       return {
         last: 0,
@@ -78,11 +78,11 @@ export default {
       },
     },
     updated() {
-      if(this.last!==this.resPagingInfo.total_cnt){
+      if(this.last!==this.authPagingInfo.total_cnt){
         this.options.page=1
       }
-      if(this.resPagingInfo.total_cnt!==undefined){
-      this.last=this.resPagingInfo.total_cnt
+      if(this.authPagingInfo.total_cnt!==undefined){
+      this.last=this.authPagingInfo.total_cnt
       }
   },
 
