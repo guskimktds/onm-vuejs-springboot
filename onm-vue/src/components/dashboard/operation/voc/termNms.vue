@@ -84,6 +84,7 @@ export default {
         console.log('전달값')
         console.log(reqParams) 
       if(!reqParams.guid){
+
         this.$fire({
               title: "검색값을 입력해주세요.",
               type: "error"})
@@ -147,7 +148,17 @@ export default {
     },
     handleParams: function(params){
       let newParams = {}
-
+      if(params.page_no === undefined || params.page_no === ''){
+        newParams.page_no = this.reqPagingInfo.page_no
+      }else{
+        newParams.page_no = params.page_no
+      }
+     
+      if(params.view_cnt === undefined || params.view_cnt === ''){
+        newParams.view_cnt = this.reqPagingInfo.view_cnt
+      }else{
+        newParams.view_cnt = params.view_cnt
+      }
       if(params.guid !== undefined && params.guid !== ''){
         newParams.guid = params.guid
       }else if(
