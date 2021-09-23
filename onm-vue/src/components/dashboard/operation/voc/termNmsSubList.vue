@@ -21,7 +21,11 @@
           :header-props="{ sortIcon: null }"
         >        
         </v-data-table>
-
+         <v-container>
+           <v-btn>
+             전송
+           </v-btn>
+         </v-container>
     </base-material-card>
   </v-container>
 </template>
@@ -40,14 +44,15 @@ export default {
       totalList: 0,
       loading: true,
         headers: [
-          { text: 'Mac_id', align: 'start', sortable: false, value: 'Term_mac_addr' },
-          { text: '단말타입', value: 'Termtype' },
-          { text: '단말변경유형코드', value: 'Term_change_code' },
-          { text: '모델명', value: 'Model_name' },
+          { text: 'Mac_id', align: 'start', sortable: false, value: 'term_mac_addr' },
+          { text: '단말타입', value: 'term_type' },
+          { text: '단말변경유형코드', value: 'term_change_code' },
+          { text: '모델명', value: 'model_name' },
           { text: '제품코드', value: 'product_code' },
-          { text: '바코드번호', value: 'term_barcode' },
-          { text: '제조사명', value: 'Mfc_name' },
-          { text: '단말별칭', value: 'Term_alias' },
+          { text: '바코드번호', value: 'term_bacode' },
+          { text: '제조사명', value: 'mfc_name' },
+          { text: '단말별칭', value: 'term_alias' },
+          { text: '전송', value: 'action' },
         ]
       }
     },

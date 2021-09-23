@@ -194,7 +194,7 @@
                 "component": "customer-transfer",
                 "children": [
                     { "name": "청약 정보조회", "path": "/operation/term-order", "component": "termOrderInfo" },
-                    { "name": "단말오더 mns 전송", "path": "/operation/term-nms", "component": "termNms" }
+                    { "name": "단말오더 NMS 전송", "path": "/operation/term-nms", "component": "termNms" }
                 ]
             }
         ]
