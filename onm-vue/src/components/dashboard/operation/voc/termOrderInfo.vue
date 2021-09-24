@@ -88,12 +88,6 @@
         ></ktt-list>
 
         <user-order-phone-list
-<<<<<<< HEAD
-          v-if=showPhonelList 
-          v-bind:telNoList=telNoList
-        >  
-        </user-order-phone-list>
-=======
           v-if=showUserOrderPhone 
           v-bind:phList=phList
           v-bind:phPagingInfo=phPagingInfo
@@ -429,18 +423,6 @@ export default {
           console.log('조회 실패', ex)
         })
     },
-<<<<<<< HEAD
-
-    searchToUserOrderPhone: function(){
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12004/get_user_subs_telno`
-      var params = {
-        page_no: 1,
-        view_cnt: 10,
-        guid: this.pObject.guid,
-      }
-      axios
-      .post(url, params, headers)
-=======
     searchToUserOrderPhone: function(){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
 
@@ -455,29 +437,18 @@ export default {
       //   params
       // })
 
->>>>>>> develop
       .then((response) => {
         console.log(response.data)
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if(resCode == 200){
-<<<<<<< HEAD
-          this.showPhonelList != this.showPhonelList;
-          this.telNoList = response.data.data.tel_no_list;
-          // this.resPagingInfo = response.data.data.paging_info
-          // console.log(this.telNoList, this.resPagingInfo);
-        }else if(resCode==204){
-            this.telNoList = [];
-            // this.resPagingInfo = {};
-=======
           this.phList = response.data.data.tel_no_list;
           this.phPagingInfo = response.data.data.paging_info
           this.showUserOrderPhone=!this.showUserOrderPhone;
         }else if(resCode==204){
             this.phList = [];
             this.phPagingInfo = {};
->>>>>>> develop
             alert("사용자 청약 전화번호 데이터가 없습니다.");
             this.showPhonelList=false;
         }else if(resCode==410){
