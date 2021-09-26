@@ -20,7 +20,13 @@
           @click:row="handleClick"
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
           :header-props="{ sortIcon: null }"
-        >    
+        >
+        <template v-slot:item.oder_div_code="{item}">
+              <span>{{ switchString(item.oder_div_code) }}</span>
+        </template>
+        <template v-slot:item.change_ared_cd="{item}">
+                <span>{{ switchString2(item.change_ared_cd) }}</span>
+        </template> 
         </v-data-table>
          
 
@@ -43,7 +49,7 @@ export default {
       loading: true,
         headers: [
           {
-            text: '1=오더, 2=AS',
+            text: '분류',
             align: 'start',
             sortable: false,
             value: 'oder_div_code',
@@ -69,7 +75,7 @@ export default {
           { text: '영업대표명', value: 'sales_mannm' },
           { text: '영업대표번호', value: 'sales_mantelno' },
           { text: '연관오더번호', value: 'corr_orderno' },
-          { text: 'I:전입 / O:전출', value: 'change_ared_cd' },
+          { text: '전입/전출', value: 'change_ared_cd' },
         ]
       }
     },
@@ -82,21 +88,17 @@ export default {
       this.$emit("pagination", this.options);
     },
       switchString(values){
-      if(values==='S'){
-        return '정상'
-      }else if(values==='D'){
-        return '삭제'
-      }else if(values==='A'){
-        return '접수/등록'
+      if(values==='1'){
+        return '오더'
+      }else if(values==='2'){
+        return 'AS'
       }
     },
     switchString2(values){
-      if(values==='X'){
-        return '삭제대기'
-      }else if(values==='S'){
-        return '정상'
-      }else if(values==='D'){
-        return '삭제'
+      if(values==='I'){
+        return '전입'
+      }else if(values==='O'){
+        return '전출'
       }
     }
   },

@@ -147,9 +147,6 @@
         v-bind:dsPagingInfo=dsPagingInfo
     >
     </sensor-info-list>
-      
-
->>>>>>> develop
 
       </v-container>
       </v-card>

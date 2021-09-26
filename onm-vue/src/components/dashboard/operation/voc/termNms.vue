@@ -23,10 +23,8 @@
          </v-btn>   
    
           <v-btn v-bind:color="changeColor(showSendBtn)"  v-if=showDetailObject v-on:click="sendToButton()">
-              전송하기
-          </v-btn>   
-
-
+            NMS 전송하기 {{showSendBtn? " 완료":" " }}
+          </v-btn>
         </v-container>
 
         <v-container v-if=showDetailObject>
@@ -34,7 +32,7 @@
           v-bind:termSubList=termSubList
           v-bind:authPagingInfo=authPagingInfo
           ></term-nms-sub-list>
-          </v-container>
+        </v-container>
       </v-card>
     </v-container>
 </template>
@@ -92,14 +90,17 @@ export default {
       authPagingInfo: {},
       searchParam: {
         guid: '',
+        is_masking:'',
       },
 
       title2: '단말nms 상세',
       termSubList: [],
       showTermNmsSubList: false,
       btnTitle: '단말 nms 상세',
-      
       showSendBtn: false,
+
+      // NMS 전송하기 버튼 클릭 여부 체크
+      checkClickButtonYn: false,
 
     }
   },
@@ -178,7 +179,8 @@ export default {
     },
     clickToSearchDetailObject: function(){
       var params ={
-        guid : this.guid
+        guid : this.guid,
+        is_masking: this.is_masking,
       }
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15024/send_term_to_nms_order_list`
       var reqParams = this.handleParams(params) 
@@ -192,9 +194,10 @@ export default {
           if(resCode == 200){
             this.termSubList = response.data.data.order_list;  //데이터 바꿀것
             this.authPagingInfo = response.data.data.paging_info; //sub페이징
-                  this.showDetailObject = true;
-                  this.showSendBtn = true;
-                  this.showTermNmsSubList =! this.showTermNmsSubList
+            this.showDetailObject =! this.showDetailObject;
+            this.showTermNmsSubList =! this.showTermNmsSubList
+            this.showSendBtn = false;
+            this.checkClickButtonYn = false;
             console.log('페이지 정보')
             console.log(this.resPagingInfo)
           }else if(resCode==204){
@@ -220,73 +223,76 @@ export default {
         })
     
     },
-       sendToButton: function(){
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15025/order_info`
-      var params = {
-        oder_div_code : this.oder_div_code,
-        receipt_date : this.receipt_date,
-        oder_no: this.oder_no,
-        oder_seq:this.oder_seq,
-        said:this.said,
-        appoint_date:this.appoint_date,
-        svc_ofc_code:this.svc_ofc_code,
-        svc_ofc_nm:this.svc_ofc_nm,
-        bizp_nm:this.bizp_nm,
-        change_code:this.change_code,
-        update_type:this.update_type,
-        arno_adr_zip_code:this.arno_adr_zip_code,
-        arno_adr_bas_sbst:this.arno_adr_bas_sbst,
-        arno_adr_dtl_sbst:this.arno_adr_dtl_sbst,
-        road_nadr_zip_code:this.road_nadr_zip_code,
-        road_nadr_bas_sbst:this.road_nadr_bas_sbst,
-        road_nadr_dtls_bst:this.road_nadr_dtls_bst,
-        sales_manid:this.sales_manid,
-        sales_mannm:this.sales_mannm,
-        sales_mantelno:this.sales_mantelno,
-        corr_orderno:this.corr_orderno,
-        change_ared_cd:this.change_ared_cd,
-        orderlist : this.termSubList,
-        subline_listinfo:[],
-      }
-
+    sendToButton: function(){
+      if(!this.checkClickButtonYn){
+        this.checkClickButtonYn = true;
+        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15025/order_info`
+        var params = {
+          oder_div_code : this.oder_div_code,
+          receipt_date : this.receipt_date,
+          oder_no: this.oder_no,
+          oder_seq:this.oder_seq,
+          said:this.said,
+          appoint_date:this.appoint_date,
+          svc_ofc_code:this.svc_ofc_code,
+          svc_ofc_nm:this.svc_ofc_nm,
+          bizp_nm:this.bizp_nm,
+          change_code:this.change_code,
+          update_type:this.update_type,
+          arno_adr_zip_code:this.arno_adr_zip_code,
+          arno_adr_bas_sbst:this.arno_adr_bas_sbst,
+          arno_adr_dtl_sbst:this.arno_adr_dtl_sbst,
+          road_nadr_zip_code:this.road_nadr_zip_code,
+          road_nadr_bas_sbst:this.road_nadr_bas_sbst,
+          road_nadr_dtls_bst:this.road_nadr_dtls_bst,
+          sales_manid:this.sales_manid,
+          sales_mannm:this.sales_mannm,
+          sales_mantelno:this.sales_mantelno,
+          corr_orderno:this.corr_orderno,
+          change_ared_cd:this.change_ared_cd,
+          orderlist : this.termSubList,
+          subline_listinfo:[],
+        }
         console.log('전달값')
         console.log(params) 
-
-          this.showSendBtn =! this.showSendBtn
-      axios.post(url, params, this.$store.state.headers)
-        .then((response) => {
-          console.log(response)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            console.log('페이지 정보')
-            console.log(this.resPagingInfo)
-                    this.$fire({
-              title: "전송하였습니다.",
-              type: "true"})
-            
-          }else if(resCode==410){
-            alert("로그인 세션이 만료되었습니다.");
-             EventBus.$emit('top-path-logout');
-                this.$store
-                .dispatch("LOGOUT")
-                .then( res => { 
-                console.log(res.status)}).catch(({ message }) => (this.msg = message))
-                this.$router.replace('/signin')
-          }else{
-             this.$fire({
-              title: "전송실패하였습니다.",
-              body: resCode + " / " + resMsg,
-              type: "error"})
-          }
+        axios.post(url, params, this.$store.state.headers)
+          .then((response) => {
+            console.log(response)
+            var resCode = response.data.res_code;
+            var resMsg = response.data.res_msg;
+            if(resCode == 200){
+              console.log('페이지 정보')
+              console.log(this.resPagingInfo)
+              this.showSendBtn =! this.showSendBtn
+              this.$fire({
+                title: "전송완료하였습니다.",
+              })
+            }else if(resCode==410){
+              alert("로그인 세션이 만료되었습니다.");
+              EventBus.$emit('top-path-logout');
+                  this.$store
+                  .dispatch("LOGOUT")
+                  .then( res => { 
+                  console.log(res.status)}).catch(({ message }) => (this.msg = message))
+                  this.$router.replace('/signin')
+            }else{
+              this.$fire({
+                title: "전송실패하였습니다.",
+                body: resCode + " / " + resMsg,
+                type: "error"})
+            }
+          })
+          .catch((ex) => {
+            this.$fire({
+                title: "전송실패하였습니다.",
+                body: ex,
+                type: "error"})
+          })
+      }else{
+        this.$fire({
+          title: "전송중이거나 전송완료하였습니다.",
         })
-        .catch((ex) => {
-          this.$fire({
-              title: "전송실패하였습니다.",
-              body: ex,
-              type: "error"})
-        })
-  
+      }
     },
     setToSearchParams: function(values){
       console.log(values)
@@ -327,6 +333,14 @@ export default {
         this.searchParam.guid!==""
       ){
         newParams.guid=this.searchParam.guid
+      }
+      if(params.is_masking !== undefined && params.is_masking !== ''){
+        newParams.is_masking = params.is_masking ? "N" : "Y";
+      }else if(
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
       return newParams
     }

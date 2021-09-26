@@ -21,11 +21,7 @@
           :header-props="{ sortIcon: null }"
         >        
         </v-data-table>
-         <v-container>
-           <v-btn>
-             전송
-           </v-btn>
-         </v-container>
+
     </base-material-card>
   </v-container>
 </template>
@@ -52,7 +48,6 @@ export default {
           { text: '바코드번호', value: 'term_bacode' },
           { text: '제조사명', value: 'mfc_name' },
           { text: '단말별칭', value: 'term_alias' },
-          { text: '전송', value: 'action' },
         ]
       }
     },
