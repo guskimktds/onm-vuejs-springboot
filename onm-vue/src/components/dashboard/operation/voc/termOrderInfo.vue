@@ -20,133 +20,155 @@
           <v-btn v-bind:color="changeColor(showDetailObject)"  v-if=isReloadDetailObject v-on:click="showDetailObject=!showDetailObject">
             오더상세{{showDetailObject?" Close":" Open"}}
           </v-btn>
-        </v-container>
-    
-        <v-container
-            id="regular-tables"
-            fluid
-            tag="section"
-        >
 
-          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="clickToSearchSubDetailList()">
-            사용자 청약오더List{{showSubDetailList?" Close":" Open"}}
+          <v-btn
+           v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="clickToSearchSubDetailList()">
+            사용자 청약오더List / 전체 호출{{showSubDetailList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn v-bind:color="changeColor(showKttList)" v-if=showDetailObject v-on:click="clickToSearchKTT()" >
-            사용자-KTT{{showKttList?" Close":" Open"}}
+          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="clickToSearchKTT()" >
+            사용자-KTT{{showSubDetailList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn v-bind:color="changeColor(showPhonelList)" v-if=showDetailObject v-on:click="searchToUserOrderPhone()" >
-            사용자 청약 전화번호{{showPhonelList?" Close":" Open"}}
+          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="searchToUserOrderPhone()" >
+            사용자 청약 전화번호{{showSubDetailList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn v-bind:color="changeColor(showAuthDevice)" v-if=showDetailObject v-on:click="searchToAuthTargetDevice()" >
-            인증대상 단말 정보 확인{{showAuthDevice?" Close":" Open"}}
+          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="searchToAuthTargetDevice()" >
+            인증대상 단말 정보 확인{{showSubDetailList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn v-bind:color="changeColor(showDeviceOrderResult)" v-if=showDetailObject v-on:click="searchToDeviceOrderResult()" >
-            단말 오더 처리결과 확인{{showDeviceOrderResult?" Close":" Open"}}
+          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="searchToDeviceOrderResult()" >
+            단말 오더 처리결과 확인{{showSubDetailList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn v-bind:color="changeColor(showKttInfoList)" v-if=showDetailObject v-on:click="searchKTTInfo()" >
-            사용자 ktt정보{{showKttInfoList?" Close":" Open"}}
+          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="searchKTTInfo()" >
+            사용자 ktt정보{{showSubDetailList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn v-bind:color="changeColor(showStoreProductSummaryInfo)" v-if=showDetailObject v-on:click="searchToStoreProductSummaryInfo()" >
-            상품 요약정보{{showStoreProductSummaryInfo?" Close":" Open"}}
+          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="searchToStoreProductSummaryInfo()" >
+            상품 요약정보{{showSubDetailList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn v-bind:color="changeColor(showVaCamCountList)" v-if=showDetailObject v-on:click="searchToVaCamCount()" >
-            사용자별 센서 신청 현황{{showVaCamCountList?" Close":" Open"}}
+          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="searchToVaCamCount()" >
+            사용자별 센서 신청 현황{{showSubDetailList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn v-bind:color="changeColor(showCameraInfoList)" v-if=showDetailObject v-on:click="searchToCameraInfo()" >
-            카메라정보{{showCameraInfoList?" Close":" Open"}}
+          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="searchToCameraInfo()" >
+            카메라정보{{showSubDetailList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn v-bind:color="changeColor(showIotGwList)" v-if=showDetailObject v-on:click="searchToIotGWInfo()" >
-            IOT GW{{showIotGwList?" Close":" Open"}}
+          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="searchToIotGWInfo()" >
+            IOT GW{{showSubDetailList?" Close":" Open"}}
           </v-btn>
 
-          <v-btn v-bind:color="changeColor(showSensorInfoList)" v-if=showDetailObject v-on:click="searchToSensorInfo()" >
-            Sensor 정보{{showSensorInfoList?" Close":" Open"}}
+          <v-btn v-bind:color="changeColor(showSubDetailList)" v-if=showDetailObject v-on:click="searchToSensorInfo()" >
+            Sensor 정보{{showSubDetailList?" Close":" Open"}}
           </v-btn>
         </v-container>
 
       <user-order-detail-object v-if=showDetailObject v-bind:pObject=pObject></user-order-detail-object>
       
-      <v-container v-if=showDetailObject>
+      <v-container
+        id="regular-tables"
+        fluid 
+        tag="section"
+        v-if=showDetailObject>
+        <v-row>
+          <v-col>
+            <user-order-sub-detail-list  
+              v-if=showSubDetailList
+              v-bind:sdList=sdList >
+            </user-order-sub-detail-list>
+          </v-col>
+     
+          <v-col>
+            <ktt-list 
+              v-if=showSubDetailList
+              v-bind:kttList=kttList
+            ></ktt-list>
+          </v-col>
+    
+          <v-col>
+            <user-order-phone-list
+              v-if=showSubDetailList 
+              v-bind:phList=phList
+              v-bind:phPagingInfo=phPagingInfo
+            ></user-order-phone-list>
+          </v-col>
 
-        <user-order-sub-detail-list 
-          v-if=showSubDetailList
-          v-bind:sdList=sdList >
-        </user-order-sub-detail-list>
+         <v-col>
+          <auth-target-device-list
+            v-if=showSubDetailList
+            v-bind:authList=authList
+            v-bind:authPagingInfo=authPagingInfo
+          >
+          </auth-target-device-list>
+         </v-col>
 
-        <ktt-list 
-          v-if=showKttList 
-          v-bind:kttList=kttList
-        ></ktt-list>
+          <v-col>
+            <device-order-result-list
+              v-if=showSubDetailList
+              v-bind:dorList=dorList
+              v-bind:dorPagingInfo=dorPagingInfo
+            >
+            </device-order-result-list>
+          </v-col>
 
-        <user-order-phone-list
-          v-if=showUserOrderPhone 
-          v-bind:phList=phList
-          v-bind:phPagingInfo=phPagingInfo
-        ></user-order-phone-list>
-       
-        <auth-target-device-list
-          v-if=showAuthDevice
-          v-bind:authList=authList
-          v-bind:authPagingInfo=authPagingInfo
-        >
-        </auth-target-device-list>
+          <v-col>
+            <ktt-info-list
+              v-if=showSubDetailList
+              v-bind:kList=kList
+              v-bind:kttPagingInfo="kttPagingInfo"
+            >
+            </ktt-info-list>
+          </v-col>
 
-        <device-order-result-list
-          v-if=showDeviceOrderResult
-          v-bind:dorList=dorList
-        >
-        </device-order-result-list>
+          <v-col>
+            <store-product-summary-info-list
+              v-if=showSubDetailList
+              v-bind:psList=psList
+              v-bind:psPagingInfo=psPagingInfo
+            >
+            </store-product-summary-info-list>
+          </v-col>
 
-        <ktt-info-list
-        v-if=showKttInfoList
-        v-bind:kList=kList
-        v-bind:kttPagingInfo="kttPagingInfo"
-        >
-        </ktt-info-list>
+          <v-col>
+            <va-cam-count-list
+              v-if=showSubDetailList
+              v-bind:vaList=vaList
+              v-bind:vaPagingInfo=vaPagingInfo
+            >
+            </va-cam-count-list>
+          </v-col>
 
-      <store-product-summary-info-list
-        v-if=showStoreProductSummaryInfo
-        v-bind:psList=psList
-        v-bind:psPagingInfo=psPagingInfo
-      >
-      </store-product-summary-info-list>
+          <v-col>
+            <camera-info-list
+            v-if=showSubDetailList
+            v-bind:dcList=dcList
+            v-bind:dcPagingInfo=dcPagingInfo
+            >
+            </camera-info-list>
+          </v-col>
+          
+          <v-col>
+            <iot-gw-list
+              v-if=showSubDetailList
+              v-bind:iotList=iotList
+              v-bind:iotPagingInfo=iotPagingInfo
+            >
+            </iot-gw-list>
+          </v-col>
 
-      <va-cam-count-list
-        v-if=showVaCamCountList
-        v-bind:vaList=vaList
-        v-bind:vaPagingInfo=vaPagingInfo
-      >
-      </va-cam-count-list>
-
-      <camera-info-list
-      v-if=showCameraInfoList
-      v-bind:dcList=dcList
-      v-bind:dcPagingInfo=dcPagingInfo
-      >
-      </camera-info-list>
-      
-      <iot-gw-list
-        v-if=showIotGwList
-        v-bind:iotList=iotList
-        v-bind:iotPagingInfo=iotPagingInfo
-      >
-      </iot-gw-list>
-
-    <sensor-info-list
-        v-if=showSensorInfoList
-        v-bind:dsList=dsList
-        v-bind:dsPagingInfo=dsPagingInfo
-    >
-    </sensor-info-list>
+          <v-col>
+            <sensor-info-list
+                v-if=showSubDetailList
+                v-bind:dsList=dsList
+                v-bind:dsPagingInfo=dsPagingInfo
+            >
+            </sensor-info-list>
+          </v-col>
+        </v-row>
 
       </v-container>
       </v-card>
@@ -279,7 +301,8 @@ export default {
 
       searchParam: {
         said: '',
-        is_masking:''
+        is_masking:'',
+        user_id:"",
       }
     }
   },
@@ -308,6 +331,8 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         this.is_masking = reqParams.is_masking;
+        this.said = reqParams.said;
+
         if(resCode == 200){
           this.pList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info
@@ -353,25 +378,27 @@ export default {
           is_masking: this.searchParam.is_masking? "N" : "Y"
         }
 
-        axios.post(url, params, headers)
+          this.showDetailObject = !this.showDetailObject
+          if(this.showDetailObject == true){
+
+            axios.post(url, params, headers)
         .then((response) => {
            var resCode = response.data.res_code;
             var resMsg = response.data.res_msg;
             if(resCode == 200){
               this.pObject = response.data.data
-              this.showDetailObject = true
-              this.isReloadDetailObject = true
-              this.orderBtn=!this.orderBtn
+              this.isReloadDetailObject = !this.isReloadDetailObject
               console.log(this.pObject)
+              this.clickToSearchSubDetailList()
             }else if(resCode==204){
               this.pObject = {};
-              this.showDetailObject = false
-              this.isReloadDetailObject = false
-            alert("사용자 청약오더 상세 데이터가 없습니다.");
+              this.showDetailObject =  !this.showDetailObject
+              this.isReloadDetailObject =  !this.isReloadDetailObject
+  
             }else{
               this.pObject = {};
-              this.showDetailObject = false
-              this.isReloadDetailObject = false
+              this.showDetailObject = !this.showDetailObject
+              this.isReloadDetailObject = !this.isReloadDetailObject
               alert(resCode + " / " + resMsg);
             }
         })
@@ -379,14 +406,7 @@ export default {
           console.log('조회 실패',ex)
         })
       }
-
-      if(values!==this.oldValue){
-          console.log('실행')
-          this.showSubDetailList=false
-          this.showKttList=false
-      } 
-        this.oldValue={}
-        this.oldValue=values
+          }
 
     },
         
@@ -396,20 +416,23 @@ export default {
       said: this.pObject.said,
       
     }
+    // this.showSubDetailList=!this.showSubDetailList;
+    // if( this.showSubDetailList == true){
+      this.showSubDetailList=!this.showSubDetailList;
+      this.isReloadDetailObject = !this.isReloadDetailObject
+      if(this.showSubDetailList == true){
 
-    axios
-        .post(url, params, headers)
+        var reqParams = this.handleParams(params) 
+    axios.post(url, reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.sdList = response.data.data.order_detail_list;
-            this.showSubDetailList=!this.showSubDetailList;
             // this.subBtn=!this.subBtn
           }else if(resCode==204){
            this.sdList = [];
-            this.showSubDetailList=false
-            alert("사용자청약 오더 List 데이터가 없습니다.");
+            this.showSubDetailList=!this.showSubDetailList;
           }else{
             this.sdList = [];
             this.showSubDetailList=false
@@ -419,6 +442,18 @@ export default {
         .catch((ex) => {
           console.log('조회 실패', ex)
         })
+        this.clickToSearchKTT()
+        this.searchToUserOrderPhone()
+        this.searchToAuthTargetDevice()
+        this.searchToDeviceOrderResult()
+        this.searchKTTInfo()
+        this.searchToStoreProductSummaryInfo()
+        this.searchToVaCamCount()
+        this.searchToCameraInfo()
+        this.searchToIotGWInfo()
+        this.searchToSensorInfo()
+      // }
+      }         
     },
     searchToUserOrderPhone: function(){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
@@ -446,8 +481,7 @@ export default {
         }else if(resCode==204){
             this.phList = [];
             this.phPagingInfo = {};
-            alert("사용자 청약 전화번호 데이터가 없습니다.");
-            this.showPhonelList=false;
+            this.showUserOrderPhone=!this.showUserOrderPhone;
         }else if(resCode==410){
           alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
@@ -456,7 +490,7 @@ export default {
             .then( res => { 
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
             this.$router.replace('/signin')
-            this.showPhonelList=false;
+            this.showUserOrderPhone=false;
         }else{
           this.phList = [];
           this.phPagingInfo = {};
@@ -475,8 +509,8 @@ export default {
       guid: this.pObject.guid,
       is_masking: this.is_masking
     }
-    axios
-        .post(url, params, headers)
+     var reqParams = this.handleParams(params) 
+    axios.post(url, reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
@@ -484,11 +518,9 @@ export default {
           if(resCode == 200){
             this.kttList = response.data.data.list;
             this.showKttList =!this.showKttList
-            this.kttBtn=!this.kttBtn
           }else if(resCode==204){
             this.kttList = [];
-            alert('사용자-KTT 데이터가 없습니다.');
-            this.showKttList=false
+            this.showKttList=!this.showKttList
           }else{
             this.kttList = [];
             alert(resCode + " / " + resMsg);
@@ -504,15 +536,12 @@ export default {
 
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
       var params = {
-        said: this.pObject.said,
-        page_no: 1,
-        view_cnt: 10,
+        said: ( this.said || this.pObject.said),
         is_masking: this.is_masking
       }
       console.log(params)
-      // var reqParams=this.handleParams(params)
-
-        axios.post(url, params, headers)
+      var reqParams = this.handleParams(params) 
+        axios.post(url,  reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
@@ -526,7 +555,7 @@ export default {
           }else if(resCode==204){
             this.authList = [];
             this.authPaingInfo={};
-            alert('인증 대상 단말 정보 데이터가 없습니다.');
+            this.showAuthDevice=!this.showAuthDevice;
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
@@ -549,11 +578,10 @@ export default {
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12012/get_device_order_result_list`
      var params = {
       guid: this.pObject.guid,
-        page_no: 1,
-        view_cnt: 10
       }
       console.log(params)
-        axios.post(url, params, headers)
+       var reqParams = this.handleParams(params) 
+        axios.post(url, reqParams, headers)
         .then((response) => {
               console.log(response)
           var resCode = response.data.res_code;
@@ -567,7 +595,7 @@ export default {
           }else if(resCode==204){
             this.dorList = [];
             this.dorPagingInfo={};
-            alert('단말 청약오더 처리 결과 데이터가 없습니다.');
+            this.showDeviceOrderResult =!this.showDeviceOrderResult
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
@@ -588,8 +616,6 @@ export default {
     },
    searchKTTInfo: function () {
      var params ={
-          page_no: 1,
-         view_cnt: 10,
          user_id: this.pObject.user_id
      }
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13003/get_user_ktt_info_list`
@@ -612,7 +638,7 @@ export default {
         }else if(resCode==204){
           this.kList = [];
           this.kttPagingInfo = {};
-          alert('KTT 정보 데이터가 없습니다.');
+          this.showKttInfoList =! this.showKttInfoList
         }else if(resCode==410){
           alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
@@ -636,12 +662,8 @@ export default {
   searchToStoreProductSummaryInfo: function () {
   
   var params = {
-     page_no: 1,
-      view_cnt: 10,
       user_id: this.pObject.user_id
   }
-
-  
   var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13005/get_prod_summary_list`
 
   var reqParams=this.handleParams(params)
@@ -661,7 +683,6 @@ export default {
         }else if(resCode==204){
           this.psList = [];
           this.psPagingInfo = {};
-          alert('상품 요약정보 데이터가 없습니다.');
         }else if(resCode==410){
           alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
@@ -683,8 +704,6 @@ export default {
     },
   searchToVaCamCount: function () {
    var params ={
-      page_no: 1,
-      view_cnt: 10,
       user_id: this.pObject.user_id
    }
    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13006/get_user_va_list`
@@ -724,8 +743,6 @@ export default {
     },
        searchToCameraInfo: function () {
       var params = {
-      page_no: 1,
-      view_cnt: 10,
       user_id: this.pObject.user_id
       }
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
@@ -745,7 +762,7 @@ export default {
           }else if(resCode==204){
             this.dcList = [];
             this.dcPagingInfo = {};
-            alert('카메라 정보 조회 데이터가 없습니다.');
+            this.showCameraInfoList =! this.showCameraInfoList;
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
@@ -767,16 +784,13 @@ export default {
     },
    searchToIotGWInfo: function () {
      var params = {
-        page_no: 1,
-        view_cnt: 10,
         user_id: this.pObject.user_id
     }
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13009/get_iotgw_list`;
 
       var reqParams = this.handleParams(params);
 
-      axios
-        .post(url, reqParams, headers)
+      axios.post(url, reqParams, headers)
         .then((response) => {
           console.log(response);
           var resCode = response.data.res_code;
@@ -784,10 +798,11 @@ export default {
           if (resCode == 200) {
             this.iotList = response.data.data.iotgw_list;
             this.iotPagingInfo = response.data.data.paging_info;
+            this.showIotGwList =!this.showIotGwList;
           }else if(resCode==204){
-             this.iotList = [];
+            this.iotList = [];
             this.iotPagingInfo = {};
-            alert('IoT GW 정보 데이터가 없습니다.');
+            this.showIotGwList =!this.showIotGwList;
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
@@ -810,16 +825,13 @@ export default {
 
    searchToSensorInfo: function () {
       var params = {
-        page_no: 1,
-        view_cnt: 10,
         user_id: this.pObject.user_id
       }
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13010/get_sensor_list`;
 
       var reqParams = this.handleParams(params)
   
-      axios
-        .post(url, reqParams, headers)
+      axios.post(url, reqParams, headers)
         .then((response) => {
           console.log(response);
           var resCode = response.data.res_code;
@@ -827,10 +839,11 @@ export default {
           if (resCode == 200) {
             this.dsList = response.data.data.sensor_list;
             this.dsPagingInfo = response.data.data.paging_info;
+            this.showSensorInfoList =!this.showSensorInfoList;
           }else if(resCode==204){
             this.dsList = [];
             this.dsPagingInfo = {};
-            alert('센서 정보 데이터가 없습니다.');
+            this.showSensorInfoList =!this.showSensorInfoList;
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
@@ -885,6 +898,15 @@ export default {
       ){
         newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
+      if(params.guid !== undefined && params.guid !== ''){
+        newParams.guid = params.guid
+      }else if(
+        this.searchParam.guid!==undefined&&
+        this.searchParam.guid!==""
+      ){
+        newParams.guid=this.searchParam.guid
+      }
+
       if (params.said !== undefined && params.said !== "") {
         newParams.said = params.said;
       } else if (

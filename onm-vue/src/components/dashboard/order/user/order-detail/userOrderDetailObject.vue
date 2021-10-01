@@ -15,7 +15,7 @@
           <v-row>
             <v-col
               cols="12"
-              md="12"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.guid"
@@ -23,11 +23,9 @@
                 readonly
               ></v-text-field>
             </v-col>        
-          </v-row>
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.pprodcd"
@@ -35,10 +33,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.pprodnm"
@@ -46,11 +43,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.ordertype"
@@ -61,7 +56,7 @@
 
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.oderno"
@@ -69,12 +64,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.oderseq"
@@ -82,10 +74,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.updatetype"
@@ -93,12 +84,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-          
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.cdate"
@@ -106,10 +94,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.appointdate"
@@ -117,12 +104,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.psaid"
@@ -133,7 +117,7 @@
 
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.custid"
@@ -141,12 +125,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-
-           <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.salesmanid"
@@ -154,10 +135,12 @@
                 readonly
               ></v-text-field>
             </v-col>
+          </v-row>
 
+           <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.salesmannm"
@@ -165,12 +148,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-
-           <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.user_id"
@@ -181,7 +161,7 @@
 
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.said"
@@ -189,12 +169,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-
-       <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.telno"
@@ -205,7 +182,7 @@
 
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.ktt_user_yn"
@@ -213,12 +190,10 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
 
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.bizp_nm"
@@ -229,7 +204,7 @@
 
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.cust_nm"
@@ -237,12 +212,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.arnoadrbassbst"
@@ -253,7 +225,7 @@
 
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.arnoadrdtlsbst"
@@ -261,12 +233,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.svcofccd"
@@ -277,7 +246,7 @@
 
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.svcofcnm"
@@ -285,12 +254,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.notice_result"
@@ -298,10 +264,12 @@
                 readonly
               ></v-text-field>
             </v-col>
+          </v-row>
 
+          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.regdate"
@@ -309,12 +277,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.resultcode"
@@ -325,7 +290,7 @@
 
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.resultmsg"
@@ -333,12 +298,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.notice_yn"
@@ -349,7 +311,7 @@
 
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.notice_date"
@@ -357,12 +319,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-
-          <v-row>
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.srcsystem"
@@ -373,7 +332,7 @@
 
             <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.tgtsystem"
@@ -381,12 +340,9 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
-          
-          <v-row>
           <v-col
               cols="12"
-              md="6"
+              md="1"
             >
               <v-text-field
                 v-model="pObject.accumupdatetype"
