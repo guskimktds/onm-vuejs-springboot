@@ -83,6 +83,8 @@ import AdminHistory from '../components/dashboard/operation/admin/adminHistory'
 import ChangeHistory from '../components/dashboard/operation/change/changeHistory'
 import termNms from '../components/dashboard/operation/voc/termNms.vue'
 import termOrderInfo from '../components/dashboard/operation/voc/termOrderInfo.vue'
+import bssResultInfo from '../components/dashboard/operation/voc/bssResultInfo.vue'
+import deviceRecoInfo from '../components/dashboard/operation/voc/deviceRecoInfo'
 
 //운영관리 / 코드 설정 관리 
 import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
@@ -481,6 +483,16 @@ export default new Router({
                     path: "term-order",
                     name: 'termOrderInfo',
                     component: termOrderInfo
+                },
+                {
+                    path: "bss-result",
+                    name: 'bssResultInfo',
+                    component: bssResultInfo
+                },
+                {
+                    path: "device-reco",
+                    name: 'deviceRecoInfo',
+                    component: deviceRecoInfo
                 },
                 // {
                 //     path: "gw-change",

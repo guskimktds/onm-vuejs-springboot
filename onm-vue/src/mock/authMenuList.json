@@ -194,7 +194,9 @@
                 "component": "customer-transfer",
                 "children": [
                     { "name": "청약 정보조회", "path": "/operation/term-order", "component": "termOrderInfo" },
-                    { "name": "단말오더 NMS 전송", "path": "/operation/term-nms", "component": "termNms" }
+                    { "name": "단말오더 NMS 전송", "path": "/operation/term-nms", "component": "termNms" },
+                    { "name": "청약 오더 OSS 전송", "path": "/operation/bss-result", "component": "bssResult" },
+                    { "name": "단말 인증 정보 수정", "path": "/operation/device-reco", "component": "deviceReco" }
                 ]
             }
         ]
