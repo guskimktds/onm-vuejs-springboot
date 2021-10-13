@@ -218,6 +218,7 @@ export default {
         this.editedIndex = this.pList.indexOf(item)
         console.log('Delte Item Index : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
+        console.log(this.editedItem)
         // 삭제
         this.editedItem.cmd_type = 'D'
         this.editedItem.mod_date = dateInfo().current

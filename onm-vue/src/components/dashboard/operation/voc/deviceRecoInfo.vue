@@ -1,130 +1,91 @@
 <template>
   <v-container fluid>
-      <v-card>
-        <device-reco-query 
-          v-on:search="searchToButton"
-          @searchToAuthMenu="searchToAuthMenuButton"
-          v-bind:param=searchParam
-          @Items="saveItems"
-        ></device-reco-query>
-        <device-reco-list 
-        v-bind:pList=pList
-        v-bind:resPagingInfo="resPagingInfo"
+    <v-card>
+      <cameraInfo-query
+        v-on:search="searchToCameraInfo"
+        v-bind:param="searchParam"
+      ></cameraInfo-query>
+      <cameraInfo-list
+        v-bind:dcList="dcList"
+        v-bind:dcPagingInfo="dcPagingInfo"
         @pagination="setToSearchParams"
-        @reset="reset"></device-reco-list>
-        <auth-menu-list v-if=isAuthMenu v-bind:authGroupList=authGroupList></auth-menu-list>
-       </v-card>
-    </v-container>
-
+      ></cameraInfo-list>
+      
+      <camera-info-detail
+        v-if="showDetailObject"
+        v-bind:pObject="pObject"
+      ></camera-info-detail>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
-import deviceRecoList from './deviceRecoList.vue'
-import deviceRecoQuery from './deviceRecoQuery.vue'
-import AuthMenuList from '../manage/authMenuList'
-import dateInfo from '../../../utils/common'
+import CameraInfoList from "./deviceRecoList.vue";
+import CameraInfoQuery from "./deviceRecoQuery.vue";
+import dateInfo from "../../../utils/common"
 
 import EventBus from '../../../../EventBus'
-import axios from "axios"
+import axios from "axios";
+
+const headers = {
+  "User-Agent":
+    "GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)",
+  "Content-Type": "application/json",
+};
 
 export default {
   components: {
-    deviceRecoList,
-    deviceRecoQuery,
-    AuthMenuList,
+    CameraInfoList,
+    CameraInfoQuery,
   },
-  data () {
+  data() {
     return {
-      title: '계정 조회',
-      pList: [],
+      title: "카메라 정보 조회",
+      dcList: [],
+      pObject: {},
+      showDetailObject: false,
+      isReloadDetailObject: false,
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10,
-        start_date: dateInfo().lastWeekDashFormat,
-        end_date: dateInfo().currentDateDashFormat,
-        date_yn:true,
-        onm_user_id: '',
-        name: '',
-        auth_group_id: '',
-        order_category:'R',
       },
-      resPagingInfo: {},
+      dcPagingInfo: {},
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
         date_yn: true,
-        onm_user_id: '',
-        name: '',
-        auth_group_id: '',
-        order_category:'R',
-        is_masking: false
+        cam_id: "",
+        cam_name: "",
+        mac_id: "",
       },
-      authGroupList:[],
-      isAuthMenu: false,
-    }
+    };
   },
-  // mounted() {
-  //   this.searchToButton(this.searchParam)
-  // },
+
   methods: {
-      reset: function(){
-      console.log(this.searchParam)
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15001/get_account`
-      var reqParams = this.handleParams(this.searchParam)
+    searchToCameraInfo: function (params) {
+      this.showDetailObject=false
+      this.isReloadDetailObject=false
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
 
-      axios
-        .post(url, reqParams, this.$store.state.headers)
-        .then((response) => {
-          console.log(response)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            // this.authGroupList = response.data.data.auth_group_list
-            // this.isAuthMenu = true
-            this.pList = response.data.data.list;
-            this.resPagingInfo = response.data.data.paging_info
-            console.log(this.resPagingInfo)
-          }else{
-            // this.authGroupList = [];
-            // this.isAuthMenu = false
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-    },
-    searchToButton: function(params){
-      console.log("부모 메소드 searchToButton 호출: "+JSON.stringify(params));
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15001/get_account`
-
-      //params : 페이징 + 검색조건
-      var reqParams = this.handleParams(params)
-      console.log('요청하는 값')  
-      console.log(reqParams)
-      if(!reqParams.date_yn&&!reqParams.onm_user_id&&!reqParams.name&&!reqParams.auth_group_id){
+      var reqParams = this.handleParams(params);
+      if(!reqParams.start_date&&!reqParams.cam_id&&!reqParams.cam_name&&!reqParams.mac_id){
         this.$fire({
               title: "검색값을 입력해주세요.",
               type: "error"})
       }else{
       axios
-        .post(url, reqParams, this.$store.state.headers)
+        .post(url, reqParams, headers)
         .then((response) => {
-          console.log(response)
+          console.log(response);
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            // this.authGroupList = response.data.data.auth_group_list
-            // this.isAuthMenu = true
-            this.pList = response.data.data.list;
-            this.resPagingInfo = response.data.data.paging_info
-            console.log(this.resPagingInfo)
+          if (resCode == 200) {
+            this.dcList = response.data.data.cam_list;
+            this.dcPagingInfo = response.data.data.paging_info;
           }else if(resCode==204){
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert('계정 정보 데이터가 없습니다.');
+            this.dcList = [];
+            this.dcPagingInfo = {};
+            alert('카메라 정보 조회 데이터가 없습니다.');
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
@@ -134,86 +95,96 @@ export default {
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
             this.$router.replace('/signin')
           }else{
-            // this.authGroupList = [];
-            // this.isAuthMenu = false
-            this.pList = [];
-            this.resPagingInfo = {};
+            this.dcList = [];
+            this.dcPagingInfo = {};
             alert(resCode + " / " + resMsg);
           }
         })
         .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
+          console.log("조회 실패", ex);
+        });
       }
     },
 
-    setToSearchParams(values) {
-      console.log(values)
+    setToSearchParams: function (values) {
       var params = {
         page_no: values.page,
         view_cnt: values.itemsPerPage,
       };
 
-      this.searchToButton(params);
+      console.log(params);
+
+      this.searchToCameraInfo(params);
     },
-        
-    handleParams: function(params){
-      let newParams = {}
+
+    handleParams: function (params) {
+      let newParams = {};
       if(params.date_yn==undefined){
         params.date_yn=this.searchParam.date_yn
       }
 
-      if(params.page_no === undefined || params.page_no === ''){
-        newParams.page_no = this.reqPagingInfo.page_no
-      }else{
-        newParams.page_no = params.page_no
+      if (params.page_no === undefined || params.page_no === "") {
+        newParams.page_no = this.reqPagingInfo.page_no;
+      } else {
+        newParams.page_no = params.page_no;
       }
-
-      if(params.view_cnt === undefined || params.view_cnt === ''){
-        newParams.view_cnt = this.reqPagingInfo.view_cnt
-      }else{
-        newParams.view_cnt = params.view_cnt
+      if (params.view_cnt === undefined || params.view_cnt === "") {
+        newParams.view_cnt = this.reqPagingInfo.view_cnt;
+      } else {
+        newParams.view_cnt = params.view_cnt;
       }
 
       if(params.date_yn==true){
         if(params.start_date !== undefined && params.start_date !== ''){
-            newParams.start_date = params.start_date.replace(/-/g,"")
-          }else if(
-            this.searchParam.start_date!==undefined&&
-            this.searchParam.start_date!==""
-          ){
-            newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
-          }
+          newParams.start_date = params.start_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.start_date!==undefined&&
+          this.searchParam.start_date!==""
+        ){
+          newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+        }
 
-          if(params.end_date !== undefined && params.end_date !== ''){
-            newParams.end_date = params.end_date.replace(/-/g,"")
-          }else if(
-            this.searchParam.end_date!==undefined&&
-            this.searchParam.end_date!==""
-          ){
-            newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
-          }
+        if(params.end_date !== undefined && params.end_date !== ''){
+          newParams.end_date = params.end_date.replace(/-/g,"")
+        }else if(
+          this.searchParam.end_date!==undefined&&
+          this.searchParam.end_date!==""
+        ){
+          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+        }
       }
 
-      if(params.onm_user_id !== undefined && params.onm_user_id !== ''){
-        newParams.onm_user_id = params.onm_user_id
-      }
-
-      if(params.name !== undefined && params.name !== ''){
-        newParams.name = params.name
-      }
-
-      if(params.auth_group_id !== undefined && params.auth_group_id !== ''){
-        newParams.auth_group_id = params.auth_group_id
-      }
-      
-      if (params.order_category !== undefined && params.order_category !== "") {
-        newParams.order_category = params.order_category;
+      if (params.cam_id !== undefined && params.cam_id !== "") {
+        newParams.cam_id = params.cam_id;
       } else if (
-        this.searchParam.order_category !== undefined &&
-        this.searchParam.order_category !== ""
+        this.searchParam.cam_id !== undefined &&
+        this.searchParam.cam_id !== ""
       ) {
-        newParams.order_category = this.searchParam.order_category;
+        newParams.cam_id = this.searchParam.cam_id;
+      }
+      if (params.cam_name !== undefined && params.cam_name !== "") {
+        newParams.cam_name = params.cam_name;
+      } else if (
+        this.searchParam.cam_name !== undefined &&
+        this.searchParam.cam_name !== ""
+      ) {
+        newParams.cam_name = this.searchParam.cam_name;
+      }
+      if (params.mac_id !== undefined && params.mac_id !== "") {
+        newParams.mac_id = params.mac_id;
+      } else if (
+        this.searchParam.mac_id !== undefined &&
+        this.searchParam.mac_id !== ""
+      ) {
+        newParams.mac_id = this.searchParam.mac_id;
+      }
+      if(params.is_masking !== undefined && params.is_masking !== ''){
+        newParams.is_masking = params.is_masking ? "N" : "Y";
+      }else if(
+        this.searchParam.is_masking!==undefined&&
+        this.searchParam.is_masking!==""
+      ){
+        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
 
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){
@@ -224,25 +195,11 @@ export default {
         this.searchParam.end_date=dateInfo().currentDateDashFormat
       }
       
-      if(params.is_masking !== undefined && params.is_masking !== ''){
-        newParams.is_masking = params.is_masking ? "N" : "Y";
-      }else if(
-        this.searchParam.is_masking!==undefined&&
-        this.searchParam.is_masking!==""
-      ){
-        newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
-      }
-
-      newParams.date_yn=this.searchParam.date_yn
-
-      return newParams
+      return newParams;
     },
-    
-  }
-  
-}
+  },
+};
 </script>
 
 <style scoped>
-
 </style>

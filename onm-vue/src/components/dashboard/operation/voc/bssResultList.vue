@@ -17,9 +17,12 @@
         :headers="headers"
         :items="bssList"
         class="elevation-1"
+        :options.sync="options"
+         :server-items-length="resPagingInfo.total_cnt"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       >
+
 
         <template v-slot:item.actions="{ item }">
           <v-icon
@@ -41,7 +44,7 @@
 import axios from "axios"
 
 export default {
-  props: ["bssList", "bssPagingInfo"],
+  props: ["bssList", "resPagingInfo"],
   data() {
     return {
       headers: [
@@ -57,7 +60,7 @@ export default {
         options: {},
         totalList: 0,
         loading: true,
-        is_result: true,
+        is_result: true
     }
   },
   methods: {
@@ -76,11 +79,10 @@ export default {
         cancelButtonText: '아니오',
       }).then(result =>{
         if(result.value){
-          this.editedIndex = this.bssList.indexOf(item)
-          console.log('update Item Index : ',this.editedIndex)
-          this.editedItem = Object.assign({}, item)
+          var select=this.bssList.indexOf(item)
+          
           var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15021/update_bss_result`
-          var param= this.editedItem.guid
+          var param= this.bssList[select].guid
           this.is_result=false
           axios.post(url, param, this.$store.state.headers)
             .then((response) => {

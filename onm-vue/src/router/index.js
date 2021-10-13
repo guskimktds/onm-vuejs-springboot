@@ -91,11 +91,11 @@ import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
 import LocalCode from '../components/dashboard/operation/code/local/codeMain'
 import ClientDevice from '../components/dashboard/operation/code/client/deviceMain'
 import CodeMaster from '../components/dashboard/operation/code/master/codeMain'
+import GwAcceptInfo from '../components/dashboard/operation/code/local/gwAcceptInfo'
 
 //운영관리 / 고객이전
 import CustomerTransfer from '../components/dashboard/operation/transfer/customerTransfer'
 import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatus'
-// import GwChange from '../components/dashboard/operation/transfer/gwChange'
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -494,11 +494,11 @@ export default new Router({
                     name: 'deviceRecoInfo',
                     component: deviceRecoInfo
                 },
-                // {
-                //     path: "gw-change",
-                //     name: 'GwChange',
-                //     component: GwChange
-                // }
+                {
+                    path: "gw-accept",
+                    name: 'GwAcceptInfo',
+                    component: GwAcceptInfo
+                },
             ]
         },
 

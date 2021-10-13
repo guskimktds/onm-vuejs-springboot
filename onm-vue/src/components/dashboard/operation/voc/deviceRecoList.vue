@@ -1,26 +1,33 @@
 <template>
-    <v-container
-        id="regular-tables"
-        fluid
-        tag="section"
+  <v-container id="regular-tables" fluid tag="section">
+    <base-material-card
+      color="orange"
+      dark
+      icon="mdi-keyboard"
+      title="카메라 정보 조회 LIST"
+      class="px-5 py-3"
     >
-        <base-material-card
-            color="orange"
-            dark
-            icon="mdi-keyboard"
-            title="단말 인증 정보 조회 LIST"
-            class="px-5 py-3"
-            >
-            <v-data-table
-                :headers="headers"
-                :items="pList"
-                :options.sync="options"
-                :server-items-length="resPagingInfo.total_cnt"
-                class="elevation-1"
-                :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
-                :header-props="{ sortIcon: null }"
-            >      
-              <template v-slot:top>
+      <v-data-table
+        :headers="headers"
+        :items="dcList"
+        :options.sync="options"
+        :server-items-length="dcPagingInfo.total_cnt"
+        class="elevation-1"
+        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+        :header-props="{ sortIcon: null }"
+      >
+      
+      <template v-slot:item.status_code="{item}">
+              <span>{{ switchString(item.status_code) }}</span>
+      </template>
+      <template v-slot:item.mgt_status="{item}">
+              <span>{{ switchString2(item.mgt_status) }}</span>
+      </template>
+      <template v-slot:item.save_method="{item}">
+              <span>{{ switchString3(item.save_method) }}</span>
+      </template>
+
+      <template v-slot:top>
                 <v-dialog v-model="dialogDelete" max-width="500px">
                   <v-card>
                     <v-card-title class="headline">삭제 하시겠습니까?</v-card-title>
@@ -33,99 +40,132 @@
                   </v-card>
                 </v-dialog>
               
-            </template>
+      </template>
 
-            <template v-slot:item.actions="{ item }">
+      <template v-slot:item.actions="{ item }">
               <v-icon
                 small
                 @click="deleteItem(item)"
               >
                 mdi-delete
               </v-icon>
-            </template>
+      </template>
 
-
-            </v-data-table>
-        </base-material-card>
-    </v-container>
+      </v-data-table>
+    </base-material-card>
+  </v-container>
 </template>
 
-
 <script>
-import dateInfo from '../../../utils/common'
 import axios from "axios"
+
 export default {
-    props: ['pList','resPagingInfo'],
-    data() {
-      return {
-        last: 0,
-        dialog: false,
-        dialogDelete: false,
-        editedIndex: -1,
-        options: {},
-        totalList: 0,
-        loading: true,
-        headers: [
-          {
-            text: '매장ID',
-            align: 'start',
-            sortable: false,
-            value: 'user_id',
-          },
-          { text: '카메라 ID', value: 'cam_id' },
-          { text: '카메라 IP', value: 'cam_ip' },
-          { text: '카메라명', value: 'cam_name' },
-          { text: 'MAC ID', value: 'mac_id' },
-          { text: '모델명', value: 'model_name' },
-          { text: '펌웨어 버전 정보', value: 'perm_version' },
-          { text: '제조사', value: 'company' },
-          { text: '서비스 상태 코드', value: 'status_code' },
-          { text: '관리상태 코드', value: 'reco_code' },
-          { text: '해상도', value: 'visible' },
-          { text: '카메라 수정일자', value: 'mod_date' },
-          { text: '개통일', value: 'reg_date' },
-          { text: '해지일', value: 'cancel_date' },
-        ],
-        editedItem: {
-          cam_id: '',
-          cam_ip: '',
-          cam_name: '',
-          mac_id: '',
-          model_name: '',
+  props: ["dcList", "dcPagingInfo"],
+  data() {
+    return {
+      last: 0,
+      dialog: false,
+      dialogDelete: false,
+      deleteIndex: -1,
+      options: {},
+      totalList: 0,
+      loading: true,
+      headers: [
+        {
+          text: "매장 ID",
+          align: "start",
+          sortable: false,
+          value: "user_id",
         },
-        defaultItem: {
-          cam_id: '',
-          cam_ip: '',
-          cam_name: '',
-          mac_id: '',
-          model_name: '',
+        { text: "카메라 ID", value: "cam_id" },
+        { text: "카메라 IP", value: "cam_ip" },
+        { text: "카메라명", value: "cam_name" },
+        { text: "MAC ID", value: "mac_id" },
+        { text: "모델명", value: "model_name" },
+        { text: "펌웨어 버전 정보", value: "firmware" },
+        { text: "제조사", value: "vendor" },
+        { text: "서비스 상태코드", value: "status_code" },
+        { text: "관리상태코드", value: "mgt_status" },
+        { text: "해상도", value: "resolution" },
+        { text: "카메라 수정일자", value: "mod_date" },
+        { text: "개통일", value: "open_date" },
+        { text: "해지일", value: "close_date" },
+        { text: "영상저장방식", value: "save_method" },
+        { text: '  ', value: 'actions', sortable: false }
+      ],
+      tempItems:{},
+      selectItem: {
+          cam_id: '',    
+          user_id: ''
         },
-        newPlist: []
+      defaultItem: {
+          cam_id: '',    
+          user_id: ''
+        },
+    };
+  },
+  methods: {
+    getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
+    },
+    switchString(values){
+      if(values==='A'){
+        return '접수'
+      }else if(values==='D'){
+        return '삭제'
+      }else if(values==='F'){
+        return '실패'
+      }else if(values==='P'){
+        return '진행중'
+      }else if(values==='S'){
+        return '성공'
+      }else if(values==='Z'){
+        return '카메라 장애'
+      }
+    },
+    switchString2(values){
+      if(values==='S'){
+        return '정상'
+      }else if(values==='D'){
+        return '삭제'
+      }else if(values==='X'){
+        return '삭제대기'
+      }else if(values==='A'){
+        return '등록'
+      }
+    },
+    switchString3(values){
+      if(values==='A'){
+        return '상시'
+      }else if(values==='E'){
+        return '스마트'
+      }else{
+        return '-'
       }
     },
 
-    methods: {
-      getDataFromApi(){
-        this.$emit("pagination",this.options)
-      },
-
-      deleteItem (item) {
-        // console.log('deleteItem method call : ',item)
-        this.editedIndex = this.pList.indexOf(item)
+    deleteItem (item) {
+        this.deleteIndex = this.dcList.indexOf(item)
         console.log('Delte Item Index : ',this.editedIndex)
-        this.editedItem = Object.assign({}, item)
-        // 삭제
-        this.editedItem.cmd_type = 'D'
-        this.editedItem.mod_date = dateInfo().current
-        this.editedItem.modifier = this.$store.state.onm_user_id
-        delete this.editedItem.accept_ip
+        this.tempItems = Object.assign({},item)
+        this.selectItem.user_id=this.tempItems.user_id
+        this.selectItem.cam_id=this.tempItems.cam_id
         this.dialogDelete = true
-      },
+    },
 
-      deleteItemConfirm () {
-        if (this.editedIndex > -1) {
-          var params = this.editedItem
-          var deleteIndex = this.editedIndex
+    closeDelete () {
+        this.dialogDelete = false
+        this.$nextTick(() => {
+          this.selectItem = Object.assign({}, this.defaultItem)
+          this.deleteIndex = -1
+        })
+    },
+
+    deleteItemConfirm () {
+        if (this.deleteIndex > -1) {
+          var params = this.selectItem
+          var deleteIndex = this.deleteIndex
           console.log(params)
           this.$fire({
             title: "비밀번호를 입력해주세요.",
@@ -154,8 +194,7 @@ export default {
                       console.log(response)
                       var resCode = response.data.res_code;
                       if(resCode == 200){
-                        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15002/set_account`
-
+                        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15022/delete_cam`
                             axios.post(url, params, this.$store.state.headers)
                               .then((response) => {
                                 console.log(response)
@@ -183,24 +222,9 @@ export default {
         }
         this.closeDelete() //다이얼로그를 닫는다.
       },
+  },
 
-      close () {
-        this.dialog = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-
-      closeDelete () {
-        this.dialogDelete = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-    },
-    watch: {
+  watch: {
     options: {
       handler() {
         this.getDataFromApi();
@@ -209,16 +233,14 @@ export default {
     },
   },
   updated() {
-      if(this.last!==this.resPagingInfo.total_cnt){
+      if(this.last!==this.dcPagingInfo.total_cnt){
         this.options.page=1
       }
-      if(this.resPagingInfo.total_cnt!==undefined){
-      this.last=this.resPagingInfo.total_cnt
+      if(this.dcPagingInfo.total_cnt!==undefined){
+      this.last=this.dcPagingInfo.total_cnt
       }
   },
-}
+};
 </script>
-
 <style>
-
 </style>
