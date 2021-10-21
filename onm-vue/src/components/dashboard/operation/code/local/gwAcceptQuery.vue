@@ -9,7 +9,20 @@
             title="로컬 국사 정보 변경"
             class="px-5 py-3"
         >
+            <v-row>
+                <v-col>
+                    <!-- 디자인을 위한 공백 처리 -->
+                </v-col>
+            </v-row>
 
+            <v-row>
+                <v-cols cols="3">
+                    <v-text-field
+                    readonly
+                    v-text="GwNow()"
+                    ></v-text-field>
+                </v-cols>
+            </v-row>
             <v-row>
                 <v-col cols="3">
                  <v-select 
@@ -27,7 +40,7 @@
               medium
               v-on:click="searchMethod"
                >
-               검색
+               변경
             </v-btn>
                 </v-col>                
             </v-row>
@@ -40,11 +53,12 @@
 import axios from 'axios'
 
 export default {
-    props: ['nowGw'],
+    props:['gw'],
     data() {
         return {
             localGwOptions:[],
-            localGwId:''
+            localGwId:'',
+            localGwName:''
         }
     },
 
@@ -65,6 +79,17 @@ beforeCreate() {
     methods: {
         searchMethod: function() {
             this.$emit('gwid',this.localGwId)
+        },
+
+        GwNow(){
+            var length=parseInt(this.localGwOptions.length)
+            console.log(this.localGwOptions[length-1])
+            for(var i=0;i<=length-1;i++){
+                if(this.localGwOptions[i].local_gw_id==this.gw){
+                this.localGwName=this.localGwOptions[i].server_name
+                }
+            }
+            return "현재 국사코드 : "+this.localGwName;
         }
     },  
 }

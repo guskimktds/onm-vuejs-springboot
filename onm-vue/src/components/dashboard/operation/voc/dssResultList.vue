@@ -9,16 +9,16 @@
         color="orange"
         dark
         icon="mdi-keyboard"
-        title="청약 오더 처리 결과 LIST"
+        title="고객 단말 오더 처리 결과 LIST"
         class="px-5 py-3"
       >
 
       <v-data-table
         :headers="headers"
-        :items="bssList"
+        :items="dssList"
         class="elevation-1"
         :options.sync="options"
-        :server-items-length="resPagingInfo.total_cnt"
+         :server-items-length="resPagingInfo.total_cnt"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       >
@@ -58,17 +58,17 @@
 import axios from "axios"
 
 export default {
-  props: ["bssList", "resPagingInfo"],
+  props: ["dssList", "resPagingInfo"],
   data() {
     return {
       headers: [
         { text: '거래고유번호', value: 'guid'},
         { text: '계약 ID', value: 'said' },
-        { text: '오더번호', value: 'oder_no' },
-        { text: '오더순번', value: 'oder_seq' },
-        { text: '오더유형', value: 'oder_type' },
-        { text: '접수일자', value: 'receipt_date' },
-        { text: '등록일시', value: 'reg_date' },
+        { text: '오더번호', value: 'oderno' },
+        { text: '오더순번', value: 'oderseq' },
+        { text: '오더유형', value: 'odertype' },
+        { text: '접수일자', value: 'receiptdate' },
+        { text: '등록일시', value: 'regdate' },
         { text: '  ', value: 'actions', sortable: false }
       ],
         last:0,
@@ -89,21 +89,19 @@ export default {
   },
   methods: {
     getDataFromApi() {
-      console.log('전달된 리스트')
-      console.log(this.bssList)
       this.loading = true;
       this.$emit("pagination", this.options);
     },
 
     sendItem(item){
-      this.sendItemIndex = this.bssList.indexOf(item)
+      this.sendItemIndex = this.dssList.indexOf(item)
       this.tempItems = Object.assign({},item)
       this.selectItem.guid=this.tempItems.guid
       this.dialogSend = true
     },
 
     sendItemConfirm () {
-          var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15021/update_bss_result`
+          var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15028/update_oss_result`
           var param= this.selectItem
           var sendIndex = this.sendItemIndex
 
@@ -113,7 +111,7 @@ export default {
               var resCode = response.data.res_code;
               var resMsg = response.data.res_msg;
               if(resCode == 200){
-                this.bssList.splice(sendIndex, 1)
+                this.dssList.splice(sendIndex, 1)
                 alert('등록이 완료되었습니다!')
               }else{
                 alert(resCode + " / " + resMsg);

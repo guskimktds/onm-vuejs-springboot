@@ -93,6 +93,9 @@ export default {
         { text: "영상저장방식", value: "save_method" },
         { text: '  ', value: 'actions', sortable: false }
       ],
+      saidItem:{
+        said: ''
+      },
       tempItems:{},
       selectItem: {
           cam_id: '',    
@@ -102,6 +105,11 @@ export default {
           cam_id: '',    
           user_id: ''
         },
+      settingItems:{
+        said:'',
+        mac_id:'',
+        mgt_status:''
+      }
     };
   },
   methods: {
@@ -145,12 +153,50 @@ export default {
       }
     },
 
+    setUserId(param){
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15029/get_said`
+      this.saidItem.user_id=param
+      axios.post(url,this.saidItem, this.$store.state.headers)
+        .then((response) => {
+           console.log('SAID')
+           console.log(response)
+           var resCode = response.data.res_code;
+           var resMsg = response.data.res_msg;
+
+            if(resCode == 200){
+               this.settingItems.said=response.data.data.said
+               this.settingItems.mac_id=this.tempItems.mac_id
+               this.settingItems.mgt_status=this.tempItems.mgt_status
+
+                var setUrl =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15026/update_delete_cam`
+                                  var setParam = this.settingItems
+                                  console.log('보정 파라미터')
+                                  console.log(setParam)
+
+                                  axios.post(setUrl, setParam, this.$store.state.headers)
+                                    .then((setResponse) => {
+                                      console.log(setResponse)
+                                      var resCode = setResponse.data.res_code;
+                                      var resMsg = setResponse.data.res_msg;
+                           if(resCode == 200){
+                               console.log(resCode+resMsg);
+                           }else{
+                           console.log(resCode+resMsg);
+                     }
+                 })
+               }else{
+                 console.log(resCode+resMsg);
+                  }
+                })
+    }, 
+
     deleteItem (item) {
         this.deleteIndex = this.dcList.indexOf(item)
         console.log('Delte Item Index : ',this.editedIndex)
         this.tempItems = Object.assign({},item)
         this.selectItem.user_id=this.tempItems.user_id
         this.selectItem.cam_id=this.tempItems.cam_id
+
         this.dialogDelete = true
     },
 
@@ -165,8 +211,9 @@ export default {
     deleteItemConfirm () {
         if (this.deleteIndex > -1) {
           var params = this.selectItem
-          var deleteIndex = this.deleteIndex
-          console.log(params)
+          var deleteCol = this.deleteIndex
+          console.log(this.tempItems)
+        
           this.$fire({
             title: "비밀번호를 입력해주세요.",
             input: 'password',
@@ -188,21 +235,25 @@ export default {
                     login_id: this.$store.state.onmUserId,
                     login_pwd: result.value
                   }
-                  console.log(params.login_id)
+                  console.log(login)
                   axios.post(url, login, this.$store.state.headers)
                     .then((response) => {
                       console.log(response)
                       var resCode = response.data.res_code;
+
                       if(resCode == 200){
+                        this.setUserId(this.selectItem.user_id)
+
                         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15022/delete_cam`
                             axios.post(url, params, this.$store.state.headers)
                               .then((response) => {
-                                console.log(response)
                                 var resCode = response.data.res_code;
                                 var resMsg = response.data.res_msg;
+                                console.log('응답코드'+resCode)
                                 if(resCode == 200){
                                   //현재 목록에서 선택한 Item을 삭제한다.
-                                  this.pList.splice(deleteIndex, 1)
+                                  this.dcList.splice(deleteCol, 1)
+                                  
                                 }else{
                                   alert(resCode + " / " + resMsg);
                                 }
@@ -215,7 +266,7 @@ export default {
                       }
                     })
               }else{
-                alert('비밀번호를 입력해주세요.')
+                console.log('취소')
               }
             })
         

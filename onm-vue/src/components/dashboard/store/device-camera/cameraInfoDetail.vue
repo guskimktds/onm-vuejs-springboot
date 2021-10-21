@@ -113,9 +113,7 @@ export default {
     switchString(){
       var status=this.pObject.status_code
       var mgt=this.pObject.mgt_status
-      console.log('fdsafasd')
-      console.log(status)
-      console.log(mgt)
+      
       if(status=='A'){
         this.status_code='접수'
       }else if(status=='D'){

@@ -3,6 +3,7 @@
       <v-card>
         <gw-accept-query
           v-on:gwid="changeGwId"
+          v-bind:gw="gw"
         ></gw-accept-query>
         <local-code-list v-bind:pList=pList></local-code-list>
       </v-card>
@@ -31,13 +32,15 @@ export default {
       resPagingInfo: {},
       changeParam: {
         local_gw_id: ""
-      }
+      },
+      gw: ""
     }
 },
 
 mounted: function() {
     var params = this.reqPagingInfo
     this.searchToButton(params)
+    this.getGwId();
   },
 
   methods: {
@@ -50,7 +53,8 @@ mounted: function() {
           var resMsg = response.data.res_msg;
           if(resCode == 200){
             this.pList = response.data.data.local_gw_list;
-            this.resPagingInfo = response.data.data.paging_info
+            this.resPagingInfo = response.data.data.paging_info;
+            this.getGwId();
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
              EventBus.$emit('top-path-logout');
@@ -69,6 +73,21 @@ mounted: function() {
           console.log('조회 실패',ex)
         })
     },
+    getGwId: function() {
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15018/get_user_acceptance`
+      axios.post(url,this.$store.state.headers)
+        .then((response) => {
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            console.log(response)
+            this.gw=response.data.data.local_gw_id;
+            console.log(this.gw)
+          }else{
+            console.log(resCode + " / " + resMsg);
+          }
+        })
+  },
     changeGwId: function(params){
       this.$fire({
         title: "변경하시겠습니까?",
@@ -88,8 +107,10 @@ mounted: function() {
               console.log(response)
               if(resCode == 200){
                 alert('변경이 완료되었습니다!')
+                this.$router.go();
               }else{
                 alert('예기치 않은 문제가 생겨 작업이 완료되지 않았습니다.\n'+resMsg);
+                this.$router.go();
               }
             })
             .catch((ex) => {

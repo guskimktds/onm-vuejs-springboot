@@ -83,6 +83,7 @@ import AdminHistory from '../components/dashboard/operation/admin/adminHistory'
 import ChangeHistory from '../components/dashboard/operation/change/changeHistory'
 import termNms from '../components/dashboard/operation/voc/termNms.vue'
 import termOrderInfo from '../components/dashboard/operation/voc/termOrderInfo.vue'
+import dssResultInfo from '../components/dashboard/operation/voc/dssResultInfo.vue'
 import bssResultInfo from '../components/dashboard/operation/voc/bssResultInfo.vue'
 import deviceRecoInfo from '../components/dashboard/operation/voc/deviceRecoInfo'
 
@@ -483,6 +484,11 @@ export default new Router({
                     path: "term-order",
                     name: 'termOrderInfo',
                     component: termOrderInfo
+                },
+                {
+                    path: "dss-result",
+                    name: 'dssResultInfo',
+                    component: dssResultInfo
                 },
                 {
                     path: "bss-result",

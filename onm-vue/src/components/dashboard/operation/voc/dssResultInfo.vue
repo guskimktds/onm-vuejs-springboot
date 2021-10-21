@@ -1,36 +1,36 @@
 <template>
     <v-container fluid>
       <v-card>
-        <bss-result-query
-        v-on:search="searchToButton"
-        v-bind:param="searchParam">
-        </bss-result-query>
-        <bss-result-list 
-        v-bind:bssList=bssList
+        <dss-result-query
+          v-on:search="searchToButton"
+          v-bind:param=searchParam
+        ></dss-result-query>
+        <dss-result-list 
+        v-bind:dssList=dssList
         v-bind:resPagingInfo="resPagingInfo"
-        @pagination="setToSearchParams"
-        ></bss-result-list>
+        @pagination="setToSearchParams"></dss-result-list>
       </v-card>
 
     </v-container>
 </template>
 
 <script>
-import BssResultQuery from './bssResultQuery'
-import BssResultList from './bssResultList'
+import DssResultQuery from './dssResultQuery'
+import DssResultList from './dssResultList'
 
 import EventBus from '../../../../EventBus'
 import axios from "axios"
 
 export default {
   components:{
-    BssResultList,
-    BssResultQuery
+    DssResultQuery,
+    DssResultList
   },
   data () {
     return {
-      title: '청약 OSS',
-      bssList: [],
+      title: '코드관리',
+      gw_id: '',
+      dssList: [],
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10
@@ -45,19 +45,24 @@ export default {
   
   methods: {
     searchToButton: function(params){
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15020/get_bss_result`
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15027/get_oss_result`
 
-    var reqParams = this.handleParams(params) 
+    var reqParams = this.handleParams(params)  
+    console.log('보내는 값')
+    console.log(reqParams)
         axios.post(url, reqParams, this.$store.state.headers)
             .then((response) => {
               console.log(response)
               var resCode = response.data.res_code;
               var resMsg = response.data.res_msg;
               if(resCode == 200){
-                this.bssList=response.data.data.list;
-                this.resPagingInfo=response.data.data.paging_info
+                this.dssList = response.data.data.list;
+                this.resPagingInfo = response.data.data.paging_info
+                this.gw_id=reqParams.local_gw_id
+                console.log('paging')
+                console.log(this.resPagingInfo)
               }else if(resCode==204){
-                this.bssList = [];
+                this.dssList = [];
                 this.resPagingInfo = {};
                 alert('코드 관리 데이터가 없습니다.');
               }else if(resCode==410){
@@ -69,7 +74,7 @@ export default {
                 console.log(res.status)}).catch(({ message }) => (this.msg = message))
                 this.$router.replace('/signin')
               }else{
-                this.bssList = [];
+                this.dssList = [];
                 this.resPagingInfo = {};
                 alert(resCode + " / " + resMsg);
               }
@@ -80,6 +85,8 @@ export default {
     },
 
     setToSearchParams(values) {
+      console.log('전달값')
+      console.log(values)
       var params = {
         page_no: values.page,
         view_cnt: values.itemsPerPage,
