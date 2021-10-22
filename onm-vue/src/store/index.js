@@ -21,7 +21,7 @@ axios.interceptors.request.use(
         return config;
     }, 
     function (error) {
-        // 요청 에러 직전 호출됩니다.
+        // 요청 에러 직전 호출됩니다. 
         return Promise.reject(error);
     }
 );
