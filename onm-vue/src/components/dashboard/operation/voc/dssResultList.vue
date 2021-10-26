@@ -64,11 +64,12 @@ export default {
       headers: [
         { text: '거래고유번호', value: 'guid'},
         { text: '계약 ID', value: 'said' },
-        { text: '오더번호', value: 'oderno' },
-        { text: '오더순번', value: 'oderseq' },
-        { text: '오더유형', value: 'odertype' },
-        { text: '접수일자', value: 'receiptdate' },
-        { text: '등록일시', value: 'regdate' },
+        { text: '오더분류번호', value: 'oder_div_cd' },
+        { text: '오더번호', value: 'oder_no' },
+        { text: '오더순번', value: 'oder_seq' },
+        { text: '오더유형', value: 'order_type' },
+        { text: '접수일자', value: 'receipt_date' },
+        { text: '등록일시', value: 'reg_date' },
         { text: '  ', value: 'actions', sortable: false }
       ],
         last:0,

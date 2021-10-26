@@ -97,7 +97,7 @@ export default {
         said: ''
       },
       tempItems:{},
-      selectItem: {
+      selectItems: {
           cam_id: '',    
           user_id: ''
         },
@@ -167,7 +167,8 @@ export default {
                this.settingItems.said=response.data.data.said
                this.settingItems.mac_id=this.tempItems.mac_id
                this.settingItems.mgt_status=this.tempItems.mgt_status
-
+               console.log('said응답')
+                console.log(this.settingItems)
                 var setUrl =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15026/update_delete_cam`
                                   var setParam = this.settingItems
                                   console.log('보정 파라미터')
@@ -194,8 +195,8 @@ export default {
         this.deleteIndex = this.dcList.indexOf(item)
         console.log('Delte Item Index : ',this.editedIndex)
         this.tempItems = Object.assign({},item)
-        this.selectItem.user_id=this.tempItems.user_id
-        this.selectItem.cam_id=this.tempItems.cam_id
+        this.selectItems.user_id=this.tempItems.user_id
+        this.selectItems.cam_id=this.tempItems.cam_id
 
         this.dialogDelete = true
     },
@@ -203,14 +204,14 @@ export default {
     closeDelete () {
         this.dialogDelete = false
         this.$nextTick(() => {
-          this.selectItem = Object.assign({}, this.defaultItem)
+          this.selectItems = Object.assign({}, this.defaultItem)
           this.deleteIndex = -1
         })
     },
 
     deleteItemConfirm () {
         if (this.deleteIndex > -1) {
-          var params = this.selectItem
+          var params = this.selectItems
           var deleteCol = this.deleteIndex
           console.log(this.tempItems)
         
@@ -242,7 +243,9 @@ export default {
                       var resCode = response.data.res_code;
 
                       if(resCode == 200){
-                        this.setUserId(this.selectItem.user_id)
+                        console.log('테스트')
+                        console.log(this.tempItems.user_id)
+                        this.setUserId(this.tempItems.user_id)
 
                         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15022/delete_cam`
                             axios.post(url, params, this.$store.state.headers)
