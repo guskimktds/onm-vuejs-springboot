@@ -28,12 +28,15 @@
 <script>
     export default{
          props: ['pList','storePagingInfo'],
-        components:{
-            
+        components:{  
         },
         methods:{
             handleClick: function(value){
                 this.$emit("child", value);
+            },
+            getDataFromApi() {
+                this.loading = true;
+                this.$emit("pagination", this.options);
             },
         },
         data(){
@@ -55,10 +58,6 @@
                     { text: "상태", value: "status_code" },
                 ],
             }
-        },
-        getDataFromApi() {
-        this.loading = true;
-        this.$emit("pagination", this.options);
         },
         watch: {
             options: {

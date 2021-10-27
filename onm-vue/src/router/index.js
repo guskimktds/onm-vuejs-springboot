@@ -42,6 +42,8 @@ import IotGWInfo from '../components/dashboard/store/device-iotgw/iotgwInfo'
 import SensorInfo from '../components/dashboard/store/device-sensor/sensorInfo'
 import DeviceKttInfo from '../components/dashboard/store/device-ktt/deviceKttInfo'
 import termAuth from '../components/dashboard/store/term-auth/termAuth'
+import registerStore from '../components/dashboard/store/register-store/registerStore'
+import approvalStore from '../components/dashboard/store/approval-store/approvalStore'
 
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
@@ -375,7 +377,18 @@ export default new Router({
                     path: "device-ktt",
                     name: "device-ktt",
                     component: DeviceKttInfo
+                },
+                {
+                    path: "register-store",
+                    name: "register-store",
+                    component: registerStore
+                },
+                {
+                    path: "approval-store",
+                    name : "approval-store",
+                    component: approvalStore
                 }
+
             ]
         },
 
