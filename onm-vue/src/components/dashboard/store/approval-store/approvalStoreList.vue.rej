@@ -1,0 +1,20 @@
+diff a/onm-vue/src/components/dashboard/store/approval-store/approvalStoreList.vue b/onm-vue/src/components/dashboard/store/approval-store/approvalStoreList.vue	(rejected hunks)
+@@ -28,13 +28,16 @@
+ <script>
+     export default{
+          props: ['pList','storePagingInfo'],
+-        components:{
+-            
++        components:{  
+         },
+         methods:{
+             handleClick: function(value){
+                 this.$emit("child", value);
+             },
++            getDataFromApi() {
++                this.loading = true;
++                this.$emit("pagination", this.options);
++            },
+         },
+         data(){
+             return {
