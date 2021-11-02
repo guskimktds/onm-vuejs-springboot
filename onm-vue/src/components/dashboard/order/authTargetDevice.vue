@@ -59,7 +59,7 @@ export default {
         axios.post(url, reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+        
           if(resCode == 200){
             this.authList = response.data.data.auth_device_list;
             this.authPagingInfo=response.data.data.paging_info;
@@ -81,7 +81,7 @@ export default {
           }else{
             this.authList = [];
             this.authPaingInfo={};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
       })
       .catch((ex) => {

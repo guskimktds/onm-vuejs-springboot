@@ -124,7 +124,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if(resCode == 200){
             console.log(response.data.data.info[0].bizp_nm,);
             this.guid = reqParams.guid;
@@ -169,7 +169,7 @@ export default {
           }else{
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -190,7 +190,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+           
           if(resCode == 200){
             this.termSubList = response.data.data.order_list;  //데이터 바꿀것
             this.authPagingInfo = response.data.data.paging_info; //sub페이징
@@ -215,7 +215,7 @@ export default {
           }else{
             this.termNmsList = [];
             this.authPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error"); 
           }
         })
         .catch((ex) => {

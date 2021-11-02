@@ -129,7 +129,7 @@ export default {
             .then((response) => {
              console.log(response)
               var resCode=response.data.res_code;
-              var resMsg=response.data.res_msg;
+       
               if(resCode==200){
                 this.pList=response.data.data.device_order_list;
                 this.resPagingInfo=response.data.data.paging_info;
@@ -148,7 +148,7 @@ export default {
               }else{
                 this.pList=[];
                 this.resPagingInfo={};
-                alert(resCode+" / "+ resMsg);
+                alert("Error");
               }
             })
             .catch((ex) => {
@@ -179,7 +179,7 @@ export default {
         axios.post(url, params, headers)
         .then((response) => {
            var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
+           
             if(resCode == 200){
               this.pObject = response.data.data
                console.log(this.pObject)
@@ -192,7 +192,7 @@ export default {
               this.isReloadDetailObject = false
             }else{
               this.pObject = {};
-              alert(resCode + " / " + resMsg);
+              alert("Error");
               this.showDetailObject = false
               this.isReloadDetailObject = false
             }
@@ -228,7 +228,7 @@ export default {
           .post(url,params,headers)
           .then((response)=>{
             var resCode=response.data.res_code;
-            var resMsg=response.data.res_msg;
+          
             if(resCode==200){
               this.dodList=response.data.data.list;
               
@@ -243,7 +243,7 @@ export default {
             }else{
               this.dodList=[];
            
-              alert(resCode + " / "+ resMsg);
+              alert("Error");
               this.showDetailList=false
             }
           })
@@ -264,7 +264,7 @@ export default {
           .post(url,params,headers)
           .then((response)=>{
             var resCode=response.data.res_code;
-            var resMsg=response.data.res_msg;
+         
             if(resCode==200){
               this.dorList=response.data.data.device_order_result_list;
              
@@ -277,7 +277,7 @@ export default {
             }else{
               this.dorList=[];
              
-              alert(resCode+" / "+resMsg);
+              alert("Error");
               this.showResultList=false
             }
           })

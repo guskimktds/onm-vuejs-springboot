@@ -58,7 +58,7 @@ export default {
       .then((response) => {
         console.log(response)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+         
         if(resCode == 200){
           this.vaList = response.data.data.va_prod_list;
           this.vaPagingInfo = response.data.data.paging_info
@@ -77,7 +77,7 @@ export default {
         }else{
           this.vaList = [];
           this.vaPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          alert("Error");
         }
       })
       .catch((ex) => {

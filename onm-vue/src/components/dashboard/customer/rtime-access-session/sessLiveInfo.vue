@@ -81,7 +81,7 @@ export default {
         .post(url, reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           console.log(response);
           if (resCode == 200) {
             this.pList = response.data.data.session_list;
@@ -101,7 +101,7 @@ export default {
           }else {
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {

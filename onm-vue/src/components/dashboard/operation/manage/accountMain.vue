@@ -81,7 +81,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if(resCode == 200){
             // this.authGroupList = response.data.data.auth_group_list
             // this.isAuthMenu = true
@@ -93,7 +93,7 @@ export default {
             // this.isAuthMenu = false
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -118,7 +118,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+           
           if(resCode == 200){
             // this.authGroupList = response.data.data.auth_group_list
             // this.isAuthMenu = true
@@ -142,7 +142,7 @@ export default {
             // this.isAuthMenu = false
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -167,7 +167,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           if(resCode == 200){
             this.authGroupList = response.data.data.auth_group_list
             this.isAuthMenu = true
@@ -178,7 +178,7 @@ export default {
             this.authGroupList = [];
             this.isAuthMenu = false
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {

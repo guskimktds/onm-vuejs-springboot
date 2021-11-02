@@ -74,8 +74,8 @@ export default {
         .then((response) => {
           console.log(response);
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if (resCode == 200) {
+        
+        if (resCode == 200) {
             this.pList = response.data.data.login_history_list;
             this.resPagingInfo = response.data.data.paging_info;
             console.log(response)
@@ -94,7 +94,7 @@ export default {
           }else {
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {

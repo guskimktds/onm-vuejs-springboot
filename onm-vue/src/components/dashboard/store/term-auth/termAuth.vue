@@ -39,8 +39,8 @@ export default {
       resPagingInfo: {},
       searchParam: {
         mac_id: '',
-
-      }
+      },
+      start:true
     }
   },
  
@@ -61,7 +61,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+    
 
           if(resCode == 200){
             this.pList = response.data.data.hist_list;
@@ -83,7 +83,7 @@ export default {
           }else{
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -100,8 +100,12 @@ export default {
       }
 
       console.log(params)
-
-      // this.searchToButton(params)
+      if(this.start==true){
+        this.pList=[]
+      } else { 
+      this.searchToButton(params)
+      }
+      this.start=false
     },
 
     handleParams: function(params){

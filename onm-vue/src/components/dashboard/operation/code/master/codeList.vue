@@ -320,7 +320,7 @@ export default {
                                   //현재 목록에서 선택한 Item을 삭제한다.
                                   this.pList.splice(deleteIndex, 1)
                                 }else{
-                                  alert(resCode + " / " + resMsg);
+                                  alert("Error");
                                 }
                               })
                               .catch((ex) => {
@@ -391,12 +391,12 @@ export default {
                             .then((response) => {
                               console.log(response)
                               var resCode = response.data.res_code;
-                              var resMsg = response.data.res_msg;
+                               
                               if(resCode == 200){
                                 //현재 목록에서 선택한 item 을 변경해준다.
                                 this.$emit('reset')
                               }else{
-                                alert(resCode + " / " + resMsg);
+                                alert("Error");
                               }
                             })
                             .catch((ex) => {

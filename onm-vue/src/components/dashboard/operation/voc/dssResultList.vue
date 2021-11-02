@@ -110,12 +110,12 @@ export default {
             .then((response) => {
               console.log(response)
               var resCode = response.data.res_code;
-              var resMsg = response.data.res_msg;
+             
               if(resCode == 200){
                 this.dssList.splice(sendIndex, 1)
                 alert('등록이 완료되었습니다!')
               }else{
-                alert(resCode + " / " + resMsg);
+                alert("Error");
               }
             })
             .catch((ex) => {
