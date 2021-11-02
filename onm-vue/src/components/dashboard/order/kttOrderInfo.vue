@@ -64,7 +64,7 @@ export default {
       .then( (response) => {
 
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+     
         if (resCode == 200) {
           this.kttList = response.data.data.list;
           this.kttPagingInfo = response.data.data.paging_info;
@@ -83,7 +83,7 @@ export default {
         }else{
           this.kttList = [];
           this.kttPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          alert("Error");
         }
 
       })

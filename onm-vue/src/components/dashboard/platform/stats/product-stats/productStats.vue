@@ -60,7 +60,7 @@ export default {
       .then( (response) => {
 
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+        
         if (resCode == 200) {
           this.pHeader=response.data.data.header_list;
           this.pList = response.data.data.prod_list;
@@ -80,7 +80,7 @@ export default {
           this.pHeader=[];
           this.pList = [];
         
-          alert(resCode + " / " + resMsg);
+          alert("Error");
         }
 
       })

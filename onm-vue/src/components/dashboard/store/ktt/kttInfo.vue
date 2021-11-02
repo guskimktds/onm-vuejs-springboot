@@ -69,7 +69,7 @@ methods: {
       .then((response) => {
         console.log(response)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+       
         if(resCode == 200){
           this.kList = response.data.data.ktt_info_list;
           this.kttPagingInfo = response.data.data.paging_info
@@ -89,7 +89,7 @@ methods: {
         }else{
           this.kList = [];
           this.kttPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          alert("Error");
         }
       })
       .catch((ex) => {

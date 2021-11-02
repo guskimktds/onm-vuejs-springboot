@@ -90,7 +90,7 @@ export default {
         .then((response) => {
           console.log(response);
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if (resCode == 200) {
             this.dsList = response.data.data.sensor_list;
             this.dsPagingInfo = response.data.data.paging_info;
@@ -109,7 +109,7 @@ export default {
           }else {
             this.dsList = [];
             this.dsPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {

@@ -50,7 +50,7 @@ mounted: function() {
         axios.post(url, reqParams, this.$store.state.headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           if(resCode == 200){
             this.pList = response.data.data.local_gw_list;
             this.resPagingInfo = response.data.data.paging_info;
@@ -66,7 +66,7 @@ mounted: function() {
           }else{
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {

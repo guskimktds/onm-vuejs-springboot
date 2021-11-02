@@ -264,7 +264,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if (resCode == 200) {
             this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info;
@@ -286,7 +286,7 @@ export default {
           }else{
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -318,7 +318,7 @@ export default {
           .post(url, params, headers)
           .then((response) => {
             var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
+          
             if (resCode == 200) {
               this.showDetailObject = true;
               this.isReloadDetailObject = true;
@@ -334,7 +334,7 @@ export default {
             } else {
               console.log(response)
               this.pObject = {};
-              alert(resCode + " / " + resMsg);
+              alert("Error");
             }
           })
           .catch((ex) => {
@@ -366,7 +366,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+        
           console.log(resCode);
           if (resCode == 200) {
             this.kList = response.data.data.ktt_info_list;
@@ -376,7 +376,7 @@ export default {
             alert('사용자-KTT 데이터가 없습니다.');
           } else {
             this.kList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -394,7 +394,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if (resCode == 200) {
             this.psList = response.data.data.prod_summary_list;
             this.showProdSummaryList = !this.showProdSummaryList;
@@ -403,7 +403,7 @@ export default {
             alert('상품 요약 정보 데이터가 없습니다.');
           } else {
             this.psList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -421,7 +421,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           if (resCode == 200) {
             this.vaList = response.data.data.va_prod_list;
             this.showVACountList = !this.showVACountList;
@@ -430,7 +430,7 @@ export default {
             alert('VA 정보 데이터가 없습니다.');
           } else {
             this.vaList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -449,7 +449,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if (resCode == 200) {
             this.soList = response.data.data.sensor_list;
             this.showSensorOrderList = !this.showSensorOrderList;
@@ -460,7 +460,7 @@ export default {
             alert('센서 정보 데이터가 없습니다.');
           } else {
             this.soList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -479,7 +479,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+        
           if (resCode == 200) {
             this.dcList = response.data.data.cam_list;
             this.showDeviceCameraList = !this.showDeviceCameraList;
@@ -488,7 +488,7 @@ export default {
             alert('단말 카메라 정보 데이터가 없습니다.');
           }else {
             this.dcList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -507,7 +507,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+ 
           if (resCode == 200) {
             this.iotList = response.data.data.iotgw_list;
             this.showIotGwList = !this.showIotGwList;
@@ -516,7 +516,7 @@ export default {
             alert('단말 IOT GW 정보 데이터가 없습니다.');
           }else {
             this.iotList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -535,7 +535,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+     
           if (resCode == 200) {
             this.dsList = response.data.data.sensor_list;
             this.showDeviceSensorList = !this.showDeviceSensorList;
@@ -544,7 +544,7 @@ export default {
             alert('단말 센서 정보 데이터가 없습니다.');
           } else {
             this.dsList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -562,7 +562,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+     
           if (resCode == 200) {
             this.pnList = response.data.data.tel_no_list;
             this.showPhoneList = !this.showPhoneList;
@@ -571,7 +571,7 @@ export default {
             alert('사용자 전화번호 데이터가 없습니다.');
           } else {
             this.pnList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
