@@ -86,7 +86,6 @@ import termOrderInfo from '../components/dashboard/operation/voc/termOrderInfo.v
 import dssResultInfo from '../components/dashboard/operation/voc/dssResultInfo.vue'
 import bssResultInfo from '../components/dashboard/operation/voc/bssResultInfo.vue'
 import deviceRecoInfo from '../components/dashboard/operation/voc/deviceRecoInfo'
-
 //운영관리 / 코드 설정 관리 
 import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
 import LocalCode from '../components/dashboard/operation/code/local/codeMain'
@@ -97,6 +96,14 @@ import GwAcceptInfo from '../components/dashboard/operation/code/local/gwAcceptI
 //운영관리 / 고객이전
 import CustomerTransfer from '../components/dashboard/operation/transfer/customerTransfer'
 import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatus'
+//open api 
+import customerApi from '../components/dashboard/operation/openApi/customerApi.vue'
+import customerApi2 from '../components/dashboard/operation/openApi/customerApi2.vue'
+//공지사항
+import notice from '../components/dashboard/operation/notice/notice.vue'
+
+//에디터
+import vueEditor from '../components/utils/vueEditor.vue'
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -504,6 +511,26 @@ export default new Router({
                     path: "gw-accept",
                     name: 'GwAcceptInfo',
                     component: GwAcceptInfo
+                },
+                {
+                    path: "customer-api",
+                    name: 'customerApi',
+                    component: customerApi
+                },
+                {
+                    path: "notice",
+                    name: 'notice',
+                    component: notice
+                },
+                {
+                    path: "vue-editor",
+                    name: 'vueEditor',
+                    component: vueEditor
+                },
+                {
+                    path: "customer-api2",
+                    name: 'customerApi2',
+                    component: customerApi2
                 },
             ]
         },

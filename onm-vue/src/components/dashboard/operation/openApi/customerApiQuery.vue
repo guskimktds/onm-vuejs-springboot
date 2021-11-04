@@ -9,9 +9,7 @@
             title="고객별 API 목록 조회" 
             class="px-5 py-3"
         >
-
             <v-row>
-
                 <v-col cols="3">
                     <v-menu
                     offset-y
@@ -50,28 +48,6 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-
-                <v-col cols="2">
-                    <v-switch
-                        v-model="param.date_yn"                    
-                        :label="`날짜검색`"
-                        color="secondary"
-                    ></v-switch>
-                </v-col>
-
-
-            </v-row>
-
-            <v-row>
-
-                <v-col cols="3">
-                    <v-text-field label="사이트 ID" placeholder=" " v-model="param.site_id">                        
-                    </v-text-field>
-                </v-col>         
-                <v-col cols="3">
-                    <v-text-field  label="인터페이스 번호" placeholder=" " v-model="param.api_no">                        
-                    </v-text-field>
-                </v-col>
                 <v-col cols="2">
                     <v-btn elevation="2" medium v-on:click="searchMethod">
                         검색
@@ -84,15 +60,18 @@
 
 </template>
 <script>
+import EventBus from '../../../../EventBus.js'
+
 export default {
   props: ['param'],
   data() {
       return {
+
       }
   },
   methods: {
     searchMethod: function() {
-      this.$emit('search', this.param)
+       EventBus.$emit('getCustomerApiList',this.param);
     }
   }, 
 }

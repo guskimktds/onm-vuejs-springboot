@@ -35,6 +35,11 @@ export default () => {
     var lastMonth = dm.getFullYear() + "" + ("00" + (dm.getMonth() + 1)).slice(-2) + "" + ("00" + dm.getDate()).slice(-2) 
     var lastMonthDashFormat = dm.getFullYear() + "-" + ("00" + (dm.getMonth() + 1)).slice(-2) + "-" + ("00" + dm.getDate()).slice(-2) 
     var lastMonthDefault = dm.getFullYear() + "-" + ("00" + (dm.getMonth() + 1)).slice(-2) 
+    //3개월 전
+    var three_dm = new Date();
+    var three_Month = three_dm.getMonth();
+    three_dm.setMonth(three_Month -3);
+    var threeMonthDashFormat = dm.getFullYear() + "-" + ("00" + (three_dm.getMonth() + 1)).slice(-2) + "-" + ("00" + dm.getDate()).slice(-2)
 
     const dateInfo = {
         current,
@@ -45,7 +50,8 @@ export default () => {
         lastMonthDefault,
         currentDateDashFormat,
         lastWeekDashFormat,
-        lastMonthDashFormat
+        lastMonthDashFormat,
+        threeMonthDashFormat
     }
 // //   const dateInfo = year
 //   var d = new Date(); 
