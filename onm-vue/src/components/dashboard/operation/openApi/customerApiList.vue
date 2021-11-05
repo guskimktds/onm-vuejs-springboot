@@ -19,10 +19,11 @@
       <v-data-table
         :search="search"
         :headers="headers"
-        :items="List"
+        :items="pList"
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
+        @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       >
@@ -33,17 +34,8 @@
 
 
 <script>
-import EventBus from '../../../../EventBus'
-import axios from "axios"
-
-const headers = {
-  "User-Agent": "GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)",
-  "Content-Type": "application/json",
-};
-
-const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15111/get_site_open_api`;
 export default {
-  props: ["resPagingInfo"],
+    props: ['pList','resPagingInfo'],
   data() {
     return {
       search: "",
@@ -60,87 +52,49 @@ export default {
         options: {},
         totalList: 0,
          List:[
-
+           {"site_id":"KTT_CTRL_001","site_name":"KTT 관제시스템","api_no":"/V100/KTT_20001/live_video","description":"실시간 영상 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"KTT_CTRL_001","site_name":"KTT 관제시스템","api_no":"/V100/KTT_20002/event_video","description":"이벤트 영상 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"KTT_CTRL_001","site_name":"KTT 관제시스템","api_no":"/V100/KTT_20003/record_video","description":"녹화 영상 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"GSM_CTRL_001","site_name":"GSM","api_no":"/V100/GSM_10001/send_said","description":"GSM 연동 계정 정보 전달","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_10123/event","description":"이벤트 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_10003/set_camera","description":"카메라 청약 등록/삭제 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_10111/camera","description":"카메라 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_10101/account","description":"매장 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_00003/authToken","description":"인증 토큰 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_10022/record_video","description":"녹화 영상 정보 조회","reg_date":"20200922220459","api_access_limit":0}
          ]
-         //{"site_id":"KTT_CTRL_001","site_name":"KTT 관제시스템","api_no":"/V100/KTT_20001/live_video","description":"실시간 영상 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"KTT_CTRL_001","site_name":"KTT 관제시스템","api_no":"/V100/KTT_20002/event_video","description":"이벤트 영상 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"KTT_CTRL_001","site_name":"KTT 관제시스템","api_no":"/V100/KTT_20003/record_video","description":"녹화 영상 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"GSM_CTRL_001","site_name":"GSM","api_no":"/V100/GSM_10001/send_said","description":"GSM 연동 계정 정보 전달","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_10123/event","description":"이벤트 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_10003/set_camera","description":"카메라 청약 등록/삭제 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_10111/camera","description":"카메라 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_10101/account","description":"매장 정보 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_00003/authToken","description":"인증 토큰 요청","reg_date":"20200922220459","api_access_limit":0},{"site_id":"POS_CTRL_001","site_name":"POS","api_no":"/V100/OAS_10022/record_video","description":"녹화 영상 정보 조회","reg_date":"20200922220459","api_access_limit":0}
 
     }
   },
-  created(){
-    EventBus.$on('getCustomerApiList', (param) => {
-	this.searchCustomerApi(param);})  
-    },
 
   methods: {
-    searchCustomerApi: function(params){
-       console.log('이벤트 버스 타기')
-      var reqParams = this.handleParams(params);
-      console.log(reqParams)
-
-      axios
-      .post(url, reqParams, headers)
-      .then( (response) => {
-
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if (resCode == 200) {
-          this.List = response.data.data.api_list;
-          this.resPagingInfo = response.data.data.paging_info;
-        }else if(resCode==204){
-          this.List = [];
-          this.resPagingInfo = {};
-          alert('사용자 API 데이터가 없습니다.');
-        }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
-          EventBus.$emit('top-path-logout');
-            this.$store
-            .dispatch("LOGOUT")
-            .then( res => { 
-            console.log(res.status)}).catch(({ message }) => (this.msg = message))
-            this.$router.replace('/signin')
-        }else {
-          this.List = [];
-          this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
-        }
-
-      })
-      .catch(function (error) {
-        console.log(error);
-        alert("Error")
-      })
-      .finally(function () {
-        // always executed
-      });
+    handleClick:function(value){
+        this.$emit("child", value.guid);
+      },
+    getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
     },
-    handleParams: function (params) {
-      console.log(params);
-      let newParams = {};
-  
-      if (params.page === undefined || params.page === "") {
-        newParams.page_no = this.reqPagingInfo.page_no;
-      } else {
-        newParams.page_no = params.page;
+    switchString(values){
+      if(values=='T'){
+        return '청약취소'
+      }else if(values=='Y'){
+        return '통보완료'
+      }else if(values=='N'){
+        return '미통보'
       }
-
-      if (params.itemsPerPage === undefined || params.itemsPerPage === "") {
-        newParams.view_cnt = this.resPagingInfo.view_cnt;
-      } else {
-        newParams.view_cnt = params.itemsPerPage;
-      }
-        if(params.end_date !== undefined && params.end_date !== ''){
-          newParams.end_date = params.end_date.replace(/-/g,"")
-        }else if(
-          this.searchParam.end_date!==undefined&&
-          this.searchParam.end_date!==""
-        ){
-          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
-        }
-      return newParams;
     }
-
     
-  }
+  },
+
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+  
+  updated() {
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
+      }
+  },
     
 }
 </script>

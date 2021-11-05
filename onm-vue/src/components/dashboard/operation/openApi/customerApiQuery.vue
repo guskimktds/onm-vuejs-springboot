@@ -60,8 +60,6 @@
 
 </template>
 <script>
-import EventBus from '../../../../EventBus.js'
-
 export default {
   props: ['param'],
   data() {
@@ -71,7 +69,7 @@ export default {
   },
   methods: {
     searchMethod: function() {
-       EventBus.$emit('getCustomerApiList',this.param);
+        this.$emit("search", this.param);
     }
   }, 
 }

@@ -35,6 +35,10 @@
                             <span class="headline" >{{ formTitle }}</span>
                         </v-card-title>
 
+                                <v-toolbar>
+                                    <span>에디터</span>
+                                    <span>직접</span>
+                                </v-toolbar>
                         <v-card-text>
                             <v-container>
                             <v-row>
@@ -61,7 +65,6 @@
                                     counter
                                     maxlength="20"
                                 ></v-text-field>
-                                <tab></tab>
              
                                 </v-col>
                                 <span>
@@ -136,11 +139,10 @@
 <script>
 
 import vueEditortool from '../../../utils/vueEditor.vue'
-import tab from './tab.vue'
+
 export default {
   components: { 
       vueEditortool,
-      tab 
     },
     props:['param','localGwOptions'],
     data() {
