@@ -65,7 +65,7 @@
             </v-text-field>
           </v-col>
         </v-row>
-          <v-row>
+          <!-- <v-row>
           <v-col cols="2" style="padding:39px 0px; margin-left: 10px;">
             api 제어 사용 여부:
           </v-col>
@@ -88,11 +88,18 @@
             >
             </v-text-field>
           </v-col>
-        </v-row>
+        </v-row> -->
       
         <v-row>
-            <v-col cols="auto">
+          <v-col >
             <v-btn 
+              elevation="2" 
+              medium
+              v-on:click="backPage"
+               >
+               뒤로
+          </v-btn>
+           <v-btn 
               elevation="2" 
               medium
               v-on:click="registerStoreInfo"
@@ -100,7 +107,6 @@
                등록
             </v-btn>
           </v-col>
-
         </v-row>
       
         </base-material-card>
@@ -149,10 +155,10 @@ export default{
                 user_name : '',
                 dept : '',
                 tel_no : '',
-                site_access_limit : '',
-                control_type: '',
+                // site_access_limit : '',
+                // control_type: '',
             },
-            checkApi : true,
+            // checkApi : true,
         }
     },
     methods:{
@@ -181,12 +187,12 @@ export default{
                     return;
                 }
             }
-            if(this.checkApi){
-              if(this.info.site_access_limit === '' || this.info.site_access_limit === undefined){
-                  alert("site 접속 제한량을 입력해주세요.");
-                  return;     
-              }
-            }
+            // if(this.checkApi){
+            //   if(this.info.site_access_limit === '' || this.info.site_access_limit === undefined){
+            //       alert("site 접속 제한량을 입력해주세요.");
+            //       return;     
+            //   }
+            // }
             var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110//` // 아직 미정
             axios(url, this.info, headers)
             .then((response)=>{
@@ -232,13 +238,16 @@ export default{
                this.info.site_access_limit = '';
                this.info.control_type = 'Y';
         },
-        authForStieLimit(radio){
-          if(radio === 'Y'){
-            this.checkApi = true; 
-          }else if(radio === 'N'){
-            this.checkApi = false;
-          }
+        backPage(){
+          this.$router.push({name: "approval-store"});
         }
+        // authForStieLimit(radio){
+        //   if(radio === 'Y'){
+        //     this.checkApi = true; 
+        //   }else if(radio === 'N'){
+        //     this.checkApi = false;
+        //   }
+        // }
     }
     
 

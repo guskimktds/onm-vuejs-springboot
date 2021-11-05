@@ -44,6 +44,7 @@ import DeviceKttInfo from '../components/dashboard/store/device-ktt/deviceKttInf
 import termAuth from '../components/dashboard/store/term-auth/termAuth'
 import registerStore from '../components/dashboard/store/register-store/registerStore'
 import approvalStore from '../components/dashboard/store/approval-store/approvalStore'
+import registerStoreList from '../components/dashboard/store/register-store-list/registerStoreList'
 
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
@@ -387,6 +388,11 @@ export default new Router({
                     path: "approval-store",
                     name : "approval-store",
                     component: approvalStore
+                },
+                {
+                    path: "register-store-list",
+                    name: "register-store-list",
+                    component:registerStoreList
                 }
 
             ]

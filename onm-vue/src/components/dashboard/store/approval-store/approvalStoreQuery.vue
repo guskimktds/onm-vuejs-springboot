@@ -61,7 +61,7 @@
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field
                     label="승인자 ID"
-                    v-model="param.admin_id"
+                    v-model="param.adm_id"
                     placeholder=" "
                     >
                     </v-text-field>

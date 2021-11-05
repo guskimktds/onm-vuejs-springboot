@@ -13,7 +13,6 @@
             <approval-store-list
               v-bind:pList="pList"
               v-bind:storePagingInfo="storePagingInfo"
-              @pagination="setToSearchParams"
             >
             </approval-store-list>
       </v-card>
@@ -44,7 +43,7 @@ const headers={
 
                 var reqParams=this.handleParams(params)
  
-                if(!reqParams.start_date&&!reqParams.admin_id&&!reqParams.site_name&&!reqParams.site_id&&!reqParams.local_gw_id){
+                if(!reqParams.start_date&&!reqParams.adm_id&&!reqParams.site_name&&!reqParams.site_id&&!reqParams.local_gw_id){
                 this.$fire({
                         title: "검색값을 입력해주세요.",
                         type: "error"})
@@ -114,10 +113,10 @@ const headers={
                     }
                 }
                 
-                if(params.admin_id !== undefined && params.admin_id !== ''){
-                    newParams.admin_id = params.admin_id
-                }else if(this.searchParam.admin_id!==undefined && this.searchParam.admin_id!==""){
-                    newParams.admin_id=this.searchParam.admin_id
+                if(params.adm_id !== undefined && params.adm_id !== ''){
+                    newParams.adm_id = params.adm_id
+                }else if(this.searchParam.adm_id!==undefined && this.searchParam.adm_id!==""){
+                    newParams.adm_id=this.searchParam.adm_id
                 }
                 if(params.site_id !== undefined && params.site_id !== ''){
                     newParams.site_id = params.site_id
@@ -147,29 +146,38 @@ const headers={
                     this.searchParam.end_date=dateInfo().currentDateDashFormat
                 }
                 return newParams
-                },
-                setToSearchParams: function(values){
-                    console.log(values)
-
-                    var params = {
-                        page_no: values.page,
-                        view_cnt: values.itemsPerPage
-                    }
-
-                    console.log(params)
-
-                    this.searchStoreInfo(params)
-                },  
+            },   
         },
         data(){
             return {
                 title: "매장 승인 정보",
-                pList: [],
+                pList: [
+                    {
+                        site_id : 'DOMINO_HEAD',
+                        site_name:'도미노피자',
+                        registered_store_count : 10,
+                        api_count : 5,
+                        user_name : '이선민',
+                        reg_date : '20211028',
+                        mod_date: '20211028',
+                        status_code : 'A'
+                    },
+                    {
+                        site_id : 'McDONALDS_HEAD',
+                        site_name:'맥도날드',
+                        registered_store_count : 12,
+                        api_count : 10,
+                        user_name : '홍길동',
+                        reg_date : '20211028',
+                        mod_date: '20211028',
+                        status_code : 'U'
+                    }
+                ],
                 searchParam:{
                 start_date: dateInfo().lastWeekDashFormat,
                 end_date: dateInfo().currentDateDashFormat,
                 date_yn:true,
-                admin_id:'', // 승인자로 변경
+                adm_id:'', // 승인자로 변경
                 site_id:'', //사이트명id
                 site_name:'' ,//사이트명  
                 local_gw_id: '' // 상태코드 
@@ -188,7 +196,7 @@ const headers={
         },
        beforeCreate() {  
             axios
-            .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}//get_local_gw`)
+            .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`) // 다시 만들기
             .then((response) => {
             this.localGwOptions = response.data.data.local_gw_list;
             this.localGwOptions.unshift(this.allOptions);
@@ -212,9 +220,7 @@ const headers={
 .button{
     float: right;
     padding-right: 45px;
-    padding-top: 18px;
-    
+    padding-top: 10px;
+    font-size:20px;
 }
-
-
 </style>
