@@ -87,6 +87,13 @@
         >
           사용자 전화번호{{ showPhoneList ? " Close" : " Open" }}
         </v-btn>
+
+        <v-btn
+          v-if="showDetailObject"
+          v-on:click="clickToChangeDay()">
+          저장기간 변경
+        </v-btn>
+
       </v-container>
       <storeInfo-detail-object
         v-if="showDetailObject"
@@ -137,7 +144,7 @@
     </v-card>
   </v-container>
 </template>
-
+              
 <script>
 import StoreInfoList from "./info/storeInfoList";
 import StoreInfoQuery from "./info/storeInfoQuery";
@@ -243,6 +250,7 @@ export default {
         is_masking:"",
         date_yn: true
       },
+
     };
   },
 
@@ -577,6 +585,46 @@ export default {
         .catch((ex) => {
           console.log("조회 실패", ex);
         });
+    },
+
+    clickToChangeDay: function(){
+      this.$fire({
+        title: "추가할 영상저장기간을 입력해주세요.",
+        input: 'number',
+        showCancelButton:true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '예',
+        cancelButtonText: '아니오',
+        inputPlaceholder: '추가 기간 입력',
+        inputAttributes: {
+          maxlength: 20,
+          autocapitalize: 'off',
+          autocorrect: 'off'
+        }
+      }).then(result=>{
+        if(result.value>0){
+          var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13017/set_user_storage_add_day`
+
+          var param = {
+            user_id: this.pObject.user_id,
+            add_day: result.value
+          }
+          console.log(param)
+          axios.post(url,param,this.$store.state.headers)
+            .then((response) => {
+              var resCode =response.data.res_code;
+
+              if(resCode==200){
+                alert('변경이 성공적으로 완료되었습니다.')
+              }
+            })
+        }else if(result.value<1){
+          alert('변경할 기간은 +1일 이상으로 해주십시오.')
+        }else{
+          console.log('취소')
+        }
+      })
     },
 
     setToSearchParams: function (values) {
