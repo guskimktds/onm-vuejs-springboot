@@ -48,16 +48,6 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-                <!-- <v-row>
-                <v-col cols="3">
-                    <v-text-field 
-                        label="사이트 ID" 
-                        v-model="param.site_id"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
-                </v-col>
-                </v-row> -->
                 <v-col cols="2">
                     <v-btn elevation="2" medium v-on:click="searchMethod">
                         검색

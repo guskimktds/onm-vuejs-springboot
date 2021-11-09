@@ -20,7 +20,6 @@
         </v-col>
         <v-col>
           <store-api-list
-            
             v-bind:storeList=storeList
             v-bind:storeResPagingInfo="storeResPagingInfo"
             @pagination="setToSearchParams"
