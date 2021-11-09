@@ -7,7 +7,7 @@
           v-bind:localGwOptions="localGwOptions"
           @Items="saveItems"
         ></vanner-query>
-        <vanner-list 
+        <vanner-list
         v-bind:pList=pList
         v-bind:gw_id="gw_id"
         v-bind:resPagingInfo="resPagingInfo"
@@ -41,7 +41,30 @@ export default {
     return {
       title: '코드관리',
       gw_id: '',
-      pList: [],
+      pList: [
+        {
+          img_type:'A타입',
+          disp_start_date : '20211108',
+          disp_end_date:'20211108',
+          disp_yn:'Y',
+          reg_id : '탁쏠크',
+          reg_date:'20211108',
+          mod_date:'20211108',
+          img_name:'탁크쏠의 크리스마스',
+          no:'1'
+        },
+         {
+          img_type:'A타입',
+          disp_start_date : '20211108',
+          disp_end_date:'20211108',
+          disp_yn:'Y',
+          reg_id : '탁크',
+          reg_date:'20211108',
+          mod_date:'20211108',
+          img_name:'탁크쏠 크리스',
+          no:'2'
+        },
+      ],
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10
@@ -75,40 +98,41 @@ export default {
       })
       .finally(function () {
         // always executed
+      
       });
   },
   
   methods: {
-    reset: function(){
-      console.log(this.searchParam)
-       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15006/get_code`
-       var reqParams = this.handleParams(this.searchParam)
-      axios
-        .post(url, reqParams, this.$store.state.headers)
-        .then((response) => {
-          console.log(response)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            // this.authGroupList = response.data.data.auth_group_list
-            // this.isAuthMenu = true
-            this.pList = response.data.data.list;
-            this.resPagingInfo = response.data.data.paging_info
-            console.log(this.resPagingInfo)
-          }else{
-            // this.authGroupList = [];
-            // this.isAuthMenu = false
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-    },
+    // reset: function(){
+    //   console.log(this.searchParam)
+    //    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}//`
+    //    var reqParams = this.handleParams(this.searchParam)
+    //   axios
+    //     .post(url, reqParams, this.$store.state.headers)
+    //     .then((response) => {
+    //       console.log(response)
+    //       var resCode = response.data.res_code;
+    //       var resMsg = response.data.res_msg;
+    //       if(resCode == 200){
+    //         // this.authGroupList = response.data.data.auth_group_list
+    //         // this.isAuthMenu = true
+    //         this.pList = response.data.data.banner_list;
+    //         this.resPagingInfo = response.data.data.paging_info
+    //         console.log(this.resPagingInfo)
+    //       }else{
+    //         // this.authGroupList = [];
+    //         // this.isAuthMenu = false
+    //         this.pList = [];
+    //         this.resPagingInfo = {};
+    //         alert(resCode + " / " + resMsg);
+    //       }
+    //     })
+    //     .catch((ex) => {
+    //       console.log('조회 실패',ex)
+    //     })
+    // },
     searchToButton: function(params){
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15006/get_code`
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}//`
 
     //params : 페이징 + 검색조건
     var reqParams = this.handleParams(params)  

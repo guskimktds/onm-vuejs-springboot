@@ -1,161 +1,144 @@
 <template>   
     <v-container
         id="regular-tables"
-        fluid
         tag="section"
+        fluid
     >
-
-        <base-material-card
+    <h3 style="font-size: 30px; height: 20px">배너 검색</h3>
+        <!-- <base-material-card
             icon="mdi-magnify"
-            title="광고배너 등록"
+            title="배너 검색"
             class="px-5 py-3"
-        >
-                        <!-- max-width="500px" -->
-                <v-col cols="12" sm="6" md="2">
-                    <v-dialog
-                        v-model="dialog"
-                        width="620px"
-                        v-show="showAuth()"
+        > -->
+        <v-card class="border-black px-5 py-3" >
+        <v-row style="padding-top: 10px">
+            <v-col   style="padding-top:25px;" cols="auto">
+                <v-text>배너타입</v-text>
+            </v-col>
+            <v-col >
+            <v-select 
+            label="전체"
+            :items="items"
+            v-model="vitem"
+            @change="test123"
+            solo
+            style="width: 150px;"
+            >
+            </v-select>
+            </v-col>
+            <v-col style="padding-top:25px; flex:0 0 5%;" cols="auto">
+                <v-text>제목</v-text>
+            </v-col>
+            <v-col style="margin-top:-10px;" >
+                <v-text-field label="입력" style="width: 335px"></v-text-field>
+                <!-- <input type="text" class="border-black"> -->
+            </v-col>
+            <v-col style="padding-top:25px;" cols="auto">
+                <v-text>노출여부</v-text>
+            </v-col>
+            <v-col cols="auto"><v-select 
+            :items="items2"
+            label="전체"
+            solo
+            style="width: 150px;"
+            >
+            </v-select></v-col>
+            <v-col cols="2">
+                <v-btn class="black" right absolute
+                 @click="test123"
+                 elevation="2"
+                 >검색</v-btn>
+            </v-col>
+        </v-row>
+        <v-row style="margin-top:-40px">
+            <v-col style="padding-top:35px;" cols="auto">
+                <v-text>노출기간</v-text>
+            </v-col>
+            <v-col cols="auto">
+                    <v-menu
+                    offset-y
                     >
-                        <template v-slot:activator="{ on, attrs }">
-                        <v-btn 
-                            color="indigo"
-                            dark
-                            class="mb-2"
-                            v-bind="attrs"
-                            v-on="on"
-                        >
-                            등록
-                        </v-btn>
-                        </template>
-                            
-                        <v-card>
-                            
-                        <v-card-title>
-                            <span class="headline">{{ formTitle }}</span>
-                        </v-card-title>
-                        <v-card-subtitle style="font-size: 13px; height: 20px;">
-                            <v-col>
-                            <span style="font-weight: bold">주의!!</span> JPG, PNG 파일만 등록해주세요.
-                            </v-col>
-                        </v-card-subtitle>
-                        <v-card-text>
-                            <v-container size>
-                                <v-row style="height: 70px">
-                                    <v-col>
-                                        <div style="padding-top: 20px;">파일업로드 : </div>
-                                    </v-col>
-                                    <v-col cols="7">
-                                        <v-file-input id="input"  label="Search..." v-model="images" accept=".jpg, .png" multiple="multiple"></v-file-input>
-                                    </v-col>
-                                    <v-col>
-                                        <v-btn>찾기</v-btn>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col>
-                                        <v-btn btn1>
-                                            -
-                                        </v-btn>
-                                        <v-btn btn1>
-                                            +
-                                        </v-btn>
-                                    </v-col>
-                                    <v-col  align="right">
-                                        <v-btn style="height: 30px; width: 40px;" @click="xbtn">
-                                            삭제
-                                        </v-btn>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <input type="submit" value="x" @click="xbtn">
-                                   <v-col v-for="(name , index) in images" :key="index">
-                                   {{images[index].name}} </v-col>
-                                </v-row>
-                                
-                                <v-row style="height: 150px;">
-                                    <div style="padding-top: 10px;">위치 : </div>
-                                    <v-col cols="5" style="height: 110px">
-                                    <v-btn 
-                                    style="width: 100px; height: 30px;"
-                                    color="none"
-                                    >
-                                        메인화면1
-                                    </v-btn>
-                                    <v-btn style="width: 100px; height: 30px;">
-                                        메인화면2
-                                    </v-btn>
-                                    <v-btn style="width: 100px; height: 30px;">
-                                        로그오프
-                                    </v-btn>
-                                    </v-col>
-                                    <v-col>
-                                        test
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    
-                                    <v-col cols="5">
-                                        게시기간 : 
-                                    <v-menu
-                                    offset-y
-                                    min-width="290px"
-                                    >
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-btn
-                                        v-model="param.start_date"
-                                        label="시작일"
-                                        prepend-icon="mdi-calendar"
-                                        readonly
-                                        v-bind="attrs"
-                                        v-on="on"
-                                        style="width: 20px ;height: 25px"
-                                        >달력</v-btn>
-                                    </template>
-                                    <v-date-picker v-model="param.start_date" no-title scrollable type="date">
-                                    </v-date-picker>
-                                    </v-menu>
-                                    </v-col>
-                                </v-row>
-                            </v-container>
-                        </v-card-text> 
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.start_date2"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        label="시작일"
+                        v-bind="attrs"
+                        v-on="on"
+                        style="width:150px"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.start_date2" no-title scrollable type="date">
+                    </v-date-picker>
+                    </v-menu>
+                </v-col>
+                <v-text style="padding-top:35px">~</v-text>
+                <v-col cols="auto">
+                    <v-menu
+                    offset-y
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.end_date2"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        label="종료일"
+                        v-bind="attrs"
+                        v-on="on"
+                        style="width:150px"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.end_date2" no-title scrollable type="date">
+                    </v-date-picker>
+                    </v-menu>
+                </v-col>
 
-                        <v-card-actions>
-                            <!-- <v-spacer></v-spacer> -->
-                         
-                            <v-col align="left"> 
-                            <v-btn
-                            color="blue darken-1"
-                            @click="closeSure"
-                            >
-                            취소
-                            </v-btn>
-                            </v-col>
-                            <v-col align="right">
-                            <v-btn
-                            color="blue darken-1"
-                            @click="saveSure"
-                            >
-                            저장
-                            </v-btn>
-                            </v-col>  
-                        </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                    <v-dialog v-model="dialogDelete" max-width="500px">
-                        <v-card>
-                        <v-card-title class="headline">삭제 하시겠습니까?</v-card-title>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                            <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-                            <v-spacer></v-spacer>
-                        </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                </v-col> 
-            
-       </base-material-card>       
+                <v-col style="padding-top:35px; padding-left: 75px" cols="auto">
+                <v-text>등록일자</v-text>
+                </v-col>
+                <v-col cols="auto">
+                    <v-menu
+                    offset-y
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.start_date"
+                        label="시작일"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        style="width:150px"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.start_date" no-title scrollable type="date">
+                    </v-date-picker>
+                    </v-menu>
+                    
+                </v-col>
+                <v-text style="padding-top:35px">~</v-text>
+                <v-col cols="auto">
+                    <v-menu
+                    offset-y
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                        v-model="param.end_date"
+                        label="종료일"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        style="width:150px"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="param.end_date" no-title scrollable type="date">
+                    </v-date-picker>
+                    </v-menu>
+                </v-col>
+        </v-row>
+    </v-card>
     </v-container>
 </template>
 
@@ -192,7 +175,10 @@ export default {
                 local_gw_id: '0',
             },
             images: [],
-            input: "<v-file-input></v-file-input>"
+            items: ["전체", "타입명 A", "타입명 B", "타이명 C"],
+            items2: ["전체", "노출", "미노출"],
+            vitem:'전체',
+            vitem2: '',
         }
     },
     computed: {
@@ -220,6 +206,7 @@ export default {
             }
         },
         searchMethod: function() {
+            console.log(this.vitem)
             if(this.status=="센터"){
                 this.param.process_status=''
             }else{
@@ -338,15 +325,19 @@ export default {
             this.$refs['image'].click()
         },
         imgUpload(){
+            this.openImage = true;
             console.log(this.images.name)
             console.log(this.images[0])
             console.log(this.input)
-            this.input
-            
+            if(this.openImage){
+                this.$('#input').get(0).click();
+                
+                }
         },
-        xbtn(){
-            this.images = ""
+        test123(){
+            console.log(this.vitem)
         }
+       
         
     },  
 }
@@ -357,10 +348,7 @@ export default {
     
 }  */
 
-.btn1{
-    color: blue;
-    background: white;
-    width: 1px;
-    height: 1px;
+.border-black {
+  border: 1px solid black;
 }
 </style>
