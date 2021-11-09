@@ -19,7 +19,7 @@
       <v-data-table
         :search="search"
         :headers="headers"
-        :items="pList"
+        :items="storeList"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
@@ -32,27 +32,17 @@
 
 
 <script>
-import EventBus from '../../../../EventBus'
-import axios from "axios"
-
-const headers = {
-  "User-Agent": "GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)",
-  "Content-Type": "application/json",
-};
-
-const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15114/get_site_open_api/user`;
 export default {
-  props: ["pList", "resPagingInfo"],
+  props: ["storeList", "resPagingInfo"],
   data() {
     return {
       search: "",
       headers: [
         { text: '사이트 ID', value: 'site_id' },
-        { text: '사이트 이름', value: 'site_name' },
         { text: '인터페이스 번호', value: 'api_no' },
-        { text: '인터페이스 설명', value: 'description' },
-        { text: '날짜', value: 'reg_date' },
-        { text: 'API 접속 제한량', value: 'api_access_limit' },
+        { text: 'api 접속량', value: 'access_cnt' },
+        { text: '날짜', value: 'access_date' },
+        { text: '등록일', value: 'reg_date' },
       ],
         last: 0,
         options: {},
@@ -61,139 +51,14 @@ export default {
 
     }
   },
-  created(){
-    EventBus.$on('getCustomerApiList',this.searchCustomerApi())
-    EventBus.$on('getEvent')
-      
-    
-  },
-
-  methods: {
-     searchCustomerApi: function(params){
-       console.log('이벤트 버스 타기')
-      var reqParams = this.handleParams(params);
-      console.log(reqParams)
-
-      axios
-      .post(url, reqParams, headers)
-      .then( (response) => {
-
-        var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
-        if (resCode == 200) {
-          this.pList = response.data.data.api_list;
-          this.resPagingInfo = response.data.data.paging_info;
-        }else if(resCode==204){
-          this.pList = [];
-          this.resPagingInfo = {};
-          alert('사용자 API 데이터가 없습니다.');
-        }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
-          EventBus.$emit('top-path-logout');
-            this.$store
-            .dispatch("LOGOUT")
-            .then( res => { 
-            console.log(res.status)}).catch(({ message }) => (this.msg = message))
-            this.$router.replace('/signin')
-        }else {
-          this.pList = [];
-          this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
-        }
-
-      })
-      .catch(function (error) {
-        console.log(error);
-        alert("Error")
-      })
-      .finally(function () {
-        // always executed
-      });
+methods: {
+    handleClick: function(value){
+      this.$emit("child", value);
     },
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
-    switchString(values){
-      if(values==='S'){
-        return '정상'
-      }else if(values==='D'){
-        return '삭제'
-      }else if(values==='A'){
-        return '접수/등록'
-      }
-    },
-    switchString2(values){
-      if(values==='X'){
-        return '삭제대기'
-      }else if(values==='S'){
-        return '정상'
-      }else if(values==='D'){
-        return '삭제'
-      }
-    }, handleParams: function (params) {
-      console.log(params);
-      // let newParams = {};
-      // if(params.date_yn==undefined){
-      //   params.date_yn=this.searchParam.date_yn
-      // }
-      // console.log(this.searchParam.date_yn)
-
-      // if (params.page === undefined || params.page === "") {
-      //   newParams.page_no = this.reqPagingInfo.page_no;
-      // } else {
-      //   newParams.page_no = params.page;
-      // }
-
-      // if (params.itemsPerPage === undefined || params.itemsPerPage === "") {
-      //   newParams.view_cnt = this.resPagingInfo.view_cnt;
-      // } else {
-      //   newParams.view_cnt = params.itemsPerPage;
-      // }
-      
-      // if(params.date_yn==true){
-      //   if(params.start_date !== undefined && params.start_date !== ''){
-      //     newParams.start_date = params.start_date.replace(/-/g,"")
-      //   }else if(
-      //     this.searchParam.start_date!==undefined&&
-      //     this.searchParam.start_date!==""
-      //   ){
-      //     newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
-      //   }
-
-      //   if(params.end_date !== undefined && params.end_date !== ''){
-      //     newParams.end_date = params.end_date.replace(/-/g,"")
-      //   }else if(
-      //     this.searchParam.end_date!==undefined&&
-      //     this.searchParam.end_date!==""
-      //   ){
-      //     newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
-      //   }
-      // }
-
-      // if (params.site_id !== undefined && params.site_id !== "") {
-      //   newParams.site_id = params.site_id;
-      // } else if (
-      //   this.searchParam.site_id !== undefined &&
-      //   this.searchParam.site_id !== ""
-      // ) {
-      //   newParams.site_id = this.searchParam.site_id;
-      // }
-
-      // if (params.api_no !== undefined && params.api_no !== "") {
-      //   newParams.api_no = params.api_no;
-      // } else if (
-      //   this.searchParam.api_no !== undefined &&
-      //   this.searchParam.api_no !== ""
-      // ) {
-      //   newParams.api_no = this.searchParam.api_no;
-      // }
-      
-     
-      
-      // return newParams;
-    },
-
     
   },
 

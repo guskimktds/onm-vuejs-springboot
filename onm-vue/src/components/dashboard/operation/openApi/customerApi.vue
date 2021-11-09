@@ -3,24 +3,24 @@
       <v-card>
           <!-- v-on:search="searchToProcess" -->
         <customer-api-query
-          v-on:search="searchToDeviceOrderInfo"
+          v-on:search="searchSiteApi"
           v-bind:param="searchParam"
         ></customer-api-query>
         <count-api
-          v-bind:cList=cList 
+          v-bind:cList=cList
         >
         </count-api>
       <v-row>
         <v-col>
           <customer-api-list
             v-bind:pList=pList
-            v-bind:resPagingInfo=resPagingInfo
+            v-bind:resPagingInfo="resPagingInfo"
             @pagination="setToSearchParams"
           ></customer-api-list>
         </v-col>
         <v-col>
           <store-api-list 
-            v-bind:pList=pList
+            v-bind:storeList=storeList
             v-bind:resPagingInfo="resPagingInfo"
             @pagination="setToSearchParams"
           ></store-api-list>
@@ -54,8 +54,9 @@ export default {
 
   data () {
     return {
-
+      cList: [],
       pList: [],
+      storeList: [],
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10,
@@ -64,13 +65,19 @@ export default {
       searchParam: {
         start_date: dateInfo().threeMonthDashFormat,
         end_date: dateInfo().currentDateDashFormat,
+        site_id: '',
       }
     }
   },
   methods: {   
     searchSiteApi: function(params){
-      var reqParams = this.handleParams(params);
-      console.log(reqParams)
+       params = this.handleParams(params);
+      var reqParams = {
+        start_date : params.start_date,
+        end_date : params.end_date,
+        site_id : 'JHC_CTRL_001'
+      }
+      console.log("searchSiteApi" + reqParams)
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15112/get_site_open_api_access`
       axios
       .post(url, reqParams, headers)
@@ -81,6 +88,7 @@ export default {
         if (resCode == 200) {
           this.cList = response.data.data.site_openapi_access;
           this.resPagingInfo = response.data.data.paging_info;
+          console.log(params)
         }else if(resCode==204){
           this.cList = [];
           this.resPagingInfo = {};
@@ -111,8 +119,9 @@ export default {
    searchCustomerApi: function(params){
        console.log('이벤트 버스 타기')
       var reqParams = this.handleParams(params);
-      console.log(reqParams)
-  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15113/get_site_open_api_acess/api`
+      reqParams.site_id ='JHC_CTRL_001'
+      console.log("api 사이트 아이디 " + reqParams)
+  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15113/get_site_open_api_access/api`
       axios
       .post(url, reqParams, headers)
       .then( (response) => {
@@ -120,7 +129,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
-          this.pList = response.data.data.api_list;
+          this.pList = response.data.data.openapi_access_api;
           this.resPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
           this.pList = [];
@@ -149,6 +158,60 @@ export default {
         // always executed
       });
     },
+   
+     searchStoreApi: function(params){
+       console.log('이벤트 버스 타기')
+      const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15114/get_site_open_api_access/user`;
+      var reqParams = this.handleParams(params);
+            reqParams.site_id ='JHC_CTRL_001'
+      console.log(reqParams)
+      axios
+      .post(url, reqParams, headers)
+      .then( (response) => {
+
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if (resCode == 200) {
+          this.storeList = response.data.data.openapi_access_user;
+          this.resPagingInfo = response.data.data.paging_info;
+        }else if(resCode==204){
+          this.storeList = [];
+          this.resPagingInfo = {};
+          alert('사용자 API 데이터가 없습니다.');
+        }else if(resCode==410){
+          alert("로그인 세션이 만료되었습니다.");
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+        }else {
+          this.storeList = [];
+          this.resPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert("Error")
+      })
+      .finally(function () {
+        // always executed
+      });
+    },
+    setToSearchParams: function(values){
+      console.log(values)
+      
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage,
+      }
+      this.searchSiteApi(params)
+      this.searchCustomerApi(params)
+      this.searchStoreApi(params)
+    },
     handleParams: function (params) {
       console.log(params);
       let newParams = {};
@@ -159,19 +222,36 @@ export default {
         newParams.page_no = params.page;
       }
 
-      if (params.itemsPerPage === undefined || params.itemsPerPage === "") {
-        newParams.view_cnt = this.resPagingInfo.view_cnt;
-      } else {
-        newParams.view_cnt = params.itemsPerPage;
+      if(params.view_cnt === undefined || params.view_cnt === ''){
+        newParams.view_cnt = this.reqPagingInfo.view_cnt
+      }else{
+        newParams.view_cnt = params.view_cnt
       }
-        if(params.end_date !== undefined && params.end_date !== ''){
-          newParams.end_date = params.end_date.replace(/-/g,"")
-        }else if(
-          this.searchParam.end_date!==undefined&&
-          this.searchParam.end_date!==""
-        ){
-          newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
-        }
+
+      if(params.start_date !== undefined && params.start_date !== ''){
+        newParams.start_date = params.start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.start_date!==undefined&&
+        this.searchParam.start_date!==""
+      ){
+        newParams.start_date=this.searchParam.start_date.replace(/-/g,"")
+      }
+      if(params.end_date !== undefined && params.end_date !== ''){
+        newParams.end_date = params.end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.end_date!==undefined&&
+        this.searchParam.end_date!==""
+      ){
+        newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
+      }
+      if(params.site_id !== undefined && params.site_id !== ''){
+        newParams.site_id = params.site_id
+      }else if(
+        this.searchParam.site_id!==undefined&&
+        this.searchParam.site_id!==""
+      ){
+        newParams.site_id=this.searchParam.site_id
+      }
       return newParams;
     }
   }

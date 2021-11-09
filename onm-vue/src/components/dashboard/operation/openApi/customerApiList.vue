@@ -9,7 +9,7 @@
         color="orange"
         dark
         icon="mdi-keyboard"
-        title="API별 호출 수"
+        title="API별 사용 현황 조회"
         class="px-5 py-3"
       >
       <v-text-field 
@@ -41,12 +41,10 @@ export default {
       search: "",
       headers: [
         { text: '사이트 ID', value: 'site_id' },
-        { text: '사이트 이름', value: 'site_name' },
         { text: '인터페이스 번호', value: 'api_no' },
-        { text: '인터페이스 설명', value: 'description' },
-        { text: '날짜', value: 'reg_date' },
-        { text: 'API 접속 제한량', value: 'api_access_limit' },
-        { text: 'action', value: 'action' },
+        { text: 'api 접속량', value: 'access_cnt' },
+        { text: '날짜', value: 'access_date' },
+        { text: '등록일', value: 'reg_date' },
       ],
         last: 0,
         options: {},

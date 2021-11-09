@@ -7,9 +7,11 @@
     md="4"
   >
 
-  <v-text-field label="집계기간 전체 호출 수">
-      {{total_api}}
+  <v-text-field label="집계기간 전체 호출 수"
+  v-model="cList.access_cnt_all"
+  >
   </v-text-field>
+
   </v-col>
 </v-row>
 <v-row>
@@ -18,8 +20,8 @@
     sm="4"
     md="4"
   >
-    <v-text-field label="집계기간 일 평균 API 호출 수">
-      {{monthly_api}}
+    <v-text-field label="집계기간 일 평균 API 호출 수"
+     v-model="cList.access_cnt_day">
   </v-text-field>
   </v-col>
     <v-col
@@ -27,8 +29,9 @@
     sm="4"
     md="4"
   >
-    <v-text-field label="집계기간 월 평균 API 호출 수">
-      {{daily_api}}
+    <v-text-field label="집계기간 월 평균 API 호출 수"
+    v-model="cList.access_cnt_month">
+
   </v-text-field>
     </v-col>
 </v-row>
@@ -43,19 +46,9 @@ export default {
       data() {
       return {
         options: {},
-        total_api: '',
-        monthly_api: '',
-        daily_api: ''
+        access_cnt_all: '',
       }
     },
-
-methods: {
-  handleParams(){
-    this.total_api = this.cList.total_api;
-    this.monthly_api = this.cList.total_api;
-    this.daily_api = this.cList.total_api;
-    }
-  }
 } 
 </script>
 
