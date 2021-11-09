@@ -46,7 +46,6 @@ export default {
       data() {
       return {
         options: {},
-        access_cnt_all: '',
       }
     },
 } 
