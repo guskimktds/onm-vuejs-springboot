@@ -21,7 +21,7 @@
         <v-col>
           <store-api-list 
             v-bind:storeList=storeList
-            v-bind:resPagingInfo="resPagingInfo"
+            v-bind:storeResPagingInfo="storeResPagingInfo"
             @pagination="setToSearchParams"
           ></store-api-list>
         </v-col>
@@ -62,6 +62,7 @@ export default {
         view_cnt: 10,
       },
       resPagingInfo: {},
+      storeResPagingInfo:{},
       searchParam: {
         start_date: dateInfo().threeMonthDashFormat,
         end_date: dateInfo().currentDateDashFormat,
@@ -173,10 +174,10 @@ export default {
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
           this.storeList = response.data.data.openapi_access_user;
-          this.resPagingInfo = response.data.data.paging_info;
+          this.storeResPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
           this.storeList = [];
-          this.resPagingInfo = {};
+          this.storeResPagingInfo = {};
           alert('사용자 API 데이터가 없습니다.');
         }else if(resCode==410){
           alert("로그인 세션이 만료되었습니다.");
@@ -188,7 +189,7 @@ export default {
             this.$router.replace('/signin')
         }else {
           this.storeList = [];
-          this.resPagingInfo = {};
+          this.storeResPagingInfo = {};
           alert(resCode + " / " + resMsg);
         }
 
