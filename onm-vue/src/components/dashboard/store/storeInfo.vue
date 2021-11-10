@@ -590,39 +590,46 @@ export default {
     clickToChangeDay: function(){
       this.$fire({
         title: "추가할 영상저장기간을 입력해주세요.",
-        input: 'number',
+        input: 'text',
         showCancelButton:true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: '예',
-        cancelButtonText: '아니오',
+        confirmButtonText: '입력',
+        cancelButtonText: '취소',
         inputPlaceholder: '추가 기간 입력',
         inputAttributes: {
-          maxlength: 20,
+          min: 0,
+          max: 25,
           autocapitalize: 'off',
           autocorrect: 'off'
         }
       }).then(result=>{
-        if(result.value>0){
+        if(result.value>=0){
           var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13017/set_user_storage_add_day`
 
           var param = {
             user_id: this.pObject.user_id,
+            old_store_day: this.pObject.storage_chg_day,
             add_day: result.value
           }
           console.log(param)
           axios.post(url,param,this.$store.state.headers)
             .then((response) => {
+              console.log(response)
               var resCode =response.data.res_code;
 
               if(resCode==200){
                 alert('변경이 성공적으로 완료되었습니다.')
+              } else if(resCode==204){
+                alert('영상저장기간 데이터가 없습니다.')
+              } else {
+                alert('에러가 발생하여 요청을 완료하지 못했습니다.')
               }
             })
-        }else if(result.value<1){
-          alert('변경할 기간은 +1일 이상으로 해주십시오.')
+        }else if(result.value<0){
+          alert('추가 기간은 음수를 입력할 수 없습니다.')
         }else{
-          console.log('취소')
+          alert('입력값이 정수가 아닙니다.')
         }
       })
     },
