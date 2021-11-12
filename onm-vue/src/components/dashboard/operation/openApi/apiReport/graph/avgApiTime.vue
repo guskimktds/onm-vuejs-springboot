@@ -6,7 +6,7 @@
                 <!-- <line-chart :chart-data="chartData" :options="labels" :styles="myStyles"
                 ></line-chart> -->
                 <line-chart 
-                    :v-on="fillData()"
+                    v-if="loaded"
                     :chart-data="datacollection" :options="labels"
                 ></line-chart>
             </div>
@@ -32,6 +32,10 @@ export default {
     },
  
     computed: {
+      formTitle () {
+        this.fillData()
+        return this.param.search_type === "D" ? `${this.title}(일간)` : `${this.title}(월간)`
+      },
       myStyles () {
             return {
                 height: `${this.height}px`,
