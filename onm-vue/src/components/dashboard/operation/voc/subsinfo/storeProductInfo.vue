@@ -8,14 +8,14 @@
             color="orange"
             dark
             icon="mdi-keyboard"
-            title="사용자 청약 오더 상세 LIST"
+            title="사용자상품정보"
             class="px-5 py-3"
             >
             <v-data-table
                 :headers="headers"
                 :items="pList"
                 :options.sync="options"
-                :server-items-length="dodPagingInfo.total_cnt"
+                :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
                 :footer-props="{ itemsPerPageOptions: pageoptions }"
                 :header-props="{ sortIcon: null }"
@@ -28,7 +28,7 @@
 <script>
 
 export default {
-    props: ['pList','dodPagingInfo'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
         last:0,
@@ -40,19 +40,24 @@ export default {
         loading: true,
         headers: [
           {
-            text: '거래고유번호',
-            sortable: false, value: 'guid',
+            text: '상품번호',
+            sortable: false, value: 'prod_info_id',
           },
-          { text: '오더번호', value: 'oderno'},
-          { text: '오더순번', value: 'oderseq'},
-          { text: '사용여부', value: 'use_yn'},
-          { text: '처리희망일자', value: 'appointdate'},
-          { text: '오더유형', value: 'ordertype'},
-          { text: '사업장명', value: 'bizpnm'},
-          { text: '상품코드', value: 'prodcd'},
-          { text: '파라미터타입코드', value: 'paramtypecd'},
-          { text: '파라미터타입명칭', value: 'paramtypenm'},
-          { text: '파라미터값', value: 'paramvalue'},
+          { text: '매장 ID', value: 'user_id'},
+          { text: '영상변경저장기간', value: 'storage_chg_day'},
+          { text: '전체캠수', value: 'cam_cnt'},
+          { text: 'pos캠수', value: 'pos_cam_cnt'},
+          { text: '멀티뷰대수', value: 'open_cam_cnt'},
+          { text: '멀티뷰(기본)', value: 'open_cam_add_cnt'},
+          { text: '멀티뷰(부가)', value: 'ip_cam_cnt'},
+          { text: 'IP캠대수', value: 'subid_cnt'},
+          { text: '서브ID', value: 'resolution'},
+          { text: '등록일시', value: 'reg_date'},
+          { text: '수정일시', value: 'mod_date'},
+          { text: '저장기간(기본)', value: 'storage_base_day'},
+          { text: '저장기간(추가)', value: 'storage_add_day'},
+          { text: 'IoT GW 대수', value: 'iotgw_cnt'},
+          { text: '영상저장방식', value: 'save_method'},
         ]
       }
     },

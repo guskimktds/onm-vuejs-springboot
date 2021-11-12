@@ -8,7 +8,7 @@
             color="orange"
             dark
             icon="mdi-keyboard"
-            title="사용자 청약 오더 상세 LIST"
+            title="단말오더 subline 정보"
             class="px-5 py-3"
             >
             <v-data-table
