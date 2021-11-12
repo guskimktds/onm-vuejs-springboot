@@ -47,11 +47,14 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
-        local_gw_id:'',
-        code_master_id: '',
-        code_id: '',
-        code_name: '',
-        code_type: ''
+          title: '',
+          board_type: '',
+          board_cate_cd: '',
+          disp_yn: '',
+          disp_start_date: '',
+          disp_end_date: '',
+          reg_start_date: '',
+          reg_end_date: '',
       },
 
       centerOptions:{
