@@ -8,12 +8,12 @@
             color="orange"
             dark
             icon="mdi-keyboard"
-            title="사용자 청약 오더 상세 LIST"
+            title="오더 상세"
             class="px-5 py-3"
             >
             <v-data-table
                 :headers="headers"
-                :items="pList"
+                :items="odList"
                 :options.sync="options"
                 :server-items-length="dodPagingInfo.total_cnt"
                 class="elevation-1"
@@ -28,7 +28,7 @@
 <script>
 
 export default {
-    props: ['pList','dodPagingInfo'],
+    props: ['odList','dodPagingInfo'],
     data() {
       return {
         last:0,
