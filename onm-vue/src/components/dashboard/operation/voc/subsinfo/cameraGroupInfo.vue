@@ -8,14 +8,14 @@
             color="orange"
             dark
             icon="mdi-keyboard"
-            title="단말오더 Snapshot 확인"
+            title="카메라 그룹 정보(12월 개발 예정)"
             class="px-5 py-3"
             >
             <v-data-table
                 :headers="headers"
                 :items="pList"
                 :options.sync="options"
-                :server-items-length="resPagingInfo.total_cnt"
+                :server-items-length="dodPagingInfo.total_cnt"
                 class="elevation-1"
                 :footer-props="{ itemsPerPageOptions: pageoptions }"
                 :header-props="{ sortIcon: null }"
@@ -28,7 +28,7 @@
 <script>
 
 export default {
-    props: ['pList','resPagingInfo'],
+    props: ['pList','dodPagingInfo'],
     data() {
       return {
         last:0,
@@ -40,12 +40,19 @@ export default {
         loading: true,
         headers: [
           {
-            text: '계약ID',
-            sortable: false, value: 'said',
+            text: '거래고유번호',
+            sortable: false, value: 'guid',
           },
           { text: '오더번호', value: 'oderno'},
-          { text: 'snapshot', value: 'snapshot'},
-          { text: '등록일시', value: 'reg_date'},
+          { text: '오더순번', value: 'oderseq'},
+          { text: '사용여부', value: 'use_yn'},
+          { text: '처리희망일자', value: 'appointdate'},
+          { text: '오더유형', value: 'ordertype'},
+          { text: '사업장명', value: 'bizpnm'},
+          { text: '상품코드', value: 'prodcd'},
+          { text: '파라미터타입코드', value: 'paramtypecd'},
+          { text: '파라미터타입명칭', value: 'paramtypenm'},
+          { text: '파라미터값', value: 'paramvalue'},
         ]
       }
     },
@@ -65,11 +72,11 @@ export default {
       },
     },
     updated() {
-      if(this.last!==this.resPagingInfo.total_cnt){
+      if(this.last!==this.dodPagingInfo.total_cnt){
         this.options.page=1
       }
-      if(this.resPagingInfo.total_cnt!==undefined){
-      this.last=this.resPagingInfo.total_cnt
+      if(this.dodPagingInfo.total_cnt!==undefined){
+      this.last=this.dodPagingInfo.total_cnt
       }
   },
     mounted () {

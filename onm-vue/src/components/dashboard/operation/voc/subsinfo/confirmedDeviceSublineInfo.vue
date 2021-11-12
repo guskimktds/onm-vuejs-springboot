@@ -15,7 +15,7 @@
                 :headers="headers"
                 :items="pList"
                 :options.sync="options"
-                :server-items-length="dodPagingInfo.total_cnt"
+                :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
                 :footer-props="{ itemsPerPageOptions: pageoptions }"
                 :header-props="{ sortIcon: null }"
@@ -28,7 +28,7 @@
 <script>
 
 export default {
-    props: ['pList','dodPagingInfo'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
         last:0,
@@ -40,19 +40,13 @@ export default {
         loading: true,
         headers: [
           {
-            text: '거래고유번호',
-            sortable: false, value: 'guid',
+            text: '계약ID',
+            sortable: false, value: 'said',
           },
-          { text: '오더번호', value: 'oderno'},
-          { text: '오더순번', value: 'oderseq'},
-          { text: '사용여부', value: 'use_yn'},
-          { text: '처리희망일자', value: 'appointdate'},
-          { text: '오더유형', value: 'ordertype'},
-          { text: '사업장명', value: 'bizpnm'},
-          { text: '상품코드', value: 'prodcd'},
-          { text: '파라미터타입코드', value: 'paramtypecd'},
-          { text: '파라미터타입명칭', value: 'paramtypenm'},
-          { text: '파라미터값', value: 'paramvalue'},
+          { text: '보조회선id', value: 'linesaid'},
+          { text: '상태', value: 'mgt_status'},
+          { text: 'psaid', value: 'psaid'},
+          { text: '등록일시', value: 'reg_date'},
         ]
       }
     },
@@ -72,11 +66,11 @@ export default {
       },
     },
     updated() {
-      if(this.last!==this.dodPagingInfo.total_cnt){
+      if(this.last!==this.resPagingInfo.total_cnt){
         this.options.page=1
       }
-      if(this.dodPagingInfo.total_cnt!==undefined){
-      this.last=this.dodPagingInfo.total_cnt
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
       }
   },
     mounted () {

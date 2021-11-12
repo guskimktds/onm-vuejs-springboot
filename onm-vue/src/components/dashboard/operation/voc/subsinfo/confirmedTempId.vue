@@ -15,7 +15,7 @@
                 :headers="headers"
                 :items="pList"
                 :options.sync="options"
-                :server-items-length="dodPagingInfo.total_cnt"
+                :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
                 :footer-props="{ itemsPerPageOptions: pageoptions }"
                 :header-props="{ sortIcon: null }"
@@ -28,7 +28,7 @@
 <script>
 
 export default {
-    props: ['pList','dodPagingInfo'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
         last:0,
@@ -40,19 +40,15 @@ export default {
         loading: true,
         headers: [
           {
-            text: '거래고유번호',
-            sortable: false, value: 'guid',
+            text: '오더번호',
+            sortable: false, value: 'oderno',
           },
-          { text: '오더번호', value: 'oderno'},
-          { text: '오더순번', value: 'oderseq'},
-          { text: '사용여부', value: 'use_yn'},
-          { text: '처리희망일자', value: 'appointdate'},
-          { text: '오더유형', value: 'ordertype'},
-          { text: '사업장명', value: 'bizpnm'},
-          { text: '상품코드', value: 'prodcd'},
-          { text: '파라미터타입코드', value: 'paramtypecd'},
-          { text: '파라미터타입명칭', value: 'paramtypenm'},
-          { text: '파라미터값', value: 'paramvalue'},
+          { text: 'id_seq', value: 'id_seq'},
+          { text: 'tel_no', value: 'tel_no'},
+          { text: 'status', value: 'status'},
+          { text: 'ctype', value: 'ctype'},
+          { text: 'reg_date', value: 'reg_date'},
+          { text: 'close_date', value: 'close_date'}
         ]
       }
     },
@@ -72,11 +68,11 @@ export default {
       },
     },
     updated() {
-      if(this.last!==this.dodPagingInfo.total_cnt){
+      if(this.last!==this.resPagingInfo.total_cnt){
         this.options.page=1
       }
-      if(this.dodPagingInfo.total_cnt!==undefined){
-      this.last=this.dodPagingInfo.total_cnt
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
       }
   },
     mounted () {

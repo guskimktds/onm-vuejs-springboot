@@ -8,14 +8,14 @@
             color="orange"
             dark
             icon="mdi-keyboard"
-            title="UpdateType"
+            title="연결된 캠, 모델, 제조사 조회, 캠상태"
             class="px-5 py-3"
             >
             <v-data-table
                 :headers="headers"
                 :items="pList"
                 :options.sync="options"
-                :server-items-length="dodPagingInfo.total_cnt"
+                :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-1"
                 :footer-props="{ itemsPerPageOptions: pageoptions }"
                 :header-props="{ sortIcon: null }"
@@ -28,7 +28,7 @@
 <script>
 
 export default {
-    props: ['pList','dodPagingInfo'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
         last:0,
@@ -72,11 +72,11 @@ export default {
       },
     },
     updated() {
-      if(this.last!==this.dodPagingInfo.total_cnt){
+      if(this.last!==this.resPagingInfo.total_cnt){
         this.options.page=1
       }
-      if(this.dodPagingInfo.total_cnt!==undefined){
-      this.last=this.dodPagingInfo.total_cnt
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
       }
   },
     mounted () {
