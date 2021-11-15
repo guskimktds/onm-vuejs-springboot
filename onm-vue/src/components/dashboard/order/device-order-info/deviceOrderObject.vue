@@ -76,7 +76,7 @@
           cols="3"
           md="3">
             <v-text-field
-              v-model="pObject.oderseq"
+              v-model="pObject.ordertype"
               label="오더유형"
               required>
             </v-text-field>

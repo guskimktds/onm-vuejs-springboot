@@ -605,7 +605,7 @@ export default {
         }
       }).then(result=>{
         if(result.value>=0){
-          var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13017/set_user_storage_add_day`
+          var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13017/set_user_store_add_day`
 
           var param = {
             user_id: this.pObject.user_id,
@@ -620,16 +620,19 @@ export default {
 
               if(resCode==200){
                 alert('변경이 성공적으로 완료되었습니다.')
+                this.$router.go()
               } else if(resCode==204){
                 alert('영상저장기간 데이터가 없습니다.')
               } else {
                 alert('에러가 발생하여 요청을 완료하지 못했습니다.')
               }
             })
-        }else if(result.value<0){
+        } else if(result.value<0){
           alert('추가 기간은 음수를 입력할 수 없습니다.')
-        }else{
-          alert('입력값이 정수가 아닙니다.')
+        } else if(result.dismiss=='cancel'){
+          console.log('취소')
+        } else {
+          alert('입력값이 잘못되어 취소되었습니다.')
         }
       })
     },
