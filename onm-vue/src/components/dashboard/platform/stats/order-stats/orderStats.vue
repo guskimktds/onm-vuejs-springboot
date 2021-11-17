@@ -57,7 +57,7 @@ export default {
       .then( (response) => {
 
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+         
         if (resCode == 200) {
           this.pList = response.data.data.subs_stat_list;
         }else if(resCode==204){
@@ -74,7 +74,11 @@ export default {
             this.$router.replace('/signin')
         }else {
           this.pList = [];
+<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
+=======
+          alert("Error");
+>>>>>>> develop
         }
 
       })

@@ -62,7 +62,7 @@ export default {
             .then((response) => {
               console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           if(resCode == 200){
             console.log(response.data.data.device_order_result_list);
             this.dorList = response.data.data.device_order_result_list;
@@ -82,7 +82,7 @@ export default {
           }else{
             this.dorList = [];
             this.dorPagingInfo={};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
             })
             .catch((ex) => {

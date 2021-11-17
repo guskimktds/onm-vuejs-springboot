@@ -88,7 +88,11 @@ export default {
             this.$router.replace('/signin')
           }else{
             this.pList = [];
+<<<<<<< HEAD
             console.log(response.data.res_code + " / " + response.data.res_msg);
+=======
+            alert("Error");
+>>>>>>> develop
           }
         })
         .catch(function (error) {

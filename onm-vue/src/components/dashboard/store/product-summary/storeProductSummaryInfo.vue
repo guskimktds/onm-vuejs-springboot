@@ -72,7 +72,7 @@ export default {
       .then((response) => {
         console.log(response)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+         
         if(resCode == 200){
           this.psList = response.data.data.prod_summary_list;
           this.psPagingInfo = response.data.data.paging_info

@@ -87,6 +87,13 @@
         >
           사용자 전화번호{{ showPhoneList ? " Close" : " Open" }}
         </v-btn>
+
+        <v-btn
+          v-if="showDetailObject"
+          v-on:click="clickToChangeDay()">
+          저장기간 변경
+        </v-btn>
+
       </v-container>
       <storeInfo-detail-object
         v-if="showDetailObject"
@@ -137,7 +144,7 @@
     </v-card>
   </v-container>
 </template>
-
+              
 <script>
 import StoreInfoList from "./info/storeInfoList";
 import StoreInfoQuery from "./info/storeInfoQuery";
@@ -243,6 +250,7 @@ export default {
         is_masking:"",
         date_yn: true
       },
+
     };
   },
 
@@ -264,7 +272,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if (resCode == 200) {
             this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info;
@@ -286,7 +294,7 @@ export default {
           }else{
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -318,7 +326,7 @@ export default {
           .post(url, params, headers)
           .then((response) => {
             var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
+          
             if (resCode == 200) {
               this.showDetailObject = true;
               this.isReloadDetailObject = true;
@@ -334,7 +342,7 @@ export default {
             } else {
               console.log(response)
               this.pObject = {};
-              alert(resCode + " / " + resMsg);
+              alert("Error");
             }
           })
           .catch((ex) => {
@@ -366,7 +374,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+        
           console.log(resCode);
           if (resCode == 200) {
             this.kList = response.data.data.ktt_info_list;
@@ -376,7 +384,7 @@ export default {
             alert('사용자-KTT 데이터가 없습니다.');
           } else {
             this.kList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -394,7 +402,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if (resCode == 200) {
             this.psList = response.data.data.prod_summary_list;
             this.showProdSummaryList = !this.showProdSummaryList;
@@ -403,7 +411,7 @@ export default {
             alert('상품 요약 정보 데이터가 없습니다.');
           } else {
             this.psList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -421,7 +429,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           if (resCode == 200) {
             this.vaList = response.data.data.va_prod_list;
             this.showVACountList = !this.showVACountList;
@@ -430,7 +438,7 @@ export default {
             alert('VA 정보 데이터가 없습니다.');
           } else {
             this.vaList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -449,7 +457,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if (resCode == 200) {
             this.soList = response.data.data.sensor_list;
             this.showSensorOrderList = !this.showSensorOrderList;
@@ -460,7 +468,7 @@ export default {
             alert('센서 정보 데이터가 없습니다.');
           } else {
             this.soList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -479,7 +487,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+        
           if (resCode == 200) {
             this.dcList = response.data.data.cam_list;
             this.showDeviceCameraList = !this.showDeviceCameraList;
@@ -488,7 +496,7 @@ export default {
             alert('단말 카메라 정보 데이터가 없습니다.');
           }else {
             this.dcList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -507,7 +515,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+ 
           if (resCode == 200) {
             this.iotList = response.data.data.iotgw_list;
             this.showIotGwList = !this.showIotGwList;
@@ -516,7 +524,7 @@ export default {
             alert('단말 IOT GW 정보 데이터가 없습니다.');
           }else {
             this.iotList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -535,7 +543,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+     
           if (resCode == 200) {
             this.dsList = response.data.data.sensor_list;
             this.showDeviceSensorList = !this.showDeviceSensorList;
@@ -544,7 +552,7 @@ export default {
             alert('단말 센서 정보 데이터가 없습니다.');
           } else {
             this.dsList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -562,7 +570,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+     
           if (resCode == 200) {
             this.pnList = response.data.data.tel_no_list;
             this.showPhoneList = !this.showPhoneList;
@@ -571,12 +579,59 @@ export default {
             alert('사용자 전화번호 데이터가 없습니다.');
           } else {
             this.pnList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
           console.log("조회 실패", ex);
         });
+    },
+
+    clickToChangeDay: function(){
+      this.$fire({
+        title: "추가할 영상저장기간을 입력해주세요.",
+        input: 'text',
+        showCancelButton:true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '입력',
+        cancelButtonText: '취소',
+        inputPlaceholder: '추가 기간 입력',
+        inputAttributes: {
+          min: 0,
+          max: 25,
+          autocapitalize: 'off',
+          autocorrect: 'off'
+        }
+      }).then(result=>{
+        if(result.value>=0){
+          var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13017/set_user_storage_add_day`
+
+          var param = {
+            user_id: this.pObject.user_id,
+            old_store_day: this.pObject.storage_chg_day,
+            add_day: result.value
+          }
+          console.log(param)
+          axios.post(url,param,this.$store.state.headers)
+            .then((response) => {
+              console.log(response)
+              var resCode =response.data.res_code;
+
+              if(resCode==200){
+                alert('변경이 성공적으로 완료되었습니다.')
+              } else if(resCode==204){
+                alert('영상저장기간 데이터가 없습니다.')
+              } else {
+                alert('에러가 발생하여 요청을 완료하지 못했습니다.')
+              }
+            })
+        }else if(result.value<0){
+          alert('추가 기간은 음수를 입력할 수 없습니다.')
+        }else{
+          alert('입력값이 정수가 아닙니다.')
+        }
+      })
     },
 
     setToSearchParams: function (values) {

@@ -92,7 +92,6 @@ export default {
         axios.post(url, reqParams, headers)
           .then((response)=>{
             var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
             if(resCode==200){
               this.pList=response.data.data.list;
               this.mobilePagingInfo=response.data.data.paging_info
@@ -113,7 +112,11 @@ export default {
             }else{
               this.pList=[];
               this.mobilePagingInfo={};
+<<<<<<< HEAD
               console.log(resCode+" / "+resMsg);
+=======
+              alert("Error");
+>>>>>>> develop
             }
           })
           .catch((ex)=>{

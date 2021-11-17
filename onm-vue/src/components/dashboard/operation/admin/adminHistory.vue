@@ -70,7 +70,7 @@ export default {
       .then((response) => {
         console.log(response)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+      
         if(resCode == 200){
           this.pList = response.data.data.mng_access_history_list;
           this.resPagingInfo = response.data.data.paging_info
@@ -90,7 +90,11 @@ export default {
         }else{
           this.pList = [];
           this.resPagingInfo = {};
+<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
+=======
+          alert("Error");
+>>>>>>> develop
         }
       })
       .catch((ex) => {

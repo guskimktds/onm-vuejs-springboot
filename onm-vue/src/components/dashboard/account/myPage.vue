@@ -142,12 +142,16 @@ export default {
     .then((response) => {
       console.log(response)
       var resCode = response.data.res_code;
-      var resMsg = response.data.res_msg;
+      
       if(resCode == 200){
         this.userInfo = response.data.data.list[0];
       }else if(resCode==410){
+<<<<<<< HEAD
         //alert(resCode + " / " + resMsg);
         console.log("로그인 세션이 만료되었습니다.");
+=======
+        alert("로그인 세션이 만료되었습니다.");
+>>>>>>> develop
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -156,7 +160,11 @@ export default {
             this.$router.replace('/signin')
       }else{
         this.userInfo = [];
+<<<<<<< HEAD
         console.log(resCode + " / " + resMsg);
+=======
+        alert("Error");
+>>>>>>> develop
       }
     })
     .catch((ex) => {

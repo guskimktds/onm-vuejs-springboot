@@ -139,7 +139,7 @@ export default {
       .then((response) => {
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+         
         if(resCode == 200){
           this.pList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info
@@ -158,7 +158,11 @@ export default {
         }else{
           this.pList = [];
           this.resPagingInfo = {};
+<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
+=======
+          alert("Error");
+>>>>>>> develop
         }
       })
       .catch((ex) => {
@@ -187,7 +191,7 @@ export default {
         axios.post(url, params, headers)
         .then((response) => {
            var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
+            
             if(resCode == 200){
               this.pObject = response.data.data
               this.showDetailObject = true
@@ -203,7 +207,7 @@ export default {
               this.pObject = {};
               this.showDetailObject = false
               this.isReloadDetailObject = false
-              alert(resCode + " / " + resMsg);
+              alert("Error");
             }
         })
         .catch((ex) => {
@@ -231,7 +235,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+           
           if(resCode == 200){
             this.sdList = response.data.data.order_detail_list;
             this.showSubDetailList=!this.showSubDetailList;
@@ -243,7 +247,11 @@ export default {
           }else{
             this.sdList = [];
             this.showSubDetailList=false
+<<<<<<< HEAD
             console.log(resCode + " / " + resMsg);
+=======
+            alert("Error");
+>>>>>>> develop
           }
         })
         .catch((ex) => {
@@ -260,7 +268,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           console.log(resCode)
           if(resCode == 200){
             this.kttList = response.data.data.list;
@@ -273,7 +281,7 @@ export default {
             this.showKttList=false
           }else{
             this.kttList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
             this.showKttList=false
           }
         })

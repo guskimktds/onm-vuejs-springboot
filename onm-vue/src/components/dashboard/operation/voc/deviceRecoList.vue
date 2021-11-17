@@ -251,14 +251,14 @@ export default {
                             axios.post(url, params, this.$store.state.headers)
                               .then((response) => {
                                 var resCode = response.data.res_code;
-                                var resMsg = response.data.res_msg;
+                                
                                 console.log('응답코드'+resCode)
                                 if(resCode == 200){
                                   //현재 목록에서 선택한 Item을 삭제한다.
                                   this.dcList.splice(deleteCol, 1)
                                   
                                 }else{
-                                  alert(resCode + " / " + resMsg);
+                                  alert("Error");
                                 }
                               })
                               .catch((ex) => {

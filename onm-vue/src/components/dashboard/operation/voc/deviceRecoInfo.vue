@@ -78,7 +78,7 @@ export default {
         .then((response) => {
           console.log(response);
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if (resCode == 200) {
             this.dcList = response.data.data.cam_list;
             this.dcPagingInfo = response.data.data.paging_info;
@@ -97,7 +97,11 @@ export default {
           }else{
             this.dcList = [];
             this.dcPagingInfo = {};
+<<<<<<< HEAD
             console.log(resCode + " / " + resMsg);
+=======
+            alert("Error");
+>>>>>>> develop
           }
         })
         .catch((ex) => {

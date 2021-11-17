@@ -73,7 +73,7 @@ export default {
         console.log(response.data)
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+        
         if(resCode == 200){
           this.phList = response.data.data.tel_no_list;
           this.phPagingInfo = response.data.data.paging_info
@@ -92,7 +92,11 @@ export default {
         }else{
           this.phList = [];
           this.phPagingInfo = {};
+<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
+=======
+          alert("Error");
+>>>>>>> develop
         }
       })
       .catch((ex) => {

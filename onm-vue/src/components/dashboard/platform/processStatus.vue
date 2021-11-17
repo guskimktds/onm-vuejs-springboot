@@ -87,7 +87,7 @@ export default {
       .then( (response) => {
 
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+     
         if (resCode == 200) {
           this.pList = response.data.data.process_list;
           this.resPagingInfo = response.data.data.paging_info;
@@ -106,7 +106,7 @@ export default {
         }else {
           this.pList = [];
           this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          alert("Error");
         }
 
       })
