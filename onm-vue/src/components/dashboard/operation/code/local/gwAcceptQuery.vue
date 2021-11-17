@@ -70,7 +70,7 @@ beforeCreate() {
     })
     .catch(function (error) {
         console.log(error);
-        alert("국사정보 조회실패")
+        // alert("국사정보 조회실패")
       })
       .finally(function () {
       });

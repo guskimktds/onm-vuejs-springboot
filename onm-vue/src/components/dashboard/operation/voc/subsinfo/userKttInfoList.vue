@@ -39,11 +39,12 @@ export default {
   data() {
     return {
       last: 0,
-      dialog: false,
-      dialogDelete: false,
-      editedIndex: -1,
+      // dialog: false,
+      // dialogDelete: false,
+      // editedIndex: -1,
       options: {},
-      totalList: 0,
+      pageoptions: this.$store.state.pageoptions,
+      // totalList: 0,
       loading: true,
       headers: [
         {

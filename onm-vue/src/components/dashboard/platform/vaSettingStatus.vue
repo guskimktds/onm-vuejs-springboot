@@ -79,7 +79,7 @@ export default {
           if(response.data.res_code == 200){
             this.pList = response.data.data.list;
           }else if(response.data.res_code==410){
-            alert("로그인 세션이 만료되었습니다.");
+            console.log("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -88,12 +88,12 @@ export default {
             this.$router.replace('/signin')
           }else{
             this.pList = [];
-            alert(response.data.res_code + " / " + response.data.res_msg);
+            console.log(response.data.res_code + " / " + response.data.res_msg);
           }
         })
         .catch(function (error) {
           console.log(error);
-          alert("Error")
+          console.log("Error")
         })
         .finally(function () {
           // always executed

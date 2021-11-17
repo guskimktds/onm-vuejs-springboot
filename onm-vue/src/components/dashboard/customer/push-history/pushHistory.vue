@@ -75,7 +75,7 @@ beforeCreate() {
     })
     .catch(function (error) {
         console.log(error);
-        alert("국사정보 조회실패")
+        console.log("국사정보 조회실패")
       })
       .finally(function () {
         // always executed
@@ -99,9 +99,9 @@ beforeCreate() {
           }else if(resCode==204){
             this.pList=[];
             this.pushPagingInfo={};
-             alert('푸시발송 데이터가 없습니다.');
+             console.log('푸시발송 데이터가 없습니다.');
           }else if(resCode==410){
-            alert("로그인 세션이 만료되었습니다.");
+            console.log("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -111,7 +111,7 @@ beforeCreate() {
           }else{
             this.pList=[];
             this.pushPagingInfo={};
-             alert(resCode+" / "+resMsg);
+             console.log(resCode+" / "+resMsg);
           }
         })
         .catch((ex)=>{
