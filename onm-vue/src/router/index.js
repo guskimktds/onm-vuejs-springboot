@@ -87,6 +87,7 @@ import subsInfo from '../components/dashboard/operation/voc/subsInfo.vue'
 import dssResultInfo from '../components/dashboard/operation/voc/dssResultInfo.vue'
 import bssResultInfo from '../components/dashboard/operation/voc/bssResultInfo.vue'
 import deviceRecoInfo from '../components/dashboard/operation/voc/deviceRecoInfo'
+import cameraModelInfo from '../components/dashboard/operation/voc/cameraModelInfo.vue'
 
 //운영관리 / 코드 설정 관리 
 import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
@@ -511,6 +512,11 @@ export default new Router({
                     name: 'GwAcceptInfo',
                     component: GwAcceptInfo
                 },
+                {
+                    path: "camera-model",
+                    name: 'cameraModelInfo',
+                    component: cameraModelInfo
+                }
             ]
         },
 
