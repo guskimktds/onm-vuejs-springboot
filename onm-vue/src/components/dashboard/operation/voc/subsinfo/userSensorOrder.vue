@@ -5,20 +5,19 @@
         tag="section"
     >
         <base-material-card
-            color="orange"
-            dark
-            icon="mdi-keyboard"
+            color="customheader" 
             title="UpdateType"
-            class="px-5 py-3"
+            class="px-2 py-1 customgrey"
             >
             <v-data-table
                 :headers="headers"
                 :items="pList"
+                hide-default-header
                 :options.sync="options"
                 :server-items-length="dodPagingInfo.total_cnt"
-                class="elevation-1"
+                class="elevation-0"
                 :footer-props="{ itemsPerPageOptions: pageoptions }"
-                :header-props="{ sortIcon: null }"
+              
             >          
             </v-data-table>
         </base-material-card>
@@ -41,18 +40,18 @@ export default {
         headers: [
           {
             text: '거래고유번호',
-            sortable: false, value: 'guid',
+            sortable: false, value: 'guid', class: 'my-header-style'
           },
-          { text: '오더번호', value: 'oderno'},
-          { text: '오더순번', value: 'oderseq'},
-          { text: '사용여부', value: 'use_yn'},
-          { text: '처리희망일자', value: 'appointdate'},
-          { text: '오더유형', value: 'ordertype'},
-          { text: '사업장명', value: 'bizpnm'},
-          { text: '상품코드', value: 'prodcd'},
-          { text: '파라미터타입코드', value: 'paramtypecd'},
-          { text: '파라미터타입명칭', value: 'paramtypenm'},
-          { text: '파라미터값', value: 'paramvalue'},
+          { text: '오더번호', value: 'oderno', class: 'my-header-style'},
+          { text: '오더순번', value: 'oderseq', class: 'my-header-style'},
+          { text: '사용여부', value: 'use_yn', class: 'my-header-style'},
+          { text: '처리희망일자', value: 'appointdate', class: 'my-header-style'},
+          { text: '오더유형', value: 'ordertype', class: 'my-header-style'},
+          { text: '사업장명', value: 'bizpnm', class: 'my-header-style'},
+          { text: '상품코드', value: 'prodcd', class: 'my-header-style'},
+          { text: '파라미터타입코드', value: 'paramtypecd', class: 'my-header-style'},
+          { text: '파라미터타입명칭', value: 'paramtypenm', class: 'my-header-style'},
+          { text: '파라미터값', value: 'paramvalue', class: 'my-header-style'},
         ]
       }
     },
@@ -85,6 +84,13 @@ export default {
 
 }
 </script>
-<style>
+<style scoped>
+
+.my-header-style {
+  color: #000000 !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  background-color: #98C4C6;
+}
     
 </style>

@@ -5,24 +5,32 @@
       tag="section"
     >
     <base-material-card
-        color="orange"
-        dark
-        icon="mdi-keyboard"
+        color="customheader" 
         title="사용자 센서 신청 현황"
-        class="px-5 py-3"
+        class="px-2 py-1 customgrey"
       >
       <v-data-table
         :headers="headers"
         :items="soList"
+        hide-default-header
         :options.sync="options"
         :server-items-length="soPagingInfo.total_cnt"
-        class="elevation-1"
-        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
-        :header-props="{ sortIcon: null }"
+        class="elevation-0"
+        :footer-props="{ itemsPerPageOptions: pageoptions }"
       >
-      <template v-slot:item.status_code="{item}">
-              <span>{{ switchString(item.status_code) }}</span>
-      </template>
+        <template v-slot:header="{ props: { headers } }">
+          <thead>
+            <tr>
+              <th v-for="h in headers" :class="h.class" v-bind:key="h">
+                <span>{{h.text}}</span>
+              </th>
+            </tr>
+          </thead>
+        </template> 
+
+        <template v-slot:item.status_code="{item}">
+                <span>{{ switchString(item.status_code) }}</span>
+        </template>
       </v-data-table>
     </base-material-card>
   </v-container>
@@ -38,6 +46,7 @@ export default {
       dialogDelete: false,
       editedIndex: -1,
       options: {},
+      pageoptions: this.$store.state.pageoptions,
       totalList: 0,
       loading: true,
       headers: [
@@ -45,13 +54,13 @@ export default {
           text: "센서 ID",
           align: "start",
           sortable: false,
-          value: "sensor_prod_id",
+          value: "sensor_prod_id", class: 'my-header-style'
         },
-        { text: "사용자 ID", value: "user_id" },
-        { text: "센서제품명", value: "sensor_prod_name" },
-        { text: "센서태그코드", value: "sensor_tag_cd" },
-        { text: "상태 코드", value: "status_code" },
-        { text: "센서 개수", value: "sensor_count" },
+        { text: "사용자 ID", value: "user_id", class: 'my-header-style' },
+        { text: "센서제품명", value: "sensor_prod_name", class: 'my-header-style' },
+        { text: "센서태그코드", value: "sensor_tag_cd", class: 'my-header-style' },
+        { text: "상태 코드", value: "status_code", class: 'my-header-style' },
+        { text: "센서 개수", value: "sensor_count", class: 'my-header-style' },
       ],
     }
   },
@@ -90,5 +99,13 @@ export default {
     
 }
 </script>
-<style>
+<style scoped>
+
+.my-header-style {
+  color: #000000 !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  background-color: #98C4C6;
+}
+
 </style>

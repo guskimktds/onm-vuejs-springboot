@@ -5,16 +5,16 @@
       tag="section"
     >
     <base-material-card
-        color="customheader" 
-        title="사용자 -KTT 정보"
+        color="customheader"  
+        title="사용자 VA 상품 및 적용카메라 대수 등록 확인"
         class="px-2 py-1 customgrey"
       >
       <v-data-table
         :headers="headers"
-        :items="kList"
+        :items="vaList"
         hide-default-header
         :options.sync="options"
-        :server-items-length="kttPagingInfo.total_cnt"
+        :server-items-length="vaPagingInfo.total_cnt"
         class="elevation-0"
         :footer-props="{ itemsPerPageOptions: pageoptions }"
       >
@@ -26,7 +26,7 @@
               </th>
             </tr>
           </thead>
-        </template>
+        </template>  
 
       </v-data-table>
     </base-material-card>
@@ -35,7 +35,8 @@
 
 <script>
 export default {
-  props: ['kList','kttPagingInfo'],
+  props: ['vaList','vaPagingInfo'],
+  //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
   data() {
     return {
       last: 0,
@@ -43,25 +44,24 @@ export default {
       dialogDelete: false,
       editedIndex: -1,
       options: {},
+      pageoptions: this.$store.state.pageoptions,
       totalList: 0,
       loading: true,
       headers: [
         {
-          text: "사용자 ID",
+          text: "사용자ID",
           align: "start",
           sortable: false,
-          value: "user_id",
-          class: 'my-header-style'
+          value: "user_id", class: 'my-header-style'
         },
-        { text: "서비스번호", value: "service_no", class: 'my-header-style' },
-        { text: "시스템ID", value: "system_id", class: 'my-header-style' },
-        { text: "단말설치여부", value: "device_yn", class: 'my-header-style' },
-        { text: "상태 코드", value: "status_code", class: 'my-header-style' },
-        { text: "등록일", value: "reg_date", class: 'my-header-style' },
+        { text: "상품번호", value: "va_prod_id", class: 'my-header-style' },
+        { text: "VA 명", value: "va_name", class: 'my-header-style' },
+        { text: "VA 개수", value: "va_count", class: 'my-header-style' },
       ],
     };
   },
-   methods: {
+
+  methods: {
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
@@ -78,11 +78,11 @@ export default {
     },
   },
   updated() {
-      if(this.last!==this.kttPagingInfo.total_cnt){
+      if(this.last!==this.vaPagingInfo.total_cnt){
         this.options.page=1
       }
-      if(this.kttPagingInfo.total_cnt!==undefined){
-      this.last=this.kttPagingInfo.total_cnt
+      if(this.vaPagingInfo.total_cnt!==undefined){
+      this.last=this.vaPagingInfo.total_cnt
       }
   },
     
@@ -98,3 +98,4 @@ export default {
 }
 
 </style>
+

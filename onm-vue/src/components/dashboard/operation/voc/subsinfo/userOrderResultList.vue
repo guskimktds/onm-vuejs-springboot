@@ -1,24 +1,23 @@
 <template>
-   <v-container
+    <v-container
         id="regular-tables"
         fluid
         tag="section"
     >
         <base-material-card
-            color="customheader"  
-            title="단말오더 Snapshot 확인"
+            color="customheader"
+            title="청약 결과"
             class="px-2 py-1 customgrey"
             >
             <v-data-table
                 :headers="headers"
                 :items="pList"
-                hide-default-header
                 :options.sync="options"
                 :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-0"
                 :footer-props="{ itemsPerPageOptions: pageoptions }"
-               
-            >    
+                hide-default-header
+            >   
               <template v-slot:header="{ props: { headers } }">
                 <thead>
                   <tr>
@@ -27,19 +26,18 @@
                     </th>
                   </tr>
                 </thead>
-              </template>       
+              </template>         
             </v-data-table>
         </base-material-card>
     </v-container>
 </template>
 
 <script>
-
 export default {
     props: ['pList','resPagingInfo'],
     data() {
       return {
-        last:0,
+        last: 0,
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
@@ -48,21 +46,27 @@ export default {
         loading: true,
         headers: [
           {
-            text: '계약ID',
-            sortable: false, value: 'said', class: 'my-header-style'
+            text: '거래고유번호', align: 'start',
+            sortable: false, value: 'guid', class: 'my-header-style'
           },
-          { text: '오더번호', value: 'oderno', class: 'my-header-style'},
-          { text: 'snapshot', value: 'snapshot', class: 'my-header-style'},
-          { text: '등록일시', value: 'reg_date', class: 'my-header-style'},
+          { text: '계약ID', value: 'said', class: 'my-header-style' },
+          { text: '오더유형', value: 'ordertype', class: 'my-header-style' },
+          { text: '처리코드', value: 'resultcode', class: 'my-header-style' },
+          { text: '처리메세지', value: 'resultmsg', class: 'my-header-style' },
+          { text: '등록일시', value: 'regdate', class: 'my-header-style'},
+          { text: '청약상태 통보여부', value: 'notice_yn', class: 'my-header-style'},
+          { text: '청약상태 통보일시', value: 'notice_date', class: 'my-header-style' },
+          { text: '청약상태 통보결과', value: 'notice_result', class: 'my-header-style' }
         ]
       }
     },
     methods: {
       getDataFromApi () {
         this.loading = true     
+        // const { page, itemsPerPage } = this.options
+        // console.log(page, itemsPerPage)
         this.$emit("pagination", this.options)
-      },
-
+      }
     },
     watch: {
       options: {
@@ -83,7 +87,6 @@ export default {
     mounted () {
       this.getDataFromApi()
     }
-
 }
 </script>
 <style scoped>

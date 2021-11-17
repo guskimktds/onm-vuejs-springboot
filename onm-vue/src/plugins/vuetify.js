@@ -12,8 +12,11 @@ Vue.use(Vuetify);
 const theme = {
     primary: '#4CAF50',
     secondary: '#9C27b0',
-    accent: '#9C27b0',
+    accent: '#1FA977',
     info: '#00CAE3',
+    custom1: '#9EA4A5',
+    customgrey: '#C3DCDC',
+    customheader: '#71A2A4',
 }
 
 export default new Vuetify({ // option을 지정한 Vuetify instance 생성해서 export

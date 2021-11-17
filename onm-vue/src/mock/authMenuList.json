@@ -189,12 +189,12 @@
                 ]
             },
             {
-                "name": "voc관리11",
+                "name": "voc관리",
                 "path": "/operation/term-order",
                 "icon":"mdi-desktop-mac",
                 "component": "customer-transfer",
                 "children": [
-                    { "name": "청약 정보조회2", "path": "/operation/term-order", "component": "termOrderInfo" },
+                    { "name": "청약 정보조회", "path": "/operation/term-order", "component": "termOrderInfo" },
                     { "name": "subsinfo 조회", "path": "/operation/subsinfo", "component": "subsInfo" },
                     { "name": "단말오더 NMS 전송", "path": "/operation/term-nms", "component": "termNms" },
                     { "name": "단말 오더 OSS 전송", "path": "/operation/dss-result", "component": "dssResult" },

@@ -5,21 +5,30 @@
         tag="section"
     >
         <base-material-card
-            color="orange"
-            dark
-            icon="mdi-keyboard"
+            color="customheader"  
             title="Temp ID 오더 확인"
-            class="px-5 py-3"
+            class="px-2 py-1 customgrey"
             >
             <v-data-table
                 :headers="headers"
                 :items="pList"
+                hide-default-header
                 :options.sync="options"
                 :server-items-length="resPagingInfo.total_cnt"
-                class="elevation-1"
+                class="elevation-0"
                 :footer-props="{ itemsPerPageOptions: pageoptions }"
-                :header-props="{ sortIcon: null }"
-            >          
+                
+            >    
+              <template v-slot:header="{ props: { headers } }">
+                <thead>
+                  <tr>
+                    <th v-for="h in headers" :class="h.class" v-bind:key="h">
+                      <span>{{h.text}}</span>
+                    </th>
+                  </tr>
+                </thead>
+              </template> 
+                    
             </v-data-table>
         </base-material-card>
     </v-container>
@@ -41,15 +50,15 @@ export default {
         headers: [
           {
             text: '거래고유번호',
-            sortable: false, value: 'guid',
+            sortable: false, value: 'guid', class: 'my-header-style'
           },
-          { text: '오더번호', value: 'oderno'},
-          { text: '오더순번', value: 'oderseq'},
-          { text: 'type', value: 'type'},
-          { text: 'div', value: 'div'},
-          { text: 'tel_no', value: 'tel_no'},
-          { text: 'result', value: 'result'},
-          { text: 'msg', value: 'msg'},
+          { text: '오더번호', value: 'oderno', class: 'my-header-style'},
+          { text: '오더순번', value: 'oderseq', class: 'my-header-style'},
+          { text: 'type', value: 'type', class: 'my-header-style'},
+          { text: 'div', value: 'div', class: 'my-header-style'},
+          { text: 'tel_no', value: 'tel_no', class: 'my-header-style'},
+          { text: 'result', value: 'result', class: 'my-header-style'},
+          { text: 'msg', value: 'msg', class: 'my-header-style'},
         ]
       }
     },
@@ -82,6 +91,13 @@ export default {
 
 }
 </script>
-<style>
+<style scoped>
+
+.my-header-style {
+  color: #000000 !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  background-color: #98C4C6;
+}
     
 </style>

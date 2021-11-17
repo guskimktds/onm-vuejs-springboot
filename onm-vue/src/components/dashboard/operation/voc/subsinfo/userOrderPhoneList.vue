@@ -1,24 +1,23 @@
 <template>
-   <v-container
+    <v-container
         id="regular-tables"
         fluid
         tag="section"
     >
         <base-material-card
-            color="customheader"  
-            title="단말오더 Snapshot 확인"
+            color="customheader" 
+            title="청약 전화번호"
             class="px-2 py-1 customgrey"
             >
             <v-data-table
                 :headers="headers"
-                :items="pList"
+                :items="phList"
                 hide-default-header
                 :options.sync="options"
-                :server-items-length="resPagingInfo.total_cnt"
+                :server-items-length="phPagingInfo.total_cnt"
                 class="elevation-0"
                 :footer-props="{ itemsPerPageOptions: pageoptions }"
-               
-            >    
+            >
               <template v-slot:header="{ props: { headers } }">
                 <thead>
                   <tr>
@@ -27,42 +26,42 @@
                     </th>
                   </tr>
                 </thead>
-              </template>       
+              </template> 
+                        
             </v-data-table>
         </base-material-card>
     </v-container>
 </template>
 
 <script>
-
 export default {
-    props: ['pList','resPagingInfo'],
+    props: ['phList', 'phPagingInfo'],
+    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
     data() {
       return {
         last:0,
-        dialog: false,
-        dialogDelete: false,
         editedIndex: -1,
         options: {},
+        totalList: 0,
         pageoptions: this.$store.state.pageoptions,
         loading: true,
         headers: [
           {
-            text: '계약ID',
-            sortable: false, value: 'said', class: 'my-header-style'
+            text: '거래고유번호', align: 'start',
+            sortable: false, value: 'guid',
+            class: 'my-header-style'
           },
-          { text: '오더번호', value: 'oderno', class: 'my-header-style'},
-          { text: 'snapshot', value: 'snapshot', class: 'my-header-style'},
-          { text: '등록일시', value: 'reg_date', class: 'my-header-style'},
+          { text: '계약자구분', value: 'contdivcd', class: 'my-header-style' },
+          { text: '전화번호', value: 'telno', class: 'my-header-style' },
+          { text: '생성일시', value: 'cdate', class: 'my-header-style'}
         ]
       }
-    },
+   },
     methods: {
       getDataFromApi () {
-        this.loading = true     
+        this.loading = true
         this.$emit("pagination", this.options)
       },
-
     },
     watch: {
       options: {
@@ -73,17 +72,16 @@ export default {
       },
     },
     updated() {
-      if(this.last!==this.resPagingInfo.total_cnt){
+      if(this.last!==this.phPagingInfo.total_cnt){
         this.options.page=1
       }
-      if(this.resPagingInfo.total_cnt!==undefined){
-      this.last=this.resPagingInfo.total_cnt
+      if(this.phPagingInfo.total_cnt!==undefined){
+      this.last=this.phPagingInfo.total_cnt
       }
   },
     mounted () {
       this.getDataFromApi()
     }
-
 }
 </script>
 <style scoped>

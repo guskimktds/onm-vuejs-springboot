@@ -5,20 +5,19 @@
         tag="section"
     >
         <base-material-card
-            color="orange"
-            dark
-            icon="mdi-keyboard"
+            color="customheader" 
             title="스냅샷 정보"
-            class="px-5 py-3"
+            class="px-2 py-1 customgrey"
             >
             <v-data-table
                 :headers="headers"
                 :items="pList"
+                hide-default-header
                 :options.sync="options"
                 :server-items-length="snPagingInfo.total_cnt"
-                class="elevation-1"
+                class="elevation-0"
                 :footer-props="{ itemsPerPageOptions: pageoptions }"
-                :header-props="{ sortIcon: null }"
+                
             >          
             </v-data-table>
         </base-material-card>
@@ -41,12 +40,12 @@ export default {
         headers: [
           {
             text: '계약ID',
-            sortable: false, value: 'said',
+            sortable: false, value: 'said', class: 'my-header-style'
           },
-          { text: '오더번호', value: 'oderno'},
-          { text: '사용자ID', value: 'user_id'},
-          { text: '스냅샷', value: 'snapshot'},
-          { text: '등록일시', value: 'reg_date'},
+          { text: '오더번호', value: 'oderno', class: 'my-header-style'},
+          { text: '사용자ID', value: 'user_id', class: 'my-header-style'},
+          { text: '스냅샷', value: 'snapshot', class: 'my-header-style'},
+          { text: '등록일시', value: 'reg_date', class: 'my-header-style'},
         ]
       }
     },
@@ -79,6 +78,13 @@ export default {
 
 }
 </script>
-<style>
+<style scoped>
+
+.my-header-style {
+  color: #000000 !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  background-color: #98C4C6;
+}
     
 </style>

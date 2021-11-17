@@ -5,20 +5,18 @@
       tag="section"
     >
     <base-material-card
-        color="orange"
-        dark
-        icon="mdi-keyboard"
+        color="customheader"  
         title="사용자 전화번호"
-        class="px-5 py-3"
+        class="px-2 py-1 customgrey"
       >
       <v-data-table
         :headers="headers"
         :items="pnList"
+        hide-default-header
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
-        class="elevation-1"
-        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
-        :header-props="{ sortIcon: null }"
+        class="elevation-0"
+        :footer-props="{ itemsPerPageOptions: pageoptions }"
       >
       <template v-slot:item.status_code="{item}">
               <span>{{ switchString(item.status_code) }}</span>
@@ -44,23 +42,24 @@ export default {
         editedIndex: -1,
         options: {},
         totalList: 0,
+        pageoptions: this.$store.state.pageoptions,
         loading: true,
         headers: [
         {
           text: "매장ID", align: "start",
-          sortable: false, value: "user_id",
+          sortable: false, value: "user_id", class: 'my-header-style'
         },
-        { text: "전화번호", value: "tel_no" },
+        { text: "전화번호", value: "tel_no" , class: 'my-header-style'},
         
         { text: "권한", value: "auth" },
-        { text: "사용자이름", value: "user_name" },
-        { text: "전화번호ID", value: "tel_no_id" },
-        { text: "알림설정권한", value: "alim_auth_yn" },
-        { text: "승인여부", value: "confirm_yn" },
-        { text: "승일인날짜", value: "confirm_date" },
-        { text: "상태코드", value: "status_code" },
-        { text: "mgt상태코드", value: "mgt_status" },
-        { text: "비고", value: "memo" },
+        { text: "사용자이름", value: "user_name", class: 'my-header-style' },
+        { text: "전화번호ID", value: "tel_no_id", class: 'my-header-style' },
+        { text: "알림설정권한", value: "alim_auth_yn", class: 'my-header-style' },
+        { text: "승인여부", value: "confirm_yn", class: 'my-header-style' },
+        { text: "승일인날짜", value: "confirm_date", class: 'my-header-style' },
+        { text: "상태코드", value: "status_code", class: 'my-header-style' },
+        { text: "mgt상태코드", value: "mgt_status", class: 'my-header-style' },
+        { text: "비고", value: "memo", class: 'my-header-style' },
       ],
     };
   },
@@ -100,11 +99,11 @@ export default {
     },
   },
   updated() {
-    if(this.last!==this.kttPagingInfo.total_cnt){
+    if(this.last!==this.resPagingInfo.total_cnt){
       this.options.page=1
     }
-    if(this.kttPagingInfo.total_cnt!==undefined){
-    this.last=this.kttPagingInfo.total_cnt
+    if(this.resPagingInfo.total_cnt!==undefined){
+    this.last=this.resPagingInfo.total_cnt
     }
   },
  
@@ -112,6 +111,13 @@ export default {
 }
 
 </script>
-<style>
+<style scoped>
+
+.my-header-style {
+  color: #000000 !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  background-color: #98C4C6;
+}
 
 </style>

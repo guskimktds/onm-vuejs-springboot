@@ -5,11 +5,9 @@
         tag="section"
     >
         <base-material-card
-            color="orange"
-            dark
-            icon="mdi-keyboard"
+            color="customheader"  
             title="UpdateType"
-            class="px-5 py-3"
+            class="px-2 py-1 customgrey"
             >
             <!-- <v-data-table
                 :headers="headers"
@@ -23,12 +21,22 @@
             <v-data-table
                 :headers="headers"
                 :items="putList"
-               
+                hide-default-header
                 hide-default-footer
-                class="elevation-1"
+                class="elevation-0"
                 
                 :header-props="{ sortIcon: null }"
-            >        
+            >      
+              <template v-slot:header="{ props: { headers } }">
+                <thead>
+                  <tr>
+                    <th v-for="h in headers" :class="h.class" v-bind:key="h">
+                      <span>{{h.text}}</span>
+                    </th>
+                  </tr>
+                </thead>
+              </template>   
+
             </v-data-table>
         </base-material-card>
     </v-container>
@@ -55,8 +63,9 @@ export default {
             text: '오더번호',
             // sortable: false, 
             value: 'orderno',
+            class: 'my-header-style'
           },
-          { text: '업데이트 타입', value: 'updatetype'},
+          { text: '업데이트 타입', value: 'updatetype', class: 'my-header-style'},
         ]
       }
     },
@@ -89,6 +98,13 @@ export default {
 
 }
 </script>
-<style>
+<style scoped>
     
+.my-header-style {
+  color: #000000 !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  background-color: #98C4C6;
+}
+
 </style>

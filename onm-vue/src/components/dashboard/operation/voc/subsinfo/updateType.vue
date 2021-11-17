@@ -5,21 +5,28 @@
         tag="section"
     >
         <base-material-card
-            color="orange"
-            dark
-            icon="mdi-keyboard"
-            title="UpdateType"
-            class="px-5 py-3"
+            color="customheader"  
+            title="단말오더 UpdateType (12월개발 예정)"
+            class="px-2 py-1 customgrey"
             >
             <v-data-table
                 :headers="headers"
-                :items="putList"
+                :items="pList"
                 :options.sync="options"
-               
-                class="elevation-1"
-                
-                :header-props="{ sortIcon: null }"
-            >          
+                hide-default-header
+                hide-default-footer
+                class="elevation-0"
+            >     
+              <template v-slot:header="{ props: { headers } }">
+                <thead>
+                  <tr>
+                    <th v-for="h in headers" :class="h.class" v-bind:key="h">
+                      <span>{{h.text}}</span>
+                    </th>
+                  </tr>
+                </thead>
+              </template>  
+
             </v-data-table>
         </base-material-card>
     </v-container>
@@ -29,7 +36,7 @@
 
 export default {
     props: [
-      'putList',
+      'pList',
       // 'dodPagingInfo'
     ],
     data() {
@@ -44,9 +51,9 @@ export default {
         headers: [
           {
             text: '오더번호',
-            sortable: false, value: 'orderno',
+            sortable: false, value: 'orderno', class: 'my-header-style'
           },
-          { text: '업데이트 타입', value: 'updatetype'},
+          { text: '업데이트 타입', value: 'updatetype', class: 'my-header-style'},
         ]
       }
     },
@@ -65,20 +72,29 @@ export default {
         deep: true,
       },
     },
-    updated() {
-      if(this.last!==this.dodPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.dodPagingInfo.total_cnt!==undefined){
-      this.last=this.dodPagingInfo.total_cnt
-      }
-  },
+    // updated() {
+    //   if(this.last!==this.dodPagingInfo.total_cnt){
+    //     this.options.page=1
+    //   }
+    //   if(this.dodPagingInfo.total_cnt!==undefined){
+    //   this.last=this.dodPagingInfo.total_cnt
+    //   }
+    // },
     mounted () {
       this.getDataFromApi()
     }
 
 }
 </script>
-<style>
+
+<style scoped>
+
+.my-header-style {
+  color: #000000 !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  background-color: #98C4C6;
+}
+
     
 </style>

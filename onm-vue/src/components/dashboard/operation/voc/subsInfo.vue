@@ -57,16 +57,16 @@
       <connected-sensor-info-list v-bind:dsList=dsList v-bind:dsPagingInfo=dsPagingInfo></connected-sensor-info-list>
 
       <!-- 카메라 그룹정보 12월 개발 예정 -->
-      <camera-group-info></camera-group-info>
+      <camera-group-info v-bind:pList=cgiList v-bind:resPagingInfo=cgiPagingInfo></camera-group-info>
 
       <!-- 연결된 캠, 모델, 제조사 조회, 캠상태 -->
       <connected-camera-info v-bind:pList=dcList v-bind:resPagingInfo=dcPagingInfo></connected-camera-info>
       <!-- 단말오더 정보 확인 -->
-      <device-order-info></device-order-info>
-      <!-- updateType -->
-      <update-type></update-type>
+      <device-order-info v-bind:pList=doiList v-bind:doiPagingInfo=doiPagingInfo></device-order-info>
+      <!-- 단말오더 updateType -->
+      <update-type v-bind:pList=doutList v-bind:resPagingInfo=doutPagingInfo></update-type>
       <!-- 단말오더 subline 정보 -->
-      <device-order-subline-info></device-order-subline-info>
+      <device-order-subline-info v-bind:pList=dosuList v-bind:resPagingInfo=dosuPagingInfo></device-order-subline-info>
 
       <!-- 단말오더 처리결과 확인 -->
       <device-order-result-list v-bind:dorList=dorList v-bind:dorPagingInfo=dorPagingInfo></device-order-result-list>
@@ -95,23 +95,23 @@
 import TermOrderInfoQuery from './subsinfo/termOrderInfoQuery'
 
 //오더 정보
-import UserOrderInfoList from '../../order/user/order-info/userOrderInfoList'
+import UserOrderInfoList from './subsinfo/userOrderInfoList'
 //오더 상세
 import UserOrderDetailList from './subsinfo/userOrderDetailList'
 //updateType 
 import PreUpdateType from './subsinfo/preUpdateType'
 
 //청약 전화번호
-import UserOrderPhoneList from '../../order/user-order-phone/userOrderPhoneList'
+import UserOrderPhoneList from './subsinfo/userOrderPhoneList'
 //KTT 정보
-import KttList from '../../order/ktt-order/kttOrderInfoList'
+import KttList from './subsinfo/kttOrderInfoList'
 //청약 결과
-import UserOrderResultList from '../../order/user-order-result/userOrderResultList'
+import UserOrderResultList from './subsinfo/userOrderResultList'
 
 //로그인 관련:: 사용자-매장-전화번호-카메라(매장정보:ONM_13001)
-import StoreInfoList from '../../store/info/storeInfoList'
+import StoreInfoList from './subsinfo/storeInfoList'
 //사용자정보 (=매장정보상세:ONM_13002)
-import StoreDetailInfoList from '../../store/store-detail/storeDetailInfoList'
+import StoreDetailInfoList from './subsinfo/storeDetailInfoList'
 //사용자-KTT 정보
 import UserKttInfoList from './subsinfo/userKttInfoList'
 
@@ -119,13 +119,13 @@ import UserKttInfoList from './subsinfo/userKttInfoList'
 import StoreProductInfo from './subsinfo/storeProductInfo'
 
 //상품 요약정보 ONM_13005
-import StoreProductSummaryInfoList from '../../store/product-summary/storeProductSummaryInfoList'
+import StoreProductSummaryInfoList from './subsinfo/storeProductSummaryInfoList'
 
 //사용자 전화번호 ONM_13004
 import UserPhoneInfo from './subsinfo/userPhoneInfo'
 
 //사용자 VA 상품 및 적용카메라 대수 등록 확인
-import VaCamCountList from '../../store/va-cam-count/vaCamCountList'
+import VaCamCountList from './subsinfo/vaCamCountList'
 
 //사용자 센서 신청 현황 (신규)
 import UserSensorOrder from './subsinfo/userSensorOrderInfo'
@@ -152,7 +152,7 @@ import UpdateType from './subsinfo/updateType'
 import DeviceOrderSublineInfo from './subsinfo/deviceOrderSublineInfo'
 
 //단말오더 처리결과 확인
-import DeviceOrderResultList from '../../order/device-order-result/deviceOrderResultList'
+import DeviceOrderResultList from './subsinfo/deviceOrderResultList'
 
 //인증 대상단말 정보 확인
 import AuthTargetDeviceList from '../../order/auth-target-device/authTargetDeviceList'
@@ -314,6 +314,10 @@ export default {
 
       tmoList: [],
       tmList: [],
+      cgiList: [],
+      doiList: [],
+      doutList: [],
+      dosuList: [],
    
       resPagingInfo: {},
       kttPagingInfo:{},
@@ -334,6 +338,10 @@ export default {
       dosPagingnfo: {},
       tmoPagingnfo: {},
       tmPagingnfo: {},
+      cgiPagingInfo: {},
+      doiPagingInfo: {},
+      doutPagingInfo: {},
+      dosuPagingInfo: {},
 
       oldValue:'',
 
@@ -454,15 +462,20 @@ export default {
               //연결된 Sensor 정보
               this.searchToConnectedSensorInfo()
 
-              //카메라 그룹정보(12월)
+              //카메라 그룹정보(12월 개발 예정)
+              this.searchToCameraGroupInfo()
 
               //연결된 캠, 모델, 제조사 조회, 캠상태
               this.searchToConnectedCameraInfo()
-              //단말오더 정보 확인(ONM_12006, 12007)
+
+              //단말오더 정보 확인(ONM_12006, 12007, 12월개발)
+              this.searchToDeviceOrderInfo()
 
               //단말오더 updateType (12월)
+              this.searchToDeviceOrderUpdateType()
 
               //단말오더 subline 정보(12월)
+              this.searchToDeviceOrderSubline()
 
               //단말오더 처리결과 확인
               this.searchToDeviceOrderResult()
@@ -474,8 +487,10 @@ export default {
               this.searchToDeviceOrderSnapshot()
 
               //TEMP ID 오더확인(12월)
+              this.searchToTempIdOrder()
 
               //TEMP ID 확인(12월)
+              this.searchToTempId()
 
             }else if(resCode==204){
             //   this.pObject = {};
@@ -951,9 +966,12 @@ export default {
         user_id: this.pUserid,
         is_masking: this.searchParam.is_masking? "N" : "Y"
       };
+
+      
       axios
         .post(url, params, headers)
         .then((response) => {
+          console.log(response)
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
@@ -1183,9 +1201,54 @@ export default {
     },
 
     //카메라 그룹정보(12월 개발 예정)
+    searchToCameraGroupInfo: function () {
+      console.log('searchToCameraGroupInfo')
+      var params = {
+        user_id: this.pUserid
+      }
+      // 12월 개발된 api 로 변경 필요
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
+
+      var reqParams = this.handleParams(params);
+
+      axios
+        .post(url, reqParams, headers)
+        .then((response) => {
+          console.log(response);
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if (resCode == 200) {
+            this.cgiList = response.data.data.cam_list;
+            this.cgiPagingInfo = response.data.data.paging_info;
+            // this.showCameraInfoList =! this.showCameraInfoList;
+          }else if(resCode==204){
+            this.cgiList = [];
+            this.cgiPagingInfo = {};
+            // this.showCameraInfoList =! this.showCameraInfoList;
+          }else if(resCode==410){
+            console.log("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else{
+            this.cgiList = [];
+            this.cgiPagingInfo = {};
+            console.log(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log("조회 실패", ex);
+        });
+      
+    },
+
 
     //연결된 캠, 모델, 제조사 조회, 캠상태
     searchToConnectedCameraInfo: function () {
+      console.log('searchToConnectedCameraInfo')
       var params = {
         user_id: this.pUserid
       }
@@ -1227,11 +1290,139 @@ export default {
       
     },
 
-    //단말오더 정보 확인(ONM_12006, 12007)
+    //단말오더 정보 확인(ONM_12006, 12007, 12월개발)
+    searchToDeviceOrderInfo: function () {
+      console.log('searchToDeviceOrderInfo')
+      var params = {
+        user_id: this.pUserid
+      }
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
+
+      var reqParams = this.handleParams(params);
+
+      axios
+        .post(url, reqParams, headers)
+        .then((response) => {
+          console.log(response);
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if (resCode == 200) {
+            this.doiList = response.data.data.cam_list;
+            this.doiPagingInfo = response.data.data.paging_info;
+            // this.showCameraInfoList =! this.showCameraInfoList;
+          }else if(resCode==204){
+            this.doiList = [];
+            this.doiPagingInfo = {};
+            // this.showCameraInfoList =! this.showCameraInfoList;
+          }else if(resCode==410){
+            console.log("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else{
+            this.doiList = [];
+            this.doiPagingInfo = {};
+            console.log(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log("조회 실패", ex);
+        });
+      
+    },
 
     //단말오더 updateType (12월 신규 개발)
+    searchToDeviceOrderUpdateType: function () {
+      console.log('searchToDeviceOrderUpdateType')
+      var params = {
+        user_id: this.pUserid
+      }
+      // 12월개발 후 api 변경해야함
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
+
+      var reqParams = this.handleParams(params);
+
+      axios
+        .post(url, reqParams, headers)
+        .then((response) => {
+          console.log(response);
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if (resCode == 200) {
+            this.doutList = response.data.data.cam_list;
+            this.doutPagingInfo = response.data.data.paging_info;
+            // this.showCameraInfoList =! this.showCameraInfoList;
+          }else if(resCode==204){
+            this.doutList = [];
+            this.doutPagingInfo = {};
+            // this.showCameraInfoList =! this.showCameraInfoList;
+          }else if(resCode==410){
+            console.log("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else{
+            this.doutList = [];
+            this.doutPagingInfo = {};
+            console.log(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log("조회 실패", ex);
+        });
+      
+    },
 
     //단말오더 subline 정보(12월)
+    searchToDeviceOrderSubline: function () {
+      console.log('searchToDeviceOrderSubline')
+      var params = {
+        user_id: this.pUserid
+      }
+      // 12월개발 후 api 변경해야함
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
+
+      var reqParams = this.handleParams(params);
+
+      axios
+        .post(url, reqParams, headers)
+        .then((response) => {
+          console.log(response);
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if (resCode == 200) {
+            this.dosuList = response.data.data.cam_list;
+            this.dosuPagingInfo = response.data.data.paging_info;
+            // this.showCameraInfoList =! this.showCameraInfoList;
+          }else if(resCode==204){
+            this.dosuList = [];
+            this.dosuPagingInfo = {};
+            // this.showCameraInfoList =! this.showCameraInfoList;
+          }else if(resCode==410){
+            console.log("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else{
+            this.dosuList = [];
+            this.dosuPagingInfo = {};
+            console.log(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log("조회 실패", ex);
+        });
+      
+    },
 
     //단말오더 처리결과 확인
     searchToDeviceOrderResult: function(){
@@ -1250,7 +1441,7 @@ export default {
         if(resCode == 200){
           console.log(response.data.data.device_order_result_list);
           this.dorList = response.data.data.device_order_result_list;
-          // this.dorPagingInfo=response.data.data.paging_info;
+          this.dorPagingInfo=response.data.data.paging_info;
           // this.showDeviceOrderResult =!this.showDeviceOrderResult
   
         }else if(resCode==204){
@@ -1399,7 +1590,9 @@ export default {
     //TEMP ID 오더확인(12월)
     searchToTempIdOrder: function(){
       console.log('searchToTempIdOrder')
-      // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15038/get_oss_snapshot_list`
+
+      //12월 개발 후 api 변경해야함
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15038/get_oss_snapshot_list`
       var params = {
         said: this.pSaid,
         is_masking: this.is_masking
@@ -1439,7 +1632,9 @@ export default {
     //TEMP ID 확인(12월)
     searchToTempId: function(){
       console.log('searchToTempId')
-      // var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15038/get_oss_snapshot_list`
+      
+      //12월 개발 후 api 변경 필요
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15038/get_oss_snapshot_list`
       var params = {
         said: this.pSaid,
         is_masking: this.is_masking

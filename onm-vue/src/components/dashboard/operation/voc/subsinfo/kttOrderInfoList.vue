@@ -4,19 +4,21 @@
       fluid
       tag="section"
     >
+
     <base-material-card
-        color="customheader" 
-        title="사용자 -KTT 정보"
+        color="customheader"  
+        title="KTT 청약 정보"
         class="px-2 py-1 customgrey"
       >
+
       <v-data-table
         :headers="headers"
-        :items="kList"
+        :items="kttList"
         hide-default-header
-        :options.sync="options"
         :server-items-length="kttPagingInfo.total_cnt"
         class="elevation-0"
         :footer-props="{ itemsPerPageOptions: pageoptions }"
+        
       >
         <template v-slot:header="{ props: { headers } }">
           <thead>
@@ -26,49 +28,40 @@
               </th>
             </tr>
           </thead>
-        </template>
-
+        </template>  
       </v-data-table>
+
     </base-material-card>
   </v-container>
 </template>
 
+
 <script>
 export default {
-  props: ['kList','kttPagingInfo'],
+  props: ["kttList", "kttPagingInfo"],
   data() {
     return {
-      last: 0,
-      dialog: false,
-      dialogDelete: false,
-      editedIndex: -1,
-      options: {},
-      totalList: 0,
-      loading: true,
       headers: [
-        {
-          text: "사용자 ID",
-          align: "start",
-          sortable: false,
-          value: "user_id",
-          class: 'my-header-style'
-        },
-        { text: "서비스번호", value: "service_no", class: 'my-header-style' },
-        { text: "시스템ID", value: "system_id", class: 'my-header-style' },
-        { text: "단말설치여부", value: "device_yn", class: 'my-header-style' },
-        { text: "상태 코드", value: "status_code", class: 'my-header-style' },
-        { text: "등록일", value: "reg_date", class: 'my-header-style' },
+        { text: '거래고유번호', value: 'guid', class: 'my-header-style' },
+        { text: '계약 ID', value: 'said', class: 'my-header-style' },
+        { text: '서비스번호', value: 'service_no', class: 'my-header-style' },
+        { text: '시스템ID', value: 'system_id', class: 'my-header-style' },
+        { text: 'KTT 계약 ID', value: 'contract_id', class: 'my-header-style' },
       ],
-    };
+        last:0,
+        options: {},
+        totalList: 0,
+        pageoptions: this.$store.state.pageoptions,
+        loading: true,
+
+    }
   },
-   methods: {
+  methods: {
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
-    
   },
-
   watch: {
     options: {
       handler() {
@@ -88,6 +81,7 @@ export default {
     
 }
 </script>
+
 <style scoped>
 
 .my-header-style {

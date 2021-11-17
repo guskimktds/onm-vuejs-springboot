@@ -7,7 +7,7 @@
 
         <base-material-card
             icon="mdi-magnify"
-            title="청약오더 및 단말오더 정보조회"
+            title="SubsInfo [청약오더, 단말오더]정보 조회"
             class="px-5 py-3"
         >
         <v-row>
