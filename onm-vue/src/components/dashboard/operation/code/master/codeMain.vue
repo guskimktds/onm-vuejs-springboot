@@ -94,11 +94,7 @@ export default {
             // this.isAuthMenu = false
             this.pList = [];
             this.resPagingInfo = {};
-<<<<<<< HEAD
             console.log(resCode + " / " + resMsg);
-=======
-            alert("Error");
->>>>>>> develop
           }
         })
         .catch((ex) => {
@@ -136,11 +132,7 @@ export default {
         }else{
           this.pList = [];
           this.resPagingInfo = {};
-<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
-=======
-          alert("Error");
->>>>>>> develop
         }
       })
       .catch((ex) => {

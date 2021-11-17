@@ -83,11 +83,7 @@ export default {
         }else{
           this.kttList = [];
           this.kttPagingInfo = {};
-<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
-=======
-          alert("Error");
->>>>>>> develop
         }
 
       })

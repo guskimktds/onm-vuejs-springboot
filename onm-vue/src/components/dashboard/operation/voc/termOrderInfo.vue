@@ -352,11 +352,7 @@ export default {
         }else{
           this.pList = [];
           this.resPagingInfo = {};
-<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
-=======
-          alert("Error");
->>>>>>> develop
         }
       })
       .catch((ex) => {
@@ -498,11 +494,7 @@ export default {
         }else{
           this.phList = [];
           this.phPagingInfo = {};
-<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
-=======
-          alert("Error");
->>>>>>> develop
         }
       })
       .catch((ex) => {
@@ -575,11 +567,7 @@ export default {
           }else{
             this.authList = [];
             this.authPaingInfo={};
-<<<<<<< HEAD
             console.log(resCode + " / " + resMsg);
-=======
-            alert("Error");
->>>>>>> develop
           }
       })
       .catch((ex) => {
@@ -662,11 +650,7 @@ export default {
         }else{
           this.kList = [];
           this.kttPagingInfo = {};
-<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
-=======
-          alert("Error");
->>>>>>> develop
         }
       })
       .catch((ex) => {
@@ -750,11 +734,7 @@ export default {
         }else{
           this.vaList = [];
           this.vaPagingInfo = {};
-<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
-=======
-          alert("Error");
->>>>>>> develop
         }
       })
       .catch((ex) => {
@@ -834,11 +814,7 @@ export default {
           }else {
             this.iotList = [];
             this.iotPagingInfo = {};
-<<<<<<< HEAD
             console.log(resCode + " / " + resMsg);
-=======
-           alert("Error");
->>>>>>> develop
           }
         })
         .catch((ex) => {

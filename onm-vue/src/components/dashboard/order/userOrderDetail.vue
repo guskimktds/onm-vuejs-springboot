@@ -93,11 +93,7 @@ export default {
         }else{
           this.pList = [];
           this.dodPagingInfo = {};
-<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
-=======
-          alert("Error");
->>>>>>> develop
         }
       })
       .catch((ex) => {

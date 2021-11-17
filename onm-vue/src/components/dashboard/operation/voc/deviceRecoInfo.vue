@@ -97,11 +97,7 @@ export default {
           }else{
             this.dcList = [];
             this.dcPagingInfo = {};
-<<<<<<< HEAD
             console.log(resCode + " / " + resMsg);
-=======
-            alert("Error");
->>>>>>> develop
           }
         })
         .catch((ex) => {

@@ -112,11 +112,7 @@ export default {
             }else{
               this.pList=[];
               this.mobilePagingInfo={};
-<<<<<<< HEAD
               console.log(resCode+" / "+resMsg);
-=======
-              alert("Error");
->>>>>>> develop
             }
           })
           .catch((ex)=>{

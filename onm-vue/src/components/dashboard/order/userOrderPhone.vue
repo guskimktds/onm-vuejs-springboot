@@ -92,11 +92,7 @@ export default {
         }else{
           this.phList = [];
           this.phPagingInfo = {};
-<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
-=======
-          alert("Error");
->>>>>>> develop
         }
       })
       .catch((ex) => {

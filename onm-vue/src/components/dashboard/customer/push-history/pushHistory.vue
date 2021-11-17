@@ -111,11 +111,7 @@ beforeCreate() {
           }else{
             this.pList=[];
             this.pushPagingInfo={};
-<<<<<<< HEAD
              console.log(resCode+" / "+resMsg);
-=======
-             alert("Error");
->>>>>>> develop
           }
         })
         .catch((ex)=>{
