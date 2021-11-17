@@ -35,12 +35,12 @@ export default {
           sortable: false,
           value: "dev_type",
         },
-        { text: "제품코드", value: "product_codevja" },
+        { text: "제품코드", value: "product_code" },
         { text: "펌웨어 버전", value: "firmware_version" },
-        { text: "카메라명", value: "dev_type" }
+        { text: "카메라명", value: "device_yn" }
+      ],
     };
   },
-    
 }
 </script>
 <style>

@@ -11,8 +11,7 @@
       @pagination="setToSearchParams"></camera-model-list>
       <firmware-list
       v-show="showFirmList"
-      v-bind:fList="fList"
-      ></firmware-list>
+      v-bind:fList="fList"></firmware-list>
   </v-container>
 </template>
 
@@ -22,7 +21,6 @@ import CameraModelQuery from "./cameraModelQuery.vue";
 import EventBus from '../../../../EventBus'
 import axios from "axios";
 import FirmwareList from './firmwareList.vue';
-
 
 const headers = {
   "User-Agent":
@@ -43,6 +41,7 @@ export default {
       fList: [],
       pObject: {},
       showFirmList: false,
+      clickVal: '',
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10,
@@ -60,9 +59,7 @@ export default {
     searchCameraModel: function (params) {
       console.log('보내는값')
       console.log(params)
-      this.showDetailObject=false
-      this.isReloadDetailObject=false
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13050/get_cam_model_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15040/get_cam_model_list`;
 
       var reqParams = this.handleParams(params);
 
@@ -105,17 +102,17 @@ export default {
       };
 
       console.log(params);
-
+      this.showFirmList=false
       this.searchCameraModel(params);
     },
 
     clickToSearchFirm: function (value) {
         if(value){
-            var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15030/get_cam_firmwarelist`;
+            var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15030/get_cam_firmware_list`;
 
             var params = {
-                dev_type: this.searchParam.dev_type,
-                product_code: value,
+                dev_type: value.dev_type,
+                product_code: value.product_code,
                 page_no: "1",
                 view_cnt: "10",
             }
@@ -124,18 +121,24 @@ export default {
                 .post(url, params, headers)
                 .then((response) => {
                     var resCode = response.data.res_code;
-
+                    console.log(response)
                     if(resCode == 200) {
                         this.showFirmList = true;
                         this.fList = response.data.data.cam_firmware_list
                     }
                     else if(resCode == 204) {
-                        alert('펌웨어 정보가 없습니다.')
                         this.fList = [];
+                        this.showFirmList = false;
                     } else {
+                        this.showFirmList = false;
                         alert('Error');
                     }
                 })
+            if(value!=this.clickVal){
+              this.showFirmList = false;
+            }
+            this.clickVal={}
+            this.clickVal=value
         }
      },
 
