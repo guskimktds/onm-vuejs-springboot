@@ -199,8 +199,7 @@
                     { "name": "단말 오더 OSS 전송", "path": "/operation/dss-result", "component": "dssResult" },
                     { "name": "청약 오더 OSS 전송", "path": "/operation/bss-result", "component": "bssResult" },
                     { "name": "단말 인증 정보 수정", "path": "/operation/device-reco", "component": "deviceReco" },
-                    { "name": "카메라 펌웨어", "path": "/operation/cam-firmware", "component": "camFireware" },
-                    { "name": "카메라 제품정보", "path": "/operation/cam-prod", "component": "camFireware" }
+                    { "name": "카메라 제품정보", "path": "/operation/cam-prod", "component": "camProd" }
                 ]
             }
         ]

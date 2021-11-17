@@ -99,9 +99,7 @@ import CustomerTransfer from '../components/dashboard/operation/transfer/custome
 import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatus'
 
 // 운영관리, VOC관리
-import CamFirmware from '../components/dashboard/operation/voc/camFirmware/camFirmware'
 import CamProd from '../components/dashboard/operation/voc/camProd/camProd'
-
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -509,11 +507,6 @@ export default new Router({
                     path: "gw-accept",
                     name: 'GwAcceptInfo',
                     component: GwAcceptInfo
-                },
-                {
-                    path: "cam-firmware",
-                    name: "CamFirmware",
-                    component: CamFirmware
                 },
                 {
                     path: "cam-prod",
