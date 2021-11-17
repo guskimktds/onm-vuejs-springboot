@@ -106,6 +106,7 @@ export default {
   font-size: 14px !important;
   font-weight: 600;
   background-color: #98C4C6;
+  /* background-color: #3333FF; */
 }
 
 </style>

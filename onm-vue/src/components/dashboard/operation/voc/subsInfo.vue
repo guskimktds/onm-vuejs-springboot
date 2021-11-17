@@ -1674,11 +1674,11 @@ export default {
 
     // 페이징 설정
     setToSearchParams: function(values){
-      var params = {
-        page_no: values.page,
-        view_cnt: values.itemsPerPage,
-      }
-      this.searchToUserOrderInfo(params)
+      // var params = {
+      //   page_no: values.page,
+      //   view_cnt: values.itemsPerPage,
+      // }
+      // this.searchToUserOrderInfo(params)
     },
 
     // 파라미터 설정
