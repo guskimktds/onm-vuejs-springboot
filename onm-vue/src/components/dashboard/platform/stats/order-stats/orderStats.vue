@@ -74,11 +74,7 @@ export default {
             this.$router.replace('/signin')
         }else {
           this.pList = [];
-<<<<<<< HEAD
           console.log(resCode + " / " + resMsg);
-=======
-          alert("Error");
->>>>>>> develop
         }
 
       })
