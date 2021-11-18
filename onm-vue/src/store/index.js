@@ -32,6 +32,7 @@ export default new Vuex.Store({
     state: {
         accessToken: null, //cookie 로 대체
         isAuthenticated: false,
+        pageoptions: [10, 20, 50, 100],
         menu: [],
         topMenu:[],
         onmUserId: '',

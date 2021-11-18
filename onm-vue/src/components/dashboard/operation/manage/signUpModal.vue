@@ -150,7 +150,7 @@ export default {
     },
     methods:{
       save(id, ip, auth) {     
-        alert("onSubmit : "+id+ ", ip : "+ip+", auth : "+ auth);
+        console.log("onSubmit : "+id+ ", ip : "+ip+", auth : "+ auth);
         //this.$router.push({name:'AccountView'})
         return axios.post(`${resourceHost}/signup`, { id, ip, auth })
         // //.then(res => {alert(res)})

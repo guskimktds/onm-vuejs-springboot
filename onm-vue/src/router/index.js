@@ -83,9 +83,11 @@ import AdminHistory from '../components/dashboard/operation/admin/adminHistory'
 import ChangeHistory from '../components/dashboard/operation/change/changeHistory'
 import termNms from '../components/dashboard/operation/voc/termNms.vue'
 import termOrderInfo from '../components/dashboard/operation/voc/termOrderInfo.vue'
+import subsInfo from '../components/dashboard/operation/voc/subsInfo.vue'
 import dssResultInfo from '../components/dashboard/operation/voc/dssResultInfo.vue'
 import bssResultInfo from '../components/dashboard/operation/voc/bssResultInfo.vue'
 import deviceRecoInfo from '../components/dashboard/operation/voc/deviceRecoInfo'
+import cameraModelInfo from '../components/dashboard/operation/voc/cameraModelInfo.vue'
 
 //운영관리 / 코드 설정 관리 
 import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
@@ -489,6 +491,11 @@ export default new Router({
                     component: termOrderInfo
                 },
                 {
+                    path: "subsinfo",
+                    name: 'subsInfo',
+                    component: subsInfo
+                },
+                {
                     path: "dss-result",
                     name: 'dssResultInfo',
                     component: dssResultInfo
@@ -512,7 +519,12 @@ export default new Router({
                     path: "cam-prod",
                     name: "CamProd",
                     component: CamProd
-                }
+                },
+                {
+                    path: "camera-model",
+                    name: 'cameraModelInfo',
+                    component: cameraModelInfo
+                },
             ]
         },
 

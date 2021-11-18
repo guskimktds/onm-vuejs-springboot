@@ -80,7 +80,7 @@ export default {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13010/get_sensor_list`;
 
       var reqParams = this.handleParams(params);
-      if(!reqParams.start_date&&!reqParams.user_id&&!reqParams.sensor_name){
+      if(!reqParams.start_date&&!reqParams.user_id&&!reqParams.sensor_name&&!reqParams.terminal_gw_id){
         this.$fire({
               title: "검색값을 입력해주세요.",
               type: "error"})

@@ -72,9 +72,9 @@ export default {
         }else if(resCode==204){
           this.pList = [];
           this.resPagingInfo = {};
-          alert('현장작업자 로그인이력 데이터가 없습니다.');
+          console.log('현장작업자 로그인이력 데이터가 없습니다.');
         }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
+          console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -84,13 +84,13 @@ export default {
         }else{
           this.pList = [];
           this.resPagingInfo = {};
-          alert("Error");
+          console.log(resCode + " / " + resMsg);
         }
 
       })
       .catch(function (error) {
         console.log(error);
-        alert("Error")
+        console.log("Error")
       })
       .finally(function () {
         // always executed

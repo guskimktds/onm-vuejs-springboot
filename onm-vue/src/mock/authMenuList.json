@@ -195,10 +195,12 @@
                 "component": "customer-transfer",
                 "children": [
                     { "name": "청약 정보조회", "path": "/operation/term-order", "component": "termOrderInfo" },
+                    { "name": "subsinfo 조회", "path": "/operation/subsinfo", "component": "subsInfo" },
                     { "name": "단말오더 NMS 전송", "path": "/operation/term-nms", "component": "termNms" },
                     { "name": "단말 오더 OSS 전송", "path": "/operation/dss-result", "component": "dssResult" },
                     { "name": "청약 오더 OSS 전송", "path": "/operation/bss-result", "component": "bssResult" },
                     { "name": "단말 인증 정보 수정", "path": "/operation/device-reco", "component": "deviceReco" },
+                    { "name": "카메라 모델 정보 조회", "path": "/operation/camera-model", "component": "cameraModel" },
                     { "name": "카메라 제품정보", "path": "/operation/cam-prod", "component": "camProd" }
                 ]
             }

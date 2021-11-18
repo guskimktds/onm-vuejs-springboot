@@ -20,11 +20,11 @@
           'pa-7': !$slots.image
         }"
         :color="color"
-        :max-height="icon ? 90 : undefined"
+        :max-height="icon ? 90 : 60"
         :width="icon ? 'auto' : '100%'"
         elevation="6"
         class="text-start v-card--material__heading mb-n6"
-        dark
+        :dark="icon ? true : false"
       >
         <slot
           v-if="$slots.heading"
@@ -38,7 +38,7 @@
 
         <div
           v-else-if="title && !icon"
-          class="display-1 font-weight-light"
+          class="display-1 font-weight-bold"
           v-text="title"
         />
 
@@ -50,7 +50,7 @@
 
         <div
           v-if="text"
-          class="headline font-weight-thin"
+          class="headline font-weight-bold"
           v-text="text"
         />
       </v-sheet>
@@ -68,7 +68,7 @@
       >
         <div
 
-          class="card-title font-weight-light"
+          class="card-title font-weight-bold"
           v-text="title"
         />
       </div>
@@ -142,7 +142,7 @@
 
     &__heading
       position: relative
-      top: -40px
+      top: -45px
       transition: .3s ease
       z-index: 1
 </style>

@@ -87,6 +87,13 @@
         >
           사용자 전화번호{{ showPhoneList ? " Close" : " Open" }}
         </v-btn>
+
+        <v-btn
+          v-if="showDetailObject"
+          v-on:click="clickToChangeDay()">
+          저장기간 변경
+        </v-btn>
+
       </v-container>
       <storeInfo-detail-object
         v-if="showDetailObject"
@@ -135,9 +142,20 @@
         ></phone-list>
       </v-container>
     </v-card>
+                <v-dialog v-model="showUpdateDialog" max-width="500px">
+                  <v-card>
+                    <v-card-title class="headline">수정 하시겠습니까?</v-card-title>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+                      <v-btn color="blue darken-1" text @click="updateConfirm">OK</v-btn>
+                      <v-spacer></v-spacer>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
   </v-container>
 </template>
-
+              
 <script>
 import StoreInfoList from "./info/storeInfoList";
 import StoreInfoQuery from "./info/storeInfoQuery";
@@ -231,7 +249,8 @@ export default {
       },
 
       resPagingInfo: {},
-
+      showUpdateDialog: false,
+      addDay:'',
       oldValue:'',
       searchParam: {
         start_date: dateInfo().lastWeekDashFormat,
@@ -243,6 +262,7 @@ export default {
         is_masking:"",
         date_yn: true
       },
+
     };
   },
 
@@ -577,6 +597,67 @@ export default {
         .catch((ex) => {
           console.log("조회 실패", ex);
         });
+    },
+
+    clickToChangeDay: function(){
+      this.$fire({
+        title: "변경할 영상저장기간을 입력해주세요. (추가 영상 저장기간만 수정이 가능합니다.)",
+        input: 'text',
+        showCancelButton:true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '입력',
+        cancelButtonText: '취소',
+        inputPlaceholder: '추가 기간 입력',
+        inputAttributes: {
+          min: 0,
+          max: 25,
+          autocapitalize: 'off',
+          autocorrect: 'off'
+        }
+      }).then(result=>{
+        
+        if(result.value>=0){
+          this.showUpdateDialog=true
+          this.addDay=result.value
+        } else if(result.value<0){
+          alert('추가 기간은 음수를 입력할 수 없습니다.')
+        } else if(result.dismiss=='cancel'){
+          console.log('취소')
+        } else {
+          alert('입력값이 잘못되어 취소되었습니다.')
+        }
+      })
+    },
+
+    updateConfirm: function(){
+          var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13017/set_user_store_add_day`
+
+          var param = {
+            user_id: this.pObject.user_id,
+            old_store_day: this.pObject.storage_chg_day,
+            add_day: this.addDay
+          }
+          console.log(param)
+          axios.post(url,param,this.$store.state.headers)
+            .then((response) => {
+              console.log(response)
+              var resCode =response.data.res_code;
+
+              if(resCode==200){
+                alert('변경이 성공적으로 완료되었습니다.')
+                this.$router.go()
+              } else if(resCode==204){
+                alert('변경이 실패하였습니다.')
+              } else {
+                alert('에러가 발생하여 요청을 완료하지 못했습니다.')
+              }
+            })
+    },
+    
+    close: function(){
+      this.showUpdateDialog=false
+      this.addDay=''
     },
 
     setToSearchParams: function (values) {

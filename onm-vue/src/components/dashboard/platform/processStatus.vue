@@ -70,7 +70,7 @@ export default {
     })
     .catch(function (error) {
         console.log(error);
-        alert("국사정보 조회실패")
+        console.log("국사정보 조회실패")
       })
       .finally(function () {
         // always executed
@@ -94,9 +94,9 @@ export default {
         }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
-            alert("프로세스 현황 데이터가 없습니다.");
+            console.log("프로세스 현황 데이터가 없습니다.");
         }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
+          console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
           this.$store
             .dispatch("LOGOUT")
@@ -112,7 +112,7 @@ export default {
       })
       .catch(function (error) {
         console.log(error);
-        alert("Error")
+        console.log("Error")
       })
       .finally(function () {
         // always executed
