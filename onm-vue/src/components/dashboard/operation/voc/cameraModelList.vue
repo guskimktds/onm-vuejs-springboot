@@ -26,39 +26,34 @@
                         <v-row>
                           <v-col cols="4">
                             <v-text-field
-                              v-model="dev_type"
+                              v-model="selectItems.dev_type"
                               label="제품타입"
-                              readonly
                             ></v-text-field>
                           </v-col>
                           <v-col cols="4">
                             <v-text-field
-                              v-model="product_code"
-                              label="펌웨어 버전"
-                              readonly
+                              v-model="selectItems.product_code"
+                              label="제품코드"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="4">
                             <v-text-field
-                              v-model="vender_name"
+                              v-model="selectItems.vender_name"
                               label="제조사명"
-                              readonly
                             ></v-text-field>
                           </v-col>
                         </v-row>
                         <v-row>
                           <v-col cols="4">
                             <v-text-field
-                              v-model="model_name"
+                              v-model="selectItems.model_name"
                               label="모델명"
-                              readonly
                             ></v-text-field>
                           </v-col>
                           <v-col cols="4">
                             <v-text-field
-                              v-model="conn_id"
+                              v-model="selectItems.conn_id"
                               label="단말접속ID"
-                              readonly
                             ></v-text-field>
                           </v-col>
                         </v-row>
@@ -164,10 +159,11 @@ export default {
       this.loading = true;
       this.$emit("pagination", this.options);
     }, 
-      updateItem (item) {
+    updateItem (item) {
         this.updateIndex = this.cmList.indexOf(item)
         this.tempItems = Object.assign({},item)
         this.selectItems.dev_type=this.tempItems.dev_type
+        this.selectItems.product_code=this.tempItems.product_code
         this.selectItems.vendor_name=this.tempItems.vendor_name
         this.selectItems.model_name=this.tempItems.model_name
         this.selectItems.conn_id=this.tempItems.conn_id
@@ -180,6 +176,7 @@ export default {
         this.deleteIndex = this.cmList.indexOf(item)
         this.tempItems = Object.assign({},item)
         this.selectItems.dev_type=this.tempItems.dev_type
+        this.selectItems.product_code=this.tempItems.product_code
         this.selectItems.vendor_name=this.tempItems.vendor_name
         this.selectItems.model_name=this.tempItems.model_name
         this.selectItems.conn_id=this.tempItems.conn_id
@@ -202,6 +199,33 @@ export default {
           this.selectItems = Object.assign({}, this.defaultItem)
           this.updateIndex = -1
         })
+    },
+
+    updateItemConfirm (){ 
+      if(this.updateIndex>-1){
+        var params = this.selectItems
+        
+
+         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15041/set_cam_model_info`
+
+                            axios.post(url, params, this.$store.state.headers)
+                              .then((response) => {
+                                var resCode = response.data.res_code;
+                                console.log(params)
+                                console.log(response)
+                                if(resCode == 200){
+                                  console.log(response)
+                                }else{
+                                  alert("Error");
+                                }
+                              })
+                              .catch((ex) => {
+                                console.log('변경 실패',ex)
+                              })
+                      }else{
+                        alert('요청 중 에러가 발생하였습니다.');
+                      }
+      this.closeUpdate()
     },
 
     deleteItemConfirm () {
@@ -241,8 +265,8 @@ export default {
                             axios.post(url, params, this.$store.state.headers)
                               .then((response) => {
                                 var resCode = response.data.res_code;
-                                
-                                console.log('응답코드'+resCode)
+                                console.log(params)
+                                console.log(response)
                                 if(resCode == 200){
                                   //현재 목록에서 선택한 Item을 삭제한다.
                                   this.cmList.splice(deleteCol, 1)
