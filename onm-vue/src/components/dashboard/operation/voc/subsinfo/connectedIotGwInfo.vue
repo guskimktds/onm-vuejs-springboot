@@ -2,7 +2,7 @@
   <v-container id="regular-tables" fluid tag="section">
     <base-material-card
       color="customheader"  
-      title="연결된 IoT GW 정보 조회 LIST"
+      title="연결된 IoT GW 정보 "
       class="px-2 py-1 customgrey"
     >
       <v-data-table
@@ -11,7 +11,8 @@
         hide-default-header
         :options.sync="options"
         :server-items-length="iotPagingInfo.total_cnt"
-        class="elevation-0"
+        
+        class="my-class"
         
         :footer-props="{ itemsPerPageOptions: pageoptions }"
       >
@@ -125,5 +126,11 @@ export default {
   font-size: 14px !important;
   font-weight: 600;
   background-color: #98C4C6;
+}
+
+.my_class td{
+    font-size: small!important;
+    height: 0!important;
+    padding: 1px!important;
 }
 </style>

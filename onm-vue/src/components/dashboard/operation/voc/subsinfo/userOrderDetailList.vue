@@ -35,7 +35,7 @@
                 hide-default-header
                 :options.sync="options"
                 :server-items-length="dodPagingInfo.total_cnt"
-                class="elevation-0"
+                class="my-class"
                 :footer-props="{ itemsPerPageOptions: pageoptions }"
     
             >  
@@ -123,6 +123,13 @@ export default {
   font-size: 14px !important;
   font-weight: 600;
   background-color: #98C4C6;
+}
+
+.my_class td{
+    /* font-size: small!important;
+    height: 0!important;
+    padding: 1px!important; */
+    font-weight: bold;
 }
 
 </style>
