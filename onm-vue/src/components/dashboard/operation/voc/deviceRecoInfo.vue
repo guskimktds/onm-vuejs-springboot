@@ -97,7 +97,7 @@ export default {
           }else{
             this.dcList = [];
             this.dcPagingInfo = {};
-            console.log(resCode + " / " + resMsg);
+            // console.log(resCode + " / " + resMsg);
           }
         })
         .catch((ex) => {

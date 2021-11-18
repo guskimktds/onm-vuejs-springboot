@@ -352,7 +352,7 @@ export default {
         }else{
           this.pList = [];
           this.resPagingInfo = {};
-          console.log(resCode + " / " + resMsg);
+          // console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
@@ -494,7 +494,7 @@ export default {
         }else{
           this.phList = [];
           this.phPagingInfo = {};
-          console.log(resCode + " / " + resMsg);
+          // console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
@@ -567,7 +567,7 @@ export default {
           }else{
             this.authList = [];
             this.authPaingInfo={};
-            console.log(resCode + " / " + resMsg);
+            // console.log(resCode + " / " + resMsg);
           }
       })
       .catch((ex) => {
@@ -650,7 +650,7 @@ export default {
         }else{
           this.kList = [];
           this.kttPagingInfo = {};
-          console.log(resCode + " / " + resMsg);
+          // console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
@@ -734,7 +734,7 @@ export default {
         }else{
           this.vaList = [];
           this.vaPagingInfo = {};
-          console.log(resCode + " / " + resMsg);
+          // console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
@@ -814,7 +814,7 @@ export default {
           }else {
             this.iotList = [];
             this.iotPagingInfo = {};
-            console.log(resCode + " / " + resMsg);
+            // console.log(resCode + " / " + resMsg);
           }
         })
         .catch((ex) => {

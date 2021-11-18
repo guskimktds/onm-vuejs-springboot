@@ -92,7 +92,7 @@ export default {
         }else{
           this.phList = [];
           this.phPagingInfo = {};
-          console.log(resCode + " / " + resMsg);
+          // console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
