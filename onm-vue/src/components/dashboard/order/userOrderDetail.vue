@@ -93,7 +93,7 @@ export default {
         }else{
           this.pList = [];
           this.dodPagingInfo = {};
-          console.log(resCode + " / " + resMsg);
+          // console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
