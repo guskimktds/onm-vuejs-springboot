@@ -34,11 +34,12 @@
                             <v-text-field
                               v-model="selectItems.product_code"
                               label="제품코드"
+                              readonly
                             ></v-text-field>
                           </v-col>
                           <v-col cols="4">
                             <v-text-field
-                              v-model="selectItems.vender_name"
+                              v-model="selectItems.vendor_name"
                               label="제조사명"
                             ></v-text-field>
                           </v-col>
