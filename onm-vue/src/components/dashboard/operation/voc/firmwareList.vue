@@ -36,6 +36,7 @@
                             <v-text-field
                               v-model="selectItems.product_code"
                               label="제품코드"
+                              readonly
                             ></v-text-field>
                           </v-col>
                           <v-col cols="4">
@@ -129,9 +130,7 @@ export default {
         this.tempItems = Object.assign({},item)
         this.selectItems.dev_type=this.tempItems.dev_type
         this.selectItems.product_code=this.tempItems.product_code
-        this.selectItems.vendor_name=this.tempItems.vendor_name
-        this.selectItems.model_name=this.tempItems.model_name
-        this.selectItems.conn_id=this.tempItems.conn_id
+        this.selectItems.firmware_version=this.tempItems.firmware_version
         this.selectItems.cmd_type='U'
 
         this.dialogUpdate = true
@@ -141,10 +140,7 @@ export default {
         this.deleteIndex = this.fList.indexOf(item)
         this.tempItems = Object.assign({},item)
         this.selectItems.dev_type=this.tempItems.dev_type
-        this.selectItems.product_code=this.tempItems.product_code
-        this.selectItems.vendor_name=this.tempItems.vendor_name
-        this.selectItems.model_name=this.tempItems.model_name
-        this.selectItems.conn_id=this.tempItems.conn_id
+        this.selectItems.firmware_version=this.tempItems.firmware_version
         this.selectItems.cmd_type='D'
 
         this.dialogDelete = true
