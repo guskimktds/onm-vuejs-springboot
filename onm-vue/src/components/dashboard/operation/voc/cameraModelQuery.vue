@@ -279,11 +279,9 @@ export default {
             this.$fire({
             title: "정말 등록 하시겠습니까?",
             type: "question",
-            html: "단말구분 : "+this.camItem.dev_type+
-            "<br/>제조사명 : "+this.camItem.vendor_name+
-            "<br/>모델명 : "+this.camItem.model_name+
-            "<br/>단말접속ID : "+this.camItem.conn_id+
-            "<br/>제품코드 : "+this.camItem.product_code,
+            html: "단말구분 : "+this.firmItem.dev_type+
+            "<br/>제품코드 : "+this.firmItem.product_code+
+            "<br/>펌웨어 버전 : "+this.firmItem.firmware_version,
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
