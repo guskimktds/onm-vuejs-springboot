@@ -274,6 +274,7 @@ export default {
                  this.closeCam()
                }
             });
+            this.closeCam()
     },
     saveFirm: function(){
             this.$fire({
@@ -291,7 +292,7 @@ export default {
                if(result.value){
                       this.firmItem.cmd_type='I'
                       var params = this.firmItem
-                      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15031/cam_firmware_info`
+                      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15031/set_cam_firmware_info`
 
                       axios.post(url, params, this.$store.state.headers)
                               .then((response) => {
@@ -308,9 +309,10 @@ export default {
                                 console.log('등록 실패',ex)
                               })
                }else{
-                 this.closeCam()
+                 this.closeFirm()
                }
             });
+            this.closeFirm()
     },
     closeCam: function(){
       this.camInsert=false
