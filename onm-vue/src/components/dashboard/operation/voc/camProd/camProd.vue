@@ -11,6 +11,7 @@
         <cam-prod-list
           v-bind:pList=pList
           v-bind:resPagingInfo="resPagingInfo"
+          @reset="reset"
           @pagination="setToSearchParams"
         >
         </cam-prod-list>
@@ -60,7 +61,7 @@ export default {
           console.log(response)
           var resCode = response.data.res_code;
           if(resCode == 200){
-            this.pList = response.data.data.list;
+            this.pList = response.data.data.cam_prod_list;
             this.resPagingInfo = response.data.data.paging_info
             console.log(this.resPagingInfo)
           }else{
@@ -83,7 +84,7 @@ export default {
           console.log(response)
           var resCode = response.data.res_code;
           if(resCode == 200){
-            this.pList = response.data.data.list;
+            this.pList = response.data.data.cam_prod_list;
             this.resPagingInfo = response.data.data.paging_info
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
@@ -118,7 +119,9 @@ export default {
                 this.pList.unshift(params)
                 this.$fire({
                   title: "등록 되었습니다.",
-                  type : "success"})
+                  type : "success"
+                })
+                this.searchToButton(params);
               }else{
                 this.$fire({
                   title: "등록 실패하였습니다.",

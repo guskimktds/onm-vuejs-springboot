@@ -2,7 +2,7 @@
   <v-container id="regular-tables" fluid tag="section">
         <base-material-card icon="mdi-magnify" title="카메라 제품정보 조회" class="px-5 py-3">            
             <v-row>      
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="12" sm="6" md="2">
                      <v-text-field 
                         label="카메라 제품 ID" 
                         v-model="param.cam_prod_id"
@@ -11,7 +11,7 @@
                     </v-text-field>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="12" sm="6" md="4">
                     <v-text-field 
                         label="카메라 제품명" 
                         v-model="param.cam_prod_name"
@@ -30,7 +30,7 @@
                     </v-btn>
                 </v-col>
                 
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="12" sm="6" md="3">
                     <v-dialog
                         v-model="dialog"
                         max-width="500px"

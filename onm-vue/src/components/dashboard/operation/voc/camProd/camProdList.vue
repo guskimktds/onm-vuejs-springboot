@@ -12,14 +12,14 @@
         title="카메라 제품정보 LIST"
         class="px-5 py-3"
       >
-      <!--//resPagingInfo.total_cnt -->
+
       <v-data-table
         :headers="headers"
         :items="pList"
         :options.sync="options"
-        :server-items-length="10" 
+        :server-items-length="resPagingInfo.total_cnt" 
         class="elevation-1"
-        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+        :footer-props="{itemsPerPageOptions:[10,20,50,100]}"
         :header-props="{ sortIcon: null }"
         v-show="showAuth()"
       >
@@ -53,6 +53,7 @@
                             <v-text-field
                                 v-model="editedItem.cam_prod_id"
                                 label="카메라 제품 ID"
+                                readonly
                                 counter
                                 maxlength="20"
                             ></v-text-field>
@@ -131,9 +132,10 @@ export default {
       totalList: 0,
       loading: true,
       headers: [
-        { text: '카메라 제품 ID', value: 'cam_prod_id' },
+        { text: '카메라 제품 ID', value: 'cam_prod_id', sortable: true },
         { text: '카메라 제품명', value: 'cam_prod_name' },
-        { text: '등록일', value: 'reg_date' },
+        { text: '등록일', value: 'reg_date', sortable: true },
+        { text: '변경', value: 'actions', sortable: false }
       ],
       editedItem: {
         cam_type: 'C',
@@ -181,12 +183,15 @@ export default {
     },
 
     editItem (item) { 
-        this.editedIndex = this.pList.indexOf(item)
-        console.log('update Item Index : ',this.editedIndex)
-        this.editedItem = Object.assign({}, item)
-        this.editedItem.cmd_type = 'U'
-        console.log('update Item value : ',this.editedItem)
-        this.dialog = true
+      this.editedIndex = this.pList.indexOf(item)
+      console.log('update Item Index : ',this.editedIndex)
+      this.editedItem = Object.assign({}, item)
+      this.editedItem.cmd_type = 'U';
+      this.editedItem.cam_type = 'C';
+      this.editedItem.chg_cam_prod_name = this.editedItem.cam_prod_name;
+      console.log('=======chg_cam_prod_name=======',this.editedItem.chg_cam_prod_name);
+      console.log('update Item value : ',this.editedItem)
+      this.dialog = true
     },
 
     deleteItem (item) {
@@ -195,6 +200,7 @@ export default {
       console.log('Delte Item Index : ',this.editedIndex)
       this.editedItem = Object.assign({}, item)
       this.editedItem.cmd_type = 'D'
+      this.editedItem.cam_type = 'C'
       this.dialogDelete = true
     },
 
@@ -275,7 +281,9 @@ export default {
 
     save () {
       if (this.editedIndex > -1) {
-        this.editItem.chg_cam_prod_name = this.editItem.cam_prod_name;
+        // this.editItem.chg_cam_prod_name = this.editItem.cam_prod_name;
+        // console.log('chg_cam_prod_name' + this.editItem.chg_cam_prod_name);
+        this.editItem.cmd_type = 'C'
         var params = this.editedItem
         this.$fire({
           title: "비밀번호를 입력해주세요.",
