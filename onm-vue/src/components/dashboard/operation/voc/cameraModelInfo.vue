@@ -48,7 +48,7 @@ export default {
       },
       cmPagingInfo: {},
       searchParam: {
-          dev_type: '',
+          dev_type: 'CAM',
           model_name: '',
           product_code: ''
       },
@@ -131,7 +131,7 @@ export default {
                         this.showFirmList = false;
                     } else {
                         this.showFirmList = false;
-                        alert('Error');
+                        console.log('Error');
                     }
                 })
             if(value!=this.clickVal){
@@ -163,6 +163,15 @@ export default {
         this.searchParam.dev_type !== ""
       ) {
         newParams.dev_type = this.searchParam.dev_type;
+      }
+
+      if (params.vendor_name !== undefined && params.vendor_name !== "") {
+        newParams.vendor_name = params.vendor_name;
+      } else if (
+        this.searchParam.vendor_name !== undefined &&
+        this.searchParam.vendor_name !== ""
+      ) {
+        newParams.vendor_name = this.searchParam.vendor_name;
       }
 
       if (params.model_name !== undefined && params.model_name !== "") {
