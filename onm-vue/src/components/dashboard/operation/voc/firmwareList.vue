@@ -32,6 +32,7 @@
                             <v-text-field
                               v-model="selectItems.dev_type"
                               label="제품타입"
+                              readonly
                             ></v-text-field>
                           </v-col>
                           <v-col cols="4">
