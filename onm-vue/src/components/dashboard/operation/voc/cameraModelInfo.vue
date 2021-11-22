@@ -11,7 +11,9 @@
       @pagination="setToSearchParams"></camera-model-list>
       <firmware-list
       v-show="showFirmList"
-      v-bind:fList="fList"></firmware-list>
+      v-bind:fList="fList"
+      v-bind:fPagingInfo="fPagingInfo"
+      @subPagination="setToSubPage"></firmware-list>
   </v-container>
 </template>
 
@@ -47,6 +49,7 @@ export default {
         view_cnt: 10,
       },
       cmPagingInfo: {},
+      fPagingInfo: {},
       searchParam: {
           dev_type: 'CAM',
           model_name: '',
@@ -106,6 +109,15 @@ export default {
       this.searchCameraModel(params);
     },
 
+    setToSubPage: function(values){
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage
+      }
+      console.log(params)
+      this.changeFirmPage(params)
+    },
+
     clickToSearchFirm: function (value) {
         if(value){
             var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15030/get_cam_firmware_list`;
@@ -125,12 +137,15 @@ export default {
                     if(resCode == 200) {
                         this.showFirmList = true;
                         this.fList = response.data.data.cam_firmware_list
+                        this.fPagingInfo = response.data.data.paging_info
                     }
                     else if(resCode == 204) {
                         this.fList = [];
+                        this.fPagingInfo = {};
                         this.showFirmList = false;
                     } else {
                         this.showFirmList = false;
+                        this.fPagingInfo = {};
                         console.log('Error');
                     }
                 })
@@ -141,6 +156,39 @@ export default {
             this.clickVal=value
         }
      },
+    changeFirmPage: function(params){
+      
+      var reqParams ={
+        page_no: params.page_no,
+        view_cnt: params.view_cnt,
+        dev_type: this.clickVal.dev_type,
+        product_code: this.clickVal.product_code,
+      }
+
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15030/get_cam_firmware_list`;
+
+              axios
+                .post(url, reqParams, headers)
+                .then((response) => {
+                    var resCode = response.data.res_code;
+                    console.log(response)
+                    if(resCode == 200) {
+                        this.showFirmList = true;
+                        this.fList = response.data.data.cam_firmware_list
+                        this.fPagingInfo = response.data.data.paging_info
+                    }
+                    else if(resCode == 204) {
+                        this.fList = [];
+                        this.fPagingInfo = {};
+                        this.showFirmList = false;
+                    } else {
+                        this.showFirmList = false;
+                        this.fPagingInfo = {};
+                        console.log('Error');
+                    }
+                })
+
+    },
 
     handleParams: function (params) {
       let newParams = {};

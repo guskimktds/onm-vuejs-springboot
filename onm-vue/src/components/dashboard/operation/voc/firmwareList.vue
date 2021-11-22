@@ -14,6 +14,8 @@
       <v-data-table
         :headers="headers"
         :items="fList"
+        :options.sync="options"
+        :server-items-length="fPagingInfo.total_cnt"
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
@@ -93,13 +95,15 @@
 import axios from "axios"
 
 export default {
-  props: ['fList'],
+  props: ['fList','fPagingInfo'],
   data() {
     return {
+      last:0,
       dialogDelete: false,
       dialogUpdate: false,
       deleteIndex: -1,
       updateIndex: -1,
+      options:{},
       headers: [
         {
           text: "단말구분",
@@ -125,6 +129,10 @@ export default {
     };
   },
    methods:{
+     getDataFromApi() {
+      this.loading = true;
+      this.$emit("subPagination", this.options);
+    }, 
     updateItem (item) {
         this.updateIndex = this.fList.indexOf(item)
         this.tempItems = Object.assign({},item)
@@ -140,6 +148,7 @@ export default {
         this.deleteIndex = this.fList.indexOf(item)
         this.tempItems = Object.assign({},item)
         this.selectItems.dev_type=this.tempItems.dev_type
+        this.selectItems.product_code=this.tempItems.product_code
         this.selectItems.firmware_version=this.tempItems.firmware_version
         this.selectItems.cmd_type='D'
 
@@ -167,7 +176,7 @@ export default {
         var params = this.selectItems
         
 
-         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15031/cam_firmware_info`
+         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15031/set_cam_firmware_info`
 
                             axios.post(url, params, this.$store.state.headers)
                               .then((response) => {
@@ -187,6 +196,7 @@ export default {
                         alert('요청 중 에러가 발생하였습니다.');
                       }
       this.closeUpdate()
+      this.$router.go();
     },
 
     deleteItemConfirm () {
@@ -222,7 +232,7 @@ export default {
                       var resCode = response.data.res_code;
 
                       if(resCode == 200){
-                        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15031/cam_firmware_info`
+                        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15031/set_cam_firmware_info`
                             axios.post(url, params, this.$store.state.headers)
                               .then((response) => {
                                 var resCode = response.data.res_code;
@@ -250,7 +260,23 @@ export default {
         }
         this.closeDelete() //다이얼로그를 닫는다.
       },
-  }
+  },
+    watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+  updated() {
+      if(this.last!==this.fPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.fPagingInfo.total_cnt!==undefined){
+      this.last=this.fPagingInfo.total_cnt
+      }
+  },
 }
 
 </script>
