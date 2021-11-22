@@ -202,6 +202,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     props: ['param'],
     data() {
@@ -219,11 +220,13 @@ export default {
                 vendor_name:'',
                 model_name:'',
                 conn_id: '',
+                cmd_type: ''
             },
             firmItem:{
               dev_type:'',
               product_code:'',
-              firmware_version:''
+              firmware_version:'',
+              cmd_type: ''
             }
         }
     },
@@ -234,10 +237,80 @@ export default {
       this.$emit("search", this.param);
     },
     saveCam: function(){
+            this.$fire({
+            title: "정말 등록 하시겠습니까?",
+            type: "question",
+            html: "단말구분 : "+this.camItem.dev_type+
+            "<br/>제조사명 : "+this.camItem.vendor_name+
+            "<br/>모델명 : "+this.camItem.model_name+
+            "<br/>단말접속ID : "+this.camItem.conn_id+
+            "<br/>제품코드 : "+this.camItem.product_code,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText: '아니오'
+            }).then(result => {
+               if(result.value){
+                      this.camItem.cmd_type='I'
+                      var params = this.camItem
+                      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15041/set_cam_model_info`
 
+                      axios.post(url, params, this.$store.state.headers)
+                              .then((response) => {
+                                var resCode = response.data.res_code;
+                                console.log(params)
+                                console.log(response)
+                                if(resCode == 200){
+                                  console.log(response)
+                                }else{
+                                  console.log("등록실패"+resCode);
+                                }
+                              })
+                              .catch((ex) => {
+                                console.log('등록 실패',ex)
+                              })
+               }else{
+                 this.closeCam()
+               }
+            });
     },
     saveFirm: function(){
+            this.$fire({
+            title: "정말 등록 하시겠습니까?",
+            type: "question",
+            html: "단말구분 : "+this.firmItem.dev_type+
+            "<br/>제품코드 : "+this.firmItem.product_code+
+            "<br/>펌웨어 버전 : "+this.firmItem.firmware_version,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText: '아니오'
+            }).then(result => {
+               if(result.value){
+                      this.firmItem.cmd_type='I'
+                      var params = this.firmItem
+                      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15031/cam_firmware_info`
 
+                      axios.post(url, params, this.$store.state.headers)
+                              .then((response) => {
+                                var resCode = response.data.res_code;
+                                console.log(params)
+                                console.log(response)
+                                if(resCode == 200){
+                                  console.log(response)
+                                }else{
+                                  console.log("등록실패"+resCode);
+                                }
+                              })
+                              .catch((ex) => {
+                                console.log('등록 실패',ex)
+                              })
+               }else{
+                 this.closeCam()
+               }
+            });
     },
     closeCam: function(){
       this.camInsert=false
