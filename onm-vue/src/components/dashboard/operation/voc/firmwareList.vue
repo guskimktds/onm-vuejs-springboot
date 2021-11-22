@@ -177,7 +177,7 @@ export default {
                                 if(resCode == 200){
                                   console.log(response)
                                 }else{
-                                  alert("Error");
+                                  console.log("Error");
                                 }
                               })
                               .catch((ex) => {
@@ -232,7 +232,7 @@ export default {
                                   //현재 목록에서 선택한 Item을 삭제한다.
                                   this.fList.splice(deleteCol, 1)
                                 }else{
-                                  alert("Error");
+                                  console.log("Error");
                                 }
                               })
                               .catch((ex) => {
