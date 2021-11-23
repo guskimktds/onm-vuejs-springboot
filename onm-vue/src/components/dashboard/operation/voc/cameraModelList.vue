@@ -1,4 +1,4 @@
-<template>
+<template> 
   <v-container id="regular-tables" fluid tag="section">
     <base-material-card
       color="orange"
@@ -13,7 +13,7 @@
         :options.sync="options"
         :server-items-length="cmPagingInfo.total_cnt"
         class="elevation-1"
-        @click:row="handleClick"
+        @click:row="handleClick" item-key="product_code" single-select
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       >
@@ -151,10 +151,12 @@ export default {
           conn_id:'',
           cmd_type:''
         },
+        selectId:-1
     };
   },
   methods: {
-    handleClick:function (value){
+    handleClick:function (value, row){
+        row.select(true);
         this.$emit("child", value);
     },
     getDataFromApi() {
@@ -313,4 +315,7 @@ export default {
 };
 </script>
 <style>
+tr.v-data-table__selected {
+  background: #616161 !important;
+}
 </style>
