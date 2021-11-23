@@ -20,7 +20,7 @@
        <template v-slot:top>
                 <v-dialog v-model="dialogUpdate" max-width="500px">
                   <v-card>
-                    <v-card-title class="headline">정보 수정 페이지</v-card-title>
+                    <v-card-title class="headline">카메라 모델 수정 페이지</v-card-title>
                     <v-card-text>
                       <v-container>
                         <v-row>
@@ -228,7 +228,7 @@ export default {
                         alert('요청 중 에러가 발생하였습니다.');
                       }
       this.closeUpdate()
-      this.$router.go();
+      this.$emit('reset')
     },
 
     deleteItemConfirm () {
