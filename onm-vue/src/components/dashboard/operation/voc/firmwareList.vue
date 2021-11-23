@@ -24,7 +24,7 @@
        <template v-slot:top>
                 <v-dialog v-model="dialogUpdate" max-width="500px">
                   <v-card>
-                    <v-card-title class="headline">정보 수정 페이지</v-card-title>
+                    <v-card-title class="headline">펌웨어 수정 페이지</v-card-title>
                     <v-card-text>
                       <v-container>
                         <v-row>
@@ -46,6 +46,15 @@
                             <v-text-field
                               v-model="selectItems.firmware_version"
                               label="펌웨어 버전"
+                              readOnly
+                            ></v-text-field>
+                          </v-col>
+                        </v-row>
+                        <v-row>
+                          <v-col cols="12">
+                            <v-text-field
+                              v-model="selectItems.chg_version"
+                              label="수정할 펌웨어 버전"
                             ></v-text-field>
                           </v-col>
                         </v-row>
@@ -120,12 +129,14 @@ export default {
       selectItems: {
           dev_type: '',
           product_code: '',
-          firmware_version: ''
+          firmware_version: '',
+          chg_version: ''
         },
       defaultItem: {
           dev_type: '',
           product_code: '',
-          firmware_version: ''
+          firmware_version: '',
+          chg_version: ''
         },
     };
   },
@@ -140,6 +151,7 @@ export default {
         this.selectItems.dev_type=this.tempItems.dev_type
         this.selectItems.product_code=this.tempItems.product_code
         this.selectItems.firmware_version=this.tempItems.firmware_version
+        this.selectItems.chg_version=this.tempItems.chg_version
         this.selectItems.cmd_type='U'
 
         this.dialogUpdate = true
@@ -187,6 +199,7 @@ export default {
                                 if(resCode == 200){
                                   console.log(response)
                                 }else{
+                                  console.log(response)
                                   console.log("Error");
                                 }
                               })
@@ -197,7 +210,7 @@ export default {
                         alert('요청 중 에러가 발생하였습니다.');
                       }
       this.closeUpdate()
-      this.$router.go();
+      this.$emit('reset')
     },
 
     deleteItemConfirm () {
