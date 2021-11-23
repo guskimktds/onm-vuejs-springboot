@@ -46,7 +46,7 @@
                             <v-text-field
                               v-model="selectItems.firmware_version"
                               label="펌웨어 버전"
-                              readOnly
+                              readonly
                             ></v-text-field>
                           </v-col>
                         </v-row>
