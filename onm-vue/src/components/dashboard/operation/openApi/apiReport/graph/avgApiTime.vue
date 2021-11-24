@@ -25,7 +25,7 @@ export default {
     props:['param'],
     data () {
         return {
-            datacollection: null,
+            datacollection: {},
             title: '시간대별 평균 호출 수',
             labels: [], 
             loaded: false           
@@ -55,11 +55,12 @@ export default {
             }
         }
     },
-    // watch: {
-    //   param : function () {
-    //       console.log("parma 이 변경되었습니다. ", this.param)
-    //     }
-    // },
+    watch: {
+      // param : function () {
+      //   console.log("parma 이 변경되었습니다. ", this.param)
+      // }
+      
+    },
     methods: {
         fillData: function() {
           this.loaded = false

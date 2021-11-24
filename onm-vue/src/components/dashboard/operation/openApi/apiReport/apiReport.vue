@@ -10,11 +10,11 @@
           v-bind:param="checkDate(param)"
           >
           </api-graph>
-
-             <v-row>
+          <api-table></api-table>
+             <!-- <v-row>
         <v-col cols="6">
        
-          <!-- <api-count
+          <api-count
           dense 
             v-bind:pList=pList
             v-bind:resPagingInfo="resPagingInfo"
@@ -27,9 +27,9 @@
             v-bind:storeList=storeList
             v-bind:storeResPagingInfo="storeResPagingInfo"
             @pagination="setToSearchParams"
-          ></service-count> -->
+          ></service-count>
         </v-col>
-      </v-row>
+      </v-row> -->
       </v-card>
     </v-container>
 </template>
@@ -40,6 +40,8 @@ import CountApiTab from './countApiTab.vue'
 import dateInfo from "../../../../utils/common"
 import ApiGraph from './apiGraph.vue'
 import EventBus from '../../../../../EventBus'
+import ApiTable from './apiTable.vue'
+
 // import ServiceCount from './serviceCount.vue'
 // import ApiCount from './apiCount.vue'
 // import axios from "axios"
@@ -48,6 +50,7 @@ export default {
     apiReportQuery,
     CountApiTab,
     ApiGraph,
+    ApiTable,
     // ServiceCount,
     // ApiCount,
   },
@@ -57,25 +60,24 @@ export default {
       param: {
         start_date: dateInfo().threeMonthDashFormat,
         end_date: dateInfo().currentDateDashFormat,
-      }
+      },
+      pList: [],
+
     }
   },
   methods: {   
-    checkDate: function(value){
-      let newParams={}
-      if(Number(value.start_date.replace(/-/g,""))-Number(value.end_date.replace(/-/g,""))>0){
-          alert('형식에 맞는 날짜 검색값을 입력해주세요')
-          this.param.start_date=dateInfo().threeMonthDashFormat
-          this.param.end_date=dateInfo().currentDateDashFormat
-      }else{
-          newParams=value
-      }
-      return newParams;
-    },
-
-    searchAllGraph: function(){
-      EventBus.$emit('search-graph', this.param);
-    }
+        checkDate: function(value){
+          console.log("DDDDDDDDDDDDDDDDDDDD")
+            let newParams={}
+            if(Number(value.start_date.replace(/-/g,""))-Number(value.end_date.replace(/-/g,""))>0){
+                alert('형식에 맞는 날짜 검색값을 입력해주세요')
+                this.param.start_date=dateInfo().threeMonthDashFormat
+                this.param.end_date=dateInfo().currentDateDashFormat
+            }else{
+                newParams=value
+            }
+            return newParams;
+        },
   }
 }
 </script>
