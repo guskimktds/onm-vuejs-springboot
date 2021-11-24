@@ -1,14 +1,24 @@
 <template>
     <v-container>
-              <avg-api-time
+        <div class="row ">
+            <div class="col-10 "  >
+            <avg-api-time
             v-bind:param=param
             ></avg-api-time>
+            </div>
+        </div>
+            <div class="row">
+        <div class="col-5">
             <count-call-api
             v-bind:param=param
             ></count-call-api>
+        </div>
+        <div class="col-5">
             <count-call-store
             v-bind:param=param
             ></count-call-store>
+        </div>
+        </div>
     </v-container>
 </template>
 
@@ -27,5 +37,7 @@ export default {
 </script>
 
 <style>
-
+.small{
+    height: 30px;
+}
 </style>

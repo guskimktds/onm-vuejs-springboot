@@ -11,15 +11,17 @@
         >
         </count-api>
       <v-row>
-        <v-col>
+        <v-col cols="6">
           <customer-api-list
+          dense 
             v-bind:pList=pList
             v-bind:resPagingInfo="resPagingInfo"
             @pagination="setToSearchParams"
           ></customer-api-list>
         </v-col>
-        <v-col>
+        <v-col cols="6">
           <store-api-list
+          dense
             v-bind:storeList=storeList
             v-bind:storeResPagingInfo="storeResPagingInfo"
             @pagination="setToSearchParams"
@@ -87,7 +89,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
-          this.cList = response.data.data.site_openapi_access;
+          this.cList = response.data.data.access_cnt;
           this.resPagingInfo = response.data.data.paging_info;
           console.log(params)
         }else if(resCode==204){
@@ -118,7 +120,6 @@ export default {
       });
     },
    searchCustomerApi: function(params){
-       console.log('이벤트 버스 타기')
       var reqParams = this.handleParams(params);
       reqParams.site_id ='JHC_CTRL_001'
       console.log("api 사이트 아이디 " + reqParams)
@@ -131,6 +132,7 @@ export default {
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
           this.pList = response.data.data.openapi_access_api;
+          this.cList = response.data.data.access_cnt;
           this.resPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
           this.pList = [];
@@ -174,6 +176,7 @@ export default {
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
           this.storeList = response.data.data.openapi_access_user;
+          this.cList = response.data.data.access_cnt;
           this.storeResPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
           this.storeList = [];

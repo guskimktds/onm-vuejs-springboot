@@ -4,9 +4,10 @@
             <div><br></div>
             <div class="chart-area">
                 <!-- <line-chart :chart-data="chartData" :options="labels" :styles="myStyles"
+                    :v-on="fillData()"
                 ></line-chart> -->
                 <line-chart 
-                    v-if="loaded"
+                v-if="loaded"
                     :chart-data="datacollection" :options="labels"
                 ></line-chart>
             </div>
@@ -30,9 +31,13 @@ export default {
             loaded: false           
         }
     },
+    // mounted(){
+    //   this.fillData()
+    // },
  
     computed: {
       formTitle () {
+        console.log("다시 로드")
         this.fillData()
         return this.param.search_type === "D" ? `${this.title}(일간)` : `${this.title}(월간)`
       },

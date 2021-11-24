@@ -8,7 +8,6 @@
         ></notice-query>
         <notice-list 
         v-bind:pList=pList
-        v-bind:gw_id="gw_id"
         v-bind:resPagingInfo="resPagingInfo"
         @pagination="setToSearchParams"
         @reset="reset"></notice-list>
@@ -48,6 +47,7 @@ export default {
       resPagingInfo: {},
       searchParam: {
           title: '',
+          board_id: '',
           board_type: '',
           board_cate_cd: '',
           disp_yn: '',
@@ -55,11 +55,6 @@ export default {
           disp_end_date: '',
           reg_start_date: '',
           reg_end_date: '',
-      },
-
-      centerOptions:{
-        server_name:'센터',
-        local_gw_id:''
       }
     }
   },
@@ -95,12 +90,18 @@ export default {
         })
     },
     searchToButton: function(params){
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15132/get_notice`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15132/get_notice`
+    //  var  reqParams = {
+    //   view_cnt : params.view_cnt,
+    //   page_no : params.page_no,
+    //   board_cate_cd :params.board_cate_cd,
+    // }
 
-    //params : 페이징 + 검색조건
-    var reqParams = this.handleParams(params)  
+      var reqParams = this.handleParams(params)  
     console.log('보내는 값')
-    console.log(reqParams)
+    //params : 페이징 + 검색조건
+      console.log("EEEEEEEEEEEEEEEEE"+reqParams.disp_end_date)
+    console.log()
         axios.post(url, reqParams, this.$store.state.headers)
             .then((response) => {
               console.log(response)
@@ -150,9 +151,11 @@ export default {
     //         })
     // }
     saveItems(params){
-           var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15132/upload_notice`
+           var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15131/upload_notice`
            console.log('서버에 전송되는 값') 
            console.log(params)
+           params.disp_end_date = params.disp_end_date.replace(/-/g,"")
+           params.disp_start_date = params.disp_start_date.replace(/-/g,"")
            axios.post(url, params, this.$store.state.headers)
             .then((response)=>{
                 var resCode=response.data.res_code;
@@ -192,6 +195,7 @@ export default {
 
     handleParams: function(params){
       let newParams = {}
+      
       if(params.page_no === undefined || params.page_no === ''){
         newParams.page_no = this.reqPagingInfo.page_no
       }else{
@@ -202,39 +206,60 @@ export default {
         newParams.view_cnt = this.reqPagingInfo.view_cnt
       }else{
         newParams.view_cnt = params.view_cnt
-      }
 
-      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
-        newParams.local_gw_id = params.local_gw_id;
-      } else if (
-        this.searchParam.local_gw_id !== undefined &&
-        this.searchParam.local_gw_id !== ""
-      ) {
-        newParams.local_gw_id = this.searchParam.local_gw_id;
+      if(params.disp_start_date !== undefined && params.disp_start_date !== ''){
+        newParams.disp_start_date = params.disp_start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.disp_start_date!==undefined&&
+        this.searchParam.disp_start_date!==""
+      ){
+        newParams.disp_start_date=this.searchParam.disp_start_date.replace(/-/g,"")
       }
-
+      // if(params.disp_end_date !== undefined && params.disp_end_date !== ''){
+      //   newParams.disp_end_date = params.disp_end_date.replace(/-/g,"")
+      // }else if(
+      //   this.searchParam.disp_end_date!==undefined&&
+      //   this.searchParam.disp_end_date!==""
+      // ){
+      //   newParams.disp_end_date=this.searchParam.disp_end_date.replace(/-/g,"")
+      // }
+      if(params.reg_start_date !== undefined && params.reg_start_date !== ''){
+        newParams.reg_start_date = params.reg_start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.reg_start_date!==undefined&&
+        this.searchParam.reg_start_date!==""
+      ){
+        newParams.reg_start_date=this.searchParam.reg_start_date.replace(/-/g,"")
+      }
+      if(params.reg_end_date !== undefined && params.reg_end_date !== ''){
+        newParams.reg_end_date = params.reg_end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.reg_end_date!==undefined&&
+        this.searchParam.reg_end_date!==""
+      ){
+        newParams.reg_end_date=this.searchParam.reg_end_date.replace(/-/g,"")
+      }
       if(params.code_master_id !== undefined && params.code_master_id !== ''){
         newParams.code_master_id = params.code_master_id
       }
 
-      if(params.code_id !== undefined && params.code_id !== ''){
-        newParams.code_id = params.code_id
-      }
+      // if(params.code_id !== undefined && params.code_id !== ''){
+      //   newParams.code_id = params.code_id
+      // }
 
-      if(params.code_name !== undefined && params.code_name !== ''){
-        newParams.code_name = params.code_name
-      }   
+      // if(params.code_name !== undefined && params.code_name !== ''){
+      //   newParams.code_name = params.code_name
+      // }   
       
-      if(params.code_type !== undefined && params.code_type !== ''){
-        newParams.code_type = params.code_type
-      }  
-
+      // if(params.code_type !== undefined && params.code_type !== ''){
+      //   newParams.code_type = params.code_type
+      // }  
       return newParams
     }
 
     
-  },
-
+  }
+  }
 }
 </script>
 

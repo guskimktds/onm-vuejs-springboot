@@ -4,9 +4,9 @@
             <div><br></div>
             <div class="chart-area">
                 <!-- <line-chart :chart-data="chartData" :options="labels" :styles="myStyles"
+                  :v-on="fillData()"
                 ></line-chart> -->
                 <pie-chart 
-                  :v-on="fillData()"
                     :chart-data="datacollection" :options="labels"
                 ></pie-chart>
             </div>
@@ -29,9 +29,15 @@ export default {
             labels: [], 
             loaded: false           
         }
+    },mounted(){
+      this.fillData()
     },
  
     computed: {
+            formTitle () {
+        this.fillData()
+        return this.param.search_type === "D" ? `${this.title}(일간)` : `${this.title}(월간)`
+      },
       myStyles () {
             return {
                 height: `${this.height}px`,
