@@ -207,7 +207,8 @@
                 "icon":"mdi-desktop-mac",
                 "component": "customer-transfer",
                 "children": [
-                    { "name": "고객 api", "path": "/operation/customer-api", "component": "customerApi" }
+                    { "name": "고객 api", "path": "/operation/customer-api", "component": "customerApi" },
+                    { "name": "api 리포트", "path": "/operation/api-report", "component": "apiReport`" }
                 ]
             },
             {

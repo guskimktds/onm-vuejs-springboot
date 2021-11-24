@@ -81,7 +81,7 @@ export default {
         site_id : 'JHC_CTRL_001'
       }
       console.log("searchSiteApi" + reqParams)
-      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15112/get_site_open_api_access`
+      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15113/get_site_open_api_access`
       axios
       .post(url, reqParams, headers)
       .then( (response) => {
@@ -164,7 +164,7 @@ export default {
    
      searchStoreApi: function(params){
        console.log('이벤트 버스 타기')
-      const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15114/get_site_open_api_access/user`;
+      const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15113/get_site_open_api_access/user`;
       var reqParams = this.handleParams(params);
             reqParams.site_id ='JHC_CTRL_001'
       console.log(reqParams)

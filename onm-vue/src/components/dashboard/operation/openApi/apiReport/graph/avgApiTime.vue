@@ -31,9 +31,9 @@ export default {
             loaded: false           
         }
     },
-    // mounted(){
-    //   this.fillData()
-    // },
+    mounted(){
+      this.fillData()
+    },
  
     computed: {
       formTitle () {

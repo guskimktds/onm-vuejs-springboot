@@ -24,7 +24,7 @@ export default {
     props:['param'],
     data () {
         return {
-            datacollection: null,
+            datacollection: {},
             title: '시간대별 평균 호출 수',
             labels: [], 
             loaded: false           

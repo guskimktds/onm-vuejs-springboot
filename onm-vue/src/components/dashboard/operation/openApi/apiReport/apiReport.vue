@@ -2,8 +2,8 @@
     <v-container fluid>
       <v-card>
         <count-api-tab></count-api-tab>
+          <!-- v-on:search="searchToGraph" -->
           <api-report-query
-          v-on:search="searchToGraph"
           v-bind:param=param>
           </api-report-query>    
           <api-graph
@@ -14,7 +14,7 @@
              <v-row>
         <v-col cols="6">
        
-          <api-count
+          <!-- <api-count
           dense 
             v-bind:pList=pList
             v-bind:resPagingInfo="resPagingInfo"
@@ -27,7 +27,7 @@
             v-bind:storeList=storeList
             v-bind:storeResPagingInfo="storeResPagingInfo"
             @pagination="setToSearchParams"
-          ></service-count>
+          ></service-count> -->
         </v-col>
       </v-row>
       </v-card>
@@ -39,16 +39,16 @@ import apiReportQuery from './apiReportQuery'
 import CountApiTab from './countApiTab.vue'
 import dateInfo from "../../../../utils/common"
 import ApiGraph from './apiGraph.vue'
-import ServiceCount from './serviceCount.vue'
-import ApiCount from './apiCount.vue'
+// import ServiceCount from './serviceCount.vue'
+// import ApiCount from './apiCount.vue'
 // import axios from "axios"
 export default {
   components: {
     apiReportQuery,
     CountApiTab,
     ApiGraph,
-    ServiceCount,
-    ApiCount,
+    // ServiceCount,
+    // ApiCount,
   },
 
   data () {

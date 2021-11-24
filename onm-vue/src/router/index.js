@@ -96,8 +96,10 @@ import GwAcceptInfo from '../components/dashboard/operation/code/local/gwAcceptI
 //운영관리 / 고객이전
 import CustomerTransfer from '../components/dashboard/operation/transfer/customerTransfer'
 import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatus'
+
 //open api 
 import customerApi from '../components/dashboard/operation/openApi/customerApi.vue'
+import apiReport from '../components/dashboard/operation/openApi/apiReport/apiReport.vue'
 import customerApi2 from '../components/dashboard/operation/openApi/customerApi2.vue'
 //공지사항
 import notice from '../components/dashboard/operation/notice/notice.vue'
@@ -516,6 +518,11 @@ export default new Router({
                     path: "customer-api",
                     name: 'customerApi',
                     component: customerApi
+                },
+                {
+                    path: "api-report",
+                    name: 'apiReport',
+                    component: apiReport
                 },
                 {
                     path: "notice",
