@@ -25,7 +25,7 @@ export default {
     data () {
         return {
             datacollection: {},
-            title: '시간대별 평균 호출 수',
+            title: '시간대별 평균 호출 수2',
             labels: [], 
             loaded: false           
         }
