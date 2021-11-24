@@ -13,7 +13,7 @@
         :options.sync="options"
         :server-items-length="cmPagingInfo.total_cnt"
         class="elevation-1"
-        @click:row="handleClick" item-key="product_code" single-select
+        @click:row="handleClick" 
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       >
@@ -155,8 +155,7 @@ export default {
     };
   },
   methods: {
-    handleClick:function (value, row){
-        row.select(true);
+    handleClick:function (value){
         this.$emit("child", value);
     },
     getDataFromApi() {
