@@ -17,6 +17,7 @@
           dense 
             v-bind:pList=pList
             v-bind:resPagingInfo=resPagingInfo
+            v-on:searchStore="searchStoreApiButton"
             @pagination="setToSearchParams"
           ></customer-api-list>
         </v-col>
@@ -135,7 +136,7 @@ export default {
         if (resCode == 200) {
           // if()
           this.storeList = response.data.data.access_user_list;
-          this.cList = response.data.data.access_cnt;
+          // this.cList = response.data.data.access_cnt;
           this.storeResPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
           this.storeList = [];
@@ -175,7 +176,7 @@ export default {
       this.searchStoreApi(params)
       this.searchCustomerApi(params)
     },
-      searchParams: function(values){
+          searchParams: function(values){
       console.log(values)
       
       var params = {
@@ -185,6 +186,50 @@ export default {
       console.log(params.page_no+"페이징")
       this.searchStoreApi(params)
       this.searchCustomerApi(params)
+    },
+      searchStoreApiButton: function(params){
+      const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15113/get_site_open_api_access/user`;
+      var reqParams = this.handleParams(params);
+            reqParams.site_id ='JHC_CTRL_001'
+      console.log(reqParams)
+
+      axios
+      .post(url, reqParams, headers)
+      .then( (response) => {
+
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if (resCode == 200) {
+          // if()
+          this.storeList = response.data.data.access_user_list;
+          this.cList = response.data.data.access_cnt;
+          this.storeResPagingInfo = response.data.data.paging_info;
+        }else if(resCode==204){
+          this.storeList = [];
+          this.storeResPagingInfo = {};
+          alert('사용자 API 데이터가 없습니다.');
+        }else if(resCode==410){
+          alert("로그인 세션이 만료되었습니다.");
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+        }else {
+          this.storeList = [];
+          this.storeResPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert("Error")
+      })
+      .finally(function () {
+        // always executed
+      });
     },
        clickToSearchDetailObject: function(values){
 
