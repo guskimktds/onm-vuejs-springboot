@@ -28,7 +28,7 @@
     md="4"
   >
     <v-text-field label="사용불가"
-    v-model="cList">
+    v-model="cList.access_cnt_all">
 
   </v-text-field>
     </v-col>

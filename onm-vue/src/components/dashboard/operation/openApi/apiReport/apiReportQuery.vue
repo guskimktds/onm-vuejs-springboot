@@ -70,7 +70,7 @@ export default {
   methods: {
     searchMethod: function() {
         this.$emit("search", this.param);
-        console.log("보내는거" + this.param)
+        console.log("보내는거" + JSON.stringify(this.param))
     }
   }, 
 }

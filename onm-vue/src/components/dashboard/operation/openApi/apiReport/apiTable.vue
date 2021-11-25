@@ -4,7 +4,7 @@
         <div class="col-6">
                 <div class="grid-board">
                     
-                    <div>프로세스 상태 현황</div>
+                    <div>API별 호출 수</div>
                           <v-text-field 
       label="search1"
       v-model="psearch"
@@ -25,7 +25,7 @@
         
                 <div class="col-6">
                     <div class="grid-board">
-                        <div>카메라 상태 현황</div>
+                        <div>서비스 업체별 호출 수</div>
                               <v-text-field 
       label="search2"
       v-model="csearch"
