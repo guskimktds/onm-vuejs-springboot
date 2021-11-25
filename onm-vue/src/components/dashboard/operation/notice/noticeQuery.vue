@@ -231,6 +231,7 @@
                                     <v-col cols="6"
                                     >
                                 <vue-editor
+                                :editorOptions="editorSettings"
                                 v-model="editedItem.content_html"
                                 ></vue-editor>
                                     </v-col >
@@ -285,11 +286,24 @@
 
 <script>
 import dateInfo from '../../../utils/common';
-import vueEditor from '../../../utils/vueEditor.vue';
+// import vueEditor from '../../../utils/vueEditor.vue';
+import { VueEditor, Quill } from "vue2-editor";
+import { ImageDrop } from 'quill-image-drop-module'
+
+Quill.register('modules/imageDrop', ImageDrop)
 export default {
     props:['param'],
     data() {
-        return{            
+        return{     
+        htmlForEditor: "",
+        content:"",
+        editorSettings: {
+          modules: {
+              imageDrop: true,
+            // imageResize: {}
+              }
+          },
+          
             dialog: false,
             dialogDelete: false,
             items:[
@@ -339,7 +353,8 @@ export default {
         }
     },
     components: {
-        vueEditor
+        VueEditor
+
     },
     computed: {
       formTitle () {

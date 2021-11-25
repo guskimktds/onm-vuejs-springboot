@@ -100,12 +100,10 @@ import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatu
 //open api 
 import customerApi from '../components/dashboard/operation/openApi/customerApi.vue'
 import apiReport from '../components/dashboard/operation/openApi/apiReport/apiReport.vue'
-import customerApi2 from '../components/dashboard/operation/openApi/customerApi2.vue'
+
 //공지사항
 import notice from '../components/dashboard/operation/notice/notice.vue'
 
-//에디터
-import vueEditor from '../components/utils/vueEditor.vue'
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -529,16 +527,7 @@ export default new Router({
                     name: 'notice',
                     component: notice
                 },
-                {
-                    path: "vue-editor",
-                    name: 'vueEditor',
-                    component: vueEditor
-                },
-                {
-                    path: "customer-api2",
-                    name: 'customerApi2',
-                    component: customerApi2
-                },
+
             ]
         },
 
