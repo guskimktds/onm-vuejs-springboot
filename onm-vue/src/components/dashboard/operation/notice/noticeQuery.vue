@@ -359,7 +359,7 @@ export default {
             }
         },
         searchMethod: function() {
-            console.log("DFFFFFFFFFFFFF"+this.param)
+            console.log("DFFFFFFFFFFFFF"+JSON.stringify(this.param))
             this.$emit('search', this.param)
         },
 

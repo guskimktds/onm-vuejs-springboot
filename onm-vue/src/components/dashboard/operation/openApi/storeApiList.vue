@@ -9,19 +9,32 @@
         color="orange"
         dark
         icon="mdi-keyboard"
-        title="매장별 호출 수"
+        title="서비스 업체별 호출 수"
         class="px-5 py-3"
       >
+
+      <v-row>
+        <v-col>
+
       <v-text-field 
       label="search"
       v-model="search"
       ></v-text-field>
+        </v-col>
+        <v-col>
+
+      <v-btn
+       v-on:click="searchMethod"
+      >검색</v-btn>
+        </v-col>
+      </v-row>
       <v-data-table
         :search="search"
         :headers="headers"
         :items="storeList"
         :server-items-length="storeResPagingInfo.total_cnt"
         class="elevation-1"
+        @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       >
@@ -38,12 +51,11 @@ export default {
     return {
       search: "",
       headers: [
-        { text: '사이트 ID', value: 'site_id' },
-        { text: '인터페이스 번호', value: 'api_no' },
+        { text: '인터페이스 번호', value: 'user_id' },
         { text: 'api 접속량', value: 'access_cnt' },
         { text: '날짜', value: 'access_date' },
-        { text: '등록일', value: 'reg_date' },
       ],
+        site_id:'',
         last: 0,
         options: {},
         totalList: 0,
@@ -53,7 +65,8 @@ export default {
   },
 methods: {
     handleClick: function(value){
-      this.$emit("child", value);
+      this.$emit("child", value.site_id);
+
     },
     getDataFromApi() {
       this.loading = true;

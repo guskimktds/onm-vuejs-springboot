@@ -1,6 +1,6 @@
 <template>
         <div class="chart-board">
-          <div class="text-area">{{ this.title }}</div>
+          <div class="text-area">{{ formTitle }}</div>
             <div><br></div>
             <div class="chart-area">
                 <!-- <line-chart :chart-data="chartData" :options="labels" :styles="myStyles"
@@ -37,7 +37,7 @@ export default {
     computed: {
       formTitle () {
         this.fillData()
-        return this.param.search_type === "D" ? `${this.title}(일간)` : `${this.title}(월간)`
+        return this.title
       },
       myStyles () {
             return {

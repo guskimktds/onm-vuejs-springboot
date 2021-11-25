@@ -215,14 +215,14 @@ export default {
       ){
         newParams.disp_start_date=this.searchParam.disp_start_date.replace(/-/g,"")
       }
-      // if(params.disp_end_date !== undefined && params.disp_end_date !== ''){
-      //   newParams.disp_end_date = params.disp_end_date.replace(/-/g,"")
-      // }else if(
-      //   this.searchParam.disp_end_date!==undefined&&
-      //   this.searchParam.disp_end_date!==""
-      // ){
-      //   newParams.disp_end_date=this.searchParam.disp_end_date.replace(/-/g,"")
-      // }
+      if(params.disp_end_date !== undefined && params.disp_end_date !== ''){
+        newParams.disp_end_date = params.disp_end_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.disp_end_date!==undefined&&
+        this.searchParam.disp_end_date!==""
+      ){
+        newParams.disp_end_date=this.searchParam.disp_end_date.replace(/-/g,"")
+      }
       if(params.reg_start_date !== undefined && params.reg_start_date !== ''){
         newParams.reg_start_date = params.reg_start_date.replace(/-/g,"")
       }else if(

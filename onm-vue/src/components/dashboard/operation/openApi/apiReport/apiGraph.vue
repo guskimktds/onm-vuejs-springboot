@@ -37,7 +37,5 @@ export default {
 </script>
 
 <style>
-.small{
-    height: 30px;
-}
+
 </style>
