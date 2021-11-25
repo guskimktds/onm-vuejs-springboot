@@ -6,8 +6,11 @@
           v-bind:param=searchParam
           v-bind:localGwOptions="localGwOptions"
           @Items="saveItems"
+          v-bind:pList=pList
         ></vanner-query>
         <vanner-list
+        v-on:search="searchToButton"
+        v-bind:param=searchParam
         v-bind:pList=pList
         v-bind:gw_id="gw_id"
         v-bind:resPagingInfo="resPagingInfo"
@@ -21,7 +24,8 @@
 <script>
 import vannerList from './vannerList'
 import vannerQuery from './vannerQuery'
-
+import EventBus from '../../../../EventBus';
+ //import dateInfo from '../../../utils/common';
 //로그인 시 서버에서 불러오면 수정해야함
 //import AdminMenuMock from '../../../mock/AdminListMock.json';
 //import EventBus from '../../../../../EventBus'
@@ -41,41 +45,21 @@ export default {
     return {
       title: '코드관리',
       gw_id: '',
-      pList: [
-        {
-          img_type:'A타입',
-          disp_start_date : '20211108',
-          disp_end_date:'20211108',
-          disp_yn:'Y',
-          reg_id : '탁쏠크',
-          reg_date:'20211108',
-          mod_date:'20211108',
-          img_name:'탁크쏠의 크리스마스',
-          no:'1'
-        },
-         {
-          img_type:'A타입',
-          disp_start_date : '20211108',
-          disp_end_date:'20211108',
-          disp_yn:'Y',
-          reg_id : '탁크',
-          reg_date:'20211108',
-          mod_date:'20211108',
-          img_name:'탁크쏠 크리스',
-          no:'2'
-        },
-      ],
+      pList: [],
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10
       },
       resPagingInfo: {},
       searchParam: {
-        local_gw_id:'',
-        code_master_id: '',
-        code_id: '',
-        code_name: '',
-        code_type: ''
+        img_type:'',
+        title: '',
+        disp_yn: '',
+        disp_start_date: '',
+        disp_end_date: '',
+        reg_date:'',
+        local_gw_id:''
+        
       },
       localGwOptions:[],
       centerOptions:{
@@ -84,58 +68,42 @@ export default {
       }
     }
   },
-
-  beforeCreate() {  
-    axios
-    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
-    .then((response) => {
-      this.localGwOptions = response.data.data.local_gw_list;
-      this.localGwOptions.unshift(this.centerOptions);
-    })
-    .catch(function (error) {
-        console.log(error);
-        alert("국사정보 조회실패")
-      })
-      .finally(function () {
-        // always executed
-      
-      });
-  },
-  
   methods: {
-    // reset: function(){
-    //   console.log(this.searchParam)
-    //    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}//`
-    //    var reqParams = this.handleParams(this.searchParam)
-    //   axios
-    //     .post(url, reqParams, this.$store.state.headers)
-    //     .then((response) => {
-    //       console.log(response)
-    //       var resCode = response.data.res_code;
-    //       var resMsg = response.data.res_msg;
-    //       if(resCode == 200){
-    //         // this.authGroupList = response.data.data.auth_group_list
-    //         // this.isAuthMenu = true
-    //         this.pList = response.data.data.banner_list;
-    //         this.resPagingInfo = response.data.data.paging_info
-    //         console.log(this.resPagingInfo)
-    //       }else{
-    //         // this.authGroupList = [];
-    //         // this.isAuthMenu = false
-    //         this.pList = [];
-    //         this.resPagingInfo = {};
-    //         alert(resCode + " / " + resMsg);
-    //       }
-    //     })
-    //     .catch((ex) => {
-    //       console.log('조회 실패',ex)
-    //     })
-    // },
+    reset: function(){
+      console.log(this.searchParam)
+       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15122/get_banner`
+       var reqParams = this.handleParams(this.searchParam)
+       console.log(reqParams)
+      axios
+        .post(url, reqParams, this.$store.state.headers)
+        .then((response) => {
+          console.log(response)
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            // this.authGroupList = response.data.data.auth_group_list
+            // this.isAuthMenu = true
+            this.pList = response.data.data.banner_list;
+            this.resPagingInfo = response.data.data.paging_info
+            console.log(this.resPagingInfo)
+          }else{
+            // this.authGroupList = [];
+            // this.isAuthMenu = false
+            this.pList = [];
+            this.resPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패',ex)
+        })
+    },
     searchToButton: function(params){
-    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}//`
+    var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15122/get_banner`
 
     //params : 페이징 + 검색조건
     var reqParams = this.handleParams(params)  
+    EventBus.$emit('param', params);
     console.log('보내는 값')
     console.log(reqParams)
         axios.post(url, reqParams, this.$store.state.headers)
@@ -144,7 +112,7 @@ export default {
               var resCode = response.data.res_code;
               var resMsg = response.data.res_msg;
               if(resCode == 200){
-                this.pList = response.data.data.list;
+                this.pList = response.data.data.banner_list;
                 this.resPagingInfo = response.data.data.paging_info
                 this.gw_id=reqParams.local_gw_id
                 console.log('paging')
@@ -171,51 +139,6 @@ export default {
               console.log('조회 실패',ex)
             })
     },
-    // saveToData: function(){
-    //   console.log('saveToData Method call : ',process.env);
-    //   axios
-    //         .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/customer-phone/query`, {       
-    //               params
-    //         })
-    //         .then((result) => {
-    //           console.log(result)
-    //           // this.list = JSON.parse(result.data.menu)
-    //           this.list = result.data
-    //         })
-    //         .catch((ex) => {
-    //           console.log('조회 실패',ex)
-    //         })
-    // }
-    saveItems(params){
-           var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15007/set_code`
-           console.log('서버에 전송되는 값') 
-           console.log(params)
-           axios.post(url, params, this.$store.state.headers)
-            .then((response)=>{
-                var resCode=response.data.res_code;
-                var resMsg=response.data.res_msg;
-                if(resCode==200){
-                    this.pList.unshift(params)
-                    this.$fire({
-                        title: "등록 되었습니다.",
-                        type: "success"})
-                }else{
-                    this.$fire({
-                        title: "등록 실패하였습니다.",
-                        html: resMsg,
-                        type: "error"})
-                }
-            })
-            .catch((ex)=>{
-                this.$fire({
-                    title: "등록 실패하였습니다.",
-                    text: ex,
-                    type: "error"
-                })
-            })
-
-        },
-
     setToSearchParams(values) {
       console.log('전달값')
       console.log(values)
@@ -241,36 +164,39 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
-        newParams.local_gw_id = params.local_gw_id;
-      } else if (
-        this.searchParam.local_gw_id !== undefined &&
-        this.searchParam.local_gw_id !== ""
-      ) {
-        newParams.local_gw_id = this.searchParam.local_gw_id;
+      // if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
+      //   newParams.local_gw_id = params.local_gw_id;
+      // } else if (
+      //   this.searchParam.local_gw_id !== undefined &&
+      //   this.searchParam.local_gw_id !== ""
+      // ) {
+      //   newParams.local_gw_id = this.searchParam.local_gw_id;
+      // }
+
+      if(params.title !== undefined && params.title !== ''){
+        newParams.title = params.title
       }
 
-      if(params.code_master_id !== undefined && params.code_master_id !== ''){
-        newParams.code_master_id = params.code_master_id
+      if(params.img_type !== undefined && params.img_type !== ''){
+        newParams.img_type = params.img_type
       }
 
-      if(params.code_id !== undefined && params.code_id !== ''){
-        newParams.code_id = params.code_id
-      }
-
-      if(params.code_name !== undefined && params.code_name !== ''){
-        newParams.code_name = params.code_name
+      if(params.disp_yn !== undefined && params.disp_yn !== ''){
+        newParams.disp_yn = params.disp_yn
       }   
       
-      if(params.code_type !== undefined && params.code_type !== ''){
-        newParams.code_type = params.code_type
+      if(params.reg_date !== undefined && params.reg_date !== ''){
+        newParams.reg_date = params.reg_date
       }  
 
       return newParams
     }
-
+    
     
   },
+  created(){
+    this.searchToButton(this.params);
+  }
 
 }
 </script>

@@ -10,7 +10,7 @@
             title="배너 검색"
             class="px-5 py-3"
         > -->
-        <v-card class="border-black px-5 py-3" >
+        <v-card class="border-black px-5 py-3" fluid >
         <v-row style="padding-top: 10px">
             <v-col   style="padding-top:25px;" cols="auto">
                 <v-text>배너타입</v-text>
@@ -19,14 +19,14 @@
             <v-select 
             label="전체"
             :items="items"
-            v-model="vitem"
-            @change="test123"
+            v-model="param.img_type"
+            @change="changeValue"
             solo
             style="width: 150px;"
             >
             </v-select>
             </v-col>
-            <v-col style="padding-top:25px; flex:0 0 5%;" cols="auto">
+            <v-col style="padding-top:25px; flex:0 0 5%;" cols="auto" v-model="param.img_name">
                 <v-text>제목</v-text>
             </v-col>
             <v-col style="margin-top:-10px;" >
@@ -38,14 +38,15 @@
             </v-col>
             <v-col cols="auto"><v-select 
             :items="items2"
+            v-model="this.param.disp_yn"
             label="전체"
             solo
             style="width: 150px;"
             >
             </v-select></v-col>
-            <v-col cols="2">
+            <v-col  cols="2">
                 <v-btn class="black" right absolute
-                 @click="test123"
+                 @click="searchMethod"
                  elevation="2"
                  >검색</v-btn>
             </v-col>
@@ -60,7 +61,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="param.start_date2"
+                        v-model="param.disp_start_date"
                         prepend-icon="mdi-calendar"
                         readonly
                         label="시작일"
@@ -69,7 +70,7 @@
                         style="width:150px"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.start_date2" no-title scrollable type="date">
+                    <v-date-picker v-model="param.disp_start_date" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
                 </v-col>
@@ -80,7 +81,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="param.end_date2"
+                        v-model="param.disp_end_date"
                         prepend-icon="mdi-calendar"
                         readonly
                         label="종료일"
@@ -89,7 +90,7 @@
                         style="width:150px"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.end_date2" no-title scrollable type="date">
+                    <v-date-picker v-model="param.disp_end_date" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
                 </v-col>
@@ -103,7 +104,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="param.start_date"
+                        v-model="param.reg_date"
                         label="시작일"
                         prepend-icon="mdi-calendar"
                         readonly
@@ -112,7 +113,7 @@
                         style="width:150px"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.start_date" no-title scrollable type="date">
+                    <v-date-picker v-model="param.reg_date" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
                     
@@ -124,7 +125,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="param.end_date"
+                        v-model="param.reg_date"
                         label="종료일"
                         prepend-icon="mdi-calendar"
                         readonly
@@ -133,7 +134,7 @@
                         style="width:150px"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.end_date" no-title scrollable type="date">
+                    <v-date-picker v-model="param.reg_date" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
                 </v-col>
@@ -151,34 +152,32 @@ export default {
             status: '센터',
             status_text:'',
             dialog: false,
-            dialogDelete: false,        
+            dialogDelete: false,
+            images: [],
+            items: ["전체", "타입명 A", "타입명 B", "타입명 C"],
+            items2: ["전체", "노출", "미노출"],
+            vitem:'전체',
+            vitem2: '',
             editedItem: {
-                code_master_id: '',
-                code_id: '',
-                code_name: '',
-                code_type: '',
-                use_yn: '',
-                orderby_no: '',
-                description: '',
+                img_type: '',
+                disp_yn: '',
+                img_name: '',
+                disp_start_date: '',
+                disp_end_date: '',
+                reg_date: '',
                 cmd_type: '',
                 local_gw_id: '0',
             },
             defaultItem: {
-                code_master_id: '',
-                code_id: '',
-                code_name: '',
-                code_type: '',
-                use_yn: '',
-                orderby_no: '',
-                description: '',
+                img_type: '',
+                disp_yn: '',
+                img_name: '',
+                disp_start_date: '',
+                disp_end_date: '',
+                reg_date: '',
                 cmd_type: 'I',
                 local_gw_id: '0',
             },
-            images: [],
-            items: ["전체", "타입명 A", "타입명 B", "타이명 C"],
-            items2: ["전체", "노출", "미노출"],
-            vitem:'전체',
-            vitem2: '',
         }
     },
     computed: {
@@ -206,107 +205,24 @@ export default {
             }
         },
         searchMethod: function() {
-            console.log(this.vitem)
-            if(this.status=="센터"){
-                this.param.process_status=''
-            }else{
-                this.param.process_status=this.status
+            // if(this.editedItem.img_type=="전체"){
+            //     this.param.process_status=''
+            // }else{
+            //     this.param.process_status=this.editedItem.img_type
+            // }
+            if(this.param.disp_yn == '노출'){
+                this.param.disp_yn = 'Y'
+            }
+            if(this.param.disp_yn == '미노출'){
+                this.param.disp_yn = 'N'
+            }
+            if(this.param.disp_yn == '전체'){
+                this.param.disp_yn = ''
             }
             this.$emit('search', this.param)
-        },
-
-        save () {
-            console.log('save method call : ',this.editedItem)     
-            // 수정
-            this.editedItem.cmd_type = 'I'
-            if(this.editedItem.local_gw_id==''){
-                delete this.editedItem.local_gw_id
-            }
-            // console.log(dateInfo().current)
-            // this.editedItem.mod_date = getDate 
-            // this.editedItem.reg_date = getDate 
-
-            // console.log(this.editedItem.mod_date)
-
-            this.$emit("Items",this.editedItem)
+            console.log(this.param)
+            console.log(this.editedItem)
             
-            this.close()
-        },
-
-        saveSure(){
-            var index=this.editedItem.local_gw_id
-            if(index==undefined){
-                index=0
-            }
-            var indexNum
-            for(var i=0;i<this.localGwOptions.length;i++){
-               if(this.localGwOptions[i].local_gw_id==index){
-                   indexNum=i
-               }
-            }
-            this.$fire({
-            title: "정말 등록 하시겠습니까?",
-            type: "question",
-            html: "국사코드 : "+this.localGwOptions[indexNum].server_name+"<br/>코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
-            "<br/>코드명 : "+this.editedItem.code_name+"<br/>코드타입 : "+this.editedItem.code_type+
-            "<br/>사용여부 : "+this.editedItem.use_yn+"<br/>정렬순서 : "+this.editedItem.orderby_no+
-            "<br/>설명 : "+this.editedItem.description,
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '예',
-            cancelButtonText: '아니오'
-            }).then(result => {
-               if(result.value){
-                   this.save()
-               }else{
-                 this.closeSure()
-               }
-            });
-            
-        },
-    
-        close () {
-            this.dialog = false
-            this.$nextTick(() => {
-            this.editedItem = Object.assign({}, this.defaultItem)
-            // this.editedIndex = -1
-            this.images = ""
-            })
-        },
-
-        closeSure(){
-           var index=this.editedItem.local_gw_id
-            if(index==undefined){
-                index=0
-            }
-            var indexNum
-            for(var i=0;i<this.localGwOptions.length;i++){
-               if(this.localGwOptions[i].local_gw_id==index){
-                   indexNum=i
-               }
-            }
-            this.close()
-            this.$fire({
-                       title: "등록이 취소되었습니다.",
-                       html: "국사코드 : "+this.localGwOptions[indexNum].server_name+"<br/>코드구분 : "+this.editedItem.code_master_id+"<br/>코드 : "+this.editedItem.code_id+
-            "<br/>코드명 : "+this.editedItem.code_name+"<br/>코드타입 : "+this.editedItem.code_type+
-            "<br/>사용여부 : "+this.editedItem.use_yn+"<br/>정렬순서 : "+this.editedItem.orderby_no+
-            "<br/>설명 : "+this.editedItem.description,
-                       type : "error"
-                   })
-        },
-
-        closeDelete () {
-            this.dialogDelete = false
-            this.$nextTick(() => {
-            this.editedItem = Object.assign({}, this.defaultItem)
-            //   this.editedIndex = -1
-            })
-        },
-        deleteItemConfirm () {
-            // this.pList.splice(this.editedIndex, 1)
-            this.closeDelete()
         },
          uploadImage: function() {
             let form = new FormData()
@@ -321,23 +237,26 @@ export default {
             // })
             // .catch( err => console.log(err))
         },
-            clickInputTag: function() {
-            this.$refs['image'].click()
-        },
-        imgUpload(){
-            this.openImage = true;
-            console.log(this.images.name)
-            console.log(this.images[0])
-            console.log(this.input)
-            if(this.openImage){
-                this.$('#input').get(0).click();
-                
-                }
+        changeValue(){
+            if(this.param.img_type == this.items[1]){
+                    this.param.img_type = '01'
+            }
+            if(this.param.img_type == '타입명 B'){
+                    this.param.img_type = '02'
+            }
+            if(this.param.img_type == '타입명 C'){
+                    this.param.img_type = '03'
+            }
+            if(this.param.img_type == '전체'){
+                    this.param.img_type = ''
+            }
+            this.searchMethod()
+            console.log(this.param)
         },
         test123(){
-            console.log(this.vitem)
-        }
-       
+            console.log(this.param)
+            
+        },
         
     },  
 }

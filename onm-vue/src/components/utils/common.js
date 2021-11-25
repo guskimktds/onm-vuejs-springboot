@@ -35,6 +35,12 @@ export default () => {
     var lastMonth = dm.getFullYear() + "" + ("00" + (dm.getMonth() + 1)).slice(-2) + "" + ("00" + dm.getDate()).slice(-2) 
     var lastMonthDashFormat = dm.getFullYear() + "-" + ("00" + (dm.getMonth() + 1)).slice(-2) + "-" + ("00" + dm.getDate()).slice(-2) 
     var lastMonthDefault = dm.getFullYear() + "-" + ("00" + (dm.getMonth() + 1)).slice(-2) 
+    //1개월후
+    var one_dm = new Date();
+    var onemonthOfYear = one_dm.getMonth();
+    one_dm.setMonth(onemonthOfYear + 1)
+    var oneMonthDashFormat = one_dm.getFullYear() + "-" + ("00" + (one_dm.getMonth() + 1)).slice(-2) + "-" + ("00" + one_dm.getDate()).slice(-2) 
+  
 
     const dateInfo = {
         current,
@@ -45,7 +51,8 @@ export default () => {
         lastMonthDefault,
         currentDateDashFormat,
         lastWeekDashFormat,
-        lastMonthDashFormat
+        lastMonthDashFormat,
+        oneMonthDashFormat
     }
 // //   const dateInfo = year
 //   var d = new Date(); 

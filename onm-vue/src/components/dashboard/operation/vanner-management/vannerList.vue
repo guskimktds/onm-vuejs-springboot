@@ -12,10 +12,6 @@
         <router-link to="/operation/vanner-register" >+신규</router-link>
       </div>
     </v-row>
-    <v-row style="padding-top:30px">
-      <v-btn @click="pageinfo">sssss</v-btn>
-    </v-row>
-
 
       <!-- class="px-5 py-3" -->
     <v-card
@@ -29,7 +25,9 @@
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
           :header-props="{ sortIcon: null }"
           @click:row="passPage"
+        
         >
+        
         </v-data-table>
 
     </v-card>
@@ -37,8 +35,8 @@
 </template>
 
 <script>
-// import { eventBus } from '../../../../../main'
-// import EventBus from '../../../../../EventBus';
+//  import { eventBus } from '../../../../../main'
+//  import EventBus from '../../../../EventBus';
 
 export default {
     props: ['pList','resPagingInfo'],
@@ -51,12 +49,12 @@ export default {
             text: 'No',
             align: 'start',
             sortable: false,
-            value: 'no',
+            value: '',
             width: '5%',
           },
 
           { text: '배너타입', value: 'img_type', width: '10%', align: 'center'},
-          { text: '제목', value: 'img_name', width: '25%', align: 'center'},
+          { text: '제목', value: 'title', width: '25%', align: 'center'},
           { text: '노출여부', value: 'disp_yn', width: '10%', align: 'center' },
           { text: '노출시작일', value: 'disp_start_date',width: '10%', align: 'center' },
           { text: '노출종료일', value: 'disp_end_date', width: '10%', align: 'center' },
@@ -72,14 +70,32 @@ export default {
         this.$emit("pagination",this.options)
       },
       passPage(value){
-        console.log(value);
-        this.$router.push({name:"vanner-register", value});
-
+        console.log(value)
+        //EventBus.$emit('param', this.param);
+        // EventBus.$emit('pList', this.pList);
+        this.$router.push({name:"vanner-detailpage", params :{'val' : value}});
+        console.log(this.pList)
       },
       pageinfo(){
-        console.log(this.resPagingInfo)
-      }  
-    }     
+        alert(this.resPagingInfo)
+      },
+      testbbb(){
+        console.log(this.param)
+        console.log(this.pList)
+      }
+      
+    },
+    computed: {
+      
+    },
+      watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
 }
 </script>
 

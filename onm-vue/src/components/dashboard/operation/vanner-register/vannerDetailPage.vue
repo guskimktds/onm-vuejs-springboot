@@ -2,7 +2,7 @@
     <v-container fluid>
         <v-row>
             <v-col cols="auto">
-                <h1 style="margin-left: 10px">배너 등록</h1>
+                <h1 style="margin-left: 10px">배너 상세</h1>
             </v-col>
            
         </v-row>
@@ -16,7 +16,7 @@
                 absolute
                 color="indigo"
                 >
-                    등록 완료
+                    저장
                 </v-btn>
                 <!-- <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -34,19 +34,17 @@
     <v-card fluid >
         <v-row style="margin-left:30px; padding-top:25px">
             <v-col cols="auto" style="padding-top:25px;"><span style="color:red;">*</span>배너 타입</v-col>
-            <v-col><v-select 
-            label="선택"
-            :items="items"
-            v-model="editedItem.img_type"
+            <v-col><v-text-field 
+            v-model="bannerType"
             solo
-            @change="selectType"
             style="width: 200px;"
-            ></v-select></v-col>
+            readonly
+            ></v-text-field></v-col>
         </v-row>
         <v-row style="margin-left:30px;">
             <v-col cols="auto" style="padding-top:35px; margin-right:30px;"><span style="color:red;">*</span>제목</v-col>
             <v-col>
-                <v-text-field label="입력" style="width: 500px" v-model="editedItem.title"></v-text-field>
+                <v-text-field label="입력" style="width: 500px" v-model="editedItem.img_name"></v-text-field>
             </v-col>
         </v-row>
         <v-row style="margin-left:30px; padding-top:35px;">
@@ -57,7 +55,6 @@
             v-model="editedItem.disp_yn"
             solo
             style="width: 100px;"
-            
             ></v-select></v-col>
         </v-row>
         <v-row style="margin-left:30px; padding-top:20px;">
@@ -82,7 +79,7 @@
                     </v-date-picker> 
                     </v-menu>
                 </v-col>
-                 <v-text name="un" style="padding-top:35px">~</v-text>
+                 <v-text style="padding-top:35px">~</v-text>
                 <v-col cols="auto">
                     <v-menu
                     offset-y
@@ -105,7 +102,8 @@
         </v-row>
         <v-row style="margin-left:30px; padding-top:20px;">
             <v-col cols="auto" style="padding-top:15px;" ><span style="color:red;">*</span>배너 파일</v-col>
-            <v-col cols="6">
+            <v-col cols="4">
+            <!-- <input type="file"  @change="onFileSelected" accept="image/png, image/gif, image/jpeg, image/jpg"> -->
             <div class="filebox">
                 <input class="upload-name" v-model="editedItem.img_name" readonly placeholder="파일명">
                 <label for="file">파일찾기</label> 
@@ -119,6 +117,7 @@
             <div v-if="istf" style="width: 400px; height: 300px; margin-left: -15px;">
                <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역</span></div>
           
+            <v-text v-if="showview"></v-text>
             <v-img :src="images" v-if="vitem.tem1" style='height:300px;width:200px; '></v-img>
             <v-img :src="images" v-else-if="vitem.tem2" style='height:400px;width:500px;'></v-img>
             <v-img :src="images" v-else-if="vitem.tem3" style='height:50px;width:50px;'></v-img>
@@ -129,6 +128,7 @@
             </v-col>
             <v-col cols="auto">
                 <v-btn  style="width:100px; height: 30px; background:black; margin-top: 8px" @click="test">미리보기</v-btn>
+              <!-- <div>  <router-link to="/operation/vanner-management" >이전</router-link></div> -->
             </v-col>
         </v-row>
                 <v-dialog v-model="dialogNum1" max-width="290">
@@ -168,17 +168,17 @@
     </v-card>
     </v-container>
 </template>
-PC PCAPP IOS ANDROID ALL
+
 <script>
- import dateInfo from '../../../utils/common';
+//  import dateInfo from '../../../utils/common';
  import axios from "axios"
+//  import EventBus from '../../../../EventBus';
 export default {
-    props:['param', 'localGwOptions'],
+    props:['param','localGwOptions'],
     data() {
         return{
             pList: [],
-            images: {},
-            images2: '',
+            images: [],
             reqPagingInfo: {
                 page_no: 1,
                 view_cnt: 10
@@ -200,20 +200,17 @@ export default {
             // end_date: dateInfo().oneMonthDashFormat,
             currentDateDashFormat2: Date(),
             imageName:'',
+            bannerType: '',
+            dispYn: '',
             editedItem: {
-                banner_image: {},
+                // banner_image: [],
                 // title: '',
-                img_type: '',
+                // img_type: '',
                 img_name: '',
-                disp_yn: '노출',
-                disp_start_date: dateInfo().currentDateDashFormat,
-                disp_end_date: dateInfo().oneMonthDashFormat,
-                reg_id: '1234',
-                reg_date: '20211111',
-                // origin_name: '',
-                // os_type: '',
-                // img_url: '',
-                // img_path: '',
+                disp_yn: '',
+                disp_start_date: '',
+                disp_end_date: '',
+                // reg_id: '',
                 // cmd_type: '',
                 // local_gw_id: '0',
             },
@@ -221,14 +218,28 @@ export default {
             dialogMsg: '',
             toolMsg: '',
             dialogNum2: false,
-             headers: {
-            'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-            'Content-Type': 'multipart/form-data'
-          },
         }
     },
-    created:{
-        
+    created(){
+           this.editedItem.img_type = this.$route.params.val.img_type
+           this.editedItem.img_name = this.$route.params.val.img_name
+           this.editedItem.disp_yn = this.$route.params.val.disp_yn
+           this.editedItem.disp_start_date = this.$route.params.val.disp_start_date.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+           this.editedItem.disp_end_date = this.$route.params.val.disp_end_date.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+           this.editedItem.reg_id = this.$route.params.val.reg_id
+           if(this.editedItem.img_type == '01'){
+               this.bannerType = '타입명 A'
+           }
+           if(this.editedItem.img_type == '02'){
+               this.bannerType = '타입명 B'
+           }
+           if(this.editedItem.img_type == '03'){
+               this.bannerType = '타입명 C'
+           }
+
+            console.log(this.editedItem);
+            console.log(this.$route.params.val);
+
     },
     computed: {
       filteredData(){
@@ -238,6 +249,7 @@ export default {
       }
       //
     },
+    
     methods: {
        
         showAuth(){
@@ -249,24 +261,7 @@ export default {
             return false;
             }
         },
-       
-        save () {
-            console.log('save method call : ',this.editedItem)     
-            // 수정
-            this.editedItem.cmd_type = 'I'
-            if(this.editedItem.local_gw_id==''){
-                delete this.editedItem.local_gw_id
-            }
-            // console.log(dateInfo().current)
-            // this.editedItem.mod_date = getDate 
-            // this.editedItem.reg_date = getDate 
-
-            // console.log(this.editedItem.mod_date)
-
-            this.$emit("Items",this.editedItem)
-            
-            this.close()
-        },
+      
         close () {
             this.dialogNum1 = false
             this.dialogNum2 = false
@@ -275,6 +270,7 @@ export default {
             // // this.editedIndex = -1
             // })
         },
+
         closeDelete () {
             this.dialogDelete = false
             this.$nextTick(() => {
@@ -289,22 +285,19 @@ export default {
         //미리보기
         onFileSelected(event){ 
             var input = event.target;
+            console.log(input.files[0]);
                 this.editedItem.img_name = input.files[0].name
                 if (input.files && input.files[0]) { 
                 var reader = new FileReader(); 
                     reader.onload = (e) => {
                         this.images = e.target.result;
                         this.selectType();
-                        
                     } 
                     reader.readAsDataURL(input.files[0]);
-                    if(input.files){
                     this.editedItem.banner_image = input.files[0]
-                    const formData = new FormData()
-                    formData.append('files', this.editedItem.banner_image)
-                    }
                     this.istf = false
-                }
+                } 
+                
             },
             selectType(){
             if(this.images != ''){
@@ -326,38 +319,23 @@ export default {
             }
             },
          saveItems(){
-           var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15121/upload_banner`
+           var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15123/update_banner`
            console.log('서버에 전송되는 값') 
            console.log(this.editedItem)
-           this.editedItem.disp_start_date = this.editedItem.disp_start_date.replace(/-/g,'')
-           this.editedItem.disp_end_date = this.editedItem.disp_end_date.replace(/-/g,'')
-           if(this.editedItem.img_type == this.items[0]){
-               this.editedItem.img_type = '01'
-           }
-           if(this.editedItem.img_type == this.items[1]){
-               this.editedItem.img_type = '02'
-           }
-           if(this.editedItem.img_type == this.items[2]){
-               this.editedItem.img_type = '03'
-           }
-           if(this.editedItem.disp_yn == '노출'){
-                this.editedItem.disp_yn = 'Y'
-            }else{
-                this.editedItem.disp_yn = 'N'
-            }
-           axios.post(url, this.editedItem, this.headers)
+           axios.post(url, this.editedItem, this.$store.state.headers)
             .then((response)=>{
                 var resCode=response.data.res_code;
                 var resMsg=response.data.res_msg;
                 if(resCode==200){
                     this.pList.unshift(this.editedItem)
-                        this.dialogNum2 = true
-                        this.toolMsg = '배너 등록 완료'
-                        this.dialogMsg = '배너가 등록 되었습니다'
-                        
+                    this.editedItem.disp_start_date = this.editedItem.disp_start_date.replace(/-/g,'')
+                    this.editedItem.disp_end_date = this.editedItem.disp_end_date.replace(/-/g,'')
                     this.$fire({
                         title: "등록 되었습니다.",
                         type: "success"})
+                        this.dialogNum2 = true
+                        this.toolMsg = '배너 등록 완료'
+                        this.dialogMsg = '배너가 등록 되었습니다'
                 }else{
                     this.$fire({
                         title: "등록 실패하였습니다.",
@@ -404,9 +382,7 @@ export default {
         },
         test(){
             console.log(this.editedItem)
-            console.log(this.images2)
-        },
-        
+        }
         
     },  
 }
