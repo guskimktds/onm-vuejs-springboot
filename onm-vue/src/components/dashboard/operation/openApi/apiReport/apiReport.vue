@@ -39,7 +39,6 @@ import apiReportQuery from './apiReportQuery'
 import CountApiTab from './countApiTab.vue'
 import dateInfo from "../../../../utils/common"
 import ApiGraph from './apiGraph.vue'
-import EventBus from '../../../../../EventBus'
 import ApiTable from './apiTable.vue'
 
 // import ServiceCount from './serviceCount.vue'

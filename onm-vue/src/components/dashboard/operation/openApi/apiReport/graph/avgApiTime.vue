@@ -7,7 +7,7 @@
                     :v-on="fillData()"
                 ></line-chart> -->
                 <line-chart 
-                v-if="loaded"
+                v-if="loaded" 
                     :chart-data="datacollection" :options="labels"
                 ></line-chart>
             </div>
