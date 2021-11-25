@@ -21,6 +21,12 @@
           :header-props="{ sortIcon: null }"
           v-show="showAuth()"
         >
+        <template v-slot:item.board_cate_cd="{item}">
+          <span>{{ switchString(item.board_cate_cd) }}</span>
+        </template>
+        <template v-slot:item.disp_yn="{item}">
+          <span>{{ switchString2(item.disp_yn) }}</span>
+        </template>
           <template v-slot:top>    
             <!-- <v-toolbar
               flat
@@ -258,6 +264,25 @@ export default {
           return false;
         }
       },
+      switchString(values){
+        if(values==='CATE01'){
+          return '일반공지'
+        }else if(values==='CATE02'){
+          return '긴급공지'
+        }else{
+          return ''
+        }
+      },
+      switchString2(values){
+        if(values==='Y'){
+          return '노출'
+        }else if(values==='N'){
+          return '미노출'
+        }else{
+          return ''
+        }
+      },
+
       editItem (item) {
         this.editedIndex = this.pList.indexOf(item)
         console.log('update Item Index : ',this.editedIndex)
