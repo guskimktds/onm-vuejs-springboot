@@ -68,6 +68,10 @@ methods: {
       this.$emit("child", value.site_id);
 
     },
+    searchMethod: function(value){
+      this.$emit("searchStore", value.user_id);
+
+    },
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);

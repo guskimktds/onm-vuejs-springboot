@@ -63,7 +63,7 @@ export default {
   methods: {
     reset: function(){
       console.log(this.searchParam)
-       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15006/get_code`
+       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15132/get_notice`
        var reqParams = this.handleParams(this.searchParam)
       axios
         .post(url, reqParams, this.$store.state.headers)
@@ -98,10 +98,10 @@ export default {
     // }
 
       var reqParams = this.handleParams(params)  
-    console.log('보내는 값')
+    console.log(JSON.stringify(reqParams))
     //params : 페이징 + 검색조건
-      console.log("EEEEEEEEEEEEEEEEE"+reqParams.disp_end_date)
-    console.log()
+      // console.log("EEEEEEEEEEEEEEEEE"+reqParams.disp_end_date)
+    
         axios.post(url, reqParams, this.$store.state.headers)
             .then((response) => {
               console.log(response)

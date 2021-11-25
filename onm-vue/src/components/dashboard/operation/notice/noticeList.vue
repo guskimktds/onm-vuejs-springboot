@@ -107,19 +107,6 @@
                                     </v-radio>
                                 </v-radio-group>
                         </v-col>
-                        <v-col
-                          cols="12"
-                          sm="6"
-                          md="6"
-                        >
-                          <v-text-field
-                            v-model="editedItem.orderby_no"
-                            label="정렬순서"
-                            counter
-                            maxlength="4"
-                            oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
-                          ></v-text-field>
-                        </v-col>
                       <v-row>
                         <v-col
                           cols="6">
@@ -197,7 +184,11 @@
 <script>
 
 import axios from "axios"
-import vueEditor from '../../../utils/vueEditor.vue'
+import { VueEditor, Quill } from "vue2-editor";
+import { ImageDrop } from 'quill-image-drop-module'
+
+Quill.register('modules/imageDrop', ImageDrop)
+// import vueEditor from '../../../utils/vueEditor.vue'
 // import { eventBus } from '../../../../../main'
 // import EventBus from '../../../../../EventBus';
 
@@ -207,7 +198,7 @@ const headers = {
 }
 
 export default {
-  components: { vueEditor },
+  components: { VueEditor },
     props: ['pList','resPagingInfo'],
     data() {
       return {
