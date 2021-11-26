@@ -16,10 +16,10 @@
         </div>
 </template>
 <script>
-
 import LineChart from '@/components/common/LineChart'
-
 import axios from "axios"
+import EventBus from '../../../../../../EventBus'
+
 export default {
     components: { LineChart },
     props:['param'],
@@ -33,6 +33,14 @@ export default {
     },
     mounted(){
       this.fillData()
+    },
+
+    created() {
+      EventBus.$on('search-all-graph', function(param){  
+      console.log("받은거" + JSON.stringify(param));       
+      // this.fillData(param)
+    });
+
     },
  
     computed: {
@@ -64,7 +72,7 @@ export default {
           var newParam = this.handleParam()
           
           console.log('변경된 파라미터')
-          console.log(newParam)
+          console.log('avgApiTime',newParam)
           axios.post(url, newParam, this.$store.state.headers)
           .then((response) => {
             // console.log(response.data)

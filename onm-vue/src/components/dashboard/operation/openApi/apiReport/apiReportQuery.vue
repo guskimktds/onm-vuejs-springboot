@@ -60,6 +60,7 @@
 
 </template>
 <script>
+import EventBus from '../../../../../EventBus'
 export default {
   props: ['param'],
   data() {
@@ -69,8 +70,9 @@ export default {
   },
   methods: {
     searchMethod: function() {
-        this.$emit("search", this.param);
-        console.log("보내는거" + JSON.stringify(this.param))
+        // this.$emit("search", this.param);
+        EventBus.$emit('search-all-graph', this.param);
+        console.log("보내는거" + JSON.stringify(this.param));
     }
   }, 
 }
