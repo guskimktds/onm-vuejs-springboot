@@ -93,6 +93,7 @@ export default {
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
           this.cList = response.data.data.access_cnt;
+          this.pList = response.data.data.access_api_list;
           this.resPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
           this.pList = [];
