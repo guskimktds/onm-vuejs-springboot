@@ -5,7 +5,6 @@
           v-on:search="searchToButton"
           v-bind:param=searchParam
           v-bind:localGwOptions="localGwOptions"
-          @Items="saveItems"
           v-bind:pList=pList
         ></vanner-query>
         <vanner-list
@@ -52,13 +51,15 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
+        img_name:'',
         img_type:'',
         title: '',
         disp_yn: '',
         disp_start_date: '',
         disp_end_date: '',
         reg_date:'',
-        local_gw_id:''
+        local_gw_id:'',
+        os_type:''
         
       },
       localGwOptions:[],
@@ -164,14 +165,14 @@ export default {
         newParams.view_cnt = params.view_cnt
       }
 
-      // if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
-      //   newParams.local_gw_id = params.local_gw_id;
-      // } else if (
-      //   this.searchParam.local_gw_id !== undefined &&
-      //   this.searchParam.local_gw_id !== ""
-      // ) {
-      //   newParams.local_gw_id = this.searchParam.local_gw_id;
-      // }
+      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
+        newParams.local_gw_id = params.local_gw_id;
+      } else if (
+        this.searchParam.local_gw_id !== undefined &&
+        this.searchParam.local_gw_id !== ""
+      ) {
+        newParams.local_gw_id = this.searchParam.local_gw_id;
+      }
 
       if(params.title !== undefined && params.title !== ''){
         newParams.title = params.title
@@ -188,14 +189,23 @@ export default {
       if(params.reg_date !== undefined && params.reg_date !== ''){
         newParams.reg_date = params.reg_date
       }  
-
+      if(params.disp_start_date !== undefined && params.disp_start_date !== ''){
+        newParams.disp_start_date = params.disp_start_date
+      }
+      if(params.disp_end_date !== undefined && params.disp_end_date !== ''){
+        newParams.disp_end_date = params.disp_end_date
+      }
+      if(params.img_name !== undefined && params.img_name !== ''){
+        newParams.img_name = params.img_name
+      }
+  
       return newParams
     }
     
     
   },
   created(){
-    this.searchToButton(this.params);
+    // this.searchToButton(this.params);
   }
 
 }

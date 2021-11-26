@@ -51,10 +51,19 @@
         </v-row>
         <v-row style="margin-left:30px; padding-top:35px;">
             <v-col cols="auto" style="padding-top:25px;"><span style="color:red;">*</span>노출 여부</v-col>
-            <v-col><v-select 
+            <v-col cols="auto"><v-select 
             label="노출"
             :items="items2"
             v-model="editedItem.disp_yn"
+            solo
+            style="width: 100px;"
+            
+            ></v-select></v-col>
+            <v-col cols="auto" style="padding-top:25px; padding-left:150px"><span style="color:red;">*</span>OS 타입</v-col>
+            <v-col cols="auto"><v-select 
+            label="노출"
+            :items="items3"
+            v-model="editedItem.os_type"
             solo
             style="width: 100px;"
             
@@ -82,7 +91,7 @@
                     </v-date-picker> 
                     </v-menu>
                 </v-col>
-                 <v-text name="un" style="padding-top:35px">~</v-text>
+                 <span style="padding-top:35px">~</span>
                 <v-col cols="auto">
                     <v-menu
                     offset-y
@@ -188,6 +197,7 @@ export default {
             istf: true,
             items: ["타입명 A (300 X 200 px)", "타입명 B (400 X 500 px)","타입명 C (50 X 50 px)"],
             items2: ["노출", "미노출"],
+            items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vvitem:'',
             vitem: 
                 {
@@ -201,17 +211,18 @@ export default {
             currentDateDashFormat2: Date(),
             imageName:'',
             editedItem: {
-                banner_image: {},
-                // title: '',
+                bannerImage: {},
+                title: '',
                 img_type: '',
                 img_name: '',
                 disp_yn: '노출',
                 disp_start_date: dateInfo().currentDateDashFormat,
                 disp_end_date: dateInfo().oneMonthDashFormat,
-                reg_id: '1234',
-                reg_date: '20211111',
+                reg_id: '',
+                reg_date: dateInfo().currentDateDashFormat,
+                os_type: 'All',
+                mod_date: dateInfo().currentDateDashFormat,
                 // origin_name: '',
-                // os_type: '',
                 // img_url: '',
                 // img_path: '',
                 // cmd_type: '',
@@ -226,9 +237,6 @@ export default {
             'Content-Type': 'multipart/form-data'
           },
         }
-    },
-    created:{
-        
     },
     computed: {
       filteredData(){
@@ -295,13 +303,12 @@ export default {
                     reader.onload = (e) => {
                         this.images = e.target.result;
                         this.selectType();
-                        
                     } 
                     reader.readAsDataURL(input.files[0]);
                     if(input.files){
-                    this.editedItem.banner_image = input.files[0]
-                    const formData = new FormData()
-                    formData.append('files', this.editedItem.banner_image)
+                    this.editedItem.bannerImage = input.files[0]
+                    // const formData = new FormData()
+                    // formData.append('files', this.editedItem.banner_image)
                     }
                     this.istf = false
                 }
@@ -331,6 +338,8 @@ export default {
            console.log(this.editedItem)
            this.editedItem.disp_start_date = this.editedItem.disp_start_date.replace(/-/g,'')
            this.editedItem.disp_end_date = this.editedItem.disp_end_date.replace(/-/g,'')
+           this.editedItem.reg_date = this.editedItem.reg_date.replace(/-/g,'')
+           this.editedItem.mod_date = this.editedItem.mod_date.replace(/-/g,'')
            if(this.editedItem.img_type == this.items[0]){
                this.editedItem.img_type = '01'
            }
@@ -345,7 +354,22 @@ export default {
             }else{
                 this.editedItem.disp_yn = 'N'
             }
-           axios.post(url, this.editedItem, this.headers)
+
+            const formData = new FormData();
+            formData.append('img_name', this.editedItem.img_name)
+            formData.append('img_type', this.editedItem.img_type)
+            formData.append('disp_start_date', this.editedItem.disp_start_date)
+            formData.append('disp_end_date', this.editedItem.disp_end_date)
+            formData.append('title', this.editedItem.title)
+            formData.append('disp_yn', this.editedItem.disp_yn)
+            formData.append('bannerImage', this.editedItem.bannerImage)
+            formData.append('reg_id', this.editedItem.reg_id)
+            formData.append('reg_date', this.editedItem.reg_date)
+            formData.append('os_type', this.editedItem.os_type)
+            formData.append('mod_date', this.editedItem.mod_date)
+            // formData.append('images', this.images)
+          
+           axios.post(url, formData, this.headers)
             .then((response)=>{
                 var resCode=response.data.res_code;
                 var resMsg=response.data.res_msg;
@@ -355,9 +379,9 @@ export default {
                         this.toolMsg = '배너 등록 완료'
                         this.dialogMsg = '배너가 등록 되었습니다'
                         
-                    this.$fire({
-                        title: "등록 되었습니다.",
-                        type: "success"})
+                    // this.$fire({
+                    //     title: "등록 되었습니다.",
+                    //     type: "success"})
                 }else{
                     this.$fire({
                         title: "등록 실패하였습니다.",
@@ -388,12 +412,12 @@ export default {
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '제목을 입력 해주세요'
                 return
-            }else if(this.editedItem.disp_start_date != this.editedItem.disp_start_date){
+            }else if(this.editedItem.disp_start_date <= dateInfo().currentDateDashFormat){
                 this.dialogNum2 = true
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '노출 기간은 오늘 이후 날짜로 설정 가능합니다'
                 return
-            }else if(this.editedItem.banner_image == ''){
+            }else if(this.editedItem.img_name == ''){
                 this.dialogNum2 = true
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '배너 파일을 확인 해주세요'
@@ -404,7 +428,6 @@ export default {
         },
         test(){
             console.log(this.editedItem)
-            console.log(this.images2)
         },
         
         

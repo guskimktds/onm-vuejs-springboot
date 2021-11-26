@@ -44,17 +44,25 @@
         <v-row style="margin-left:30px;">
             <v-col cols="auto" style="padding-top:35px; margin-right:30px;"><span style="color:red;">*</span>제목</v-col>
             <v-col>
-                <v-text-field label="입력" style="width: 500px" v-model="editedItem.img_name"></v-text-field>
+                <v-text-field label="입력" style="width: 500px" v-model="editedItem.title"></v-text-field>
             </v-col>
         </v-row>
         <v-row style="margin-left:30px; padding-top:35px;">
             <v-col cols="auto" style="padding-top:25px;"><span style="color:red;">*</span>노출 여부</v-col>
-            <v-col><v-select 
-            label="노출"
+            <v-col cols="auto"><v-select 
             :items="items2"
             v-model="editedItem.disp_yn"
             solo
             style="width: 100px;"
+            ></v-select></v-col>
+            <v-col cols="auto" style="padding-top:25px; padding-left:150px"><span style="color:red;">*</span>OS 타입</v-col>
+            <v-col cols="auto"><v-select 
+            label="All"
+            :items="items3"
+            v-model="editedItem.os_type"
+            solo
+            style="width: 100px;"
+            
             ></v-select></v-col>
         </v-row>
         <v-row style="margin-left:30px; padding-top:20px;">
@@ -79,7 +87,7 @@
                     </v-date-picker> 
                     </v-menu>
                 </v-col>
-                 <v-text style="padding-top:35px">~</v-text>
+                 <span style="padding-top:35px">~</span>
                 <v-col cols="auto">
                     <v-menu
                     offset-y
@@ -117,7 +125,7 @@
             <div v-if="istf" style="width: 400px; height: 300px; margin-left: -15px;">
                <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역</span></div>
           
-            <v-text v-if="showview"></v-text>
+            
             <v-img :src="images" v-if="vitem.tem1" style='height:300px;width:200px; '></v-img>
             <v-img :src="images" v-else-if="vitem.tem2" style='height:400px;width:500px;'></v-img>
             <v-img :src="images" v-else-if="vitem.tem3" style='height:50px;width:50px;'></v-img>
@@ -188,6 +196,7 @@ export default {
             istf: true,
             items: ["타입명 A (300 X 200 px)", "타입명 B (400 X 500 px)","타입명 C (50 X 50 px)"],
             items2: ["노출", "미노출"],
+            items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vvitem:'',
             vitem: 
                 {
@@ -201,15 +210,17 @@ export default {
             currentDateDashFormat2: Date(),
             imageName:'',
             bannerType: '',
-            dispYn: '',
             editedItem: {
-                // banner_image: [],
-                // title: '',
+                bannerImage: {},
+                title: '',
                 // img_type: '',
                 img_name: '',
                 disp_yn: '',
                 disp_start_date: '',
                 disp_end_date: '',
+                mod_id: '',
+                mod_date: '',
+                os_type:'',
                 // reg_id: '',
                 // cmd_type: '',
                 // local_gw_id: '0',
@@ -221,20 +232,30 @@ export default {
         }
     },
     created(){
-           this.editedItem.img_type = this.$route.params.val.img_type
+           this.$route.params.val.bannerImage
+        //    this.$route.params.val.images
+           this.editedItem.os_type = this.$route.params.val.os_type
+           this.editedItem.title = this.$route.params.val.title
+           this.$route.params.val.img_type
            this.editedItem.img_name = this.$route.params.val.img_name
-           this.editedItem.disp_yn = this.$route.params.val.disp_yn
+           this.$route.params.val.disp_yn
            this.editedItem.disp_start_date = this.$route.params.val.disp_start_date.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
            this.editedItem.disp_end_date = this.$route.params.val.disp_end_date.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-           this.editedItem.reg_id = this.$route.params.val.reg_id
-           if(this.editedItem.img_type == '01'){
+           this.editedItem.mod_id = this.$route.params.val.reg_id
+           if(this.$route.params.val.img_type == '01'){
                this.bannerType = '타입명 A'
            }
-           if(this.editedItem.img_type == '02'){
+           if(this.$route.params.val.img_type == '02'){
                this.bannerType = '타입명 B'
            }
-           if(this.editedItem.img_type == '03'){
+           if(this.$route.params.val.img_type == '03'){
                this.bannerType = '타입명 C'
+           }
+           if(this.$route.params.val.disp_yn == 'Y'){
+               this.editedItem.disp_yn = "노출"
+           }
+           if(this.$route.params.val.disp_yn == 'N'){
+               this.editedItem.disp_yn = "미노출"
            }
 
             console.log(this.editedItem);
@@ -271,13 +292,6 @@ export default {
             // })
         },
 
-        closeDelete () {
-            this.dialogDelete = false
-            this.$nextTick(() => {
-            this.editedItem = Object.assign({}, this.defaultItem)
-            //   this.editedIndex = -1
-            })
-        },
         deleteItemConfirm () {
             // this.pList.splice(this.editedIndex, 1)
             this.closeDelete()
@@ -294,7 +308,7 @@ export default {
                         this.selectType();
                     } 
                     reader.readAsDataURL(input.files[0]);
-                    this.editedItem.banner_image = input.files[0]
+                    this.editedItem.bannerImage = input.files[0]
                     this.istf = false
                 } 
                 
@@ -322,23 +336,28 @@ export default {
            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15123/update_banner`
            console.log('서버에 전송되는 값') 
            console.log(this.editedItem)
+            this.editedItem.disp_start_date = this.editedItem.disp_start_date.replace(/-/g,'')
+            this.editedItem.disp_end_date = this.editedItem.disp_end_date.replace(/-/g,'')
+            if(this.editedItem.disp_yn == this.items2[0]){
+                this.editedItem.disp_yn = 'Y'
+            }else{
+                this.editedItem.disp_yn = 'N'
+            }
            axios.post(url, this.editedItem, this.$store.state.headers)
             .then((response)=>{
                 var resCode=response.data.res_code;
                 var resMsg=response.data.res_msg;
                 if(resCode==200){
                     this.pList.unshift(this.editedItem)
-                    this.editedItem.disp_start_date = this.editedItem.disp_start_date.replace(/-/g,'')
-                    this.editedItem.disp_end_date = this.editedItem.disp_end_date.replace(/-/g,'')
-                    this.$fire({
-                        title: "등록 되었습니다.",
-                        type: "success"})
                         this.dialogNum2 = true
-                        this.toolMsg = '배너 등록 완료'
-                        this.dialogMsg = '배너가 등록 되었습니다'
+                        this.toolMsg = '배너 수정 완료'
+                        this.dialogMsg = '배너가 수정 되었습니다'
+                    // this.$fire({
+                    //     title: "수정 되었습니다.",
+                    //     type: "success"})
                 }else{
                     this.$fire({
-                        title: "등록 실패하였습니다.",
+                        title: "등록 실패하였습니다123.",
                         html: resMsg,
                         type: "error"})
                         this.dialogNum1 = false
@@ -371,7 +390,7 @@ export default {
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '노출 기간은 오늘 이후 날짜로 설정 가능합니다'
                 return
-            }else if(this.editedItem.banner_image == ''){
+            }else if(this.editedItem.bannerImage == ''){
                 this.dialogNum2 = true
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '배너 파일을 확인 해주세요'

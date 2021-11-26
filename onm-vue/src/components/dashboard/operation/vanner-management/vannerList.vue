@@ -31,6 +31,7 @@
         </v-data-table>
 
     </v-card>
+    <v-btn @click="testbbb"></v-btn>
   </v-container>
 </template>
 
@@ -39,7 +40,7 @@
 //  import EventBus from '../../../../EventBus';
 
 export default {
-    props: ['pList','resPagingInfo'],
+    props: ['pList','resPagingInfo', 'gw_id'],
     data() {
       return {
         options: {},
@@ -54,6 +55,7 @@ export default {
           },
 
           { text: '배너타입', value: 'img_type', width: '10%', align: 'center'},
+          { text: 'OS타입', value: 'os_type', width: '10%', align: 'center'},
           { text: '제목', value: 'title', width: '25%', align: 'center'},
           { text: '노출여부', value: 'disp_yn', width: '10%', align: 'center' },
           { text: '노출시작일', value: 'disp_start_date',width: '10%', align: 'center' },
@@ -82,6 +84,7 @@ export default {
       testbbb(){
         console.log(this.param)
         console.log(this.pList)
+        console.log(this.gw_id)
       }
       
     },

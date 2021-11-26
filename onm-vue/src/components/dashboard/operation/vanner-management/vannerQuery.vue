@@ -13,38 +13,46 @@
         <v-card class="border-black px-5 py-3" fluid >
         <v-row style="padding-top: 10px">
             <v-col   style="padding-top:25px;" cols="auto">
-                <v-text>배너타입</v-text>
+                <span>배너타입</span>
             </v-col>
-            <v-col >
+            <v-col cols="auto">
             <v-select 
             label="전체"
             :items="items"
-            v-model="param.img_type"
-            @change="changeValue"
+            v-model="typeitem"
             solo
             style="width: 150px;"
             >
             </v-select>
             </v-col>
-            <v-col style="padding-top:25px; flex:0 0 5%;" cols="auto" v-model="param.img_name">
-                <v-text>제목</v-text>
+            <v-col cols="auto" style="padding-top:25px;">OS 타입</v-col>
+            <v-col cols="auto"><v-select 
+            label="All"
+            :items="items3"
+            v-model="editedItem.os_type"
+            solo
+            style="width: 100px;"
+            
+            ></v-select></v-col>
+            <v-col style="padding-top:25px; flex:0 0 5%;" cols="auto" >
+                <span>제목</span>
             </v-col>
-            <v-col style="margin-top:-10px;" >
-                <v-text-field label="입력" style="width: 335px"></v-text-field>
+            <v-col style="margin-top:-10px;" cols="auto">
+                <v-text-field label="입력" style="width: 335px" v-model="param.img_name"></v-text-field>
                 <!-- <input type="text" class="border-black"> -->
             </v-col>
             <v-col style="padding-top:25px;" cols="auto">
-                <v-text>노출여부</v-text>
+                <span>노출여부</span>
             </v-col>
             <v-col cols="auto"><v-select 
             :items="items2"
-            v-model="this.param.disp_yn"
+            v-model="typeitem2"
             label="전체"
             solo
             style="width: 150px;"
             >
             </v-select></v-col>
-            <v-col  cols="2">
+            <v-col  cols="auto">
                 <v-btn class="black" right absolute
                  @click="searchMethod"
                  elevation="2"
@@ -53,7 +61,7 @@
         </v-row>
         <v-row style="margin-top:-40px">
             <v-col style="padding-top:35px;" cols="auto">
-                <v-text>노출기간</v-text>
+                <span>노출기간</span>
             </v-col>
             <v-col cols="auto">
                     <v-menu
@@ -74,7 +82,7 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-text style="padding-top:35px">~</v-text>
+                <span style="padding-top:35px">~</span>
                 <v-col cols="auto">
                     <v-menu
                     offset-y
@@ -96,7 +104,7 @@
                 </v-col>
 
                 <v-col style="padding-top:35px; padding-left: 75px" cols="auto">
-                <v-text>등록일자</v-text>
+                <span>등록일자</span>
                 </v-col>
                 <v-col cols="auto">
                     <v-menu
@@ -118,7 +126,7 @@
                     </v-menu>
                     
                 </v-col>
-                <v-text style="padding-top:35px">~</v-text>
+                <span style="padding-top:35px">~</span>
                 <v-col cols="auto">
                     <v-menu
                     offset-y
@@ -156,8 +164,10 @@ export default {
             images: [],
             items: ["전체", "타입명 A", "타입명 B", "타입명 C"],
             items2: ["전체", "노출", "미노출"],
+            items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vitem:'전체',
-            vitem2: '',
+            typeitem:'',
+            typeitem2:'',
             editedItem: {
                 img_type: '',
                 disp_yn: '',
@@ -166,16 +176,7 @@ export default {
                 disp_end_date: '',
                 reg_date: '',
                 cmd_type: '',
-                local_gw_id: '0',
-            },
-            defaultItem: {
-                img_type: '',
-                disp_yn: '',
-                img_name: '',
-                disp_start_date: '',
-                disp_end_date: '',
-                reg_date: '',
-                cmd_type: 'I',
+                os_type:'',
                 local_gw_id: '0',
             },
         }
@@ -210,51 +211,30 @@ export default {
             // }else{
             //     this.param.process_status=this.editedItem.img_type
             // }
-            if(this.param.disp_yn == '노출'){
+            if(this.typeitem == this.items[1]){
+                    this.param.img_type = '01'
+            }
+            if(this.typeitem == this.items[2]){
+                    this.param.img_type = '02'
+            }
+            if(this.typeitem == this.items[3]){
+                    this.param.img_type = '03'
+            }
+            if(this.typeitem == this.items[0]){
+                    this.param.img_type = ''
+            }
+             if(this.typeitem2 == this.items2[1]){
                 this.param.disp_yn = 'Y'
             }
-            if(this.param.disp_yn == '미노출'){
+            if(this.typeitem2 == this.items2[2]){
                 this.param.disp_yn = 'N'
             }
-            if(this.param.disp_yn == '전체'){
+            if(this.typeitem2 == this.items2[0]){
                 this.param.disp_yn = ''
             }
             this.$emit('search', this.param)
             console.log(this.param)
             console.log(this.editedItem)
-            
-        },
-         uploadImage: function() {
-            let form = new FormData()
-            let image = this.$refs['image'].files[0]
-            
-            form.append('image', image)
-
-            // axios.post('/upload', form, {
-            //     header: { 'Content-Type': 'multipart/form-data' }
-            // }).then( ({data}) => {
-            // this.images = data
-            // })
-            // .catch( err => console.log(err))
-        },
-        changeValue(){
-            if(this.param.img_type == this.items[1]){
-                    this.param.img_type = '01'
-            }
-            if(this.param.img_type == '타입명 B'){
-                    this.param.img_type = '02'
-            }
-            if(this.param.img_type == '타입명 C'){
-                    this.param.img_type = '03'
-            }
-            if(this.param.img_type == '전체'){
-                    this.param.img_type = ''
-            }
-            this.searchMethod()
-            console.log(this.param)
-        },
-        test123(){
-            console.log(this.param)
             
         },
         
