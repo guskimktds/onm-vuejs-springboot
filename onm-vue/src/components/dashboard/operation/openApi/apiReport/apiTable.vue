@@ -4,7 +4,7 @@
         <div class="col">
                 <div class="grid-board">
                     
-                    <div>API별 호출 수</div>
+                    <div style="font-size:20px; font-weight:bold; text-align:left;">API별 호출 수</div>
                             <v-row>
         <v-col>
 
@@ -58,7 +58,7 @@ export default {
     data() {
       return {
         pHeaders:[
-            { text: '사이트id', value: 'site_id' },
+            { text: '사이트ID', value: 'site_id' },
             { text: '인터페이스 번호', value: 'api_no' },
             { text: '접속량', value: 'access_cnt' },
             { text: '날짜', value: 'access_date' },

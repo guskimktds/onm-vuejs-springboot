@@ -1,6 +1,6 @@
 <template>
         <div class="chart-board">
-          <div class="text-area">{{ formTitle }}</div>
+          <div class="text-area" style="font-size:20px; font-weight:bold; text-align:center;">{{ formTitle }}</div>
             <div><br></div>
             <div class="chart-area">
                 <!-- <line-chart :chart-data="chartData" :options="labels" :styles="myStyles"
@@ -74,16 +74,10 @@ export default {
                 datasets: [
                   {
                     label:'신규', 
-                    // backgroundColor: '#f87979',
+                    backgroundColor: ['#FFF200','#99C802','#FF0000','#F89403','#1E9600'],
                     borderColor:'#f87979',
                     data: this.getNewCnt(response.data.data.access_api_rank)
                   },
-                  {
-                    label:"해지", 
-                    // backgroundColor: 'white',
-                    borderColor:'white',
-                    data: this.getCloseCnt(response.data.data.access_api_rank)
-                  }
                 ]
               }
               // console.log(this.datacollection)
@@ -103,31 +97,19 @@ export default {
 
       getLabels: function(arr){
         var new_arr = []
-        // arr.forEach(function(element){
-        //     new_arr.push(element.dt) 
-        // })
-                                      var arr2 = Object.keys(arr[0])
-              console.log("값꺼내기"+JSON.stringify(arr2))
-              new_arr = arr2
-        return new_arr
-      },
-
-      getCloseCnt: function(arr){
-         var new_arr = []
         arr.forEach(function(element){
-            new_arr.push(element.close_cnt) 
+            new_arr.push(element.api_no) 
         })
+        console.log('countCallApi keys',new_arr)
         return new_arr
       },
 
       getNewCnt: function(arr){
-         var new_arr = []
-        // arr.forEach(function(element){
-        //     new_arr.push(element.new_cnt) 
-        // })
-                              var arr2 = Object.values(arr[0])
-              console.log("값꺼내기"+JSON.stringify(arr2))
-              new_arr = arr2
+        var new_arr = []
+        arr.forEach(function(element){
+            new_arr.push(element.access_cnt) 
+        })
+        console.log('countCallApi value',new_arr)
         return new_arr
       },
 

@@ -1,13 +1,13 @@
 <template>
         <div class="chart-board">
-          <div class="text-area">{{ formTitle }}</div>
+          <div class="text-area" style="font-size:20px; font-weight:bold; text-align:center;">{{ formTitle }}</div>
             <div><br></div>
             <div class="chart-area">
                 <!-- <line-chart :chart-data="chartData" :options="labels" :styles="myStyles"
                     :v-on="fillData()"
                 ></line-chart> -->
                 <line-chart 
-                v-if="loaded" 
+                v-if="loaded"
                     :chart-data="datacollection" :options="labels"
                 ></line-chart>
             </div>
@@ -16,7 +16,7 @@
         </div>
 </template>
 <script>
-import LineChart from '@/components/common/LineChart'
+import LineChart from '@/components/common/OpenApiLineChart'
 import axios from "axios"
 import EventBus from '../../../../../../EventBus'
 
@@ -28,7 +28,7 @@ export default {
             datacollection: {},
             title: '시간대별 평균 호출 수',
             labels: [], 
-            loaded: false           
+            loaded: false,         
         }
     },
     mounted(){
@@ -79,14 +79,16 @@ export default {
             var resCode = response.data.res_code;
             var resMsg = response.data.res_msg;
             if(resCode == 200){
-  
+
+              console.log('avgApiTime response' + JSON.stringify(response.data.data.access_hourly));
+              
               this.labels = this.getLabels(response.data.data.access_hourly)
-             
+              
               this.datacollection = {
                 labels: this.labels,
                 datasets: [
                   {
-                    label:'신규', 
+                    label:'시간대별 평균 호출 수', 
                     // backgroundColor: '#f87979',
                     borderColor:'#f87979',
                     data: this.getNewCnt(response.data.data.access_hourly)
@@ -110,36 +112,25 @@ export default {
 
       getLabels: function(arr){
         var new_arr = []
-      //   // arr.forEach(function(element){
-      //   //     new_arr.push(element.dt) 
-      //   // })
-      //   var keys = arr[0]
-
-              var arr2 = Object.keys(arr[0])
-              console.log("DFDFDFDFㄱ밧ㅂ삽삽삽사"+JSON.stringify(arr2))
-              new_arr = arr2
-      //   console.log("값찍기"+keys)
-        return new_arr
-      },
-
-      getCloseCnt: function(arr){
-         var new_arr = []
-        arr.forEach(function(element){
-            new_arr.push(element.close_cnt) 
+        let result_map = Object.keys(arr[0]).map(function(key){
+          return [String(key)+'시']
         })
-        
-
+        for(let i=0; i < result_map.length; i++){
+            new_arr.push(result_map[i]) 
+        }
+        console.log('avgApiTime keys',new_arr)
         return new_arr
       },
 
       getNewCnt: function(arr){
-         var new_arr = []
-        // arr.forEach(function(element){
-        //     new_arr.push(element.new_cnt) 
-        // })
-                      var arr2 = Object.values(arr[0])
-              console.log("값꺼내기"+JSON.stringify(arr2))
-              new_arr = arr2
+        var new_arr = []
+        let result_map = Object.values(arr[0]).map(function(key){
+          return [String(key)]
+        })
+        for(let i=0; i < result_map.length; i++){
+            new_arr.push(result_map[i]) 
+          }
+        console.log('avgApiTime value',new_arr)
         return new_arr
       },
 

@@ -24,7 +24,15 @@ export default {
     //     }
     //   ]
     // }, 
-    {responsive: true, maintainAspectRatio: false})
+    {
+      responsive: true, 
+      maintainAspectRatio: false,
+      legend: {
+					display: true,
+					position: 'right',
+          align: 'right'
+			},
+    })
   }
 }
 </script>
