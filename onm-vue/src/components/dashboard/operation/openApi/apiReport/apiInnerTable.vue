@@ -2,41 +2,12 @@
 <v-container fluid>
     <div class="row">
         <div class="col">
-                <div class="grid-board">
-                    
-                    <div>API별 호출 수</div>
-                            <v-row>
-        <v-col>
-
-      <v-text-field 
-      label="search"
-      v-model="api_no"
-      ></v-text-field>
-        </v-col>
-        <v-col>
-
-      <v-btn
-     v-on:click="processList"
-      >검색</v-btn>
-        </v-col>
-      </v-row>
-                        <v-data-table
-                        :headers="pHeaders"
-                        :items="pList"
-                        :options.sync="options"
-                        :server-items-length="resPagingInfo.total_cnt"
-                        class="elevation-1"
-                        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
-                        :header-props="{ sortIcon: null }"
-                        >
-                        </v-data-table>
-                    </div>
+        <api-inner-table></api-inner-table>
         </div>
-            
+    
         <div class="col">
         <service-table></service-table>
         </div>
-
     </div>
 
 
@@ -48,7 +19,7 @@
 import axios from "axios"
 import EventBus from '../../../../../EventBus'
 import ServiceTable from './serviceTable.vue'
-
+import apiInnerTable from './apiInnerTable.vue'
 const headers={
   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
   'Content-Type': 'application/json'
@@ -58,16 +29,16 @@ export default {
     data() {
       return {
         pHeaders:[
-            { text: '사이트id', value: 'site_id' },
-            { text: '인터페이스 번호', value: 'api_no' },
-            { text: '접속량', value: 'access_cnt' },
-            { text: '날짜', value: 'access_date' },
+            { text: '국사코드', value: 'site_id' },
+            { text: '서버명', value: 'api_no' },
+            { text: '프로세스 종류', value: 'access_cnt' },
+            { text: '상태', value: 'acess_date' },
         ],
          reqPagingInfo: {
         page_no: 1,
         view_cnt: 10
         },
-        api_no:'',
+        psearch: '',
         dialog:false,
         dialogDelete:false,
         editedIndex:-1,
@@ -80,7 +51,8 @@ export default {
       }
     },
     components: {
-      ServiceTable  
+      ServiceTable,
+      apiInnerTable  
     },
     methods: {
         processList:function(options) {
@@ -120,8 +92,7 @@ export default {
         setParams:function(options){
             var values={
                 page_no: options.page,
-                view_cnt: options.itemsPerPage,
-                api_no:this.api_no
+                view_cnt: options.itemsPerPage
             }
             return values;
         },

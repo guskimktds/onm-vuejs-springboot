@@ -74,7 +74,7 @@ export default {
           if(resCode == 200){
             // this.authGroupList = response.data.data.auth_group_list
             // this.isAuthMenu = true
-            this.pList = response.data.data.list;
+            this.pList = response.data.data.notice_list;
             this.resPagingInfo = response.data.data.paging_info
             console.log(this.resPagingInfo)
           }else{
@@ -96,9 +96,9 @@ export default {
     //   page_no : params.page_no,
     //   board_cate_cd :params.board_cate_cd,
     // }
-
+console.log("검색1"+JSON.stringify(params))
       var reqParams = this.handleParams(params)  
-    console.log(JSON.stringify(reqParams))
+    console.log("검색2"+JSON.stringify(reqParams))
     //params : 페이징 + 검색조건
       // console.log("EEEEEEEEEEEEEEEEE"+reqParams.disp_end_date)
     
@@ -116,7 +116,7 @@ export default {
               }else if(resCode==204){
                 this.pList = [];
                 this.resPagingInfo = {};
-                alert('코드 관리 데이터가 없습니다.');
+                alert('공지 목록 데이터가 없습니다.');
               }else if(resCode==410){
                 alert("로그인 세션이 만료되었습니다.");
                 EventBus.$emit('top-path-logout');

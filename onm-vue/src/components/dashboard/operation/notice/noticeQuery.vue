@@ -311,7 +311,7 @@ export default {
               {state: '일반공지'     , abbr: 'CATE01'},
               {state: '긴급공지'     , abbr: 'CATE02'}],
             dispItems:[
-              {state: '전체'     , abbr: 'All'},
+              {state: '전체'     , abbr: ''},
               {state: '노출'     , abbr: 'Y'},
               {state: '미노출'     , abbr: 'N'}],
             modalItems:[
