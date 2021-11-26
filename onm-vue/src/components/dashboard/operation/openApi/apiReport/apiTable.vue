@@ -1,7 +1,7 @@
 <template>
 <v-container fluid>
     <div class="row">
-        <div class="col-6">
+        <div class="col">
                 <div class="grid-board">
                     
                     <div>API별 호출 수</div>
@@ -32,11 +32,11 @@
                         </v-data-table>
                     </div>
         </div>
-            <div class="row">
+            
         <div class="col">
         <service-table></service-table>
         </div>
-            </div>
+
     </div>
 
 

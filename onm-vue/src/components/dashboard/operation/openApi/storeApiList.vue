@@ -24,7 +24,7 @@
         <v-col>
 
       <v-btn
-     v-on:click="searchMethod"
+     v-on:click="searchStoreApiButton"
       >검색</v-btn>
         </v-col>
       </v-row>
@@ -44,12 +44,18 @@
 
 
 <script>
+import EventBus from '../../../../EventBus'
+import axios from "axios"
+  const headers={
+'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+'Content-Type': 'application/json'
+}
 export default {
   props: ["storeList", "storeResPagingInfo"],
   data() {
     return {
       headers: [
-        { text: '인터페이스 번호', value: 'user_id' },
+        { text: '매장', value: 'user_id' },
         { text: 'api 접속량', value: 'access_cnt' },
         { text: '날짜', value: 'access_date' },
       ],
@@ -76,6 +82,58 @@ methods: {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
+    searchStoreApiButton: function(params){
+        const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/user`;
+        var reqParams = this.setParams(params);
+      
+        console.log(reqParams)
+  
+        axios
+        .post(url, reqParams, headers)
+        .then( (response) => {
+  
+          var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if (resCode == 200) {
+            this.storeList = response.data.data.access_user_list;
+            this.sList = response.data.data.access_cnt;
+            this.storeResPagingInfo = response.data.data.paging_info;
+          }else if(resCode==204){
+            this.storeList = [];
+            this.sList = response.data.data.access_cnt;
+            this.storeResPagingInfo = {};
+            alert('사용자 API 데이터가 없습니다.');
+          }else if(resCode==410){
+            alert("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+              this.$store
+              .dispatch("LOGOUT")
+              .then( res => { 
+              console.log(res.status)}).catch(({ message }) => (this.msg = message))
+              this.$router.replace('/signin')
+          }else {
+            this.storeList = [];
+            this.storeResPagingInfo = {};
+            alert(resCode + " / " + resMsg);
+          }
+  
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("Error")
+        })
+        .finally(function () {
+          // always executed
+        });
+      },
+          setParams:function(options){
+            var values={
+                page_no: options.page,
+                view_cnt: options.itemsPerPage,
+                user_id:this.user_id
+            }
+            return values;
+        },
     
   },
 

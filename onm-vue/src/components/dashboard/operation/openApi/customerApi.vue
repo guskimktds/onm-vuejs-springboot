@@ -7,6 +7,7 @@
           v-bind:param="searchParam"
         ></customer-api-query>
         <count-api
+          v-bind:sList=sList
           v-bind:cList=cList
         >
         </count-api>
@@ -18,7 +19,6 @@
             v-bind:param="searchParam"
             v-bind:pList=pList
             v-bind:resPagingInfo=resPagingInfo
-            v-on:searchCustomer="searchCustomerApi"
             @pagination="setToSearchParams"
           ></customer-api-list>
         </v-col>
@@ -32,6 +32,12 @@
           ></store-api-list>
         </v-col>
       </v-row>
+      <v-dialog v-if=showModal>
+        <ul>
+          <h1>api명 | 호출 수</h1>
+          <li></li>
+        </ul>
+      </v-dialog>
 
       </v-card>     
     </v-container>
@@ -62,6 +68,7 @@ export default {
     return {
       cList: [],
       pList: [],
+      sList:[],
       storeList: [],
       reqPagingInfo: {
         page_no: 1,
@@ -75,7 +82,8 @@ export default {
         site_id: '',
         api_no: '',
         user_id: '',
-      }
+      },
+      showModal: false
     }
   },
   methods: {   
@@ -138,6 +146,7 @@ export default {
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
           this.storeList = response.data.data.access_user_list;
+          this.sList = response.data.data.access_cnt;
           this.storeResPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
           this.storeList = [];
@@ -167,50 +176,7 @@ export default {
       });
     },
     //검색
-        searchStoreApiButton: function(params){
-        const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/user`;
-        var reqParams = this.handleParams(params);
-              // reqParams.site_id ='JHC_CTRL_001'
-        console.log(reqParams)
-  
-        axios
-        .post(url, reqParams, headers)
-        .then( (response) => {
-  
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if (resCode == 200) {
-            this.storeList = response.data.data.access_user_list;
-            this.cList = response.data.data.access_cnt;
-            this.storeResPagingInfo = response.data.data.paging_info;
-          }else if(resCode==204){
-            this.storeList = [];
-            this.cList = response.data.data.access_cnt;
-            this.storeResPagingInfo = {};
-            alert('사용자 API 데이터가 없습니다.');
-          }else if(resCode==410){
-            alert("로그인 세션이 만료되었습니다.");
-            EventBus.$emit('top-path-logout');
-              this.$store
-              .dispatch("LOGOUT")
-              .then( res => { 
-              console.log(res.status)}).catch(({ message }) => (this.msg = message))
-              this.$router.replace('/signin')
-          }else {
-            this.storeList = [];
-            this.storeResPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-  
-        })
-        .catch(function (error) {
-          console.log(error);
-          alert("Error")
-        })
-        .finally(function () {
-          // always executed
-        });
-      },
+    
       //row 클릭
       clickToSearchDetailObject: function(values){
 
@@ -225,7 +191,7 @@ export default {
          view_cnt: '100',
        }
        // console.log(values+"DDDDDDDDewrerer")
-
+      this.showModal=true
        axios.post(url, params, headers)
        .then((response) => {
           var resCode = response.data.res_code;
@@ -236,27 +202,6 @@ export default {
              this.isReloadDetailObject = true
              this.orderBtn=!this.orderBtn
              console.log(this.pObject)
-                   this.$fire({
-           title: "매장별 api 호출 수",
-           html: `"<tr>
-     <td></td>
-     <td></td>
-     <td>/</td>
-     <td></td>
-     <td></td>
-     <td><button
-                    <c:choose>
-         <c:when test =""> onClick="location.href='joinClassView.do?c_num='" class="btn btn-primary btn-sm"</c:when>
-         <c:otherwise>class="btn btn-danger btn-sm"  disabled="disabled"</c:otherwise>
-         </c:choose>>신청</button></td>
-         <!-- 모달창 열수있는 버튼 -->
-     <td><a class="ls-modal btn btn-outline-primary" data-toggle="modal"
-             href="modalList.do?c_num=" data-target="#modal">보기</a></td>
-   </tr>"`
-           // showCancelButton: true,
-           // cancelButtonColor: '#d33',
-           // cancelButtonText: '닫기'
-                       })
            }else if(resCode==204){
              this.pObject = {};
              this.showDetailObject = false
@@ -294,7 +239,7 @@ export default {
       this.searchStoreApi(params)
       this.searchCustomerApi(params)
     },
-          searchParams: function(values){
+    searchParams: function(values){
       console.log(values)
       
       var params = {

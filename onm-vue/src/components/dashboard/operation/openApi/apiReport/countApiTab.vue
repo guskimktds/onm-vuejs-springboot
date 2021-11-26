@@ -9,6 +9,7 @@
 
   <v-text-field label="API 전체 수"
   v-model="cList"
+  readonly
   >
   </v-text-field>
 
@@ -17,9 +18,11 @@
     cols="12"
     sm="4"
     md="4"
+    readonly
   >
     <v-text-field label="사용가능"
-     v-model="cList">
+     v-model="cList"
+     readonly>
   </v-text-field>
   </v-col>
     <v-col
@@ -28,7 +31,8 @@
     md="4"
   >
     <v-text-field label="사용불가"
-    v-model="cList.access_cnt_all">
+    v-model="cList.access_cnt_all"
+    readonly>
 
   </v-text-field>
     </v-col>
