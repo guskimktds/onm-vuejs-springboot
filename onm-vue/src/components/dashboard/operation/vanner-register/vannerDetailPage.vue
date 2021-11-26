@@ -14,21 +14,10 @@
                 <v-btn @click="checkYn" 
                 right 
                 absolute
-                color="indigo"
+                color="black"
                 >
                     저장
                 </v-btn>
-                <!-- <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                            color="indigo"
-                            dark
-                            class="mb-2"
-                            v-bind="attrs"
-                            v-on="on"
-                        >
-                            등록
-                        </v-btn>
-                        </template> -->
             </v-col>
         </v-row>
     <v-card fluid >
@@ -51,7 +40,7 @@
             <v-col cols="auto" style="padding-top:25px;"><span style="color:red;">*</span>노출 여부</v-col>
             <v-col cols="auto"><v-select 
             :items="items2"
-            v-model="editedItem.disp_yn"
+            v-model="typedate"
             solo
             style="width: 100px;"
             ></v-select></v-col>
@@ -73,17 +62,17 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="editedItem.disp_start_date"
+                        v-model="dispdate"
                         prepend-icon="mdi-calendar"
                         readonly
                         label="시작일"
                         v-bind="attrs"
                         v-on="on"
-                        style="width:150px"
+                        style="width:180px"
                         
                         ></v-text-field>
                     </template>
-                     <v-date-picker v-model="editedItem.disp_start_date" no-title scrollable type="date">
+                     <v-date-picker v-model="dispdate" no-title scrollable type="date">
                     </v-date-picker> 
                     </v-menu>
                 </v-col>
@@ -94,23 +83,23 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="editedItem.disp_end_date"
+                        v-model="dispdate2"
                         prepend-icon="mdi-calendar"
                         readonly
                         label="종료일"
                         v-bind="attrs"
                         v-on="on"
-                        style="width:150px"
+                        style="width:180px"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="editedItem.disp_end_date" no-title scrollable type="date">
+                    <v-date-picker v-model="dispdate2" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
                 </v-col>
         </v-row>
         <v-row style="margin-left:30px; padding-top:20px;">
             <v-col cols="auto" style="padding-top:15px;" ><span style="color:red;">*</span>배너 파일</v-col>
-            <v-col cols="4">
+            <v-col cols="6">
             <!-- <input type="file"  @change="onFileSelected" accept="image/png, image/gif, image/jpeg, image/jpg"> -->
             <div class="filebox">
                 <input class="upload-name" v-model="editedItem.img_name" readonly placeholder="파일명">
@@ -131,13 +120,7 @@
             <v-img :src="images" v-else-if="vitem.tem3" style='height:50px;width:50px;'></v-img>
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
-            <v-col cols="auto" style="padding-top: 25px; padding-right:25px">
-                미리보기
-            </v-col>
-            <v-col cols="auto">
-                <v-btn  style="width:100px; height: 30px; background:black; margin-top: 8px" @click="test">미리보기</v-btn>
-              <!-- <div>  <router-link to="/operation/vanner-management" >이전</router-link></div> -->
-            </v-col>
+            
         </v-row>
                 <v-dialog v-model="dialogNum1" max-width="290">
                         <v-card >
@@ -146,7 +129,7 @@
                             height="30px"
                             dark
                             >배너 등록</v-toolbar>
-                        <v-card-title style="margin-top:20px; font-size:17px">배너를 등록 하시겠습니까?</v-card-title>
+                        <v-card-title style="margin-top:20px; font-size:17px">배너를 수정 하시겠습니까?</v-card-title>
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="white" text @click="dialogMsgType" style=" background-color:black;margin-top:50px; width:120px; margin-right:10px;">확인</v-btn>
@@ -166,8 +149,8 @@
                         <v-card-title style="margin-top:20px; font-size:17px">{{ dialogMsg }}</v-card-title>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="white" text @click="close" style=" background-color:black;margin-top:50px; width:120px; margin-right:10px;">닫기</v-btn>
-                            <!-- <v-btn color="white darken-1" text @click="close" style=" background-color:gray;margin-top:50px; width:120px;">취소</v-btn> -->
+                            <v-btn color="white" text @click="close" v-if="closeT" style=" background-color:black;margin-top:50px; width:120px; margin-right:10px;">닫기</v-btn>
+                            <v-btn color="white" text @click="close2" v-if="closeF" style=" background-color:black;margin-top:50px; width:120px; margin-right:10px;">닫기</v-btn>
                             <v-spacer></v-spacer>
                         </v-card-actions>
                         </v-card>
@@ -210,6 +193,9 @@ export default {
             currentDateDashFormat2: Date(),
             imageName:'',
             bannerType: '',
+            typedate:'',
+            dispdate:'',
+            dispdate2:'',
             editedItem: {
                 bannerImage: {},
                 title: '',
@@ -229,6 +215,8 @@ export default {
             dialogMsg: '',
             toolMsg: '',
             dialogNum2: false,
+            closeT:true,
+            closeF:false,
         }
     },
     created(){
@@ -238,9 +226,11 @@ export default {
            this.editedItem.title = this.$route.params.val.title
            this.$route.params.val.img_type
            this.editedItem.img_name = this.$route.params.val.img_name
-           this.$route.params.val.disp_yn
-           this.editedItem.disp_start_date = this.$route.params.val.disp_start_date.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-           this.editedItem.disp_end_date = this.$route.params.val.disp_end_date.substring(0,8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+           this.typedate = this.$route.params.val.disp_yn
+           this.dispdate = this.$route.params.val.disp_start_date.substring(0,10)
+        //    .replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+           this.dispdate2 = this.$route.params.val.disp_end_date.substring(0,10)
+        //    .replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
            this.editedItem.mod_id = this.$route.params.val.reg_id
            if(this.$route.params.val.img_type == '01'){
                this.bannerType = '타입명 A'
@@ -252,10 +242,10 @@ export default {
                this.bannerType = '타입명 C'
            }
            if(this.$route.params.val.disp_yn == 'Y'){
-               this.editedItem.disp_yn = "노출"
+               this.typedate = "노출"
            }
            if(this.$route.params.val.disp_yn == 'N'){
-               this.editedItem.disp_yn = "미노출"
+               this.typedate = "미노출"
            }
 
             console.log(this.editedItem);
@@ -282,7 +272,6 @@ export default {
             return false;
             }
         },
-      
         close () {
             this.dialogNum1 = false
             this.dialogNum2 = false
@@ -291,7 +280,12 @@ export default {
             // // this.editedIndex = -1
             // })
         },
-
+        close2(){
+            
+            this.dialogNum1 = false
+            this.dialogNum2 = false
+            this.$router.push('/operation/vanner-management');
+        },
         deleteItemConfirm () {
             // this.pList.splice(this.editedIndex, 1)
             this.closeDelete()
@@ -336,9 +330,9 @@ export default {
            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15123/update_banner`
            console.log('서버에 전송되는 값') 
            console.log(this.editedItem)
-            this.editedItem.disp_start_date = this.editedItem.disp_start_date.replace(/-/g,'')
-            this.editedItem.disp_end_date = this.editedItem.disp_end_date.replace(/-/g,'')
-            if(this.editedItem.disp_yn == this.items2[0]){
+            this.editedItem.disp_start_date = this.dispdate.substring(0,10).replace(/-/g,'')
+            this.editedItem.disp_end_date = this.dispdate2.substring(0,10).replace(/-/g,'')
+            if(this.typedate == this.items2[0]){
                 this.editedItem.disp_yn = 'Y'
             }else{
                 this.editedItem.disp_yn = 'N'
@@ -352,6 +346,8 @@ export default {
                         this.dialogNum2 = true
                         this.toolMsg = '배너 수정 완료'
                         this.dialogMsg = '배너가 수정 되었습니다'
+                        this.closeT = false
+                        this.closeF = true
                     // this.$fire({
                     //     title: "수정 되었습니다.",
                     //     type: "success"})
@@ -385,7 +381,7 @@ export default {
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '제목을 입력 해주세요'
                 return
-            }else if(this.editedItem.disp_start_date != this.editedItem.disp_start_date){
+            }else if(this.dispdate == this.editedItem.disp_start_date){
                 this.dialogNum2 = true
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '노출 기간은 오늘 이후 날짜로 설정 가능합니다'

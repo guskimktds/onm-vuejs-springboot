@@ -14,21 +14,10 @@
                 <v-btn @click="checkYn" 
                 right 
                 absolute
-                color="indigo"
+                color="black"
                 >
                     등록 완료
                 </v-btn>
-                <!-- <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                            color="indigo"
-                            dark
-                            class="mb-2"
-                            v-bind="attrs"
-                            v-on="on"
-                        >
-                            등록
-                        </v-btn>
-                        </template> -->
             </v-col>
         </v-row>
     <v-card fluid >
@@ -37,7 +26,7 @@
             <v-col><v-select 
             label="선택"
             :items="items"
-            v-model="editedItem.img_type"
+            v-model="typedata"
             solo
             @change="selectType"
             style="width: 200px;"
@@ -51,22 +40,20 @@
         </v-row>
         <v-row style="margin-left:30px; padding-top:35px;">
             <v-col cols="auto" style="padding-top:25px;"><span style="color:red;">*</span>노출 여부</v-col>
-            <v-col cols="auto"><v-select 
-            label="노출"
+            <v-col cols="auto">
+            <v-select
             :items="items2"
-            v-model="editedItem.disp_yn"
+            v-model="typedata2"
             solo
             style="width: 100px;"
-            
             ></v-select></v-col>
             <v-col cols="auto" style="padding-top:25px; padding-left:150px"><span style="color:red;">*</span>OS 타입</v-col>
-            <v-col cols="auto"><v-select 
-            label="노출"
+            <v-col cols="auto">
+            <v-select 
             :items="items3"
             v-model="editedItem.os_type"
             solo
             style="width: 100px;"
-            
             ></v-select></v-col>
         </v-row>
         <v-row style="margin-left:30px; padding-top:20px;">
@@ -77,7 +64,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="editedItem.disp_start_date"
+                        v-model="dispdate"
                         prepend-icon="mdi-calendar"
                         readonly
                         label="시작일"
@@ -87,7 +74,7 @@
                         
                         ></v-text-field>
                     </template>
-                     <v-date-picker v-model="editedItem.disp_start_date" no-title scrollable type="date">
+                     <v-date-picker v-model="dispdate" no-title scrollable type="date">
                     </v-date-picker> 
                     </v-menu>
                 </v-col>
@@ -98,7 +85,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="editedItem.disp_end_date"
+                        v-model="dispdate2"
                         prepend-icon="mdi-calendar"
                         readonly
                         label="종료일"
@@ -107,7 +94,7 @@
                         style="width:150px"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="editedItem.disp_end_date" no-title scrollable type="date">
+                    <v-date-picker v-model="dispdate2" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
                 </v-col>
@@ -123,7 +110,7 @@
             </v-col>
         </v-row>
             <v-container 
-            style="width:550px; height: 450px; margin-left: 125px; border:1px solid #999999; margin-top: 10px;"
+            style="width:550px; height: 450px; margin-left: 132px; border:1px solid #999999; margin-top: 10px;"
             id="file">
             <div v-if="istf" style="width: 400px; height: 300px; margin-left: -15px;">
                <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역</span></div>
@@ -133,12 +120,6 @@
             <v-img :src="images" v-else-if="vitem.tem3" style='height:50px;width:50px;'></v-img>
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
-            <v-col cols="auto" style="padding-top: 25px; padding-right:25px">
-                미리보기
-            </v-col>
-            <v-col cols="auto">
-                <v-btn  style="width:100px; height: 30px; background:black; margin-top: 8px" @click="test">미리보기</v-btn>
-            </v-col>
         </v-row>
                 <v-dialog v-model="dialogNum1" max-width="290">
                         <v-card >
@@ -167,8 +148,8 @@
                         <v-card-title style="margin-top:20px; font-size:17px">{{ dialogMsg }}</v-card-title>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="white" text @click="close" style=" background-color:black;margin-top:50px; width:120px; margin-right:10px;">닫기</v-btn>
-                            <!-- <v-btn color="white darken-1" text @click="close" style=" background-color:gray;margin-top:50px; width:120px;">취소</v-btn> -->
+                            <v-btn color="white" text @click="close" style=" background-color:black;margin-top:50px; width:120px; margin-right:10px;" v-if="move">닫기</v-btn>
+                            <v-btn color="white" text @click="close2" style=" background-color:black;margin-top:50px; width:120px; margin-right:10px;" v-if="move2">닫기</v-btn>
                             <v-spacer></v-spacer>
                         </v-card-actions>
                         </v-card>
@@ -210,6 +191,8 @@ export default {
             // end_date: dateInfo().oneMonthDashFormat,
             currentDateDashFormat2: Date(),
             imageName:'',
+            move:true,
+            move2:false,
             editedItem: {
                 bannerImage: {},
                 title: '',
@@ -232,6 +215,10 @@ export default {
             dialogMsg: '',
             toolMsg: '',
             dialogNum2: false,
+            typedata:'',
+            typedata2:'노출',
+            dispdate:dateInfo().currentDateDashFormat,
+            dispdate2:dateInfo().oneMonthDashFormat,
              headers: {
             'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
             'Content-Type': 'multipart/form-data'
@@ -247,34 +234,6 @@ export default {
       //
     },
     methods: {
-       
-        showAuth(){
-            var auth=this.$store.state.authGroupId
-            if(auth=='G100'){
-            return true;
-            }else{
-            alert('접근권한이 없습니다.')
-            return false;
-            }
-        },
-       
-        save () {
-            console.log('save method call : ',this.editedItem)     
-            // 수정
-            this.editedItem.cmd_type = 'I'
-            if(this.editedItem.local_gw_id==''){
-                delete this.editedItem.local_gw_id
-            }
-            // console.log(dateInfo().current)
-            // this.editedItem.mod_date = getDate 
-            // this.editedItem.reg_date = getDate 
-
-            // console.log(this.editedItem.mod_date)
-
-            this.$emit("Items",this.editedItem)
-            
-            this.close()
-        },
         close () {
             this.dialogNum1 = false
             this.dialogNum2 = false
@@ -283,17 +242,11 @@ export default {
             // // this.editedIndex = -1
             // })
         },
-        closeDelete () {
-            this.dialogDelete = false
-            this.$nextTick(() => {
-            this.editedItem = Object.assign({}, this.defaultItem)
-            //   this.editedIndex = -1
-            })
+        close2(){
+            this.dialogNum1 = false
+            this.dialogNum2 = false
+            this.$router.push('/operation/vanner-management');
         },
-        deleteItemConfirm () {
-            // this.pList.splice(this.editedIndex, 1)
-            this.closeDelete()
-        }, 
         //미리보기
         onFileSelected(event){ 
             var input = event.target;
@@ -315,17 +268,17 @@ export default {
             },
             selectType(){
             if(this.images != ''){
-                if(this.items[0]==this.editedItem.img_type){
+                if(this.items[0]==this.typedata){
                     this.vitem.tem1 = true
                     this.vitem.tem2 = false
                     this.vitem.tem3 = false
                 }
-                if(this.items[1]==this.editedItem.img_type){
+                if(this.items[1]==this.typedata){
                     this.vitem.tem1 = false
                     this.vitem.tem2 = true
                     this.vitem.tem3 = false
                 }
-                if(this.items[2]==this.editedItem.img_type){
+                if(this.items[2]==this.typedata){
                     this.vitem.tem1 = false
                     this.vitem.tem2 = false
                     this.vitem.tem3 = true
@@ -336,20 +289,20 @@ export default {
            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15121/upload_banner`
            console.log('서버에 전송되는 값') 
            console.log(this.editedItem)
-           this.editedItem.disp_start_date = this.editedItem.disp_start_date.replace(/-/g,'')
-           this.editedItem.disp_end_date = this.editedItem.disp_end_date.replace(/-/g,'')
+           this.editedItem.disp_start_date = this.dispdate.replace(/-/g,'')
+           this.editedItem.disp_end_date = this.dispdate2.replace(/-/g,'')
            this.editedItem.reg_date = this.editedItem.reg_date.replace(/-/g,'')
            this.editedItem.mod_date = this.editedItem.mod_date.replace(/-/g,'')
-           if(this.editedItem.img_type == this.items[0]){
+           if(this.typedata == this.items[0]){
                this.editedItem.img_type = '01'
            }
-           if(this.editedItem.img_type == this.items[1]){
+           if(this.typedata == this.items[1]){
                this.editedItem.img_type = '02'
            }
-           if(this.editedItem.img_type == this.items[2]){
+           if(this.typedata == this.items[2]){
                this.editedItem.img_type = '03'
            }
-           if(this.editedItem.disp_yn == '노출'){
+           if(this.typedata2 == this.items2[0]){
                 this.editedItem.disp_yn = 'Y'
             }else{
                 this.editedItem.disp_yn = 'N'
@@ -378,6 +331,8 @@ export default {
                         this.dialogNum2 = true
                         this.toolMsg = '배너 등록 완료'
                         this.dialogMsg = '배너가 등록 되었습니다'
+                        this.move = false
+                        this.move2 = true
                         
                     // this.$fire({
                     //     title: "등록 되었습니다.",
@@ -402,7 +357,7 @@ export default {
            this.dialogNum1 = true
         },
         dialogMsgType(){
-           if(this.editedItem.img_type == ''){
+           if(this.typedata == ''){
                this.dialogNum2 = true
                this.toolMsg = '필수값 확인'
                this.dialogMsg = '배너 타입을 선택 해주세요'
@@ -412,7 +367,7 @@ export default {
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '제목을 입력 해주세요'
                 return
-            }else if(this.editedItem.disp_start_date <= dateInfo().currentDateDashFormat){
+            }else if(this.dispdate <= dateInfo().currentDateDashFormat){
                 this.dialogNum2 = true
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '노출 기간은 오늘 이후 날짜로 설정 가능합니다'
@@ -426,11 +381,6 @@ export default {
             this.saveItems()
             }
         },
-        test(){
-            console.log(this.editedItem)
-        },
-        
-        
     },  
 }
 </script>

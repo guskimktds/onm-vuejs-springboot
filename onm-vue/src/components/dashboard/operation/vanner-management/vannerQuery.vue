@@ -29,7 +29,7 @@
             <v-col cols="auto"><v-select 
             label="All"
             :items="items3"
-            v-model="editedItem.os_type"
+            v-model="param.os_type"
             solo
             style="width: 100px;"
             
@@ -38,7 +38,7 @@
                 <span>제목</span>
             </v-col>
             <v-col style="margin-top:-10px;" cols="auto">
-                <v-text-field label="입력" style="width: 335px" v-model="param.img_name"></v-text-field>
+                <v-text-field label="입력" style="width: 335px" v-model="param.title"></v-text-field>
                 <!-- <input type="text" class="border-black"> -->
             </v-col>
             <v-col style="padding-top:25px;" cols="auto">
@@ -69,7 +69,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="param.disp_start_date"
+                        v-model="editedItem.disp_start_date"
                         prepend-icon="mdi-calendar"
                         readonly
                         label="시작일"
@@ -78,7 +78,7 @@
                         style="width:150px"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.disp_start_date" no-title scrollable type="date">
+                    <v-date-picker v-model="editedItem.disp_start_date" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
                 </v-col>
@@ -89,7 +89,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="param.disp_end_date"
+                        v-model="editedItem.disp_end_date"
                         prepend-icon="mdi-calendar"
                         readonly
                         label="종료일"
@@ -98,7 +98,7 @@
                         style="width:150px"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.disp_end_date" no-title scrollable type="date">
+                    <v-date-picker v-model="editedItem.disp_end_date" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
                 </v-col>
@@ -146,6 +146,11 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+                <v-col  cols="auto">
+                <v-btn class="black" right absolute
+                 @click="fomatdata"
+                 >초기화</v-btn>
+            </v-col>
         </v-row>
     </v-card>
     </v-container>
@@ -174,7 +179,8 @@ export default {
                 img_name: '',
                 disp_start_date: '',
                 disp_end_date: '',
-                reg_date: '',
+                reg_start_date: '',
+                reg_end_date: '',
                 cmd_type: '',
                 os_type:'',
                 local_gw_id: '0',
@@ -182,10 +188,6 @@ export default {
         }
     },
     computed: {
-      formTitle () {
-        // return this.editedIndex === -1 ? '등록' : '수정'
-        return '배너등록'
-      },
       // select box => center 국사정보와 version_code가 1302이상인 
       // 국사정보만 노출하도록 추가(21.06.03)
       filteredData(){
@@ -204,6 +206,18 @@ export default {
             alert('접근권한이 없습니다.')
             return false;
             }
+        },
+        fomatdata(){
+            this.param.title = ''
+            this.param.img_type = ''
+            this.param.os_type = ''
+            this.param.reg_date = ''
+            this.param.disp_yn = ''
+            this.typeitem= ''
+            this.typeitem2 = ''
+            this.editedItem.disp_start_date = ''
+            this.editedItem.disp_end_date = ''
+            this.searchMethod()
         },
         searchMethod: function() {
             // if(this.editedItem.img_type=="전체"){
@@ -232,9 +246,14 @@ export default {
             if(this.typeitem2 == this.items2[0]){
                 this.param.disp_yn = ''
             }
+            this.param.disp_start_date = this.editedItem.disp_start_date.replace(/-/g,'')
+            this.param.disp_end_date = this.editedItem.disp_end_date.replace(/-/g,'')
+            // this.param.reg_date = this.editedItem.disp_end_date.replace(/-/g,'')
+           
+        //    this.param.reg_date = this.editedItem.reg_end_date.replace(/-/g,'')
             this.$emit('search', this.param)
             console.log(this.param)
-            console.log(this.editedItem)
+            // console.log(this.editedItem)
             
         },
         

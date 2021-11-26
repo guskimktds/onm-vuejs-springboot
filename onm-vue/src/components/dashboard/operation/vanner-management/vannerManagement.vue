@@ -198,7 +198,9 @@ export default {
       if(params.img_name !== undefined && params.img_name !== ''){
         newParams.img_name = params.img_name
       }
-  
+      if(params.os_type !== undefined && params.os_type !== ''){
+        newParams.os_type = params.os_type
+      }
       return newParams
     }
     

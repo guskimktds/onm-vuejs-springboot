@@ -9,7 +9,7 @@
             <h3 style="font-size: 30px; height: 20px; padding-left:12px">배너 목록</h3>
       </v-col>
       <div class = "button">
-        <router-link to="/operation/vanner-register" >+신규</router-link>
+        <router-link to="/operation/vanner-register" style="color:white;">등록</router-link>
       </div>
     </v-row>
 
@@ -31,7 +31,7 @@
         </v-data-table>
 
     </v-card>
-    <v-btn @click="testbbb"></v-btn>
+    <!-- <v-btn @click="testbbb"></v-btn> -->
   </v-container>
 </template>
 
@@ -46,13 +46,13 @@ export default {
         options: {},
         loading: true,
         headers: [
-          {
-            text: 'No',
-            align: 'start',
-            sortable: false,
-            value: '',
-            width: '5%',
-          },
+          // {
+          //   text: 'No',
+          //   align: 'start',
+          //   sortable: false,
+          //   value: '',
+          //   width: '5%',
+          // },
 
           { text: '배너타입', value: 'img_type', width: '10%', align: 'center'},
           { text: 'OS타입', value: 'os_type', width: '10%', align: 'center'},
@@ -60,7 +60,7 @@ export default {
           { text: '노출여부', value: 'disp_yn', width: '10%', align: 'center' },
           { text: '노출시작일', value: 'disp_start_date',width: '10%', align: 'center' },
           { text: '노출종료일', value: 'disp_end_date', width: '10%', align: 'center' },
-          { text: '작성자', value: 'reg_id', width: '10%', align: 'center' },
+          // { text: '작성자', value: 'reg_id', width: '10%', align: 'center' },
           // { text: '등록일시', value: 'reg_date' },
           { text: '등록일자', value: 'reg_date', width: '10%', align: 'center' }, 
           { text: '변경일자', value: 'mod_date', sortable: false, width: '10%', align: 'center' }
@@ -73,8 +73,6 @@ export default {
       },
       passPage(value){
         console.log(value)
-        //EventBus.$emit('param', this.param);
-        // EventBus.$emit('pList', this.pList);
         this.$router.push({name:"vanner-detailpage", params :{'val' : value}});
         console.log(this.pList)
       },
@@ -104,9 +102,15 @@ export default {
 
 <style scoped>
 .button{
+  width:100px;
+  height: 50px;
   float: right;
-  padding-right: 45px;
-  padding-top:20px;
-  font-size:20px;
+  padding-top:10px;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #000000;
+  border: 2px solid #ffffff;
+  color: white;
 }
 </style>>
