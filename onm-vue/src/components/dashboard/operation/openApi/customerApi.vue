@@ -131,12 +131,7 @@ export default {
     },
    //user관련 로드
      searchStoreApi: function(params){
-<<<<<<< HEAD
-       console.log('이벤트 버스 타기')
-      const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15113/get_site_open_api_access/user`;
-=======
        const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/user`;
->>>>>>> hsk_feature01
       var reqParams = this.handleParams(params);
             // reqParams.site_id ='JHC_CTRL_001'
       console.log(reqParams)
