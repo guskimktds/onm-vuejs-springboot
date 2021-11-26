@@ -69,6 +69,9 @@ export default {
       cList: [],
 
     }
+  }, mounted(){
+    console.log('api count adfaf')
+    this.fillApiCountTab()
   },
 
   methods: {   
@@ -87,12 +90,12 @@ export default {
               console.log("vkflalxj"+JSON.stringify(newParams))
             return newParams;
         },
-     searchCustomerApi: function(params){
-      var reqParams = this.handleParams(params);
-      // reqParams.site_id ='JHC_CTRL_001'
-      console.log("api 사이트 아이디 " + reqParams.view_cnt+"페이징"+reqParams.page_no)
+     fillApiCountTab: function(){
+      var reqParams 
+      reqParams.site_id ='KTT_1234'
+      console.log("!!!!!!!!!!!!!!!!!!api 사이트 아이디 " + reqParams.view_cnt+"페이징"+reqParams.page_no)
 
-  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15113/get_site_open_api_access/api`
+  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13036/get_siteInfo`
       axios
       .post(url, reqParams, headers)
       .then( (response) => {
@@ -101,7 +104,7 @@ export default {
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
       
-          this.cList = response.data.data.access_cnt;
+          this.cList = response.data.data.api_list;
 
         }else if(resCode==204){
           this.cList = [];
@@ -116,7 +119,7 @@ export default {
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
             this.$router.replace('/signin')
         }else {
-          this.pList = [];
+          this.cList = [];
           this.resPagingInfo = {};
           alert(resCode + " / " + resMsg);
         }

@@ -8,7 +8,7 @@
       color="orange"
       dark
       icon="mdi-keyboard"
-      title="코드 정보 LIST"
+      title="서비스 공지 목록"
       class="px-5 py-3"
     >
         <v-data-table
@@ -21,6 +21,12 @@
           :header-props="{ sortIcon: null }"
           v-show="showAuth()"
         >
+        <template v-slot:item.board_cate_cd="{item}">
+          <span>{{ switchString(item.board_cate_cd) }}</span>
+        </template>
+        <template v-slot:item.disp_yn="{item}">
+          <span>{{ switchString2(item.disp_yn) }}</span>
+        </template>
           <template v-slot:top>    
             <!-- <v-toolbar
               flat
@@ -43,10 +49,21 @@
                         >
                           <v-text-field
                             v-model="editedItem.board_id"
-                            label="게시판 id"
-                            readonly
+                            label="게시판"
                           ></v-text-field>
                         </v-col>
+                            <v-row>
+                                                <v-col
+                          cols="12"
+                          sm="6"
+                          md="6"
+                        >
+                          <v-text-field
+                            v-model="editedItem.title"
+                            label="제목"
+                          ></v-text-field>
+                        </v-col>
+                            </v-row>
                                                          <v-row>
                 <v-col cols="3">
                     <v-menu
@@ -221,8 +238,8 @@ export default {
         ],
         editedItem: {
           boarrd_id: '',
-          disp_start_date: '',
-          disp_end_date: '',
+           disp_start_date :'',
+           disp_end_date : '',
           disp_yn: '',
           title: '',
           content: '',
@@ -258,6 +275,25 @@ export default {
           return false;
         }
       },
+      switchString(values){
+        if(values==='CATE01'){
+          return '일반공지'
+        }else if(values==='CATE02'){
+          return '긴급공지'
+        }else{
+          return ''
+        }
+      },
+      switchString2(values){
+        if(values==='Y'){
+          return '노출'
+        }else if(values==='N'){
+          return '미노출'
+        }else{
+          return ''
+        }
+      },
+
       editItem (item) {
         this.editedIndex = this.pList.indexOf(item)
         console.log('update Item Index : ',this.editedIndex)
@@ -317,6 +353,10 @@ export default {
             content : this.editedItem.content,
             content_html : this.editedItem.content_html
           }
+          var reqParams = params
+          reqParams.disp_end_date = params.disp_end_date.replace(/-/g,"").split(' ', 1)[0]
+          reqParams.disp_start_date = params.disp_start_date.replace(/-/g,"").split(' ', 1)[0]
+          // repParams.disp_end_date = repParams.disp_end_date.split
           this.$fire({
             title: "비밀번호를 입력해주세요.",
             input: 'password',

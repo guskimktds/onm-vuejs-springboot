@@ -1,42 +1,30 @@
 <template>
 <v-container fluid>
-    <div class="row">
-        <div class="col-6">
-                <div class="grid-board">
-                    
-                    <div>API별 호출 수</div>
-                          <v-text-field 
-      label="search1"
-      v-model="psearch"
-      ></v-text-field>
-                        <v-data-table
-                        :headers="pHeaders"
-                        :items="pList"
-                        :options.sync="options"
-                        :server-items-length="resPagingInfo.total_cnt"
-                        class="elevation-1"
-                        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
-                        :header-props="{ sortIcon: null }"
-                        >
-                        </v-data-table>
+
+                    <div class="grid-board">
+                        <div>서비스 업체별 호출 수</div>
+                              <v-text-field 
+                            label="search2"
+                            v-model="csearch"
+                            ></v-text-field>
+                            <v-data-table
+                            :search="csearch"
+                            :headers="cHeaders"
+                            :items="cList"
+                            :options.sync="options2"
+                            :items-per-page="10"
+                            class="elevation-1"
+                            :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+                            :header-props="{ sortIcon: null }"
+                            ></v-data-table>
                     </div>
-        </div>
-            <div class="row">
-        <div class="col">
-        <service-table></service-table>
-        </div>
-            </div>
-    </div>
-
-
 </v-container>
 
 </template>
 
 <script>
 import axios from "axios"
-import EventBus from '../../../../../EventBus'
-import ServiceTable from './serviceTable.vue'
+// import EventBus from '../../../../../EventBus'
 
 const headers={
   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
@@ -46,17 +34,18 @@ const headers={
 export default {
     data() {
       return {
-        pHeaders:[
+        cHeaders: [
             { text: '국사코드', value: 'site_id' },
-            { text: '서버명', value: 'api_no' },
-            { text: '프로세스 종류', value: 'access_cnt' },
-            { text: '상태', value: 'acess_date' },
+            { text: '전체 카메라 대수', value: 'user_id' },
+            { text: '정상 카메라 대수', value: 'access_cnt' },
+            { text: '개통 대기 카메라 대수', value: 'access_date' },
         ],
          reqPagingInfo: {
         page_no: 1,
         view_cnt: 10
         },
-        psearch: '',
+
+        csearch:'',
         dialog:false,
         dialogDelete:false,
         editedIndex:-1,
@@ -64,21 +53,15 @@ export default {
         options2:{},
         totalList: 0,
         loading: true,
-        pList: [],
+        cList: [],
         resPagingInfo:{}
       }
     },
-    components: {
-      ServiceTable  
-    },
     methods: {
-        processList:function(options) {
-            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/api`
+        cameraList:function(options) {
+            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/user`
             
             var reqParams=this.setParams(options)
-            console.log(reqParams)
-            reqParams.api_no = this.psearch;
-
             axios
                 .post(url,reqParams,headers)
                 .then((response)=>{
@@ -86,19 +69,10 @@ export default {
                     var resCode = response.data.res_code;
                     var resMsg = response.data.res_msg;
                     if(resCode == 200){
-                    this.pList = response.data.data.access_api_list;
-                    this.resPagingInfo=response.data.data.paging_info;
-                    }else if(resCode==410){
-                    alert("로그인 세션이 만료되었습니다.");
-                    EventBus.$emit('top-path-logout');
-                    this.$store
-                    .dispatch("LOGOUT")
-                    .then( res => { 
-                    console.log(res.status)}).catch(({ message }) => (this.msg = message))
-                    this.$router.replace('/signin')
+                    this.cList = response.data.data.access_user_list;
+                    }else if(resCode==204){
+                    alert('카메라 상태 현황 데이터가 없습니다.')
                     }else{
-                    this.pList = [];
-                    this.resPagingInfo = {};
                     console.log(resCode + " / " + resMsg);
                     }
                 })
@@ -106,7 +80,6 @@ export default {
                     console.log('조회 실패',ex)
                 })
         },
-    
         setParams:function(options){
             var values={
                 page_no: options.page,
@@ -119,7 +92,10 @@ export default {
             this.loading = true;
             this.processList(this.options)
         },
-
+        getCameraApi(){
+            this.loading=true;
+            this.cameraList(this.options2)
+        }
         
     },
 
@@ -130,13 +106,15 @@ export default {
             },
             deep: true,
             },
-     
+        options2:{
+            handler(){
+                this.getCameraApi();
+            },
+            deep:true
+        }
     },
     mounted() {
-    
-          
-            this.getProcessApi();
-
+            this.getCameraApi();
             console.log('갱신')
             },  
 }

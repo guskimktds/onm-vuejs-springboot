@@ -1,31 +1,13 @@
 <template>
 <v-container fluid>
     <div class="row">
-        <div class="col-6">
-                <div class="grid-board">
-                    
-                    <div>API별 호출 수</div>
-                          <v-text-field 
-      label="search1"
-      v-model="psearch"
-      ></v-text-field>
-                        <v-data-table
-                        :headers="pHeaders"
-                        :items="pList"
-                        :options.sync="options"
-                        :server-items-length="resPagingInfo.total_cnt"
-                        class="elevation-1"
-                        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
-                        :header-props="{ sortIcon: null }"
-                        >
-                        </v-data-table>
-                    </div>
+        <div class="col">
+        <api-inner-table></api-inner-table>
         </div>
-            <div class="row">
+    
         <div class="col">
         <service-table></service-table>
         </div>
-            </div>
     </div>
 
 
@@ -37,7 +19,7 @@
 import axios from "axios"
 import EventBus from '../../../../../EventBus'
 import ServiceTable from './serviceTable.vue'
-
+import apiInnerTable from './apiInnerTable.vue'
 const headers={
   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
   'Content-Type': 'application/json'
@@ -69,7 +51,8 @@ export default {
       }
     },
     components: {
-      ServiceTable  
+      ServiceTable,
+      apiInnerTable  
     },
     methods: {
         processList:function(options) {
@@ -77,7 +60,6 @@ export default {
             
             var reqParams=this.setParams(options)
             console.log(reqParams)
-            reqParams.api_no = this.psearch;
 
             axios
                 .post(url,reqParams,headers)

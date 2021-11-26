@@ -18,18 +18,17 @@
 
       <v-text-field 
       label="search"
-      v-model="search"
+      v-model="param.user_id"
       ></v-text-field>
         </v-col>
         <v-col>
 
       <v-btn
-       v-on:click="searchMethod"
+     v-on:click="searchMethod"
       >검색</v-btn>
         </v-col>
       </v-row>
       <v-data-table
-        :search="search"
         :headers="headers"
         :items="storeList"
         :server-items-length="storeResPagingInfo.total_cnt"
@@ -46,10 +45,9 @@
 
 <script>
 export default {
-  props: ["storeList", "storeResPagingInfo"],
+  props: ["param","storeList", "storeResPagingInfo"],
   data() {
     return {
-      search: "",
       headers: [
         { text: '인터페이스 번호', value: 'user_id' },
         { text: 'api 접속량', value: 'access_cnt' },
@@ -68,10 +66,12 @@ methods: {
       this.$emit("child", value.site_id);
 
     },
-    searchMethod: function(value){
-      this.$emit("searchStore", value.user_id);
 
+    searchMethod: function() {
+        this.$emit("searchStore", this.param);
+        console.log("보내는거Tjcl" + this.param)
     },
+  
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);

@@ -74,7 +74,7 @@ export default {
           if(resCode == 200){
             // this.authGroupList = response.data.data.auth_group_list
             // this.isAuthMenu = true
-            this.pList = response.data.data.list;
+            this.pList = response.data.data.notice_list;
             this.resPagingInfo = response.data.data.paging_info
             console.log(this.resPagingInfo)
           }else{
@@ -96,9 +96,9 @@ export default {
     //   page_no : params.page_no,
     //   board_cate_cd :params.board_cate_cd,
     // }
-
+console.log("검색1"+JSON.stringify(params))
       var reqParams = this.handleParams(params)  
-    console.log(JSON.stringify(reqParams))
+    console.log("검색2"+JSON.stringify(reqParams))
     //params : 페이징 + 검색조건
       // console.log("EEEEEEEEEEEEEEEEE"+reqParams.disp_end_date)
     
@@ -116,7 +116,7 @@ export default {
               }else if(resCode==204){
                 this.pList = [];
                 this.resPagingInfo = {};
-                alert('코드 관리 데이터가 없습니다.');
+                alert('공지 목록 데이터가 없습니다.');
               }else if(resCode==410){
                 alert("로그인 세션이 만료되었습니다.");
                 EventBus.$emit('top-path-logout');
@@ -206,6 +206,16 @@ export default {
         newParams.view_cnt = this.reqPagingInfo.view_cnt
       }else{
         newParams.view_cnt = params.view_cnt
+      }
+
+      if(params.disp_start_date !== undefined && params.disp_start_date !== ''){
+        newParams.disp_start_date = params.disp_start_date.replace(/-/g,"")
+      }else if(
+        this.searchParam.disp_start_date!==undefined&&
+        this.searchParam.disp_start_date!==""
+      ){
+        newParams.disp_start_date=this.searchParam.disp_start_date.replace(/-/g,"")
+      }
 
       if(params.disp_start_date !== undefined && params.disp_start_date !== ''){
         newParams.disp_start_date = params.disp_start_date.replace(/-/g,"")
@@ -242,23 +252,54 @@ export default {
       if(params.code_master_id !== undefined && params.code_master_id !== ''){
         newParams.code_master_id = params.code_master_id
       }
+ 
+      if(params.title !== undefined && params.title !== ''){
+        newParams.title = params.title
+      }else if(
+        this.searchParam.title!==undefined&&
+        this.searchParam.title!==""
+      ){
+        newParams.title=this.searchParam.title
+      }
 
-      // if(params.code_id !== undefined && params.code_id !== ''){
-      //   newParams.code_id = params.code_id
-      // }
+      if(params.board_id !== undefined && params.board_id !== ''){
+        newParams.board_id = params.board_id
+      }else if(
+        this.searchParam.board_id!==undefined&&
+        this.searchParam.board_id!==""
+      ){
+        newParams.board_id=this.searchParam.board_id
+      }
 
-      // if(params.code_name !== undefined && params.code_name !== ''){
-      //   newParams.code_name = params.code_name
-      // }   
-      
-      // if(params.code_type !== undefined && params.code_type !== ''){
-      //   newParams.code_type = params.code_type
-      // }  
+      if(params.board_type !== undefined && params.board_type !== ''){
+        newParams.board_type = params.board_type
+      }else if(
+        this.searchParam.board_type!==undefined&&
+        this.searchParam.board_type!==""
+      ){
+        newParams.board_type=this.searchParam.board_type
+      }
+
+      if(params.board_cate_cd !== undefined && params.board_cate_cd !== ''){
+        newParams.board_cate_cd = params.board_cate_cd
+      }else if(
+        this.searchParam.board_cate_cd!==undefined&&
+        this.searchParam.board_cate_cd!==""
+      ){
+        newParams.board_cate_cd=this.searchParam.board_cate_cd
+      }
+
+      if(params.disp_yn !== undefined && params.disp_yn !== ''){
+        newParams.disp_yn = params.disp_yn
+      }else if(
+        this.searchParam.disp_yn!==undefined&&
+        this.searchParam.disp_yn!==""
+      ){
+        newParams.disp_yn=this.searchParam.disp_yn
+      }
+
       return newParams
-    }
-
-    
-  }
+    } 
   }
 }
 </script>

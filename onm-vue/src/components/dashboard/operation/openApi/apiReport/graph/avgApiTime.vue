@@ -56,7 +56,7 @@ export default {
     methods: {
         fillData: function() {
           this.loaded = false
-          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_11010/get_user_transition`
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13048/get_open_api_access_report`
           // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
           // var params = this.param
           // console.log(this.param)
@@ -71,7 +71,9 @@ export default {
             var resCode = response.data.res_code;
             var resMsg = response.data.res_msg;
             if(resCode == 200){
-              this.labels = this.getLabels(response.data.data.date_list)
+  
+              this.labels = this.getLabels(response.data.data.access_hourly)
+             
               this.datacollection = {
                 labels: this.labels,
                 datasets: [
@@ -79,14 +81,8 @@ export default {
                     label:'신규', 
                     // backgroundColor: '#f87979',
                     borderColor:'#f87979',
-                    data: this.getNewCnt(response.data.data.date_list)
+                    data: this.getNewCnt(response.data.data.access_hourly)
                   },
-                  {
-                    label:"해지", 
-                    // backgroundColor: 'white',
-                    borderColor:'white',
-                    data: this.getCloseCnt(response.data.data.date_list)
-                  }
                 ]
               }
               // console.log(this.datacollection)
@@ -106,9 +102,15 @@ export default {
 
       getLabels: function(arr){
         var new_arr = []
-        arr.forEach(function(element){
-            new_arr.push(element.dt) 
-        })
+      //   // arr.forEach(function(element){
+      //   //     new_arr.push(element.dt) 
+      //   // })
+      //   var keys = arr[0]
+
+              var arr2 = Object.keys(arr[0])
+              console.log("DFDFDFDFㄱ밧ㅂ삽삽삽사"+JSON.stringify(arr2))
+              new_arr = arr2
+      //   console.log("값찍기"+keys)
         return new_arr
       },
 
@@ -117,20 +119,25 @@ export default {
         arr.forEach(function(element){
             new_arr.push(element.close_cnt) 
         })
+        
+
         return new_arr
       },
 
       getNewCnt: function(arr){
          var new_arr = []
-        arr.forEach(function(element){
-            new_arr.push(element.new_cnt) 
-        })
+        // arr.forEach(function(element){
+        //     new_arr.push(element.new_cnt) 
+        // })
+                      var arr2 = Object.values(arr[0])
+              console.log("값꺼내기"+JSON.stringify(arr2))
+              new_arr = arr2
         return new_arr
       },
 
       handleParam: function() {
         var result = {
-          search_type : "D",
+          view_cnt: 5,
           start_date : this.param.start_date.replace(/-/g,""),
           end_date : this.param.end_date.replace(/-/g,"")
         }
