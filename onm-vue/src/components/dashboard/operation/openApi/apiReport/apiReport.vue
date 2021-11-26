@@ -1,7 +1,9 @@
 <template>
     <v-container fluid>
       <v-card>
-        <count-api-tab></count-api-tab>
+        <count-api-tab
+        v-bind:cList=cList
+        ></count-api-tab>
           <!-- v-on:search="searchToGraph" -->
           <api-report-query
             v-bind:param="param">
@@ -41,10 +43,13 @@ import dateInfo from "../../../../utils/common"
 import ApiGraph from './apiGraph.vue'
 import EventBus from '../../../../../EventBus'
 import ApiTable from './apiTable.vue'
-
+  const headers={
+'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
+'Content-Type': 'application/json'
+}
 // import ServiceCount from './serviceCount.vue'
 // import ApiCount from './apiCount.vue'
-// import axios from "axios"
+import axios from "axios"
 export default {
   components: {
     apiReportQuery,
@@ -62,6 +67,7 @@ export default {
         end_date: dateInfo().currentDateDashFormat,
       },
       pList: [],
+      cList:[],
 
     }
   }, mounted(){
@@ -81,7 +87,7 @@ export default {
             }
             return newParams;
         },
-<<<<<<< HEAD
+
      fillApiCountTab: function(){
       var reqParams 
       reqParams.site_id ='KTT_1234'
@@ -126,8 +132,7 @@ export default {
       });
     },
   
-=======
->>>>>>> e2c6f9c53f874393b38caa4af9bf42d715c639dd
+
   }
 }
 </script>

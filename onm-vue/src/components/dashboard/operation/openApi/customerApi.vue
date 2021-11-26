@@ -27,7 +27,6 @@
           dense
             v-bind:storeList=storeList
             v-bind:storeResPagingInfo="storeResPagingInfo"
-            @searchStore="searchStoreApiButton"
             @child="clickToSearchDetailObject" 
             @pagination="setToSearchParams"
           ></store-api-list>
@@ -83,7 +82,7 @@ export default {
 //api관련
    searchCustomerApi: function(params){
       var reqParams = this.handleParams(params);
-      reqParams.site_id ='JHC_CTRL_001'
+      // reqParams.site_id ='JHC_CTRL_001'
       console.log("api 사이트 아이디 " + reqParams.view_cnt+"페이징"+reqParams.page_no)
 
   var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13047/get_site_open_api_access/api`
@@ -128,7 +127,7 @@ export default {
      searchStoreApi: function(params){
        const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/user`;
       var reqParams = this.handleParams(params);
-            reqParams.site_id ='JHC_CTRL_001'
+            // reqParams.site_id ='JHC_CTRL_001'
       console.log(reqParams)
 
       axios

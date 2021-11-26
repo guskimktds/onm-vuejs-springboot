@@ -9,10 +9,10 @@
         color="orange"
         dark
         icon="mdi-keyboard"
-        title="API별 사용 현황 조회"
+        title="API별 호출 수"
         class="px-5 py-3"
       >
-      <v-row>
+<v-row>
         <v-col>
 
       <v-text-field 
@@ -23,7 +23,7 @@
         <v-col>
 
       <v-btn
-      v-on:click="searchCustomerApi"
+     v-on:click="searchCustomerApi"
       >검색</v-btn>
         </v-col>
       </v-row>
@@ -68,7 +68,6 @@ export default {
         last: 0,
         options: {},
         totalList: 0,
-
     }
   },
 
@@ -81,12 +80,8 @@ export default {
       this.$emit("pagination", this.options);
       console.log("ㅇ페이징 옵션들"+this.options.total_cnt)
     },
-    searchMethod: function() {
-        this.$emit("searchCustomer", this.search);
-        console.log("보내는거Tjcl" + this.search)
-    },
       searchCustomerApi: function(params){
-      var reqParams = this.handleParams(params);
+      var reqParams  =this.setParams(params);
       console.log("api 사이트 아이디 " + reqParams.view_cnt+"페이징"+reqParams.page_no)
 
   var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13047/get_site_open_api_access/api`
@@ -97,7 +92,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
-          this.pList = response.data.data.access_api_list;
+          // this.pList = response.data.data.access_api_list;
           this.cList = response.data.data.access_cnt;
           this.resPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
@@ -127,32 +122,14 @@ export default {
         // always executed
       });
     },
-       handleParams: function (params) {
-      console.log(params+"DFDFDFD핸들파람");
-      let newParams = {};
-  
-      if(params.page_no === undefined || params.page_no === ''){
-        newParams.page_no = this.reqPagingInfo.page_no
-      }else{
-        newParams.page_no = params.page_no
-      }
-      if(params.view_cnt === undefined || params.view_cnt === ''){
-        newParams.view_cnt = this.reqPagingInfo.view_cnt
-      }else{
-        newParams.view_cnt = params.view_cnt
-      }
-      if(params.api_no !== undefined && params.api_no !== ''){
-        newParams.api_no = params.api_no
-      }else if(
-        this.searchParam.api_no!==undefined&&
-        this.searchParam.api_no!==""
-      ){
-        newParams.api_no=this.searchParam.api_no
-      }
-      return newParams;
-    }
-    
-  },
+        setParams:function(options){
+            var values={
+                page_no: options.page,
+                view_cnt: options.itemsPerPage,
+                api_no:this.api_no
+            }
+            return values;
+        },
 
   watch: {
     options: {
@@ -172,7 +149,7 @@ export default {
       }
   },
     
-}
+  }}
 </script>
 
 <style>

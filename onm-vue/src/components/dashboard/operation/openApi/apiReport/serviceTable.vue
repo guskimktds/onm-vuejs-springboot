@@ -3,12 +3,22 @@
 
                     <div class="grid-board">
                         <div>서비스 업체별 호출 수</div>
-                              <v-text-field 
-                            label="search2"
-                            v-model="csearch"
-                            ></v-text-field>
+                                 <v-row>
+        <v-col>
+
+      <v-text-field 
+      label="search"
+      v-model="user_id"
+      ></v-text-field>
+        </v-col>
+        <v-col>
+
+      <v-btn
+     v-on:click="cameraList"
+      >검색</v-btn>
+        </v-col>
+      </v-row>
                             <v-data-table
-                            :search="csearch"
                             :headers="cHeaders"
                             :items="cList"
                             :options.sync="options2"
@@ -35,7 +45,7 @@ export default {
     data() {
       return {
         cHeaders: [
-            { text: '국사코드', value: 'site_id' },
+            { text: '사이트id', value: 'site_id' },
             { text: '전체 카메라 대수', value: 'user_id' },
             { text: '정상 카메라 대수', value: 'access_cnt' },
             { text: '개통 대기 카메라 대수', value: 'access_date' },
@@ -44,8 +54,7 @@ export default {
         page_no: 1,
         view_cnt: 10
         },
-
-        csearch:'',
+        user_id:'',
         dialog:false,
         dialogDelete:false,
         editedIndex:-1,
@@ -83,7 +92,9 @@ export default {
         setParams:function(options){
             var values={
                 page_no: options.page,
-                view_cnt: options.itemsPerPage
+                view_cnt: options.itemsPerPage,
+                user_id:this.user_id
+
             }
             return values;
         },
@@ -100,12 +111,7 @@ export default {
     },
 
     watch: {
-        options: {
-            handler() {
-                this.getProcessApi();
-            },
-            deep: true,
-            },
+
         options2:{
             handler(){
                 this.getCameraApi();

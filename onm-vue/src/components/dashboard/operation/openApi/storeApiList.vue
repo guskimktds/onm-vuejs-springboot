@@ -18,7 +18,7 @@
 
       <v-text-field 
       label="search"
-      v-model="param.user_id"
+      v-model="user_id"
       ></v-text-field>
         </v-col>
         <v-col>
@@ -45,7 +45,7 @@
 
 <script>
 export default {
-  props: ["param","storeList", "storeResPagingInfo"],
+  props: ["storeList", "storeResPagingInfo"],
   data() {
     return {
       headers: [
@@ -53,7 +53,7 @@ export default {
         { text: 'api 접속량', value: 'access_cnt' },
         { text: '날짜', value: 'access_date' },
       ],
-        site_id:'',
+        user_id:'',
         last: 0,
         options: {},
         totalList: 0,
