@@ -117,6 +117,12 @@
             v-bind:receivedValue="receivedValue"
         >
         </store-management>
+        <customer-api v-show="isShowSeq==3"
+            v-bind:receivedValue="receivedValue"
+        >>
+
+        </customer-api>
+
       </v-card>
  </v-container>
 </template>
@@ -126,6 +132,7 @@
 
 import serviceComInfo from './serviceComInfo.vue';
 import storeManagement from './storeManagement.vue';
+import customerApi from '../register-store-list/openApi/customerApi.vue'
 import axios from "axios";
 
 const headers={
@@ -325,6 +332,7 @@ const headers={
         components:{
             serviceComInfo,
             storeManagement,
+            customerApi,
         },
     }
 </script>

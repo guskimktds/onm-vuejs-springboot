@@ -33,7 +33,8 @@
           ></store-api-list>
         </v-col>
       </v-row>
-      <v-card v-if=showModal>
+      <h1>나타나기</h1>
+      <v-card>
         <ul v-for="site_id in rowList" v-bind:key="site_id">
           <h1>api명 | 호출 수</h1>
           <li></li>
@@ -194,7 +195,7 @@ export default {
          view_cnt: '100',
        }
        console.log(JSON.stringify(params.end_date)+"DDDDDDDDewrerer")
-      this.showModal=!this.showModal
+      // this.showModal=!this.showModal
        axios.post(url, params, headers)
        .then((response) => {
           var resCode = response.data.res_code;
