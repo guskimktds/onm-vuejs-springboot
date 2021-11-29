@@ -93,13 +93,10 @@ import termOrderInfo from '../components/dashboard/operation/voc/termOrderInfo.v
 import dssResultInfo from '../components/dashboard/operation/voc/dssResultInfo.vue'
 import bssResultInfo from '../components/dashboard/operation/voc/bssResultInfo.vue'
 import deviceRecoInfo from '../components/dashboard/operation/voc/deviceRecoInfo'
-<<<<<<< HEAD
-=======
 import vannerManagement from '../components/dashboard/operation/vanner-management/vannerManagement'
 import vannerRegster from '../components/dashboard/operation/vanner-register/vannerRegister';
 import vannerDetailPage from '../components/dashboard/operation/vanner-register/vannerDetailPage';
 
->>>>>>> dev_20211022
 //운영관리 / 코드 설정 관리 
 import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
 import LocalCode from '../components/dashboard/operation/code/local/codeMain'
@@ -553,7 +550,6 @@ export default new Router({
                     component: GwAcceptInfo
                 },
                 {
-<<<<<<< HEAD
                     path: "customer-api",
                     name: 'customerApi',
                     component: customerApi
@@ -568,8 +564,7 @@ export default new Router({
                     name: 'notice',
                     component: notice
                 },
-
-=======
+                {
                 path: "vanner-management",
                 name: 'vanner-management',
                 component:vannerManagement
@@ -587,7 +582,6 @@ export default new Router({
                     props:true
                 },
                
->>>>>>> dev_20211022
             ]
         },
 
