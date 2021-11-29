@@ -49,16 +49,16 @@ const headers={
                     },
                     localGwOptions:[],
                     pList:[
-                         {
-                            site_id : 'DOMINO_HEAD',
-                            site_name:'도미노피자',
-                            api_count : 5,
-                            user_name : '이선민',
-                            reg_date : '20211028',
-                            mod_date: '20211028',
-                            status_code : 'A',
-                            adm_access_date: '20211108'
-                        },
+                        //  {
+                        //     site_id : 'DOMINO_HEAD',
+                        //     site_name:'도미노피자',
+                        //     api_count : 5,
+                        //     user_name : '이선민',
+                        //     reg_date : '20211028',
+                        //     mod_date: '20211028',
+                        //     status_code : 'A',
+                        //     adm_access_date: '20211108'
+                        // },
                     ],
                     resPagingInfo:{},
                 }
