@@ -40,6 +40,12 @@ export default () => {
     var three_Month = three_dm.getMonth();
     three_dm.setMonth(three_Month -3);
     var threeMonthDashFormat = dm.getFullYear() + "-" + ("00" + (three_dm.getMonth() + 1)).slice(-2) + "-" + ("00" + dm.getDate()).slice(-2)
+    //1개월후
+    var one_dm = new Date();
+    var onemonthOfYear = one_dm.getMonth();
+    one_dm.setMonth(onemonthOfYear + 1)
+    var oneMonthDashFormat = one_dm.getFullYear() + "-" + ("00" + (one_dm.getMonth() + 1)).slice(-2) + "-" + ("00" + one_dm.getDate()).slice(-2) 
+  
 
     //1개월 후
     var one_dm = new Date();
@@ -59,6 +65,7 @@ export default () => {
         threeMonthDashFormat,
         oneMonthDashFormat,
         
+        oneMonthDashFormat
     }
 // //   const dateInfo = year
 //   var d = new Date(); 

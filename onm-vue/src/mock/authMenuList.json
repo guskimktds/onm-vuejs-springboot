@@ -216,12 +216,11 @@
             },
             {
                 "name": "배너관리",
-                "path": "/operation/banner",
+                "path": "/operation/vanner-management",
                 "icon":"mdi-desktop-mac",
-                "component": "banner",
+                "component": "vannerManagement",
                 "children": [
-                    { "name": "광고배너", "path": "/operation/banner", "component": "banner" },
-                    { "name": "공지사항", "path": "/operation/notice", "component": "notice" }
+                    { "name": "광고 배너", "path": "/operation/vanner-management", "component": "vannerManagement" }
                 ]
             }
         ]
