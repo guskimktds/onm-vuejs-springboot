@@ -32,12 +32,12 @@
           ></store-api-list>
         </v-col>
       </v-row>
-      <v-dialog v-if=showModal>
+      <v-card v-if=showModal>
         <ul>
           <h1>api명 | 호출 수</h1>
           <li></li>
         </ul>
-      </v-dialog>
+      </v-card>
 
       </v-card>     
     </v-container>
