@@ -3,18 +3,17 @@
       <v-card>
         <vanner-query 
           v-on:search="searchToButton"
-          v-bind:param=searchParam
+          v-bind:param="searchParam"
           v-bind:localGwOptions="localGwOptions"
-          v-bind:pList=pList
+          
         ></vanner-query>
         <vanner-list
         v-on:search="searchToButton"
-        v-bind:param=searchParam
+        v-bind:param="searchParam"
         v-bind:pList=pList
-        v-bind:gw_id="gw_id"
-        v-bind:resPagingInfo="resPagingInfo"
+        v-bind:resPagingInfo=resPagingInfo
         @pagination="setToSearchParams"
-        @reset="reset"></vanner-list>
+        ></vanner-list>
       </v-card>
 
     </v-container>
@@ -23,7 +22,7 @@
 <script>
 import vannerList from './vannerList'
 import vannerQuery from './vannerQuery'
-import EventBus from '../../../../EventBus';
+// import EventBus from '../../../../EventBus';
  //import dateInfo from '../../../utils/common';
 //로그인 시 서버에서 불러오면 수정해야함
 //import AdminMenuMock from '../../../mock/AdminListMock.json';
@@ -59,7 +58,9 @@ export default {
         disp_end_date: '',
         reg_date:'',
         local_gw_id:'',
-        os_type:''
+        os_type:'',
+        reg_start_date:'',
+        reg_end_date:'',
         
       },
       localGwOptions:[],
@@ -104,7 +105,7 @@ export default {
 
     //params : 페이징 + 검색조건
     var reqParams = this.handleParams(params)  
-    EventBus.$emit('param', params);
+    // EventBus.$emit('param', params);
     console.log('보내는 값')
     console.log(reqParams)
         axios.post(url, reqParams, this.$store.state.headers)
@@ -121,7 +122,7 @@ export default {
               }else if(resCode==204){
                 this.pList = [];
                 this.resPagingInfo = {};
-                alert('코드 관리 데이터가 없습니다.');
+                // alert('코드 관리 데이터가 없습니다.');
               }else if(resCode==410){
                 alert("로그인 세션이 만료되었습니다.");
               //  EventBus.$emit('top-path-logout');
@@ -200,6 +201,12 @@ export default {
       }
       if(params.os_type !== undefined && params.os_type !== ''){
         newParams.os_type = params.os_type
+      }
+      if(params.reg_start_date !== undefined && params.reg_start_date !== ''){
+        newParams.reg_start_date = params.reg_start_date
+      }
+      if(params.reg_end_date !== undefined && params.reg_end_date !== ''){
+        newParams.reg_end_date = params.reg_end_date
       }
       return newParams
     }

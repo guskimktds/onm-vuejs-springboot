@@ -112,7 +112,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="param.reg_date"
+                        v-model="editedItem.reg_start_date"
                         label="시작일"
                         prepend-icon="mdi-calendar"
                         readonly
@@ -121,7 +121,7 @@
                         style="width:150px"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.reg_date" no-title scrollable type="date">
+                    <v-date-picker v-model="editedItem.reg_start_date" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
                     
@@ -133,7 +133,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                        v-model="param.reg_date"
+                        v-model="editedItem.reg_end_date"
                         label="종료일"
                         prepend-icon="mdi-calendar"
                         readonly
@@ -142,7 +142,7 @@
                         style="width:150px"
                         ></v-text-field>
                     </template>
-                    <v-date-picker v-model="param.reg_date" no-title scrollable type="date">
+                    <v-date-picker v-model="editedItem.reg_end_date" no-title scrollable type="date">
                     </v-date-picker>
                     </v-menu>
                 </v-col>
@@ -161,9 +161,7 @@
 export default {
     props:['param','localGwOptions'],
     data() {
-        return{            
-            status: '센터',
-            status_text:'',
+        return{
             dialog: false,
             dialogDelete: false,
             images: [],
@@ -181,6 +179,7 @@ export default {
                 disp_end_date: '',
                 reg_start_date: '',
                 reg_end_date: '',
+                reg_date: '',
                 cmd_type: '',
                 os_type:'',
                 local_gw_id: '0',
@@ -217,6 +216,8 @@ export default {
             this.typeitem2 = ''
             this.editedItem.disp_start_date = ''
             this.editedItem.disp_end_date = ''
+            this.editedItem.reg_start_date = ''
+            this.editedItem.reg_end_date = ''
             this.searchMethod()
         },
         searchMethod: function() {
@@ -246,11 +247,24 @@ export default {
             if(this.typeitem2 == this.items2[0]){
                 this.param.disp_yn = ''
             }
-            this.param.disp_start_date = this.editedItem.disp_start_date.replace(/-/g,'')
-            this.param.disp_end_date = this.editedItem.disp_end_date.replace(/-/g,'')
+            this.param.disp_start_date = this.editedItem.disp_start_date
+            .replace(/-/g,'')
+            this.param.disp_end_date = this.editedItem.disp_end_date
+            .replace(/-/g,'')
+                // this.param.regStartDate = this.editedItem.reg_start_date.replace(/-/g,'')
+            this.param.reg_start_date = this.editedItem.reg_start_date.replace(/-/g,'')
+            this.param.reg_end_date = this.editedItem.reg_end_date.replace(/-/g,'')
+            if(this.param.disp_start_date != '' && this.param.disp_end_date == ''){
+                alert("노출종료일을 선택하세요")
+                return
+            }
+            if(this.param.reg_start_date != '' && this.param.reg_end_date == ''){
+                alert("등록일자를 선택하세요")
+                return
+            }
+            // this.param.reg_date = this.editedItem.reg_start_date.replace(/-/g,'')
             // this.param.reg_date = this.editedItem.disp_end_date.replace(/-/g,'')
            
-        //    this.param.reg_date = this.editedItem.reg_end_date.replace(/-/g,'')
             this.$emit('search', this.param)
             console.log(this.param)
             // console.log(this.editedItem)

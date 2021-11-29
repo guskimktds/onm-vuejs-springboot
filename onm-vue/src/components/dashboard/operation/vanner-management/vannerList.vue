@@ -9,7 +9,7 @@
             <h3 style="font-size: 30px; height: 20px; padding-left:12px">배너 목록</h3>
       </v-col>
       <div class = "button">
-        <router-link to="/operation/vanner-register" style="color:white;">등록</router-link>
+        <router-link to="/operation/vanner-register" style="color:white; text-decoration: none;">등록</router-link>
       </div>
     </v-row>
 
@@ -25,9 +25,7 @@
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
           :header-props="{ sortIcon: null }"
           @click:row="passPage"
-        
         >
-        
         </v-data-table>
 
     </v-card>
@@ -40,11 +38,10 @@
 //  import EventBus from '../../../../EventBus';
 
 export default {
-    props: ['pList','resPagingInfo', 'gw_id'],
+    props: ['pList','resPagingInfo', 'gw_id', 'param'],
     data() {
       return {
         options: {},
-        loading: true,
         headers: [
           // {
           //   text: 'No',
@@ -54,10 +51,10 @@ export default {
           //   width: '5%',
           // },
 
-          { text: '배너타입', value: 'img_type', width: '10%', align: 'center'},
-          { text: 'OS타입', value: 'os_type', width: '10%', align: 'center'},
-          { text: '제목', value: 'title', width: '25%', align: 'center'},
-          { text: '노출여부', value: 'disp_yn', width: '10%', align: 'center' },
+          { text: '배너타입', value: 'img_type', width: '5%', align: 'center'},
+          { text: 'OS타입', value: 'os_type', width: '8%', align: 'center'},
+          { text: '제목', value: 'title', width: '20%', align: 'center'},
+          { text: '노출여부', value: 'disp_yn', width: '5%', align: 'center' },
           { text: '노출시작일', value: 'disp_start_date',width: '10%', align: 'center' },
           { text: '노출종료일', value: 'disp_end_date', width: '10%', align: 'center' },
           // { text: '작성자', value: 'reg_id', width: '10%', align: 'center' },
@@ -70,6 +67,7 @@ export default {
     methods: {
       getDataFromApi(){
         this.$emit("pagination",this.options)
+        console.log(this.options)
       },
       passPage(value){
         console.log(value)
