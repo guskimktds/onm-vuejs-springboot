@@ -563,8 +563,13 @@ export default new Router({
                     path: "notice",
                     name: 'notice',
                     component: notice
+<<<<<<< HEAD
                 },
                 {
+=======
+                },{
+
+>>>>>>> hsk_feature01
                 path: "vanner-management",
                 name: 'vanner-management',
                 component:vannerManagement
