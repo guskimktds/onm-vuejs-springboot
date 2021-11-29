@@ -19,6 +19,7 @@
             v-bind:param="searchParam"
             v-bind:pList=pList
             v-bind:resPagingInfo=resPagingInfo
+            @child="clickToSearchDetailObject" 
             @pagination="setToSearchParams"
           ></customer-api-list>
         </v-col>
@@ -33,7 +34,7 @@
         </v-col>
       </v-row>
       <v-card v-if=showModal>
-        <ul>
+        <ul v-for="site_id in rowList" v-bind:key="site_id">
           <h1>api명 | 호출 수</h1>
           <li></li>
         </ul>
@@ -70,6 +71,7 @@ export default {
       pList: [],
       sList:[],
       storeList: [],
+      rowList:[],
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10,
@@ -181,34 +183,35 @@ export default {
       clickToSearchDetailObject: function(values){
 
     
-       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/user`
+       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/api`
        var params = {
          site_id: values.site_id,
          user_id: values.user_id,
          start_date: values.access_date,
-         end_date: values.acess_date,
+         end_date: values.access_date,
+         api_no: values.api_no,
          page_no: '1',
          view_cnt: '100',
        }
-       // console.log(values+"DDDDDDDDewrerer")
-      this.showModal=true
+       console.log(JSON.stringify(params.end_date)+"DDDDDDDDewrerer")
+      this.showModal=!this.showModal
        axios.post(url, params, headers)
        .then((response) => {
           var resCode = response.data.res_code;
            var resMsg = response.data.res_msg;
            if(resCode == 200){
-             this.pObject = response.data.data
+             this.rowList = response.data.data.access_user_list
              this.showDetailObject = true
              this.isReloadDetailObject = true
              this.orderBtn=!this.orderBtn
-             console.log(this.pObject)
+             console.log(this.rowList)
            }else if(resCode==204){
-             this.pObject = {};
+             this.rowList = {};
              this.showDetailObject = false
              this.isReloadDetailObject = false
            alert("사용자 청약오더 상세 데이터가 없습니다.");
            }else{
-             this.pObject = {};
+             this.rowList = {};
              this.showDetailObject = false
              this.isReloadDetailObject = false
              alert(resCode + " / " + resMsg);

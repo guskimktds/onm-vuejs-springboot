@@ -22,8 +22,7 @@
       ></v-text-field>
         </v-col>
         <v-col>
-
-      <v-btn
+           <v-btn
      v-on:click="searchStoreApiButton"
       >검색</v-btn>
         </v-col>
@@ -69,7 +68,8 @@ export default {
   },
 methods: {
     handleClick: function(value){
-      this.$emit("child", value.site_id);
+      this.$emit("child", value);
+      console.log("로우클릭 값 보내기"+JSON.stringify(value))
 
     },
 

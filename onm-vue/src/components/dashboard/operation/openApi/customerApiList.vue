@@ -73,7 +73,8 @@ export default {
 
   methods: {
     handleClick:function(value){
-        this.$emit("child", value.site_id);
+        this.$emit("child", value);
+         console.log("로우클릭 값 보내기"+value.site_id);
       },
     getDataFromApi() {
       this.loading = true;
