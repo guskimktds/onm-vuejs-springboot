@@ -97,7 +97,7 @@ export default {
         arr.forEach(function(element){
             new_arr.push(element.user_id) 
         })
-        console.log('countCallApi keys',new_arr)
+        console.log('countCallStore keys',new_arr)
         return new_arr
       },
 
@@ -106,7 +106,7 @@ export default {
         arr.forEach(function(element){
             new_arr.push(element.access_cnt) 
         })
-        console.log('countCallApi value',new_arr)
+        console.log('countCallStore value',new_arr)
         return new_arr
       },
 
