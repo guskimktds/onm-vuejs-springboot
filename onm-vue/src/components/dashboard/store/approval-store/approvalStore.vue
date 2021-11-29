@@ -12,7 +12,7 @@
             </div>
             <approval-store-list
               v-bind:pList="pList"
-              v-bind:storePagingInfo="storePagingInfo"
+              v-bind:resPagingInfo="resPagingInfo"
             >
             </approval-store-list>
       </v-card>
@@ -39,7 +39,7 @@ const headers={
         },
         methods:{
             searchStoreInfo(params){
-                var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110//`
+                var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13031/get_site`
 
                 var reqParams=this.handleParams(params)
  
@@ -53,12 +53,11 @@ const headers={
                     var resCode = response.data.res_code;
                     var resMsg = response.data.res_msg;
                     if(resCode == 200){
-                    this.pList = response.data.data.값채우기;
-                    this.storePagingInfo = response.data.data.paging_info
-                
+                    this.pList = response.data.data.list;
+                    this.resPagingInfo = response.data.data.paging_info
                     }else if(resCode==204){
                     this.pList = [];
-                    this.storePagingInfo = {};
+                    this.resPagingInfo = {};
                     alert('매장 관련 정보 데이터가 없습니다.');
                     }else if(resCode==410){
                     alert("로그인 세션이 만료되었습니다.");
@@ -70,7 +69,7 @@ const headers={
                         this.$router.replace('/signin')
                     }else{
                     this.pList = [];
-                    this.storePagingInfo = {};
+                    this.resPagingInfo = {};
                     alert(resCode + " / " + resMsg);
                     }
                 })
@@ -151,7 +150,7 @@ const headers={
         data(){
             return {
                 title: "매장 승인 정보",
-                pList: [
+                pList: [  // 안에 데이터 지우기
                     {
                         site_id : 'DOMINO_HEAD',
                         site_name:'도미노피자',
@@ -160,17 +159,8 @@ const headers={
                         user_name : '이선민',
                         reg_date : '20211028',
                         mod_date: '20211028',
-                        status_code : 'A'
-                    },
-                    {
-                        site_id : 'McDONALDS_HEAD',
-                        site_name:'맥도날드',
-                        registered_store_count : 12,
-                        api_count : 10,
-                        user_name : '홍길동',
-                        reg_date : '20211028',
-                        mod_date: '20211028',
-                        status_code : 'U'
+                        status_code : 'D',
+                        control_type: 'NONE'
                     }
                 ],
                 searchParam:{
@@ -191,25 +181,27 @@ const headers={
                     local_gw_id: ""
                 },
                 localGwOptions:[],
-                storePagingInfo:{}, // 페이지 정보 관련 값 받아옴
+                resPagingInfo:{}, // 페이지 정보 관련 값 받아옴
             }
         },
-       beforeCreate() {  
-            axios
-            .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`) // 다시 만들기
-            .then((response) => {
-            this.localGwOptions = response.data.data.local_gw_list;
-            this.localGwOptions.unshift(this.allOptions);
-            
-            })
-            .catch(function (error) {
-                console.log(error);
-                alert("상태코드 조회실패");
-            })
-            .finally(function () {
-                // always executed
-            });
-        },
+        beforeCreate() {  
+            var code_master_id= "STATUS_CODE";
+                axios
+                .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13032/get_status_code`,code_master_id,headers)
+                .then((response) => {
+                this.localGwOptions = response.data.data.comm_code_list;
+                this.localGwOptions.unshift(this.allOptions);
+                
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("상태코드 조회실패");
+                    
+                })
+                .finally(function () {
+                    // always executed
+                });
+            },
         created(){
             this.searchStoreInfo(this.searchParam);
         }

@@ -7,7 +7,7 @@
             tag="section">
             <base-material-card
             icon="mdi-magnify"
-            title="매장 승인 내역 조회"
+            title="API 사용 및 승인 조회"
             class="px-5 py-3"
             >
            <v-row>
@@ -115,6 +115,7 @@
             return {
             }
         },
+
         methods: {
             searchMethod: function () {
             this.$emit("search", this.param);

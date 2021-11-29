@@ -36,7 +36,7 @@
             </v-text-field>
           </v-col>
         </v-row>
-        <v-row>
+        <!-- <v-row>
           <v-col cols="2" style="padding:39px 0px; margin-left: 10px;">
             부서 명:
           </v-col>
@@ -49,7 +49,7 @@
             >
             </v-text-field>
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-row>
           <v-col cols="2" style="padding:39px 0px; margin-left: 10px;">
             담당 번호:
@@ -65,31 +65,6 @@
             </v-text-field>
           </v-col>
         </v-row>
-          <!-- <v-row>
-          <v-col cols="2" style="padding:39px 0px; margin-left: 10px;">
-            api 제어 사용 여부:
-          </v-col>
-          <v-col cols="2">
-            <v-radio-group v-model="info.control_type" :mandatory="true" v-on:change="authForStieLimit(info.control_type)">
-                <v-radio label="Y" value="Y"></v-radio>
-                <v-radio label="N" value="N"></v-radio>
-            </v-radio-group>
-          </v-col>
-        </v-row>
-        <v-row v-show="checkApi">
-          <v-col cols="2" style="padding:39px 0px; margin-left: 10px;">
-            site 접속 제한량:
-          </v-col>
-          <v-col cols="3">
-           <v-text-field
-              placeholder="site 접속 제한량"
-              v-model = "info.site_access_limit"
-              v-on:keyup="checkNumber(info.site_access_limit,2)"
-            >
-            </v-text-field>
-          </v-col>
-        </v-row> -->
-      
         <v-row>
           <v-col >
             <v-btn 
@@ -127,38 +102,34 @@ const headers = {
 
 export default{
 
-    // created(){
+    created(){
 
-    //     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110//` // 아직 미정
-    //      axios.post(url, headers)
-    //      .then((response) =>{
-    //         var resCode = response.data.res_code;
-    //     if(resCode==410){
-    //         alert("로그인 세션이 만료되었습니다.");
-    //         EventBus.$emit('top-path-logout');
-    //         this.$store
-    //         .dispatch("LOGOUT")
-    //         .then( res => { 
-    //         console.log(res.status)}).catch(({ message }) => (this.msg = message))
-    //         this.$router.replace('/signin')
-    //         }
-    //     })
-    //     .catch((ex) => {
-    //     console.log('조회 실패',ex)
-    //   })
-
-    // },
+      //   var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/` // 아직 미정
+      //    axios.post(url, headers)
+      //    .then((response) =>{
+      //       var resCode = response.data.res_code;
+      //   if(resCode==410){
+      //       alert("로그인 세션이 만료되었습니다.");
+      //       EventBus.$emit('top-path-logout');
+      //       this.$store
+      //       .dispatch("LOGOUT")
+      //       .then( res => { 
+      //       console.log(res.status)}).catch(({ message }) => (this.msg = message))
+      //       this.$router.replace('/signin')
+      //       }
+      //   })
+      //   .catch((ex) => {
+      //   console.log('조회 실패',ex)
+      // })
+    },
     data(){
         return{
             info:{
                 site_name : '',
                 user_name : '',
-                dept : '',
+                //dept : '',
                 tel_no : '',
-                // site_access_limit : '',
-                // control_type: '',
             },
-            // checkApi : true,
         }
     },
     methods:{
@@ -172,10 +143,10 @@ export default{
                 alert("담당자 명을 입력해주세요.");
                 return;
             }
-             if(this.info.dept === '' || this.info.dept === undefined){
-                alert("부서 명을 입력해주세요.");
-                return;
-            }
+            //  if(this.info.dept === '' || this.info.dept === undefined){
+            //     alert("부서 명을 입력해주세요.");
+            //     return;
+            // }
              if(this.info.tel_no === '' || this.info.tel_no === undefined){
                 alert("담당 번호를 입력해주세요.");
                 return;
@@ -187,14 +158,9 @@ export default{
                     return;
                 }
             }
-            // if(this.checkApi){
-            //   if(this.info.site_access_limit === '' || this.info.site_access_limit === undefined){
-            //       alert("site 접속 제한량을 입력해주세요.");
-            //       return;     
-            //   }
-            // }
-            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110//` // 아직 미정
-            axios(url, this.info, headers)
+            
+            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13039/register_site` // 아직 미정
+            axios.post(url, this.info, headers)
             .then((response)=>{
                 var resCode = response.data.res_code;
                 if(resCode == 200){
@@ -233,21 +199,13 @@ export default{
         resetInfo(){
                this.info.site_name = '';
                this.info.user_name = '';
-               this.info.dept = '';
+              //  this.info.dept = '';
                this.info.tel_no = '';
-               this.info.site_access_limit = '';
-               this.info.control_type = 'Y';
         },
         backPage(){
           this.$router.push({name: "approval-store"});
         }
-        // authForStieLimit(radio){
-        //   if(radio === 'Y'){
-        //     this.checkApi = true; 
-        //   }else if(radio === 'N'){
-        //     this.checkApi = false;
-        //   }
-        // }
+       
     }
     
 

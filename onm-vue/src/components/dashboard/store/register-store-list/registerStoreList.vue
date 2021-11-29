@@ -5,95 +5,7 @@
                 <h3>
                 <span v-bind:style="option_css">{{status_code_title}}</span>
                 {{receivedValue.site_name}}
-                <span v-show="isShowBtn === 1" style="margin-left:10px; padding:5px; ">
-                <!-- <button @click="rejectRequest" style="margin-right:15px; margin-bottom:5px; background:darkGray;color:white; width:80px;border-radius:3px; padding:7px; font-size:12px; margin-top:1px;">반려</button> 
-                <v-dialog
-                v-model="dialog"
-                max-width="500px"
-                v-show="showAuth()"
-                >
-                <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    color="black"
-                    dark
-                    class="mb-2"
-                    v-bind="attrs"
-                    v-on="on"
-                >
-                    승인
-                </v-btn>
-                </template>
-                <v-card>
-                <v-card-title>
-                    <span class="headline" >승인</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-container>
-                    <v-row>
-                        <v-radio-group
-                            label="사용여부"
-                            v-model="receivedValue.control_type"
-                            row
-                            mandatory>
-                            <v-radio
-                            label="NONE"
-                            value="NONE"
-                            checked
-                            ></v-radio>  
-                            <v-radio
-                            label="API"
-                            value="API">
-                            </v-radio>
-                            <v-radio
-                            label="SITE"
-                            value="SITE">
-                            </v-radio>
-                            <v-radio
-                            label="BOTH"
-                            value="BOTH">
-                            </v-radio>
-                        </v-radio-group>
-                    </v-row>
-                    <v-row>
-                        <v-radio-group
-                            label="사용여부"
-                            v-model="receivedValue.control_yn"
-                            row
-                            mandatory
-                            >
-                            <v-radio
-                            label="Y"
-                            value="Y"
-                            ></v-radio>  
-                            <v-radio
-                            label="N"
-                            value="N">
-                            </v-radio>
-                        </v-radio-group>
-                    </v-row>
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                <v-spacer></v-spacer>
-                    <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="acceptRequest"
-                    >
-                    저장
-                    </v-btn>
-                    <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="closeSure"
-                    >
-                    취소
-                    </v-btn>
-                </v-card-actions>
-                </v-card>
-                </v-dialog> -->
-            </span>
-            </h3>
+                </h3>
             </div>
             <v-tabs >
             <v-tab @click="passPageInfo(1,receivedValue.site_id)">서비스 업체 정보</v-tab>
@@ -103,51 +15,89 @@
       </v-card>
         
       <v-card>
-        <p style="width: 97%; text-align:right; margin-top: 10px;" v-show="getApi && isShowSeq === 1 && apiBtnDetail === 2">
+        <p style="width: 99%; text-align:right; margin-top: 10px;" v-show="getApi && isShowSeq === 1 && apiBtnDetail === 2">
             <button @click.prevent="reissueCert" style="margin-right:15px; background:black;color:white; width:80px;border-radius:3px; margin-top:15px;">재발행</button>
             <button @click.prevent="deleteCert" style="background:black;color:white; width:80px;border-radius:3px; margin-top:15px;">키삭제</button>        
         </p> 
-        <p style="width: 97%; text-align:right; margin-top: 10px;" v-show="isShowSeq === 1 && apiBtnDetail === 3">
-            <button disabled style="margin-right:15px; background:lightGray;color:white; width:80px;border-radius:3px; margin-top:15px;">재발행</button>
-            <button disabled style="margin-right:15px; background:lightGray;color:white; width:80px;border-radius:3px; margin-top:15px;">키삭제</button>
+        <p style="width: 98%; text-align:right; height:50px; margin-top: 15px;" v-show="isShowSeq === 1 && apiBtnDetail === 3">
             <button @click.prevent="reissueCert" style="background:black;color:white; width:80px;border-radius:3px; margin-top:15px;">키생성</button>        
         </p> 
        <v-form v-show="getApi && isShowSeq === 1">    
             <v-row style="margin-top: -30px;">
-                <v-col cols="2" style="padding:39px 0px; margin-left: 35px; flex: 0 0 7%; font-size:12px;">
+                <v-col cols="2" style="padding:39px 0px; margin-left: 20px; flex: 0 0 5%; font-size:12px;">
                     <label id ="cert_key">
                         인증키:
                     </label>
                 </v-col>
-                <v-col cols="3" style="padding-top:30px; margin-left:21px;">
-                    <v-text-field
-                    v-model="apiInfo.cert_key"
-                    id="cert_key"
-                    disabled
+                <v-col cols="8"> 
+                    <p style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; whdth:100px; height:20px; padding:35px; border-bottom-style : solid; ">
+                        {{apiInfo.cert_key}}
+                    </p>
+                </v-col>
+                <v-col  style="margin-left:30px; padding-top:20px; font-size:12px;">
+                   <v-dialog
+                        v-model="dialog"
+                        max-width="900px"
                     >
-                    </v-text-field>
+                        <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            color="indigo"
+                            v-bind="attrs"
+                            v-on="on"
+                            class="certKeyDetails"
+                        >
+                            자세히 보기
+                        </v-btn>
+                        </template>
+                        <v-card>
+                            <v-card-title>
+                                <span class="headline" >인증키</span>
+                            </v-card-title>
+                            <v-card-text>
+                                <v-container>
+                                    <table style="border:solid 1px;" width="100%; height:300px;">
+                                         <tr>
+                                           <td>
+                                               {{apiInfo.cert_key}}
+                                           </td>
+                                        </tr>
+                                    </table>
+                                </v-container>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                color="blue darken-1"
+                                text
+                                @click="closeSure"
+                                >
+                                닫기
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>  
                 </v-col>
             </v-row>
                 <v-row style="margin-top: -20px;">
-                <v-col cols="2" style="padding:39px 0px; margin-left: 35px; flex: 0 0 7%; font-size:12px;">
+                <v-col cols="2" style="padding:39px 0px; margin-left: 20px; flex: 0 0 7%; font-size:12px;">
                         <label id ="cert_start_date">
                             인증시작시간:
                         </label>
                 </v-col>
-                <v-col cols="2" style="padding: 30px; margin-left:-5px;">
-                    <v-text-field
+                <v-col cols="2" style="padding: 30px; margin-left:-5px; font-size:12px;">
+                    <v-text-field   
                     v-model="apiInfo.cert_start_date"
                     id="cert_start_date"
                     disabled
                     >
                     </v-text-field>
                 </v-col>
-                    <v-col  cols="auto" style="padding:39px 0px; margin-left: 20px; flex: 0 0 7%; font-size:12px;">
+                    <v-col  cols="auto" style="padding:39px 0px; margin-left: 73px; flex: 0 0 7%; font-size:12px;">
                     <label id ="cert_end_date">
                         인증종료시간:
                     </label>
                 </v-col>
-                <v-col cols="2" style="padding: 30px;">
+                <v-col cols="2" style="padding: 30px; font-size:12px;">
                     <v-text-field
                     v-model="apiInfo.cert_end_date"
                     id="cert_end_date"
@@ -157,20 +107,25 @@
                 </v-col> 
             </v-row>
         </v-form>
+        </v-card>
+        <v-card>
         <service-com-info v-show="isShowSeq==1"
             v-bind:receivedValue="receivedValue"
         >
         </service-com-info>  
-        <store-management v-show="isShowSeq==2">
+        <store-management v-show="isShowSeq==2"
+            v-bind:receivedValue="receivedValue"
+        >
         </store-management>
       </v-card>
  </v-container>
 </template>
+<script src="https://cdn.jsdelivr.net/npm/vue-clipboard2@0.3.1/dist/vue-clipboard.min.js"></script>
+
 <script>
 
 import serviceComInfo from './serviceComInfo.vue';
 import storeManagement from './storeManagement.vue';
-//mport EventBus from '../../../../EventBus'
 import axios from "axios";
 
 const headers={
@@ -185,7 +140,7 @@ const headers={
             this.receivedValue.site_id = site_id;
             this.receivedValue.site_name = site_name;
             this.receivedValue.status_code = status_code;
-            if(status_code === 'U'){
+            if(status_code === 'S'){
                 this.getApi = true;
                 this.getApiInfo();
                 this.apiBtnDetail = 2;
@@ -195,6 +150,7 @@ const headers={
             }
             this.checkStatus(status_code);
             this.passPageInfo(1,site_id);
+
         },
         methods:{
             passPageInfo(isShowSeq,site_id){  //넘어온 값에 대한 확인 여부
@@ -206,18 +162,18 @@ const headers={
                 }
             },
             checkStatus(status_code){   //업체 상태에 따른 css
+
                 if(status_code === 'A'){
                     this.status_code_title = '신청';
                     this.receivedValue.status_code = 'A';
                     this.option_css.background = 'red';
-                    //this.isShowBtn = 1; //승인 및 반려 버튼 
-                }else if(status_code ==='R'){
+                }else if(status_code ==='F'){
                     this.status_code_title = '반려';
                     this.option_css.background = 'lightgray';
-                    this.receivedValue.status_code = 'R';
-                }else if(status_code ==='U'){
+                    this.receivedValue.status_code = 'F';
+                }else if(status_code ==='S'){
                     this.status_code_title = '사용중';
-                    this.receivedValue.status_code = 'U';
+                    this.receivedValue.status_code = 'S';
                     this.option_css.background = 'green';
                 }else if(status_code ==='D'){
                     this.status_code_title = '미사용';
@@ -225,139 +181,92 @@ const headers={
                     this.option_css.background = '#ffd400';
                 }
             },
-            // rejectRequest(){  //승인신청 거절하는 method
-            //     var vm = this;
-            //     var result = confirm("신청을 반려하시겠습니까?");
-            //     if(result){
-            //         var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110//`;// 다시 만들기
-    
-            //         axios.post(url,this.receivedValue.site_id,headers) 
-            //         .then((response) => {
-            //             alert("신청이 반려되었습니다.");
-            //             console.log(response);
-            //             //this.receivedValue.status_code= response.data.data.status_code;
-            //         })
-            //         .catch(function (error) {
-            //             console.log(error);
-            //             alert("반려 신청 중 오류가 생겼습니다.");
-            //             vm.isShowBtn = 0;
-            //             vm.option_css.background = 'lightGray';
-            //             vm.status_code_title = "반려";
-            //         })
-            //         .finally(function () {
-            //             // always executed
-            //         });
-            //     }else{
-            //         alert("반려진행이 취소되었습니다.")
-            //         return;
-            //     }
-            // },
-            // acceptRequest(){ //승인요청을 받아주는 method
-            //     var result = confirm("신청을 승인하시겠습니까?");
-            //     if(result){
-            //         var vm = this;
-            //         var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110//`;
-            //         axios.post(url,this.receivedValue.site_id,headers) // 다시 만들기
-            //         .then((response) => {
-            //             alert("신청이 승인되었습니다.");
-            //             //this.receivedValue.status_code= response.data.data.status_code;
-            //             console.log(response);
-            //             this.dialog = false;   
-            //         })
-            //         .catch(function (error) {
-            //             console.log(error);
-            //             alert("승인 신청 중 오류가 생겼습니다.");
-            //             vm.isShowBtn = 0;
-            //             vm.option_css.background = 'green';
-            //             vm.status_code_title = "사용중";
-            //             vm.getApi = true;
-            //             vm.apiBtnDetail =2;
-            //             vm.getApiInfo();
-            //             vm.dialog = false;
-            //             vm.receivedValue.control_yn = 'N';  //추후에 지우지 않기
-            //             vm.receivedValue.control_type = 'NONE'; //추후에 지우지 않기
-            //         })
-            //         .finally(function () {
-            //             // always executed
-            //         });
-            //     }else{
-            //         alert("승인진행이 취소되었습니다.");
-            //         this.receivedValue.control_yn = 'N';  //추후에 지우지 않기
-            //         this.receivedValue.control_type = 'NONE'; //추후에 지우지 않기
-            //         this.dialog = false;
-            //         return;
-            //     }
-            // },
             getApiInfo(){ //키 정보 가져오는 method
-                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110//`;
-                 var vm  = this;
+                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13033/get_cert_info`;
+                //  var vm  = this;
                     axios.post(url,this.receivedValue,headers) // 다시 만들기(상태코드랑 site_id)
-                    .then((response) => {  
-                        console.log(response);   
-                        const cert_key = response.data.data.apiNo;
-                        const cert_start_date = response.data.data.cert_start_date;
-                        const cert_end_date = response.data.data.cert_end_date;
-                        this.apiInfo.cert_key = cert_key;
-                        this.apiInfo.cert_start_date = cert_start_date;
-                        this.apiInfo.cert_end_date = cert_end_date;
+                    .then((response) => {    
+                         // res_code = 200
+                          if(response.data.res_code === '200'){
+
+                            this.apiInfo.cert_key = response.data.data.cert_key;
+                            this.apiInfo.cert_start_date = response.data.data.cert_start_date;
+                            this.apiInfo.cert_end_date = response.data.data.cert_end_date;
+
+                        }else{
+                            alert("키를 가져오는 중 문제가 발생하였습니다.");
+                            return;
+                        }
                     })
                     .catch(function (error) {
                         console.log(error);
-                        const cert_key = 'abc30448390ccc0303030k0c789';
-                        const cert_start_date = '202111021348';
-                        const cert_end_date = '202111021348';
-                        vm.apiInfo.cert_key = cert_key;
-                        vm.apiInfo.cert_start_date = cert_start_date;
-                        vm.apiInfo.cert_end_date = cert_end_date;
+                        // const cert_key = 'abc30448390ccc0303030k0c789'; //  추후 다 지우기
+                        // const cert_start_date = '202111021348';
+                        // const cert_end_date = '202111021348';
+                        // vm.apiInfo.cert_key = cert_key;
+                        // vm.apiInfo.cert_start_date = cert_start_date;
+                        // vm.apiInfo.cert_end_date = cert_end_date;
                     })
                     .finally(function () {
                         // always executed
-                    });
+                });
             },
             reissueCert(){
                 var result = confirm("키를 생성하시겠습니까?");
                 if(result){
-                    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110//`;
-                    var vm  = this;
+                    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13034/issue_certKey`;
+                    //var vm  = this;
                     axios.post(url,this.receivedValue,headers) // 다시 만들기(상태코드랑 site_id)
                     .then((response) => {  
                         console.log(response);
-                        if(response.data.data.res_code === 'S'){
-                            vm.getApiInfo();
+                        if(response.data.res_code === 200){
+                            this.getApiInfo();
+                            //this.receivedValue.site_id = response.data.data.site_info.site_id;
+                            this.receivedValue.status_code = response.data.data.status_code;
+                            this.checkStatus(this.receivedValue.status_code);
+                            this.getApi = true;
+                            this.apiBtnDetail = 2;
+
                         }else{
-                            alert("키 발생 중 문제가 생겼습니다.");
+                           alert("키 삭제 중 문제가 생겼습니다.");
                             return;
                         }   
                     })
                     .catch(function (error) {
-                        alert("오류가 발생했습니다.");
-                        vm.getApiInfo();
-                        vm.getApi = true;
-                        vm.option_css.background = "green";
-                        vm.status_code_title = "사용중";
-                        vm.apiBtnDetail = 2;
                         console.log(error);
+                        alert("오류가 발생했습니다.");
+                        // vm.getApiInfo(); // 추후 지우기
+                        // vm.getApi = true;
+                        // vm.option_css.background = "green";
+                        // vm.status_code_title = "사용중";
+                        // vm.apiBtnDetail = 2;
+              
                     })
                     .finally(function () {
                         // always executed
                     });
                 }else{
-                    alert("재발행 진행을 취소했습니다.")    
+                     this.$fire({
+                       title: "생성이 취소되었습니다.",
+                       type : "error",
+                       html: ""
+                   })
                 }
             },
             deleteCert(){
                 var result = confirm("키를 삭제하시겠습니까?");
                 if(result){
-                    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110//`;
-                    var vm  = this;
+                    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13035/delete_certKey`;
+                    // var vm  = this;
                     axios.post(url,this.receivedValue,headers) // 다시 만들기(상태코드랑 site_id)
-                    .then((response) => {  
+                    .then((response) => {   
                         console.log(response);
-                        if(response.data.data.res_code === 'S'){
-                            vm.apiBtnDetail = 3;
-                            vm.option_css.background = "#ffd400";
-                            vm.status_code_title = "미사용";
-                            vm.getApi = false;
+                        if(response.data.data.res_code === 200){
+                            this.apiBtnDetail = 3;
+                            this.getApi = false;
+                            this.receivedValue.status_code = response.data.data.status_code;
+                            this.checkStatus(this.receivedValue.status_code);
+                         
                         }else{
                             alert("키 삭제 중 문제가 생겼습니다.");
                             return;
@@ -365,26 +274,28 @@ const headers={
                     })
                     .catch(function (error) {
                         alert("오류가 발생했습니다.");
-                        vm.apiBtnDetail = 3;
-                        vm.option_css.background = "#ffd400";
-                        vm.status_code_title = "미사용";
-                        vm.getApi = false;
-
+                        
+                        // vm.apiBtnDetail = 3;  // 추후지우기
+                        // vm.option_css.background = "#ffd400";
+                        // vm.status_code_title = "미사용";
+                        // vm.getApi = false; // 여기까지
                         console.log(error);
+                        return;
                     })
                     .finally(function () {
                         // always executed
                     });
+                }else{
+                    this.$fire({
+                       title: "삭제가 취소되었습니다.",
+                       type : "error",
+                       html: ""
+                   })
                 }
             },
-            // showAuth(){
-            //     return true;
-            // },
-            // closeSure(){
-            //     this.receivedValue.control_yn = 'N';
-            //     this.receivedValue.control_type = 'NONE';
-            //     this.dialog = false
-            // }
+            closeSure(){
+                this.dialog = false;
+            },
         },
         data(){
             return{
@@ -393,11 +304,8 @@ const headers={
                     site_name: '',
                     status_code:'',
                     changeInfo: 'N',
-                    // control_yn:'N',
-                    // control_type:'NONE',
                 },
                 isShowSeq: 1,
-                //isShowBtn: 0,
                 status_code_title:'',
                 option_css:{
                     background: '',
@@ -405,13 +313,13 @@ const headers={
                     padding: '5px',
                 },
                 getApi: '',
-                apiInfo:{
+                apiInfo:{ 
                     cert_key:'',
                     cert_start_date:'',
                     cert_end_date:'',
                 },
                 apiBtnDetail:'',
-                //dialog : false,
+                dialog: false,
             }
         },
         components:{
@@ -443,6 +351,13 @@ a{text-decoration:none; color:#333;}
 }
 .d-flex grow flex-wrap{
     background-color: yellow;
+}
+.certKeyDetails{ 
+    width:90px;
+    border-radius:3px;
+    font-size:10px; 
+    margin: 8px 0 0 -20px;
+
 }
 
 </style>

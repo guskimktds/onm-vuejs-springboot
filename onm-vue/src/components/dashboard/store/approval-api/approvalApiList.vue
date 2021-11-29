@@ -32,7 +32,8 @@
         },
         methods:{
             handleClick: function(value){
-                this.$router.push({name: "register-store-list", params:value})
+                console.log(value);
+                this.$router.push({name: "api-info-detail", params:value})
 
             },
         },
@@ -46,13 +47,12 @@
                     value: "site_id",
                     },
                     { text: "업체 명", value: "site_name" },
-                    { text: "등록 매장", value: "registered_store_count"},
                     { text: "등록 API", value: "api_count" },
-                    { text: "API 제한 여부", value: "control_type" },
                     { text: "담당자 명", value: "user_name" },
+                    { text: "승인일자", value: "adm_access_date" },
                     { text: "등록일자", value: "reg_date" },
                     { text: "수정일자", value: "mod_date" },
-                    { text: "상태", value: "status_code" },
+                    { text: "상태", value: "status_code"},
                 ],
             }
         },
