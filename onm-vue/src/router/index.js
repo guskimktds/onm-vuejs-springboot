@@ -43,6 +43,13 @@ import SensorInfo from '../components/dashboard/store/device-sensor/sensorInfo'
 import DeviceKttInfo from '../components/dashboard/store/device-ktt/deviceKttInfo'
 import termAuth from '../components/dashboard/store/term-auth/termAuth'
 
+//sun
+import registerStore from '../components/dashboard/store/register-store/registerStore'
+import approvalStore from '../components/dashboard/store/approval-store/approvalStore'
+import registerStoreList from '../components/dashboard/store/register-store-list/registerStoreList'
+import approvalApi from '../components/dashboard/store/approval-api/approvalApi'
+import apiInfoDetail from '../components/dashboard/store/api-info-detail/apiInfoDetail'
+
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
 import SessLiveInfo from '../components/dashboard/customer/rtime-access-session/sessLiveInfo'
@@ -382,7 +389,33 @@ export default new Router({
                     path: "device-ktt",
                     name: "device-ktt",
                     component: DeviceKttInfo
+                },
+                {
+                    path: "register-store",
+                    name: "register-store",
+                    component: registerStore
+                },
+                {
+                    path: "approval-store",
+                    name : "approval-store",
+                    component: approvalStore
+                },
+                {
+                    path: "register-store-list",
+                    name: "register-store-list",
+                    component:registerStoreList
+                },
+                {
+                    path: "approval-api",
+                    name: "approval-api",
+                    component:approvalApi
+                },
+                {
+                    path: "api-info-detail",
+                    name: "api-info-detail",
+                    component:apiInfoDetail
                 }
+
             ]
         },
 
