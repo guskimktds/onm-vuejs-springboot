@@ -12,6 +12,7 @@
         @pagination="setToSearchParams"
         @reset="reset"></notice-list>
       </v-card>
+     
 
     </v-container>
 </template>

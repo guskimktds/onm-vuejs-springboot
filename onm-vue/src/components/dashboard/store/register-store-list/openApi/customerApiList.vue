@@ -44,7 +44,7 @@
 
 
 <script>
-import EventBus from '../../../../EventBus'
+import EventBus from '../../../../../EventBus'
 import axios from "axios"
   const headers={
 'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
@@ -72,6 +72,10 @@ export default {
   },
 
   methods: {
+    handleClick:function(value){
+        this.$emit("child", value);
+         console.log("로우클릭 값 보내기"+value.site_id);
+      },
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);

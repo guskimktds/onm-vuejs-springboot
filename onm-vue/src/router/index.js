@@ -43,6 +43,13 @@ import SensorInfo from '../components/dashboard/store/device-sensor/sensorInfo'
 import DeviceKttInfo from '../components/dashboard/store/device-ktt/deviceKttInfo'
 import termAuth from '../components/dashboard/store/term-auth/termAuth'
 
+//sun
+import registerStore from '../components/dashboard/store/register-store/registerStore'
+import approvalStore from '../components/dashboard/store/approval-store/approvalStore'
+import registerStoreList from '../components/dashboard/store/register-store-list/registerStoreList'
+import approvalApi from '../components/dashboard/store/approval-api/approvalApi'
+import apiInfoDetail from '../components/dashboard/store/api-info-detail/apiInfoDetail'
+
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
 import SessLiveInfo from '../components/dashboard/customer/rtime-access-session/sessLiveInfo'
@@ -86,6 +93,10 @@ import termOrderInfo from '../components/dashboard/operation/voc/termOrderInfo.v
 import dssResultInfo from '../components/dashboard/operation/voc/dssResultInfo.vue'
 import bssResultInfo from '../components/dashboard/operation/voc/bssResultInfo.vue'
 import deviceRecoInfo from '../components/dashboard/operation/voc/deviceRecoInfo'
+import vannerManagement from '../components/dashboard/operation/vanner-management/vannerManagement'
+import vannerRegster from '../components/dashboard/operation/vanner-register/vannerRegister';
+import vannerDetailPage from '../components/dashboard/operation/vanner-register/vannerDetailPage';
+
 //운영관리 / 코드 설정 관리 
 import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
 import LocalCode from '../components/dashboard/operation/code/local/codeMain'
@@ -382,7 +393,33 @@ export default new Router({
                     path: "device-ktt",
                     name: "device-ktt",
                     component: DeviceKttInfo
+                },
+                {
+                    path: "register-store",
+                    name: "register-store",
+                    component: registerStore
+                },
+                {
+                    path: "approval-store",
+                    name : "approval-store",
+                    component: approvalStore
+                },
+                {
+                    path: "register-store-list",
+                    name: "register-store-list",
+                    component:registerStoreList
+                },
+                {
+                    path: "approval-api",
+                    name: "approval-api",
+                    component:approvalApi
+                },
+                {
+                    path: "api-info-detail",
+                    name: "api-info-detail",
+                    component:apiInfoDetail
                 }
+
             ]
         },
 
@@ -526,8 +563,25 @@ export default new Router({
                     path: "notice",
                     name: 'notice',
                     component: notice
-                },
+                },{
 
+                path: "vanner-management",
+                name: 'vanner-management',
+                component:vannerManagement
+               
+                },
+                {
+                    path: "vanner-register",
+                    name: 'vanner-register',
+                    component: vannerRegster
+                },
+                {
+                    path: "vanner-detailpage",
+                    name: 'vanner-detailpage',
+                    component: vannerDetailPage,
+                    props:true
+                },
+               
             ]
         },
 

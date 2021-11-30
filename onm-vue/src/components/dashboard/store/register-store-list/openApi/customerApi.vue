@@ -1,9 +1,9 @@
 <template>
     <v-container fluid>
-      <v-card>
+
           <!-- v-on:search="searchToProcess" -->
         <customer-api-query
-          v-on:search="searchSiteApi"
+          v-on:search="searchParams"
           v-bind:param="searchParam"
         ></customer-api-query>
         <count-api
@@ -13,11 +13,13 @@
         </count-api>
       <v-row>
         <v-col cols="6">
+          
           <customer-api-list
           dense 
             v-bind:param="searchParam"
             v-bind:pList=pList
             v-bind:resPagingInfo=resPagingInfo
+            @child="clickToSearchDetailObject" 
             @pagination="setToSearchParams"
           ></customer-api-list>
         </v-col>
@@ -26,37 +28,11 @@
           dense
             v-bind:storeList=storeList
             v-bind:storeResPagingInfo="storeResPagingInfo"
+            @child="clickToSearchDetailObject" 
             @pagination="setToSearchParams"
           ></store-api-list>
         </v-col>
-      </v-row>
-        <v-dialog v-model="showModal" max-width="500px">
-            <v-card>
-            <v-card-title class="headline"> 매장별 API 호출 수</v-card-title>
-            <v-text leftSpace>호출일자: {{rowList.start_date}}</v-text>
-            <v-text>매장명: {{rowList.start_date}}</v-text>
-            <hr>
-              <!-- <ul v-for="site_id in rowList" v-bind:key="site_id">       -->
-  <table>
-                                            <tr>
-                                                <th></th>
-                                                <th style="text-align:center">api 명  </th>
-                                                <th style="text-align:center">호출 수</th>
-                                            </tr>
-                                            <tr v-for="api_no in rowList" v-bind:key="api_no"> 
-                                                 <td>{{rowList.api_no}}</td>
-                                                 <td>{{rowList.access_cnt}}</td>
-                                            </tr>
-                                        </table>       
-              <!-- </ul> -->
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete">닫기</v-btn>
-                <v-spacer></v-spacer>
-            </v-card-actions>
-            </v-card>
-        </v-dialog>
-      </v-card>     
+      </v-row> 
     </v-container>
 </template>
 
@@ -65,8 +41,8 @@ import customerApiQuery from './customerApiQuery'
 import customerApiList from './customerApiList'
 import StoreApiList from './storeApiList.vue'
 import countApi from './countApiTab.vue'
-import dateInfo from "../../../utils/common"
-import EventBus from '../../../../EventBus'
+import dateInfo from "../../../../utils/common"
+import EventBus from '../../../../../EventBus'
 import axios from "axios"
   const headers={
 'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
@@ -97,11 +73,11 @@ export default {
       searchParam: {
         start_date: dateInfo().threeMonthDashFormat,
         end_date: dateInfo().currentDateDashFormat,
-        site_id: '',
+        site_id: this.$route.params.site_id,
         api_no: '',
         user_id: '',
       },
-      showModal: false
+      showModal: true
     }
   },
   methods: {   
@@ -119,7 +95,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
-          this.pList = response.data.data.openapi_access_api;
+          this.pList = response.data.data.access_api_list;
           this.cList = response.data.data.access_cnt;
           this.resPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
@@ -155,6 +131,7 @@ export default {
       var reqParams = this.handleParams(params);
             // reqParams.site_id ='JHC_CTRL_001'
       console.log(reqParams)
+
       axios
       .post(url, reqParams, headers)
       .then( (response) => {
@@ -209,13 +186,13 @@ export default {
          view_cnt: '100',
        }
        console.log(JSON.stringify(params.end_date)+"DDDDDDDDewrerer")
-      this.showModal=true
+      this.showModal=!this.showModal
        axios.post(url, params, headers)
        .then((response) => {
           var resCode = response.data.res_code;
            var resMsg = response.data.res_msg;
            if(resCode == 200){
-             this.rowList = response.data.data.access_api_list
+             this.rowList = response.data.data.access_user_list
              this.showDetailObject = true
              this.isReloadDetailObject = true
              this.orderBtn=!this.orderBtn
@@ -253,7 +230,8 @@ export default {
         page_no: values.page,
         view_cnt: values.itemsPerPage,
       }
-      this.searchSiteApi(params)
+      console.log(params.page_no+"페이징")
+      this.searchStoreApi(params)
       this.searchCustomerApi(params)
     },
     searchParams: function(values){
@@ -267,20 +245,15 @@ export default {
       this.searchStoreApi(params)
       this.searchCustomerApi(params)
     },
-    
-    closeDelete () {
-        this.showModal = false
-    },
     handleParams: function (params) {
-      console.log(params);
+      console.log(params+"DFDFDFD핸들파람");
       let newParams = {};
   
-      if (params.page === undefined || params.page === "") {
-        newParams.page_no = this.reqPagingInfo.page_no;
-      } else {
-        newParams.page_no = params.page;
+      if(params.page_no === undefined || params.page_no === ''){
+        newParams.page_no = this.reqPagingInfo.page_no
+      }else{
+        newParams.page_no = params.page_no
       }
-
       if(params.view_cnt === undefined || params.view_cnt === ''){
         newParams.view_cnt = this.reqPagingInfo.view_cnt
       }else{
@@ -313,12 +286,14 @@ export default {
       }
       return newParams;
     }
+  },
+  created(){
+    console.log(this.$route.params.site_id);
+    
   }
 }
 </script>
 
 <style scoped>
-.leftSpace{
-  margin-left:20px;
-}
+
 </style>
