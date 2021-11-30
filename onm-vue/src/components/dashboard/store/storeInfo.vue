@@ -616,14 +616,12 @@ export default {
           autocorrect: 'off'
         }
       }).then(result=>{
-        
+        console.log(result)
         if(result.value>=0){
           this.showUpdateDialog=true
           this.addDay=result.value
         } else if(result.value<0){
           alert('추가 기간은 음수를 입력할 수 없습니다.')
-        } else if(result.dismiss=='cancel'){
-          console.log('취소')
         } else {
           alert('입력값이 잘못되어 취소되었습니다.')
         }
