@@ -3,7 +3,7 @@
       <v-card>
           <!-- v-on:search="searchToProcess" -->
         <customer-api-query
-          v-on:search="searchSiteApi"
+          v-on:search="searchParams"
           v-bind:param="searchParam"
         ></customer-api-query>
         <count-api
@@ -13,12 +13,14 @@
         </count-api>
       <v-row>
         <v-col cols="6">
+          
           <customer-api-list
           dense 
             v-bind:param="searchParam"
             v-bind:pList=pList
             v-bind:resPagingInfo=resPagingInfo
             @pagination="setToSearchParams"
+            @child="clickToSearchDetailObject"
           ></customer-api-list>
         </v-col>
         <v-col cols="6">
@@ -26,6 +28,7 @@
           dense
             v-bind:storeList=storeList
             v-bind:storeResPagingInfo="storeResPagingInfo"
+            @child="clickToSearchDetailObject" 
             @pagination="setToSearchParams"
           ></store-api-list>
         </v-col>
@@ -119,7 +122,7 @@ export default {
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
-          this.pList = response.data.data.openapi_access_api;
+          this.pList = response.data.data.access_api_list;
           this.cList = response.data.data.access_cnt;
           this.resPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
@@ -155,6 +158,7 @@ export default {
       var reqParams = this.handleParams(params);
             // reqParams.site_id ='JHC_CTRL_001'
       console.log(reqParams)
+
       axios
       .post(url, reqParams, headers)
       .then( (response) => {
@@ -253,7 +257,8 @@ export default {
         page_no: values.page,
         view_cnt: values.itemsPerPage,
       }
-      this.searchSiteApi(params)
+      console.log(params.page_no+"페이징")
+      this.searchStoreApi(params)
       this.searchCustomerApi(params)
     },
     searchParams: function(values){
@@ -272,15 +277,14 @@ export default {
         this.showModal = false
     },
     handleParams: function (params) {
-      console.log(params);
+      console.log(params+"DFDFDFD핸들파람");
       let newParams = {};
   
-      if (params.page === undefined || params.page === "") {
-        newParams.page_no = this.reqPagingInfo.page_no;
-      } else {
-        newParams.page_no = params.page;
+      if(params.page_no === undefined || params.page_no === ''){
+        newParams.page_no = this.reqPagingInfo.page_no
+      }else{
+        newParams.page_no = params.page_no
       }
-
       if(params.view_cnt === undefined || params.view_cnt === ''){
         newParams.view_cnt = this.reqPagingInfo.view_cnt
       }else{

@@ -46,12 +46,6 @@ export default () => {
     one_dm.setMonth(onemonthOfYear + 1)
     var oneMonthDashFormat = one_dm.getFullYear() + "-" + ("00" + (one_dm.getMonth() + 1)).slice(-2) + "-" + ("00" + one_dm.getDate()).slice(-2) 
   
-
-    //1개월 후
-    var one_dm = new Date();
-    var onePlusMonth = one_dm.getMonth();
-    one_dm.setMonth(onePlusMonth +1);
-    var oneMonthDashFormat = one_dm.getFullYear() + "-" + ("00" + (one_dm.getMonth() + 1)).slice(-2) + "-" + ("00" + dm.getDate()).slice(-2)
     const dateInfo = {
         current,
         currentDate,
@@ -64,8 +58,6 @@ export default () => {
         lastMonthDashFormat,
         threeMonthDashFormat,
         oneMonthDashFormat,
-        
-        oneMonthDashFormat
     }
 // //   const dateInfo = year
 //   var d = new Date(); 
