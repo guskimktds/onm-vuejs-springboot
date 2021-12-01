@@ -19,8 +19,8 @@
             v-bind:param="searchParam"
             v-bind:pList=pList
             v-bind:resPagingInfo=resPagingInfo
+            @child="clickToSearchDetailObject" 
             @pagination="setToSearchParams"
-            @child="clickToSearchDetailObject"
           ></customer-api-list>
         </v-col>
         <v-col cols="6">
@@ -33,32 +33,14 @@
           ></store-api-list>
         </v-col>
       </v-row>
-        <v-dialog v-model="showModal" max-width="500px">
-            <v-card>
-            <v-card-title class="headline"> 매장별 API 호출 수</v-card-title>
-            <v-text leftSpace>호출일자: {{rowList.start_date}}</v-text>
-            <v-text>매장명: {{rowList.start_date}}</v-text>
-            <hr>
-              <!-- <ul v-for="site_id in rowList" v-bind:key="site_id">       -->
-  <table>
-                                            <tr>
-                                                <th></th>
-                                                <th style="text-align:center">api 명  </th>
-                                                <th style="text-align:center">호출 수</th>
-                                            </tr>
-                                            <tr v-for="api_no in rowList" v-bind:key="api_no"> 
-                                                 <td>{{rowList.api_no}}</td>
-                                                 <td>{{rowList.access_cnt}}</td>
-                                            </tr>
-                                        </table>       
-              <!-- </ul> -->
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete">닫기</v-btn>
-                <v-spacer></v-spacer>
-            </v-card-actions>
-            </v-card>
-        </v-dialog>
+      <h1>나타나기</h1>
+      <v-card>
+        <ul v-for="site_id in rowList" v-bind:key="site_id">
+          <h1>api명 | 호출 수</h1>
+          <li></li>
+        </ul>
+      </v-card>
+
       </v-card>     
     </v-container>
 </template>
@@ -202,7 +184,7 @@ export default {
       clickToSearchDetailObject: function(values){
 
     
-       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/api`
+       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/user`
        var params = {
          site_id: values.site_id,
          user_id: values.user_id,
@@ -212,14 +194,14 @@ export default {
          page_no: '1',
          view_cnt: '100',
        }
-       console.log(JSON.stringify(params.end_date)+"DDDDDDDDewrerer")
-      this.showModal=true
+       console.log(JSON.stringify(params)+"DDDDDDDDewrerer")
+      // this.showModal=!this.showModal
        axios.post(url, params, headers)
        .then((response) => {
           var resCode = response.data.res_code;
            var resMsg = response.data.res_msg;
            if(resCode == 200){
-             this.rowList = response.data.data.access_api_list
+             this.rowList = response.data.data.access_user_list
              this.showDetailObject = true
              this.isReloadDetailObject = true
              this.orderBtn=!this.orderBtn
@@ -272,10 +254,6 @@ export default {
       this.searchStoreApi(params)
       this.searchCustomerApi(params)
     },
-    
-    closeDelete () {
-        this.showModal = false
-    },
     handleParams: function (params) {
       console.log(params+"DFDFDFD핸들파람");
       let newParams = {};
@@ -322,7 +300,5 @@ export default {
 </script>
 
 <style scoped>
-.leftSpace{
-  margin-left:20px;
-}
+
 </style>
