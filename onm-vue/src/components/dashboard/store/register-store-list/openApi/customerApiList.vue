@@ -16,7 +16,7 @@
         <v-col>
 
       <v-text-field 
-      label="search"
+      label="인터페이스 검색"
       v-model="api_no"
       ></v-text-field>
         </v-col>

@@ -39,7 +39,7 @@
             <v-text>매장명: {{rowList.start_date}}</v-text>
             <hr>
               <!-- <ul v-for="site_id in rowList" v-bind:key="site_id">       -->
-  <table>
+                                      <table>
                                             <tr>
                                                 <th></th>
                                                 <th style="text-align:center">api 명  </th>

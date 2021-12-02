@@ -3,12 +3,12 @@
 <v-row>
   <v-col
     cols="12"
-    sm="4"
-    md="4"
+    sm="3"
+    md="3"
   >
 
   <v-text-field label="API 전체 수"
-  v-model="cList"
+  v-model="apiCountInfo.total"
   readonly
   >
   </v-text-field>
@@ -16,38 +16,50 @@
   </v-col>
     <v-col
     cols="12"
-    sm="4"
-    md="4"
+    sm="3"
+    md="3"
     readonly
   >
     <v-text-field label="사용가능"
-     v-model="cList"
+     v-model="apiCountInfo.usedApi"
      readonly>
   </v-text-field>
   </v-col>
     <v-col
     cols="12"
-    sm="4"
-    md="4"
+    sm="3"
+    md="3"
   >
     <v-text-field label="사용불가"
-    v-model="cList.access_cnt_all"
+    v-model="apiCountInfo.unusedApi"
     readonly>
 
   </v-text-field>
     </v-col>
-</v-row>
+    <v-col cols="12" sm="3" md="3">
 
+                 <v-select 
+                    label="API명" 
+                    :items="apiCountInfo.arr"
+                      item-text="apiCountInfo.arr.[index]" 
+                      item-value="apiCountInfo.arr.value" 
+                  ></v-select>
+
+                </v-col>
+</v-row>
 </v-container>
 
 </template>
 
 <script>
+
 export default {
-  props: ['cList'],
+  props: ['apiCountInfo'],
       data() {
       return {
-        options: {},
+        arr:[
+          {state: '',value:''}
+        ]
       }
     },
   method:{

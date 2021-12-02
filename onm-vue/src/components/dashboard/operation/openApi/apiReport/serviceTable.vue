@@ -2,7 +2,7 @@
 <v-container fluid>
 
                     <div class="grid-board">
-                        <div>서비스 업체별 호출 수</div>
+                        <div style="font-size:20px; font-weight:bold; text-align:left;">서비스 업체별 호출 수</div>
                                  <v-row>
         <v-col>
 
@@ -45,10 +45,10 @@ export default {
     data() {
       return {
         cHeaders: [
-            { text: '사이트id', value: 'site_id' },
-            { text: '전체 카메라 대수', value: 'user_id' },
-            { text: '정상 카메라 대수', value: 'access_cnt' },
-            { text: '개통 대기 카메라 대수', value: 'access_date' },
+            { text: '사이트ID', value: 'site_id' },
+            { text: '매장ID', value: 'user_id' },
+            { text: '접속량', value: 'access_cnt' },
+            { text: '날짜', value: 'access_date' },
         ],
          reqPagingInfo: {
         page_no: 1,
@@ -79,6 +79,7 @@ export default {
                     var resMsg = response.data.res_msg;
                     if(resCode == 200){
                     this.cList = response.data.data.access_user_list;
+                    
                     }else if(resCode==204){
                     alert('카메라 상태 현황 데이터가 없습니다.')
                     }else{
