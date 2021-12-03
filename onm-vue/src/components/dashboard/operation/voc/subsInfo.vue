@@ -403,7 +403,7 @@ export default {
     // 오더 상세 리스트로 대체 ONM_12002 -> ONM_12010    
     // 오더 상세 : ONM_12010/get_subs_details_list
     clickToSearchUserOrderDetailList: function(values){
-      console.log("values  : ");
+      // console.log("values  : ");
       console.log(values);
       if(values) {
         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12010/get_subs_details_list`
@@ -629,7 +629,8 @@ export default {
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12005/get_user_ktt_subs`
     var params={
       // guid: this.pObject.guid,
-      guid: this.pGuid,
+      // guid: this.pGuid,
+      said: this.pSaid,
       is_masking: this.is_masking
     }
      var reqParams = this.handleParams(params) 
@@ -662,7 +663,8 @@ export default {
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12011/get_user_subs_result_list`
       var params = {
         // said: ( this.said || this.pObject.said),
-        said : this.pSaid,
+        // said : this.pSaid,
+        guid : this.pGuid,
         is_masking: this.is_masking
       }
 
