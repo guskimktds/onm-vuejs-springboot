@@ -17,7 +17,7 @@
         <v-col>
 
       <v-text-field 
-      label="search"
+      label="매장명 검색"
       v-model="user_id"
       ></v-text-field>
         </v-col>
