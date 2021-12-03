@@ -93,6 +93,9 @@ import termOrderInfo from '../components/dashboard/operation/voc/termOrderInfo.v
 import dssResultInfo from '../components/dashboard/operation/voc/dssResultInfo.vue'
 import bssResultInfo from '../components/dashboard/operation/voc/bssResultInfo.vue'
 import deviceRecoInfo from '../components/dashboard/operation/voc/deviceRecoInfo'
+import vannerManagement from '../components/dashboard/operation/vanner-management/vannerManagement'
+import vannerRegster from '../components/dashboard/operation/vanner-register/vannerRegister';
+import vannerDetailPage from '../components/dashboard/operation/vanner-register/vannerDetailPage';
 
 //운영관리 / 코드 설정 관리 
 import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
@@ -104,6 +107,14 @@ import GwAcceptInfo from '../components/dashboard/operation/code/local/gwAcceptI
 //운영관리 / 고객이전
 import CustomerTransfer from '../components/dashboard/operation/transfer/customerTransfer'
 import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatus'
+
+//open api 
+import customerApi from '../components/dashboard/operation/openApi/customerApi.vue'
+import apiReport from '../components/dashboard/operation/openApi/apiReport/apiReport.vue'
+
+//공지사항
+import notice from '../components/dashboard/operation/notice/notice.vue'
+
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -538,6 +549,38 @@ export default new Router({
                     name: 'GwAcceptInfo',
                     component: GwAcceptInfo
                 },
+                {
+                    path: "customer-api",
+                    name: 'customerApi',
+                    component: customerApi
+                },
+                {
+                    path: "api-report",
+                    name: 'apiReport',
+                    component: apiReport
+                },
+                {
+                    path: "notice",
+                    name: 'notice',
+                    component: notice
+                },
+                {
+                    path: "vanner-management",
+                    name: 'vanner-management',
+                    component:vannerManagement
+                },
+                {
+                    path: "vanner-register",
+                    name: 'vanner-register',
+                    component: vannerRegster
+                },
+                {
+                    path: "vanner-detailpage",
+                    name: 'vanner-detailpage',
+                    component: vannerDetailPage,
+                    props:true
+                },
+               
             ]
         },
 

@@ -185,7 +185,7 @@
                 "name": "고객이전",
                 "path": "/operation/customer-transfer",
                 "icon":"mdi-account-switch",
-                "component": "customer-transfer",
+                "component": "customer-transfer", 
                 "children": [
                     { "name": "실행관리", "path": "/operation/customer-transfer", "component": "customer-transfer" },
                     { "name": "단말상태", "path": "/operation/device-status", "component": "device-status" }
@@ -202,6 +202,26 @@
                     { "name": "단말 오더 OSS 전송", "path": "/operation/dss-result", "component": "dssResult" },
                     { "name": "청약 오더 OSS 전송", "path": "/operation/bss-result", "component": "bssResult" },
                     { "name": "단말 인증 정보 수정", "path": "/operation/device-reco", "component": "deviceReco" }
+                ]
+            },
+            {
+                "name": "open api 관리",
+                "path": "/operation/customer-api",
+                "icon":"mdi-desktop-mac",
+                "component": "customer-transfer",
+                "children": [
+                    { "name": "고객 api", "path": "/operation/customer-api", "component": "customerApi" },
+                    { "name": "api 리포트", "path": "/operation/api-report", "component": "apiReport`" }
+                ]
+            },
+            {
+                "name": "배너관리",
+                "path": "/operation/vanner-management",
+                "icon":"mdi-desktop-mac",
+                "component": "vannerManagement",
+                "children": [
+                    { "name": "광고 배너", "path": "/operation/vanner-management", "component": "vannerManagement" },
+                    { "name": "공지사항", "path": "/operation/notice", "component": "notice" }
                 ]
             }
         ]
