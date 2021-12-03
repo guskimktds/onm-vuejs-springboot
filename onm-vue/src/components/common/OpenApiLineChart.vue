@@ -13,13 +13,13 @@ export default {
           scales: {
             yAxes: [{
               ticks: {
-                fontColor: "white"
+                fontColor: "black"
               }
             }],
         
             xAxes: [{
               ticks: {
-                fontColor: "white"
+                fontColor: "black"
               }
             }]
           },
@@ -27,7 +27,7 @@ export default {
       maintainAspectRatio: false,
       legend:{
         labels:{
-          fontColor: 'white'
+          fontColor: 'black'
         }
       },
     })

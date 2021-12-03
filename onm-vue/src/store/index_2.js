@@ -1,35 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import EventBus from '../../../../EventBus'
-import  termAuthList  from '../api/index.js'
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state : {
-        title: '고객이전 단말상태 조회',
-        pList: [],
-        reqPagingInfo: {
-        page_no: 1,
-        view_cnt: 10
-      },
-       resPagingInfo: {},
-        searchParam: {
-        mac_id: '',
-
-      }
+      itemList:[],
     },
     getters: {
-        termAuthList(state){
-            return state.termAuthList;
+        fetchedApiList(state){
+            return state.itemList;
         }
     },
     mutations:{
-        SET_AUTH_LIST(state, termAuthList ){
-            state.termAuthList = termAuthList;
+        SET_OPENAPI_LIST(state, openApiList){
+            state.itemList = openApiList;
         }
     },
     action: {
-        FETCH_AUTH_LIST(context){
+        FETCH_OPENAPI_LIST({commit}, params){
         searchToButton(params){
         termAuthList()
      
