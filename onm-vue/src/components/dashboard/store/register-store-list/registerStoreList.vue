@@ -55,13 +55,11 @@
                             </v-card-title>
                             <v-card-text>
                                 <v-container>
-                                    <table style="border:solid 1px;" width="100%; height:300px;">
-                                         <tr>
-                                           <td>
-                                               {{apiInfo.cert_key}}
-                                           </td>
-                                        </tr>
-                                    </table>
+                                    <div style="padding:5px; ">
+                                        <div style="width:95%; text-align:left">
+                                            {{apiInfo.cert_key}}
+                                        </div>
+                                    </div>        
                                 </v-container>
                             </v-card-text>
                             <v-card-actions>
@@ -120,8 +118,6 @@
       </v-card>
  </v-container>
 </template>
-<script src="https://cdn.jsdelivr.net/npm/vue-clipboard2@0.3.1/dist/vue-clipboard.min.js"></script>
-
 <script>
 
 import serviceComInfo from './serviceComInfo.vue';
@@ -183,12 +179,10 @@ const headers={
             },
             getApiInfo(){ //키 정보 가져오는 method
                  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13033/get_cert_info`;
-                //  var vm  = this;
+              
                     axios.post(url,this.receivedValue,headers) // 다시 만들기(상태코드랑 site_id)
                     .then((response) => {    
-                         // res_code = 200
-                          if(response.data.res_code === '200'){
-
+                          if(response.data.res_code === 200){
                             this.apiInfo.cert_key = response.data.data.cert_key;
                             this.apiInfo.cert_start_date = response.data.data.cert_start_date;
                             this.apiInfo.cert_end_date = response.data.data.cert_end_date;
@@ -200,12 +194,6 @@ const headers={
                     })
                     .catch(function (error) {
                         console.log(error);
-                        // const cert_key = 'abc30448390ccc0303030k0c789'; //  추후 다 지우기
-                        // const cert_start_date = '202111021348';
-                        // const cert_end_date = '202111021348';
-                        // vm.apiInfo.cert_key = cert_key;
-                        // vm.apiInfo.cert_start_date = cert_start_date;
-                        // vm.apiInfo.cert_end_date = cert_end_date;
                     })
                     .finally(function () {
                         // always executed
@@ -214,33 +202,23 @@ const headers={
             reissueCert(){
                 var result = confirm("키를 생성하시겠습니까?");
                 if(result){
-                    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13034/issue_certKey`;
-                    //var vm  = this;
+                    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13034/issue_certKey`; 
+                 
                     axios.post(url,this.receivedValue,headers) // 다시 만들기(상태코드랑 site_id)
                     .then((response) => {  
-                        console.log(response);
                         if(response.data.res_code === 200){
+                            alert("키 생성이 되었습니다.");
                             this.getApiInfo();
-                            //this.receivedValue.site_id = response.data.data.site_info.site_id;
-                            this.receivedValue.status_code = response.data.data.status_code;
-                            this.checkStatus(this.receivedValue.status_code);
+                            this.checkStatus('S');
                             this.getApi = true;
                             this.apiBtnDetail = 2;
-
                         }else{
-                           alert("키 삭제 중 문제가 생겼습니다.");
+                           alert("키 생성 중 문제가 생겼습니다.");
                             return;
                         }   
                     })
                     .catch(function (error) {
-                        console.log(error);
-                        alert("오류가 발생했습니다.");
-                        // vm.getApiInfo(); // 추후 지우기
-                        // vm.getApi = true;
-                        // vm.option_css.background = "green";
-                        // vm.status_code_title = "사용중";
-                        // vm.apiBtnDetail = 2;
-              
+                        console.log(error);   
                     })
                     .finally(function () {
                         // always executed
@@ -261,7 +239,8 @@ const headers={
                     axios.post(url,this.receivedValue,headers) // 다시 만들기(상태코드랑 site_id)
                     .then((response) => {   
                         console.log(response);
-                        if(response.data.data.res_code === 200){
+                        if(response.data.res_code === 200){
+                            alert("키가 삭제되었습니다.")
                             this.apiBtnDetail = 3;
                             this.getApi = false;
                             this.receivedValue.status_code = response.data.data.status_code;
@@ -274,11 +253,6 @@ const headers={
                     })
                     .catch(function (error) {
                         alert("오류가 발생했습니다.");
-                        
-                        // vm.apiBtnDetail = 3;  // 추후지우기
-                        // vm.option_css.background = "#ffd400";
-                        // vm.status_code_title = "미사용";
-                        // vm.getApi = false; // 여기까지
                         console.log(error);
                         return;
                     })

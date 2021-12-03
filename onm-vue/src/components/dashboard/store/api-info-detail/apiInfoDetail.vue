@@ -91,6 +91,7 @@
                 </v-col>
                 <v-col cols="2" style="margin-top:-25px;">
                     <v-text-field
+                    placeholder="(-)없이 번호만 입력"
                     v-model="getValue.tel_no"
                     disabled
                     id="tel_no"
@@ -172,7 +173,7 @@
                         item-value="value" 
                         :items="access_limit_list"
                         label="제한 종류 " 
-                        v-model="defaultSelected" 
+                        v-model="defaultSelected.value" 
                         v-on:change="chooseControlType"
                         style="font-size:15px;"
                     >
@@ -189,7 +190,7 @@
                     item-text="name" 
                     item-value="value" 
                     :items="access_limit_type_list"
-                    v-model="defaultTypeSelected" 
+                    v-model="defaultTypeSelected.value" 
                     v-on:change="chooseAccess_limit_type"
                     style="font-size:15px;"
                     >
@@ -269,29 +270,10 @@ export default ({
         created(){
 
             const site_id = this.$route.params.site_id;
-            const site_name = this.$route.params.site_name;// 추후 지우기
-            const status_code = this.$route.params.status_code;// 추후 지우기
             this.receivedValue.site_id = site_id;
-            this.receivedValue.status_code = status_code; // 추후 지우기
-            this.receivedValue.site_name = site_name;// 추후 지우기
+            this.receivedValue.site_name = this.$route.params.site_name;
             this.passPageInfo(site_id);
-            this.checkStatus(status_code); // 추후 지우기
-            this.getApiInfo();
-
-            if(status_code === 'A'){  // 추후 지우기
-                this.mainBtn = 1;
-            }else {
-                this.mainBtn = 0;
-            }
-
-        for(var i = 0; i < this.api_list.length; i++){ // 추후 지우기
-            if(this.api_list[i].use_yn === 'Y'){
-                if(this.api_list[i].api_access_limit === ''){
-                    this.api_list[i].api_access_limit = 0;
-                }
-                this.receivedValue.selectedApi[i] = this.api_list[i];
-            } 
-        }                  
+            this.getApiInfo();    
     },
     data(){
         return{
@@ -343,35 +325,9 @@ export default ({
                 name: "",
                 value: ""
             },
-            api_list:[
-                {
-                    api_no:'/V100/GSM10001/send_said',
-                    description: 'GSM 연동계정 정보 전달',
-                    api_access_limit:'100',
-                    use_yn:'Y'
-                },
-                {
-                    api_no:'/V120/GSM10005/get_said',
-                    description: 'GSM 연동계정 정보 받기',
-                    api_access_limit:'20',
-                    use_yn:'Y'    
-                },
-                {
-                    api_no:'/V111/GSM10003/send_message',
-                    description: 'GSM 알림 전달',
-                    api_access_limit:'', 
-                    use_yn:'Y'      
-                },
-                {
-                    api_no:'/V123/GS20003/check_issue',
-                    description: '장애 발생 전달',
-                    api_access_limit:'',   
-                    use_yn:'N' 
-                }
-
-            ],
-            limit_type:'매월',
-            control_type_list:'SITE 제한',
+            api_list:[],
+            limit_type:'',
+            control_type_list:'',
             mainBtn: '',
           
         }
@@ -380,8 +336,11 @@ export default ({
         getApiInfo(){
                if(this.receivedValue.site_id){
                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13036/get_siteInfoDetails`
-
-                axios.post(url, this.receivedValue.site_id, headers)
+                
+                var tsJson = new Object();
+                tsJson.site_id = this.receivedValue.site_id; 
+                
+                axios.post(url, tsJson, headers)
                 .then((response) => {
                     var resCode = response.data.res_code;
                     var resMsg = response.data.res_msg;
@@ -416,15 +375,15 @@ export default ({
 
                         
                         if(this.getValue.control_type === 'BOTH'){ // controltype 
-                            this.control_type_list += 'SITE + API 제한';
+                            this.control_type_list = 'SITE + API 제한';
                         }else if(this.getValue.control_type === 'API'){
                             this.control_type_list = 'API 제한';
                         }else if(this.getValue.control_type === 'SITE'){
                             this.control_type_list  = 'SITE 제한';
                         }else if(this.getValue.control_type === 'NONE'){
                             this.control_type_list  = '제한 없음';
-
                         }
+
                         this.defaultSelected.name = this.control_type_list;
                         this.defaultSelected.value = this.getValue.control_type;
 
@@ -479,33 +438,29 @@ export default ({
         checkStatus(status_code){   //업체 상태에 따른 css
             if(status_code === 'A'){
                 this.status_code_title = '신청';
-                //this.receivedValue.status_code = 'A';
                 this.option_css.background = 'red';
                 this.mainBtn = 1;
             }else if(status_code ==='F'){
                 this.status_code_title = '반려';
                 this.option_css.background = 'lightgray';
-                //this.receivedValue.status_code = 'F';
                  this.mainBtn = 0;
             }else if(status_code ==='S'){
                 this.status_code_title = '사용중';
-               // this.receivedValue.status_code = 'S';
                 this.option_css.background = 'green';
                 this.mainBtn = 0;
             }else if(status_code ==='D'){
                 this.status_code_title = '미사용';
-               // this.receivedValue.status_code = 'D';
                 this.option_css.background = '#ffd400';
                 this.mainBtn = 0;
             }
         },
         chooseControlType(){
-            this.getValue.control_type = this.defaultSelected;
+            this.getValue.control_type = this.defaultSelected.value;
             this.receivedValue.control_type = this.getValue.control_type;
-            console.log(this.receivedValue.control_type);
+         
         },
         chooseAccess_limit_type(){
-            this.getValue.access_limit_type = this.defaultTypeSelected;
+            this.getValue.access_limit_type = this.defaultTypeSelected.value;
             this.receivedValue.access_limit_type = this.getValue.access_limit_type;
             console.log(this.receivedValue.access_limit_type);
         },
@@ -514,7 +469,7 @@ export default ({
             if(result){
                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13040/reject_site`;// 다시 만들기
 
-                axios.post(url,this.receivedValue.site_id,headers) 
+                axios.post(url,this.receivedValue,headers) 
                 .then((response) => {
                     if(response.data.res_code === 200){
                             alert("신청이 반려되었습니다.");
@@ -528,11 +483,6 @@ export default ({
                 })
                 .catch(function (error) {
                     console.log(error);
-                    this.$fire({
-                        title: "반려신청 중 오류가 생겼습니다.",
-                        type : "error",
-                        html: ""
-                    })
                 })
                 .finally(function () {
                     // always executed
@@ -546,19 +496,8 @@ export default ({
             }
         },
         acceptRequest(){ //승인요청을 받아주는 method
-            console.log(this.receivedValue.control_type)
-
             this.receivedValue.site_access_limit = this.getValue.site_access_limit;
-
-            if(this.receivedValue.control_type === ''){
-                  this.$fire({
-                       title: "제한종류를 선택해주세요.",
-                       type : "error",
-                       html: ""
-                })
-                return;
-            }
-
+           
             if(this.receivedValue.control_type === 'BOTH' || this.receivedValue.control_type === 'SITE'){
                 if(this.receivedValue.site_access_limit === ''){
                         this.$fire({
@@ -593,7 +532,7 @@ export default ({
                      if(response.data.res_code === 200){
                            alert("신청이 승인되었습니다.");
                             this.mainBtn = 0;
-                            this.checkStatus(response.data.data.status_code);
+                            this.getApiInfo();
                         }else{
                            alert("승인 중 오류가 발생했습니다.");
                             return;
@@ -601,7 +540,6 @@ export default ({
                 })
                 .catch(function (error) {
                     console.log(error);
-                    alert("승인 신청 중 오류가 생겼습니다.");
                 })
                 .finally(function () {
                     // always executed

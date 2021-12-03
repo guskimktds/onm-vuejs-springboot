@@ -81,6 +81,7 @@
                     </v-col>
                     <v-col cols="2" style="padding:0px;" >
                         <v-text-field
+                        placeholder="(-)없이 번호만입력"
                         v-model="infoObject.tel_no"
                         :disabled="validated == 0"
                         v-on:keyup="checkNumber(infoObject.tel_no)"
@@ -158,7 +159,7 @@
                     </v-col>
                     <v-col cols="2" style="padding:0px;">
                         <v-text-field
-                        v-model="infoObject.control_type"
+                        v-model="control_type"
                         id="control_type"
                         disabled
                         style="font-size:15px;"
@@ -172,7 +173,7 @@
                     </v-col>
                     <v-col cols="2" style="padding:0px;">
                         <v-text-field
-                        v-model="infoObject.access_limit_type"
+                        v-model="access_limit_type"
                         id="access_limit_type"
                         disabled
                         style="font-size:15px;"
@@ -218,7 +219,7 @@
             </tr>
             <tr v-for="(api,index) in api_list" :key="index" v-show="api_list.length > 0">
                 <td style="text-align:center;">
-                    <input type="checkbox"  v-model="selectedApi" :value ="api.api_no">
+                    <input type="checkbox" v-model="selectedApi" :value ="api">
                 </td>
                 <td>
                     {{api.api_no}}
@@ -265,18 +266,16 @@ const headers={
             //정보값 가져오기     
             this.receivedInfo.site_id = this.receivedValue.site_id;
             this.getStoreApiInfo();  
-            // for(var i = 0; i < this.api_list.length; i++){ // 추후 지우기
-            //     if(this.api_list[i].use_yn === 'Y'){
-            //         this.selectedApi[i] = this.api_list[i].api_no;
-            //     } 
-            // }
+           
         }, 
         methods:{
            getStoreApiInfo(){  
-               if(this.receivedValue.site_id){
-                var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13036/get_siteInfoDetails`
+               if(this.receivedInfo.site_id){
+                var tsJson = new Object();
+                tsJson.site_id = this.receivedInfo.site_id; 
 
-                axios.post(url, this.rereivedInfo, headers)
+                var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13036/get_siteInfoDetails`
+                axios.post(url, tsJson, headers)
                 .then((response) => {
                     var resCode = response.data.res_code;
                     var resMsg = response.data.res_msg;
@@ -310,22 +309,27 @@ const headers={
 
                                             
                         if(this.infoObject.control_type === 'BOTH'){ // controltype 
-                            this.infoObject.control_type += 'SITE + API 제한';
-                            this.infoObject.site_access_limit =  this.infoObject.site_access_limit + "회"; 
+                            this.control_type += 'SITE + API 제한';
+                            this.site_access_limit =  this.infoObject.site_access_limit + "회"; 
                         }else if(this.infoObject.control_type === 'API'){
-                            this.infoObject.control_type = 'API 제한';
-                            this.infoObject.infoObject.site_access_limit = "-";
+                            this.control_type = 'API 제한';
+                            this.site_access_limit = "-";
                         }else if(this.infoObject.control_type === 'SITE'){
-                            this.infoObject.control_type = 'SITE 제한';
+                            this.control_type = 'SITE 제한';
                         }else if(this.infoObject.control_type === 'NONE'){
-                            this.infoObject.control_type = '제한 없음';
-                            this.infoObject.site_access_limit = "-";
+                            this.control_type = '제한 없음';
+                            this.site_access_limit = "-";
                         }
+                        if(this.infoObject.site_access_limit === ''){
+                            this.infoObject.site_access_limit = 0;
+                        }
+
                        for(var i = 0; i < this.api_list.length; i++){ // 사용 api만 체크
                             if(this.api_list[i].use_yn === 'Y'){
-                                this.receivedInfo.selectedApi[i] = this.api_list[i];
+                                this.selectedApi[i] = this.api_list[i];
                             } 
                         }
+                 
                     }else if(resCode==204){
                     this.infoObject = {};                                   
                     this.api_list =[];
@@ -353,12 +357,12 @@ const headers={
                 this.changedInfo = 'Y';
                 this.validated = 1;
             },
+
             updateInfo(){ // 업체 정보 수정
-                var vm = this;
+               
                 var result = this.checkChangeValues();
                 if(result){
                 var params = this.infoObject;
-                console.log(params)
                 this.$fire({
                     title: "비밀번호를 입력해주세요.",
                     input: 'password',
@@ -384,19 +388,20 @@ const headers={
                         .then((response) => {
                         var resCode = response.data.res_code;
                         if(resCode == 200){
-                            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13038/update_siteInfo`
+                            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13037/add_apiList`
                             axios.post(url, params, headers)
                             .then((response) => {
                             console.log(response)
                             var resCode = response.data.res_code;
                             var resMsg = response.data.res_msg;
                             if(resCode == 200){
+                                alert("성공적으로 수정되었습니다.")
                                 this.changedInfo = 'N';
-                                this.validated = 1;
+                                this.validated = 0;
                             }else{
                                 alert(resCode + " / " + resMsg);
                                 this.changedInfo = 'N';
-                                this.validated = 1;
+                                this.validated = 0;
                             }
                             })
                             .catch((ex) => {
@@ -404,7 +409,7 @@ const headers={
                             })
                         }else{
                             alert('서버와 통신이 안되었거나 비밀번호가 맞지 않습니다.');
-                             vm.changedInfo = 'N';
+                            
                          }
                         })
                     }else{
@@ -478,13 +483,12 @@ const headers={
                     })   
                     return;
                 }
-
+                
                 for(var i = 0; i < this.selectedApi.length;i++){
                     var tsJson = new Object();
-                    tsJson.api_no = this.selectedApi[i];
+                    tsJson.api_no = this.selectedApi[i].api_no;
                     this.receivedInfo.selectedApi.push(tsJson);
                 }
-
 
                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13037/add_apiList`
                 axios.post(url, this.receivedInfo, headers)
@@ -530,32 +534,7 @@ const headers={
                     site_access_limit:'',
                     access_limit_type:'',
                },
-                api_list : [
-                    // {
-                    //     api_no:'/V100/GSM10001/send_said',
-                    //     description: 'GSM 연동계정 정보 전달',
-                    //     api_access_limit:'100',
-                    //     use_yn:'Y'
-                    // },
-                    // {
-                    //     api_no:'/V120/GSM10005/get_said',
-                    //     description: 'GSM 연동계정 정보 받기',
-                    //     api_access_limit:'20',
-                    //     use_yn:'Y'     
-                    // },
-                    // {
-                    //     api_no:'/V111/GSM10003/send_message',
-                    //     description: 'GSM 알림 전달',
-                    //     api_access_limit:'0',
-                    //     use_yn:'Y'     
-                    // },
-                    // {
-                    //     api_no:'/V123/GS20003/check_issue',
-                    //     description: '장애 발생 전달',
-                    //     api_access_limit:'',
-                    //     use_yn:'N'     
-                    // }
-                ],
+                api_list : [],
                 changedInfo:'N',//수정 가능 여부
                 dialog: true, 
                 validated : 0, 
@@ -564,6 +543,9 @@ const headers={
                     site_id: ''
                 },
                 selectedApi:[],
+                access_limit_type:'',
+                control_type:'',
+                site_access_limit:''
             }
         },  
     }

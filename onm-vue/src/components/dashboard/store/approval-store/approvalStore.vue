@@ -13,6 +13,7 @@
             <approval-store-list
               v-bind:pList="pList"
               v-bind:resPagingInfo="resPagingInfo"
+              @pagination="setToSearchParams"
             >
             </approval-store-list>
       </v-card>
@@ -38,6 +39,15 @@ const headers={
             approvalStoreList,
         },
         methods:{
+            setToSearchParams(values){
+                
+                var params={
+                    page_no : values.page,
+                    view_cnt : values.itemsPerPage
+
+                }
+                this.searchStoreInfo(params);
+            },
             searchStoreInfo(params){
                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13031/get_site`
 
@@ -177,17 +187,20 @@ const headers={
                     view_cnt:10
                 },
                 allOptions:{
-                    server_name:"전체",
-                    local_gw_id: ""
+                    code_name:"전체",
+                    code_id: ""
                 },
                 localGwOptions:[],
                 resPagingInfo:{}, // 페이지 정보 관련 값 받아옴
             }
         },
         beforeCreate() {  
-            var code_master_id= "STATUS_CODE";
+
+            var request = new Object();
+               request.code_master_id = 'STATUS_CODE';
+
                 axios
-                .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13032/get_status_code`,code_master_id,headers)
+                .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13032/get_status_code`,request,headers)
                 .then((response) => {
                 this.localGwOptions = response.data.data.comm_code_list;
                 this.localGwOptions.unshift(this.allOptions);

@@ -19,26 +19,30 @@
         @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
+        :options.sync="options"
       >
       </v-data-table>
     </base-material-card>
   </v-container>
 </template>
 <script>
-
     export default{
          props: ['pList','resPagingInfo'],
         components:{  
         },
         methods:{
             handleClick: function(value){
-                console.log(value);
                 this.$router.push({name: "api-info-detail", params:value})
 
             },
+             getDateFromApi(){
+                this.$emit("pagination",this.options)
+            }
         },
         data(){
             return {
+                options:{},
+                
                 headers: [
                     {
                     text: "업체 ID",
@@ -64,6 +68,14 @@
             this.last=this.resPagingInfo.total_cnt
             }
         },
+        watch:{
+            options:{
+                handler(){
+                    this.getDateFromApi();
+                },
+                deep:true
+            }
+        }
     }
 
 </script>

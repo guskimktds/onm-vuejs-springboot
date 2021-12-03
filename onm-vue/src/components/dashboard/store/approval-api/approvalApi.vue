@@ -10,6 +10,7 @@
             <approval-api-list
               v-bind:pList="pList"
               v-bind:resPagingInfo="resPagingInfo"
+              @pagination="setToSearchParams"
             >
             </approval-api-list>
       </v-card>
@@ -44,23 +45,13 @@ const headers={
                         view_cnt:10
                     },
                     allOptions:{
-                        server_name:"전체",
-                        local_gw_id: ""
+                        code_name:"전체",
+                        code_id: ""
                     },
                     localGwOptions:[],
-                    pList:[
-                        //  {
-                        //     site_id : 'DOMINO_HEAD',
-                        //     site_name:'도미노피자',
-                        //     api_count : 5,
-                        //     user_name : '이선민',
-                        //     reg_date : '20211028',
-                        //     mod_date: '20211028',
-                        //     status_code : 'A',
-                        //     adm_access_date: '20211108'
-                        // },
-                    ],
+                    pList:[],
                     resPagingInfo:{},
+                   
                 }
             },
             components:{
@@ -68,9 +59,12 @@ const headers={
                 approvalApiList
             },
             beforeCreate() {  
-                var code_master_id= "STATUS_CODE";
+             
+                var request = new Object();
+                request.code_master_id = 'STATUS_CODE';
+
                 axios
-                .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13032/get_status_code`,code_master_id,headers)
+                .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13032/get_status_code`,request,headers)
                 .then((response) => {
                 this.localGwOptions = response.data.data.comm_code_list;
                 this.localGwOptions.unshift(this.allOptions);
@@ -79,6 +73,7 @@ const headers={
                 .catch(function (error) {
                     console.log(error);
                     alert("상태코드 조회실패");
+                    
                 })
                 .finally(function () {
                     // always executed
@@ -88,6 +83,14 @@ const headers={
                this.searchApiInfo(this.searchParam); 
             },
             methods:{
+                setToSearchParams(values){ 
+                    var params={
+                        page_no : values.page,
+                        view_cnt : values.itemsPerPage
+
+                    }
+                    this.searchApiInfo(params);
+                },
                 searchApiInfo(params){
                     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13031/get_site`
                     var reqParams=this.handleParams(params);

@@ -11,6 +11,7 @@
                     <v-dialog
                         v-model="dialog"
                         max-width="900px"
+                
                     >
                         <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -22,11 +23,11 @@
                             매장검색
                         </v-btn>
                         </template>
-                        <v-card>
+                        <v-card >
                             <v-card-title>
                                 <span class="headline" >매장검색</span>
                             </v-card-title>
-                            <v-card-text>
+                            <v-card-text fluid>
                                 <v-container>
                                     <table>
                                          <tr>
@@ -71,7 +72,7 @@
                                             </tr>
                                             <tr v-for="(searchedStore, index) in searchCalData" v-bind:key="index">
                                                  <td style="text-align:center"> 
-                                                     <input type = "checkbox" v-model="checkedList" :value ="searchedStore.user_id">
+                                                     <input type="checkbox" v-model="checkedList" :value ="searchedStore">
                                                  </td>    
                                                  <td>{{searchedStore.store_name}}</td>
                                                  <td>{{searchedStore.user_name}}</td>
@@ -103,7 +104,7 @@
                     </v-dialog>  
                 </p>    
             </h2>
-            <div style="width:99%; height:400px;" v-show="store_list.length > 0">
+            <div style="width:99%; height:400px;" v-show="user_list.length > 0">
                 <table width="100%">
                     <tr>
                         <td style="text-align:center; font-weight:bold">매장 명</td>
@@ -113,28 +114,28 @@
                         <td style="text-align:center; font-weight:bold">승인 요청 및 승인일자</td>
                         <td style="text-align:center; font-weight:bold">삭제</td>
                     </tr>
-                    <tr v-for="(store,index) in calData" v-bind:key="index" v-show="store.delete_yn === 'N'">
-                        <td style="width:20%;">{{store.store_name}}</td>
-                        <td style="width:15%">{{store.user_name}}</td>
+                    <tr v-for="(store,index) in calData" v-bind:key="index" v-show="user_list.length > 0">
+                        <td style="width:20%;">{{store.user_name}}</td>
+                        <td style="width:15%">{{store.cust_name}}</td>
                         <td style="width:20%; text-align:center;">{{store.tel_no}}</td>
-                        <td v-if="store.access_yn === ''" style="color:red;text-align:center;width:16%;">
+                        <td v-if="store.status_code === ''" style="color:red;text-align:center;width:16%;">
                             승인대기
                         </td>
-                        <td v-else-if="store.access_yn === 'N'" style="color:red;text-align:center;width:16%">
+                        <td v-else-if="store.status_code === 'N'" style="color:red;text-align:center;width:16%">
                             미승인
                         </td>
                         <td v-else style="text-align:center;width:16%">
                             승인
                         </td>
                         <!--  -->
-                         <td v-if="store.access_yn === ''" style="text-align:center;width:20%">
+                         <td v-if="store.status_code === ''" style="text-align:center;width:20%">
                             -
                         </td>
-                        <td v-else-if="store.access_yn === 'N'" style="color:red;text-align:center;width:20%">
+                        <td v-else-if="store.status_code === 'Y'" style="color:red;text-align:center;width:20%"> <!--N으로 바꾸기-->
                             <button @click="sendApproval(store)" style="color:white;background-color:black;width:70px;border-radius:3px;">승인요청</button>
                         </td>
                         <td v-else style="text-align:center;width:20%">
-                            {{store.access_date}}
+                            -
                         </td> 
                         <td style="width:22%;text-align:center;">
                             <button class="deleteBtn" @click="deleteList(store)">삭제</button>
@@ -143,7 +144,7 @@
                 </table>
                  <v-pagination :length= "numofpage" v-model="curpagenum" style="margin-top:20px;"> </v-pagination>
             </div>
-            <div style="width:99%; height:400px; margin-top:30px; margin-bottom:30px; border: 1px solid" v-show="store_list.length === 0">
+            <div style="width:99%; height:400px; margin-top:30px; margin-bottom:30px; border: 1px solid" v-show="user_list.length === 0">
                 <p align="center" style="font-size:20px;padding-top:220px;">[매장 검색] 버튼을 클릭하여, 매장을 추가하세요</p>
             </div>
       
@@ -163,6 +164,8 @@ const headers={
         props:['receivedValue'],
         created(){
             this.infoObject.site_id = this.receivedValue.site_id
+        },
+        mounted(){
             this.getStoreList();
         },
         data(){
@@ -173,45 +176,13 @@ const headers={
                     user_id:''
                 },
                 checkedList:[],
-                store_list:[
-                    //  {
-                    //     store_name:"선릉점2", 
-                    //     user_name:"홍길동",
-                    //     tel_no:"01000000000",
-                    //     access_yn:'N',
-                    //     access_date:'20211115',
-                    //     site_id:'',
-                    //     delete_yn:'N',
-                    //     user_id:'',
-                    // }
-                ],
+                user_list:[],
                 dialog: false,
                 searchStore:{
                     ex_tel_no:'',
                     ex_user_name:''
                 },
-                searchedStoreList:[
-                    //  {
-                    //     store_name:"방배점",
-                    //     user_name:"갑순이",
-                    //     tel_no:"01000000000",
-                    //     user_id:'1',
-                    // },
-                    //  {
-                    //     store_name:"릉점2",
-                    //     user_name:"홍동",
-                    //     tel_no:"01000000000",
-                    //     user_id:'2',   
-                        
-                    // },
-                    //  {
-                    //     store_name:"선릉점2",
-                    //     user_name:"홍길동",
-                    //     access_date:'20211115',
-                    //     user_id:'3',
-                    //     tel_no:"01000000000",
-                    // }
-                ],   
+                searchedStoreList:[],   
               
                 curpagenum : 1,
                 datapage : 5,
@@ -221,18 +192,22 @@ const headers={
         methods:{
             getStoreList(){  //등록된 매장 목록 가져오기
                   if(this.infoObject.site_id){
+               
                     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13036/get_siteInfoDetails`
+                    
+                    const tsJson = new Object();
+                    tsJson.site_id = this.infoObject.site_id;
 
-                    axios.post(url, this.infoObject, headers)
+                    axios.post(url, tsJson, headers)
                     .then((response) => {
                         var resCode = response.data.res_code;
                         var resMsg = response.data.res_msg;
-                        if(resCode == 200){
-                            this.store_list=response.data.data.user_list;                                               
-                        }else if(resCode==204){
-                        this.store_list =[];
+                        if(resCode === 200){
+                            this.user_list = response.data.data.user_list;   
+                        }else if(resCode === 204){
+                        this.user_list =[];
                         alert('매장 정보 데이터가 없습니다.');
-                        }else if(resCode==410){
+                        }else if(resCode===410){
                         alert("로그인 세션이 만료되었습니다.");
                         EventBus.$emit('top-path-logout');
                             this.$store
@@ -261,7 +236,7 @@ const headers={
 
                 for(var i = 0; i < this.checkedList.length;i++){
                     var tjson = new Object();
-                    tjson.user_id = this.checkedList[i]
+                    tjson.user_id = this.checkedList[i].user_id;
                     this.infoObject.checkedList.push(tjson);
                 }           
                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13037/add_apiList`;
@@ -269,13 +244,10 @@ const headers={
                  axios.post(url,this.infoObject, headers)
                 .then((response)=>{
                     var resCode = response.data.res_code;
-                    if(resCode == 200){
+                    if(resCode === 200){
                         alert("저장되었습니다.");
-                        this.infoObject.checkedList = [];
-                        this.infoObject.site_id = this.response.data.data.site_id;
-                        this.getStoreList(this.infoObject.site_id); // 새로뿌리기
-                        this.closeSure();
-                    }else if(resCode==410){
+                         this.closeSure();
+                    }else if(resCode === 410){
                         alert("로그인 세션이 만료되었습니다.");
                         EventBus.$emit('top-path-logout');
                         this.$store
@@ -329,16 +301,14 @@ const headers={
                     cancelButtonText: '아니오',
                     }).then(result => {
                     if(result.value){
-                        //this.store_list[index].delete_yn = 'Y';
                         var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13045/delete_store`;
                         axios.post(url,this.infoObject, headers)
                         .then((response)=>{
                             var resCode = response.data.res_code;
-                            if(resCode == 200){
-                                this.infoObject.site_id = this.response.data.data.site_id;
-                                this.getStoreList(this.infoObject.site_id); // 새로뿌리기
+                            if(resCode === 200){
+                                alert("삭제되었습니다.");
                                 this.closeSure();
-                            }else if(resCode==410){
+                            }else if(resCode===410){
                                 alert("로그인 세션이 만료되었습니다.");
                                 EventBus.$emit('top-path-logout');
                                 this.$store
@@ -360,8 +330,9 @@ const headers={
                 this.searchStore.ex_tel_no='';
                 this.searchStore.ex_user_name='';
                 this.infoObject.checkedList = [];
-                this.setStoreValue.api_no = '';
                 this.checkedList  = [];
+                this.searchedStoreList = [];
+                this.getStoreList();
             },
             findStores(){
                  
@@ -374,15 +345,22 @@ const headers={
                     return;
                     }
                     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13046/search_store`;
+
                     axios.post(url,this.searchStore, headers)
                     .then((response)=>{
                     var resCode = response.data.res_code;
-                    if(resCode == 200){
-                        this.searchedStoreList = response.data.data.list;   
-                    }else if(resCode==204){
+                    if(resCode === 200){
+                        var searchedStoreList = response.data.data.list;
+                        
+                        if(searchedStoreList.length > 0) {
+                            this.searchedStoreList = searchedStoreList;                                           
+                        } else {
+                            this.searchedStoreList = [];
+                        }
+                    }else if(resCode===204){
                         this.searchedStoreList =[];
                         alert('매장 정보 데이터가 없습니다.');
-                    }else if(resCode==410){
+                    }else if(resCode===410){
                         alert("로그인 세션이 만료되었습니다.");
                         EventBus.$emit('top-path-logout');
                         this.$store
@@ -406,10 +384,10 @@ const headers={
             return (this.startOffset + this.datapage);
             }, 
             numofpage() {
-                return Math.ceil(this.store_list.length / this.datapage);
+                return Math.ceil(this.user_list.length / this.datapage);
             },
             calData() {
-            return this.store_list.slice(this.startOffset, this.endOffset);
+            return this.user_list.slice(this.startOffset, this.endOffset);
             },
             searchStartOffset() {
             return ((this.serachCurPagenum - 1) * this.datapage);
@@ -422,7 +400,8 @@ const headers={
             },
             searchCalData() {
                 return this.searchedStoreList.slice(this.searchStartOffset, this.searchEndOffset);
-            }
+            },
+          
         },
     }
 </script>

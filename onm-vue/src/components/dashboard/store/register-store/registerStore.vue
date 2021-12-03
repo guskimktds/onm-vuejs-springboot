@@ -159,7 +159,7 @@ export default{
                 }
             }
             
-            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13039/register_site` // 아직 미정
+            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13039/register_site`
             axios.post(url, this.info, headers)
             .then((response)=>{
                 var resCode = response.data.res_code;

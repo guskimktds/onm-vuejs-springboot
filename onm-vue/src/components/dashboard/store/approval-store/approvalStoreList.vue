@@ -19,6 +19,7 @@
         @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
+        :options.sync="options"
       >
       </v-data-table>
     </base-material-card>
@@ -28,13 +29,16 @@
 
     export default{
          props: ['pList','resPagingInfo'],
-        components:{  
+        components:{    
         },
         methods:{
             handleClick: function(value){
                 this.$router.push({name: "register-store-list", params:value})
 
             },
+            getDateFromApi(){
+                this.$emit("pagination",this.options)
+            }
         },
         data(){
             return {
@@ -54,6 +58,7 @@
                     { text: "수정일자", value: "mod_date" },
                     { text: "상태", value: "status_code" },
                 ],
+                options:{}
             }
         },
         updated() {
@@ -64,6 +69,14 @@
             this.last=this.resPagingInfo.total_cnt
             }
         },
+        watch:{
+            options:{
+                handler(){
+                    this.getDateFromApi();
+                },
+                deep:true
+            }
+        }
     }
 
 </script>
