@@ -99,8 +99,10 @@ export default {
             }
           }
           for(var j in this.cList){
-            console.log(this.cList[j].api_no+ "리릴리리리ㅣㄹ리")
-          this.apiCountInfo.arr[j] = this.cList[j].api_no
+            var obj = new Object();
+            obj.key = this.cList[j].api_no
+            obj.value = this.cList[j].api_no
+          this.apiCountInfo.arr.push(obj);
         }
 
         }else if(resCode==204){

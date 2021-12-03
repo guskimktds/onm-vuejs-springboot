@@ -41,8 +41,8 @@
                  <v-select 
                     label="API명" 
                     :items="apiCountInfo.arr"
-                      item-text="apiCountInfo.arr.[index]" 
-                      item-value="apiCountInfo.arr.value" 
+                      item-text="key"
+                      item-value="value"
                   ></v-select>
 
                 </v-col>
@@ -57,14 +57,10 @@ export default {
   props: ['apiCountInfo'],
       data() {
       return {
-        arr:[
-          {state: '',value:''}
-        ]
+
       }
     },
-  method:{
-    
-  }
+
 } 
 </script>
 
