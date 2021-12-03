@@ -11,7 +11,7 @@
                     <v-dialog
                         v-model="dialog"
                         max-width="900px"
-                
+                        scrollable  
                     >
                         <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -23,11 +23,11 @@
                             매장검색
                         </v-btn>
                         </template>
-                        <v-card >
+                        <v-card height="vh">
                             <v-card-title>
                                 <span class="headline" >매장검색</span>
                             </v-card-title>
-                            <v-card-text fluid>
+                            <v-card-text>
                                 <v-container>
                                     <table>
                                          <tr>
@@ -79,7 +79,7 @@
                                                  <td style="text-align:center">{{searchedStore.tel_no}}</td>   
                                             </tr>
                                         </table>
-                                         <v-pagination :length= "searchNumofpage" v-model="serachCurPagenum" style="margin-top:20px;"> </v-pagination>
+                                         <v-pagination :length= "searchNumofpage" v-model="serachCurPagenum" style="margin-top:12px;"> </v-pagination>
                                     </div>
                                 </v-container>
                             </v-card-text>
