@@ -90,7 +90,7 @@ export default {
               this.loaded = true
 
             }else if(resCode==204){
-              alert('고객 개통/해지 추이 데이터가 없습니다.')
+              console.log('고객 개통/해지 추이 데이터가 없습니다.')
             }else{
               this.datacollection = null;
               //alert(resCode + " / " + resMsg);

@@ -67,7 +67,7 @@ export default {
           }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
-            alert("단말통계 데이터가 없습니다.");
+            console.log("단말통계 데이터가 없습니다.");
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
@@ -79,7 +79,7 @@ export default {
           }else{
             this.pList = [];
             this.resPagingInfo = {};
-            alert("Error");
+            console.log("Error");
           }
         })
         .catch((ex) => {
@@ -105,13 +105,13 @@ export default {
         } else {
           this.pList = [];
           this.resPagingInfo = {};
-          alert("Error");
+          console.log("Error");
         }
 
       })
       .catch(function (error) {
         console.log(error);
-        alert("Error")
+        console.log("Error")
       })
       .finally(function () {
         // always executed

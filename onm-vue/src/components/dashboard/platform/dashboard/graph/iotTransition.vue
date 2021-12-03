@@ -83,7 +83,7 @@ export default {
               this.loaded = true
 
             }else if(resCode==204){
-              alert(resMsg+'IoT 개통/해지 추이 데이터가 없습니다.')
+              console.log(resMsg+'IoT 개통/해지 추이 데이터가 없습니다.')
             }
             else{
               this.datacollection = null;

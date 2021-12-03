@@ -106,7 +106,7 @@ export default {
         }else {
           this.pList = [];
           this.resPagingInfo = {};
-          alert("Error");
+          console.log("Error");
         }
 
       })

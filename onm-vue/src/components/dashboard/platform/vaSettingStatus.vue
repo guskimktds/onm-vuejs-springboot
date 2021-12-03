@@ -63,7 +63,7 @@ export default {
     })
     .catch(function (error) {
       console.log(error);
-      alert("국사정보 조회실패")
+      console.log("국사정보 조회실패")
     })
     .finally(function () {
     });    
