@@ -181,7 +181,7 @@
                   item-text="state" 
                   item-value="abbr" 
                   :items="modalDispItems"
-                  label="분류" 
+                  label="노출유무" 
                   v-model="editedItem.disp_yn" 
                   ></v-select>
                 </v-col>     
@@ -329,11 +329,11 @@ export default {
             ],
             editedItem: {
                 board_type: 'NOTICE',
-                board_cate_cd: '',
+                board_cate_cd: 'CATE01',
                 title: '',
                 content_html: '',
                 content: '',
-                disp_yn: '',
+                disp_yn: 'Y',
                 disp_start_date:dateInfo().currentDateDashFormat,
                 disp_end_date:dateInfo().oneMonthDashFormat,
                 os_type: '',
@@ -341,11 +341,11 @@ export default {
             },
             defaultItem: {
                 board_type: 'NOTICE',
-                board_cate_cd: '',
+                board_cate_cd: 'CATE01',
                 title: '',
                 content_html: '',
                 content: '',
-                disp_yn: '',
+                disp_yn: 'Y',
                 disp_start_date: dateInfo().currentDateDashFormat,
                 disp_end_date:dateInfo().oneMonthDashFormat ,
                 os_type: '',
@@ -389,13 +389,14 @@ export default {
         saveSure(){
             console.log(222)
             console.log(this.editedItem.content_html)
-            if(this.editedItem.title ==''){
+            if(this.editedItem.title == '' || this.editedItem.content_html == ''|| this.editedItem.content == ''){
+            alert('제목 | 내용을 입력하세요')
+            this.dialog =false
+            }else{
+
+                
                 this.$fire({
-            title: "제목을 입력 해주세요",
-            type: "question"})
-            }
-            this.$fire({
-            title: "정말 등록 하시겠습니까?",
+                    title: "정말 등록 하시겠습니까?",
             type: "question",
 
             showCancelButton: true,
@@ -404,28 +405,30 @@ export default {
             confirmButtonText: '예',
             cancelButtonText: '아니오'
             }).then(result => {
-               if(result.value){
-                   this.save()
+                if(result.value){
+                    this.save()
                }else{
-                 this.closeSure()
+                   this.closeSure()
                }
             });
             
+            
+            }
         },
     
         close () {
             this.dialog = false
             this.$nextTick(() => {
-            this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedItem = Object.assign({}, this.defaultItem)
             // this.editedIndex = -1
             })
         },
 
         closeSure(){
-
+            
             this.close()
             this.$fire({
-                       title: "등록이 취소되었습니다.",
+                title: "등록이 취소되었습니다.",
                        type : "error"
                    })
         },
@@ -433,7 +436,7 @@ export default {
         closeDelete () {
             this.dialogDelete = false
             this.$nextTick(() => {
-            this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedItem = Object.assign({}, this.defaultItem)
             //   this.editedIndex = -1
             })
         },
@@ -441,6 +444,7 @@ export default {
             // this.pList.splice(this.editedIndex, 1)
             this.closeDelete()
         },
+
     },  
 }
 </script>
