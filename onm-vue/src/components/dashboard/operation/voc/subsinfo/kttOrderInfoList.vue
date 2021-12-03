@@ -15,10 +15,9 @@
         :headers="headers"
         :items="kttList"
         hide-default-header
+        hide-default-footer
         :server-items-length="kttPagingInfo.total_cnt"
         class="elevation-0"
-        :footer-props="{ itemsPerPageOptions: pageoptions }"
-        
       >
         <template v-slot:header="{ props: { headers } }">
           <thead>
@@ -69,14 +68,6 @@ export default {
       },
       deep: true,
     },
-  },
-  updated() {
-      if(this.last!==this.kttPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.kttPagingInfo.total_cnt!==undefined){
-      this.last=this.kttPagingInfo.total_cnt
-      }
   },
     
 }

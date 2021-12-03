@@ -13,11 +13,9 @@
         :headers="headers"
         :items="dsList"
         hide-default-header
-        :options.sync="options"
+        hide-default-footer
         :server-items-length="dsPagingInfo.total_cnt"
         class="elevation-0"
-        
-        :footer-props="{ itemsPerPageOptions: pageoptions }"
       >
         <template v-slot:header="{ props: { headers } }">
           <thead>
@@ -41,11 +39,6 @@ export default {
   props: ["dsList",'dsPagingInfo'],
   data() {
     return {
-      last: 0,
-      dialog: false,
-      dialogDelete: false,
-      editedIndex: -1,
-      options: {},
       pageoptions: this.$store.state.pageoptions,
       totalList: 0,
       loading: true,
@@ -97,14 +90,6 @@ export default {
       },
       deep: true,
     },
-  },
-  updated() {
-      if(this.last!==this.dsPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.dsPagingInfo.total_cnt!==undefined){
-      this.last=this.dsPagingInfo.total_cnt
-      }
   },
     
 }

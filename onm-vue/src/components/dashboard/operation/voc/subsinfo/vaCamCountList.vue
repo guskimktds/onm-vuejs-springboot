@@ -13,10 +13,9 @@
         :headers="headers"
         :items="vaList"
         hide-default-header
-        :options.sync="options"
+        hide-default-footer
         :server-items-length="vaPagingInfo.total_cnt"
         class="elevation-0"
-        :footer-props="{ itemsPerPageOptions: pageoptions }"
       >
         <template v-slot:header="{ props: { headers } }">
           <thead>
@@ -39,11 +38,6 @@ export default {
   //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
   data() {
     return {
-      last: 0,
-      dialog: false,
-      dialogDelete: false,
-      editedIndex: -1,
-      options: {},
       pageoptions: this.$store.state.pageoptions,
       totalList: 0,
       loading: true,
@@ -76,14 +70,6 @@ export default {
       },
       deep: true,
     },
-  },
-  updated() {
-      if(this.last!==this.vaPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.vaPagingInfo.total_cnt!==undefined){
-      this.last=this.vaPagingInfo.total_cnt
-      }
   },
     
 }

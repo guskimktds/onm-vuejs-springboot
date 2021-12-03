@@ -13,11 +13,9 @@
                 :headers="headers"
                 :items="pList"
                 hide-default-header
-                :options.sync="options"
+                hide-default-footer
                 :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-0"
-                :footer-props="{ itemsPerPageOptions: pageoptions }"
-                
             >
               <template v-slot:header="{ props: { headers } }">
                 <thead>

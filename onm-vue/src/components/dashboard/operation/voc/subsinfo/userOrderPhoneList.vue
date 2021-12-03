@@ -13,10 +13,9 @@
                 :headers="headers"
                 :items="phList"
                 hide-default-header
-                :options.sync="options"
+                hide-default-footer
                 :server-items-length="phPagingInfo.total_cnt"
                 class="elevation-0"
-                :footer-props="{ itemsPerPageOptions: pageoptions }"
             >
               <template v-slot:header="{ props: { headers } }">
                 <thead>
@@ -39,9 +38,6 @@ export default {
     //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
     data() {
       return {
-        last:0,
-        editedIndex: -1,
-        options: {},
         totalList: 0,
         pageoptions: this.$store.state.pageoptions,
         loading: true,
@@ -71,14 +67,6 @@ export default {
         deep: true,
       },
     },
-    updated() {
-      if(this.last!==this.phPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.phPagingInfo.total_cnt!==undefined){
-      this.last=this.phPagingInfo.total_cnt
-      }
-  },
     mounted () {
       this.getDataFromApi()
     }

@@ -51,12 +51,6 @@ export default {
     ],
     data() {
       return {
-        last:0,
-        dialog: false,
-        dialogDelete: false,
-        editedIndex: -1,
-        // options: {},
-        // pageoptions: this.$store.state.pageoptions,
         loading: true,
         headers: [
           {
@@ -84,14 +78,6 @@ export default {
         deep: true,
       },
     },
-    // updated() {
-    //   if(this.last!==this.dodPagingInfo.total_cnt){
-    //     this.options.page=1
-    //   }
-    //   if(this.dodPagingInfo.total_cnt!==undefined){
-    //   this.last=this.dodPagingInfo.total_cnt
-    //   }
-    // },
     mounted () {
       this.getDataFromApi()
     }

@@ -242,11 +242,11 @@ export default {
     //   btnTitle: '청약오더상세open',
       reqPagingInfo: {
         page_no: 1,
-        view_cnt: 10
+        view_cnt: 100
       },
 
       default_page_no: 1,
-      default_view_cnt: 10,
+      default_view_cnt: 100,
 
     //   title2: '사용자 청약오더 List',
       sdList:[],

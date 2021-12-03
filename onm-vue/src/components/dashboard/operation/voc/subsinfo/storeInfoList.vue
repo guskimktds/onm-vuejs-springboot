@@ -12,11 +12,10 @@
       <v-data-table
         :headers="headers"
         :items="pList"
-        :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-0"
-        :footer-props="{ itemsPerPageOptions: pageoptions }"
         hide-default-header
+        hide-default-footer
       >
 
       <template v-slot:header="{ props: { headers } }">
@@ -48,11 +47,6 @@ export default {
 
   data() {
     return {
-      last: 0,
-      dialog: false,
-      dialogDelete: false,
-      editedIndex: -1,
-      options: {},
       totalList: 0,
       pageoptions: this.$store.state.pageoptions,
       loading: true,
@@ -106,14 +100,6 @@ export default {
       },
       deep: true,
     },
-  },
-  updated() {
-      if(this.last!==this.resPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.resPagingInfo.total_cnt!==undefined){
-      this.last=this.resPagingInfo.total_cnt
-      }
   },
 };
 </script>

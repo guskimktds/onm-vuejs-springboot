@@ -13,11 +13,9 @@
                 :headers="headers"
                 :items="pList"
                 hide-default-header
-                :options.sync="options"
+                hide-default-footer
                 :server-items-length="snPagingInfo.total_cnt"
                 class="elevation-0"
-                :footer-props="{ itemsPerPageOptions: pageoptions }"
-                
             >          
             </v-data-table>
         </base-material-card>
@@ -30,11 +28,6 @@ export default {
     props: ['pList','snPagingInfo'],
     data() {
       return {
-        last:0,
-        dialog: false,
-        dialogDelete: false,
-        editedIndex: -1,
-        options: {},
         pageoptions: this.$store.state.pageoptions,
         loading: true,
         headers: [
@@ -64,14 +57,6 @@ export default {
         deep: true,
       },
     },
-    updated() {
-      if(this.last!==this.snPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.snPagingInfo.total_cnt!==undefined){
-      this.last=this.snPagingInfo.total_cnt
-      }
-  },
     mounted () {
       this.getDataFromApi()
     }

@@ -13,11 +13,9 @@
                 :headers="headers"
                 :items="pList"
                 hide-default-header
-                :options.sync="options"
+                hide-default-footer
                 :server-items-length="doiPagingInfo.total_cnt"
                 class="elevation-0"
-                :footer-props="{ itemsPerPageOptions: pageoptions }"
-                
             >     
               <template v-slot:header="{ props: { headers } }">
                 <thead>
@@ -40,11 +38,6 @@ export default {
     props: ['pList','doiPagingInfo'],
     data() {
       return {
-        last:0,
-        dialog: false,
-        dialogDelete: false,
-        editedIndex: -1,
-        options: {},
         pageoptions: this.$store.state.pageoptions,
         loading: true,
         headers: [
@@ -84,14 +77,6 @@ export default {
         deep: true,
       },
     },
-    updated() {
-      if(this.last!==this.doiPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.doiPagingInfo.total_cnt!==undefined){
-      this.last=this.doiPagingInfo.total_cnt
-      }
-  },
     mounted () {
       this.getDataFromApi()
     }

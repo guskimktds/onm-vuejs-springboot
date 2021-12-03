@@ -13,10 +13,9 @@
                 :headers="headers"
                 :items="dorList"
                 hide-default-header
-                :options.sync="options"
+                hide-default-footer
                 :server-items-length="dorPagingInfo.total_cnt"
                 class="elevation-0"
-                :footer-props="{ itemsPerPageOptions: pageoptions }"
             >  
               <template v-slot:header="{ props: { headers } }">
                 <thead>
@@ -41,11 +40,6 @@ export default {
     props: ['dorList', 'dorPagingInfo'],
     data() {
       return {
-        last: 0,
-        dialog: false,
-        dialogDelete: false,
-        editedIndex: -1,
-        options:{},
         pageoptions: this.$store.state.pageoptions,
         loading:true,
         headers: [
@@ -91,14 +85,6 @@ export default {
         deep: true,
       },
     },
-    updated() {
-      if(this.last!==this.dorPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.dorPagingInfo.total_cnt!==undefined){
-      this.last=this.dorPagingInfo.total_cnt
-      }
-  },
     mounted () {
       this.getDataFromApi()
     }

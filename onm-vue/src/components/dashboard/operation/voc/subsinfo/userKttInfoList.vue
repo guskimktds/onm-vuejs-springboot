@@ -13,10 +13,9 @@
         :headers="headers"
         :items="kList"
         hide-default-header
-        :options.sync="options"
+        hide-default-footer
         :server-items-length="kttPagingInfo.total_cnt"
         class="elevation-0"
-        :footer-props="{ itemsPerPageOptions: pageoptions }"
       >
         <template v-slot:header="{ props: { headers } }">
           <thead>
@@ -38,11 +37,6 @@ export default {
   props: ['kList','kttPagingInfo'],
   data() {
     return {
-      last: 0,
-      // dialog: false,
-      // dialogDelete: false,
-      // editedIndex: -1,
-      options: {},
       pageoptions: this.$store.state.pageoptions,
       // totalList: 0,
       loading: true,
@@ -77,14 +71,6 @@ export default {
       },
       deep: true,
     },
-  },
-  updated() {
-      if(this.last!==this.kttPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.kttPagingInfo.total_cnt!==undefined){
-      this.last=this.kttPagingInfo.total_cnt
-      }
   },
     
 }

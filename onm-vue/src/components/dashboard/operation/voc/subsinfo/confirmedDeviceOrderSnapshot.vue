@@ -13,11 +13,8 @@
                 :headers="headers"
                 :items="pList"
                 hide-default-header
-                :options.sync="options"
                 :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-0"
-                :footer-props="{ itemsPerPageOptions: pageoptions }"
-               
             >    
               <template v-slot:header="{ props: { headers } }">
                 <thead>
@@ -39,11 +36,6 @@ export default {
     props: ['pList','resPagingInfo'],
     data() {
       return {
-        last:0,
-        dialog: false,
-        dialogDelete: false,
-        editedIndex: -1,
-        options: {},
         pageoptions: this.$store.state.pageoptions,
         loading: true,
         headers: [
@@ -72,14 +64,6 @@ export default {
         deep: true,
       },
     },
-    updated() {
-      if(this.last!==this.resPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.resPagingInfo.total_cnt!==undefined){
-      this.last=this.resPagingInfo.total_cnt
-      }
-  },
     mounted () {
       this.getDataFromApi()
     }
