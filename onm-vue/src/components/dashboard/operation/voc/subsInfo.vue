@@ -1675,7 +1675,8 @@ export default {
 
 
     // 페이징 설정
-    setToSearchParams: function(values){
+    // setToSearchParams: function(values){
+    setToSearchParams: function(){
       // var params = {
       //   page_no: values.page,
       //   view_cnt: values.itemsPerPage,

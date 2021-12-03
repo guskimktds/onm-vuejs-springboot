@@ -156,7 +156,7 @@ export default {
             this.$router.replace('/signin')
       }else{
         this.userInfo = [];
-        console.log(resCode + " / " + resMsg);
+        // console.log(resCode + " / " + resMsg);
       }
     })
     .catch((ex) => {

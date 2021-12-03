@@ -14,6 +14,8 @@
       <v-data-table
         :headers="headers"
         :items="fList"
+        :options.sync="options"
+        :server-items-length="fPagingInfo.total_cnt"
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
@@ -22,7 +24,7 @@
        <template v-slot:top>
                 <v-dialog v-model="dialogUpdate" max-width="500px">
                   <v-card>
-                    <v-card-title class="headline">정보 수정 페이지</v-card-title>
+                    <v-card-title class="headline">펌웨어 수정 페이지</v-card-title>
                     <v-card-text>
                       <v-container>
                         <v-row>
@@ -30,18 +32,29 @@
                             <v-text-field
                               v-model="selectItems.dev_type"
                               label="제품타입"
+                              readonly
                             ></v-text-field>
                           </v-col>
                           <v-col cols="4">
                             <v-text-field
                               v-model="selectItems.product_code"
                               label="제품코드"
+                              readonly
                             ></v-text-field>
                           </v-col>
                           <v-col cols="4">
                             <v-text-field
                               v-model="selectItems.firmware_version"
                               label="펌웨어 버전"
+                              readonly
+                            ></v-text-field>
+                          </v-col>
+                        </v-row>
+                        <v-row>
+                          <v-col cols="12">
+                            <v-text-field
+                              v-model="selectItems.chg_version"
+                              label="수정할 펌웨어 버전"
                             ></v-text-field>
                           </v-col>
                         </v-row>
@@ -92,13 +105,15 @@
 import axios from "axios"
 
 export default {
-  props: ['fList'],
+  props: ['fList','fPagingInfo'],
   data() {
     return {
+      last:0,
       dialogDelete: false,
       dialogUpdate: false,
       deleteIndex: -1,
       updateIndex: -1,
+      options:{},
       headers: [
         {
           text: "단말구분",
@@ -114,24 +129,29 @@ export default {
       selectItems: {
           dev_type: '',
           product_code: '',
-          firmware_version: ''
+          firmware_version: '',
+          chg_version: ''
         },
       defaultItem: {
           dev_type: '',
           product_code: '',
-          firmware_version: ''
+          firmware_version: '',
+          chg_version: ''
         },
     };
   },
    methods:{
+     getDataFromApi() {
+      this.loading = true;
+      this.$emit("subPagination", this.options);
+    }, 
     updateItem (item) {
         this.updateIndex = this.fList.indexOf(item)
         this.tempItems = Object.assign({},item)
         this.selectItems.dev_type=this.tempItems.dev_type
         this.selectItems.product_code=this.tempItems.product_code
-        this.selectItems.vendor_name=this.tempItems.vendor_name
-        this.selectItems.model_name=this.tempItems.model_name
-        this.selectItems.conn_id=this.tempItems.conn_id
+        this.selectItems.firmware_version=this.tempItems.firmware_version
+        this.selectItems.chg_version=this.tempItems.chg_version
         this.selectItems.cmd_type='U'
 
         this.dialogUpdate = true
@@ -142,9 +162,7 @@ export default {
         this.tempItems = Object.assign({},item)
         this.selectItems.dev_type=this.tempItems.dev_type
         this.selectItems.product_code=this.tempItems.product_code
-        this.selectItems.vendor_name=this.tempItems.vendor_name
-        this.selectItems.model_name=this.tempItems.model_name
-        this.selectItems.conn_id=this.tempItems.conn_id
+        this.selectItems.firmware_version=this.tempItems.firmware_version
         this.selectItems.cmd_type='D'
 
         this.dialogDelete = true
@@ -171,7 +189,7 @@ export default {
         var params = this.selectItems
         
 
-         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15031/cam_firmware_info`
+         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15031/set_cam_firmware_info`
 
                             axios.post(url, params, this.$store.state.headers)
                               .then((response) => {
@@ -181,7 +199,8 @@ export default {
                                 if(resCode == 200){
                                   console.log(response)
                                 }else{
-                                  alert("Error");
+                                  console.log(response)
+                                  console.log("Error");
                                 }
                               })
                               .catch((ex) => {
@@ -191,6 +210,7 @@ export default {
                         alert('요청 중 에러가 발생하였습니다.');
                       }
       this.closeUpdate()
+      this.$emit('reset')
     },
 
     deleteItemConfirm () {
@@ -226,7 +246,7 @@ export default {
                       var resCode = response.data.res_code;
 
                       if(resCode == 200){
-                        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15031/cam_firmware_info`
+                        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15031/set_cam_firmware_info`
                             axios.post(url, params, this.$store.state.headers)
                               .then((response) => {
                                 var resCode = response.data.res_code;
@@ -236,7 +256,7 @@ export default {
                                   //현재 목록에서 선택한 Item을 삭제한다.
                                   this.fList.splice(deleteCol, 1)
                                 }else{
-                                  alert("Error");
+                                  console.log("Error");
                                 }
                               })
                               .catch((ex) => {
@@ -254,7 +274,23 @@ export default {
         }
         this.closeDelete() //다이얼로그를 닫는다.
       },
-  }
+  },
+    watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+  updated() {
+      if(this.last!==this.fPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.fPagingInfo.total_cnt!==undefined){
+      this.last=this.fPagingInfo.total_cnt
+      }
+  },
 }
 
 </script>

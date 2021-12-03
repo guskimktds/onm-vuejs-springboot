@@ -100,6 +100,9 @@ import GwAcceptInfo from '../components/dashboard/operation/code/local/gwAcceptI
 import CustomerTransfer from '../components/dashboard/operation/transfer/customerTransfer'
 import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatus'
 
+// 운영관리, VOC관리
+import CamProd from '../components/dashboard/operation/voc/camProd/camProd'
+
 // store 에 로그인 여부 체크
 import store from '../store'
 
@@ -513,10 +516,15 @@ export default new Router({
                     component: GwAcceptInfo
                 },
                 {
+                    path: "cam-prod",
+                    name: "CamProd",
+                    component: CamProd
+                },
+                {
                     path: "camera-model",
                     name: 'cameraModelInfo',
                     component: cameraModelInfo
-                }
+                },
             ]
         },
 

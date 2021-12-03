@@ -1,4 +1,4 @@
-<template>
+<template> 
   <v-container id="regular-tables" fluid tag="section">
     <base-material-card
       color="orange"
@@ -13,14 +13,14 @@
         :options.sync="options"
         :server-items-length="cmPagingInfo.total_cnt"
         class="elevation-1"
-        @click:row="handleClick"
+        @click:row="handleClick" item-key="product_code" single-select
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       >
        <template v-slot:top>
                 <v-dialog v-model="dialogUpdate" max-width="500px">
                   <v-card>
-                    <v-card-title class="headline">정보 수정 페이지</v-card-title>
+                    <v-card-title class="headline">카메라 모델 수정 페이지</v-card-title>
                     <v-card-text>
                       <v-container>
                         <v-row>
@@ -28,17 +28,19 @@
                             <v-text-field
                               v-model="selectItems.dev_type"
                               label="제품타입"
+                              readonly
                             ></v-text-field>
                           </v-col>
                           <v-col cols="4">
                             <v-text-field
                               v-model="selectItems.product_code"
                               label="제품코드"
+                              readonly
                             ></v-text-field>
                           </v-col>
                           <v-col cols="4">
                             <v-text-field
-                              v-model="selectItems.vender_name"
+                              v-model="selectItems.vendor_name"
                               label="제조사명"
                             ></v-text-field>
                           </v-col>
@@ -148,11 +150,12 @@ export default {
           model_name: '',
           conn_id:'',
           cmd_type:''
-        },
+        }
     };
   },
   methods: {
-    handleClick:function (value){
+    handleClick:function (value, row){
+        row.select(true);
         this.$emit("child", value);
     },
     getDataFromApi() {
@@ -216,7 +219,7 @@ export default {
                                 if(resCode == 200){
                                   console.log(response)
                                 }else{
-                                  alert("Error");
+                                  console.log("Error");
                                 }
                               })
                               .catch((ex) => {
@@ -226,6 +229,7 @@ export default {
                         alert('요청 중 에러가 발생하였습니다.');
                       }
       this.closeUpdate()
+      this.$emit('reset')
     },
 
     deleteItemConfirm () {
@@ -271,7 +275,7 @@ export default {
                                   //현재 목록에서 선택한 Item을 삭제한다.
                                   this.cmList.splice(deleteCol, 1)
                                 }else{
-                                  alert("Error");
+                                  console.log("Error");
                                 }
                               })
                               .catch((ex) => {
@@ -310,4 +314,7 @@ export default {
 };
 </script>
 <style>
+tr.v-data-table__selected {
+  background: #616161 !important;
+}
 </style>
