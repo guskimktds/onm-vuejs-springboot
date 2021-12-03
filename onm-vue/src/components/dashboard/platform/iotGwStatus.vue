@@ -73,10 +73,6 @@ export default {
       .then( (response) => {
         if(response.data.res_code == 200){
           this.pList = response.data.data.list;
-        }else if(response.data.res_code==204){
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert("IoT GW 상태현황 데이터가 없습니다.");
         }else if(response.data.res_code==410){
           alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
@@ -87,7 +83,6 @@ export default {
             this.$router.replace('/signin')
         }else{
           this.pList = [];
-          alert("Error");
         }
       })
       .catch(function (error) {

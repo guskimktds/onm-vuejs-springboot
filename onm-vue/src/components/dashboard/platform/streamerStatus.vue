@@ -94,7 +94,6 @@ export default {
             this.$router.replace('/signin')
         }else{
           this.pList = [];
-          alert("Error");
         }
       })
       .catch(function (error) {

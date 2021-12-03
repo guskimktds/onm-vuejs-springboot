@@ -91,10 +91,6 @@ export default {
         if (resCode == 200) {
           this.pList = response.data.data.process_list;
           this.resPagingInfo = response.data.data.paging_info;
-        }else if(resCode==204){
-            this.pList = [];
-            this.resPagingInfo = {};
-            console.log("프로세스 현황 데이터가 없습니다.");
         }else if(resCode==410){
           console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
@@ -106,7 +102,6 @@ export default {
         }else {
           this.pList = [];
           this.resPagingInfo = {};
-          alert("Error");
         }
 
       })
