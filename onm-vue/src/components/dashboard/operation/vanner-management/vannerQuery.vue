@@ -165,7 +165,7 @@ export default {
             dialog: false,
             dialogDelete: false,
             images: [],
-            items: ["전체", "타입명 A", "타입명 B", "타입명 C"],
+            items: ["전체", "로그아웃", "공지사항", "타입명 C"],
             items2: ["전체", "노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vitem:'전체',
@@ -221,16 +221,11 @@ export default {
             this.searchMethod()
         },
         searchMethod: function() {
-            // if(this.editedItem.img_type=="전체"){
-            //     this.param.process_status=''
-            // }else{
-            //     this.param.process_status=this.editedItem.img_type
-            // }
             if(this.typeitem == this.items[1]){
-                    this.param.img_type = '01'
+                    this.param.img_type = 'LOGOUT'
             }
             if(this.typeitem == this.items[2]){
-                    this.param.img_type = '02'
+                    this.param.img_type = 'NOTICE'
             }
             if(this.typeitem == this.items[3]){
                     this.param.img_type = '03'
@@ -266,9 +261,6 @@ export default {
             // this.param.reg_date = this.editedItem.disp_end_date.replace(/-/g,'')
            
             this.$emit('search', this.param)
-            console.log(this.param)
-            // console.log(this.editedItem)
-            
         },
         
     },  

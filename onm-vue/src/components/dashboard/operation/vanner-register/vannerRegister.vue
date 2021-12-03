@@ -176,7 +176,7 @@ export default {
             gw_id: '',
             resPagingInfo: {},
             istf: true,
-            items: ["타입명 A (300 X 200 px)", "타입명 B (400 X 500 px)","타입명 C (50 X 50 px)"],
+            items: ["로그아웃 (300 X 200 px)", "공지사항 (400 X 500 px)","타입명 C (50 X 50 px)"],
             items2: ["노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vvitem:'',
@@ -294,10 +294,10 @@ export default {
            this.editedItem.reg_date = this.editedItem.reg_date.replace(/-/g,'')
            this.editedItem.mod_date = this.editedItem.mod_date.replace(/-/g,'')
            if(this.typedata == this.items[0]){
-               this.editedItem.img_type = '01'
+               this.editedItem.img_type = 'LOGOUT'
            }
            if(this.typedata == this.items[1]){
-               this.editedItem.img_type = '02'
+               this.editedItem.img_type = 'NOTICE'
            }
            if(this.typedata == this.items[2]){
                this.editedItem.img_type = '03'
@@ -367,11 +367,11 @@ export default {
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '제목을 입력 해주세요'
                 return
-            }else if(this.dispdate <= dateInfo().currentDateDashFormat){
-                this.dialogNum2 = true
-                this.toolMsg = '필수값 확인'
-                this.dialogMsg = '노출 기간은 오늘 이후 날짜로 설정 가능합니다'
-                return
+            // }else if(this.dispdate <= dateInfo().currentDateDashFormat){
+            //     this.dialogNum2 = true
+            //     this.toolMsg = '필수값 확인'
+            //     this.dialogMsg = '노출 기간은 오늘 이후 날짜로 설정 가능합니다'
+            //     return
             }else if(this.editedItem.img_name == ''){
                 this.dialogNum2 = true
                 this.toolMsg = '필수값 확인'

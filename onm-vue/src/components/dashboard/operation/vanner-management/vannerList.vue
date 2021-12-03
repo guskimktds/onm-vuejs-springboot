@@ -38,7 +38,7 @@
 //  import EventBus from '../../../../EventBus';
 
 export default {
-    props: ['pList','resPagingInfo', 'gw_id', 'param'],
+    props: ['pList','resPagingInfo'],
     data() {
       return {
         options: {},
@@ -67,27 +67,13 @@ export default {
     methods: {
       getDataFromApi(){
         this.$emit("pagination",this.options)
-        console.log(this.options)
       },
       passPage(value){
-        console.log(value)
         this.$router.push({name:"vanner-detailpage", params :{'val' : value}});
-        console.log(this.pList)
-      },
-      pageinfo(){
-        alert(this.resPagingInfo)
-      },
-      testbbb(){
-        console.log(this.param)
-        console.log(this.pList)
-        console.log(this.gw_id)
       }
       
     },
-    computed: {
-      
-    },
-      watch: {
+  watch: {
     options: {
       handler() {
         this.getDataFromApi();

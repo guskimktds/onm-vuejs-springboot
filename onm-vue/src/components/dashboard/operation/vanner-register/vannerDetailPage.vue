@@ -103,7 +103,7 @@
             <!-- <input type="file"  @change="onFileSelected" accept="image/png, image/gif, image/jpeg, image/jpg"> -->
             <div class="filebox">
                 <input class="upload-name" v-model="editedItem.img_name" readonly placeholder="파일명">
-                <label for="file">파일찾기</label> 
+                <!-- <label for="file" >파일찾기</label> -->
                 <input type="file" id="file" @change="onFileSelected" accept="image/png, image/gif, image/jpeg, image/jpg">
             </div>
             </v-col>
@@ -118,6 +118,7 @@
             <v-img :src="images" v-if="vitem.tem1" style='height:300px;width:200px; '></v-img>
             <v-img :src="images" v-else-if="vitem.tem2" style='height:400px;width:500px;'></v-img>
             <v-img :src="images" v-else-if="vitem.tem3" style='height:50px;width:50px;'></v-img>
+            <!-- <v-img :src="images"></v-img> -->
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
             
@@ -169,7 +170,7 @@ export default {
     data() {
         return{
             pList: [],
-            images: [],
+            images: '',
             reqPagingInfo: {
                 page_no: 1,
                 view_cnt: 10
@@ -177,7 +178,7 @@ export default {
             gw_id: '',
             resPagingInfo: {},
             istf: true,
-            items: ["타입명 A (300 X 200 px)", "타입명 B (400 X 500 px)","타입명 C (50 X 50 px)"],
+            items: ["로그아웃 (300 X 200 px)", "공지사항 (400 X 500 px)","타입명 C (50 X 50 px)"],
             items2: ["노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vvitem:'',
@@ -232,11 +233,11 @@ export default {
            this.dispdate2 = this.$route.params.val.disp_end_date.substring(0,10)
         //    .replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
            this.editedItem.mod_id = this.$route.params.val.reg_id
-           if(this.$route.params.val.img_type == '01'){
-               this.bannerType = '타입명 A'
+           if(this.$route.params.val.img_type == 'LOGOUT'){
+               this.bannerType = '로그아웃 (300 X 200 px)'
            }
-           if(this.$route.params.val.img_type == '02'){
-               this.bannerType = '타입명 B'
+           if(this.$route.params.val.img_type == 'NOTICE'){
+               this.bannerType = '공지사항 (400 X 500 px)'
            }
            if(this.$route.params.val.img_type == '03'){
                this.bannerType = '타입명 C'
@@ -247,10 +248,11 @@ export default {
            if(this.$route.params.val.disp_yn == 'N'){
                this.typedate = "미노출"
            }
-
+            this.selectType();
+            this.istf = false
             console.log(this.editedItem);
             console.log(this.$route.params.val);
-
+            this.images = process.env.VUE_APP_IMG_URL + this.$route.params.val.img_name
     },
     computed: {
       filteredData(){
@@ -275,10 +277,6 @@ export default {
         close () {
             this.dialogNum1 = false
             this.dialogNum2 = false
-            // this.$nextTick(() => {
-            // this.editedItem = Object.assign({}, this.defaultItem)
-            // // this.editedIndex = -1
-            // })
         },
         close2(){
             
@@ -286,10 +284,6 @@ export default {
             this.dialogNum2 = false
             this.$router.push('/operation/vanner-management');
         },
-        deleteItemConfirm () {
-            // this.pList.splice(this.editedIndex, 1)
-            this.closeDelete()
-        }, 
         //미리보기
         onFileSelected(event){ 
             var input = event.target;
@@ -299,32 +293,30 @@ export default {
                 var reader = new FileReader(); 
                     reader.onload = (e) => {
                         this.images = e.target.result;
-                        this.selectType();
+                        
                     } 
                     reader.readAsDataURL(input.files[0]);
                     this.editedItem.bannerImage = input.files[0]
-                    this.istf = false
+                    
                 } 
                 
             },
             selectType(){
-            if(this.images != ''){
-                if(this.items[0]==this.editedItem.img_type){
+                if(this.items[0]==this.bannerType){
                     this.vitem.tem1 = true
                     this.vitem.tem2 = false
                     this.vitem.tem3 = false
                 }
-                if(this.items[1]==this.editedItem.img_type){
+                if(this.items[1]==this.bannerType){
                     this.vitem.tem1 = false
                     this.vitem.tem2 = true
                     this.vitem.tem3 = false
                 }
-                if(this.items[2]==this.editedItem.img_type){
+                if(this.items[2]==this.bannerType){
                     this.vitem.tem1 = false
                     this.vitem.tem2 = false
                     this.vitem.tem3 = true
                 }
-            }
             },
          saveItems(){
            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15123/update_banner`

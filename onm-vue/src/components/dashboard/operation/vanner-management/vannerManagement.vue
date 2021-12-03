@@ -8,10 +8,8 @@
           
         ></vanner-query>
         <vanner-list
-        v-on:search="searchToButton"
-        v-bind:param="searchParam"
-        v-bind:pList=pList
-        v-bind:resPagingInfo=resPagingInfo
+        v-bind:pList="pList"
+        v-bind:resPagingInfo="resPagingInfo"
         @pagination="setToSearchParams"
         ></vanner-list>
       </v-card>
@@ -22,17 +20,7 @@
 <script>
 import vannerList from './vannerList'
 import vannerQuery from './vannerQuery'
-// import EventBus from '../../../../EventBus';
- //import dateInfo from '../../../utils/common';
-//로그인 시 서버에서 불러오면 수정해야함
-//import AdminMenuMock from '../../../mock/AdminListMock.json';
-//import EventBus from '../../../../../EventBus'
 import axios from "axios"
-
-// const headers = {
-//   'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
-//   'Content-Type': 'application/json'
-// }
 
 export default {
   components:{
@@ -41,7 +29,7 @@ export default {
   },
   data () {
     return {
-      title: '코드관리',
+      title: '배너관리',
       gw_id: '',
       pList: [],
       reqPagingInfo: {
@@ -61,7 +49,9 @@ export default {
         os_type:'',
         reg_start_date:'',
         reg_end_date:'',
-        
+        page_no: '',
+        view_cnt: '',
+        img_path:''
       },
       localGwOptions:[],
       centerOptions:{
@@ -71,41 +61,13 @@ export default {
     }
   },
   methods: {
-    reset: function(){
-      console.log(this.searchParam)
-       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15122/get_banner`
-       var reqParams = this.handleParams(this.searchParam)
-       console.log(reqParams)
-      axios
-        .post(url, reqParams, this.$store.state.headers)
-        .then((response) => {
-          console.log(response)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            // this.authGroupList = response.data.data.auth_group_list
-            // this.isAuthMenu = true
-            this.pList = response.data.data.banner_list;
-            this.resPagingInfo = response.data.data.paging_info
-            console.log(this.resPagingInfo)
-          }else{
-            // this.authGroupList = [];
-            // this.isAuthMenu = false
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-    },
     searchToButton: function(params){
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15122/get_banner`
-
-    //params : 페이징 + 검색조건
     var reqParams = this.handleParams(params)  
+  
+    //params : 페이징 + 검색조건
     // EventBus.$emit('param', params);
+    
     console.log('보내는 값')
     console.log(reqParams)
         axios.post(url, reqParams, this.$store.state.headers)
@@ -141,19 +103,21 @@ export default {
               console.log('조회 실패',ex)
             })
     },
-    setToSearchParams(values) {
+    setToSearchParams: function(values){
       console.log('전달값')
       console.log(values)
       var params = {
         page_no: values.page,
         view_cnt: values.itemsPerPage,
       };
-
+      this.searchParam.page_no = values.page
+      this.searchParam.view_cnt = values.itemsPerPage
       this.searchToButton(params);
     },
 
     handleParams: function(params){
       let newParams = {}
+      
       if(params.page_no === undefined || params.page_no === ''){
         newParams.page_no = this.reqPagingInfo.page_no
       }else{
@@ -177,46 +141,89 @@ export default {
 
       if(params.title !== undefined && params.title !== ''){
         newParams.title = params.title
+      }else if(
+            this.searchParam.title!==undefined&&
+            this.searchParam.title!==""
+          ){
+            newParams.title=this.searchParam.title
       }
 
       if(params.img_type !== undefined && params.img_type !== ''){
         newParams.img_type = params.img_type
-      }
-
+      }else if(
+            this.searchParam.img_type!==undefined&&
+            this.searchParam.img_type!==""
+          ){
+            newParams.img_type=this.searchParam.img_type
+          }
       if(params.disp_yn !== undefined && params.disp_yn !== ''){
         newParams.disp_yn = params.disp_yn
-      }   
-      
+      }else if(
+            this.searchParam.disp_yn!==undefined&&
+            this.searchParam.disp_yn!==""
+          ){
+            newParams.disp_yn=this.searchParam.disp_yn   
+          }
       if(params.reg_date !== undefined && params.reg_date !== ''){
         newParams.reg_date = params.reg_date
-      }  
+      }else if(
+            this.searchParam.reg_date!==undefined&&
+            this.searchParam.reg_date!==""
+          ){
+            newParams.reg_date=this.searchParam.reg_date  
+          }
       if(params.disp_start_date !== undefined && params.disp_start_date !== ''){
         newParams.disp_start_date = params.disp_start_date
-      }
+      }else if(
+            this.searchParam.disp_start_date!==undefined&&
+            this.searchParam.disp_start_date!==""
+          ){
+            newParams.disp_start_date=this.searchParam.disp_start_date.replace(/-/g,"")
+          }
       if(params.disp_end_date !== undefined && params.disp_end_date !== ''){
         newParams.disp_end_date = params.disp_end_date
-      }
+      }else if(
+            this.searchParam.disp_end_date!==undefined&&
+            this.searchParam.disp_end_date!==""
+          ){
+            newParams.disp_end_date=this.searchParam.disp_end_date.replace(/-/g,"")
+          }
+
       if(params.img_name !== undefined && params.img_name !== ''){
         newParams.img_name = params.img_name
-      }
+      }else if(
+            this.searchParam.img_name!==undefined&&
+            this.searchParam.img_name!==""
+          ){
+            newParams.img_name=this.searchParam.img_name  
+          }
       if(params.os_type !== undefined && params.os_type !== ''){
         newParams.os_type = params.os_type
-      }
+      }else if(
+            this.searchParam.os_type!==undefined&&
+            this.searchParam.os_type!==""
+          ){
+            newParams.os_type=this.searchParam.os_type  
+          }
       if(params.reg_start_date !== undefined && params.reg_start_date !== ''){
         newParams.reg_start_date = params.reg_start_date
-      }
+      }else if(
+            this.searchParam.reg_start_date!==undefined&&
+            this.searchParam.reg_start_date!==""
+          ){
+            newParams.reg_start_date=this.searchParam.reg_start_date.replace(/-/g,"")
+          }
       if(params.reg_end_date !== undefined && params.reg_end_date !== ''){
         newParams.reg_end_date = params.reg_end_date
-      }
+      }else if(
+            this.searchParam.reg_end_date!==undefined&&
+            this.searchParam.reg_end_date!==""
+          ){
+            newParams.reg_end_date=this.searchParam.reg_end_date.replace(/-/g,"")
+          }
       return newParams
     }
-    
-    
   },
-  created(){
-    // this.searchToButton(this.params);
-  }
-
 }
 </script>
 
