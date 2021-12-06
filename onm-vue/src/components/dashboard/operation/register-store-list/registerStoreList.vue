@@ -117,7 +117,7 @@
         </store-management>
         <customer-api v-show="isShowSeq==3"
             v-bind:receivedValue="receivedValue"
-        >>
+        >
 
         </customer-api>
 
