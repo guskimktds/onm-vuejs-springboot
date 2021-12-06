@@ -59,7 +59,6 @@ export default {
           .then((response) => {
             console.log(response.data)
             var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
             if(resCode == 200){
               this.labels = this.getLabels(response.data.data.date_list)
               this.datacollection = {
