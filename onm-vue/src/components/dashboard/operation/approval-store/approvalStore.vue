@@ -8,7 +8,7 @@
            >
             </approval-store-query> 
             <div class="button">
-                <router-link to='/store/register-store'>+ 신규</router-link>
+                <router-link to='/operation/register-store'>+ 신규</router-link>
             </div>
             <approval-store-list
               v-bind:pList="pList"
