@@ -65,6 +65,8 @@
                             ></v-text-field>
                         </v-col>
                       </v-row>
+                    </v-container>
+                  </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn

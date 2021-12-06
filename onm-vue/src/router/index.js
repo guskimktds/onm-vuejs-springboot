@@ -43,6 +43,8 @@ import SensorInfo from '../components/dashboard/store/device-sensor/sensorInfo'
 import DeviceKttInfo from '../components/dashboard/store/device-ktt/deviceKttInfo'
 import termAuth from '../components/dashboard/store/term-auth/termAuth'
 
+
+
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
 import SessLiveInfo from '../components/dashboard/customer/rtime-access-session/sessLiveInfo'
@@ -88,6 +90,15 @@ import dssResultInfo from '../components/dashboard/operation/voc/dssResultInfo.v
 import bssResultInfo from '../components/dashboard/operation/voc/bssResultInfo.vue'
 import deviceRecoInfo from '../components/dashboard/operation/voc/deviceRecoInfo'
 import cameraModelInfo from '../components/dashboard/operation/voc/cameraModelInfo.vue'
+import vannerManagement from '../components/dashboard/operation/vanner-management/vannerManagement'
+import vannerRegster from '../components/dashboard/operation/vanner-register/vannerRegister';
+import vannerDetailPage from '../components/dashboard/operation/vanner-register/vannerDetailPage';
+//sun
+import registerStore from '../components/dashboard/operation/register-store/registerStore'
+import approvalStore from '../components/dashboard/operation/approval-store/approvalStore'
+import registerStoreList from '../components/dashboard/operation/register-store-list/registerStoreList'
+import approvalApi from '../components/dashboard/operation/approval-api/approvalApi'
+import apiInfoDetail from '../components/dashboard/operation/api-info-detail/apiInfoDetail'
 
 //운영관리 / 코드 설정 관리 
 import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
@@ -102,6 +113,13 @@ import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatu
 
 // 운영관리, VOC관리
 import CamProd from '../components/dashboard/operation/voc/camProd/camProd'
+//open api 
+import customerApi from '../components/dashboard/operation/openApi/customerApi.vue'
+import apiReport from '../components/dashboard/operation/openApi/apiReport/apiReport.vue'
+
+//공지사항
+import notice from '../components/dashboard/operation/notice/notice.vue'
+
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -381,6 +399,8 @@ export default new Router({
                     name: "device-ktt",
                     component: DeviceKttInfo
                 }
+           
+
             ]
         },
 
@@ -525,6 +545,63 @@ export default new Router({
                     name: 'cameraModelInfo',
                     component: cameraModelInfo
                 },
+                {
+                    path: "customer-api",
+                    name: 'customerApi',
+                    component: customerApi
+                },
+                {
+                    path: "api-report",
+                    name: 'apiReport',
+                    component: apiReport
+                },
+                {
+                    path: "notice",
+                    name: 'notice',
+                    component: notice
+                },
+                {
+                    path: "vanner-management",
+                    name: 'vanner-management',
+                    component:vannerManagement
+                },
+                {
+                    path: "vanner-register",
+                    name: 'vanner-register',
+                    component: vannerRegster
+                },
+                {
+                    path: "vanner-detailpage",
+                    name: 'vanner-detailpage',
+                    component: vannerDetailPage,
+                    props:true
+                },     
+                {
+                    path: "register-store",
+                    name: "register-store",
+                    component: registerStore
+                },
+                {
+                    path: "approval-store",
+                    name : "approval-store",
+                    component: approvalStore
+                },
+                {
+                    path: "register-store-list",
+                    name: "register-store-list",
+                    component:registerStoreList
+                },
+                {
+                    path: "approval-api",
+                    name: "approval-api",
+                    component:approvalApi
+                },
+                {
+                    path: "api-info-detail",
+                    name: "api-info-detail",
+                    component:apiInfoDetail
+                }
+               
             ]
         },
 
