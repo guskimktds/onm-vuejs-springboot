@@ -142,11 +142,7 @@ export default{
              if(this.info.user_name === '' || this.info.user_name === undefined){
                 alert("담당자 명을 입력해주세요.");
                 return;
-            }
-            //  if(this.info.dept === '' || this.info.dept === undefined){
-            //     alert("부서 명을 입력해주세요.");
-            //     return;
-            // }
+             }
              if(this.info.tel_no === '' || this.info.tel_no === undefined){
                 alert("담당 번호를 입력해주세요.");
                 return;
@@ -165,7 +161,8 @@ export default{
                 var resCode = response.data.res_code;
                 if(resCode == 200){
                     alert("매장이 성공적으로 등록되었습니다.");
-                    this.resetInfo();
+                    //this.resetInfo();
+                    this.$router.replace('/approval-store');
                 }else if(resCode==410){
                     alert("로그인 세션이 만료되었습니다.");
                     EventBus.$emit('top-path-logout');
@@ -188,9 +185,6 @@ export default{
                     if(num === 1){
                         this.info.tel_no = '';
                         return;
-                    }else if(num === 2){
-                        this.info.site_access_limit = '';
-                        return; 
                     }
                    
                }
