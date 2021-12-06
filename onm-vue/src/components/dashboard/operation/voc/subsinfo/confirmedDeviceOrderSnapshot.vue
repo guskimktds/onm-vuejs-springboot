@@ -13,6 +13,7 @@
                 :headers="headers"
                 :items="pList"
                 hide-default-header
+                hide-default-footer
                 :server-items-length="resPagingInfo.total_cnt"
                 class="elevation-0"
             >    
