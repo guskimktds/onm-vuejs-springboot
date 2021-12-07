@@ -50,12 +50,14 @@ export default {
             text: '오더번호',
             sortable: false, value: 'oderno', class: 'my-header-style'
           },
-          { text: 'id_seq', value: 'id_seq', class: 'my-header-style'},
-          { text: 'tel_no', value: 'tel_no', class: 'my-header-style'},
-          { text: 'status', value: 'status', class: 'my-header-style'},
-          { text: 'ctype', value: 'ctype', class: 'my-header-style'},
-          { text: 'reg_date', value: 'reg_date', class: 'my-header-style'},
-          { text: 'close_date', value: 'close_date', class: 'my-header-style'}
+          { text: '계약ID', value: 'said', class: 'my-header-style'},
+          { text: '일련번호', value: 'id_seq', class: 'my-header-style'},
+          { text: '현장작업자전화번호', value: 'tel_no', class: 'my-header-style'},
+          { text: '오더구분', value: 'oderdivcd', class: 'my-header-style'},
+          { text: '사용상태', value: 'status_code', class: 'my-header-style'},
+          { text: '삭제상태', value: 'close_type', class: 'my-header-style'},
+          { text: '등록일', value: 'reg_date', class: 'my-header-style'},
+          { text: '삭제일', value: 'close_date', class: 'my-header-style'}
         ]
       }
     },

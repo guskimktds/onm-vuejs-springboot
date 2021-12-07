@@ -399,7 +399,6 @@ export default {
       // }
     },
 
-
     // 오더 상세 리스트로 대체 ONM_12002 -> ONM_12010    
     // 오더 상세 : ONM_12010/get_subs_details_list
     clickToSearchUserOrderDetailList: function(values){
@@ -418,7 +417,7 @@ export default {
 
         // this.showDetailObject = !this.showDetailObject
         // if(this.showDetailObject == true){
-          var reqParams = this.handleParams(params) 
+          var reqParams = this.handleParams(params)
           axios.post(url, reqParams, headers)
           .then((response) => {
             var resCode = response.data.res_code;
@@ -1298,7 +1297,7 @@ export default {
       var params = {
         user_id: this.pUserid
       }
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12006/get_device_order`;
 
       var reqParams = this.handleParams(params);
 
@@ -1309,7 +1308,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
-            this.doiList = response.data.data.cam_list;
+            this.doiList = response.data.data.device_order_list;
             this.doiPagingInfo = response.data.data.paging_info;
             // this.showCameraInfoList =! this.showCameraInfoList;
           }else if(resCode==204){
@@ -1343,7 +1342,7 @@ export default {
         user_id: this.pUserid
       }
       // 12월개발 후 api 변경해야함
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15042/get_oss_updatetype`;
 
       var reqParams = this.handleParams(params);
 
@@ -1354,7 +1353,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
-            this.doutList = response.data.data.cam_list;
+            this.doutList = response.data.data.list;
             this.doutPagingInfo = response.data.data.paging_info;
             // this.showCameraInfoList =! this.showCameraInfoList;
           }else if(resCode==204){
@@ -1388,7 +1387,7 @@ export default {
         user_id: this.pUserid
       }
       // 12월개발 후 api 변경해야함
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15043/get_oss_subline_list`;
 
       var reqParams = this.handleParams(params);
 
@@ -1399,7 +1398,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
-            this.dosuList = response.data.data.cam_list;
+            this.dosuList = response.data.data.list;
             this.dosuPagingInfo = response.data.data.paging_info;
             // this.showCameraInfoList =! this.showCameraInfoList;
           }else if(resCode==204){
@@ -1594,7 +1593,7 @@ export default {
       console.log('searchToTempIdOrder')
 
       //12월 개발 후 api 변경해야함
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15038/get_oss_snapshot_list`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15044/get_oss_worker_id`
       var params = {
         said: this.pSaid,
         is_masking: this.is_masking
@@ -1636,7 +1635,7 @@ export default {
       console.log('searchToTempId')
       
       //12월 개발 후 api 변경 필요
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15038/get_oss_snapshot_list`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15045/get_worker_id_info`
       var params = {
         said: this.pSaid,
         is_masking: this.is_masking

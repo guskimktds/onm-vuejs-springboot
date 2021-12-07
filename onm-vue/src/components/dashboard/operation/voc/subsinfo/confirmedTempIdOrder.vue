@@ -45,13 +45,14 @@ export default {
             text: '거래고유번호',
             sortable: false, value: 'guid', class: 'my-header-style'
           },
+          { text: '계약ID', value: 'said', class: 'my-header-style'},
           { text: '오더번호', value: 'oderno', class: 'my-header-style'},
-          { text: '오더순번', value: 'oderseq', class: 'my-header-style'},
-          { text: 'type', value: 'type', class: 'my-header-style'},
-          { text: 'div', value: 'div', class: 'my-header-style'},
-          { text: 'tel_no', value: 'tel_no', class: 'my-header-style'},
-          { text: 'result', value: 'result', class: 'my-header-style'},
-          { text: 'msg', value: 'msg', class: 'my-header-style'},
+          { text: '고객주문버전번호', value: 'oderseq', class: 'my-header-style'},
+          { text: '요청구분', value: 'requesttypecd', class: 'my-header-style'},
+          { text: '오더구분', value: 'oderdivcd', class: 'my-header-style'},
+          { text: '현장작업자전화번호', value: 'spotwrkrtelno', class: 'my-header-style'},
+          { text: '등록일', value: 'reg_date', class: 'my-header-style'},
+          { text: '결과메세지', value: 'resultmsg', class: 'my-header-style'},
         ]
       }
     },

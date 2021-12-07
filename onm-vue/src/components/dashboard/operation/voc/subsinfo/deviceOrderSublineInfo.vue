@@ -45,16 +45,7 @@ export default {
             text: '거래고유번호',
             sortable: false, value: 'guid', class: 'my-header-style'
           },
-          { text: '오더번호', value: 'oderno', class: 'my-header-style'},
-          { text: '오더순번', value: 'oderseq', class: 'my-header-style'},
-          { text: '사용여부', value: 'use_yn', class: 'my-header-style'},
-          { text: '처리희망일자', value: 'appointdate', class: 'my-header-style'},
-          { text: '오더유형', value: 'ordertype', class: 'my-header-style'},
-          { text: '사업장명', value: 'bizpnm', class: 'my-header-style'},
-          { text: '상품코드', value: 'prodcd', class: 'my-header-style'},
-          { text: '파라미터타입코드', value: 'paramtypecd', class: 'my-header-style'},
-          { text: '파라미터타입명칭', value: 'paramtypenm', class: 'my-header-style'},
-          { text: '파라미터값', value: 'paramvalue', class: 'my-header-style'},
+          { text: '보조회선 계약ID', value: 'linesaid', class: 'my-header-style'}
         ]
       }
     },
