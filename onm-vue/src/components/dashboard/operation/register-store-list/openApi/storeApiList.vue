@@ -67,6 +67,12 @@ export default {
     }
   },
 methods: {
+   getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
+      console.log("storeApiList"+this.options.total_cnt)
+    },
+
     handleClick: function(value){
       this.$emit("child", value);
       console.log("로우클릭 값 보내기"+JSON.stringify(value))
@@ -74,67 +80,61 @@ methods: {
     },
 
     searchMethod: function() {
-        this.$emit("searchStore", this.param);
-        console.log("보내는거Tjcl" + this.param)
-    },
-  
-    getDataFromApi() {
-      this.loading = true;
-      this.$emit("pagination", this.options);
+      this.$emit("searchStore", this.param);
+      console.log("보내는거Tjcl" + this.param)
     },
     searchStoreApiButton: function(params){
-        const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/user`;
-        var reqParams = this.setParams(params);
-      
-        console.log(reqParams)
-  
-        axios
-        .post(url, reqParams, headers)
-        .then( (response) => {
-  
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if (resCode == 200) {
-            this.storeList = response.data.data.access_user_list;
-            this.sList = response.data.data.access_cnt;
-            this.storeResPagingInfo = response.data.data.paging_info;
-          }else if(resCode==204){
-            this.storeList = [];
-            this.sList = response.data.data.access_cnt;
-            this.storeResPagingInfo = {};
-            alert('사용자 API 데이터가 없습니다.');
-          }else if(resCode==410){
-            alert("로그인 세션이 만료되었습니다.");
-            EventBus.$emit('top-path-logout');
-              this.$store
-              .dispatch("LOGOUT")
-              .then( res => { 
-              console.log(res.status)}).catch(({ message }) => (this.msg = message))
-              this.$router.replace('/signin')
-          }else {
-            this.storeList = [];
-            this.storeResPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-  
-        })
-        .catch(function (error) {
-          console.log(error);
-          alert("Error")
-        })
-        .finally(function () {
-          // always executed
-        });
-      },
-          setParams:function(options){
-            var values={
-                page_no: options.page,
-                view_cnt: options.itemsPerPage,
-                user_id:this.user_id
-            }
-            return values;
-        },
+      const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/user`;
+      var reqParams = this.setParams(params);
     
+      console.log(reqParams)
+
+      axios
+      .post(url, reqParams, headers)
+      .then( (response) => {
+
+        var resCode = response.data.res_code;
+        var resMsg = response.data.res_msg;
+        if (resCode == 200) {
+          this.storeList = response.data.data.access_user_list;
+          this.sList = response.data.data.access_cnt;
+          this.storeResPagingInfo = response.data.data.paging_info;
+        }else if(resCode==204){
+          this.storeList = [];
+          this.sList = response.data.data.access_cnt;
+          this.storeResPagingInfo = {};
+          alert('사용자 API 데이터가 없습니다.');
+        }else if(resCode==410){
+          alert("로그인 세션이 만료되었습니다.");
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+        }else {
+          this.storeList = [];
+          this.storeResPagingInfo = {};
+          alert(resCode + " / " + resMsg);
+        }
+
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert("Error")
+      })
+      .finally(function () {
+        // always executed
+      });
+    },
+    setParams:function(options){
+      var values={
+        page_no: options.page,
+        view_cnt: options.itemsPerPage,
+        user_id:this.user_id
+      }
+      return values;
+    },
   },
 
   watch: {
@@ -145,14 +145,15 @@ methods: {
       deep: true,
     },
   },
+
   updated() {
-      if(this.last!==this.storeResPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.resPagingInfo.total_cnt!==undefined){
+    if(this.last!==this.storeResPagingInfo.total_cnt){
+      this.options.page=1
+    }
+    if(this.storeResPagingInfo.total_cnt!==undefined){
       this.last=this.storeResPagingInfo.total_cnt
-      }
-  },
+    }
+  }
     
 }
 </script>
