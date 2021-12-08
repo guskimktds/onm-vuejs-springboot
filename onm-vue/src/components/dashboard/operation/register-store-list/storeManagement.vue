@@ -31,7 +31,7 @@
                                 <v-container>
                                     <table>
                                          <tr>
-                                            <th  style=" margin-left: 20px; font-size:8px;">
+                                            <!-- <th  style=" margin-left: 20px; font-size:8px;">
                                                 <label id ="user_name">
                                                     담당자 명:
                                                 </label>
@@ -43,13 +43,13 @@
                                                 
                                                 >
                                                 </v-text-field>
-                                            </td>
-                                            <th style=" margin-left: 20px;  font-size:8px;">
+                                            </td> -->
+                                            <th style=" margin-left: 20px; font-size:8px;" >
                                                 <label id ="tel_no">
                                                     담당자 번호:
                                                 </label>
                                             </th>
-                                            <td cols="2" >
+                                            <td cols="3" >
                                                 <v-text-field
                                                 v-model="searchStore.ex_tel_no"
                                                 id="tel_no"   
@@ -131,7 +131,7 @@
                          <td v-if="store.status_code === ''" style="text-align:center;width:20%">
                             -
                         </td>
-                        <td v-else-if="store.status_code === 'Y'" style="color:red;text-align:center;width:20%"> <!--N으로 바꾸기-->
+                        <td v-else-if="store.status_code === 'N'" style="color:red;text-align:center;width:20%"> <!--N으로 바꾸기-->
                             <button @click="sendApproval(store)" style="color:white;background-color:black;width:70px;border-radius:3px;">승인요청</button>
                         </td>
                         <td v-else style="text-align:center;width:20%">
