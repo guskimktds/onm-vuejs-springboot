@@ -498,6 +498,15 @@ export default ({
         },
         acceptRequest(){ //승인요청을 받아주는 method
             this.receivedValue.site_access_limit = this.getValue.site_access_limit;
+
+            if(this.receivedValue.control_type === ''){
+                  this.$fire({
+                       title: "제한 종류를 선택해주세요.",
+                       type : "error",
+                       html: ""
+                })
+                return;
+            }
            
             if(this.receivedValue.control_type === 'BOTH' || this.receivedValue.control_type === 'SITE'){
                 if(this.receivedValue.site_access_limit === ''){
