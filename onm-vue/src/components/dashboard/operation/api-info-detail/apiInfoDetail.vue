@@ -395,15 +395,18 @@ export default ({
                         }else {
                             this.mainBtn = 0;
                         }
-
+                        
                         for(var i = 0; i < this.api_list.length; i++){
+                           
                             if(this.api_list[i].use_yn === 'Y'){
-                                if(this.api_list[i].api_access_limit === ''){
+                                this.receivedValue.selectedApi.push(this.api_list[i]);
+                                 if(this.api_list[i].api_access_limit === ''){
                                     this.api_list[i].api_access_limit = 0;
                                 }
-                                this.receivedValue.selectedApi[i] = this.api_list[i];
                             } 
                         }
+                        
+                        console.log(this.receivedValue.selectedApi);
                         
                     }else if(resCode==204){
                     //this.getValue = {};
@@ -456,13 +459,11 @@ export default ({
         },
         chooseControlType(){
             this.getValue.control_type = this.defaultSelected.value;
-            this.receivedValue.control_type = this.getValue.control_type;
-         
+            this.receivedValue.control_type = this.getValue.control_type; 
         },
         chooseAccess_limit_type(){
             this.getValue.access_limit_type = this.defaultTypeSelected.value;
             this.receivedValue.access_limit_type = this.getValue.access_limit_type;
-            console.log(this.receivedValue.access_limit_type);
         },
         rejectRequest(){  //승인신청 거절하는 method + 반려 거절 코드 넣기
             var result = confirm("신청을 반려하시겠습니까?");
@@ -524,7 +525,7 @@ export default ({
                 }
             }
 
-            var result = confirm("신청을 승인하시겠습니까?");   // api 에서 a 만 코드 변경해주시
+            var result = confirm("신청을 승인하시겠습니까?");   // api 에서 a 만 코드 변경해주기
             if(result){
                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13041/accept_site`;
                 axios.post(url,this.receivedValue,headers) // 다시 만들기
