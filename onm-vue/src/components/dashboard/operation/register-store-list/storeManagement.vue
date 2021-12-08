@@ -31,9 +31,9 @@
                                 <v-container>
                                     <table>
                                          <tr>
-                                            <!-- <th  style=" margin-left: 20px; font-size:8px;">
+                                            <th  style=" margin-left: 20px; font-size:8px;">
                                                 <label id ="user_name">
-                                                    담당자 명:
+                                                    매장 명:
                                                 </label>
                                             </th>
                                             <td cols="2" >
@@ -43,7 +43,7 @@
                                                 
                                                 >
                                                 </v-text-field>
-                                            </td> -->
+                                            </td>
                                             <th style=" margin-left: 20px; font-size:8px;" >
                                                 <label id ="tel_no">
                                                     담당자 번호:
@@ -334,6 +334,8 @@ const headers={
                 this.infoObject.checkedList = [];
                 this.checkedList  = [];
                 this.searchedStoreList = [];
+                this.curpagenum = 1,
+                this.serachCurPagenum = 1,
                 this.getStoreList();
             },
             findStores(){
