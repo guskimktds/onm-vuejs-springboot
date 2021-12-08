@@ -323,10 +323,11 @@ const headers={
                         if(this.infoObject.site_access_limit === ''){
                             this.infoObject.site_access_limit = 0;
                         }
-
+                        
+                        this.selectedApi = [];
                        for(var i = 0; i < this.api_list.length; i++){ // 사용 api만 체크
                             if(this.api_list[i].use_yn === 'Y'){
-                                this.selectedApi[i] = this.api_list[i];
+                                this.selectedApi.push(this.api_list[i]);
                             } 
                         }
                  
@@ -474,7 +475,7 @@ const headers={
                }
             },
             apiSave(){ // api 선택 수정
-                
+
                 if(this.selectedApi.length === 0){
                    this.$fire({
                        title: "API를 선택해주세요.",
