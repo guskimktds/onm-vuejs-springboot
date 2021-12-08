@@ -68,7 +68,7 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field
-                    label="사이트 ID"
+                    label="업체 ID"
                     v-model="param.site_id"
                     placeholder=" "
                     >
@@ -76,7 +76,7 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="2">
                     <v-text-field
-                    label="사이트 명"
+                    label="업체 명"
                     v-model="param.site_name"
                     placeholder=" "
                     >
