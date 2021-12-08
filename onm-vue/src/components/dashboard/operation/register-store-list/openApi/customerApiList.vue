@@ -123,7 +123,8 @@ export default {
       var values={
         page_no: options.page,
         view_cnt: options.itemsPerPage,
-        api_no:this.api_no
+        api_no:this.api_no,
+        site_id: this.$route.params.site_id
       }
       return values;
     },
