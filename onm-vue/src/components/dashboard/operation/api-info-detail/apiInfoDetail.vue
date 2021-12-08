@@ -397,9 +397,9 @@ export default ({
                         }else {
                             this.mainBtn = 0;
                         }
-                        
+                       this.receivedValue.selectedApi.length = 0;
+
                         for(var i = 0; i < this.api_list.length; i++){
-                           
                             if(this.api_list[i].use_yn === 'Y'){
                                 this.receivedValue.selectedApi.push(this.api_list[i]);
                                  if(this.api_list[i].api_access_limit === ''){
@@ -408,10 +408,7 @@ export default ({
                             } 
                         }
                         
-                        console.log(this.receivedValue.selectedApi);
-                        
                     }else if(resCode==204){
-                    //this.getValue = {};
                     this.api_list =[];
                     alert('매장 정보 데이터가 없습니다.');
                     }else if(resCode==410){
@@ -546,8 +543,6 @@ export default ({
                      if(response.data.res_code === 200){
                            alert("신청이 승인되었습니다.");
                             this.mainBtn = 0;
-                            this.api_list = [];
-                            this.getApiInfo();
                         }else{
                            alert("승인 중 오류가 발생했습니다.");
                             return;
