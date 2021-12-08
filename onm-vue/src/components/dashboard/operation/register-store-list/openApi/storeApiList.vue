@@ -131,7 +131,8 @@ methods: {
       var values={
         page_no: options.page,
         view_cnt: options.itemsPerPage,
-        user_id:this.user_id
+        user_id:this.user_id,
+        site_id:     this.$route.params.site_id
       }
       return values;
     },
