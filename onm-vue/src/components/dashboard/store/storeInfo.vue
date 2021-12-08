@@ -260,7 +260,9 @@ export default {
         user_id: "",
         tel_no: "",
         is_masking:"",
-        date_yn: true
+        date_yn: true,
+        prod_code: "",
+        local_gw_id: ""
       },
 
     };
@@ -271,9 +273,9 @@ export default {
       this.showDetailObject=false
       this.isReloadDetailObject=false
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13001/get_user_list`;
-
+      console.log('params',JSON.stringify(params))
       var reqParams = this.handleParams(params);
-      console.log(reqParams)
+      console.log('reqparmas',reqParams)
       if(!reqParams.start_date&&!reqParams.said&&!reqParams.user_name&&!reqParams.user_id&&!reqParams.tel_no){
              this.$fire({
               title: "검색값을 입력해주세요.",
@@ -294,7 +296,7 @@ export default {
           }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
-            alert('매장정보 조회 데이터가 없습니다.');
+            console.log('매장정보 조회 데이터가 없습니다.');
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
@@ -744,6 +746,24 @@ export default {
       ){
         newParams.is_masking = this.searchParam.is_masking ? "N" : "Y";
       }
+
+      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
+        newParams.local_gw_id = params.local_gw_id;
+      } else if (
+        this.searchParam.local_gw_id !== undefined &&
+        this.searchParam.local_gw_id !== ""
+      ) {
+        newParams.local_gw_id = this.searchParam.local_gw_id;
+      }
+      if (params.prod_code !== undefined && params.prod_code !== "") {
+        newParams.prod_code = params.prod_code;
+      } else if (
+        this.searchParam.prod_code !== undefined &&
+        this.searchParam.prod_code !== ""
+      ) {
+        newParams.prod_code = this.searchParam.prod_code;
+      }
+
 
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){
         alert('형식에 맞는 날짜 검색값을 입력해주세요')

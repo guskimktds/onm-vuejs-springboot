@@ -6,7 +6,7 @@
     >
         <base-material-card
             color="customheader"
-            title="카메라 그룹 정보(12월 개발 예정)"
+            title="카메라 그룹 정보"
             class="px-2 py-1 customgrey"
             >
             <v-data-table
@@ -42,19 +42,16 @@ export default {
         loading: true,
         headers: [
           {
-            text: '거래고유번호',
-            sortable: false, value: 'guid', class: 'my-header-style'
+            text: '카메라그룹아이디',
+            sortable: false, value: 'cam_group_id', class: 'my-header-style'
           },
-          { text: '오더번호', value: 'oderno', class: 'my-header-style'},
-          { text: '오더순번', value: 'oderseq', class: 'my-header-style'},
-          { text: '사용여부', value: 'use_yn', class: 'my-header-style'},
-          { text: '처리희망일자', value: 'appointdate', class: 'my-header-style'},
-          { text: '오더유형', value: 'ordertype', class: 'my-header-style'},
-          { text: '사업장명', value: 'bizpnm', class: 'my-header-style'},
-          { text: '상품코드', value: 'prodcd', class: 'my-header-style'},
-          { text: '파라미터타입코드', value: 'paramtypecd', class: 'my-header-style'},
-          { text: '파라미터타입명칭', value: 'paramtypenm', class: 'my-header-style'},
-          { text: '파라미터값', value: 'paramvalue', class: 'my-header-style'},
+          { text: '사용자ID', value: 'user_id', class: 'my-header-style'},
+          { text: '카메라그룹이름', value: 'cam_group_name', class: 'my-header-style'},
+          { text: '기본그룹여부', value: 'default_yn', class: 'my-header-style'},
+          { text: '정렬순서', value: 'orderby_no', class: 'my-header-style'},
+          { text: '서비스상태코드', value: 'status_code', class: 'my-header-style'},
+          { text: '등록일시', value: 'reg_date', class: 'my-header-style'},
+          { text: '수정일시', value: 'mod_date', class: 'my-header-style'},
         ]
       }
     },

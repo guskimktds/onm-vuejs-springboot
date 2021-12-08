@@ -1209,7 +1209,7 @@ export default {
         user_id: this.pUserid
       }
       // 12월 개발된 api 로 변경 필요
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15047/get_cam_group_info`;
 
       var reqParams = this.handleParams(params);
 
