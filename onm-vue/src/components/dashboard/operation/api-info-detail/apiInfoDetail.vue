@@ -221,7 +221,7 @@
             title="API 목록"
             class="px-5 py-3"
             >
-                <table width=100%>
+                <table width=100% v-show="receivedValue.selectedApi.length > 0">
                     <tr>
                         <th>API No</th>
                         <th>Description</th>
@@ -242,7 +242,10 @@
                             </v-text-field>
                         </td>
                     </tr>            
-                        </table>
+                </table>
+                <p v-show="receivedValue.selectedApi.length === 0" style="margin-top:20px; font-size:15px;">
+                    사용하는 API가 존재하지 않습니다.
+                </p>    
                     </base-material-card>
                 </v-container>
                  <p style="margin:-10px 0 0 10px; padding-bottom:10px;">
