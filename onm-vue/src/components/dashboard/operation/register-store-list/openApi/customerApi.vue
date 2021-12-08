@@ -356,6 +356,7 @@ export default {
     }
   },
   created(){
+    
     console.log(this.$route.params.site_id);
     
   }
