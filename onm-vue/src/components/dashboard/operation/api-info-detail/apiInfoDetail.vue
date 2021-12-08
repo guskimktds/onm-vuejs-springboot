@@ -223,12 +223,12 @@
             >
                 <table width=100% v-show="receivedValue.selectedApi.length > 0">
                     <tr>
-                        <th>API No</th>
-                        <th>Description</th>
-                        <th>제한 단위/량</th>
+                        <th >API No</th>
+                        <th stlye="padding:3px;">Description</th>
+                        <th stlye="padding:3px;">제한 단위/량</th>
                     </tr>
                     <tr v-for="(api,index) in receivedValue.selectedApi" :key="index">
-                        <td>
+                        <td > 
                             {{api.api_no}}
                         </td>
                         <td >
@@ -498,16 +498,15 @@ export default ({
         acceptRequest(){ //승인요청을 받아주는 method
             this.receivedValue.site_access_limit = this.getValue.site_access_limit;
             this.receivedValue.control_type = this.getValue.control_type;
-           
-            if(this.receivedValue.control_type){
-                if(this.receivedValue.control_type === ''){
-                        this.$fire({
-                       title: "제한종류 타입을 선택해주세요.",
-                       type : "error",
-                       html: ""
+          
+            if(this.receivedValue.control_type === ''){
+                this.$fire({
+                    title: "제한종류 타입을 선택해주세요.",
+                    type : "error",
+                    html: ""
                 })
                 return;
-                }
+                
             }
             
             if(this.receivedValue.control_type === 'BOTH' || this.receivedValue.control_type === 'SITE'){
@@ -599,7 +598,7 @@ export default ({
   th, td {
     border-bottom: 1px solid #444444;
     border-left: 1px solid #444444;
-    padding: 10px;
+    padding-left: 10px;
   }
   th:first-child, td:first-child {
     border-left: none;
