@@ -11,7 +11,7 @@
             class="px-5 py-3"
             >
            <v-row>
-                <v-col cols="3">
+                <v-col cols="12" sm="6" md="2">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -30,7 +30,7 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col cols="3">
+                <v-col  cols="12" sm="6" md="2">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -58,7 +58,7 @@
                 </v-col>
             </v-row> 
             <v-row>
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="12" sm="6" md="2" style="margin-left:3px;">
                     <v-text-field
                     label="승인자 ID"
                     v-model="param.adm_id"
