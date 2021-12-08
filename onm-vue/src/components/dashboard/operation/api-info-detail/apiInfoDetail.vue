@@ -339,7 +339,6 @@ export default ({
         getApiInfo(){
                if(this.receivedValue.site_id){
                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13036/get_siteInfoDetails`
-                
                 var tsJson = new Object();
                 tsJson.site_id = this.receivedValue.site_id; 
                 
@@ -365,7 +364,7 @@ export default ({
                         this.receivedValue.site_id = this.getValue.site_id;
                         this.api_list=response.data.data.api_list;
                         this.checkStatus(this.getValue.status_code);
-                
+                     
                         if(this.getValue.access_limit_type === 'Y'){ // 사용 제한 타입 
                             this.limit_type = "매년";
                         }else if(this.getValue.access_limit_type === 'M'){
@@ -501,16 +500,19 @@ export default ({
         },
         acceptRequest(){ //승인요청을 받아주는 method
             this.receivedValue.site_access_limit = this.getValue.site_access_limit;
-
-            if(this.receivedValue.control_type === ''){
-                  this.$fire({
-                       title: "제한 종류를 선택해주세요.",
+            this.receivedValue.control_type = this.getValue.control_type;
+           
+            if(this.receivedValue.control_type){
+                if(this.receivedValue.control_type === ''){
+                        this.$fire({
+                       title: "제한종류 타입을 선택해주세요.",
                        type : "error",
                        html: ""
                 })
                 return;
+                }
             }
-           
+            
             if(this.receivedValue.control_type === 'BOTH' || this.receivedValue.control_type === 'SITE'){
                 if(this.receivedValue.site_access_limit === ''){
                         this.$fire({
@@ -521,7 +523,6 @@ export default ({
                 return;
                 }
             }
-
             
             if(this.receivedValue.control_type === 'BOTH' || this.receivedValue.control_type === 'API'){
                 
@@ -545,6 +546,7 @@ export default ({
                      if(response.data.res_code === 200){
                            alert("신청이 승인되었습니다.");
                             this.mainBtn = 0;
+                            this.api_list = [];
                             this.getApiInfo();
                         }else{
                            alert("승인 중 오류가 발생했습니다.");
