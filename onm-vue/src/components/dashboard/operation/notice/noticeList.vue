@@ -104,6 +104,15 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+                <v-col>
+                   <v-select 
+                  item-text="state" 
+                  item-value="abbr" 
+                  :items="osType"
+                  label="OS 타입" 
+                  v-model="editedItem.os_type"
+                  ></v-select>
+                </v-col>
                                     </v-row>
                         <v-col
                           cols="12"
@@ -244,6 +253,7 @@ export default {
           title: '',
           content: '',
           content_html: '',
+          os_type:''
         },
         defaultItem: {
           boarrd_id: '',
@@ -253,8 +263,16 @@ export default {
           title: '',
           content: '',
           content_html: '',
+           os_type:''
         },
-        newPlist: []
+        newPlist: [],
+         osType:[
+              {state: 'All'     , abbr: 'ALL'},
+              {state: 'Android'     , abbr: 'Android'},
+              {state: 'iOS'     , abbr: 'iOS'},
+              {state: 'PC'     , abbr: 'PC'},
+              {state: 'PCAPP'     , abbr: 'PCAPP'},
+            ],
       }
     },
     computed: {
@@ -351,7 +369,8 @@ export default {
             disp_yn : this.editedItem.disp_yn,
             title : this.editedItem.title,
             content : this.editedItem.content,
-            content_html : this.editedItem.content_html
+            content_html : this.editedItem.content_html,
+             os_type : this.editedItem.os_type
           }
           var reqParams = params
           reqParams.disp_end_date = params.disp_end_date.replace(/-/g,"").split(' ', 1)[0]
