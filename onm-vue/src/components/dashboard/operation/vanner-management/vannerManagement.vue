@@ -7,6 +7,13 @@
           v-bind:localGwOptions="localGwOptions"
           
         ></vanner-query>
+          
+   
+      <div class = "button">
+        <router-link to="/operation/vanner-register">배너등록</router-link>
+      </div>
+ 
+
         <vanner-list
         v-bind:pList="pList"
         v-bind:resPagingInfo="resPagingInfo"
@@ -236,5 +243,15 @@ export default {
 </script>
 
 <style scoped>
-
+.button{
+  width:100px;
+  height: 50px;
+  float: right;
+  padding-top:10px;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 5px;
+  border: 2px solid #ffffff;
+  color: white;
+}
 </style>
