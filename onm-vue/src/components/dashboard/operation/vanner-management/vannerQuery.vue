@@ -165,7 +165,7 @@ export default {
             dialog: false,
             dialogDelete: false,
             images: [],
-            items: ["전체", "로그아웃", "공지사항", "타입명 C"],
+            items: ["전체", "로그아웃", "공지사항"],
             items2: ["전체", "노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vitem:'전체',
@@ -226,9 +226,6 @@ export default {
             }
             if(this.typeitem == this.items[2]){
                     this.param.img_type = 'NOTICE'
-            }
-            if(this.typeitem == this.items[3]){
-                    this.param.img_type = '03'
             }
             if(this.typeitem == this.items[0]){
                     this.param.img_type = ''

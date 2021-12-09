@@ -113,11 +113,14 @@
             style="width:550px; height: 450px; margin-left: 132px; border:1px solid #999999; margin-top: 10px;"
             id="file">
             <div v-if="istf" style="width: 400px; height: 300px; margin-left: -15px;">
-               <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역</span></div>
-          
-            <v-img :src="images" v-if="vitem.tem1" style='height:300px;width:200px; '></v-img>
-            <v-img :src="images" v-else-if="vitem.tem2" style='height:400px;width:500px;'></v-img>
-            <v-img :src="images" v-else-if="vitem.tem3" style='height:50px;width:50px;'></v-img>
+               <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역1</span></div>
+
+            <div v-if="vitem.tem1" style="height:300px;width:200px; overflow: hidden">
+            <v-img :src="images" v-if="vitem.tem1" style='max-height:100%;width:100%;'></v-img></div>
+
+            <div v-if="vitem.tem2" style="height:400px;width:500px; overflow: hidden">
+            <v-img :src="images" v-if="vitem.tem2" style='height:100%;width:100%;'></v-img></div>
+            
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
         </v-row>
@@ -176,15 +179,14 @@ export default {
             gw_id: '',
             resPagingInfo: {},
             istf: true,
-            items: ["로그아웃 (300 X 200 px)", "공지사항 (400 X 500 px)","타입명 C (50 X 50 px)"],
+            items: ["로그아웃 (300 X 200 px)", "공지사항 (400 X 500 px)"],
             items2: ["노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vvitem:'',
             vitem: 
                 {
                     tem1: false,
-                    tem2: false,
-                    tem3: false
+                    tem2: false
                 }
             ,
             // start_date: dateInfo().currentDateDashFormat,
@@ -264,6 +266,8 @@ export default {
                     // formData.append('files', this.editedItem.banner_image)
                     }
                     this.istf = false
+                    console.log(this.images)
+                    console.log(input.files[0])
                 }
             },
             selectType(){
@@ -271,17 +275,10 @@ export default {
                 if(this.items[0]==this.typedata){
                     this.vitem.tem1 = true
                     this.vitem.tem2 = false
-                    this.vitem.tem3 = false
                 }
                 if(this.items[1]==this.typedata){
                     this.vitem.tem1 = false
                     this.vitem.tem2 = true
-                    this.vitem.tem3 = false
-                }
-                if(this.items[2]==this.typedata){
-                    this.vitem.tem1 = false
-                    this.vitem.tem2 = false
-                    this.vitem.tem3 = true
                 }
             }
             },
@@ -298,9 +295,6 @@ export default {
            }
            if(this.typedata == this.items[1]){
                this.editedItem.img_type = 'NOTICE'
-           }
-           if(this.typedata == this.items[2]){
-               this.editedItem.img_type = '03'
            }
            if(this.typedata2 == this.items2[0]){
                 this.editedItem.disp_yn = 'Y'

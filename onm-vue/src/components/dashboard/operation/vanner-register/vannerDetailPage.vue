@@ -114,10 +114,11 @@
             <div v-if="istf" style="width: 400px; height: 300px; margin-left: -15px;">
                <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역</span></div>
           
-            
-            <v-img :src="images" v-if="vitem.tem1" style='height:300px;width:200px; '></v-img>
-            <v-img :src="images" v-else-if="vitem.tem2" style='height:400px;width:500px;'></v-img>
-            <v-img :src="images" v-else-if="vitem.tem3" style='height:50px;width:50px;'></v-img>
+            <div v-if="vitem.tem1" style="height:300px;width:200px; overflow: hidden">
+            <v-img :src="images" v-if="vitem.tem1" style='height:auto;width:auto; '></v-img></div>
+
+            <div v-if="vitem.tem2" style="height:400px;width:500px; overflow: hidden">
+            <v-img :src="images" v-if="vitem.tem2" style='height:auto;width:auto;'></v-img></div>
             <!-- <v-img :src="images"></v-img> -->
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
@@ -178,7 +179,7 @@ export default {
             gw_id: '',
             resPagingInfo: {},
             istf: true,
-            items: ["로그아웃 (300 X 200 px)", "공지사항 (400 X 500 px)","타입명 C (50 X 50 px)"],
+            items: ["로그아웃 (300 X 200 px)", "공지사항 (400 X 500 px)"],
             items2: ["노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vvitem:'',
@@ -238,9 +239,6 @@ export default {
            }
            if(this.$route.params.val.img_type == 'NOTICE'){
                this.bannerType = '공지사항 (400 X 500 px)'
-           }
-           if(this.$route.params.val.img_type == '03'){
-               this.bannerType = '타입명 C'
            }
            if(this.$route.params.val.disp_yn == 'Y'){
                this.typedate = "노출"
@@ -305,17 +303,10 @@ export default {
                 if(this.items[0]==this.bannerType){
                     this.vitem.tem1 = true
                     this.vitem.tem2 = false
-                    this.vitem.tem3 = false
                 }
                 if(this.items[1]==this.bannerType){
                     this.vitem.tem1 = false
                     this.vitem.tem2 = true
-                    this.vitem.tem3 = false
-                }
-                if(this.items[2]==this.bannerType){
-                    this.vitem.tem1 = false
-                    this.vitem.tem2 = false
-                    this.vitem.tem3 = true
                 }
             },
          saveItems(){
@@ -372,11 +363,6 @@ export default {
                 this.dialogNum2 = true
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '제목을 입력 해주세요'
-                return
-            }else if(this.dispdate == this.editedItem.disp_start_date){
-                this.dialogNum2 = true
-                this.toolMsg = '필수값 확인'
-                this.dialogMsg = '노출 기간은 오늘 이후 날짜로 설정 가능합니다'
                 return
             }else if(this.editedItem.bannerImage == ''){
                 this.dialogNum2 = true

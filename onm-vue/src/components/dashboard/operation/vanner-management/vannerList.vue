@@ -52,11 +52,11 @@ export default {
           // },
 
           { text: '배너타입', value: 'img_type', width: '5%', align: 'center'},
-          { text: 'OS타입', value: 'os_type', width: '8%', align: 'center'},
           { text: '제목', value: 'title', width: '20%', align: 'center'},
-          { text: '노출여부', value: 'disp_yn', width: '5%', align: 'center' },
-          { text: '노출시작일', value: 'disp_start_date',width: '10%', align: 'center' },
-          { text: '노출종료일', value: 'disp_end_date', width: '10%', align: 'center' },
+          { text: 'OS타입', value: 'os_type', width: '8%', align: 'center'},
+          { text: '노출여부', value: 'pop_up_yn', width: '5%', align: 'center' },
+          // { text: '노출시작일', value: 'disp_start_date',width: '10%', align: 'center' },
+          // { text: '노출종료일', value: 'disp_end_date', width: '10%', align: 'center' },
           // { text: '작성자', value: 'reg_id', width: '10%', align: 'center' },
           // { text: '등록일시', value: 'reg_date' },
           { text: '등록일자', value: 'reg_date', width: '10%', align: 'center' }, 
@@ -70,8 +70,10 @@ export default {
       },
       passPage(value){
         this.$router.push({name:"vanner-detailpage", params :{'val' : value}});
+      },
+      popUpYn(){
+        
       }
-      
     },
   watch: {
     options: {
