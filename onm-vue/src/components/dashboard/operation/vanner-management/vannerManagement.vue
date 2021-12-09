@@ -81,10 +81,11 @@ export default {
                 this.gw_id=reqParams.local_gw_id
                 console.log('paging')
                 console.log(this.resPagingInfo)
+                console.log(this.pList)
               }else if(resCode==204){
                 this.pList = [];
                 this.resPagingInfo = {};
-                // alert('코드 관리 데이터가 없습니다.');
+                alert('코드 관리 데이터가 없습니다.');
               }else if(resCode==410){
                 alert("로그인 세션이 만료되었습니다.");
               //  EventBus.$emit('top-path-logout');
@@ -97,6 +98,13 @@ export default {
                 this.pList = [];
                 this.resPagingInfo = {};
                 alert(resCode + " / " + resMsg);
+              }
+              for(let i = 0; i < this.pList.length; i++){
+              if(this.pList[i].pop_up_yn == 'Y'){
+                this.pList[i].pop_up_yn = '노출'
+              }else{
+                this.pList[i].pop_up_yn = '미노출'
+              }
               }
             })
             .catch((ex) => {
