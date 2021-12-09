@@ -14,7 +14,6 @@ export default {
             yAxes: [{
               ticks: {
                 fontColor: "black",
-                beginAtZero :true
               }
             }],
         
