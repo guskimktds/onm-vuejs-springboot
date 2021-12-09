@@ -13,7 +13,10 @@ export default {
           scales: {
             yAxes: [{
               ticks: {
-                fontColor: "black"
+                fontColor: "black",
+                suggestedMax:100,
+                min:0,
+                stepSize: 15,
               }
             }],
         

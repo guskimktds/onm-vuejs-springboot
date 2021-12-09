@@ -1220,7 +1220,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
-            this.cgiList = response.data.data.cam_list;
+            this.cgiList = response.data.data.cam_group_list;
             this.cgiPagingInfo = response.data.data.paging_info;
             // this.showCameraInfoList =! this.showCameraInfoList;
           }else if(resCode==204){
