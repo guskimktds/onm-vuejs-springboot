@@ -408,7 +408,7 @@ export default {
         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12010/get_subs_details_list`
         
         var params = {
-          guid:values.guid,
+          said:values.said,
           is_masking: this.searchParam.is_masking? "N" : "Y"
         }
 

@@ -30,16 +30,15 @@ export default {
     return {
       headers: [
         {
-          text: "사용자 ID",
+          text: "거래고유번호",
           align: "start",
           sortable: false,
-          value: "user_id",
+          value: "guid",
         },
+        { text: "계약ID", value: "said" },
         { text: "서비스번호", value: "service_no" },
         { text: "시스템ID", value: "system_id" },
-        { text: "단말설치여부", value: "device_yn" },
-        { text: "상태 코드", value: "status_code" },
-        { text: "등록일", value: "reg_date" },
+        { text: "KTT 계약 ID", value: "contract_id" }
       ],
     };
   },
