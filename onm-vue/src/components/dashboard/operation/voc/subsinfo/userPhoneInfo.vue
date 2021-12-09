@@ -17,6 +17,15 @@
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-0"
       >
+      <template v-slot:header="{ props: { headers } }">
+        <thead>
+          <tr>
+             <th v-for="h in headers" :class="h.class" v-bind:key="h">
+              <span>{{h.text}}</span>
+             </th>
+          </tr>
+        </thead>
+      </template> 
       <template v-slot:item.status_code="{item}">
               <span>{{ switchString(item.status_code) }}</span>
       </template>
@@ -44,8 +53,7 @@ export default {
           sortable: false, value: "user_id", class: 'my-header-style'
         },
         { text: "전화번호", value: "tel_no" , class: 'my-header-style'},
-        
-        { text: "권한", value: "auth" },
+        { text: "권한", value: "auth" , class: 'my-header-style'},
         { text: "사용자이름", value: "user_name", class: 'my-header-style' },
         { text: "전화번호ID", value: "tel_no_id", class: 'my-header-style' },
         { text: "알림설정권한", value: "alim_auth_yn", class: 'my-header-style' },
@@ -92,6 +100,9 @@ export default {
       deep: true,
     },
   },
+  mounted () {
+      this.getDataFromApi()
+    }
 }
 
 </script>

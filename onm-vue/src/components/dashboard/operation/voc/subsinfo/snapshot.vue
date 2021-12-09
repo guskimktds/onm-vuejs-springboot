@@ -17,6 +17,15 @@
                 :server-items-length="snPagingInfo.total_cnt"
                 class="elevation-0"
             >          
+              <template v-slot:header="{ props: { headers } }">
+                <thead>
+                  <tr>
+                    <th v-for="h in headers" :class="h.class" v-bind:key="h">
+                      <span>{{h.text}}</span>
+                    </th>
+                  </tr>
+                </thead>
+              </template>
             </v-data-table>
         </base-material-card>
     </v-container>

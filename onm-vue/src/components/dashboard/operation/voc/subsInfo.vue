@@ -61,7 +61,7 @@
 
       <!-- 연결된 캠, 모델, 제조사 조회, 캠상태 -->
       <connected-camera-info v-bind:pList=dcList v-bind:resPagingInfo=dcPagingInfo></connected-camera-info>
-      <!-- 단말오더 정보 확인 -->
+      <!-- 단말오더 -->
       <device-order-info v-bind:pList=doiList v-bind:doiPagingInfo=doiPagingInfo></device-order-info>
       <!-- 단말오더 updateType -->
       <update-type v-bind:pList=doutList v-bind:resPagingInfo=doutPagingInfo></update-type>
@@ -1205,10 +1205,10 @@ export default {
     searchToCameraGroupInfo: function () {
       console.log('searchToCameraGroupInfo')
       var params = {
-        user_id: this.pUserid
+        said: this.pSaid
       }
       // 12월 개발된 api 로 변경 필요
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15047/get_cam_group_info`;
 
       var reqParams = this.handleParams(params);
 
@@ -1219,7 +1219,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
-            this.cgiList = response.data.data.cam_list;
+            this.cgiList = response.data.data.cam_group_list;
             this.cgiPagingInfo = response.data.data.paging_info;
             // this.showCameraInfoList =! this.showCameraInfoList;
           }else if(resCode==204){
@@ -1297,7 +1297,7 @@ export default {
       var params = {
         user_id: this.pUserid
       }
-      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12006/get_device_order`;
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12008/get_device_order_detail_list`;
 
       var reqParams = this.handleParams(params);
 
@@ -1308,7 +1308,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
-            this.doiList = response.data.data.device_order_list;
+            this.doiList = response.data.data.device_order_detail_list;
             this.doiPagingInfo = response.data.data.paging_info;
             // this.showCameraInfoList =! this.showCameraInfoList;
           }else if(resCode==204){

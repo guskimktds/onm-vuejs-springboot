@@ -6,7 +6,7 @@
     >
         <base-material-card
             color="customheader"  
-            title="단말오더 정보 확인(12월개발 예정)"
+            title="단말오더"
             class="px-2 py-1 customgrey"
             >
             <v-data-table
@@ -45,14 +45,16 @@ export default {
             text: '거래고유번호',
             sortable: false, value: 'guid', class: 'my-header-style'
           },
-          { text: '희망일시', value: 'appointdate', class: 'my-header-style'},
-          { text: '오더구분', value: 'oderdivcd', class: 'my-header-style'},
-          { text: '오더번호', value: 'oderno', class: 'my-header-style'},
-          { text: '오더순번', value: 'oderseq', class: 'my-header-style'},
-          { text: '계약ID', value: 'said', class: 'my-header-style'},
-          { text: '오더유형', value: 'ordertype', class: 'my-header-style'},
-          { text: '등록일', value: 'reg_date', class: 'my-header-style'},
-          { text: '청약처리통보여부', value: 'notice_yn', class: 'my-header-style'},
+          { text: '단말변경유형코드', value: 'termchangecd', class: 'my-header-style'},
+          { text: 'MAC ID', value: 'mac_id', class: 'my-header-style'},
+          { text: '단말타입', value: 'termtype', class: 'my-header-style'},
+          { text: '제조사명', value: 'mfcname', class: 'my-header-style'},
+          { text: '제품코드', value: 'productcode', class: 'my-header-style'},
+          { text: '모델명', value: 'modelname', class: 'my-header-style'},
+          { text: '오더타입', value: 'ordertype', class: 'my-header-style'},
+          { text: '오더번호', value: 'orderno', class: 'my-header-style'},
+          { text: 'changeareacd', value: 'changeareacd', class: 'my-header-style'},
+          { text: '계약ID', value: 'said', class: 'my-header-style'}
         ]
       }
     },
