@@ -2,9 +2,9 @@
 <v-container fluid>
     <div class="row">
         <div class="col">
-                <div class="grid-board">
+                <base-material-card class="grid-board " dark>
                     
-                    <div>API별 호출 수</div>
+                    <div style="font-size:20px; font-weight:bold; text-align:left;">API별 호출 수</div>
                             <v-row>
         <v-col>
 
@@ -30,7 +30,7 @@
                         :header-props="{ sortIcon: null }"
                         >
                         </v-data-table>
-                    </div>
+                </base-material-card>
         </div>
             
         <div class="col">

@@ -1,12 +1,14 @@
 <template>
-<v-container fluid>
+<v-container fluid
 
-                    <div class="grid-board">
+>
+                    <base-material-card  dark>
                         <div style="font-size:20px; font-weight:bold; text-align:left;">서비스 업체별 호출 수</div>
                                  <v-row>
         <v-col>
 
       <v-text-field 
+      
       label="search"
       v-model="user_id"
       ></v-text-field>
@@ -19,6 +21,7 @@
         </v-col>
       </v-row>
                             <v-data-table
+                            
                             :headers="cHeaders"
                             :items="cList"
                             :options.sync="options2"
@@ -27,7 +30,7 @@
                             :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
                             :header-props="{ sortIcon: null }"
                             ></v-data-table>
-                    </div>
+                    </base-material-card>
 </v-container>
 
 </template>

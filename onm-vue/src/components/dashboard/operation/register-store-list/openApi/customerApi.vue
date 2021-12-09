@@ -110,6 +110,7 @@ export default {
   methods: {   
 //api관련
    searchCustomerApi: function(params){
+
       var reqParams = this.handleParams(params);
       // reqParams.site_id ='JHC_CTRL_001'
       console.log("api 사이트 아이디 " + reqParams.view_cnt+"페이징"+reqParams.page_no)
@@ -157,6 +158,7 @@ export default {
     },
    //user관련 로드
      searchStoreApi: function(params){
+       
        const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/user`;
       var reqParams = this.handleParams(params);
             // reqParams.site_id ='JHC_CTRL_001'
@@ -196,7 +198,7 @@ export default {
       })
       .catch(function (error) {
         console.log(error);
-        alert("Error")
+        // alert("Error")
       })
       .finally(function () {
         // always executed
@@ -259,6 +261,7 @@ export default {
         view_cnt: values.itemsPerPage,
       }
       this.searchCustomerApi(params)
+      this.searchStoreApi(params)
     },
     setToSearchParams2: function(values){
       var params = {
@@ -321,7 +324,7 @@ export default {
     }
   },
   mounted(){
-    this.setToSearchParams2()
+   
     
     
   }
