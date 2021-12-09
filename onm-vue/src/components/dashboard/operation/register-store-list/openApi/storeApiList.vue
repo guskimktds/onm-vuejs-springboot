@@ -50,7 +50,7 @@ import axios from "axios"
 'Content-Type': 'application/json'
 }
 export default {
-  props: ["storeList", "storeResPagingInfo"],
+  props: ["storeList", "storeResPagingInfo", 'param'],
   data() {
     return {
       headers: [
@@ -121,7 +121,7 @@ methods: {
       })
       .catch(function (error) {
         console.log(error);
-        alert("Error")
+   
       })
       .finally(function () {
         // always executed
@@ -132,7 +132,12 @@ methods: {
         page_no: options.page,
         view_cnt: options.itemsPerPage,
         user_id:this.user_id,
-        site_id:     this.$route.params.site_id
+        site_id: this.$route.params.site_id,
+        start_date: this.param.start_date.replace(/-/g,""),
+        end_date:this.param.end_date.replace(/-/g,"")
+    
+ 
+
       }
       return values;
     },

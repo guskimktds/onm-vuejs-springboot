@@ -93,10 +93,7 @@ export default {
                     borderColor:'#f87979',
                     data: this.getNewCnt(response.data.data.access_hourly)
                   }
-                ],
-                  options:{
-                    responsive:true
-                  }
+                ]
               }
               // console.log(this.datacollection)
               this.loaded = true

@@ -320,8 +320,9 @@ export default {
       return newParams;
     }
   },
-  created(){
-    console.log(this.$route.params.site_id);
+  mounted(){
+    this.setToSearchParams2()
+    
     
   }
 }

@@ -50,7 +50,7 @@ import axios from "axios"
 'Content-Type': 'application/json'
 }
 export default {
-    props: ['pList','resPagingInfo'],
+    props: ['pList','resPagingInfo', 'param'],
   data() {
     return {
 
@@ -124,7 +124,9 @@ export default {
         page_no: options.page,
         view_cnt: options.itemsPerPage,
         api_no:this.api_no,
-        site_id: this.$route.params.site_id
+        site_id: this.$route.params.site_id,
+         start_date: this.param.start_date.replace(/-/g,""),
+        end_date:this.param.end_date.replace(/-/g,"")
       }
       return values;
     },

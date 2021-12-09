@@ -14,6 +14,17 @@ export default {
             yAxes: [{
               ticks: {
                 fontColor: "black",
+                // beginAtZero:true,
+                // max:10
+                // scaleOverride:true,
+                steps:10,
+                stepValue:5,
+                max:100,
+                // stacked:true,
+                // drawTicks: true,
+                enabled:true,
+                
+                
               }
             }],
         
