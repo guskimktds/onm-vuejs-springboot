@@ -238,9 +238,7 @@ export default {
            { text: '게시판 id', value: 'board_id' },
           { text: '공지사항 타입', value: 'board_cate_cd' },
           { text: '제목', value: 'title' },
-          { text: '공지 노출 여부', value: 'disp_yn' },
-          { text: '공지 노출 시작 일자', value: 'disp_start_date' },
-          { text: '공지 노출 종료 일자', value: 'disp_end_date' },
+          { text: '공지사항 팝업여부', value: ''},
           { text: '등록일자', value: 'reg_date' },
           { text: '수정일자', value: 'mod_date' },
           { text: '변경', value: 'actions', sortable: false }

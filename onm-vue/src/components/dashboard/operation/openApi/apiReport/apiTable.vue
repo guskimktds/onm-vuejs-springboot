@@ -34,7 +34,9 @@
         </div>
             
         <div class="col">
-        <service-table></service-table>
+        <service-table
+        v-bind:param=param
+        ></service-table>
         </div>
 
     </div>
@@ -55,6 +57,7 @@ const headers={
 }
 
 export default {
+    props:['param'],
     data() {
       return {
         pHeaders:[
@@ -121,7 +124,9 @@ export default {
             var values={
                 page_no: options.page,
                 view_cnt: options.itemsPerPage,
-                api_no:this.api_no
+                api_no:this.api_no,
+                start_date:this.param.start_date.replace(/-/g,""),
+                end_date:this.param.end_date.replace(/-/g,"")
             }
             return values;
         },

@@ -13,7 +13,8 @@ export default {
           scales: {
             yAxes: [{
               ticks: {
-                fontColor: "black"
+                fontColor: "black",
+                beginAtZero :true
               }
             }],
         

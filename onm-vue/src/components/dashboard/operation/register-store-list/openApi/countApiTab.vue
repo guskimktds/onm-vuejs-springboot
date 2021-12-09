@@ -84,7 +84,7 @@ export default {
   props: ['cList', 'sList'],
       data() {
       return {
-        options: {},
+        options: {}
       }
     },
 } 

@@ -42,6 +42,7 @@ const headers={
 }
 
 export default {
+    props:['param'],
     data() {
       return {
         cHeaders: [
@@ -81,7 +82,8 @@ export default {
                     this.cList = response.data.data.access_user_list;
                     
                     }else if(resCode==204){
-                    alert('카메라 상태 현황 데이터가 없습니다.')
+                    console.log(resCode + " / " + resMsg);
+                    this.cList =[];
                     }else{
                     console.log(resCode + " / " + resMsg);
                     }
@@ -94,7 +96,9 @@ export default {
             var values={
                 page_no: options.page,
                 view_cnt: options.itemsPerPage,
-                user_id:this.user_id
+                user_id:this.user_id,
+                start_date:this.param.start_date.replace(/-/g,""),
+                end_date:this.param.end_date.replace(/-/g,"")
 
             }
             return values;
