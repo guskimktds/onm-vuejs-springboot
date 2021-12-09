@@ -199,6 +199,7 @@
                     </v-col>
                 </v-row>
       </v-container>
+      </v-form>
       <v-container
         id="regular-tables"
         fluid
@@ -207,30 +208,30 @@
         title="API 목록"
         class="px-5 py-3"
         >
-         <button id = "apiSave" v-on:click.prevent="apiSave">
+         <button id = "apiSave" @click="apiSave">
             저장
         </button>
         <table width="100%;">
             <tr>
-                <th></th>
-                <th>API No</th>
-                <th>Description</th>
-                <th>제한 단위/량</th>
+                <th style="padding:3px;"></th>
+                <th style="padding:3px;">API No</th>
+                <th style="padding:3px;">Description</th>
+                <th style="padding:3px;">제한 단위/량</th>
             </tr>
             <tr v-for="(api,index) in api_list" :key="index" v-show="api_list.length > 0">
-                <td style="text-align:center;">
+                <td style="text-align:center; padding:3px;">
                     <input type="checkbox" v-model="selectedApi" :value ="api">
                 </td>
-                <td>
+                <td style="padding:3px; padding-left:10px;">
                     {{api.api_no}}
                 </td>
-                 <td>
+                 <td style="padding:3px; padding-left:10px;">
                     {{api.description}}
                 </td>
-                <td v-if="api.use_yn === 'Y' && api.api_access_limit > 0">
+                <td v-if="api.use_yn === 'Y' && api.api_access_limit > 0" style="padding:3px; padding-left:10px;">
                      &nbsp;&nbsp; {{api.api_access_limit}} 회
                 </td>
-                <td v-else>
+                <td v-else style="padding:3px; padding-left:10px;">
                     &nbsp;&nbsp;-
                 </td>
             </tr>
@@ -240,7 +241,7 @@
         </table>
         </base-material-card>
       </v-container>
-    </v-form>
+    
     <p style="margin-left:30px; padding-bottom:10px;">
     <v-btn 
         elevation="2" 
@@ -323,10 +324,11 @@ const headers={
                         if(this.infoObject.site_access_limit === ''){
                             this.infoObject.site_access_limit = 0;
                         }
-
+                        
+                        this.selectedApi = [];
                        for(var i = 0; i < this.api_list.length; i++){ // 사용 api만 체크
                             if(this.api_list[i].use_yn === 'Y'){
-                                this.selectedApi[i] = this.api_list[i];
+                                this.selectedApi.push(this.api_list[i]);
                             } 
                         }
                  
@@ -474,7 +476,7 @@ const headers={
                }
             },
             apiSave(){ // api 선택 수정
-                
+             
                 if(this.selectedApi.length === 0){
                    this.$fire({
                        title: "API를 선택해주세요.",
@@ -489,14 +491,15 @@ const headers={
                     tsJson.api_no = this.selectedApi[i].api_no;
                     this.receivedInfo.selectedApi.push(tsJson);
                 }
-
+                
                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13037/add_apiList`
                 axios.post(url, this.receivedInfo, headers)
                 .then((response)=>{
                     var resCode = response.data.res_code;
-                    if(resCode == 200){
+                    if(resCode === 200){
                         alert("성공적으로 수정되었습니다.");
-                    }else if(resCode==410){
+                         this.$router.push({name: "approval-store"})
+                    }else if(resCode===410){
                         alert("로그인 세션이 만료되었습니다.");
                         EventBus.$emit('top-path-logout');
                         this.$store

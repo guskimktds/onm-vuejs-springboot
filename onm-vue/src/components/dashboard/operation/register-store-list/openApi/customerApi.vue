@@ -14,25 +14,48 @@
       <v-row>
         <v-col cols="6">
           
-          <customer-api-list
-          dense 
-            v-bind:param="searchParam"
-            v-bind:pList=pList
-            v-bind:resPagingInfo=resPagingInfo
-            @child="clickToSearchDetailObject" 
-            @pagination="setToSearchParams"
-          ></customer-api-list>
+ <customer-api-list
+            dense 
+              v-bind:param="searchParam"
+              v-bind:pList=pList
+              v-bind:resPagingInfo=resPagingInfo
+              @pagination="setToSearchParams1"
+            ></customer-api-list>
         </v-col>
         <v-col cols="6">
-          <store-api-list
-          dense
-            v-bind:storeList=storeList
-            v-bind:storeResPagingInfo="storeResPagingInfo"
-            @child="clickToSearchDetailObject" 
-            @pagination="setToSearchParams"
-          ></store-api-list>
+ <store-api-list
+            dense
+              v-bind:param="searchParam"
+              v-bind:storeList=storeList
+              v-bind:storeResPagingInfo=storeResPagingInfo
+              @child="clickToSearchDetailObject"
+              @pagination="setToSearchParams2"
+            ></store-api-list>
         </v-col>
       </v-row> 
+        <v-dialog v-model="showModal" max-width="500px">
+          <v-card>
+          <v-card-title class="headline"> 매장별 API 호출 수</v-card-title>
+          호출일자: {{modal.access_date}}
+          매장명: {{modal.user_id}}
+          <hr>
+          <table>
+            <tr>
+              <th style="text-align:center">api 명  </th>
+              <th style="text-align:center">호출 수</th>
+            </tr>
+            <tr v-for="list in rowList" v-bind:key="list.api_no"> 
+              <td>*매장명 : {{list.api_no}}   *호출 수 : </td>
+              <td>{{list.access_cnt}}</td>
+            </tr>
+          </table>     
+          <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="closeDelete">닫기</v-btn>
+              <v-spacer></v-spacer>
+          </v-card-actions>
+          </v-card>
+        </v-dialog>
     </v-container>
 </template>
 
@@ -77,12 +100,17 @@ export default {
         api_no: '',
         user_id: '',
       },
-      showModal: true
+      showModal: false,
+            modal: {
+        access_date: '',
+        user_id: ''
+      }
     }
   },
   methods: {   
 //api관련
    searchCustomerApi: function(params){
+
       var reqParams = this.handleParams(params);
       // reqParams.site_id ='JHC_CTRL_001'
       console.log("api 사이트 아이디 " + reqParams.view_cnt+"페이징"+reqParams.page_no)
@@ -100,8 +128,11 @@ export default {
           this.resPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
           this.pList = [];
+           this.cList = {"access_cnt_all":0,
+           "access_cnt_day":0,
+           "access_cnt_month":0};
           this.resPagingInfo = {};
-          alert('사용자 API 데이터가 없습니다.');
+   
         }else if(resCode==410){
           alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
@@ -127,6 +158,7 @@ export default {
     },
    //user관련 로드
      searchStoreApi: function(params){
+       
        const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/user`;
       var reqParams = this.handleParams(params);
             // reqParams.site_id ='JHC_CTRL_001'
@@ -144,8 +176,11 @@ export default {
           this.storeResPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
           this.storeList = [];
+           this.sList = {"access_cnt_all":0,
+           "access_cnt_day":0,
+           "access_cnt_month":0};
           this.storeResPagingInfo = {};
-          alert('사용자 API 데이터가 없습니다.');
+          
         }else if(resCode==410){
           alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
@@ -163,7 +198,7 @@ export default {
       })
       .catch(function (error) {
         console.log(error);
-        alert("Error")
+        // alert("Error")
       })
       .finally(function () {
         // always executed
@@ -172,78 +207,79 @@ export default {
     //검색
     
       //row 클릭
-      clickToSearchDetailObject: function(values){
-
-    
-       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/api`
-       var params = {
-         site_id: values.site_id,
-         user_id: values.user_id,
-         start_date: values.access_date,
-         end_date: values.access_date,
-         api_no: values.api_no,
-         page_no: '1',
-         view_cnt: '100',
-       }
-       console.log(JSON.stringify(params.end_date)+"DDDDDDDDewrerer")
-      this.showModal=!this.showModal
-       axios.post(url, params, headers)
-       .then((response) => {
-          var resCode = response.data.res_code;
-           var resMsg = response.data.res_msg;
-           if(resCode == 200){
-             this.rowList = response.data.data.access_user_list
-             this.showDetailObject = true
-             this.isReloadDetailObject = true
-             this.orderBtn=!this.orderBtn
-             console.log(this.rowList)
-           }else if(resCode==204){
-             this.rowList = {};
-             this.showDetailObject = false
-             this.isReloadDetailObject = false
-           alert("사용자 청약오더 상세 데이터가 없습니다.");
-           }else{
-             this.rowList = {};
-             this.showDetailObject = false
-             this.isReloadDetailObject = false
-             alert(resCode + " / " + resMsg);
-           }
-       })
-       .catch((ex) => {
-         console.log('조회 실패',ex)
-       })
+       clickToSearchDetailObject: function(values){
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_13047/get_site_open_api_access/api`
+      var params = {
+        site_id: values.site_id,
+        user_id: values.user_id,
+        start_date: values.access_date,
+        end_date: values.access_date,
+        api_no: values.api_no,
+        page_no: '1',
+        view_cnt: '100',
+      }
+      console.log(JSON.stringify(params.end_date)+"DDDDDDDDewrerer")
+      this.modal.access_date = values.user_id;
+      this.modal.user_id = values.user_id;
+      this.showModal=true
+      axios.post(url, params, headers)
+      .then((response) => {
+        var resCode = response.data.res_code;
+          var resMsg = response.data.res_msg;
+          if(resCode == 200){
+            this.rowList = response.data.data.access_api_list
+            this.showDetailObject = true
+            this.isReloadDetailObject = true
+            this.orderBtn=!this.orderBtn
+          }else if(resCode==204){
+            this.rowList = {};
+            this.showDetailObject = false
+            this.isReloadDetailObject = false
+          alert("사용자 청약오더 상세 데이터가 없습니다.");
+          }else{
+            this.rowList = {};
+            this.showDetailObject = false
+            this.isReloadDetailObject = false
+            alert(resCode + " / " + resMsg);
+          }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
      
-
-     if(values!==this.oldValue){
+      if(values!==this.oldValue){
          console.log('실행')
          this.showSubDetailList=false
          this.showKttList=false
-     } 
-       this.oldValue={}
-       this.oldValue=values
-
-   },
-    setToSearchParams: function(values){
-      console.log(values)
-      
+      } 
+      this.oldValue={}
+      this.oldValue=values
+    },
+    setToSearchParams1: function(values){
       var params = {
         page_no: values.page,
         view_cnt: values.itemsPerPage,
       }
-      console.log(params.page_no+"페이징")
+      this.searchCustomerApi(params)
+      this.searchStoreApi(params)
+    },
+    setToSearchParams2: function(values){
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage,
+      }
+      this.searchStoreApi(params)
+    },
+    searchParams: function(values){
+      var params = {
+        page_no: values.page,
+        view_cnt: values.itemsPerPage,
+      }
       this.searchStoreApi(params)
       this.searchCustomerApi(params)
     },
-    searchParams: function(values){
-      console.log(values)
-      
-      var params = {
-        page_no: values.page,
-        view_cnt: values.itemsPerPage,
-      }
-      console.log(params.page_no+"페이징")
-      this.searchStoreApi(params)
-      this.searchCustomerApi(params)
+    closeDelete () {
+        this.showModal = false
     },
     handleParams: function (params) {
       console.log(params+"DFDFDFD핸들파람");
@@ -287,8 +323,9 @@ export default {
       return newParams;
     }
   },
-  created(){
-    console.log(this.$route.params.site_id);
+  mounted(){
+   
+    
     
   }
 }
@@ -296,4 +333,4 @@ export default {
 
 <style scoped>
 
-</style>
+</style> 

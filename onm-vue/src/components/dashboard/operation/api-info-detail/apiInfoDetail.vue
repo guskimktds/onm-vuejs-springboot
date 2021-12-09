@@ -221,14 +221,14 @@
             title="API 목록"
             class="px-5 py-3"
             >
-                <table width=100%>
+                <table width=100% v-show="receivedValue.selectedApi.length > 0">
                     <tr>
-                        <th>API No</th>
-                        <th>Description</th>
-                        <th>제한 단위/량</th>
+                        <th >API No</th>
+                        <th stlye="padding:3px;">Description</th>
+                        <th stlye="padding:3px;">제한 단위/량</th>
                     </tr>
                     <tr v-for="(api,index) in receivedValue.selectedApi" :key="index">
-                        <td>
+                        <td > 
                             {{api.api_no}}
                         </td>
                         <td >
@@ -242,7 +242,10 @@
                             </v-text-field>
                         </td>
                     </tr>            
-                        </table>
+                </table>
+                <p v-show="receivedValue.selectedApi.length === 0" style="margin-top:20px; font-size:15px;">
+                    사용하는 API가 존재하지 않습니다.
+                </p>    
                     </base-material-card>
                 </v-container>
                  <p style="margin:-10px 0 0 10px; padding-bottom:10px;">
@@ -336,7 +339,6 @@ export default ({
         getApiInfo(){
                if(this.receivedValue.site_id){
                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13036/get_siteInfoDetails`
-                
                 var tsJson = new Object();
                 tsJson.site_id = this.receivedValue.site_id; 
                 
@@ -362,7 +364,7 @@ export default ({
                         this.receivedValue.site_id = this.getValue.site_id;
                         this.api_list=response.data.data.api_list;
                         this.checkStatus(this.getValue.status_code);
-                
+                     
                         if(this.getValue.access_limit_type === 'Y'){ // 사용 제한 타입 
                             this.limit_type = "매년";
                         }else if(this.getValue.access_limit_type === 'M'){
@@ -395,18 +397,18 @@ export default ({
                         }else {
                             this.mainBtn = 0;
                         }
+                       this.receivedValue.selectedApi.length = 0;
 
                         for(var i = 0; i < this.api_list.length; i++){
                             if(this.api_list[i].use_yn === 'Y'){
-                                if(this.api_list[i].api_access_limit === ''){
+                                this.receivedValue.selectedApi.push(this.api_list[i]);
+                                 if(this.api_list[i].api_access_limit === ''){
                                     this.api_list[i].api_access_limit = 0;
                                 }
-                                this.receivedValue.selectedApi[i] = this.api_list[i];
                             } 
                         }
                         
                     }else if(resCode==204){
-                    //this.getValue = {};
                     this.api_list =[];
                     alert('매장 정보 데이터가 없습니다.');
                     }else if(resCode==410){
@@ -456,13 +458,11 @@ export default ({
         },
         chooseControlType(){
             this.getValue.control_type = this.defaultSelected.value;
-            this.receivedValue.control_type = this.getValue.control_type;
-         
+            this.receivedValue.control_type = this.getValue.control_type; 
         },
         chooseAccess_limit_type(){
             this.getValue.access_limit_type = this.defaultTypeSelected.value;
             this.receivedValue.access_limit_type = this.getValue.access_limit_type;
-            console.log(this.receivedValue.access_limit_type);
         },
         rejectRequest(){  //승인신청 거절하는 method + 반려 거절 코드 넣기
             var result = confirm("신청을 반려하시겠습니까?");
@@ -497,7 +497,18 @@ export default ({
         },
         acceptRequest(){ //승인요청을 받아주는 method
             this.receivedValue.site_access_limit = this.getValue.site_access_limit;
-           
+            this.receivedValue.control_type = this.getValue.control_type;
+          
+            if(this.receivedValue.control_type === ''){
+                this.$fire({
+                    title: "제한종류 타입을 선택해주세요.",
+                    type : "error",
+                    html: ""
+                })
+                return;
+                
+            }
+            
             if(this.receivedValue.control_type === 'BOTH' || this.receivedValue.control_type === 'SITE'){
                 if(this.receivedValue.site_access_limit === ''){
                         this.$fire({
@@ -508,7 +519,6 @@ export default ({
                 return;
                 }
             }
-
             
             if(this.receivedValue.control_type === 'BOTH' || this.receivedValue.control_type === 'API'){
                 
@@ -524,7 +534,7 @@ export default ({
                 }
             }
 
-            var result = confirm("신청을 승인하시겠습니까?");   // api 에서 a 만 코드 변경해주시
+            var result = confirm("신청을 승인하시겠습니까?");   // api 에서 a 만 코드 변경해주기
             if(result){
                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13041/accept_site`;
                 axios.post(url,this.receivedValue,headers) // 다시 만들기
@@ -532,7 +542,6 @@ export default ({
                      if(response.data.res_code === 200){
                            alert("신청이 승인되었습니다.");
                             this.mainBtn = 0;
-                            this.getApiInfo();
                         }else{
                            alert("승인 중 오류가 발생했습니다.");
                             return;
@@ -589,7 +598,7 @@ export default ({
   th, td {
     border-bottom: 1px solid #444444;
     border-left: 1px solid #444444;
-    padding: 10px;
+    padding-left: 10px;
   }
   th:first-child, td:first-child {
     border-left: none;

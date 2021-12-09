@@ -104,6 +104,15 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+                <v-col>
+                   <v-select 
+                  item-text="state" 
+                  item-value="abbr" 
+                  :items="osType"
+                  label="OS 타입" 
+                  v-model="editedItem.os_type"
+                  ></v-select>
+                </v-col>
                                     </v-row>
                         <v-col
                           cols="12"
@@ -229,9 +238,7 @@ export default {
            { text: '게시판 id', value: 'board_id' },
           { text: '공지사항 타입', value: 'board_cate_cd' },
           { text: '제목', value: 'title' },
-          { text: '공지 노출 여부', value: 'disp_yn' },
-          { text: '공지 노출 시작 일자', value: 'disp_start_date' },
-          { text: '공지 노출 종료 일자', value: 'disp_end_date' },
+          { text: '공지사항 노출 유무', value: 'pop_up_yn'},
           { text: '등록일자', value: 'reg_date' },
           { text: '수정일자', value: 'mod_date' },
           { text: '변경', value: 'actions', sortable: false }
@@ -244,6 +251,7 @@ export default {
           title: '',
           content: '',
           content_html: '',
+          os_type:''
         },
         defaultItem: {
           boarrd_id: '',
@@ -253,8 +261,16 @@ export default {
           title: '',
           content: '',
           content_html: '',
+           os_type:''
         },
-        newPlist: []
+        newPlist: [],
+         osType:[
+              {state: 'All'     , abbr: 'ALL'},
+              {state: 'Android'     , abbr: 'Android'},
+              {state: 'iOS'     , abbr: 'iOS'},
+              {state: 'PC'     , abbr: 'PC'},
+              {state: 'PCAPP'     , abbr: 'PCAPP'},
+            ],
       }
     },
     computed: {
@@ -351,7 +367,8 @@ export default {
             disp_yn : this.editedItem.disp_yn,
             title : this.editedItem.title,
             content : this.editedItem.content,
-            content_html : this.editedItem.content_html
+            content_html : this.editedItem.content_html,
+             os_type : this.editedItem.os_type
           }
           var reqParams = params
           reqParams.disp_end_date = params.disp_end_date.replace(/-/g,"").split(' ', 1)[0]

@@ -41,7 +41,6 @@
             부서 명:
           </v-col>
           <v-col cols="3">
-              
            <v-text-field
               placeholder="부서 명"
               v-model = "info.dept"
@@ -83,7 +82,6 @@
             </v-btn>
           </v-col>
         </v-row>
-      
         </base-material-card>
       </v-container>
     </v-form>
@@ -162,7 +160,7 @@ export default{
                 if(resCode == 200){
                     alert("매장이 성공적으로 등록되었습니다.");
                     //this.resetInfo();
-                    this.$router.replace('/approval-store');
+                    this.$router.push({name: "approval-store"})
                 }else if(resCode==410){
                     alert("로그인 세션이 만료되었습니다.");
                     EventBus.$emit('top-path-logout');

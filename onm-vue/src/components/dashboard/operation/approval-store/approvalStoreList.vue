@@ -48,16 +48,18 @@
                     align: "start",
                     sortable: false,
                     value: "site_id",
-                    width: '13%'
+                    width: '10%',
                     },
-                    { text: "업체 명", value: "site_name", width: '13%' },
-                    { text: "등록 매장", value: "registered_store_count", width: '10%', align:'center'},
-                    { text: "등록 API", value: "api_count" ,width: '10%', align:'center'},
-                    { text: "API 제한 여부", value: "control_type", width: '10%' },
-                    { text: "담당자 명", value: "user_name", width: '12%' },
-                    { text: "등록일자", value: "reg_date" ,width: '12%'},
-                    { text: "수정일자", value: "mod_date", width: '12%' },
-                    { text: "상태", value: "status_code", width: '10%' },
+                    { text: "업체 명", value: "site_name", width: '8%', align:'center' },
+                    { text: "등록 매장", value: "registered_store_count", width: '7%', align:'right'},
+                    { text: "등록 API", value: "api_count" ,width: '8%', align:'right'},
+                    { text: "API 제한 여부", value: "control_type", width: '9%', align:'center' },
+                    { text: "담당자 명", value: "user_name", width: '10%', align:'center' },
+                    { text: "승인자 ID", value: "adm_id", width: '8%', align:'center' },
+                    { text: "상태", value: "status_value", width: '7%' , align:'center'},
+                    { text: "등록일자", value: "reg_date" ,width: '10%', align:'center'},
+                    { text: "수정일자", value: "mod_date", width: '10%', align:'center' },
+              
                 ],
                 options:{}
             }
@@ -77,7 +79,7 @@
                 },
                 deep:true
             }
-        }
+        },
     }
 
 </script>

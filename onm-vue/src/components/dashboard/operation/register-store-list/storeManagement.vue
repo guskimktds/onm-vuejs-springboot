@@ -33,7 +33,7 @@
                                          <tr>
                                             <th  style=" margin-left: 20px; font-size:8px;">
                                                 <label id ="user_name">
-                                                    담당자 명:
+                                                    매장 명:
                                                 </label>
                                             </th>
                                             <td cols="2" >
@@ -44,12 +44,12 @@
                                                 >
                                                 </v-text-field>
                                             </td>
-                                            <th style=" margin-left: 20px;  font-size:8px;">
+                                            <th style=" margin-left: 20px; font-size:8px;" >
                                                 <label id ="tel_no">
                                                     담당자 번호:
                                                 </label>
                                             </th>
-                                            <td cols="2" >
+                                            <td cols="3" >
                                                 <v-text-field
                                                 v-model="searchStore.ex_tel_no"
                                                 id="tel_no"   
@@ -203,7 +203,9 @@ const headers={
                         var resCode = response.data.res_code;
                         var resMsg = response.data.res_msg;
                         if(resCode === 200){
-                            this.user_list = response.data.data.user_list;   
+                            if(response.data.data.user_list != null) {
+                                this.user_list = response.data.data.user_list;                
+                            }
                         }else if(resCode === 204){
                         this.user_list =[];
                         alert('매장 정보 데이터가 없습니다.');
@@ -269,11 +271,11 @@ const headers={
                  axios.post(url,value, headers)
                 .then((response)=>{
                     var resCode = response.data.res_code;
-                    if(resCode == 200){
+                    if(resCode === 200){
                         alert("승인 요청이 전송되었습니다.");
-                        this.infoObject.site_id = this.response.data.data.site_id;
-                        this.getStoreList(this.infoObject.site_id); // 새로뿌리기
-                    }else if(resCode==410){
+                        //this.infoObject.site_id = this.response.data.data.site_id;
+                        this.getStoreList(); // 새로뿌리기
+                    }else if(resCode===410){
                         alert("로그인 세션이 만료되었습니다.");
                         EventBus.$emit('top-path-logout');
                         this.$store
@@ -332,6 +334,8 @@ const headers={
                 this.infoObject.checkedList = [];
                 this.checkedList  = [];
                 this.searchedStoreList = [];
+                this.curpagenum = 1,
+                this.serachCurPagenum = 1,
                 this.getStoreList();
             },
             findStores(){
@@ -350,10 +354,9 @@ const headers={
                     .then((response)=>{
                     var resCode = response.data.res_code;
                     if(resCode === 200){
-                        var searchedStoreList = response.data.data.list;
-                        
+                        var searchedStoreList = response.data.data.list;                       
                         if(searchedStoreList.length > 0) {
-                            this.searchedStoreList = searchedStoreList;                                           
+                            this.searchedStoreList = searchedStoreList;                                         
                         } else {
                             this.searchedStoreList = [];
                         }

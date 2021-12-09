@@ -12,7 +12,9 @@
           v-bind:param="checkDate(param)"
           >
           </api-graph>
-          <api-table></api-table>
+          <api-table
+          v-bind:param="param"
+          ></api-table>
 
       </v-card>
     </v-container>

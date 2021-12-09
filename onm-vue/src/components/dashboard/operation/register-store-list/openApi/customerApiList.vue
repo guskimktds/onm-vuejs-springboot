@@ -33,7 +33,6 @@
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
-        @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       >
@@ -51,7 +50,7 @@ import axios from "axios"
 'Content-Type': 'application/json'
 }
 export default {
-    props: ['pList','resPagingInfo'],
+    props: ['pList','resPagingInfo', 'param'],
   data() {
     return {
 
@@ -72,20 +71,17 @@ export default {
   },
 
   methods: {
-    handleClick:function(value){
-        this.$emit("child", value);
-         console.log("로우클릭 값 보내기"+value.site_id);
-      },
+   
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
-      console.log("ㅇ페이징 옵션들"+this.options.total_cnt)
+      console.log("customerApiList"+this.options.total_cnt)
     },
-      searchCustomerApi: function(params){
+    searchCustomerApi: function(params){
       var reqParams  =this.setParams(params);
       console.log("api 사이트 아이디 " + reqParams.view_cnt+"페이징"+reqParams.page_no)
 
-  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13047/get_site_open_api_access/api`
+      var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13047/get_site_open_api_access/api`
       axios
       .post(url, reqParams, headers)
       .then( (response) => {
@@ -123,15 +119,19 @@ export default {
         // always executed
       });
     },
-        setParams:function(options){
-            var values={
-                page_no: options.page,
-                view_cnt: options.itemsPerPage,
-                api_no:this.api_no
-            }
-            return values;
-        },
-
+    setParams:function(options){
+      var values={
+        page_no: options.page,
+        view_cnt: options.itemsPerPage,
+        api_no:this.api_no,
+        site_id: this.$route.params.site_id,
+         start_date: this.param.start_date.replace(/-/g,""),
+        end_date:this.param.end_date.replace(/-/g,"")
+      }
+      return values;
+    },
+  },
+  
   watch: {
     options: {
       handler() {
@@ -142,14 +142,13 @@ export default {
   },
   
   updated() {
-      if(this.last!==this.resPagingInfo.total_cnt){
-        this.options.page=1
-      }
-      if(this.resPagingInfo.total_cnt!==undefined){
-      this.last=this.resPagingInfo.total_cnt
-      }
-  },
-    
+    if(this.last!==this.resPagingInfo.total_cnt){
+      this.options.page=1
+    }
+    if(this.resPagingInfo.total_cnt!==undefined){
+     this.last=this.resPagingInfo.total_cnt
+    }
+  
   }}
 </script>
 

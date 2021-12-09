@@ -92,7 +92,7 @@ export default {
                     // backgroundColor: '#f87979',
                     borderColor:'#f87979',
                     data: this.getNewCnt(response.data.data.access_hourly)
-                  },
+                  }
                 ]
               }
               // console.log(this.datacollection)
@@ -113,7 +113,7 @@ export default {
       getLabels: function(arr){
         var new_arr = []
         let result_map = Object.keys(arr[0]).map(function(key){
-          return [String(key)+'시']
+          return [String(key)+'일']
         })
         for(let i=0; i < result_map.length; i++){
             new_arr.push(result_map[i]) 
