@@ -347,18 +347,18 @@ export default ({
                     var resCode = response.data.res_code;
                     var resMsg = response.data.res_msg;
                     if(resCode == 200){
-                        this.getValue.site_id = response.data.data.site_id;  
-                        this.getValue.site_name = response.data.data.site_name;
-                        this.getValue.status_code = response.data.data.status_code;
-                        this.getValue.user_name = response.data.data.user_name;
-                        this.getValue.mod_date = response.data.data.mod_date;
-                        this.getValue.reg_date = response.data.data.reg_date;
-                        this.getValue.adm_id = response.data.data.adm_id;
-                        this.getValue.tel_no = response.data.data.tel_no;
-                        this.getValue.adm_access_date = response.data.data.adm_access_date;
-                        this.getValue.control_type = response.data.data.control_type;
-                        this.getValue.site_access_limit = response.data.data.site_access_limit;
-                        this.getValue.access_limit_type = response.data.data.access_limit_type;
+                        this.getValue.site_id = response.data.data.site_info.site_id;  
+                        this.getValue.site_name = response.data.data.site_info.site_name;
+                        this.getValue.status_code = response.data.data.site_info.status_code;
+                        this.getValue.user_name = response.data.data.site_info.user_name;
+                        this.getValue.mod_date = response.data.data.site_info.mod_date;
+                        this.getValue.reg_date = response.data.data.site_info.reg_date;
+                        this.getValue.adm_id = response.data.data.site_info.adm_id;
+                        this.getValue.tel_no = response.data.data.site_info.tel_no;
+                        this.getValue.adm_access_date = response.data.data.site_info.adm_access_date;
+                        this.getValue.control_type = response.data.data.site_info.control_type;
+                        this.getValue.site_access_limit = response.data.data.site_info.site_access_limit;
+                        this.getValue.access_limit_type = response.data.data.site_info.access_limit_type;
 
 
                         this.receivedValue.site_id = this.getValue.site_id;
@@ -542,6 +542,7 @@ export default ({
                      if(response.data.res_code === 200){
                            alert("신청이 승인되었습니다.");
                             this.mainBtn = 0;
+                            this.checkStatus(response.data.data.status_code);
                         }else{
                            alert("승인 중 오류가 발생했습니다.");
                             return;
