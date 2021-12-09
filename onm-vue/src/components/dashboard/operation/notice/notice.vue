@@ -4,7 +4,7 @@
         <notice-query 
           v-on:search="searchToButton"
           v-bind:param=searchParam
-          @Items="saveItems"
+          @Items="saveItems"    
         ></notice-query>
         <notice-list 
         v-bind:pList=pList
