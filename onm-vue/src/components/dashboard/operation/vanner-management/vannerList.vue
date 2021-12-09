@@ -4,9 +4,16 @@
       fluid
       tag="section"
   >
+  <base-material-card
+      color="orange"
+      dark
+      icon="mdi-keyboard"
+      title="배너목록"
+      class="px-5 py-3"
+    >
     <v-row style="padding-top: 50px">
       <v-col>
-            <h3 style="font-size: 30px; height: 20px; padding-left:12px">배너 목록</h3>
+            <!-- <h3 style="font-size: 30px; height: 20px; padding-left:12px">배너 목록</h3> -->
       </v-col>
       <div class = "button">
         <router-link to="/operation/vanner-register" style="color:white; text-decoration: none;">등록</router-link>
@@ -30,6 +37,7 @@
 
     </v-card>
     <!-- <v-btn @click="testbbb"></v-btn> -->
+  </base-material-card>
   </v-container>
 </template>
 
@@ -54,7 +62,7 @@ export default {
           { text: '배너타입', value: 'img_type', width: '5%', align: 'center'},
           { text: '제목', value: 'title', width: '20%', align: 'center'},
           { text: 'OS타입', value: 'os_type', width: '8%', align: 'center'},
-          { text: '노출여부', value: 'pop_up_yn', width: '5%', align: 'center' },
+          { text: '배너노출여부', value: 'pop_up_yn', width: '5%', align: 'center' },
           // { text: '노출시작일', value: 'disp_start_date',width: '10%', align: 'center' },
           // { text: '노출종료일', value: 'disp_end_date', width: '10%', align: 'center' },
           // { text: '작성자', value: 'reg_id', width: '10%', align: 'center' },
@@ -71,9 +79,6 @@ export default {
       passPage(value){
         this.$router.push({name:"vanner-detailpage", params :{'val' : value}});
       },
-      popUpYn(){
-        
-      }
     },
   watch: {
     options: {

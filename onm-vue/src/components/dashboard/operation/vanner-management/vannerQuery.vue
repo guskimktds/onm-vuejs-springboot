@@ -4,13 +4,13 @@
         tag="section"
         fluid
     >
-    <h3 style="font-size: 30px; height: 20px">배너 검색</h3>
-        <!-- <base-material-card
+    <!-- <h3 style="font-size: 30px; height: 20px">배너 검색</h3> -->
+        <base-material-card
             icon="mdi-magnify"
             title="배너 검색"
             class="px-5 py-3"
-        > -->
-        <v-card class="border-black px-5 py-3" fluid >
+        >
+        <!-- <v-card class="border-black px-5 py-3" fluid > -->
         <v-row style="padding-top: 10px">
             <v-col   style="padding-top:25px;" cols="auto">
                 <span>배너타입</span>
@@ -152,7 +152,8 @@
                  >초기화</v-btn>
             </v-col>
         </v-row>
-    </v-card>
+    <!-- </v-card> -->
+    </base-material-card>
     </v-container>
 </template>
 
