@@ -108,15 +108,15 @@
                 <table width="100%">
                     <tr>
                         <td style="text-align:center; font-weight:bold">매장 명</td>
-                        <td style="text-align:center; font-weight:bold">담당자 명</td>
+                        <!-- <td style="text-align:center; font-weight:bold">담당자 명</td> -->
                         <td style="text-align:center; font-weight:bold">담당자 번호</td>
                         <td style="text-align:center; font-weight:bold">진행 상태</td>
-                        <td style="text-align:center; font-weight:bold">승인 요청 및 승인일자</td>
+                        <td style="text-align:center; font-weight:bold">승인 요청 및 상태</td>
                         <td style="text-align:center; font-weight:bold">삭제</td>
                     </tr>
                     <tr v-for="(store,index) in calData" v-bind:key="index" v-show="user_list.length > 0">
                         <td style="width:20%;">{{store.user_name}}</td>
-                        <td style="width:15%">{{store.cust_name}}</td>
+                        <!-- <td style="width:15%">{{store.cust_name}}</td> -->
                         <td style="width:20%; text-align:center;">{{store.tel_no}}</td>
                         <td v-if="store.status_code === ''" style="color:red;text-align:center;width:16%;">
                             승인대기
@@ -137,7 +137,7 @@
                         <td v-else style="text-align:center;width:20%">
                             -
                         </td> 
-                        <td style="width:22%;text-align:center;">
+                        <td style="width:15%;text-align:center;">
                             <button class="deleteBtn" @click="deleteList(store)">삭제</button>
                         </td>
                     </tr>
