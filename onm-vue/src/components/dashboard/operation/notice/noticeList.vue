@@ -294,9 +294,9 @@ export default {
       },
       switchString(values){
         if(values==='CATE01'){
-          return '일반공지'
+          return '왼쪽공지'
         }else if(values==='CATE02'){
-          return '긴급공지'
+          return '오른쪽공지'
         }else{
           return ''
         }
