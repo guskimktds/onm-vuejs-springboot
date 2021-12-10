@@ -238,10 +238,11 @@ export default {
            { text: '게시판 id', value: 'board_id' },
           { text: '공지사항 타입', value: 'board_cate_cd' },
           { text: '제목', value: 'title' },
+          {text: 'os 타입', value: 'os_type' },
           { text: '공지사항 노출 유무', value: 'pop_up_yn'},
           { text: '등록일자', value: 'reg_date' },
           { text: '수정일자', value: 'mod_date' },
-          { text: '변경', value: 'actions', sortable: false }
+          { text: '변경', value: 'actions', sortable: false },
         ],
         editedItem: {
           boarrd_id: '',

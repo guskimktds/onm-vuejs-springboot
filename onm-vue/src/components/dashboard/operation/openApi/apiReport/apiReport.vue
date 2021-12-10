@@ -78,7 +78,7 @@ export default {
      fillApiCountTab: function(){
       // console.log("!!!!!!!!!!!!!!!!!!api 사이트 아이디 " + reqParams.view_cnt+"페이징"+reqParams.page_no)
 
-       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13039/get_total_apiList`
+       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13049/get_total_apiList`
       axios
       .post(url, headers)
       .then( (response) => {

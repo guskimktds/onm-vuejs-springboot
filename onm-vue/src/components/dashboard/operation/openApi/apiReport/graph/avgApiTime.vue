@@ -8,7 +8,7 @@
                 ></line-chart> -->
                 <line-chart 
                 v-if="loaded"
-                    :chart-data="datacollection" :options="labels" 
+                    :chart-data="datacollection" :options="options" 
                 ></line-chart>
             </div>
            
@@ -29,7 +29,7 @@ export default {
             title: '시간대별 평균 호출 수',
             labels: [], 
             loaded: false,
-            maxValue: 0,         
+            options: {},    
         }
     },
     mounted(){
@@ -83,21 +83,45 @@ export default {
 
               console.log('avgApiTime response' + JSON.stringify(response.data.data.access_hourly));
               
+              var resData = response.data.data.access_hourly.[0]
+              var resArr = Object.values(resData);
+              //var sortesArr = arr.sort(resArr)
+              var arrMax = Math.max(...resArr);
+
               this.labels = this.getLabels(response.data.data.access_hourly)
-              this.maxValue = this.getMaxValue(response.data.data.access_hourly)
               this.datacollection = {
                 labels: this.labels,
-                datasets: [
-                  {
+                datasets: [{
                     label:'시간대별 평균 호출 수', 
                     // backgroundColor: '#f87979',
                     borderColor:'#f87979',
-                    data: this.getNewCnt(response.data.data.access_hourly)
-                   
-                  } 
-                  ],max: this.maxValue
-
+                    data: resArr
+                  }]
               }
+              this.options = {
+                scales: {
+                  yAxes: [{
+                    ticks: {
+                      fontColor: "black",
+                      suggestedMax: arrMax,
+                      min:0,
+                      // stepSize: 15,
+                    }
+                  }],
+                  xAxes: [{
+                    ticks: {
+                      fontColor: "black"
+                    }
+                  }]
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                legend:{
+                  labels:{
+                    fontColor: 'black'
+                  }
+                },
+              },
               // console.log(this.datacollection)
               this.loaded = true
 
