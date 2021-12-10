@@ -108,6 +108,14 @@
             </div>
             </v-col>
         </v-row>
+        <v-row style="margin-left:30px;">
+            <v-col cols="auto" style="padding-top:35px;" >
+                <span style="color:red;">*</span>Link URL
+            </v-col>
+            <v-col>
+                <v-text-field label="입력" style="width: 520px" v-model="editedItem.img_url" maxlength="200"></v-text-field>
+            </v-col>
+        </v-row>
             <v-container 
             style="width:550px; height: 450px; margin-left: 125px; border:1px solid #999999; margin-top: 10px;"
             id="file">
@@ -209,6 +217,7 @@ export default {
                 mod_id: '',
                 mod_date: '',
                 os_type:'',
+                img_url:'',
                 // reg_id: '',
                 // cmd_type: '',
                 // local_gw_id: '0',
@@ -227,13 +236,15 @@ export default {
            this.editedItem.os_type = this.$route.params.val.os_type
            this.editedItem.title = this.$route.params.val.title
            this.$route.params.val.img_type
+           this.editedItem.mod_id = this.$store.state.onmUserId
+           this.editedItem.img_url = this.$route.params.val.img_url
            this.editedItem.img_name = this.$route.params.val.img_name
            this.typedate = this.$route.params.val.disp_yn
            this.dispdate = this.$route.params.val.disp_start_date.substring(0,10)
         //    .replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
            this.dispdate2 = this.$route.params.val.disp_end_date.substring(0,10)
         //    .replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-           this.editedItem.mod_id = this.$route.params.val.reg_id
+        //    this.editedItem.mod_id = this.$route.params.val.reg_id
            if(this.$route.params.val.img_type == 'LOGOUT'){
                this.bannerType = '로그아웃 (300 X 200 px)'
            }
