@@ -4,7 +4,7 @@
         <div class="col">
                 <base-material-card class="grid-board " dark>
                     
-                    <div style="font-size:20px; font-weight:bold; text-align:left;">API별 호출 수</div>
+                    <div style="font-size:20px; font-weight:bold; text-align:left;">{{formTitle}}</div>
                             <v-row>
         <v-col>
 
@@ -79,7 +79,8 @@ export default {
         totalList: 0,
         loading: true,
         pList: [],
-        resPagingInfo:{}
+        resPagingInfo:{},
+        title: 'API별 호출 수'
       }
     },
     components: {
@@ -155,6 +156,12 @@ export default {
 
             console.log('갱신')
             },  
+    computed: {
+        formTitle(){
+            this.getProcessApi();
+            return this.title
+        }
+    }
 }
 </script>
 

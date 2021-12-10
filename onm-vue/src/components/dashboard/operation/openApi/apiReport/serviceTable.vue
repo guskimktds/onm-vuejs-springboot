@@ -3,7 +3,7 @@
 
 >
                     <base-material-card  dark>
-                        <div style="font-size:20px; font-weight:bold; text-align:left;">서비스 업체별 호출 수</div>
+                        <div style="font-size:20px; font-weight:bold; text-align:left;">{{ formTitle }}</div>
                                  <v-row>
         <v-col>
 
@@ -25,7 +25,7 @@
                             :headers="cHeaders"
                             :items="cList"
                             :options.sync="options2"
-                            :items-per-page="10"
+                            :server-items-length="resPagingInfo.total_cnt"
                             class="elevation-1"
                             :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
                             :header-props="{ sortIcon: null }"
@@ -67,7 +67,8 @@ export default {
         totalList: 0,
         loading: true,
         cList: [],
-        resPagingInfo:{}
+        resPagingInfo:{},
+        title: '서비스 업체별 호출 수'
       }
     },
     methods: {
@@ -83,7 +84,7 @@ export default {
                     var resMsg = response.data.res_msg;
                     if(resCode == 200){
                     this.cList = response.data.data.access_user_list;
-                    
+                    this.resPagingInfo=response.data.data.paging_info;
                     }else if(resCode==204){
                     console.log(resCode + " / " + resMsg);
                     this.cList =[];
@@ -131,6 +132,13 @@ export default {
             this.getCameraApi();
             console.log('갱신')
             },  
+    computed: {
+        formTitle(){
+            this.getCameraApi();
+            return this.title
+        }
+    
+        },  
 }
 </script>
 

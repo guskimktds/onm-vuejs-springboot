@@ -24,8 +24,8 @@
         <template v-slot:item.board_cate_cd="{item}">
           <span>{{ switchString(item.board_cate_cd) }}</span>
         </template>
-        <template v-slot:item.disp_yn="{item}">
-          <span>{{ switchString2(item.disp_yn) }}</span>
+        <template v-slot:item.pop_up_yn="{item}">
+          <span>{{ switchString2(item.pop_up_yn) }}</span>
         </template>
           <template v-slot:top>    
             <!-- <v-toolbar
@@ -310,7 +310,7 @@ export default {
         }
       },
 
-      editItem (item) {
+      editItem (item) {  
         this.editedIndex = this.pList.indexOf(item)
         console.log('update Item Index : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
@@ -321,7 +321,8 @@ export default {
         // this.editedItem.local_gw_id = this.gw_id    
         // }
 
-
+      this.editedItem.disp_start_date = this.editedItem.disp_start_date.substring(0,10)
+      this.editedItem.disp_end_date = this.editedItem.disp_end_date.substring(0,10)
         console.log('update Item value : ',this.editedItem)
 
         this.dialog = true

@@ -44,7 +44,7 @@ export default {
   data () {
     return {
       param: {
-        start_date: dateInfo().threeMonthDashFormat,
+        start_date: dateInfo().currentDateDashFormat,
         end_date: dateInfo().currentDateDashFormat,
       },
       pList: [],
