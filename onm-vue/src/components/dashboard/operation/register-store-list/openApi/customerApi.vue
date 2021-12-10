@@ -36,16 +36,15 @@
         <v-dialog v-model="showModal" max-width="500px">
           <v-card>
           <v-card-title class="headline"> 매장별 API 호출 수</v-card-title>
-          호출일자: {{modal.access_date}}
-          매장명: {{modal.user_id}}
+          <div>호출일자: {{modal.access_date}}<v-spacer></v-spacer>매장명: {{modal.user_id}}</div>
           <hr>
           <table>
             <tr>
-              <th style="text-align:center">api 명  </th>
-              <th style="text-align:center">호출 수</th>
+              <th style="text-align:center width: 50px">api 명  </th>
+              <th style="text-align:center width:50px">호출 수</th>
             </tr>
             <tr v-for="list in rowList" v-bind:key="list.api_no"> 
-              <td>*매장명 : {{list.api_no}}   *호출 수 : </td>
+              <td>{{list.api_no}}</td>
               <td>{{list.access_cnt}}</td>
             </tr>
           </table>     
@@ -219,8 +218,8 @@ export default {
         view_cnt: '100',
       }
       console.log(JSON.stringify(params.end_date)+"DDDDDDDDewrerer")
-      this.modal.access_date = values.user_id;
-      this.modal.user_id = values.user_id;
+      this.modal.access_date = values.access_date;
+      this.modal.user_id = values.site_id;
       this.showModal=true
       axios.post(url, params, headers)
       .then((response) => {
@@ -332,5 +331,15 @@ export default {
 </script>
 
 <style scoped>
-
+th{
+ border: 1px solid;
+ text-align:center;
+  width:1000px;
+}
+td{
+  border: 1px solid ;
+  padding: 2px;
+   text-align:center;
+  width:1000px;
+}
 </style> 
