@@ -86,7 +86,7 @@ export default {
               this.loaded = true
 
             }else if(resCode==204){
-              alert(resMsg+'고객 개통/해지 추이 데이터가 없습니다.')
+              alert(resMsg+'서비스 업체별 호출 수가 없습니다')
             }else{
               this.datacollection = null;
               //alert(resCode + " / " + resMsg);

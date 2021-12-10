@@ -154,13 +154,10 @@
                         <v-card-text>
                             <v-container>
                  <v-col cols="12" sm="6" md="3">
-                 <v-select 
-                  item-text="state" 
-                  item-value="abbr" 
-                  :items="modalItems"
+                 <v-text-field 
                   label="분류" 
                   v-model="editedItem.board_cate_cd"
-                  ></v-select>
+                  ></v-text-field>
                   <v-select 
                   item-text="state" 
                   item-value="abbr" 
@@ -316,7 +313,7 @@ export default {
               {state: '미노출'     , abbr: 'N'}],
             modalItems:[
               {state: '일반공지'     , abbr: 'CATE01'},
-              {state: '긴급공지'     , abbr: 'CATE02'}],
+              ],
             modalDispItems:[
               {state: '노출'     , abbr: 'Y'},
               {state: '미노출'     , abbr: 'N'}],
@@ -329,7 +326,7 @@ export default {
             ],
             editedItem: {
                 board_type: 'NOTICE',
-                board_cate_cd: 'CATE01',
+                board_cate_cd: '일반공지',
                 title: '',
                 content_html: '',
                 content: '',
@@ -341,7 +338,7 @@ export default {
             },
             defaultItem: {
                 board_type: 'NOTICE',
-                board_cate_cd: 'CATE01',
+                board_cate_cd: '일반공지',
                 title: '',
                 content_html: '',
                 content: '',
@@ -380,7 +377,7 @@ export default {
 
         save () {
             console.log('save method call : ',this.editedItem)     
-
+            this.editedItem.board_cate_cd = 'CATE01'
             this.$emit("Items",this.editedItem)
             
             this.close()

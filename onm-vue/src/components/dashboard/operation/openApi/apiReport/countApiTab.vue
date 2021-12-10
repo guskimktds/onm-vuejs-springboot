@@ -3,8 +3,8 @@
 <v-row>
   <v-col
     cols="12"
-    sm="3"
-    md="3"
+    sm="4"
+    md="4"
   >
 
   <v-text-field label="API 전체 수"
@@ -16,8 +16,8 @@
   </v-col>
     <v-col
     cols="12"
-    sm="3"
-    md="3"
+    sm="4"
+    md="4"
     readonly
   >
     <v-text-field label="사용가능"
@@ -27,8 +27,8 @@
   </v-col>
     <v-col
     cols="12"
-    sm="3"
-    md="3"
+    sm="4"
+    md="4"
   >
     <v-text-field label="사용불가"
     v-model="apiCountInfo.unusedApi"
@@ -36,16 +36,16 @@
 
   </v-text-field>
     </v-col>
-    <v-col cols="12" sm="3" md="3">
+   <!--  <v-col cols="12" sm="3" md="3">
 
                  <v-select 
                     label="API명" 
                     :items="apiCountInfo.arr"
                       item-text="key"
                       item-value="value"
-                  ></v-select>
+                  ></v-select> 
 
-                </v-col>
+                </v-col>-->
 </v-row>
 </v-container>
 

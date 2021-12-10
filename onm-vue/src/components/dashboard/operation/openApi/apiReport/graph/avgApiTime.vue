@@ -8,7 +8,7 @@
                 ></line-chart> -->
                 <line-chart 
                 v-if="loaded"
-                    :chart-data="datacollection" :options="labels"
+                    :chart-data="datacollection" :options="labels" 
                 ></line-chart>
             </div>
            
@@ -28,7 +28,8 @@ export default {
             datacollection: {},
             title: '시간대별 평균 호출 수',
             labels: [], 
-            loaded: false,         
+            loaded: false,
+            maxValue: 0,         
         }
     },
     mounted(){
@@ -83,7 +84,7 @@ export default {
               console.log('avgApiTime response' + JSON.stringify(response.data.data.access_hourly));
               
               this.labels = this.getLabels(response.data.data.access_hourly)
-              
+              this.maxValue = this.getMaxValue(response.data.data.access_hourly)
               this.datacollection = {
                 labels: this.labels,
                 datasets: [
@@ -92,14 +93,16 @@ export default {
                     // backgroundColor: '#f87979',
                     borderColor:'#f87979',
                     data: this.getNewCnt(response.data.data.access_hourly)
-                  }
-                ]
+                   
+                  } 
+                  ],max: this.maxValue
+
               }
               // console.log(this.datacollection)
               this.loaded = true
 
             }else if(resCode==204){
-              alert(resMsg+'고객 개통/해지 추이 데이터가 없습니다.')
+              alert(resMsg+'시간댑별 호출수가 없습니다')
             }else{
               this.datacollection = null;
               //alert(resCode + " / " + resMsg);
@@ -113,13 +116,23 @@ export default {
       getLabels: function(arr){
         var new_arr = []
         let result_map = Object.keys(arr[0]).map(function(key){
-          return [String(key)+'일']
+          return [String(key)+'시']
         })
         for(let i=0; i < result_map.length; i++){
             new_arr.push(result_map[i]) 
         }
         console.log('avgApiTime keys',new_arr)
         return new_arr
+      },
+      getMaxValue: function(arr){
+        
+        var maxValue
+        maxValue = Object.values(arr)
+        maxValue = Math.max(maxValue)
+        // alert(maxValue+"최대값구하기")
+        maxValue = maxValue + (maxValue * 1.1)
+        return maxValue
+        
       },
 
       getNewCnt: function(arr){
