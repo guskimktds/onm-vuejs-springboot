@@ -1295,7 +1295,7 @@ export default {
     searchToDeviceOrderInfo: function () {
       console.log('searchToDeviceOrderInfo')
       var params = {
-        user_id: this.pUserid
+        said: this.pSaid
       }
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12008/get_device_order_detail_list`;
 
@@ -1304,11 +1304,10 @@ export default {
       axios
         .post(url, reqParams, headers)
         .then((response) => {
-          console.log(response);
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if (resCode == 200) {
-            this.doiList = response.data.data.device_order_detail_list;
+            this.doiList = response.data.data.list;
             this.doiPagingInfo = response.data.data.paging_info;
             // this.showCameraInfoList =! this.showCameraInfoList;
           }else if(resCode==204){
