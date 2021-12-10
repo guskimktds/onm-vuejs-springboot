@@ -398,8 +398,9 @@ const headers={
                             var resMsg = response.data.res_msg;
                             if(resCode == 200){
                                 alert("성공적으로 수정되었습니다.")
-                                this.changedInfo = 'N';
-                                this.validated = 0;
+                                 this.changedInfo = 'N';
+                                 this.validated = 0;
+                                this.getStoreApiInfo();
                             }else{
                                 alert(resCode + " / " + resMsg);
                                 this.changedInfo = 'N';
