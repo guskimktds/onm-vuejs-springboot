@@ -123,10 +123,13 @@
                <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역</span></div>
           
             <div v-if="vitem.tem1" style="height:300px;width:200px; overflow: hidden">
-            <v-img :src="images" v-if="vitem.tem1" style='height:auto;width:auto; '></v-img></div>
+            <v-img :src="images" v-if="vitem.tem1" style='height:100%;width:100%; '></v-img></div>
 
-            <div v-if="vitem.tem2" style="height:400px;width:500px; overflow: hidden">
-            <v-img :src="images" v-if="vitem.tem2" style='height:auto;width:auto;'></v-img></div>
+            <div v-if="vitem.tem2" style="height:150px;width:500px; overflow: hidden">
+            <v-img :src="images" v-if="vitem.tem2" style='height:100%;width:100%to;'></v-img></div>
+
+            <div v-if="vitem.tem3" style="height:150px;width:500px; overflow: hidden">
+            <v-img :src="images" v-if="vitem.tem3" style='height:100%;width:100%;'></v-img></div>
             <!-- <v-img :src="images"></v-img> -->
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
@@ -187,7 +190,7 @@ export default {
             gw_id: '',
             resPagingInfo: {},
             istf: true,
-            items: ["로그아웃 (300 X 200 px)", "공지사항 (400 X 500 px)"],
+            items: ["로그아웃 (300 X 200 px)", "왼쪽공지 (500 X 150 px)", "오른쪽공지 (500 X 150 px)"],
             items2: ["노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vvitem:'',
@@ -248,8 +251,11 @@ export default {
            if(this.$route.params.val.img_type == 'LOGOUT'){
                this.bannerType = '로그아웃 (300 X 200 px)'
            }
-           if(this.$route.params.val.img_type == 'NOTICE'){
-               this.bannerType = '공지사항 (400 X 500 px)'
+           if(this.$route.params.val.img_type == 'CATE01'){
+               this.bannerType = '왼쪽공지 (500 X 150 px)'
+           }
+           if(this.$route.params.val.img_type == 'CATE02'){
+               this.bannerType = '오른쪽공지 (500 X 150 px)'
            }
            if(this.$route.params.val.disp_yn == 'Y'){
                this.typedate = "노출"
@@ -314,10 +320,17 @@ export default {
                 if(this.items[0]==this.bannerType){
                     this.vitem.tem1 = true
                     this.vitem.tem2 = false
+                    this.vitem.tem3 = false
                 }
                 if(this.items[1]==this.bannerType){
                     this.vitem.tem1 = false
                     this.vitem.tem2 = true
+                    this.vitem.tem3 = false
+                }
+                if(this.items[2]==this.bannerType){
+                    this.vitem.tem1 = false
+                    this.vitem.tem2 = false
+                    this.vitem.tem3 = true
                 }
             },
          saveItems(){
