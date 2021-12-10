@@ -274,8 +274,6 @@ export default {
                     // formData.append('files', this.editedItem.banner_image)
                     }
                     this.istf = false
-                    console.log(this.images)
-                    console.log(input.files[0])
                 }
             },
             selectType(){
@@ -294,6 +292,7 @@ export default {
            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15121/upload_banner`
            console.log('서버에 전송되는 값') 
            console.log(this.editedItem)
+           this.editedItem.reg_id = this.$store.state.onmUserId
            this.editedItem.disp_start_date = this.dispdate.replace(/-/g,'')
            this.editedItem.disp_end_date = this.dispdate2.replace(/-/g,'')
            this.editedItem.reg_date = this.editedItem.reg_date.replace(/-/g,'')
