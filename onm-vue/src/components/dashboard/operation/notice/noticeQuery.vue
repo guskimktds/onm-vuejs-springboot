@@ -154,10 +154,13 @@
                         <v-card-text>
                             <v-container>
                  <v-col cols="12" sm="6" md="3">
-                 <v-text-field 
+                 <v-select 
+                  item-text="state" 
+                  item-value="abbr" 
+                  :items="modalItems"
                   label="분류" 
                   v-model="editedItem.board_cate_cd"
-                  ></v-text-field>
+                  ></v-select>
                   <v-select 
                   item-text="state" 
                   item-value="abbr" 
@@ -305,15 +308,15 @@ export default {
             dialogDelete: false,
             items:[
               {state: '전체'     , abbr: ''},
-              {state: '일반공지'     , abbr: 'CATE01'},
-              {state: '긴급공지'     , abbr: 'CATE02'}],
+              {state: '왼쪽공지'     , abbr: 'CATE01'},
+              {state: '오른쪽공지'     , abbr: 'CATE02'}],
             dispItems:[
               {state: '전체'     , abbr: ''},
               {state: '노출'     , abbr: 'Y'},
               {state: '미노출'     , abbr: 'N'}],
             modalItems:[
-              {state: '일반공지'     , abbr: 'CATE01'},
-              ],
+              {state: '왼쪽공지'     , abbr: 'CATE01'},
+              {state: '오른쪽공지'     , abbr: 'CATE02'}],
             modalDispItems:[
               {state: '노출'     , abbr: 'Y'},
               {state: '미노출'     , abbr: 'N'}],
@@ -326,7 +329,7 @@ export default {
             ],
             editedItem: {
                 board_type: 'NOTICE',
-                board_cate_cd: '일반공지',
+                board_cate_cd: 'CATE01',
                 title: '',
                 content_html: '',
                 content: '',
@@ -338,7 +341,7 @@ export default {
             },
             defaultItem: {
                 board_type: 'NOTICE',
-                board_cate_cd: '일반공지',
+                board_cate_cd: 'CATE01',
                 title: '',
                 content_html: '',
                 content: '',
@@ -377,7 +380,7 @@ export default {
 
         save () {
             console.log('save method call : ',this.editedItem)     
-            this.editedItem.board_cate_cd = 'CATE01'
+
             this.$emit("Items",this.editedItem)
             
             this.close()
