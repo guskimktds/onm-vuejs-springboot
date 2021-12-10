@@ -125,11 +125,10 @@ export default {
         return new_arr
       },
       getMaxValue: function(arr){
-        
         var maxValue
         maxValue = Object.values(arr)
         maxValue = Math.max(maxValue)
-        // alert(maxValue+"최대값구하기")
+        console.log(maxValue+"최대값구하기")
         maxValue = maxValue + (maxValue * 1.1)
         return maxValue
         
