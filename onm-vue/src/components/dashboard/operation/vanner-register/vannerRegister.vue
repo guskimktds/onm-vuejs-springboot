@@ -35,7 +35,7 @@
         <v-row style="margin-left:30px;">
             <v-col cols="auto" style="padding-top:35px; margin-right:30px;"><span style="color:red;">*</span>제목</v-col>
             <v-col>
-                <v-text-field label="입력" style="width: 500px" v-model="editedItem.title"></v-text-field>
+                <v-text-field label="입력" style="width: 500px" v-model="editedItem.title" maxlength="200"></v-text-field>
             </v-col>
         </v-row>
         <v-row style="margin-left:30px; padding-top:35px;">
@@ -107,6 +107,14 @@
                 <label for="file">파일찾기</label> 
                 <input type="file" id="file" @change="onFileSelected" accept="image/png, image/gif, image/jpeg, image/jpg">
             </div>
+            </v-col>
+        </v-row>
+        <v-row style="margin-left:30px;">
+            <v-col cols="auto" style="padding-top:35px;" >
+                <span style="color:red;">*</span>Link URL
+            </v-col>
+            <v-col>
+                <v-text-field label="입력" style="width: 520px; padding-left: 5px;" v-model="editedItem.img_url" maxl3ength="200"></v-text-field>
             </v-col>
         </v-row>
             <v-container 
@@ -208,7 +216,7 @@ export default {
                 os_type: 'All',
                 mod_date: dateInfo().currentDateDashFormat,
                 // origin_name: '',
-                // img_url: '',
+                img_url: '',
                 // img_path: '',
                 // cmd_type: '',
                 // local_gw_id: '0',
@@ -314,7 +322,7 @@ export default {
             formData.append('reg_date', this.editedItem.reg_date)
             formData.append('os_type', this.editedItem.os_type)
             formData.append('mod_date', this.editedItem.mod_date)
-            // formData.append('images', this.images)
+            formData.append('img_url', this.editedItem.img_url)
           
            axios.post(url, formData, this.headers)
             .then((response)=>{

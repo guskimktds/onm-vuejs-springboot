@@ -69,6 +69,8 @@ export default {
         this.$emit("pagination",this.options)
       },
       passPage(value){
+        console.log(value)
+        console.log(this.pList)
         this.$router.push({name:"vanner-detailpage", params :{'val' : value}});
       },
     },
