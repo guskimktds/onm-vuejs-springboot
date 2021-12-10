@@ -105,7 +105,7 @@ export default {
                       fontColor: "black",
                       suggestedMax: arrMax,
                       min:0,
-                      // stepSize: 15,
+                      stepSize: 1,
                     }
                   }],
                   xAxes: [{

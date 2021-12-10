@@ -133,6 +133,20 @@
                                     </v-radio>
                                 </v-radio-group>
                         </v-col>
+                                     
+                        <v-col
+                          cols="12"
+                          sm="6"
+                          md="6"
+                        >
+                   <v-select 
+                  item-text="state" 
+                  item-value="abbr" 
+                  :items="modalItems"
+                  label="분류" 
+                  v-model="editedItem.board_cate_cd"
+                  ></v-select>
+                    </v-col>
                       <v-row>
                         <v-col
                           cols="6">
@@ -245,33 +259,38 @@ export default {
           { text: '변경', value: 'actions', sortable: false },
         ],
         editedItem: {
-          boarrd_id: '',
+          board_id: '',
            disp_start_date :'',
            disp_end_date : '',
           disp_yn: '',
           title: '',
           content: '',
           content_html: '',
-          os_type:''
+          os_type:'',
+          board_cate_cd: '',
         },
         defaultItem: {
-          boarrd_id: '',
+          board_id: '',
           disp_start_date: '',
           disp_end_date: '',
           disp_yn: '',
           title: '',
           content: '',
           content_html: '',
-           os_type:''
+           os_type:'',
+           board_cate_cd: '',
         },
         newPlist: [],
-         osType:[
+        osType:[
               {state: 'All'     , abbr: 'ALL'},
               {state: 'Android'     , abbr: 'Android'},
               {state: 'iOS'     , abbr: 'iOS'},
               {state: 'PC'     , abbr: 'PC'},
               {state: 'PCAPP'     , abbr: 'PCAPP'},
             ],
+        modalItems:[
+              {state: '왼쪽공지'     , abbr: 'CATE01'},
+              {state: '오른쪽공지'     , abbr: 'CATE02'}],
       }
     },
     computed: {
@@ -370,7 +389,8 @@ export default {
             title : this.editedItem.title,
             content : this.editedItem.content,
             content_html : this.editedItem.content_html,
-             os_type : this.editedItem.os_type
+             os_type : this.editedItem.os_type,
+              board_cate_cd : this.editedItem.board_cate_cd
           }
           var reqParams = params
           reqParams.disp_end_date = params.disp_end_date.replace(/-/g,"").split(' ', 1)[0]
