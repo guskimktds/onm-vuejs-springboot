@@ -20,11 +20,9 @@
         :footer-props="{itemsPerPageOptions:[10,20,50,100]}"
         :header-props="{ sortIcon: null }"
       >
-      <!-- 
       <template v-slot:item.prod_from="{item}">
               <span>{{ switchString(item.prod_from) }}</span>
       </template> 
-      -->
       </v-data-table>
     </base-material-card>
   </v-container>
@@ -58,11 +56,11 @@ export default {
         { text: "그룹명", value: "group_nm" },
         { text: "상태코드", value: "status_code" },
         { text: "순서", value: "orderby_no" },
-        { text: "va상품 사용유무", value: "va_user_yn" },
+        { text: "va상품 사용유무", value: "va_use_yn" },
         { text: "va사용가능개수", value: "va_use_count" },
+        { text: "상품출시회사", value: "prod_from" },
         { text: "등록일", value: "reg_date" },
         { text: "수정일", value: "mod_date" },
-        { text: "상품출시회사", value: "prod_from" },
       ],
     }
   },
@@ -71,15 +69,13 @@ export default {
       this.loading = true;
       this.$emit("pagination", this.options);
     },
-    // switchString(values){
-    //   if(values==='S'){
-    //     return '정상'
-    //   }else if(values==='F'){
-    //     return '장애'
-    //   }else if(values==='D'){
-    //     return '삭제'
-    //   }
-    // }
+    switchString(values){
+      if(values==='T'){
+        return 'KTT'
+      }else{
+        return ''
+      }
+    }
   },
 
   watch: {
