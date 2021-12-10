@@ -251,10 +251,10 @@ export default {
            if(this.$route.params.val.img_type == 'LOGOUT'){
                this.bannerType = '로그아웃 (300 X 200 px)'
            }
-           if(this.$route.params.val.img_type == 'CATE01'){
+           if(this.$route.params.val.img_type == '왼쪽공지'){
                this.bannerType = '왼쪽공지 (500 X 150 px)'
            }
-           if(this.$route.params.val.img_type == 'CATE02'){
+           if(this.$route.params.val.img_type == '오른쪽공지'){
                this.bannerType = '오른쪽공지 (500 X 150 px)'
            }
            if(this.$route.params.val.disp_yn == 'Y'){
