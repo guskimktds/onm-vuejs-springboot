@@ -113,6 +113,15 @@ export default {
                 this.pList[i].pop_up_yn = '미노출'
               }
               }
+              for(let i = 0; i < this.pList.length; i++){
+              if(this.pList[i].img_type == 'LOGOUT'){
+                this.pList[i].img_type = '로그아웃'
+              }else if(this.pList[i].img_type == 'CATE01'){
+                this.pList[i].img_type = '왼쪽공지'
+              }else if(this.pList[i].img_type == 'CATE02'){
+                this.pList[i].img_type = '오른쪽공지'
+              }
+              }
             })
             .catch((ex) => {
               console.log('조회 실패',ex)
