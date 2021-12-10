@@ -89,7 +89,7 @@ export default {
       })
       .catch(function (error) {
         console.log(error);
-        alert("Error")
+        console.log("Error")
       })
       .finally(function () {
         // always executed

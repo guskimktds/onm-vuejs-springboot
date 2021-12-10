@@ -198,12 +198,12 @@ export default {
               this.pObject = {};
               this.showDetailObject = false
               this.isReloadDetailObject = false
-            alert("사용자 청약오더 상세 데이터가 없습니다.");
+              console.log("사용자 청약오더 상세 데이터가 없습니다.");
             }else{
               this.pObject = {};
               this.showDetailObject = false
               this.isReloadDetailObject = false
-              alert("Error");
+              console.log("Error");
             }
         })
         .catch((ex) => {
@@ -269,11 +269,11 @@ export default {
             this.kttBtn=!this.kttBtn
           }else if(resCode==204){
             this.kttList = [];
-            alert('사용자-KTT 데이터가 없습니다.');
+            console.log('사용자-KTT 데이터가 없습니다.');
             this.showKttList=false
           }else{
             this.kttList = [];
-            alert("Error");
+            console.log("Error");
             this.showKttList=false
           }
         })

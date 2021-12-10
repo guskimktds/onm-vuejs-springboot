@@ -59,9 +59,9 @@ export default {
         }else if(resCode==204){
           this.prodList = [];
           this.soPagingInfo = {};
-          alert('센서 신청 현황 데이터가 없습니다.');
+          console.log('청약 상품 데이터가 없습니다.');
         }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
+          console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -71,7 +71,7 @@ export default {
         }else{
           this.prodList = [];
           this.soPagingInfo = {};
-          alert("Error");
+          console.log("Error");
         }
       })
       .catch((ex) => {
