@@ -126,8 +126,11 @@
             <div v-if="vitem.tem1" style="height:300px;width:200px; overflow: hidden">
             <v-img :src="images" v-if="vitem.tem1" style='max-height:100%;width:100%;'></v-img></div>
 
-            <div v-if="vitem.tem2" style="height:400px;width:500px; overflow: hidden">
+            <div v-if="vitem.tem2" style="height:150px;width:500px; overflow: hidden">
             <v-img :src="images" v-if="vitem.tem2" style='height:100%;width:100%;'></v-img></div>
+
+            <div v-if="vitem.tem3" style="height:150px;width:500px; overflow: hidden">
+            <v-img :src="images" v-if="vitem.tem3" style='height:100%;width:100%;'></v-img></div>
             
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
@@ -187,14 +190,15 @@ export default {
             gw_id: '',
             resPagingInfo: {},
             istf: true,
-            items: ["로그아웃 (300 X 200 px)", "공지사항 (400 X 500 px)"],
+            items: ["로그아웃 (300 X 200 px)", "왼쪽공지 (500 X 150 px)","오른쪽공지 (500 X 150 px)"],
             items2: ["노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vvitem:'',
             vitem: 
                 {
                     tem1: false,
-                    tem2: false
+                    tem2: false,
+                    tem3: false
                 }
             ,
             // start_date: dateInfo().currentDateDashFormat,
@@ -283,10 +287,17 @@ export default {
                 if(this.items[0]==this.typedata){
                     this.vitem.tem1 = true
                     this.vitem.tem2 = false
+                    this.vitem.tem3 = false
                 }
                 if(this.items[1]==this.typedata){
                     this.vitem.tem1 = false
                     this.vitem.tem2 = true
+                    this.vitem.tem3 = false
+                }
+                if(this.items[2]==this.typedata){
+                    this.vitem.tem1 = false
+                    this.vitem.tem2 = false
+                    this.vitem.tem3 = true
                 }
             }
             },
@@ -302,7 +313,10 @@ export default {
                this.editedItem.img_type = 'LOGOUT'
            }
            if(this.typedata == this.items[1]){
-               this.editedItem.img_type = 'NOTICE'
+               this.editedItem.img_type = 'CATE01'
+           }
+           if(this.typedata == this.items[2]){
+               this.editedItem.img_type = 'CATE02'
            }
            if(this.typedata2 == this.items2[0]){
                 this.editedItem.disp_yn = 'Y'
