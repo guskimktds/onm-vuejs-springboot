@@ -47,7 +47,8 @@
                     { "name": "사용자 청약 오더 상세", "path": "/order/user/order-detail", "component": "order-detail" },
                     { "name": "사용자 청약 오더 처리 결과", "path": "/order/user-order-result", "component": "user-order-result" },
                     { "name": "사용자 청약 전화번호", "path": "/order/user-order-phone", "component": "user-order-phone" },
-                    { "name": "KTT 청약정보", "path": "/order/ktt-order", "component": "ktt-order" }
+                    { "name": "KTT 청약정보", "path": "/order/ktt-order", "component": "ktt-order" },
+                    { "name": "청약 상품", "path": "/order/prod-info", "component": "prod-info" }
                 ]
             },
             {

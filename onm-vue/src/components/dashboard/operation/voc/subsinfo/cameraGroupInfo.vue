@@ -6,7 +6,7 @@
     >
         <base-material-card
             color="customheader"
-            title="카메라 그룹 정보(12월 개발 예정)"
+            title="카메라 그룹 정보"
             class="px-2 py-1 customgrey"
             >
             <v-data-table
@@ -42,7 +42,7 @@ export default {
         loading: true,
         headers: [
           {
-            text: '카메라 그룹 아이디',
+            text: '카메라그룹아이디',
             sortable: false, value: 'cam_group_id', class: 'my-header-style'
           },
           { text: '사용자ID', value: 'user_id', class: 'my-header-style'},
@@ -51,7 +51,7 @@ export default {
           { text: '정렬순서', value: 'orderby_no', class: 'my-header-style'},
           { text: '서비스상태코드', value: 'status_code', class: 'my-header-style'},
           { text: '등록일시', value: 'reg_date', class: 'my-header-style'},
-          { text: '수정일시', value: 'mod_date', class: 'my-header-style'}
+          { text: '수정일시', value: 'mod_date', class: 'my-header-style'},
         ]
       }
     },

@@ -67,6 +67,7 @@ import UserOrderDetail from '../components/dashboard/order/userOrderDetail'
 import UserOrderResult from '../components/dashboard/order/userOrderResult'
 import UserOrderPhone from '../components/dashboard/order/userOrderPhone'
 import KTTOrderInfo from '../components/dashboard/order/kttOrderInfo'
+import ProdInfo from '../components/dashboard/order/prod-info/prodInfo'
 import DeviceOrderInfo from '../components/dashboard/order/deviceOrderInfo'
 import DeviceOrderResult from '../components/dashboard/order/deviceOrderResult'
 import AuthTargetDevice from '../components/dashboard/order/authTargetDevice'
@@ -258,6 +259,11 @@ export default new Router({
                     path: "ktt-order", 
                     name: 'KTTOrderInfo',
                     component: KTTOrderInfo
+                },
+                {
+                    path: "prod-info", 
+                    name: 'ProdInfo',
+                    component: ProdInfo
                 },
                 {
                     path: "device-order-info",
