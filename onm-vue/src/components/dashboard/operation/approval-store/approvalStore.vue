@@ -160,19 +160,7 @@ const headers={
         data(){
             return {
                 title: "매장 승인 정보",
-                pList: [  // 안에 데이터 지우기
-                    // {
-                    //     site_id : 'DOMINO_HEAD',
-                    //     site_name:'도미노피자',
-                    //     registered_store_count : 10,
-                    //     api_count : 5,
-                    //     user_name : '이선민',
-                    //     reg_date : '20211028',
-                    //     mod_date: '20211028',
-                    //     status_code : 'D',
-                    //     control_type: 'NONE'
-                    // }
-                ],
+                pList: [],
                 searchParam:{
                 start_date: dateInfo().lastWeekDashFormat,
                 end_date: dateInfo().currentDateDashFormat,
