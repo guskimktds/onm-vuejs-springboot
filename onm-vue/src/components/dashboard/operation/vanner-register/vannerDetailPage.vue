@@ -248,7 +248,7 @@ export default {
            this.dispdate2 = this.$route.params.val.disp_end_date.substring(0,10)
         //    .replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
         //    this.editedItem.mod_id = this.$route.params.val.reg_id
-           if(this.$route.params.val.img_type == 'LOGOUT'){
+           if(this.$route.params.val.img_type == '로그아웃'){
                this.bannerType = '로그아웃 (300 X 200 px)'
            }
            if(this.$route.params.val.img_type == '왼쪽공지'){
