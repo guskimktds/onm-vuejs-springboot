@@ -117,9 +117,9 @@ export default {
               if(this.pList[i].img_type == 'LOGOUT'){
                 this.pList[i].img_type = '로그아웃'
               }else if(this.pList[i].img_type == 'CATE01'){
-                this.pList[i].img_type = '왼쪽공지'
+                this.pList[i].img_type = '왼쪽배너'
               }else if(this.pList[i].img_type == 'CATE02'){
-                this.pList[i].img_type = '오른쪽공지'
+                this.pList[i].img_type = '오른쪽배너'
               }
               }
             })

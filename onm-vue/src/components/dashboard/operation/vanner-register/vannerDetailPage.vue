@@ -190,7 +190,7 @@ export default {
             gw_id: '',
             resPagingInfo: {},
             istf: true,
-            items: ["로그아웃 (300 X 200 px)", "왼쪽공지 (500 X 150 px)", "오른쪽공지 (500 X 150 px)"],
+            items: ["로그아웃 (300 X 200 px)", "왼쪽배너 (500 X 150 px)", "오른쪽배너 (500 X 150 px)"],
             items2: ["노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vvitem:'',
@@ -251,11 +251,11 @@ export default {
            if(this.$route.params.val.img_type == '로그아웃'){
                this.bannerType = '로그아웃 (300 X 200 px)'
            }
-           if(this.$route.params.val.img_type == '왼쪽공지'){
-               this.bannerType = '왼쪽공지 (500 X 150 px)'
+           if(this.$route.params.val.img_type == '왼쪽배너'){
+               this.bannerType = '왼쪽배너 (500 X 150 px)'
            }
-           if(this.$route.params.val.img_type == '오른쪽공지'){
-               this.bannerType = '오른쪽공지 (500 X 150 px)'
+           if(this.$route.params.val.img_type == '오른쪽배너'){
+               this.bannerType = '오른쪽배너 (500 X 150 px)'
            }
            if(this.$route.params.val.disp_yn == 'Y'){
                this.typedate = "노출"

@@ -168,7 +168,7 @@ export default {
             dialog: false,
             dialogDelete: false,
             images: [],
-            items: ["전체", "로그아웃", "왼쪽공지", "오른쪽공지"],
+            items: ["전체", "로그아웃", "왼쪽배너", "오른쪽배너"],
             items2: ["전체", "노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vitem:'전체',
