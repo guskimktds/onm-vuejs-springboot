@@ -231,7 +231,7 @@
                                     <v-col cols="6"
                                     >
                                 <vue-editor
-                                :editorOptions="editorSettings"
+                                
                                 v-model="editedItem.content_html"
                                  :editorToolbar="customToolbar"
                                 ></vue-editor>
@@ -314,12 +314,6 @@ export default {
 [{ 'direction': 'rtl' }],
 ['clean'],
 ],
-        editorSettings: {
-          modules: {
-              imageDrop: true,
-            imageResize: {}
-              }
-          },
           
             dialog: false,
             dialogDelete: false,
