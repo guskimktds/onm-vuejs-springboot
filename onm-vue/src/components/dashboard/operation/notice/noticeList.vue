@@ -152,6 +152,7 @@
                           cols="6">
                           <vue-editor
                             v-model="editedItem.content_html"
+                            :editorToolbar="customToolbar"
                           ></vue-editor>
                         </v-col>
                          <v-col cols="6"
@@ -242,6 +243,22 @@ export default {
     props: ['pList','resPagingInfo'],
     data() {
       return {
+        customToolbar :
+         [
+[{ 'font': [] }],
+[{ 'header': [false, 1, 2, 3, 4, 5, 6, ] }],
+[{ 'size': ['small', false, 'large', 'huge'] }],
+['bold', 'italic', 'underline', 'strike'],
+[{'align': ''}, {'align': 'center'}, {'align': 'right'}, {'align': 'justify'}],
+['blockquote', 'code-block'],
+[{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+[{ 'script': 'sub'}, { 'script': 'super' }],
+[{ 'indent': '-1'}, { 'indent': '+1' }],
+[{ 'color': [] }, { 'background': [] }],
+['link', 'image', 'video', 'formula'],
+[{ 'direction': 'rtl' }],
+['clean'],
+],
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
