@@ -189,7 +189,7 @@ export default {
             gw_id: '',
             resPagingInfo: {},
             istf: true,
-            items: ["로그아웃 (300 X 200 px)", "왼쪽공지 (500 X 150 px)", "오른쪽공지 (500 X 150 px)"],
+            items: ["로그아웃 (300 X 200 px)", "왼쪽배너 (500 X 150 px)", "오른쪽배너 (500 X 150 px)"],
             items2: ["노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vvitem:'',
@@ -233,6 +233,7 @@ export default {
         }
     },
     created(){
+        this.showAuth()
            this.$route.params.val.bannerImage
         //    this.$route.params.val.images
            this.editedItem.os_type = this.$route.params.val.os_type
@@ -249,11 +250,11 @@ export default {
            if(this.$route.params.val.img_type == '로그아웃'){
                this.bannerType = '로그아웃 (300 X 200 px)'
            }
-           if(this.$route.params.val.img_type == '왼쪽공지'){
-               this.bannerType = '왼쪽공지 (500 X 150 px)'
+           if(this.$route.params.val.img_type == '왼쪽배너'){
+               this.bannerType = '왼쪽배너 (500 X 150 px)'
            }
-           if(this.$route.params.val.img_type == '오른쪽공지'){
-               this.bannerType = '오른쪽공지 (500 X 150 px)'
+           if(this.$route.params.val.img_type == '오른쪽배너'){
+               this.bannerType = '오른쪽배너 (500 X 150 px)'
            }
            if(this.$route.params.val.disp_yn == 'Y'){
                this.typedate = "노출"
@@ -356,13 +357,23 @@ export default {
                     // this.$fire({
                     //     title: "수정 되었습니다.",
                     //     type: "success"})
-                }else{
-                    this.$fire({
-                        title: "등록 실패하였습니다123.",
-                        html: resMsg,
-                        type: "error"})
-                        this.dialogNum1 = false
-                }
+                }else if(resCode==204){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert('데이터가 없습니다.');
+              }else if(resCode==410){
+                alert("로그인 세션이 만료되었습니다.");
+              //  EventBus.$emit('top-path-logout');
+                this.$store
+                .dispatch("LOGOUT")
+                .then( res => { 
+                console.log(res.status)}).catch(({ message }) => (this.msg = message))
+                this.$router.replace('/signin')
+              }else{
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert(resCode + " / " + resMsg);
+              }
             })
             .catch((ex)=>{
                 this.$fire({

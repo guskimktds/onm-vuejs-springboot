@@ -10,7 +10,7 @@
           
    
       <div class = "button">
-        <router-link to="/operation/vanner-register">배너등록</router-link>
+        <router-link to="/operation/vanner-register" v-show="showAuth()">배너등록</router-link>
       </div>
  
 
@@ -68,6 +68,15 @@ export default {
     }
   },
   methods: {
+    showAuth(){
+            var auth=this.$store.state.authGroupId
+            if(auth=='G100'){
+            return true;
+            }else{
+            alert('접근권한이 없습니다.')
+            return false;
+            }
+        },
     searchToButton: function(params){
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15122/get_banner`
     var reqParams = this.handleParams(params)  
@@ -92,7 +101,7 @@ export default {
               }else if(resCode==204){
                 this.pList = [];
                 this.resPagingInfo = {};
-                alert('코드 관리 데이터가 없습니다.');
+                alert('데이터가 없습니다.');
               }else if(resCode==410){
                 alert("로그인 세션이 만료되었습니다.");
               //  EventBus.$emit('top-path-logout');
@@ -117,9 +126,9 @@ export default {
               if(this.pList[i].img_type == 'LOGOUT'){
                 this.pList[i].img_type = '로그아웃'
               }else if(this.pList[i].img_type == 'CATE01'){
-                this.pList[i].img_type = '왼쪽공지'
+                this.pList[i].img_type = '왼쪽배너'
               }else if(this.pList[i].img_type == 'CATE02'){
-                this.pList[i].img_type = '오른쪽공지'
+                this.pList[i].img_type = '오른쪽배너'
               }
               }
             })
