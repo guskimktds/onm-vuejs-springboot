@@ -190,7 +190,7 @@ export default {
             gw_id: '',
             resPagingInfo: {},
             istf: true,
-            items: ["로그아웃 (300 X 200 px)", "왼쪽공지 (500 X 150 px)","오른쪽공지 (500 X 150 px)"],
+            items: ["로그아웃 (300 X 200 px)", "왼쪽배너 (500 X 150 px)","오른쪽배너 (500 X 150 px)"],
             items2: ["노출", "미노출"],
             items3: ["All", "Android", "IOS", "PC", "PCAPP"],
             vvitem:'',
