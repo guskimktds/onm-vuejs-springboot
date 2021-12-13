@@ -407,7 +407,7 @@ export default {
             console.log(222)
             console.log(this.editedItem.content_html)
             if(this.editedItem.title == '' || this.editedItem.content_html == ''|| this.editedItem.content == ''){
-            alert('제목 | 내용을 입력하세요')
+            alert('제목과 내용을 모두 입력하세요')
             this.dialog =false
             }else{
 
