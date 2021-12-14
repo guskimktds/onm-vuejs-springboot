@@ -101,24 +101,8 @@ const headers = {
 export default{
 
     created(){
-
-      //   var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/` // 아직 미정
-      //    axios.post(url, headers)
-      //    .then((response) =>{
-      //       var resCode = response.data.res_code;
-      //   if(resCode==410){
-      //       alert("로그인 세션이 만료되었습니다.");
-      //       EventBus.$emit('top-path-logout');
-      //       this.$store
-      //       .dispatch("LOGOUT")
-      //       .then( res => { 
-      //       console.log(res.status)}).catch(({ message }) => (this.msg = message))
-      //       this.$router.replace('/signin')
-      //       }
-      //   })
-      //   .catch((ex) => {
-      //   console.log('조회 실패',ex)
-      // })
+      this.showAuth();
+      
     },
     data(){
         return{
@@ -196,7 +180,16 @@ export default{
         },
         backPage(){
           this.$router.push({name: "approval-store"});
+        },
+         showAuth(){
+        var auth=this.$store.state.authGroupId
+        if(auth=='G100'){
+          return true;
+        }else{
+          alert('접근권한이 없습니다.')
+          return false;
         }
+      }
        
     }
     

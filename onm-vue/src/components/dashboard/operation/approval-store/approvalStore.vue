@@ -49,6 +49,7 @@ const headers={
                 this.searchStoreInfo(params);
             },
             searchStoreInfo(params){
+
                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13031/get_site`
 
                 var reqParams=this.handleParams(params)
