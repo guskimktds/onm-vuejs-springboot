@@ -9,7 +9,7 @@
 
       <v-text-field 
       
-      label="search"
+      label="매장 ID"
       v-model="user_id"
       ></v-text-field>
         </v-col>
