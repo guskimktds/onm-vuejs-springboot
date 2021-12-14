@@ -10,7 +10,7 @@
           
    
       <div class = "button">
-        <router-link to="/operation/vanner-register">배너등록</router-link>
+        <router-link to="/operation/vanner-register" style="text-decoration:none;">배너등록</router-link>
       </div>
  
 
@@ -254,14 +254,12 @@ export default {
 
 <style scoped>
 .button{
-  width:100px;
-  height: 50px;
   float: right;
   padding-top:10px;
+  padding-right:40px;
   font-size: 20px;
   text-align: center;
   border-radius: 5px;
   border: 2px solid #ffffff;
-  color: white;
 }
 </style>
