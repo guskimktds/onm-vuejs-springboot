@@ -239,6 +239,9 @@ export default {
           },
         }
     },
+    created(){
+        this.showAuth();
+    },
     computed: {
       filteredData(){
           return this.localGwOptions.filter(function(param){
@@ -247,6 +250,15 @@ export default {
       }
     },
     methods: {
+        showAuth(){
+            var auth=this.$store.state.authGroupId
+            if(auth=='G100'){
+            return true;
+            }else{
+            alert('접근권한이 없습니다.')
+            return false;
+            }
+        },
         close () {
             this.dialogNum1 = false
             this.dialogNum2 = false

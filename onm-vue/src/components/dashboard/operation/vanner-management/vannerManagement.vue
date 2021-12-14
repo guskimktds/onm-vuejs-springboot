@@ -10,7 +10,7 @@
           
    
       <div class = "button">
-        <router-link to="/operation/vanner-register" v-show="showAuth()">배너등록</router-link>
+        <router-link to="/operation/vanner-register">배너등록</router-link>
       </div>
  
 
