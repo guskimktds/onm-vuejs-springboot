@@ -122,14 +122,15 @@
             <div v-if="istf" style="width: 400px; height: 300px; margin-left: -15px;">
                <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역</span></div>
           
-            <div v-if="vitem.tem1" style="height:200px;width:300px; overflow: hidden;">
+            <div v-if="vitem.tem1" style="height:200px;width:300px; overflow: hidden">
             <img :src="images" v-if="vitem.tem1" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
 
-            <div v-if="vitem.tem2" style="height:150px;width:500px; overflow: hidden;">
+            <div v-if="vitem.tem2" style="height:150px;width:500px; overflow: hidden">
             <img :src="images" v-if="vitem.tem2" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
 
-            <div v-if="vitem.tem3" style="height:150px;width:500px; overflow: hidden;">
+            <div v-if="vitem.tem3" style="height:150px;width:500px; overflow: hidden">
             <img :src="images" v-if="vitem.tem3" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
+            <!-- <v-img :src="images"></v-img> -->
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
             
@@ -239,6 +240,7 @@ export default {
            this.editedItem.os_type = this.$route.params.val.os_type
            this.editedItem.title = this.$route.params.val.title
            this.$route.params.val.img_type
+           this.editedItem.mod_id = this.$store.state.onmUserId
            this.editedItem.img_url = this.$route.params.val.img_url
            this.editedItem.img_name = this.$route.params.val.img_name
            this.typedate = this.$route.params.val.disp_yn
@@ -246,7 +248,7 @@ export default {
         //    .replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
            this.dispdate2 = this.$route.params.val.disp_end_date.substring(0,10)
         //    .replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-           this.editedItem.mod_id = this.$route.params.val.reg_id
+        //    this.editedItem.mod_id = this.$route.params.val.reg_id
            if(this.$route.params.val.img_type == '로그아웃'){
                this.bannerType = '로그아웃 (300 X 200 px)'
            }
