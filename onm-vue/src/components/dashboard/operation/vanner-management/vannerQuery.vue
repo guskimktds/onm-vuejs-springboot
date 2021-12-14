@@ -200,15 +200,6 @@ export default {
       //
     },
     methods: {
-        showAuth(){
-            var auth=this.$store.state.authGroupId
-            if(auth=='G100'){
-            return true;
-            }else{
-            alert('접근권한이 없습니다.')
-            return false;
-            }
-        },
         fomatdata(){
             this.param.title = ''
             this.param.img_type = ''

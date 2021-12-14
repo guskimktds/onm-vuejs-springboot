@@ -234,6 +234,7 @@ export default {
         }
     },
     created(){
+        this.showAuth()
            this.$route.params.val.bannerImage
         //    this.$route.params.val.images
            this.editedItem.os_type = this.$route.params.val.os_type
@@ -358,13 +359,23 @@ export default {
                     // this.$fire({
                     //     title: "수정 되었습니다.",
                     //     type: "success"})
-                }else{
-                    this.$fire({
-                        title: "등록 실패하였습니다123.",
-                        html: resMsg,
-                        type: "error"})
-                        this.dialogNum1 = false
-                }
+                }else if(resCode==204){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert('데이터가 없습니다.');
+              }else if(resCode==410){
+                alert("로그인 세션이 만료되었습니다.");
+              //  EventBus.$emit('top-path-logout');
+                this.$store
+                .dispatch("LOGOUT")
+                .then( res => { 
+                console.log(res.status)}).catch(({ message }) => (this.msg = message))
+                this.$router.replace('/signin')
+              }else{
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert(resCode + " / " + resMsg);
+              }
             })
             .catch((ex)=>{
                 this.$fire({
