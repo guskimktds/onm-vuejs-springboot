@@ -192,7 +192,7 @@ export default {
             istf: true,
             items: ["로그아웃 (300 X 200 px)", "왼쪽배너 (500 X 150 px)","오른쪽배너 (500 X 150 px)"],
             items2: ["노출", "미노출"],
-            items3: ["All", "Android", "IOS", "PC", "PCAPP"],
+            items3: ["ALL", "Android", "iOS", "PC", "PCAPP"],
             vvitem:'',
             vitem: 
                 {
@@ -217,7 +217,7 @@ export default {
                 disp_end_date: dateInfo().oneMonthDashFormat,
                 reg_id: '',
                 reg_date: dateInfo().currentDateDashFormat,
-                os_type: 'All',
+                os_type: 'ALL',
                 mod_date: dateInfo().currentDateDashFormat,
                 // origin_name: '',
                 img_url: '',
@@ -239,15 +239,15 @@ export default {
           },
         }
     },
-    created(){
-        this.showAuth();
-    },
     computed: {
       filteredData(){
           return this.localGwOptions.filter(function(param){
             return (Number(param.version_code) > 1301 || param.local_gw_id == '');
         });
       }
+    },
+    created(){
+        this.showAuth();
     },
     methods: {
         showAuth(){
@@ -275,6 +275,7 @@ export default {
         //미리보기
         onFileSelected(event){ 
             var input = event.target;
+            console.log(input.files[0])
                 this.editedItem.img_name = input.files[0].name
                 if (input.files && input.files[0]) { 
                 var reader = new FileReader(); 
@@ -289,6 +290,21 @@ export default {
                     // formData.append('files', this.editedItem.banner_image)
                     }
                     this.istf = false
+                    console.log(input.files[0])
+                //      사이즈 제한
+                //     var file  = input.files[0];
+                //     var _URL = window.URL || window.webkitURL;
+                //     var img = new Image();
+
+                //     img.src = _URL.createObjectURL(file);
+                //     img.onload = function() {
+                        
+                //         if(img.width != 500 || img.height != 150) {
+                //             alert("이미지 크기맞춰서 올려주세요.");
+                //         return
+                //     } 
+                // }
+                //         console.log(img)
                 }
             },
             selectType(){
@@ -314,7 +330,6 @@ export default {
            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15121/upload_banner`
            console.log('서버에 전송되는 값') 
            console.log(this.editedItem)
-           this.editedItem.reg_id = this.$store.state.onmUserId
            this.editedItem.disp_start_date = this.dispdate.replace(/-/g,'')
            this.editedItem.disp_end_date = this.dispdate2.replace(/-/g,'')
            this.editedItem.reg_date = this.editedItem.reg_date.replace(/-/g,'')
@@ -375,6 +390,10 @@ export default {
                 .then( res => { 
                 console.log(res.status)}).catch(({ message }) => (this.msg = message))
                 this.$router.replace('/signin')
+              }else if(resCode==778){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert(resMsg);
               }else{
                 this.pList = [];
                 this.resPagingInfo = {};
