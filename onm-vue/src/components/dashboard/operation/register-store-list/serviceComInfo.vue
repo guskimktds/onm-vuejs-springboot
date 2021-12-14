@@ -300,9 +300,9 @@ const headers={
                   
                         if(this.infoObject.access_limit_type === 'Y'){ // 사용 제한 타입 
                             this.access_limit_type = "매년";
-                        }else if(this.infoObject.access_limit_type === 'M'){
+                        }else if(this.infoObject.access_limit_type === 'YM'){
                             this.access_limit_type = "매월";
-                        }else if(this.infoObject.access_limit_type === 'D'){
+                        }else if(this.infoObject.access_limit_type === 'YMD'){
                             this.access_limit_type = "매일";
                         }else{
                             this.access_limit_type= "-";
