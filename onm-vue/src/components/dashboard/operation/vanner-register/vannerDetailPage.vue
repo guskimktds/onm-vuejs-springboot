@@ -122,14 +122,14 @@
             <div v-if="istf" style="width: 400px; height: 300px; margin-left: -15px;">
                <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역</span></div>
           
-            <div v-if="vitem.tem1" style="height:300px;width:200px; overflow: hidden">
-            <v-img :src="images" v-if="vitem.tem1" style='height:100%;width:100%; '></v-img></div>
+            <div v-if="vitem.tem1" style="height:200px;width:300px; overflow: hidden">
+            <img :src="images" v-if="vitem.tem1" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
 
             <div v-if="vitem.tem2" style="height:150px;width:500px; overflow: hidden">
-            <v-img :src="images" v-if="vitem.tem2" style='height:100%;width:100%to;'></v-img></div>
+            <img :src="images" v-if="vitem.tem2" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
 
             <div v-if="vitem.tem3" style="height:150px;width:500px; overflow: hidden">
-            <v-img :src="images" v-if="vitem.tem3" style='height:100%;width:100%;'></v-img></div>
+            <img :src="images" v-if="vitem.tem3" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
             <!-- <v-img :src="images"></v-img> -->
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
@@ -192,7 +192,7 @@ export default {
             istf: true,
             items: ["로그아웃 (300 X 200 px)", "왼쪽배너 (500 X 150 px)", "오른쪽배너 (500 X 150 px)"],
             items2: ["노출", "미노출"],
-            items3: ["All", "Android", "IOS", "PC", "PCAPP"],
+            items3: ["ALL", "Android", "iOS", "PC", "PCAPP"],
             vvitem:'',
             vitem: 
                 {
@@ -234,6 +234,7 @@ export default {
         }
     },
     created(){
+        this.showAuth()
            this.$route.params.val.bannerImage
         //    this.$route.params.val.images
            this.editedItem.os_type = this.$route.params.val.os_type
@@ -358,13 +359,23 @@ export default {
                     // this.$fire({
                     //     title: "수정 되었습니다.",
                     //     type: "success"})
-                }else{
-                    this.$fire({
-                        title: "등록 실패하였습니다123.",
-                        html: resMsg,
-                        type: "error"})
-                        this.dialogNum1 = false
-                }
+                }else if(resCode==204){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert('데이터가 없습니다.');
+              }else if(resCode==410){
+                alert("로그인 세션이 만료되었습니다.");
+              //  EventBus.$emit('top-path-logout');
+                this.$store
+                .dispatch("LOGOUT")
+                .then( res => { 
+                console.log(res.status)}).catch(({ message }) => (this.msg = message))
+                this.$router.replace('/signin')
+              }else{
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert(resCode + " / " + resMsg);
+              }
             })
             .catch((ex)=>{
                 this.$fire({

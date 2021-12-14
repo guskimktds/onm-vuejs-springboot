@@ -123,14 +123,14 @@
             <div v-if="istf" style="width: 400px; height: 300px; margin-left: -15px;">
                <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역1</span></div>
 
-            <div v-if="vitem.tem1" style="height:300px;width:200px; overflow: hidden">
-            <v-img :src="images" v-if="vitem.tem1" style='max-height:100%;width:100%;'></v-img></div>
+            <div v-if="vitem.tem1" style="height:200px;width:300px; overflow: hidden">
+            <img :src="images" v-if="vitem.tem1" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
 
             <div v-if="vitem.tem2" style="height:150px;width:500px; overflow: hidden">
-            <v-img :src="images" v-if="vitem.tem2" style='height:100%;width:100%;'></v-img></div>
+            <img :src="images" v-if="vitem.tem2" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
 
             <div v-if="vitem.tem3" style="height:150px;width:500px; overflow: hidden">
-            <v-img :src="images" v-if="vitem.tem3" style='height:100%;width:100%;'></v-img></div>
+            <img :src="images" v-if="vitem.tem3" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
             
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
@@ -192,7 +192,7 @@ export default {
             istf: true,
             items: ["로그아웃 (300 X 200 px)", "왼쪽배너 (500 X 150 px)","오른쪽배너 (500 X 150 px)"],
             items2: ["노출", "미노출"],
-            items3: ["All", "Android", "IOS", "PC", "PCAPP"],
+            items3: ["ALL", "Android", "iOS", "PC", "PCAPP"],
             vvitem:'',
             vitem: 
                 {
@@ -217,7 +217,7 @@ export default {
                 disp_end_date: dateInfo().oneMonthDashFormat,
                 reg_id: '',
                 reg_date: dateInfo().currentDateDashFormat,
-                os_type: 'All',
+                os_type: 'ALL',
                 mod_date: dateInfo().currentDateDashFormat,
                 // origin_name: '',
                 img_url: '',
@@ -245,9 +245,20 @@ export default {
             return (Number(param.version_code) > 1301 || param.local_gw_id == '');
         });
       }
-      //
+    },
+    created(){
+        this.showAuth();
     },
     methods: {
+        showAuth(){
+            var auth=this.$store.state.authGroupId
+            if(auth=='G100'){
+            return true;
+            }else{
+            alert('접근권한이 없습니다.')
+            return false;
+            }
+        },
         close () {
             this.dialogNum1 = false
             this.dialogNum2 = false
@@ -264,6 +275,7 @@ export default {
         //미리보기
         onFileSelected(event){ 
             var input = event.target;
+            console.log(input.files[0])
                 this.editedItem.img_name = input.files[0].name
                 if (input.files && input.files[0]) { 
                 var reader = new FileReader(); 
@@ -278,6 +290,21 @@ export default {
                     // formData.append('files', this.editedItem.banner_image)
                     }
                     this.istf = false
+                    console.log(input.files[0])
+                //      사이즈 제한
+                //     var file  = input.files[0];
+                //     var _URL = window.URL || window.webkitURL;
+                //     var img = new Image();
+
+                //     img.src = _URL.createObjectURL(file);
+                //     img.onload = function() {
+                        
+                //         if(img.width != 500 || img.height != 150) {
+                //             alert("이미지 크기맞춰서 올려주세요.");
+                //         return
+                //     } 
+                // }
+                //         console.log(img)
                 }
             },
             selectType(){
@@ -303,7 +330,6 @@ export default {
            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15121/upload_banner`
            console.log('서버에 전송되는 값') 
            console.log(this.editedItem)
-           this.editedItem.reg_id = this.$store.state.onmUserId
            this.editedItem.disp_start_date = this.dispdate.replace(/-/g,'')
            this.editedItem.disp_end_date = this.dispdate2.replace(/-/g,'')
            this.editedItem.reg_date = this.editedItem.reg_date.replace(/-/g,'')
@@ -352,13 +378,27 @@ export default {
                     // this.$fire({
                     //     title: "등록 되었습니다.",
                     //     type: "success"})
-                }else{
-                    this.$fire({
-                        title: "등록 실패하였습니다.",
-                        html: resMsg,
-                        type: "error"})
-                        this.dialogNum1 = false
-                }
+                }else if(resCode==204){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert('데이터가 없습니다.');
+              }else if(resCode==410){
+                alert("로그인 세션이 만료되었습니다.");
+              //  EventBus.$emit('top-path-logout');
+                this.$store
+                .dispatch("LOGOUT")
+                .then( res => { 
+                console.log(res.status)}).catch(({ message }) => (this.msg = message))
+                this.$router.replace('/signin')
+              }else if(resCode==778){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert(resMsg);
+              }else{
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert(resCode + " / " + resMsg);
+              }
             })
             .catch((ex)=>{
                 this.$fire({

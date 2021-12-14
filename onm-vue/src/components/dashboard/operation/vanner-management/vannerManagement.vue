@@ -68,6 +68,7 @@ export default {
     }
   },
   methods: {
+    
     searchToButton: function(params){
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15122/get_banner`
     var reqParams = this.handleParams(params)  
@@ -92,7 +93,7 @@ export default {
               }else if(resCode==204){
                 this.pList = [];
                 this.resPagingInfo = {};
-                alert('코드 관리 데이터가 없습니다.');
+                alert('데이터가 없습니다.');
               }else if(resCode==410){
                 alert("로그인 세션이 만료되었습니다.");
               //  EventBus.$emit('top-path-logout');
