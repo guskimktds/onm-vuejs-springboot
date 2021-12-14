@@ -68,15 +68,7 @@ export default {
     }
   },
   methods: {
-    showAuth(){
-            var auth=this.$store.state.authGroupId
-            if(auth=='G100'){
-            return true;
-            }else{
-            alert('접근권한이 없습니다.')
-            return false;
-            }
-        },
+    
     searchToButton: function(params){
     var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15122/get_banner`
     var reqParams = this.handleParams(params)  
