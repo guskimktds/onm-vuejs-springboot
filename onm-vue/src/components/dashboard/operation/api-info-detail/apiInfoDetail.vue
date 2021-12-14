@@ -316,8 +316,8 @@ export default ({
             ],
             access_limit_type_list:[
                 {name:'매년', value:'Y'},
-                {name:'매월', value:'M'},
-                {name:'매일', value:'D'},
+                {name:'매월', value:'YM'},
+                {name:'매일', value:'YMD'},
                 {name:'제한없음', value:''},
             ],
             defaultSelected: {
@@ -367,9 +367,9 @@ export default ({
                      
                         if(this.getValue.access_limit_type === 'Y'){ // 사용 제한 타입 
                             this.limit_type = "매년";
-                        }else if(this.getValue.access_limit_type === 'M'){
+                        }else if(this.getValue.access_limit_type === 'YM'){
                             this.limit_type = "매월";
-                        }else if(this.getValue.access_limit_type === 'D'){
+                        }else if(this.getValue.access_limit_type === 'YMD'){
                             this.limit_type = "매일";
                         }else{
                             this.limit_type= "-";
