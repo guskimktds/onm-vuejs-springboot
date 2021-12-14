@@ -122,14 +122,14 @@
             <div v-if="istf" style="width: 400px; height: 300px; margin-left: -15px;">
                <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역</span></div>
           
-            <div v-if="vitem.tem1" style="height:300px;width:200px; overflow: hidden">
-            <v-img :src="images" v-if="vitem.tem1" style='height:100%;width:100%; '></v-img></div>
+            <div v-if="vitem.tem1" style="height:200px;width:300px; overflow: hidden">
+            <img :src="images" v-if="vitem.tem1" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
 
             <div v-if="vitem.tem2" style="height:150px;width:500px; overflow: hidden">
-            <v-img :src="images" v-if="vitem.tem2" style='height:100%;width:100%to;'></v-img></div>
+            <img :src="images" v-if="vitem.tem2" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
 
             <div v-if="vitem.tem3" style="height:150px;width:500px; overflow: hidden">
-            <v-img :src="images" v-if="vitem.tem3" style='height:100%;width:100%;'></v-img></div>
+            <img :src="images" v-if="vitem.tem3" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
             <!-- <v-img :src="images"></v-img> -->
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">

@@ -249,9 +249,6 @@ export default {
         });
       }
     },
-    created(){
-        this.showAuth();
-    },
     methods: {
         showAuth(){
             var auth=this.$store.state.authGroupId
