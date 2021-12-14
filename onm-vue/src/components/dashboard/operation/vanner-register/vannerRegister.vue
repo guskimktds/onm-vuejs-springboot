@@ -192,7 +192,7 @@ export default {
             istf: true,
             items: ["로그아웃 (300 X 200 px)", "왼쪽배너 (500 X 150 px)","오른쪽배너 (500 X 150 px)"],
             items2: ["노출", "미노출"],
-            items3: ["All", "Android", "IOS", "PC", "PCAPP"],
+            items3: ["ALL", "Android", "iOS", "PC", "PCAPP"],
             vvitem:'',
             vitem: 
                 {
@@ -217,7 +217,7 @@ export default {
                 disp_end_date: dateInfo().oneMonthDashFormat,
                 reg_id: '',
                 reg_date: dateInfo().currentDateDashFormat,
-                os_type: 'All',
+                os_type: 'ALL',
                 mod_date: dateInfo().currentDateDashFormat,
                 // origin_name: '',
                 img_url: '',
@@ -275,6 +275,7 @@ export default {
         //미리보기
         onFileSelected(event){ 
             var input = event.target;
+            console.log(input.files[0])
                 this.editedItem.img_name = input.files[0].name
                 if (input.files && input.files[0]) { 
                 var reader = new FileReader(); 
@@ -289,8 +290,21 @@ export default {
                     // formData.append('files', this.editedItem.banner_image)
                     }
                     this.istf = false
-                    console.log(this.images)
                     console.log(input.files[0])
+                //      사이즈 제한
+                //     var file  = input.files[0];
+                //     var _URL = window.URL || window.webkitURL;
+                //     var img = new Image();
+
+                //     img.src = _URL.createObjectURL(file);
+                //     img.onload = function() {
+                        
+                //         if(img.width != 500 || img.height != 150) {
+                //             alert("이미지 크기맞춰서 올려주세요.");
+                //         return
+                //     } 
+                // }
+                //         console.log(img)
                 }
             },
             selectType(){
@@ -376,6 +390,10 @@ export default {
                 .then( res => { 
                 console.log(res.status)}).catch(({ message }) => (this.msg = message))
                 this.$router.replace('/signin')
+              }else if(resCode==778){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert(resMsg);
               }else{
                 this.pList = [];
                 this.resPagingInfo = {};
