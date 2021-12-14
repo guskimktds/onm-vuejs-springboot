@@ -192,7 +192,7 @@ export default {
             istf: true,
             items: ["로그아웃 (300 X 200 px)", "왼쪽배너 (500 X 150 px)", "오른쪽배너 (500 X 150 px)"],
             items2: ["노출", "미노출"],
-            items3: ["All", "Android", "IOS", "PC", "PCAPP"],
+            items3: ["ALL", "Android", "iOS", "PC", "PCAPP"],
             vvitem:'',
             vitem: 
                 {
