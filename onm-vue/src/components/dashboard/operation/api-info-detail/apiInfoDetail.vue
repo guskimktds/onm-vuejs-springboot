@@ -350,11 +350,11 @@ export default ({
                         this.getValue.site_id = response.data.data.site_info.site_id;  
                         this.getValue.site_name = response.data.data.site_info.site_name;
                         this.getValue.status_code = response.data.data.site_info.status_code;
-                        this.getValue.user_name = response.data.data.site_info.user_name;
+                        this.getValue.user_name = response.data.data.site_info.mng_name;
                         this.getValue.mod_date = response.data.data.site_info.mod_date;
                         this.getValue.reg_date = response.data.data.site_info.reg_date;
                         this.getValue.adm_id = response.data.data.site_info.adm_id;
-                        this.getValue.tel_no = response.data.data.site_info.tel_no;
+                        this.getValue.tel_no = response.data.data.site_info.mng_no;
                         this.getValue.adm_access_date = response.data.data.site_info.adm_access_date;
                         this.getValue.control_type = response.data.data.site_info.control_type;
                         this.getValue.site_access_limit = response.data.data.site_info.site_access_limit;
