@@ -434,6 +434,7 @@ export default {
                 return
             }else{
             this.saveItems()
+            this.dialogNum1 = false
             }
         },
     },  
