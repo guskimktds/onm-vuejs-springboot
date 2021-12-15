@@ -53,8 +53,9 @@ export default {
           { text: '모델명', value: 'modelname', class: 'my-header-style'},
           { text: '오더타입', value: 'ordertype', class: 'my-header-style'},
           { text: '오더번호', value: 'orderno', class: 'my-header-style'},
-          { text: 'changeareacd', value: 'changeareacd', class: 'my-header-style'},
-          { text: '계약ID', value: 'said', class: 'my-header-style'}
+          { text: '계약ID', value: 'said', class: 'my-header-style'},
+          { text: '서비스ID', value: 'service_no', class: 'my-header-style'},
+          { text: 'changeareacd', value: 'changeareacd', class: 'my-header-style'}
         ]
       }
     },
