@@ -400,6 +400,9 @@ export default {
         saveSure(){
             console.log(222)
             console.log(this.editedItem.content_html)
+             console.log("체크워드 실행전")
+             this.checkWord()
+            
             if(this.editedItem.title == '' || this.editedItem.content_html == ''|| this.editedItem.content == ''){
             alert('제목과 내용을 모두 입력하세요')
             this.dialog =false
@@ -455,7 +458,13 @@ export default {
             // this.pList.splice(this.editedIndex, 1)
             this.closeDelete()
         },
-
+      checkWord(){
+       if(this.editedItem.content.match('loginForm')){
+         alert('loginForm은 입력할 수 없습니다.')
+         this.editedItem.content = ''
+         console.log('!!!!!!!!!!!!!!!!!!!로그인폼 체크')
+       }
+      },
     },  
 }
 </script>
