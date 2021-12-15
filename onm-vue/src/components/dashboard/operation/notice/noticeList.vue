@@ -409,6 +409,8 @@ export default {
              os_type : this.editedItem.os_type,
               board_cate_cd : this.editedItem.board_cate_cd
           }
+          console.log("체크워드 실행전")
+             this.checkWord()
           var reqParams = params
           reqParams.disp_end_date = params.disp_end_date.replace(/-/g,"").split(' ', 1)[0]
           reqParams.disp_start_date = params.disp_start_date.replace(/-/g,"").split(' ', 1)[0]
@@ -467,7 +469,14 @@ export default {
         } 
         this.close()
       },
-
+  checkWord(){
+       if(this.editedItem.content.match('loginForm')){
+         alert('loginForm은 입력할 수 없습니다.')
+         this.params.content = ''
+         console.log('!!!!!!!!!!!!!!!!!!!로그인폼 체크')
+         
+       }
+      },
     deleteItemConfirm () {
         if (this.editedIndex > -1) {
           var params = this.editedItem
