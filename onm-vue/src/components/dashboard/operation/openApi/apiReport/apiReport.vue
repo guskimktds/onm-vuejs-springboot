@@ -67,7 +67,7 @@ export default {
             let newParams={}
             if(Number(value.start_date.replace(/-/g,""))-Number(value.end_date.replace(/-/g,""))>0){
                 alert('형식에 맞는 날짜 검색값을 입력해주세요')
-                this.param.start_date=dateInfo().threeMonthDashFormat
+                this.param.start_date=dateInfo().currentDateDashFormat
                 this.param.end_date=dateInfo().currentDateDashFormat
             }else{
                 newParams=value
