@@ -26,6 +26,7 @@
                         label="제목" 
                         v-model="param.title"
                         placeholder=" " 
+                       
                     >                        
                     </v-text-field>
                 </v-col>  
@@ -173,7 +174,7 @@
                     v-model="editedItem.title"
                     label="제목"
                     counter
-                    maxlength="20"
+                    maxlength="1000"
                 ></v-text-field>
                 <v-col cols="12">
                 <v-col cols="12" sm="6" md="3">
@@ -238,6 +239,7 @@
                                     </v-col >
                                     <v-col cols="6">
                                 <v-textarea
+                                label="공지사항 내용"
                                 outlined
                                  v-model="editedItem.content"
                                 ></v-textarea>
@@ -403,7 +405,7 @@ export default {
              console.log("체크워드 실행전")
              this.checkWord()
             
-            if(this.editedItem.title == '' || this.editedItem.content_html == ''|| this.editedItem.content == ''){
+            if(this.editedItem.title == '' || this.editedItem.content == ''){
             alert('제목과 내용을 모두 입력하세요')
             this.dialog =false
             }else{

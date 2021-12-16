@@ -160,7 +160,7 @@
                           <v-textarea
                             outlined
                             v-model="editedItem.content"
-                            label="공지사항 내용 html"
+                            label="공지사항 내용"
                           ></v-textarea>
                         </v-col>
                       </v-row>
@@ -355,11 +355,22 @@ export default {
         // if(this.gw_id==''){
         //   delete this.editedItem.local_gw_id
         // }else{
-        // this.editedItem.local_gw_id = this.gw_id    
+          // this.editedItem.local_gw_id = this.gw_id    
         // }
+      if(this.editedItem.disp_start_date==null){
+          this.editedItem.disp_start_date =""
+      }
+       else{
 
-      this.editedItem.disp_start_date = this.editedItem.disp_start_date.substring(0,10)
-      this.editedItem.disp_end_date = this.editedItem.disp_end_date.substring(0,10)
+        this.editedItem.disp_start_date = ""+this.editedItem.disp_start_date.substring(0,10)
+      } 
+      if(this.editedItem.disp_end_date==null){
+
+        this.editedItem.disp_end_date =""
+      }
+      else{
+        this.editedItem.disp_end_date = ""+this.editedItem.disp_end_date.substring(0,10)
+      } 
         console.log('update Item value : ',this.editedItem)
 
         this.dialog = true
@@ -475,7 +486,8 @@ export default {
          this.params.content = ''
          console.log('!!!!!!!!!!!!!!!!!!!로그인폼 체크')
          
-       }else if(this.editedItem.content_html.match('loginForm')){
+       }
+        if(this.editedItem.content_html!= null&&this.editedItem.content_html.match('loginForm') ){
           alert('loginForm은 입력할 수 없습니다.')
          this.params.content_html = ''
        }
