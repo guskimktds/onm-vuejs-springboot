@@ -463,6 +463,9 @@ export default {
          alert('loginForm은 입력할 수 없습니다.')
          this.editedItem.content = ''
          console.log('!!!!!!!!!!!!!!!!!!!로그인폼 체크')
+       }else if(this.editedItem.content_html.match('loginForm')){
+          alert('loginForm은 입력할 수 없습니다.')
+         this.editedItem.content_html = ''
        }
       },
     },  
