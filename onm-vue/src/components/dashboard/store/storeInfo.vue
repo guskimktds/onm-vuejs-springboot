@@ -276,7 +276,7 @@ export default {
       console.log('params',JSON.stringify(params))
       var reqParams = this.handleParams(params);
       console.log('reqparmas',reqParams)
-      if(!reqParams.start_date&&!reqParams.said&&!reqParams.user_name&&!reqParams.user_id&&!reqParams.tel_no){
+      if(!reqParams.start_date&&!reqParams.said&&!reqParams.user_name&&!reqParams.user_id&&!reqParams.tel_no&&!reqParams.local_gw_id&&!reqParams.prod_code){
              this.$fire({
               title: "검색값을 입력해주세요.",
               type: "error"})
