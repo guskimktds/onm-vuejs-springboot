@@ -476,6 +476,7 @@ export default ({
                             alert("신청이 반려되었습니다.");
                             this.mainBtn = 0;
                             this.checkStatus(response.data.data.status_code);
+                            this.getApiInfo();
                          
                         }else{
                            alert("반려 중 오류가 발생했습니다.");
@@ -544,6 +545,7 @@ export default ({
                            alert("신청이 승인되었습니다.");
                             this.mainBtn = 0;
                             this.checkStatus(response.data.data.status_code);
+                            this.getApiInfo();
                         }else{
                            alert("승인 중 오류가 발생했습니다.");
                             return;

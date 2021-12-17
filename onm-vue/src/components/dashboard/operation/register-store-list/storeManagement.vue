@@ -133,6 +133,7 @@
                         </td>
                         <td v-else-if="store.status_code === 'N'" style="color:red;text-align:center;width:20%"> <!--N으로 바꾸기-->
                             <button @click="sendApproval(store)" style="color:white;background-color:black;width:70px;border-radius:3px;">승인요청</button>
+                            <button @click="approvalByforce(store)" style="color:white;background-color:black;width:70px;border-radius:3px;margin-left:20px;">강제승인</button>
                         </td>
                         <td v-else style="text-align:center;width:20%">
                             -
@@ -264,6 +265,30 @@ const headers={
                     this.closeSure();       
                 })    
                 
+            },
+            approvalByforce(value){
+                console.log(value);
+                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13050/approval_by_force`; 
+                 axios.post(url,value, headers)
+                .then((response)=>{
+                    var resCode = response.data.res_code;
+                    if(resCode === 200){
+                        alert("승인되었습니다.");
+                        //this.infoObject.site_id = this.response.data.data.site_id;
+                        this.getStoreList(); // 새로뿌리기
+                    }else if(resCode===410){
+                        alert("로그인 세션이 만료되었습니다.");
+                        EventBus.$emit('top-path-logout');
+                        this.$store
+                        .dispatch("LOGOUT")
+                        .then( res => { 
+                        console.log(res.status)}).catch(({ message }) => (this.msg = message))
+                        this.$router.replace('/signin')
+                    }
+                })
+                .catch(() => {
+                    alert("승인요청 중 오류가 발생하였습니다.");        
+                })
             },
             sendApproval(value){ // 매장으로 승인 요청 보내기
                 console.log(value)

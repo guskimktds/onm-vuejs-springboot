@@ -417,7 +417,7 @@ const headers={
                         })
                     }else{
                         this.$fire({
-                       title: "비밀번호를 입력해주세요.",
+                       title: "수정이 취소되었습니다.",
                        type : "error",
                        html: ""
                         })
