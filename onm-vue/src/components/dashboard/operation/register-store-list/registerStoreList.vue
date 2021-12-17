@@ -206,73 +206,148 @@ const headers={
                         // always executed
                 });
             },
-            reissueCert(){
-                var result = confirm("키를 생성하시겠습니까?");
-                if(result){
-                    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13034/issue_certKey`; 
-                 
-                    axios.post(url,this.receivedValue,headers) // 다시 만들기(상태코드랑 site_id)
-                    .then((response) => {  
-                        if(response.data.res_code === 200){
-                            alert("키 생성이 되었습니다.");
+            reissueCert(){ // 업체 정보 수정
+            
+            var result = confirm("키를 생성하시겠습니까?");
+
+            if(result){
+            var params = this.receivedValue;
+            this.$fire({
+                title: "비밀번호를 입력해주세요.",
+                input: 'password',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '예',
+                cancelButtonText: '아니오',
+                inputPlaceholder: 'Enter your password',
+                inputAttributes: {
+                    maxlength: 20,
+                    autocapitalize: 'off',
+                    autocorrect: 'off'
+                }
+                }).then(result => {
+                if(result.value){
+                    var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
+                    var login = {
+                        login_id: this.$store.state.onmUserId,
+                        login_pwd: result.value
+                    }
+                    axios.post(url, login, this.$store.state.headers)
+                    .then((response) => {
+                    var resCode = response.data.res_code;
+                    if(resCode == 200){
+                        var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13034/issue_certKey`; 
+                        axios.post(url, params, headers)
+                        .then((response) => {
+                        console.log(response)
+                        var resCode = response.data.res_code;
+                        
+                        if(resCode === 200){
+                                alert("키 생성이 되었습니다.");
                             this.getApiInfo();
                             this.checkStatus('S');
                             this.getApi = true;
                             this.apiBtnDetail = 2;
-                        }else{
-                           alert("키 생성 중 문제가 생겼습니다.");
-                            return;
-                        }   
+                            }else{
+                            alert("키 생성 중 문제가 생겼습니다.");
+                                return;
+                            }   
+                        })
+                        .catch((ex) => {
+                        console.log('변경 실패',ex)
+                        })
+                    }else{
+                        alert('서버와 통신이 안되었거나 비밀번호가 맞지 않습니다.');
+                        
+                        }
                     })
-                    .catch(function (error) {
-                        console.log(error);   
-                    })
-                    .finally(function () {
-                        // always executed
-                    });
-                }else{
-                     this.$fire({
-                       title: "생성이 취소되었습니다.",
-                       type : "error",
-                       html: ""
-                   })
-                }
-            },
-            deleteCert(){
-                var result = confirm("키를 삭제하시겠습니까?");
-                if(result){
-                    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13035/delete_certKey`;
-                    // var vm  = this;
-                    axios.post(url,this.receivedValue,headers) // 다시 만들기(상태코드랑 site_id)
-                    .then((response) => {   
-                        console.log(response);
-                        if(response.data.res_code === 200){
-                            alert("키가 삭제되었습니다.")
-                            this.apiBtnDetail = 3;
-                            this.getApi = false;
-                            this.receivedValue.status_code = response.data.data.status_code;
-                            this.checkStatus(this.receivedValue.status_code);
-                         
-                        }else{
-                            alert("키 삭제 중 문제가 생겼습니다.");
-                            return;
-                        }   
-                    })
-                    .catch(function (error) {
-                        alert("오류가 발생했습니다.");
-                        console.log(error);
-                        return;
-                    })
-                    .finally(function () {
-                        // always executed
-                    });
                 }else{
                     this.$fire({
-                       title: "삭제가 취소되었습니다.",
+                    title: "키 생성이 취소되었습니다.",
+                    type : "error",
+                    html: ""
+                    })
+
+                }
+            });
+
+            }else{
+                alert("키 생성이 취소되었습니다.");
+                return;
+            }
+            
+        },
+          deleteCert(){ // 업체 정보 수정
+                
+                var result = confirm("키를 삭제하시겠습니까?");
+
+                if(result){
+                var params = this.receivedValue;
+                this.$fire({
+                    title: "비밀번호를 입력해주세요.",
+                    input: 'password',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '예',
+                    cancelButtonText: '아니오',
+                    inputPlaceholder: 'Enter your password',
+                    inputAttributes: {
+                        maxlength: 20,
+                        autocapitalize: 'off',
+                        autocorrect: 'off'
+                    }
+                    }).then(result => {
+                    if(result.value){
+                        var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
+                        var login = {
+                            login_id: this.$store.state.onmUserId,
+                            login_pwd: result.value
+                        }
+                        axios.post(url, login, this.$store.state.headers)
+                        .then((response) => {
+                        var resCode = response.data.res_code;
+                        if(resCode == 200){
+                            var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13035/delete_certKey`;
+                            axios.post(url, params, headers)
+                            .then((response) => {
+                            console.log(response);
+                            if(response.data.res_code === 200){
+                                alert("키가 삭제되었습니다.")
+                                this.apiBtnDetail = 3;
+                                this.getApi = false;
+                                this.receivedValue.status_code = response.data.data.status_code;
+                                this.checkStatus(this.receivedValue.status_code);
+                            
+                            }else{
+                                alert("키 삭제 중 문제가 생겼습니다.");
+                                return;
+                            }     
+                            })
+                            .catch((ex) => {
+                            console.log('변경 실패',ex)
+                            })
+                        }else{
+                            alert('서버와 통신이 안되었거나 비밀번호가 맞지 않습니다.');
+                            
+                         }
+                        })
+                    }else{
+                        this.$fire({
+                       title: "키 삭제가 취소되었습니다.",
                        type : "error",
                        html: ""
-                   })
-                }
+                        })
+
+                    }
+                });
+
+               }else{
+                   alert("키 삭제가 취소되었습니다.");
+                   return;
+               }
+                
             },
             closeSure(){
                 this.dialog = false;
