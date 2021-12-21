@@ -210,6 +210,8 @@ const headers={
                         if(resCode === 200){
                             if(response.data.data.user_list != null) {
                                 this.user_list = response.data.data.user_list;                
+                            }else{
+                                this.user_list = [];
                             }
                         }else if(resCode === 204){
                         this.user_list =[];
@@ -338,7 +340,7 @@ const headers={
                             var resCode = response.data.res_code;
                             if(resCode === 200){
                                 alert("삭제되었습니다.");
-                                this.closeSure();
+                                this.getStoreList();
                             }else if(resCode===410){
                                 alert("로그인 세션이 만료되었습니다.");
                                 EventBus.$emit('top-path-logout');
