@@ -37,6 +37,11 @@ export default {
   props: ['kList','kttPagingInfo'],
   data() {
     return {
+      last: 0,
+      // dialog: false,
+      // dialogDelete: false,
+      // editedIndex: -1,
+      options: {},
       pageoptions: this.$store.state.pageoptions,
       // totalList: 0,
       loading: true,

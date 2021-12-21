@@ -92,7 +92,7 @@ export default {
         }else{
           this.psList = [];
           this.psPagingInfo = {};
-          // console.log(resCode + " / " + resMsg);
+          //console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {

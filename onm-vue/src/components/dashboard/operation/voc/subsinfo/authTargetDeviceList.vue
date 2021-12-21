@@ -13,9 +13,10 @@
                 :headers="headers"
                 :items="authList"
                 hide-default-header
-                hide-default-footer
+                :options.sync="options"
                 :server-items-length="authPagingInfo.total_cnt"
                 class="elevation-0"
+                :footer-props="{ itemsPerPageOptions: pageoptions }"
             >    
               <template v-slot:header="{ props: { headers } }">
                 <thead>
@@ -40,6 +41,11 @@ export default {
     props: ['authList', 'authPagingInfo'],
     data() {
       return {
+        last: 0,
+        dialog: false,
+        dialogDelete: false,
+        editedIndex: -1,
+        options:{},
         pageoptions: this.$store.state.pageoptions,
         loading: true,
         headers: [
@@ -81,6 +87,14 @@ export default {
         deep: true,
       },
     },
+    updated() {
+      if(this.last!==this.authPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.authPagingInfo.total_cnt!==undefined){
+      this.last=this.authPagingInfo.total_cnt
+      }
+  },
 
 }
 </script>
@@ -92,7 +106,6 @@ export default {
   font-size: 14px !important;
   font-weight: 600;
   background-color: #98C4C6;
-  /* background-color: #3333FF; */
 }
 
 </style>

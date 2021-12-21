@@ -83,7 +83,7 @@ export default {
         }else{
           this.kttList = [];
           this.kttPagingInfo = {};
-          // console.log(resCode + " / " + resMsg);
+          //console.log(resCode + " / " + resMsg);
         }
 
       })

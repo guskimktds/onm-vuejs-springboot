@@ -158,7 +158,7 @@ export default {
         }else{
           this.pList = [];
           this.resPagingInfo = {};
-          // console.log(resCode + " / " + resMsg);
+          //console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
@@ -243,7 +243,7 @@ export default {
           }else{
             this.sdList = [];
             this.showSubDetailList=false
-            // console.log(resCode + " / " + resMsg);
+            //console.log(resCode + " / " + resMsg);
           }
         })
         .catch((ex) => {

@@ -112,7 +112,7 @@ export default {
             }else{
               this.pList=[];
               this.mobilePagingInfo={};
-              // console.log(resCode+" / "+resMsg);
+              //console.log(resCode+" / "+resMsg);
             }
           })
           .catch((ex)=>{
