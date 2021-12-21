@@ -274,51 +274,82 @@ const headers={
             },
             approvalByforce(value){
                 console.log(value);
-                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13050/approval_by_force`; 
-                 axios.post(url,value, headers)
-                .then((response)=>{
-                    var resCode = response.data.res_code;
-                    if(resCode === 200){
-                        alert("승인되었습니다.");
-                        //this.infoObject.site_id = this.response.data.data.site_id;
-                        this.getStoreList(); // 새로뿌리기
-                    }else if(resCode===410){
-                        alert("로그인 세션이 만료되었습니다.");
-                        EventBus.$emit('top-path-logout');
-                        this.$store
-                        .dispatch("LOGOUT")
-                        .then( res => { 
-                        console.log(res.status)}).catch(({ message }) => (this.msg = message))
-                        this.$router.replace('/signin')
+                this.$fire({
+                title: "강제로 승인 하시겠습니까?",
+                type: "question",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '예',
+                cancelButtonText: '아니오',
+                }).then(result => {
+                    if(result.value){
+                    
+                    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13050/approval_by_force`; 
+                    axios.post(url,value, headers)
+                    .then((response)=>{
+                        var resCode = response.data.res_code;
+                        if(resCode === 200){
+                            alert("승인되었습니다.");
+                            //this.infoObject.site_id = this.response.data.data.site_id;
+                            this.getStoreList(); // 새로뿌리기
+                        }else if(resCode===410){
+                            alert("로그인 세션이 만료되었습니다.");
+                            EventBus.$emit('top-path-logout');
+                            this.$store
+                            .dispatch("LOGOUT")
+                            .then( res => { 
+                            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+                            this.$router.replace('/signin')
+                        }
+                    })
+                    .catch(() => {
+                        alert("승인요청 중 오류가 발생하였습니다.");        
+                    })
+                 }else{
+                    this.closeSure()
                     }
-                })
-                .catch(() => {
-                    alert("승인요청 중 오류가 발생하였습니다.");        
-                })
+                });
             },
             sendApproval(value){ // 매장으로 승인 요청 보내기
                 console.log(value)
-                 var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13044/send_approval`; 
-                 axios.post(url,value, headers)
-                .then((response)=>{
-                    var resCode = response.data.res_code;
-                    if(resCode === 200){
-                        alert("승인 요청이 전송되었습니다.");
-                        //this.infoObject.site_id = this.response.data.data.site_id;
-                        this.getStoreList(); // 새로뿌리기
-                    }else if(resCode===410){
-                        alert("로그인 세션이 만료되었습니다.");
-                        EventBus.$emit('top-path-logout');
-                        this.$store
-                        .dispatch("LOGOUT")
-                        .then( res => { 
-                        console.log(res.status)}).catch(({ message }) => (this.msg = message))
-                        this.$router.replace('/signin')
+                this.$fire({
+                title: "정말 승인 하시겠습니까?",
+                type: "question",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '예',
+                cancelButtonText: '아니오',
+                }).then(result => {
+                
+                if(result.value){
+
+                    var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13044/send_approval`; 
+                    axios.post(url,value, headers)
+                    .then((response)=>{
+                        var resCode = response.data.res_code;
+                            if(resCode === 200){
+                                alert("승인 요청이 전송되었습니다.");
+                                //this.infoObject.site_id = this.response.data.data.site_id;
+                                this.getStoreList(); // 새로뿌리기
+                            }else if(resCode===410){
+                                alert("로그인 세션이 만료되었습니다.");
+                                EventBus.$emit('top-path-logout');
+                                this.$store
+                                .dispatch("LOGOUT")
+                                .then( res => { 
+                                console.log(res.status)}).catch(({ message }) => (this.msg = message))
+                                this.$router.replace('/signin')
+                            }
+                        })
+                        .catch(() => {
+                            alert("승인요청 중 오류가 발생하였습니다.");        
+                        })
+                    }else{
+                    this.closeSure()
                     }
-                })
-                .catch(() => {
-                    alert("승인요청 중 오류가 발생하였습니다.");        
-                })
+                });
             },
             deleteList(storeInfo){
 
