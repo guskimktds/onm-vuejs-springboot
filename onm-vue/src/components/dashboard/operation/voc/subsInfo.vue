@@ -2,16 +2,15 @@
   <v-container fluid>
     <v-card>
       <term-order-info-query 
-        v-on:search="searchToUserOrderInfo"
+        v-on:search="searchSaid"
         v-bind:param=searchParam
       ></term-order-info-query>
 
       <!-- ## 오더 정보 사용자 청약 오더 정보 -->
-      <user-order-info-list v-bind:pList=pList v-bind:resPagingInfo=resPagingInfo @child="clickToSearchUserOrderDetailList" @pagination="setToSearchParams">
-      </user-order-info-list>
+      <user-order-info-list v-bind:uoiList=uoiList v-bind:resPagingInfo=resPagingInfo></user-order-info-list>
 
       <!-- ## 오더 상세 오더 처리 결과 -->  
-      <user-order-detail-list v-bind:odList=odList v-bind:dodPagingInfo=dodPagingInfo @pagination="setToSearchParams"></user-order-detail-list>
+      <user-order-detail-list v-bind:odList=odList v-bind:dodPagingInfo=dodPagingInfo></user-order-detail-list>
 
       <!-- updateType 화면 -->
       <pre-update-type v-bind:putList=putList ></pre-update-type>
@@ -22,25 +21,25 @@
       <ktt-list v-bind:kttList=kttList v-bind:kttPagingInfo=kttPagingInfo></ktt-list>
 
       <!-- 청약 결과 -->
-      <user-order-result-list v-bind:pList=uorList v-bind:resPagingInfo=resPagingInfo @pagination="setToSearchParams"></user-order-result-list>
+      <user-order-result-list v-bind:pList=uorList v-bind:resPagingInfo=resPagingInfo></user-order-result-list>
 
       <!-- 로그인 관련:: 사용자-매장-전화번호-카메라 ONM_13001 -->
-      <store-info-list v-bind:pList=siList v-bind:resPagingInfo="resPagingInfo" @pagination="setToSearchParams"></store-info-list>
+      <store-info-list v-bind:pList=siList v-bind:resPagingInfo="resPagingInfo"></store-info-list>
 
       <!-- 사용자정보 -->
-      <store-detail-info-list v-bind:pList=sdiList v-bind:resPagingInfo=resPagingInfo @pagination="setToSearchParams"></store-detail-info-list>
+      <store-detail-info-list v-bind:pList=sdiList v-bind:resPagingInfo=resPagingInfo></store-detail-info-list>
 
       <!-- 사용자-KTT정보 -->
-      <user-ktt-info-list v-bind:kList=kList v-bind:kttPagingInfo=kttPagingInfo @pagination="setToSearchParams"></user-ktt-info-list>
+      <user-ktt-info-list v-bind:kList=kList v-bind:kttPagingInfo=kttPagingInfo></user-ktt-info-list>
 
       <!-- 사용자상품정보 ONM-13002 확인 필요-->
-      <store-product-info v-bind:pList=spiList v-bind:resPagingInfo=spiPagingInfo @pagination="setToSearchParams"></store-product-info>
+      <store-product-info v-bind:pList=spiList v-bind:resPagingInfo=spiPagingInfo></store-product-info>
 
       <!-- 상품 요약정보 ONM_13005 -->
       <store-product-summary-info-list v-bind:psList=psList v-bind:psPagingInfo=psPagingInfo></store-product-summary-info-list>
 
       <!-- 사용자 전화번호 ONM_13004 -->
-      <user-phone-info v-bind:pnList=upiList v-bind:resPagingInfo=upiPagingInfo @pagination="setToSearchParams"></user-phone-info>
+      <user-phone-info v-bind:pnList=upiList v-bind:resPagingInfo=upiPagingInfo></user-phone-info>
 
       <!-- 사용자 VA 상품 및 적용카메라 대수 등록 확인 -->
       <va-cam-count-list v-bind:vaList=vaList v-bind:vaPagingInfo=vaPagingInfo></va-cam-count-list>
@@ -48,7 +47,7 @@
       <!-- 사용자 센서 신청 현황 -->
       <user-sensor-order v-bind:soList=soList v-bind:soPagingInfo=soPagingInfo></user-sensor-order>
       <!-- 스냅샷 정보 -->
-      <snapshot v-bind:pList=snList v-bind:snPagingInfo=snPagingInfo @pagination="setToSearchParams"></snapshot>
+      <snapshot v-bind:pList=snList v-bind:snPagingInfo=snPagingInfo></snapshot>
     
       <!-- 연결된 IoT GW정보 -->
       <connected-iot-gw-list v-bind:iotList=iotList v-bind:iotPagingInfo=iotPagingInfo></connected-iot-gw-list>
@@ -229,6 +228,7 @@ export default {
     return {
       // title: '사용자 청약 오더 정보',
       pList: [],
+      uoiList:[],
       odList: [],
       putList: [], // pre updateType res
       uorList: [],
@@ -348,12 +348,80 @@ export default {
       searchParam: {
         said: '',
         is_masking:'',
-        user_id:'',
+        page_no: 1,
+        view_cnt: ''
       }
     }
   },
 
   methods: {
+
+      searchSaid: function(params){
+              console.log('검색값'+params)
+              //사용자오더 정보 api 호출
+              this.searchToUserOrderInfo(params)
+              //오더상세
+              this.SearchToUserOrderDetailList(params)
+              //updateType api 호출
+              this.searchToUserOrderUpdateType(params)
+              //청약 전화번호 api 호출
+              this.searchToUserOrderPhone(params)
+              // KTT 정보 (12월 개발예정)
+              this.clickToSearchKTT(params)
+              // 청약 결과 ONM_12011/get_user_subs_result_list
+              this.searchToUserOrderResult(params)
+              //로그인 관련:: 사용자-매장-전화번호-카메라(매장정보:ONM_13001)
+              this.searchToStoreInfo(params)
+              //사용자정보 (=매장정보상세:ONM_13002)
+              this.searchToStoreDetailInfo(params)
+              //사용자상품정보 ONM-15039 확인 필요
+              this.searchToStoreProductInfo(params)
+              //상품 요약정보
+              this.searchToStoreProductSummaryInfo(params)
+              //사용자 전화번호
+              this.searchToUserPhone(params)
+              //사용자 VA 상품 및 적용카메라 대수 등록 확인
+              this.searchToVaCamCount(params)
+              // 사용자 센서 신청 현황
+              this.searchUserSensorOrderInfo(params)
+              //스냅샷 정보
+              this.searchToSnapshotInfo(params)
+              //연결된 IoT GW정보
+              this.searchToConnectedIotGWInfo(params)
+              //연결된 Sensor 정보
+              this.searchToConnectedSensorInfo(params)
+
+              //카메라 그룹정보
+              this.searchToCameraGroupInfo(params)
+
+              //연결된 캠, 모델, 제조사 조회, 캠상태
+              this.searchToConnectedCameraInfo(params)
+
+              //단말오더 정보 확인(ONM_12006, 12007)
+              this.searchToDeviceOrderInfo(params)
+
+              //단말오더 updateType
+              this.searchToDeviceOrderUpdateType()
+
+              //단말오더 subline 정보
+              this.searchToDeviceOrderSubline()
+
+              //단말오더 처리결과 확인
+              this.searchToDeviceOrderResult()
+              //인증 대상단말 정보 확인
+              this.searchToAuthTargetDevice()
+              //단말 subline 정보 확인(ONM_15035)
+              this.searchToDeviceSubline()
+              //단말오더 Snapshot 확인(onm_15038)
+              this.searchToDeviceOrderSnapshot()
+
+              //TEMP ID 오더확인
+              this.searchToTempIdOrder()
+
+              //TEMP ID 확인
+              this.searchToTempId()
+  },
+
     // 오더정보 : ONM_12001/get_user_subs_order_info
     searchToUserOrderInfo: function(params){
       // this.showDetailObject=false
@@ -372,11 +440,12 @@ export default {
         // this.said = reqParams.said;
 
         if(resCode == 200){
-          this.pList = response.data.data.list;
+          this.uoiList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info
-     
+          console.log('테스트')
+          console.log(this.uoiList)
         }else if(resCode==204){
-          this.pList = [];
+          this.uoiList = [];
           this.resPagingInfo = {};
           //alert("사용자 청약 오더 정보 데이터가 없습니다.");
         }else if(resCode==410){
@@ -388,7 +457,7 @@ export default {
             .catch(({ message }) => (this.msg = message))
             this.$router.replace('/signin')
         }else{
-          this.pList = [];
+          this.uoiList = [];
           this.resPagingInfo = {};
           console.log(resCode + " / " + resMsg);
         }
@@ -396,144 +465,44 @@ export default {
       .catch((ex) => {
         console.log('조회 실패',ex)
       })
-      // }
     },
 
     // 오더 상세 리스트로 대체 ONM_12002 -> ONM_12010    
     // 오더 상세 : ONM_12010/get_subs_details_list
-    clickToSearchUserOrderDetailList: function(values){
-      // console.log("values  : ");
-      console.log(values);
-      if(values) {
+    SearchToUserOrderDetailList: function(params){
+
         var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12010/get_subs_details_list`
         
-        var params = {
-          said:values.said,
-          is_masking: this.searchParam.is_masking? "N" : "Y"
-        }
-
-        this.pSaid = values.said
-        this.pGuid = values.guid
-
-        // this.showDetailObject = !this.showDetailObject
-        // if(this.showDetailObject == true){
           var reqParams = this.handleParams(params)
           axios.post(url, reqParams, headers)
           .then((response) => {
             var resCode = response.data.res_code;
             var resMsg = response.data.res_msg;
             if(resCode == 200){
-              //   this.pObject = response.data.data
-              // console.log(`ONM_12002 : ${response.data.data}`)
-              // console.log(`${response.data.data.order_detail_list}`)
+              console.log('테스트2'+response)
               this.odList = response.data.data.order_detail_list;     
-              this.dodPagingInfo = response.data.data.paging_info               
-              // this.isReloadDetailObject = !this.isReloadDetailObject
-              // console.log(this.odList)
-              // console.log(this.dodPagingInfo)
-              //this.clickToSearchSubDetailList()
-              //updateType api 호출
-              this.searchToUserOrderUpdateType()
-              //청약 전화번호 api 호출
-              this.searchToUserOrderPhone()
-              // KTT 정보 (12월 개발예정)
-              this.clickToSearchKTT()
-              // 청약 결과 ONM_12011/get_user_subs_result_list
-              this.searchToUserOrderResult()
-              //로그인 관련:: 사용자-매장-전화번호-카메라(매장정보:ONM_13001)
-              this.searchToStoreInfo()
-              //사용자정보 (=매장정보상세:ONM_13002)
-              this.searchToStoreDetailInfo()
-              //사용자상품정보 ONM-15039 확인 필요
-              this.searchToStoreProductInfo()
-              //상품 요약정보
-              this.searchToStoreProductSummaryInfo()
-              //사용자 전화번호
-              this.searchToUserPhone()
-              //사용자 VA 상품 및 적용카메라 대수 등록 확인
-              this.searchToVaCamCount()
-              // 사용자 센서 신청 현황
-              this.searchUserSensorOrderInfo()
-              //스냅샷 정보
-              this.searchToSnapshotInfo()
-              //연결된 IoT GW정보
-              this.searchToConnectedIotGWInfo()
-              //연결된 Sensor 정보
-              this.searchToConnectedSensorInfo()
-
-              //카메라 그룹정보(12월 개발 예정)
-              this.searchToCameraGroupInfo()
-
-              //연결된 캠, 모델, 제조사 조회, 캠상태
-              this.searchToConnectedCameraInfo()
-
-              //단말오더 정보 확인(ONM_12006, 12007, 12월개발)
-              this.searchToDeviceOrderInfo()
-
-              //단말오더 updateType (12월)
-              this.searchToDeviceOrderUpdateType()
-
-              //단말오더 subline 정보(12월)
-              this.searchToDeviceOrderSubline()
-
-              //단말오더 처리결과 확인
-              this.searchToDeviceOrderResult()
-              //인증 대상단말 정보 확인
-              this.searchToAuthTargetDevice()
-              //단말 subline 정보 확인(ONM_15035)
-              this.searchToDeviceSubline()
-              //단말오더 Snapshot 확인(onm_15038)
-              this.searchToDeviceOrderSnapshot()
-
-              //TEMP ID 오더확인(12월)
-              this.searchToTempIdOrder()
-
-              //TEMP ID 확인(12월)
-              this.searchToTempId()
-
+              this.dodPagingInfo = response.data.data.paging_info              
             }else if(resCode==204){
-            //   this.pObject = {};
               this.odList = [];
-              // this.showDetailObject =  !this.showDetailObject
-              // this.isReloadDetailObject =  !this.isReloadDetailObject
-
             }else{
-              //   this.pObject = {};
               this.odList = [];
-              // this.showDetailObject = !this.showDetailObject
-              // this.isReloadDetailObject = !this.isReloadDetailObject
               console(resCode + " / " + resMsg);
               }
           })
           .catch((ex) => {
             console.log('조회 실패',ex)
           })
-        // }
-      }
 
     },
     
 
     // updateType 화면 조회
-    searchToUserOrderUpdateType: function(){
+    searchToUserOrderUpdateType: function(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15037/get_bss_updatetype`
 
-      // var params = {
-      //   guid: this.pObject.guid,
-      //   page_no: 1,
-      //   view_cnt: 10,
-      //   is_masking: this.is_masking
-      // }
-      // console.log("searchToUserOrderUpdateType")
-      // console.log(this.pSaid)
-      var params = {}
-      if(this.pSaid){ 
-        params = {
-          said: this.pSaid
-        }
-        console.log(params)
+      var reqParams = this.handleParams(params)
 
-        axios.post(url, params, headers)
+        axios.post(url, reqParams, headers)
         // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
         //   params
         // })
@@ -547,11 +516,9 @@ export default {
             this.putList = response.data.data.list;
             // this.dodPagingInfo = response.data.data.paging_info  
             // this.phPagingInfo = response.data.data.paging_info
-            // this.showUserOrderPhone=!this.showUserOrderPhone;
           }else if(resCode==204){
               this.putList = [];
               // this.phPagingInfo = {};
-              // this.showUserOrderPhone=!this.showUserOrderPhone;
           }else if(resCode==410){
             // console.log("로그인 세션이 만료되었습니다.");
             this.putList = [];
@@ -571,20 +538,14 @@ export default {
         .catch((ex) => {
           console.log('조회 실패',ex)
         })
-      }
     },
 
     // 청약 전화번호
-    searchToUserOrderPhone: function(){
+    searchToUserOrderPhone: function(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12004/get_user_subs_telno`
 
-      var params = {
-        guid: this.pGuid,
-        page_no: this.default_page_no,
-        view_cnt: this.default_view_cnt,
-        is_masking: this.is_masking
-      }
-      axios.post(url, params, headers)
+      var reqParams = this.handleParams(params)
+      axios.post(url, reqParams, headers)
       // .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/code/query`, {
       //   params
       // })
@@ -624,15 +585,10 @@ export default {
     },
 
     // KTT 정보 (12월 개발예정)
-    clickToSearchKTT: function(){
+    clickToSearchKTT: function(params){
     var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12005/get_user_ktt_subs`
-    var params={
-      // guid: this.pObject.guid,
-      // guid: this.pGuid,
-      said: this.pSaid,
-      is_masking: this.is_masking
-    }
-     var reqParams = this.handleParams(params) 
+
+    var reqParams = this.handleParams(params) 
     axios.post(url, reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code
@@ -658,14 +614,8 @@ export default {
     },
 
     // 청약 결과 ONM_12011/get_user_subs_result_list
-    searchToUserOrderResult: function(){
+    searchToUserOrderResult: function(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12011/get_user_subs_result_list`
-      var params = {
-        // said: ( this.said || this.pObject.said),
-        // said : this.pSaid,
-        guid : this.pGuid,
-        is_masking: this.is_masking
-      }
 
       //params : 페이징 + 검색조건
       var reqParams = this.handleParams(params)      
@@ -683,7 +633,6 @@ export default {
         var resCode = response.data.res_code
         var resMsg = response.data.res_msg
         if(resCode == 200){
-          // this.pList = response.data.data.subs_result_list;
           this.uorList = response.data.data.subs_result_list
           this.resPagingInfo = response.data.data.paging_info
 
@@ -712,17 +661,11 @@ export default {
     },
 
     //로그인 관련:: 사용자-매장-전화번호-카메라(매장정보:ONM_13001)
-    searchToStoreInfo: function () {
+    searchToStoreInfo: function (params) {
       // this.showDetailObject=false
       // this.isReloadDetailObject=false
       console.log("searchToStoreInfo")
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13001/get_user_list`;
-
-      var params = {
-        // said: ( this.said || this.pObject.said),
-        said : this.pSaid,
-        is_masking: this.is_masking
-      }
 
       var reqParams = this.handleParams(params);
       // console.log(reqParams)
@@ -740,9 +683,6 @@ export default {
           if (resCode == 200) {
             this.siList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info;
-            // console.log(this.pList)
-            // console.log('페이지값')
-            // console.log(this.resPagingInfo)
             this.searchKTTInfo()
           }else if(resCode==204){
             this.siList = [];
@@ -769,17 +709,11 @@ export default {
     },
  
     //사용자정보 (=매장정보상세:ONM_13002)
-    searchToStoreDetailInfo: function () {
+    searchToStoreDetailInfo: function (params) {
       // this.showDetailObject=false
       // this.isReloadDetailObject=false
       console.log("searchToStoreDetailInfo")
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13002/get_user_detail`;
-
-      var params = {
-        // said: ( this.said || this.pObject.said),
-        said : this.pSaid,
-        is_masking: this.is_masking
-      }
 
       var reqParams = this.handleParams(params);
       // console.log(reqParams)
@@ -797,9 +731,6 @@ export default {
           if (resCode == 200) {
             this.sdiList = response.data.data.user_detail_list;
             this.resPagingInfo = response.data.data.paging_info;
-            // console.log(this.pList)
-            // console.log('페이지값')
-            // console.log(this.resPagingInfo)
           }else if(resCode==204){
             this.sdiList = [];
             this.resPagingInfo = {};
@@ -826,13 +757,11 @@ export default {
 
     
     //사용자-KTT 정보
-    searchKTTInfo: function () {
-      console.log('searchKTTInfo')
-      console.log(this.siList)
-      this.pUserid = this.siList[0].user_id
-      var params ={
-          user_id: this.siList[0].user_id
-      }
+    searchKTTInfo: function (params) {
+      // this.pUserid = this.siList[0].user_id
+      // var params ={
+      //     user_id: this.siList[0].user_id
+      // }
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13003/get_user_ktt_info_list`
 
       var reqParams=this.handleParams(params)
@@ -872,12 +801,7 @@ export default {
     },
 
     //사용자상품정보 ONM-15039 확인 필요(신규api)
-    searchToStoreProductInfo: function () {
-      console.log('searchToUserProductInfo')
-      var params = {
-          // user_id: this.pObject.user_id
-          said: this.pSaid
-      }
+    searchToStoreProductInfo: function (params) {
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15039/get_user_prod_list`
 
       var reqParams=this.handleParams(params)  
@@ -916,12 +840,7 @@ export default {
     },
 
     //상품 요약정보
-    searchToStoreProductSummaryInfo: function () {  
-      console.log('searchToStoreProductSummaryInfo')  
-      var params = {
-          // user_id: this.pObject.user_id
-          user_id: this.pUserid
-      }
+    searchToStoreProductSummaryInfo: function (params) {  
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13005/get_prod_summary_list`
 
       var reqParams=this.handleParams(params)
@@ -959,16 +878,10 @@ export default {
     },
 
     //사용자 전화번호
-    searchToUserPhone: function () {
+    searchToUserPhone: function (params) {
       console.log('searchToUserPhone')
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13004/get_user_tel_list`;
 
-      var params = {
-        user_id: this.pUserid,
-        is_masking: this.searchParam.is_masking? "N" : "Y"
-      };
-
-      
       axios
         .post(url, params, headers)
         .then((response) => {
@@ -993,11 +906,8 @@ export default {
     },
 
     //사용자 VA 상품 및 적용카메라 대수 등록 확인
-    searchToVaCamCount: function () {
-      console.log('searchToVaCamCount')
-      var params ={
-          user_id: this.pUserid
-      }
+    searchToVaCamCount: function (params) {
+
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13006/get_user_va_list`
 
       var reqParams=this.handleParams(params)
@@ -1035,12 +945,10 @@ export default {
     },
 
     // 사용자 센서 신청 현황
-    searchUserSensorOrderInfo: function () {   
+    searchUserSensorOrderInfo: function (params) {   
       console.log('searchUserSensorOrderInfo')
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13007/get_sensor_status_list`
-      var params ={
-          user_id: this.pUserid
-      }
+
       var reqParams=this.handleParams(params)
     
       axios.post(url, reqParams, headers)
@@ -1076,12 +984,10 @@ export default {
     },
 
     //스냅샷 정보
-    searchToSnapshotInfo: function () {   
+    searchToSnapshotInfo: function (params) {   
       console.log('searchToSnapshotInfo')
       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15036/get_bss_snapshot_list`
-      var params ={
-          said: this.pSaid
-      }
+
       var reqParams=this.handleParams(params)
     
       axios.post(url, reqParams, headers)
@@ -1117,11 +1023,7 @@ export default {
     },
 
     //연결된 IoT GW정보
-    searchToConnectedIotGWInfo: function () {
-      console.log('searchToConnectedIotGWInfo')
-      var params = {
-        said: this.pSaid
-      }
+    searchToConnectedIotGWInfo: function (params) {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13009/get_iotgw_list`;
 
       var reqParams = this.handleParams(params);
@@ -1160,10 +1062,7 @@ export default {
     },
 
     //연결된 Sensor 정보
-    searchToConnectedSensorInfo: function () {
-      var params = {
-        said: this.pSaid
-      }
+    searchToConnectedSensorInfo: function (params) {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13010/get_sensor_list`;
 
       var reqParams = this.handleParams(params)
@@ -1202,11 +1101,7 @@ export default {
     },
 
     //카메라 그룹정보(12월 개발 예정)
-    searchToCameraGroupInfo: function () {
-      console.log('searchToCameraGroupInfo')
-      var params = {
-        said: this.pSaid
-      }
+    searchToCameraGroupInfo: function (params) {
       // 12월 개발된 api 로 변경 필요
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15047/get_cam_group_info`;
 
@@ -1246,13 +1141,8 @@ export default {
       
     },
 
-
     //연결된 캠, 모델, 제조사 조회, 캠상태
-    searchToConnectedCameraInfo: function () {
-      console.log('searchToConnectedCameraInfo')
-      var params = {
-        user_id: this.pUserid
-      }
+    searchToConnectedCameraInfo: function (params) {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13008/get_cam_list`;
 
       var reqParams = this.handleParams(params);
@@ -1292,11 +1182,7 @@ export default {
     },
 
     //단말오더 정보 확인(ONM_12006, 12007, 12월개발)
-    searchToDeviceOrderInfo: function () {
-      console.log('searchToDeviceOrderInfo')
-      var params = {
-        said: this.pSaid
-      }
+    searchToDeviceOrderInfo: function (params) {
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12008/get_device_order_detail_list`;
 
       var reqParams = this.handleParams(params);
@@ -1335,11 +1221,7 @@ export default {
     },
 
     //단말오더 updateType (12월 신규 개발)
-    searchToDeviceOrderUpdateType: function () {
-      console.log('searchToDeviceOrderUpdateType')
-      var params = {
-        user_id: this.pUserid
-      }
+    searchToDeviceOrderUpdateType: function (params) {
       // 12월개발 후 api 변경해야함
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15042/get_oss_updatetype`;
 
@@ -1380,11 +1262,7 @@ export default {
     },
 
     //단말오더 subline 정보(12월)
-    searchToDeviceOrderSubline: function () {
-      console.log('searchToDeviceOrderSubline')
-      var params = {
-        user_id: this.pUserid
-      }
+    searchToDeviceOrderSubline: function (params) {
       // 12월개발 후 api 변경해야함
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_15043/get_oss_subline_list`;
 
@@ -1425,13 +1303,13 @@ export default {
     },
 
     //단말오더 처리결과 확인
-    searchToDeviceOrderResult: function(){
+    searchToDeviceOrderResult: function(params){
       console.log('searchToDeviceOrderResult')
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_12012/get_device_order_result_list`
-      var params = {
-          guid: this.pGuid,
-        }
-        console.log(params)
+      // var params = {
+      //     guid: this.pGuid,
+      //   }
+
       var reqParams = this.handleParams(params) 
       axios.post(url, reqParams, headers)
       .then((response) => {
@@ -1468,13 +1346,9 @@ export default {
     },
    
     //인증 대상단말 정보 확인
-    searchToAuthTargetDevice: function(){
-      console.log('searchToAuthTargetDevice')
+    searchToAuthTargetDevice: function(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_12009/get_auth_device_list`
-      var params = {
-        said: this.pSaid,
-        is_masking: this.is_masking
-      }
+
       var reqParams = this.handleParams(params) 
       axios.post(url,  reqParams, headers)
       .then((response) => {
@@ -1508,13 +1382,10 @@ export default {
     },
 
     //단말 subline 정보 확인(ONM_15035)
-    searchToDeviceSubline: function(){
+    searchToDeviceSubline: function(params){
       console.log('searchToDeviceSubline')
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15035/get_term_subline_list`
-      var params = {
-        said: this.pSaid,
-        // is_masking: this.is_masking
-      }
+
       var reqParams = this.handleParams(params) 
       axios.post(url,  reqParams, headers)
       .then((response) => {
@@ -1548,13 +1419,10 @@ export default {
     },
 
     //단말오더 Snapshot 확인(onm_15038)
-    searchToDeviceOrderSnapshot: function(){
+    searchToDeviceOrderSnapshot: function(params){
       console.log('searchToDeviceOrderSnapshot')
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15038/get_oss_snapshot_list`
-      var params = {
-        said: this.pSaid,
-        is_masking: this.is_masking
-      }
+
       var reqParams = this.handleParams(params) 
       axios.post(url,  reqParams, headers)
       .then((response) => {
@@ -1588,15 +1456,12 @@ export default {
     },
 
     //TEMP ID 오더확인(12월)
-    searchToTempIdOrder: function(){
+    searchToTempIdOrder: function(params){
       console.log('searchToTempIdOrder')
 
       //12월 개발 후 api 변경해야함
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15044/get_oss_worker_id`
-      var params = {
-        said: this.pSaid,
-        is_masking: this.is_masking
-      }
+
       var reqParams = this.handleParams(params) 
       axios.post(url,  reqParams, headers)
       .then((response) => {
@@ -1630,15 +1495,12 @@ export default {
     },
 
     //TEMP ID 확인(12월)
-    searchToTempId: function(){
+    searchToTempId: function(params){
       console.log('searchToTempId')
       
       //12월 개발 후 api 변경 필요
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15045/get_worker_id_info`
-      var params = {
-        said: this.pSaid,
-        is_masking: this.is_masking
-      }
+
       var reqParams = this.handleParams(params) 
       axios.post(url,  reqParams, headers)
       .then((response) => {
@@ -1671,17 +1533,6 @@ export default {
       })
     },
 
-
-    // 페이징 설정
-    // setToSearchParams: function(values){
-    setToSearchParams: function(){
-      // var params = {
-      //   page_no: values.page,
-      //   view_cnt: values.itemsPerPage,
-      // }
-      // this.searchToUserOrderInfo(params)
-    },
-
     // 파라미터 설정
     handleParams: function(params){
       let newParams = {}
@@ -1692,9 +1543,9 @@ export default {
       }
      
       if(params.view_cnt === undefined || params.view_cnt === ''){
-        newParams.view_cnt = this.reqPagingInfo.view_cnt
+        newParams.view_cnt = this.searchParam.view_cnt
       }else{
-        newParams.view_cnt = params.view_cnt
+        newParams.view_cnt = this.searchParam.view_cnt
       }
       if(params.is_masking !== undefined && params.is_masking !== ''){
         newParams.is_masking = params.is_masking ? "N" : "Y";

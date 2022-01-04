@@ -41,13 +41,11 @@
      
       <v-data-table
         :headers="headers"
-        :items="pList"
+        :items="uoiList"
         hide-default-header
         hide-default-footer
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-0"
-        @click:row="handleClick"
-        
       >
         <template v-slot:header="{ props: { headers } }">
           <thead>
@@ -70,10 +68,9 @@
 // import EventBus from '../../../../../EventBus';
 
 export default {
-    props: ['pList', 'resPagingInfo'],
+    props: ['uoiList', 'resPagingInfo'],
     data() {
       return {
-        options: {},
         pageoptions: this.$store.state.pageoptions,
         loading: true,
         headers: [
@@ -98,12 +95,9 @@ export default {
     },
 
 methods: {
-    handleClick: function(value){
-      this.$emit("child", value);
-    },
     getDataFromApi() {
       this.loading = true;
-      this.$emit("pagination", this.options);
+      //this.$emit("pagination", this.options);
     },
     
   },
