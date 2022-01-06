@@ -401,25 +401,25 @@ export default {
               this.searchToDeviceOrderInfo(params)
 
               //단말오더 updateType
-              this.searchToDeviceOrderUpdateType()
+              this.searchToDeviceOrderUpdateType(params)
 
               //단말오더 subline 정보
-              this.searchToDeviceOrderSubline()
+              this.searchToDeviceOrderSubline(params)
 
               //단말오더 처리결과 확인
-              this.searchToDeviceOrderResult()
+              this.searchToDeviceOrderResult(params)
               //인증 대상단말 정보 확인
-              this.searchToAuthTargetDevice()
+              this.searchToAuthTargetDevice(params)
               //단말 subline 정보 확인(ONM_15035)
-              this.searchToDeviceSubline()
+              this.searchToDeviceSubline(params)
               //단말오더 Snapshot 확인(onm_15038)
-              this.searchToDeviceOrderSnapshot()
+              this.searchToDeviceOrderSnapshot(params)
 
               //TEMP ID 오더확인
-              this.searchToTempIdOrder()
+              this.searchToTempIdOrder(params)
 
               //TEMP ID 확인
-              this.searchToTempId()
+              this.searchToTempId(params)
   },
 
     // 오더정보 : ONM_12001/get_user_subs_order_info
