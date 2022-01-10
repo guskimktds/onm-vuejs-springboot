@@ -50,6 +50,7 @@ export default {
         product_name:'',
         user_id:'',
         prodcd:'',
+        said:''
       }
     }
   },
@@ -174,6 +175,14 @@ export default {
         this.searchParam.prodcd!==""
       ){
         newParams.prodcd=this.searchParam.prodcd
+      }
+      if (params.said !== undefined && params.said !== "") {
+        newParams.said = params.said;
+      } else if (
+        this.searchParam.said !== undefined &&
+        this.searchParam.said !== ""
+      ) {
+        newParams.said = this.searchParam.said;
       }
 
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){

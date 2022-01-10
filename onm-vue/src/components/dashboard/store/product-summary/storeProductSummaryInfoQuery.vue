@@ -103,6 +103,18 @@
           </v-col>
           
         </v-row>
+        <v-row>
+          <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              
+              label="계약 ID"
+              v-model="param.said"
+              placeholder=" "
+              
+            >
+            </v-text-field>
+          </v-col>
+        </v-row>
         </base-material-card>
       </v-container>
     </v-form>

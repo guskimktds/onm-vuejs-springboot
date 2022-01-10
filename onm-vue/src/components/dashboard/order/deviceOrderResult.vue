@@ -42,7 +42,8 @@ export default {
         end_date: dateInfo().currentDateDashFormat,
         date_yn: true,
         oderno:'',
-        guid:''
+        guid:'',
+        said:''
       }
     }
   },
@@ -156,6 +157,14 @@ export default {
         ){
           newParams.guid=this.searchParam.guid
         }
+        if (params.said !== undefined && params.said !== "") {
+        newParams.said = params.said;
+      } else if (
+        this.searchParam.said !== undefined &&
+        this.searchParam.said !== ""
+      ) {
+        newParams.said = this.searchParam.said;
+      }
         
         if(Number(newParams.start_date)-Number(newParams.end_date)>0){
         alert('형식에 맞는 날짜 검색값을 입력해주세요')

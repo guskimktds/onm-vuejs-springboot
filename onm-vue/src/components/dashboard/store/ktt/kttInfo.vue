@@ -46,7 +46,8 @@ export default {
         date_yn:true,
         user_id:'',
         service_no:'',
-        system_id:''
+        system_id:'',
+        said:''
       }
     }
   },
@@ -174,6 +175,14 @@ methods: {
         this.searchParam.system_id!==""
       ){
         newParams.system_id=this.searchParam.system_id
+      }
+      if (params.said !== undefined && params.said !== "") {
+        newParams.said = params.said;
+      } else if (
+        this.searchParam.said !== undefined &&
+        this.searchParam.said !== ""
+      ) {
+        newParams.said = this.searchParam.said;
       }
 
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){
