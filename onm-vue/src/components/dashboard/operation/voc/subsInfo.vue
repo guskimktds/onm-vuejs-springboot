@@ -355,9 +355,9 @@ export default {
   },
 
   methods: {
-
       searchSaid: function(params){
               console.log('검색값'+params)
+              if(params.said !== undefined && params.said !== ""){ 
               //사용자오더 정보 api 호출
               this.searchToUserOrderInfo(params)
               //오더상세
@@ -420,6 +420,12 @@ export default {
 
               //TEMP ID 확인
               this.searchToTempId(params)
+              }
+              else {
+                this.$fire({
+                  title: "SAID값을 반드시 입력해주세요.",
+                  type: "error"})
+              }
   },
 
     // 오더정보 : ONM_12001/get_user_subs_order_info
@@ -881,10 +887,12 @@ export default {
     searchToUserPhone: function (params) {
       console.log('searchToUserPhone')
       var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13004/get_user_tel_list`;
-
+      var reqParams=this.handleParams(params)
       axios
-        .post(url, params, headers)
+        .post(url, reqParams, headers)
         .then((response) => {
+          console.log('사용자전화번호 리턴')
+          console.log(params)
           console.log(response)
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
