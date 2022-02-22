@@ -329,7 +329,7 @@ export default {
       .then((response) => {
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+        
         this.is_masking = reqParams.is_masking;
         this.said = reqParams.said;
 
@@ -340,9 +340,9 @@ export default {
         }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
-            alert("사용자 청약 오더 정보 데이터가 없습니다.");
+            console.log("사용자 청약 오더 정보 데이터가 없습니다.");
         }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
+          console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -352,7 +352,7 @@ export default {
         }else{
           this.pList = [];
           this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          //console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
@@ -384,7 +384,7 @@ export default {
             axios.post(url, params, headers)
         .then((response) => {
            var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
+             
             if(resCode == 200){
               this.pObject = response.data.data
               this.isReloadDetailObject = !this.isReloadDetailObject
@@ -399,7 +399,7 @@ export default {
               this.pObject = {};
               this.showDetailObject = !this.showDetailObject
               this.isReloadDetailObject = !this.isReloadDetailObject
-              alert(resCode + " / " + resMsg);
+              alert("Error");
             }
         })
         .catch((ex) => {
@@ -426,7 +426,7 @@ export default {
     axios.post(url, reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if(resCode == 200){
             this.sdList = response.data.data.order_detail_list;
             // this.subBtn=!this.subBtn
@@ -436,7 +436,7 @@ export default {
           }else{
             this.sdList = [];
             this.showSubDetailList=false
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -473,7 +473,7 @@ export default {
         console.log(response.data)
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+         
         if(resCode == 200){
           this.phList = response.data.data.tel_no_list;
           this.phPagingInfo = response.data.data.paging_info
@@ -483,7 +483,7 @@ export default {
             this.phPagingInfo = {};
             this.showUserOrderPhone=!this.showUserOrderPhone;
         }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
+          console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -494,7 +494,7 @@ export default {
         }else{
           this.phList = [];
           this.phPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          //console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
@@ -513,7 +513,7 @@ export default {
     axios.post(url, reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           console.log(resCode)
           if(resCode == 200){
             this.kttList = response.data.data.list;
@@ -523,7 +523,7 @@ export default {
             this.showKttList=!this.showKttList
           }else{
             this.kttList = [];
-            alert(resCode + " / " + resMsg);
+            alert("Error");
             this.showKttList=false
           }
         })
@@ -544,7 +544,7 @@ export default {
         axios.post(url,  reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           if(resCode == 200){
             this.authList = response.data.data.auth_device_list;
             this.authPagingnfo=response.data.data.paging_info;
@@ -557,7 +557,7 @@ export default {
             this.authPaingInfo={};
             this.showAuthDevice=!this.showAuthDevice;
           }else if(resCode==410){
-            alert("로그인 세션이 만료되었습니다.");
+            console.log("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -567,7 +567,7 @@ export default {
           }else{
             this.authList = [];
             this.authPaingInfo={};
-            alert(resCode + " / " + resMsg);
+            //console.log(resCode + " / " + resMsg);
           }
       })
       .catch((ex) => {
@@ -585,7 +585,7 @@ export default {
         .then((response) => {
               console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if(resCode == 200){
             console.log(response.data.data.device_order_result_list);
             this.dorList = response.data.data.device_order_result_list;
@@ -607,7 +607,7 @@ export default {
           }else{
             this.dorList = [];
             this.dorPagingInfo={};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
             })
             .catch((ex) => {
@@ -630,7 +630,7 @@ export default {
       .then((response) => {
         console.log(response)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+ 
         if(resCode == 200){
           this.kList = response.data.data.ktt_info_list;
           this.kttPagingInfo = response.data.data.paging_info
@@ -640,7 +640,7 @@ export default {
           this.kttPagingInfo = {};
           this.showKttInfoList =! this.showKttInfoList
         }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
+          console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -650,7 +650,7 @@ export default {
         }else{
           this.kList = [];
           this.kttPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          //console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
@@ -674,7 +674,7 @@ export default {
       .then((response) => {
         console.log(response)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+        
         if(resCode == 200){
           this.psList = response.data.data.prod_summary_list;
           this.psPagingInfo = response.data.data.paging_info;
@@ -694,7 +694,7 @@ export default {
         }else{
           this.psList = [];
           this.psPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          alert("Error");
         }
       })
       .catch((ex) => {
@@ -714,7 +714,7 @@ export default {
       .then((response) => {
         console.log(response)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+        
         if(resCode == 200){
           this.vaList = response.data.data.va_prod_list;
           this.vaPagingInfo = response.data.data.paging_info
@@ -722,9 +722,9 @@ export default {
         }else if(resCode==204){
           this.vaList = [];
           this.vaPagingInfo = {};
-          alert('VA 상품 및 카메라 대수 확인');
+          console.log('VA 상품 및 카메라 대수 확인');
         }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
+          console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -734,7 +734,7 @@ export default {
         }else{
           this.vaList = [];
           this.vaPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          //console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
@@ -754,7 +754,7 @@ export default {
         .then((response) => {
           console.log(response);
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if (resCode == 200) {
             this.dcList = response.data.data.cam_list;
             this.dcPagingInfo = response.data.data.paging_info;
@@ -774,7 +774,7 @@ export default {
           }else{
             this.dcList = [];
             this.dcPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -794,7 +794,7 @@ export default {
         .then((response) => {
           console.log(response);
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+           
           if (resCode == 200) {
             this.iotList = response.data.data.iotgw_list;
             this.iotPagingInfo = response.data.data.paging_info;
@@ -804,7 +804,7 @@ export default {
             this.iotPagingInfo = {};
             this.showIotGwList =!this.showIotGwList;
           }else if(resCode==410){
-            alert("로그인 세션이 만료되었습니다.");
+            console.log("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -814,7 +814,7 @@ export default {
           }else {
             this.iotList = [];
             this.iotPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            //console.log(resCode + " / " + resMsg);
           }
         })
         .catch((ex) => {
@@ -835,7 +835,7 @@ export default {
         .then((response) => {
           console.log(response);
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if (resCode == 200) {
             this.dsList = response.data.data.sensor_list;
             this.dsPagingInfo = response.data.data.paging_info;
@@ -855,7 +855,7 @@ export default {
           }else {
             this.dsList = [];
             this.dsPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {

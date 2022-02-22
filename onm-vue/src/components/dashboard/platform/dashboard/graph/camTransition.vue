@@ -58,7 +58,7 @@ export default {
           .then((response) => {
             console.log(response.data)
             var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
+            
             if(resCode == 200){
               this.labels = this.getLabels(response.data.data.date_list)
               this.datacollection = {
@@ -81,12 +81,8 @@ export default {
               // console.log(this.datacollection)
               this.loaded = true
 
-            }else if(resCode==204){
-              alert(resMsg + '카메라 개통/해지 추이 데이터가 없습니다.')
-            }
-            else{
+            } else {
               this.datacollection = null;
-              //alert(resCode + " / " + resMsg);
             }
           })
           .catch((ex) => {

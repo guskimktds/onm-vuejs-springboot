@@ -60,14 +60,10 @@ export default {
         .then((response) => {
           console.log(response.data)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           if(resCode == 200){
             this.pList = response.data.data.subs_stat_list;
             this.resPagingInfo = response.data.data.paging_info
-          }else if(resCode==204){
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert("단말통계 데이터가 없습니다.");
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
@@ -79,7 +75,6 @@ export default {
           }else{
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
           }
         })
         .catch((ex) => {
@@ -98,20 +93,20 @@ export default {
       .then( (response) => {
 
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+       
         if (resCode == 200) {
           this.pList = response.data.data.subs_stat_list;
           this.resPagingInfo = response.data.data.paging_info;
         } else {
           this.pList = [];
           this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          console.log("Error");
         }
 
       })
       .catch(function (error) {
         console.log(error);
-        alert("Error")
+        console.log("Error")
       })
       .finally(function () {
         // always executed

@@ -26,6 +26,7 @@
                         label="제목" 
                         v-model="param.title"
                         placeholder=" " 
+                       
                     >                        
                     </v-text-field>
                 </v-col>  
@@ -173,7 +174,7 @@
                     v-model="editedItem.title"
                     label="제목"
                     counter
-                    maxlength="20"
+                    maxlength="1000"
                 ></v-text-field>
                 <v-col cols="12">
                 <v-col cols="12" sm="6" md="3">
@@ -181,7 +182,7 @@
                   item-text="state" 
                   item-value="abbr" 
                   :items="modalDispItems"
-                  label="분류" 
+                  label="노출유무" 
                   v-model="editedItem.disp_yn" 
                   ></v-select>
                 </v-col>     
@@ -231,12 +232,14 @@
                                     <v-col cols="6"
                                     >
                                 <vue-editor
-                                :editorOptions="editorSettings"
+                                
                                 v-model="editedItem.content_html"
+                                 :editorToolbar="customToolbar"
                                 ></vue-editor>
                                     </v-col >
                                     <v-col cols="6">
                                 <v-textarea
+                                label="공지사항 내용"
                                 outlined
                                  v-model="editedItem.content"
                                 ></v-textarea>
@@ -297,26 +300,36 @@ export default {
         return{     
         htmlForEditor: "",
         content:"",
-        editorSettings: {
-          modules: {
-              imageDrop: true,
-            // imageResize: {}
-              }
-          },
+                customToolbar :
+         [
+[{ 'font': [] }],
+[{ 'header': [false, 1, 2, 3, 4, 5, 6, ] }],
+[{ 'size': ['small', false, 'large', 'huge'] }],
+['bold', 'italic', 'underline', 'strike'],
+[{'align': ''}, {'align': 'center'}, {'align': 'right'}, {'align': 'justify'}],
+['blockquote', 'code-block'],
+[{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+[{ 'script': 'sub'}, { 'script': 'super' }],
+[{ 'indent': '-1'}, { 'indent': '+1' }],
+[{ 'color': [] }, { 'background': [] }],
+['link', 'image', 'video', 'formula'],
+[{ 'direction': 'rtl' }],
+['clean'],
+],
           
             dialog: false,
             dialogDelete: false,
             items:[
               {state: '전체'     , abbr: ''},
-              {state: '일반공지'     , abbr: 'CATE01'},
-              {state: '긴급공지'     , abbr: 'CATE02'}],
+              {state: '왼쪽공지'     , abbr: 'CATE01'},
+              {state: '오른쪽공지'     , abbr: 'CATE02'}],
             dispItems:[
               {state: '전체'     , abbr: ''},
               {state: '노출'     , abbr: 'Y'},
               {state: '미노출'     , abbr: 'N'}],
             modalItems:[
-              {state: '일반공지'     , abbr: 'CATE01'},
-              {state: '긴급공지'     , abbr: 'CATE02'}],
+              {state: '왼쪽공지'     , abbr: 'CATE01'},
+              {state: '오른쪽공지'     , abbr: 'CATE02'}],
             modalDispItems:[
               {state: '노출'     , abbr: 'Y'},
               {state: '미노출'     , abbr: 'N'}],
@@ -329,11 +342,11 @@ export default {
             ],
             editedItem: {
                 board_type: 'NOTICE',
-                board_cate_cd: '',
+                board_cate_cd: 'CATE01',
                 title: '',
                 content_html: '',
                 content: '',
-                disp_yn: '',
+                disp_yn: 'Y',
                 disp_start_date:dateInfo().currentDateDashFormat,
                 disp_end_date:dateInfo().oneMonthDashFormat,
                 os_type: '',
@@ -341,11 +354,11 @@ export default {
             },
             defaultItem: {
                 board_type: 'NOTICE',
-                board_cate_cd: '',
+                board_cate_cd: 'CATE01',
                 title: '',
                 content_html: '',
                 content: '',
-                disp_yn: '',
+                disp_yn: 'Y',
                 disp_start_date: dateInfo().currentDateDashFormat,
                 disp_end_date:dateInfo().oneMonthDashFormat ,
                 os_type: '',
@@ -389,13 +402,17 @@ export default {
         saveSure(){
             console.log(222)
             console.log(this.editedItem.content_html)
-            if(this.editedItem.title ==''){
+             console.log("체크워드 실행전")
+             this.checkWord()
+            
+            if(this.editedItem.title == '' || this.editedItem.content == ''){
+            alert('제목과 내용을 모두 입력하세요')
+            this.dialog =false
+            }else{
+
+                
                 this.$fire({
-            title: "제목을 입력 해주세요",
-            type: "question"})
-            }
-            this.$fire({
-            title: "정말 등록 하시겠습니까?",
+                    title: "정말 등록 하시겠습니까?",
             type: "question",
 
             showCancelButton: true,
@@ -404,28 +421,30 @@ export default {
             confirmButtonText: '예',
             cancelButtonText: '아니오'
             }).then(result => {
-               if(result.value){
-                   this.save()
+                if(result.value){
+                    this.save()
                }else{
-                 this.closeSure()
+                   this.closeSure()
                }
             });
             
+            
+            }
         },
     
         close () {
             this.dialog = false
             this.$nextTick(() => {
-            this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedItem = Object.assign({}, this.defaultItem)
             // this.editedIndex = -1
             })
         },
 
         closeSure(){
-
+            
             this.close()
             this.$fire({
-                       title: "등록이 취소되었습니다.",
+                title: "등록이 취소되었습니다.",
                        type : "error"
                    })
         },
@@ -433,7 +452,7 @@ export default {
         closeDelete () {
             this.dialogDelete = false
             this.$nextTick(() => {
-            this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedItem = Object.assign({}, this.defaultItem)
             //   this.editedIndex = -1
             })
         },
@@ -441,6 +460,16 @@ export default {
             // this.pList.splice(this.editedIndex, 1)
             this.closeDelete()
         },
+      checkWord(){
+       if(this.editedItem.content.match('loginForm')){
+         alert('loginForm은 입력할 수 없습니다.')
+         this.editedItem.content = ''
+         console.log('!!!!!!!!!!!!!!!!!!!로그인폼 체크')
+       }else if(this.editedItem.content_html.match('loginForm')){
+          alert('loginForm은 입력할 수 없습니다.')
+         this.editedItem.content_html = ''
+       }
+      },
     },  
 }
 </script>

@@ -103,9 +103,17 @@
             <!-- <input type="file"  @change="onFileSelected" accept="image/png, image/gif, image/jpeg, image/jpg"> -->
             <div class="filebox">
                 <input class="upload-name" v-model="editedItem.img_name" readonly placeholder="파일명">
-                <label for="file">파일찾기</label> 
+                <!-- <label for="file" >파일찾기</label> -->
                 <input type="file" id="file" @change="onFileSelected" accept="image/png, image/gif, image/jpeg, image/jpg">
             </div>
+            </v-col>
+        </v-row>
+        <v-row style="margin-left:30px;">
+            <v-col cols="auto" style="padding-top:35px;" >
+                <span style="color:red;">*</span>Link URL
+            </v-col>
+            <v-col>
+                <v-text-field label="입력" style="width: 520px" v-model="editedItem.img_url" maxlength="200"></v-text-field>
             </v-col>
         </v-row>
             <v-container 
@@ -114,10 +122,15 @@
             <div v-if="istf" style="width: 400px; height: 300px; margin-left: -15px;">
                <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역</span></div>
           
-            
-            <v-img :src="images" v-if="vitem.tem1" style='height:300px;width:200px; '></v-img>
-            <v-img :src="images" v-else-if="vitem.tem2" style='height:400px;width:500px;'></v-img>
-            <v-img :src="images" v-else-if="vitem.tem3" style='height:50px;width:50px;'></v-img>
+            <div v-if="vitem.tem1" style="height:200px;width:300px; overflow: hidden">
+            <img :src="images" v-if="vitem.tem1" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
+
+            <div v-if="vitem.tem2" style="height:150px;width:500px; overflow: hidden">
+            <img :src="images" v-if="vitem.tem2" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
+
+            <div v-if="vitem.tem3" style="height:150px;width:500px; overflow: hidden">
+            <img :src="images" v-if="vitem.tem3" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
+            <!-- <v-img :src="images"></v-img> -->
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
             
@@ -169,7 +182,7 @@ export default {
     data() {
         return{
             pList: [],
-            images: [],
+            images: '',
             reqPagingInfo: {
                 page_no: 1,
                 view_cnt: 10
@@ -177,9 +190,9 @@ export default {
             gw_id: '',
             resPagingInfo: {},
             istf: true,
-            items: ["타입명 A (300 X 200 px)", "타입명 B (400 X 500 px)","타입명 C (50 X 50 px)"],
+            items: ["로그아웃 (300 X 200 px)", "왼쪽배너 (500 X 150 px)", "오른쪽배너 (500 X 150 px)"],
             items2: ["노출", "미노출"],
-            items3: ["All", "Android", "IOS", "PC", "PCAPP"],
+            items3: ["ALL", "Android", "iOS", "PC", "PCAPP"],
             vvitem:'',
             vitem: 
                 {
@@ -207,6 +220,7 @@ export default {
                 mod_id: '',
                 mod_date: '',
                 os_type:'',
+                img_url:'',
                 // reg_id: '',
                 // cmd_type: '',
                 // local_gw_id: '0',
@@ -220,26 +234,29 @@ export default {
         }
     },
     created(){
+        this.showAuth()
            this.$route.params.val.bannerImage
         //    this.$route.params.val.images
            this.editedItem.os_type = this.$route.params.val.os_type
            this.editedItem.title = this.$route.params.val.title
            this.$route.params.val.img_type
+           this.editedItem.mod_id = this.$store.state.onmUserId
+           this.editedItem.img_url = this.$route.params.val.img_url
            this.editedItem.img_name = this.$route.params.val.img_name
            this.typedate = this.$route.params.val.disp_yn
            this.dispdate = this.$route.params.val.disp_start_date.substring(0,10)
         //    .replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
            this.dispdate2 = this.$route.params.val.disp_end_date.substring(0,10)
         //    .replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-           this.editedItem.mod_id = this.$route.params.val.reg_id
-           if(this.$route.params.val.img_type == '01'){
-               this.bannerType = '타입명 A'
+        //    this.editedItem.mod_id = this.$route.params.val.reg_id
+           if(this.$route.params.val.img_type == '로그아웃'){
+               this.bannerType = '로그아웃 (300 X 200 px)'
            }
-           if(this.$route.params.val.img_type == '02'){
-               this.bannerType = '타입명 B'
+           if(this.$route.params.val.img_type == '왼쪽배너'){
+               this.bannerType = '왼쪽배너 (500 X 150 px)'
            }
-           if(this.$route.params.val.img_type == '03'){
-               this.bannerType = '타입명 C'
+           if(this.$route.params.val.img_type == '오른쪽배너'){
+               this.bannerType = '오른쪽배너 (500 X 150 px)'
            }
            if(this.$route.params.val.disp_yn == 'Y'){
                this.typedate = "노출"
@@ -247,10 +264,11 @@ export default {
            if(this.$route.params.val.disp_yn == 'N'){
                this.typedate = "미노출"
            }
-
+            this.selectType();
+            this.istf = false
             console.log(this.editedItem);
             console.log(this.$route.params.val);
-
+            this.images = process.env.VUE_APP_IMG_URL + this.$route.params.val.img_name
     },
     computed: {
       filteredData(){
@@ -275,10 +293,6 @@ export default {
         close () {
             this.dialogNum1 = false
             this.dialogNum2 = false
-            // this.$nextTick(() => {
-            // this.editedItem = Object.assign({}, this.defaultItem)
-            // // this.editedIndex = -1
-            // })
         },
         close2(){
             
@@ -286,10 +300,6 @@ export default {
             this.dialogNum2 = false
             this.$router.push('/operation/vanner-management');
         },
-        deleteItemConfirm () {
-            // this.pList.splice(this.editedIndex, 1)
-            this.closeDelete()
-        }, 
         //미리보기
         onFileSelected(event){ 
             var input = event.target;
@@ -299,32 +309,30 @@ export default {
                 var reader = new FileReader(); 
                     reader.onload = (e) => {
                         this.images = e.target.result;
-                        this.selectType();
+                        
                     } 
                     reader.readAsDataURL(input.files[0]);
                     this.editedItem.bannerImage = input.files[0]
-                    this.istf = false
+                    
                 } 
                 
             },
             selectType(){
-            if(this.images != ''){
-                if(this.items[0]==this.editedItem.img_type){
+                if(this.items[0]==this.bannerType){
                     this.vitem.tem1 = true
                     this.vitem.tem2 = false
                     this.vitem.tem3 = false
                 }
-                if(this.items[1]==this.editedItem.img_type){
+                if(this.items[1]==this.bannerType){
                     this.vitem.tem1 = false
                     this.vitem.tem2 = true
                     this.vitem.tem3 = false
                 }
-                if(this.items[2]==this.editedItem.img_type){
+                if(this.items[2]==this.bannerType){
                     this.vitem.tem1 = false
                     this.vitem.tem2 = false
                     this.vitem.tem3 = true
                 }
-            }
             },
          saveItems(){
            var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15123/update_banner`
@@ -351,13 +359,23 @@ export default {
                     // this.$fire({
                     //     title: "수정 되었습니다.",
                     //     type: "success"})
-                }else{
-                    this.$fire({
-                        title: "등록 실패하였습니다123.",
-                        html: resMsg,
-                        type: "error"})
-                        this.dialogNum1 = false
-                }
+                }else if(resCode==204){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert('데이터가 없습니다.');
+              }else if(resCode==410){
+                alert("로그인 세션이 만료되었습니다.");
+              //  EventBus.$emit('top-path-logout');
+                this.$store
+                .dispatch("LOGOUT")
+                .then( res => { 
+                console.log(res.status)}).catch(({ message }) => (this.msg = message))
+                this.$router.replace('/signin')
+              }else{
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert(resCode + " / " + resMsg);
+              }
             })
             .catch((ex)=>{
                 this.$fire({
@@ -380,11 +398,6 @@ export default {
                 this.dialogNum2 = true
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '제목을 입력 해주세요'
-                return
-            }else if(this.dispdate == this.editedItem.disp_start_date){
-                this.dialogNum2 = true
-                this.toolMsg = '필수값 확인'
-                this.dialogMsg = '노출 기간은 오늘 이후 날짜로 설정 가능합니다'
                 return
             }else if(this.editedItem.bannerImage == ''){
                 this.dialogNum2 = true

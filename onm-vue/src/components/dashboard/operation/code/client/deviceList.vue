@@ -296,11 +296,11 @@ export default {
                           axios.post(url,params,headers)
                             .then((response)=>{
                               var resCode=response.data.res_code;
-                              var resMsg=response.data.res_msg;
+                              
                               if(resCode==200){
                                 this.pList.splice(updateIndex,1,params)
                               }else{
-                                alert(resCode+" / "+resMsg);
+                                alert("Error");
                               }
                             })
                             .catch((ex)=>{

@@ -8,7 +8,7 @@
                 ></line-chart> -->
                 <line-chart 
                 v-if="loaded"
-                    :chart-data="datacollection" :options="labels"
+                    :chart-data="datacollection" :options="options" 
                 ></line-chart>
             </div>
            
@@ -28,7 +28,12 @@ export default {
             datacollection: {},
             title: '시간대별 평균 호출 수',
             labels: [], 
+<<<<<<< HEAD
             loaded: false,         
+=======
+            loaded: false,
+            options: {},    
+>>>>>>> develop
         }
     },
     mounted(){
@@ -82,24 +87,59 @@ export default {
 
               console.log('avgApiTime response' + JSON.stringify(response.data.data.access_hourly));
               
+<<<<<<< HEAD
               this.labels = this.getLabels(response.data.data.access_hourly)
               
               this.datacollection = {
                 labels: this.labels,
                 datasets: [
                   {
+=======
+              var resData = response.data.data.access_hourly.[0]
+              var resArr = Object.values(resData);
+              //var sortesArr = arr.sort(resArr)
+              var arrMax = Math.max(...resArr);
+
+              this.labels = this.getLabels(response.data.data.access_hourly)
+              this.datacollection = {
+                labels: this.labels,
+                datasets: [{
+>>>>>>> develop
                     label:'시간대별 평균 호출 수', 
                     // backgroundColor: '#f87979',
                     borderColor:'#f87979',
-                    data: this.getNewCnt(response.data.data.access_hourly)
-                  },
-                ]
+                    data: resArr
+                  }]
               }
+              this.options = {
+                scales: {
+                  yAxes: [{
+                    ticks: {
+                      fontColor: "black",
+                      suggestedMax: arrMax,
+                      min:0,
+                      stepSize: 1,
+                    }
+                  }],
+                  xAxes: [{
+                    ticks: {
+                      fontColor: "black"
+                    }
+                  }]
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                legend:{
+                  labels:{
+                    fontColor: 'black'
+                  }
+                },
+              },
               // console.log(this.datacollection)
               this.loaded = true
 
             }else if(resCode==204){
-              alert(resMsg+'고객 개통/해지 추이 데이터가 없습니다.')
+              alert(resMsg+'시간댑별 호출수가 없습니다')
             }else{
               this.datacollection = null;
               //alert(resCode + " / " + resMsg);
@@ -120,6 +160,18 @@ export default {
         }
         console.log('avgApiTime keys',new_arr)
         return new_arr
+<<<<<<< HEAD
+=======
+      },
+      getMaxValue: function(arr){
+        var maxValue
+        maxValue = Object.values(arr)
+        maxValue = Math.max(maxValue)
+        console.log(maxValue+"최대값구하기")
+        maxValue = maxValue + (maxValue * 1.1)
+        return maxValue
+        
+>>>>>>> develop
       },
 
       getNewCnt: function(arr){

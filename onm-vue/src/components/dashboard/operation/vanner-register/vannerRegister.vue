@@ -35,7 +35,7 @@
         <v-row style="margin-left:30px;">
             <v-col cols="auto" style="padding-top:35px; margin-right:30px;"><span style="color:red;">*</span>제목</v-col>
             <v-col>
-                <v-text-field label="입력" style="width: 500px" v-model="editedItem.title"></v-text-field>
+                <v-text-field label="입력" style="width: 500px" v-model="editedItem.title" maxlength="200"></v-text-field>
             </v-col>
         </v-row>
         <v-row style="margin-left:30px; padding-top:35px;">
@@ -109,15 +109,29 @@
             </div>
             </v-col>
         </v-row>
+        <v-row style="margin-left:30px;">
+            <v-col cols="auto" style="padding-top:35px;" >
+                <span style="color:red;">*</span>Link URL
+            </v-col>
+            <v-col>
+                <v-text-field label="입력" style="width: 520px; padding-left: 5px;" v-model="editedItem.img_url" maxl3ength="200"></v-text-field>
+            </v-col>
+        </v-row>
             <v-container 
             style="width:550px; height: 450px; margin-left: 132px; border:1px solid #999999; margin-top: 10px;"
             id="file">
             <div v-if="istf" style="width: 400px; height: 300px; margin-left: -15px;">
-               <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역</span></div>
-          
-            <v-img :src="images" v-if="vitem.tem1" style='height:300px;width:200px; '></v-img>
-            <v-img :src="images" v-else-if="vitem.tem2" style='height:400px;width:500px;'></v-img>
-            <v-img :src="images" v-else-if="vitem.tem3" style='height:50px;width:50px;'></v-img>
+               <span v-if="istf" style="margin-left:20px"> 배너 이미지 미리보기 영역1</span></div>
+
+            <div v-if="vitem.tem1" style="height:200px;width:300px; overflow: hidden">
+            <img :src="images" v-if="vitem.tem1" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
+
+            <div v-if="vitem.tem2" style="height:150px;width:500px; overflow: hidden">
+            <img :src="images" v-if="vitem.tem2" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
+
+            <div v-if="vitem.tem3" style="height:150px;width:500px; overflow: hidden">
+            <img :src="images" v-if="vitem.tem3" style='height:100%;width:100%; object-fit:scale-down; border: 1px solid black;'></div>
+            
             </v-container>
         <v-row style="margin-left:30px; padding-top:20px;">
         </v-row>
@@ -176,9 +190,9 @@ export default {
             gw_id: '',
             resPagingInfo: {},
             istf: true,
-            items: ["타입명 A (300 X 200 px)", "타입명 B (400 X 500 px)","타입명 C (50 X 50 px)"],
+            items: ["로그아웃 (300 X 200 px)", "왼쪽배너 (500 X 150 px)","오른쪽배너 (500 X 150 px)"],
             items2: ["노출", "미노출"],
-            items3: ["All", "Android", "IOS", "PC", "PCAPP"],
+            items3: ["ALL", "Android", "iOS", "PC", "PCAPP"],
             vvitem:'',
             vitem: 
                 {
@@ -203,10 +217,10 @@ export default {
                 disp_end_date: dateInfo().oneMonthDashFormat,
                 reg_id: '',
                 reg_date: dateInfo().currentDateDashFormat,
-                os_type: 'All',
+                os_type: 'ALL',
                 mod_date: dateInfo().currentDateDashFormat,
                 // origin_name: '',
-                // img_url: '',
+                img_url: '',
                 // img_path: '',
                 // cmd_type: '',
                 // local_gw_id: '0',
@@ -231,9 +245,20 @@ export default {
             return (Number(param.version_code) > 1301 || param.local_gw_id == '');
         });
       }
-      //
+    },
+    created(){
+        this.showAuth();
     },
     methods: {
+        showAuth(){
+            var auth=this.$store.state.authGroupId
+            if(auth=='G100'){
+            return true;
+            }else{
+            alert('접근권한이 없습니다.')
+            return false;
+            }
+        },
         close () {
             this.dialogNum1 = false
             this.dialogNum2 = false
@@ -250,6 +275,7 @@ export default {
         //미리보기
         onFileSelected(event){ 
             var input = event.target;
+            console.log(input.files[0])
                 this.editedItem.img_name = input.files[0].name
                 if (input.files && input.files[0]) { 
                 var reader = new FileReader(); 
@@ -264,6 +290,21 @@ export default {
                     // formData.append('files', this.editedItem.banner_image)
                     }
                     this.istf = false
+                    console.log(input.files[0])
+                //      사이즈 제한
+                //     var file  = input.files[0];
+                //     var _URL = window.URL || window.webkitURL;
+                //     var img = new Image();
+
+                //     img.src = _URL.createObjectURL(file);
+                //     img.onload = function() {
+                        
+                //         if(img.width != 500 || img.height != 150) {
+                //             alert("이미지 크기맞춰서 올려주세요.");
+                //         return
+                //     } 
+                // }
+                //         console.log(img)
                 }
             },
             selectType(){
@@ -294,13 +335,13 @@ export default {
            this.editedItem.reg_date = this.editedItem.reg_date.replace(/-/g,'')
            this.editedItem.mod_date = this.editedItem.mod_date.replace(/-/g,'')
            if(this.typedata == this.items[0]){
-               this.editedItem.img_type = '01'
+               this.editedItem.img_type = 'LOGOUT'
            }
            if(this.typedata == this.items[1]){
-               this.editedItem.img_type = '02'
+               this.editedItem.img_type = 'CATE01'
            }
            if(this.typedata == this.items[2]){
-               this.editedItem.img_type = '03'
+               this.editedItem.img_type = 'CATE02'
            }
            if(this.typedata2 == this.items2[0]){
                 this.editedItem.disp_yn = 'Y'
@@ -320,7 +361,7 @@ export default {
             formData.append('reg_date', this.editedItem.reg_date)
             formData.append('os_type', this.editedItem.os_type)
             formData.append('mod_date', this.editedItem.mod_date)
-            // formData.append('images', this.images)
+            formData.append('img_url', this.editedItem.img_url)
           
            axios.post(url, formData, this.headers)
             .then((response)=>{
@@ -337,13 +378,27 @@ export default {
                     // this.$fire({
                     //     title: "등록 되었습니다.",
                     //     type: "success"})
-                }else{
-                    this.$fire({
-                        title: "등록 실패하였습니다.",
-                        html: resMsg,
-                        type: "error"})
-                        this.dialogNum1 = false
-                }
+                }else if(resCode==204){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert('데이터가 없습니다.');
+              }else if(resCode==410){
+                alert("로그인 세션이 만료되었습니다.");
+              //  EventBus.$emit('top-path-logout');
+                this.$store
+                .dispatch("LOGOUT")
+                .then( res => { 
+                console.log(res.status)}).catch(({ message }) => (this.msg = message))
+                this.$router.replace('/signin')
+              }else if(resCode==778){
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert(resMsg);
+              }else{
+                this.pList = [];
+                this.resPagingInfo = {};
+                alert(resCode + " / " + resMsg);
+              }
             })
             .catch((ex)=>{
                 this.$fire({
@@ -367,11 +422,11 @@ export default {
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '제목을 입력 해주세요'
                 return
-            }else if(this.dispdate <= dateInfo().currentDateDashFormat){
-                this.dialogNum2 = true
-                this.toolMsg = '필수값 확인'
-                this.dialogMsg = '노출 기간은 오늘 이후 날짜로 설정 가능합니다'
-                return
+            // }else if(this.dispdate <= dateInfo().currentDateDashFormat){
+            //     this.dialogNum2 = true
+            //     this.toolMsg = '필수값 확인'
+            //     this.dialogMsg = '노출 기간은 오늘 이후 날짜로 설정 가능합니다'
+            //     return
             }else if(this.editedItem.img_name == ''){
                 this.dialogNum2 = true
                 this.toolMsg = '필수값 확인'

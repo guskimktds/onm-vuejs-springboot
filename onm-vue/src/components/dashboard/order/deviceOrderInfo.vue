@@ -129,16 +129,16 @@ export default {
             .then((response) => {
              console.log(response)
               var resCode=response.data.res_code;
-              var resMsg=response.data.res_msg;
+       
               if(resCode==200){
                 this.pList=response.data.data.device_order_list;
                 this.resPagingInfo=response.data.data.paging_info;
               }else if(resCode==204){
                 this.pList = [];
                 this.resPagingInfo = {};
-                alert("단말 청약 오더 정보 데이터가 없습니다.");
+                console.log("단말 청약 오더 정보 데이터가 없습니다.");
               }else if(resCode==410){
-                alert("로그인 세션이 만료되었습니다.");
+                console.log("로그인 세션이 만료되었습니다.");
                 EventBus.$emit('top-path-logout');
                 this.$store
                 .dispatch("LOGOUT")
@@ -148,7 +148,7 @@ export default {
               }else{
                 this.pList=[];
                 this.resPagingInfo={};
-                alert(resCode+" / "+ resMsg);
+                console.log("Error");
               }
             })
             .catch((ex) => {
@@ -179,7 +179,7 @@ export default {
         axios.post(url, params, headers)
         .then((response) => {
            var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
+           
             if(resCode == 200){
               this.pObject = response.data.data
                console.log(this.pObject)
@@ -187,12 +187,12 @@ export default {
               this.isReloadDetailObject = true
             }else if(resCode==204){
               this.pObject = {};
-              alert('단말 청약 오더 정보 상세 데이터가 없습니다.');
+              console.log('단말 청약 오더 정보 상세 데이터가 없습니다.');
               this.showDetailObject = false
               this.isReloadDetailObject = false
             }else{
               this.pObject = {};
-              alert(resCode + " / " + resMsg);
+              console.log("Error");
               this.showDetailObject = false
               this.isReloadDetailObject = false
             }
@@ -228,7 +228,7 @@ export default {
           .post(url,params,headers)
           .then((response)=>{
             var resCode=response.data.res_code;
-            var resMsg=response.data.res_msg;
+          
             if(resCode==200){
               this.dodList=response.data.data.list;
               
@@ -238,12 +238,12 @@ export default {
             }else if(resCode==204){
               this.dodList=[];
            
-              alert('단말오더 상세 내역 데이터가 없습니다.');
+              console.log('단말오더 상세 내역 데이터가 없습니다.');
               this.showDetailList=false
             }else{
               this.dodList=[];
            
-              alert(resCode + " / "+ resMsg);
+              console.log("Error");
               this.showDetailList=false
             }
           })
@@ -264,7 +264,7 @@ export default {
           .post(url,params,headers)
           .then((response)=>{
             var resCode=response.data.res_code;
-            var resMsg=response.data.res_msg;
+         
             if(resCode==200){
               this.dorList=response.data.data.device_order_result_list;
              
@@ -272,12 +272,12 @@ export default {
             }else if(resCode==204){
               this.dorList=[];
              
-              alert('단말오더 처리결과 데이터가 없습니다.');
+              console.log('단말오더 처리결과 데이터가 없습니다.');
               this.showResultList=false
             }else{
               this.dorList=[];
              
-              alert(resCode+" / "+resMsg);
+              console.log("Error");
               this.showResultList=false
             }
           })

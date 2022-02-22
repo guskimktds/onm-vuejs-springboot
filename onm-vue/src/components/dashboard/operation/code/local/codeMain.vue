@@ -95,13 +95,13 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if(resCode == 200){
             this.pList = response.data.data.local_gw_list;
             this.resPagingInfo = response.data.data.paging_info
 
           }else if(resCode==410){
-            alert("로그인 세션이 만료되었습니다.");
+            console.log("로그인 세션이 만료되었습니다.");
              EventBus.$emit('top-path-logout');
                 this.$store
                 .dispatch("LOGOUT")
@@ -111,7 +111,7 @@ export default {
           }else{
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            //console.log(resCode + " / " + resMsg);
           }
         })
         .catch((ex) => {

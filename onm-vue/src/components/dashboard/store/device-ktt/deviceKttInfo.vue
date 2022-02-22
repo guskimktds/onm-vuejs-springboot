@@ -67,7 +67,7 @@ export default{
                 .then((response)=>{
                     console.log(response)
                     var resCode=response.data.res_code;
-                    var resMsg=response.data.res_msg;
+                
                     if(resCode==200){
                         this.dkList=response.data.data.cam_list;
                         this.dkttPagingInfo=response.data.data.paging_info
@@ -85,7 +85,7 @@ export default{
                     }else{
                         this.dkList=[];
                         this.dkttPagingInfo={};
-                        alert(resCode+" / "+resMsg);
+                        alert("Error");
                     }
                 })
                 .catch((ex)=>{

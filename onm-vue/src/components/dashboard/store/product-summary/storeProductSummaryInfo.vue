@@ -50,6 +50,7 @@ export default {
         product_name:'',
         user_id:'',
         prodcd:'',
+        said:''
       }
     }
   },
@@ -72,7 +73,7 @@ export default {
       .then((response) => {
         console.log(response)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+         
         if(resCode == 200){
           this.psList = response.data.data.prod_summary_list;
           this.psPagingInfo = response.data.data.paging_info
@@ -80,9 +81,9 @@ export default {
         }else if(resCode==204){
           this.psList = [];
           this.psPagingInfo = {};
-          alert('상품 요약정보 데이터가 없습니다.');
+          console.log('상품 요약정보 데이터가 없습니다.');
         }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
+          console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -92,7 +93,7 @@ export default {
         }else{
           this.psList = [];
           this.psPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          //console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
@@ -174,6 +175,14 @@ export default {
         this.searchParam.prodcd!==""
       ){
         newParams.prodcd=this.searchParam.prodcd
+      }
+      if (params.said !== undefined && params.said !== "") {
+        newParams.said = params.said;
+      } else if (
+        this.searchParam.said !== undefined &&
+        this.searchParam.said !== ""
+      ) {
+        newParams.said = this.searchParam.said;
       }
 
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){

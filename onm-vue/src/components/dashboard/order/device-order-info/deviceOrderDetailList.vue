@@ -46,6 +46,7 @@ export default {
         { text: "mac_id", value: "mac_id" },
         { text: "단말타입", value: "termtype" },
         { text: "제조사명", value: "mfcname" },
+        { text: "서비스번호", value: "service_no"},
         { text: "제품코드", value: "productcode" },
         { text: "모델명", value: "modelname" }
       ],

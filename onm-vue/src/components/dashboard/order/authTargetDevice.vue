@@ -59,7 +59,7 @@ export default {
         axios.post(url, reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+        
           if(resCode == 200){
             this.authList = response.data.data.auth_device_list;
             this.authPagingInfo=response.data.data.paging_info;
@@ -69,9 +69,9 @@ export default {
           }else if(resCode==204){
             this.authList = [];
             this.authPaingInfo={};
-            alert('인증 대상 단말 정보 데이터가 없습니다.');
+            console.log('인증 대상 단말 정보 데이터가 없습니다.');
           }else if(resCode==410){
-            alert("로그인 세션이 만료되었습니다.");
+            console.log("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -81,7 +81,7 @@ export default {
           }else{
             this.authList = [];
             this.authPaingInfo={};
-            alert(resCode + " / " + resMsg);
+            console.log("Error");
           }
       })
       .catch((ex) => {

@@ -46,7 +46,8 @@ export default {
         date_yn:true,
         user_id:'',
         service_no:'',
-        system_id:''
+        system_id:'',
+        said:''
       }
     }
   },
@@ -69,7 +70,7 @@ methods: {
       .then((response) => {
         console.log(response)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+       
         if(resCode == 200){
           this.kList = response.data.data.ktt_info_list;
           this.kttPagingInfo = response.data.data.paging_info
@@ -89,7 +90,7 @@ methods: {
         }else{
           this.kList = [];
           this.kttPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          alert("Error");
         }
       })
       .catch((ex) => {
@@ -174,6 +175,14 @@ methods: {
         this.searchParam.system_id!==""
       ){
         newParams.system_id=this.searchParam.system_id
+      }
+      if (params.said !== undefined && params.said !== "") {
+        newParams.said = params.said;
+      } else if (
+        this.searchParam.said !== undefined &&
+        this.searchParam.said !== ""
+      ) {
+        newParams.said = this.searchParam.said;
       }
 
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){

@@ -71,7 +71,16 @@ export default {
                 datasets: [
                   {
                     label:'신규', 
+<<<<<<< HEAD
                     backgroundColor: ['#FF0000','#F89403','#FFF200','#99C802','#1E9600'],
+=======
+                    backgroundColor: [                               'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'],
+>>>>>>> develop
                     borderColor:'#f87979',
                     data: this.getNewCnt(response.data.data.access_user_rank)
                   },
@@ -81,7 +90,7 @@ export default {
               this.loaded = true
 
             }else if(resCode==204){
-              alert(resMsg+'고객 개통/해지 추이 데이터가 없습니다.')
+              alert(resMsg+'서비스 업체별 호출 수가 없습니다')
             }else{
               this.datacollection = null;
               //alert(resCode + " / " + resMsg);
@@ -97,7 +106,11 @@ export default {
         arr.forEach(function(element){
             new_arr.push(element.user_id) 
         })
+<<<<<<< HEAD
         console.log('countCallStore keys',new_arr)
+=======
+        console.log('countCallApi keys',new_arr)
+>>>>>>> develop
         return new_arr
       },
 
@@ -106,7 +119,11 @@ export default {
         arr.forEach(function(element){
             new_arr.push(element.access_cnt) 
         })
+<<<<<<< HEAD
         console.log('countCallStore value',new_arr)
+=======
+        console.log('countCallApi value',new_arr)
+>>>>>>> develop
         return new_arr
       },
 

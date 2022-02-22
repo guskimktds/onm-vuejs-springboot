@@ -24,7 +24,11 @@ export default {
     //     }
     //   ]
     // }, 
+<<<<<<< HEAD
     {
+=======
+       {
+>>>>>>> develop
       responsive: true, 
       maintainAspectRatio: false,
       legend: {

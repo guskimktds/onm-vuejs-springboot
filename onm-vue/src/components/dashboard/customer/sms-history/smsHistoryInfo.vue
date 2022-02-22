@@ -73,7 +73,7 @@ export default {
         .post(url, reqParams, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           console.log(response);
           if (resCode == 200) {
             this.pList = response.data.data.sms_history_list;
@@ -83,7 +83,7 @@ export default {
             this.resPagingInfo = {};
             alert('SMS 발송 이력 데이터가 없습니다.');
           }else if(resCode==410){
-            alert("로그인 세션이 만료되었습니다.");
+            // alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -93,7 +93,7 @@ export default {
           }else {
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {

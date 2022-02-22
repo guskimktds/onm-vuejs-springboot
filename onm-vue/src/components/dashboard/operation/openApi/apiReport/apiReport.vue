@@ -2,7 +2,7 @@
     <v-container fluid>
       <v-card>
         <count-api-tab
-        v-bind:cList=cList
+        v-bind:apiCountInfo="apiCountInfo"
         ></count-api-tab>
           <!-- v-on:search="searchToGraph" -->
           <api-report-query
@@ -12,26 +12,10 @@
           v-bind:param="checkDate(param)"
           >
           </api-graph>
-          <api-table></api-table>
-             <!-- <v-row>
-        <v-col cols="6">
-       
-          <api-count
-          dense 
-            v-bind:pList=pList
-            v-bind:resPagingInfo="resPagingInfo"
-            @pagination="setToSearchParams"
-          ></api-count>
-        </v-col>
-        <v-col cols="6">
-          <service-count
-          dense
-            v-bind:storeList=storeList
-            v-bind:storeResPagingInfo="storeResPagingInfo"
-            @pagination="setToSearchParams"
-          ></service-count>
-        </v-col>
-      </v-row> -->
+          <api-table
+          v-bind:param="param"
+          ></api-table>
+
       </v-card>
     </v-container>
 </template>
@@ -43,44 +27,50 @@ import dateInfo from "../../../../utils/common"
 import ApiGraph from './apiGraph.vue'
 import ApiTable from './apiTable.vue'
 import EventBus from '../../../../../EventBus'
+<<<<<<< HEAD
+=======
+import axios from "axios"
+>>>>>>> develop
   const headers={
 'User-Agent': 'GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)',
 'Content-Type': 'application/json'
 }
-// import ServiceCount from './serviceCount.vue'
-// import ApiCount from './apiCount.vue'
-import axios from "axios"
+
 export default {
   components: {
     apiReportQuery,
     CountApiTab,
     ApiGraph,
     ApiTable,
-    // ServiceCount,
-    // ApiCount,
   },
 
   data () {
     return {
       param: {
-        start_date: dateInfo().threeMonthDashFormat,
+        start_date: dateInfo().currentDateDashFormat,
         end_date: dateInfo().currentDateDashFormat,
       },
       pList: [],
       cList:[],
-
+      apiCountInfo:{
+        total:'',
+        unusedApi:0,
+        usedApi:0,
+        arr:[]
+      }
     }
-  }, mounted(){
-    console.log('api count adfaf')
+  },
+  created(){
     this.fillApiCountTab()
   },
+
   methods: {   
         checkDate: function(value){
           console.log("DDDDDDDDDDDDDDDDDDDD")
             let newParams={}
             if(Number(value.start_date.replace(/-/g,""))-Number(value.end_date.replace(/-/g,""))>0){
                 alert('형식에 맞는 날짜 검색값을 입력해주세요')
-                this.param.start_date=dateInfo().threeMonthDashFormat
+                this.param.start_date=dateInfo().currentDateDashFormat
                 this.param.end_date=dateInfo().currentDateDashFormat
             }else{
                 newParams=value
@@ -89,20 +79,36 @@ export default {
         },
 
      fillApiCountTab: function(){
-      var reqParams 
-      reqParams.site_id ='KTT_1234'
-      console.log("!!!!!!!!!!!!!!!!!!api 사이트 아이디 " + reqParams.view_cnt+"페이징"+reqParams.page_no)
+      // console.log("!!!!!!!!!!!!!!!!!!api 사이트 아이디 " + reqParams.view_cnt+"페이징"+reqParams.page_no)
 
-  var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13036/get_siteInfo`
+       var url=`${process.env.VUE_APP_BACKEND_SERVER_URL}/V110/ONM_13049/get_total_apiList`
       axios
-      .post(url, reqParams, headers)
+      .post(url, headers)
       .then( (response) => {
 
         var resCode = response.data.res_code;
         var resMsg = response.data.res_msg;
         if (resCode == 200) {
       
-          this.cList = response.data.data.api_list;
+        this.cList = response.data.data.comm_code_list;  
+        this.apiCountInfo.total = 0;
+        this.apiCountInfo.unusedApi = 0;
+        this.apiCountInfo.unusedApi = 0;
+        
+        this.apiCountInfo.total = this.cList.length;
+         for(var i = 0; i < this.cList.length; i++){
+            if(this.cList[i].use_yn === 'Y'){
+              this.apiCountInfo.usedApi += 1;
+            }else if(this.cList[i].use_yn === 'N'){
+              this.apiCountInfo.unusedApi += 1;
+            }
+          }
+          for(var j in this.cList){
+            var obj = new Object();
+            obj.key = this.cList[j].api_no
+            obj.value = this.cList[j].api_no
+          this.apiCountInfo.arr.push(obj);
+        }
 
         }else if(resCode==204){
           this.cList = [];

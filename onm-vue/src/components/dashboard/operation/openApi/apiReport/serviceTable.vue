@@ -1,13 +1,20 @@
 <template>
-<v-container fluid>
+<v-container fluid
 
+<<<<<<< HEAD
                     <div class="grid-board">
                         <div style="font-size:20px; font-weight:bold; text-align:left;">서비스 업체별 호출 수</div>
+=======
+>
+                    <base-material-card  dark>
+                        <div style="font-size:20px; font-weight:bold; text-align:left;">{{ formTitle }}</div>
+>>>>>>> develop
                                  <v-row>
         <v-col>
 
       <v-text-field 
-      label="search"
+      
+      label="매장 ID"
       v-model="user_id"
       ></v-text-field>
         </v-col>
@@ -19,15 +26,16 @@
         </v-col>
       </v-row>
                             <v-data-table
+                            
                             :headers="cHeaders"
                             :items="cList"
                             :options.sync="options2"
-                            :items-per-page="10"
+                            :server-items-length="resPagingInfo.total_cnt"
                             class="elevation-1"
                             :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
                             :header-props="{ sortIcon: null }"
                             ></v-data-table>
-                    </div>
+                    </base-material-card>
 </v-container>
 
 </template>
@@ -42,6 +50,7 @@ const headers={
 }
 
 export default {
+    props:['param'],
     data() {
       return {
         cHeaders: [
@@ -63,7 +72,8 @@ export default {
         totalList: 0,
         loading: true,
         cList: [],
-        resPagingInfo:{}
+        resPagingInfo:{},
+        title: '서비스 업체별 호출 수'
       }
     },
     methods: {
@@ -79,9 +89,14 @@ export default {
                     var resMsg = response.data.res_msg;
                     if(resCode == 200){
                     this.cList = response.data.data.access_user_list;
+<<<<<<< HEAD
                     
+=======
+                    this.resPagingInfo=response.data.data.paging_info;
+>>>>>>> develop
                     }else if(resCode==204){
-                    alert('카메라 상태 현황 데이터가 없습니다.')
+                    console.log(resCode + " / " + resMsg);
+                    this.cList =[];
                     }else{
                     console.log(resCode + " / " + resMsg);
                     }
@@ -94,7 +109,9 @@ export default {
             var values={
                 page_no: options.page,
                 view_cnt: options.itemsPerPage,
-                user_id:this.user_id
+                user_id:this.user_id,
+                start_date:this.param.start_date.replace(/-/g,""),
+                end_date:this.param.end_date.replace(/-/g,"")
 
             }
             return values;
@@ -124,6 +141,13 @@ export default {
             this.getCameraApi();
             console.log('갱신')
             },  
+    computed: {
+        formTitle(){
+            this.getCameraApi();
+            return this.title
+        }
+    
+        },  
 }
 </script>
 

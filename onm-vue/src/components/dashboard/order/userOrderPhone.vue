@@ -73,16 +73,16 @@ export default {
         console.log(response.data)
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+        
         if(resCode == 200){
           this.phList = response.data.data.tel_no_list;
           this.phPagingInfo = response.data.data.paging_info
         }else if(resCode==204){
             this.phList = [];
             this.phPagingInfo = {};
-            alert("사용자 청약 전화번호 데이터가 없습니다.");
+            console.log("사용자 청약 전화번호 데이터가 없습니다.");
         }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
+          console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -92,7 +92,7 @@ export default {
         }else{
           this.phList = [];
           this.phPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          //console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {

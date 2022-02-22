@@ -91,7 +91,7 @@ export default {
         .then((response) => {
           console.log(response);
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+      
           if (resCode == 200) {
             this.iotList = response.data.data.iotgw_list;
             this.iotPagingInfo = response.data.data.paging_info;
@@ -110,7 +110,7 @@ export default {
           }else {
             this.iotList = [];
             this.iotPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {

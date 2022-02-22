@@ -24,8 +24,8 @@
         <template v-slot:item.board_cate_cd="{item}">
           <span>{{ switchString(item.board_cate_cd) }}</span>
         </template>
-        <template v-slot:item.disp_yn="{item}">
-          <span>{{ switchString2(item.disp_yn) }}</span>
+        <template v-slot:item.pop_up_yn="{item}">
+          <span>{{ switchString2(item.pop_up_yn) }}</span>
         </template>
           <template v-slot:top>    
             <!-- <v-toolbar
@@ -104,6 +104,15 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+                <v-col>
+                   <v-select 
+                  item-text="state" 
+                  item-value="abbr" 
+                  :items="osType"
+                  label="OS 타입" 
+                  v-model="editedItem.os_type"
+                  ></v-select>
+                </v-col>
                                     </v-row>
                         <v-col
                           cols="12"
@@ -124,11 +133,26 @@
                                     </v-radio>
                                 </v-radio-group>
                         </v-col>
+                                     
+                        <v-col
+                          cols="12"
+                          sm="6"
+                          md="6"
+                        >
+                   <v-select 
+                  item-text="state" 
+                  item-value="abbr" 
+                  :items="modalItems"
+                  label="분류" 
+                  v-model="editedItem.board_cate_cd"
+                  ></v-select>
+                    </v-col>
                       <v-row>
                         <v-col
                           cols="6">
                           <vue-editor
                             v-model="editedItem.content_html"
+                            :editorToolbar="customToolbar"
                           ></vue-editor>
                         </v-col>
                          <v-col cols="6"
@@ -136,7 +160,7 @@
                           <v-textarea
                             outlined
                             v-model="editedItem.content"
-                            label="공지사항 내용 html"
+                            label="공지사항 내용"
                           ></v-textarea>
                         </v-col>
                       </v-row>
@@ -219,6 +243,22 @@ export default {
     props: ['pList','resPagingInfo'],
     data() {
       return {
+        customToolbar :
+         [
+[{ 'font': [] }],
+[{ 'header': [false, 1, 2, 3, 4, 5, 6, ] }],
+[{ 'size': ['small', false, 'large', 'huge'] }],
+['bold', 'italic', 'underline', 'strike'],
+[{'align': ''}, {'align': 'center'}, {'align': 'right'}, {'align': 'justify'}],
+['blockquote', 'code-block'],
+[{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+[{ 'script': 'sub'}, { 'script': 'super' }],
+[{ 'indent': '-1'}, { 'indent': '+1' }],
+[{ 'color': [] }, { 'background': [] }],
+['link', 'image', 'video', 'formula'],
+[{ 'direction': 'rtl' }],
+['clean'],
+],
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
@@ -229,32 +269,45 @@ export default {
            { text: '게시판 id', value: 'board_id' },
           { text: '공지사항 타입', value: 'board_cate_cd' },
           { text: '제목', value: 'title' },
-          { text: '공지 노출 여부', value: 'disp_yn' },
-          { text: '공지 노출 시작 일자', value: 'disp_start_date' },
-          { text: '공지 노출 종료 일자', value: 'disp_end_date' },
+          {text: 'os 타입', value: 'os_type' },
+          { text: '공지사항 노출 유무', value: 'pop_up_yn'},
           { text: '등록일자', value: 'reg_date' },
           { text: '수정일자', value: 'mod_date' },
-          { text: '변경', value: 'actions', sortable: false }
+          { text: '변경', value: 'actions', sortable: false },
         ],
         editedItem: {
-          boarrd_id: '',
+          board_id: '',
            disp_start_date :'',
            disp_end_date : '',
           disp_yn: '',
           title: '',
           content: '',
           content_html: '',
+          os_type:'',
+          board_cate_cd: '',
         },
         defaultItem: {
-          boarrd_id: '',
+          board_id: '',
           disp_start_date: '',
           disp_end_date: '',
           disp_yn: '',
           title: '',
           content: '',
           content_html: '',
+           os_type:'',
+           board_cate_cd: '',
         },
-        newPlist: []
+        newPlist: [],
+        osType:[
+              {state: 'All'     , abbr: 'ALL'},
+              {state: 'Android'     , abbr: 'Android'},
+              {state: 'iOS'     , abbr: 'iOS'},
+              {state: 'PC'     , abbr: 'PC'},
+              {state: 'PCAPP'     , abbr: 'PCAPP'},
+            ],
+        modalItems:[
+              {state: '왼쪽공지'     , abbr: 'CATE01'},
+              {state: '오른쪽공지'     , abbr: 'CATE02'}],
       }
     },
     computed: {
@@ -277,9 +330,9 @@ export default {
       },
       switchString(values){
         if(values==='CATE01'){
-          return '일반공지'
+          return '왼쪽공지'
         }else if(values==='CATE02'){
-          return '긴급공지'
+          return '오른쪽공지'
         }else{
           return ''
         }
@@ -294,7 +347,7 @@ export default {
         }
       },
 
-      editItem (item) {
+      editItem (item) {  
         this.editedIndex = this.pList.indexOf(item)
         console.log('update Item Index : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
@@ -302,10 +355,22 @@ export default {
         // if(this.gw_id==''){
         //   delete this.editedItem.local_gw_id
         // }else{
-        // this.editedItem.local_gw_id = this.gw_id    
+          // this.editedItem.local_gw_id = this.gw_id    
         // }
+      if(this.editedItem.disp_start_date==null){
+          this.editedItem.disp_start_date =""
+      }
+       else{
 
+        this.editedItem.disp_start_date = ""+this.editedItem.disp_start_date.substring(0,10)
+      } 
+      if(this.editedItem.disp_end_date==null){
 
+        this.editedItem.disp_end_date =""
+      }
+      else{
+        this.editedItem.disp_end_date = ""+this.editedItem.disp_end_date.substring(0,10)
+      } 
         console.log('update Item value : ',this.editedItem)
 
         this.dialog = true
@@ -351,8 +416,12 @@ export default {
             disp_yn : this.editedItem.disp_yn,
             title : this.editedItem.title,
             content : this.editedItem.content,
-            content_html : this.editedItem.content_html
+            content_html : this.editedItem.content_html,
+             os_type : this.editedItem.os_type,
+              board_cate_cd : this.editedItem.board_cate_cd
           }
+          console.log("체크워드 실행전")
+             this.checkWord()
           var reqParams = params
           reqParams.disp_end_date = params.disp_end_date.replace(/-/g,"").split(' ', 1)[0]
           reqParams.disp_start_date = params.disp_start_date.replace(/-/g,"").split(' ', 1)[0]
@@ -411,7 +480,18 @@ export default {
         } 
         this.close()
       },
-
+  checkWord(){
+       if(this.editedItem.content.match('loginForm')){
+         alert('loginForm은 입력할 수 없습니다.')
+         this.params.content = ''
+         console.log('!!!!!!!!!!!!!!!!!!!로그인폼 체크')
+         
+       }
+        if(this.editedItem.content_html!= null&&this.editedItem.content_html.match('loginForm') ){
+          alert('loginForm은 입력할 수 없습니다.')
+         this.params.content_html = ''
+       }
+      },
     deleteItemConfirm () {
         if (this.editedIndex > -1) {
           var params = this.editedItem

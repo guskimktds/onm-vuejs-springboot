@@ -69,7 +69,7 @@
 
         <v-row>
         
-          <v-col cols="4">
+          <v-col cols="3">
             <v-text-field
               
               label="계약 ID"
@@ -79,7 +79,7 @@
             </v-text-field>
           </v-col>
 
-          <v-col cols="4">
+          <v-col cols="3">
             <v-text-field
               
               label="매장명"
@@ -88,11 +88,21 @@
             >
             </v-text-field>
           </v-col>
+
+           <v-col cols="3">
+            <v-text-field
+              
+              label="상품코드"
+              v-model="param.prod_code"
+              placeholder=" "
+            >
+            </v-text-field>
+          </v-col>
         </v-row>
 
         <v-row>
 
-          <v-col cols="4">
+          <v-col cols="3">
             <v-text-field
               
               label="매장ID"
@@ -102,11 +112,21 @@
             </v-text-field>
           </v-col>
 
-          <v-col cols="4">
+          <v-col cols="3">
             <v-text-field
               
               label="매장 전화번호"
               v-model="param.tel_no"
+              placeholder=" "
+            >
+            </v-text-field>
+          </v-col>
+
+          <v-col cols="3">
+            <v-text-field
+              
+              label="국사코드"
+              v-model="param.local_gw_id"
               placeholder=" "
             >
             </v-text-field>

@@ -42,7 +42,8 @@ export default {
         end_date: dateInfo().currentDateDashFormat,
         date_yn: true,
         oderno:'',
-        guid:''
+        guid:'',
+        said:''
       }
     }
   },
@@ -62,7 +63,7 @@ export default {
             .then((response) => {
               console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           if(resCode == 200){
             console.log(response.data.data.device_order_result_list);
             this.dorList = response.data.data.device_order_result_list;
@@ -70,9 +71,9 @@ export default {
           }else if(resCode==204){
             this.dorList = [];
             this.dorPagingInfo={};
-            alert('단말 청약오더 처리 결과 데이터가 없습니다.');
+            console.log('단말 청약오더 처리 결과 데이터가 없습니다.');
           }else if(resCode==410){
-            alert("로그인 세션이 만료되었습니다.");
+            console.log("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -82,7 +83,7 @@ export default {
           }else{
             this.dorList = [];
             this.dorPagingInfo={};
-            alert(resCode + " / " + resMsg);
+            console.log("Error");
           }
             })
             .catch((ex) => {
@@ -156,6 +157,14 @@ export default {
         ){
           newParams.guid=this.searchParam.guid
         }
+        if (params.said !== undefined && params.said !== "") {
+        newParams.said = params.said;
+      } else if (
+        this.searchParam.said !== undefined &&
+        this.searchParam.said !== ""
+      ) {
+        newParams.said = this.searchParam.said;
+      }
         
         if(Number(newParams.start_date)-Number(newParams.end_date)>0){
         alert('형식에 맞는 날짜 검색값을 입력해주세요')

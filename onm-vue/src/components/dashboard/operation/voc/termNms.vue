@@ -124,7 +124,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if(resCode == 200){
             console.log(response.data.data.info[0].bizp_nm,);
             this.guid = reqParams.guid;
@@ -157,9 +157,9 @@ export default {
           }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
-            alert('고객이전 단말 상태 데이터가 없습니다.');
+            console.log('고객이전 단말 상태 데이터가 없습니다.');
           }else if(resCode==410){
-            alert("로그인 세션이 만료되었습니다.");
+            console.log("로그인 세션이 만료되었습니다.");
              EventBus.$emit('top-path-logout');
                 this.$store
                 .dispatch("LOGOUT")
@@ -169,7 +169,7 @@ export default {
           }else{
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            //console.log(resCode + " / " + resMsg);
           }
         })
         .catch((ex) => {
@@ -190,7 +190,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+           
           if(resCode == 200){
             this.termSubList = response.data.data.order_list;  //데이터 바꿀것
             this.authPagingInfo = response.data.data.paging_info; //sub페이징
@@ -215,7 +215,7 @@ export default {
           }else{
             this.termNmsList = [];
             this.authPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error"); 
           }
         })
         .catch((ex) => {
@@ -268,7 +268,7 @@ export default {
                 title: "전송완료하였습니다.",
               })
             }else if(resCode==410){
-              alert("로그인 세션이 만료되었습니다.");
+              console.log("로그인 세션이 만료되었습니다.");
               EventBus.$emit('top-path-logout');
                   this.$store
                   .dispatch("LOGOUT")

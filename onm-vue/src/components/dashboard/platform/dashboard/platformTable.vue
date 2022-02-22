@@ -122,13 +122,11 @@ export default {
                 .then((response)=>{
                     console.log(response.data)
                     var resCode = response.data.res_code;
-                    var resMsg = response.data.res_msg;
+                     
                     if(resCode == 200){
                     this.cList = response.data.data.list;
-                    }else if(resCode==204){
-                    alert('카메라 상태 현황 데이터가 없습니다.')
                     }else{
-                    console.log(resCode + " / " + resMsg);
+                    this.cList=[]
                     }
                 })
                 .catch((ex)=>{

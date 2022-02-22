@@ -15,15 +15,17 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols="5">
+                <v-col cols="4">
                     <v-text-field label="관리자ID" placeholder=" " v-model="param.admin_id">                        
                     </v-text-field>
                 </v-col>         
-                <v-col cols="5">
+                <v-col cols="4">
                     <v-text-field label="매장ID" placeholder=" " v-model="param.user_id">                        
                     </v-text-field>
                 </v-col> 
-
+            </v-row>
+            
+            <v-row>
                 <v-col cols="4">
                     <v-text-field label="전화번호" placeholder=" " v-model="param.tel_no">                        
                     </v-text-field>

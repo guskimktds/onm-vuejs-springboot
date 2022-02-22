@@ -33,6 +33,7 @@
           ></store-api-list>
         </v-col>
       </v-row>
+<<<<<<< HEAD
       <h1>나타나기</h1>
       <v-card>
         <ul v-for="site_id in rowList" v-bind:key="site_id">
@@ -41,6 +42,34 @@
         </ul>
       </v-card>
 
+=======
+        <v-dialog v-model="showModal" max-width="500px">
+            <v-card>
+            <v-card-title class="headline"> 매장별 API 호출 수</v-card-title>
+            <v-text leftSpace>호출일자: {{rowList.start_date}}</v-text>
+            <v-text>매장명: {{rowList.start_date}}</v-text>
+            <hr>
+              <!-- <ul v-for="site_id in rowList" v-bind:key="site_id">       -->
+                                      <table>
+                                            <tr>
+                                                <th></th>
+                                                <th style="text-align:center">api 명  </th>
+                                                <th style="text-align:center">호출 수</th>
+                                            </tr>
+                                            <tr v-for="api_no in rowList" v-bind:key="api_no"> 
+                                                 <td>{{rowList.api_no}}</td>
+                                                 <td>{{rowList.access_cnt}}</td>
+                                            </tr>
+                                        </table>       
+              <!-- </ul> -->
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="closeDelete">닫기</v-btn>
+                <v-spacer></v-spacer>
+            </v-card-actions>
+            </v-card>
+        </v-dialog>
+>>>>>>> develop
       </v-card>     
     </v-container>
 </template>

@@ -45,7 +45,7 @@ export default {
         { text: '사용자 이름', value: 'user_name' },
         { text: '전화번호', value: 'tel_no' },
         { text: '전화번호 타입', value: 'auth' },
-        { text: 'Sub ID(전화번호 ID)', value: 'tel_no_id' },
+        { text: 'Sub ID(tel_no_id)', value: 'tel_no_id' },
         { text: '알림설정권한(Y/N)', value: 'alim_auth_yn' },
         { text: '승인여부', value: 'confirm_yn' },
         { text: '승인일', value: 'confirm_date' },

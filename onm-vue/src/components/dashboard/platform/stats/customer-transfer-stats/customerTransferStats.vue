@@ -57,13 +57,9 @@ export default {
       .then( (response) => {
 
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+    
         if (resCode == 200) {
           this.pList = response.data.data.mig_stat_list;
-        }else if(resCode==204){
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert("고객이전 통계 데이터가 없습니다.");
         }else if(resCode==410){
           alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
@@ -74,13 +70,12 @@ export default {
             this.$router.replace('/signin')
         }else {
           this.pList = [];
-          alert(resCode + " / " + resMsg);
         }
 
       })
       .catch(function (error) {
         console.log(error);
-        alert("Error")
+        console.log("Error")
       })
       .finally(function () {
         // always executed

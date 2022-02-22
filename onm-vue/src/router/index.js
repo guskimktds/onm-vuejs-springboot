@@ -43,12 +43,7 @@ import SensorInfo from '../components/dashboard/store/device-sensor/sensorInfo'
 import DeviceKttInfo from '../components/dashboard/store/device-ktt/deviceKttInfo'
 import termAuth from '../components/dashboard/store/term-auth/termAuth'
 
-//sun
-import registerStore from '../components/dashboard/store/register-store/registerStore'
-import approvalStore from '../components/dashboard/store/approval-store/approvalStore'
-import registerStoreList from '../components/dashboard/store/register-store-list/registerStoreList'
-import approvalApi from '../components/dashboard/store/approval-api/approvalApi'
-import apiInfoDetail from '../components/dashboard/store/api-info-detail/apiInfoDetail'
+
 
 // 사용자 정보 조회 메뉴
 import UsrInfo from '../components/dashboard/customer/phone/usrInfo'
@@ -72,6 +67,7 @@ import UserOrderDetail from '../components/dashboard/order/userOrderDetail'
 import UserOrderResult from '../components/dashboard/order/userOrderResult'
 import UserOrderPhone from '../components/dashboard/order/userOrderPhone'
 import KTTOrderInfo from '../components/dashboard/order/kttOrderInfo'
+import ProdInfo from '../components/dashboard/order/prod-info/prodInfo'
 import DeviceOrderInfo from '../components/dashboard/order/deviceOrderInfo'
 import DeviceOrderResult from '../components/dashboard/order/deviceOrderResult'
 import AuthTargetDevice from '../components/dashboard/order/authTargetDevice'
@@ -90,12 +86,20 @@ import AdminHistory from '../components/dashboard/operation/admin/adminHistory'
 import ChangeHistory from '../components/dashboard/operation/change/changeHistory'
 import termNms from '../components/dashboard/operation/voc/termNms.vue'
 import termOrderInfo from '../components/dashboard/operation/voc/termOrderInfo.vue'
+import subsInfo from '../components/dashboard/operation/voc/subsInfo.vue'
 import dssResultInfo from '../components/dashboard/operation/voc/dssResultInfo.vue'
 import bssResultInfo from '../components/dashboard/operation/voc/bssResultInfo.vue'
 import deviceRecoInfo from '../components/dashboard/operation/voc/deviceRecoInfo'
+import cameraModelInfo from '../components/dashboard/operation/voc/cameraModelInfo.vue'
 import vannerManagement from '../components/dashboard/operation/vanner-management/vannerManagement'
 import vannerRegster from '../components/dashboard/operation/vanner-register/vannerRegister';
 import vannerDetailPage from '../components/dashboard/operation/vanner-register/vannerDetailPage';
+//sun
+import registerStore from '../components/dashboard/operation/register-store/registerStore'
+import approvalStore from '../components/dashboard/operation/approval-store/approvalStore'
+import registerStoreList from '../components/dashboard/operation/register-store-list/registerStoreList'
+import approvalApi from '../components/dashboard/operation/approval-api/approvalApi'
+import apiInfoDetail from '../components/dashboard/operation/api-info-detail/apiInfoDetail'
 
 //운영관리 / 코드 설정 관리 
 import CodeConfig from '../components/dashboard/operation/code/manage/codeMain'
@@ -108,6 +112,8 @@ import GwAcceptInfo from '../components/dashboard/operation/code/local/gwAcceptI
 import CustomerTransfer from '../components/dashboard/operation/transfer/customerTransfer'
 import DeviceStatus from '../components/dashboard/operation/transfer/deviceStatus'
 
+// 운영관리, VOC관리
+import CamProd from '../components/dashboard/operation/voc/camProd/camProd'
 //open api 
 import customerApi from '../components/dashboard/operation/openApi/customerApi.vue'
 import apiReport from '../components/dashboard/operation/openApi/apiReport/apiReport.vue'
@@ -255,6 +261,11 @@ export default new Router({
                     component: KTTOrderInfo
                 },
                 {
+                    path: "prod-info", 
+                    name: 'ProdInfo',
+                    component: ProdInfo
+                },
+                {
                     path: "device-order-info",
                     name: 'DeviceOrderInfo',
                     component: DeviceOrderInfo
@@ -393,32 +404,8 @@ export default new Router({
                     path: "device-ktt",
                     name: "device-ktt",
                     component: DeviceKttInfo
-                },
-                {
-                    path: "register-store",
-                    name: "register-store",
-                    component: registerStore
-                },
-                {
-                    path: "approval-store",
-                    name : "approval-store",
-                    component: approvalStore
-                },
-                {
-                    path: "register-store-list",
-                    name: "register-store-list",
-                    component:registerStoreList
-                },
-                {
-                    path: "approval-api",
-                    name: "approval-api",
-                    component:approvalApi
-                },
-                {
-                    path: "api-info-detail",
-                    name: "api-info-detail",
-                    component:apiInfoDetail
                 }
+           
 
             ]
         },
@@ -530,6 +517,11 @@ export default new Router({
                     component: termOrderInfo
                 },
                 {
+                    path: "subsinfo",
+                    name: 'subsInfo',
+                    component: subsInfo
+                },
+                {
                     path: "dss-result",
                     name: 'dssResultInfo',
                     component: dssResultInfo
@@ -550,6 +542,16 @@ export default new Router({
                     component: GwAcceptInfo
                 },
                 {
+                    path: "cam-prod",
+                    name: "CamProd",
+                    component: CamProd
+                },
+                {
+                    path: "camera-model",
+                    name: 'cameraModelInfo',
+                    component: cameraModelInfo
+                },
+                {
                     path: "customer-api",
                     name: 'customerApi',
                     component: customerApi
@@ -563,12 +565,11 @@ export default new Router({
                     path: "notice",
                     name: 'notice',
                     component: notice
-                },{
-
-                path: "vanner-management",
-                name: 'vanner-management',
-                component:vannerManagement
-               
+                },
+                {
+                    path: "vanner-management",
+                    name: 'vanner-management',
+                    component:vannerManagement
                 },
                 {
                     path: "vanner-register",
@@ -580,7 +581,32 @@ export default new Router({
                     name: 'vanner-detailpage',
                     component: vannerDetailPage,
                     props:true
+                },     
+                {
+                    path: "register-store",
+                    name: "register-store",
+                    component: registerStore
                 },
+                {
+                    path: "approval-store",
+                    name : "approval-store",
+                    component: approvalStore
+                },
+                {
+                    path: "register-store-list",
+                    name: "register-store-list",
+                    component:registerStoreList
+                },
+                {
+                    path: "approval-api",
+                    name: "approval-api",
+                    component:approvalApi
+                },
+                {
+                    path: "api-info-detail",
+                    name: "api-info-detail",
+                    component:apiInfoDetail
+                }
                
             ]
         },

@@ -17,7 +17,7 @@
                 :options.sync="options"
                 :server-items-length="dodPagingInfo.total_cnt"
                 class="elevation-1"
-                :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+                :footer-props="{ itemsPerPageOptions: pageoptions }"
                 :header-props="{ sortIcon: null }"
             >          
             </v-data-table>
@@ -36,6 +36,7 @@ export default {
         dialogDelete: false,
         editedIndex: -1,
         options: {},
+        pageoptions: this.$store.state.pageoptions,
         loading: true,
         headers: [
           {

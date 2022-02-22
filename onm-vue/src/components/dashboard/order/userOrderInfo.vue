@@ -139,16 +139,16 @@ export default {
       .then((response) => {
         //this.list = JSON.parse(result.data.menu)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+         
         if(resCode == 200){
           this.pList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info
         }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
-            alert("사용자 청약 오더 정보 데이터가 없습니다.");
+            console.log("사용자 청약 오더 정보 데이터가 없습니다.");
         }else if(resCode==410){
-          alert("로그인 세션이 만료되었습니다.");
+          console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
             this.$store
             .dispatch("LOGOUT")
@@ -158,7 +158,7 @@ export default {
         }else{
           this.pList = [];
           this.resPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          //console.log(resCode + " / " + resMsg);
         }
       })
       .catch((ex) => {
@@ -187,7 +187,7 @@ export default {
         axios.post(url, params, headers)
         .then((response) => {
            var resCode = response.data.res_code;
-            var resMsg = response.data.res_msg;
+            
             if(resCode == 200){
               this.pObject = response.data.data
               this.showDetailObject = true
@@ -198,12 +198,12 @@ export default {
               this.pObject = {};
               this.showDetailObject = false
               this.isReloadDetailObject = false
-            alert("사용자 청약오더 상세 데이터가 없습니다.");
+              console.log("사용자 청약오더 상세 데이터가 없습니다.");
             }else{
               this.pObject = {};
               this.showDetailObject = false
               this.isReloadDetailObject = false
-              alert(resCode + " / " + resMsg);
+              console.log("Error");
             }
         })
         .catch((ex) => {
@@ -231,7 +231,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+           
           if(resCode == 200){
             this.sdList = response.data.data.order_detail_list;
             this.showSubDetailList=!this.showSubDetailList;
@@ -239,11 +239,11 @@ export default {
           }else if(resCode==204){
            this.sdList = [];
             this.showSubDetailList=false
-            alert("사용자청약 오더 List 데이터가 없습니다.");
+            console.log("사용자청약 오더 List 데이터가 없습니다.");
           }else{
             this.sdList = [];
             this.showSubDetailList=false
-            alert(resCode + " / " + resMsg);
+            //console.log(resCode + " / " + resMsg);
           }
         })
         .catch((ex) => {
@@ -260,7 +260,7 @@ export default {
         .post(url, params, headers)
         .then((response) => {
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           console.log(resCode)
           if(resCode == 200){
             this.kttList = response.data.data.list;
@@ -269,11 +269,11 @@ export default {
             this.kttBtn=!this.kttBtn
           }else if(resCode==204){
             this.kttList = [];
-            alert('사용자-KTT 데이터가 없습니다.');
+            console.log('사용자-KTT 데이터가 없습니다.');
             this.showKttList=false
           }else{
             this.kttList = [];
-            alert(resCode + " / " + resMsg);
+            console.log("Error");
             this.showKttList=false
           }
         })

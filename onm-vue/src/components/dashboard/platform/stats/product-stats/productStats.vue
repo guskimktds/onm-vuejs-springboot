@@ -60,14 +60,10 @@ export default {
       .then( (response) => {
 
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+        
         if (resCode == 200) {
           this.pHeader=response.data.data.header_list;
           this.pList = response.data.data.prod_list;
-        }else if(resCode==204){
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert("상품 통계 데이터가 없습니다.");
         }else if(resCode==410){
           alert("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
@@ -79,14 +75,12 @@ export default {
         }else {
           this.pHeader=[];
           this.pList = [];
-        
-          alert(resCode + " / " + resMsg);
         }
 
       })
       .catch(function (error) {
         console.log(error);
-        alert("Error")
+        console.log("Error")
       })
       .finally(function () {
         // always executed

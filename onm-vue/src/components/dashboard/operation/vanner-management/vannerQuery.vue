@@ -4,66 +4,59 @@
         tag="section"
         fluid
     >
-    <h3 style="font-size: 30px; height: 20px">배너 검색</h3>
-        <!-- <base-material-card
+    <!-- <h3 style="font-size: 30px; height: 20px">배너 검색</h3> -->
+        <base-material-card
             icon="mdi-magnify"
             title="배너 검색"
             class="px-5 py-3"
-        > -->
-        <v-card class="border-black px-5 py-3" fluid >
+        >
+        <!-- <v-card class="border-black px-5 py-3" fluid > -->
         <v-row style="padding-top: 10px">
-            <v-col   style="padding-top:25px;" cols="auto">
+            <v-col   style="padding-top:25px;" cols="auto" >
                 <span>배너타입</span>
             </v-col>
-            <v-col cols="auto">
+            <v-col cols="12" sm="6" md="2">
             <v-select 
             label="전체"
             :items="items"
             v-model="typeitem"
             solo
-            style="width: 150px;"
             >
             </v-select>
             </v-col>
             <v-col cols="auto" style="padding-top:25px;">OS 타입</v-col>
-            <v-col cols="auto"><v-select 
+            <v-col cols="12" sm="6" md="2"><v-select 
             label="All"
             :items="items3"
             v-model="param.os_type"
             solo
-            style="width: 100px;"
             
             ></v-select></v-col>
-            <v-col style="padding-top:25px; flex:0 0 5%;" cols="auto" >
+            <v-col style="padding-top:25px; flex:0 0 5%;" cols="1" md="1">
                 <span>제목</span>
             </v-col>
-            <v-col style="margin-top:-10px;" cols="auto">
-                <v-text-field label="입력" style="width: 335px" v-model="param.title"></v-text-field>
+            <v-col style="margin-top:-10px;" cols="12" sm="6" md="2">
+                <v-text-field label="입력" v-model="param.title"></v-text-field>
                 <!-- <input type="text" class="border-black"> -->
             </v-col>
             <v-col style="padding-top:25px;" cols="auto">
                 <span>노출여부</span>
             </v-col>
-            <v-col cols="auto"><v-select 
+            <v-col cols="12" sm="6" md="2">
+            <v-select 
             :items="items2"
             v-model="typeitem2"
             label="전체"
             solo
-            style="width: 150px;"
             >
             </v-select></v-col>
-            <v-col  cols="auto">
-                <v-btn class="black" right absolute
-                 @click="searchMethod"
-                 elevation="2"
-                 >검색</v-btn>
-            </v-col>
+           
         </v-row>
         <v-row style="margin-top:-40px">
             <v-col style="padding-top:35px;" cols="auto">
                 <span>노출기간</span>
             </v-col>
-            <v-col cols="auto">
+            <v-col cols="auto" sm="auto" md="auto">
                     <v-menu
                     offset-y
                     >
@@ -83,7 +76,7 @@
                     </v-menu>
                 </v-col>
                 <span style="padding-top:35px">~</span>
-                <v-col cols="auto">
+                <v-col cols="auto" sm="auto" md="auto">
                     <v-menu
                     offset-y
                     >
@@ -106,7 +99,7 @@
                 <v-col style="padding-top:35px; padding-left: 75px" cols="auto">
                 <span>등록일자</span>
                 </v-col>
-                <v-col cols="auto">
+                <v-col cols="auto" sm="auto" md="auto">
                     <v-menu
                     offset-y
                     >
@@ -127,7 +120,7 @@
                     
                 </v-col>
                 <span style="padding-top:35px">~</span>
-                <v-col cols="auto">
+                <v-col cols="auto" sm="auto" md="auto">
                     <v-menu
                     offset-y
                     >
@@ -146,13 +139,23 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col  cols="auto">
+                <!-- <v-col  cols="auto">
                 <v-btn class="black" right absolute
                  @click="fomatdata"
                  >초기화</v-btn>
+            </v-col> -->
+        </v-row>
+        <v-row>
+             <v-col  cols="12" sm="6" md="2">
+                <v-btn
+                medium
+                 @click="searchMethod"
+                 elevation="2"
+                 >검색</v-btn>
             </v-col>
         </v-row>
-    </v-card>
+    <!-- </v-card> -->
+    </base-material-card>
     </v-container>
 </template>
 
@@ -165,9 +168,9 @@ export default {
             dialog: false,
             dialogDelete: false,
             images: [],
-            items: ["전체", "타입명 A", "타입명 B", "타입명 C"],
+            items: ["전체", "로그아웃", "왼쪽배너", "오른쪽배너"],
             items2: ["전체", "노출", "미노출"],
-            items3: ["All", "Android", "IOS", "PC", "PCAPP"],
+            items3: ["ALL", "Android", "iOS", "PC", "PCAPP"],
             vitem:'전체',
             typeitem:'',
             typeitem2:'',
@@ -197,15 +200,6 @@ export default {
       //
     },
     methods: {
-        showAuth(){
-            var auth=this.$store.state.authGroupId
-            if(auth=='G100'){
-            return true;
-            }else{
-            alert('접근권한이 없습니다.')
-            return false;
-            }
-        },
         fomatdata(){
             this.param.title = ''
             this.param.img_type = ''
@@ -221,19 +215,14 @@ export default {
             this.searchMethod()
         },
         searchMethod: function() {
-            // if(this.editedItem.img_type=="전체"){
-            //     this.param.process_status=''
-            // }else{
-            //     this.param.process_status=this.editedItem.img_type
-            // }
             if(this.typeitem == this.items[1]){
-                    this.param.img_type = '01'
+                    this.param.img_type = 'LOGOUT'
             }
             if(this.typeitem == this.items[2]){
-                    this.param.img_type = '02'
+                    this.param.img_type = 'CATE01'
             }
             if(this.typeitem == this.items[3]){
-                    this.param.img_type = '03'
+                    this.param.img_type = 'CATE02'
             }
             if(this.typeitem == this.items[0]){
                     this.param.img_type = ''
@@ -266,9 +255,6 @@ export default {
             // this.param.reg_date = this.editedItem.disp_end_date.replace(/-/g,'')
            
             this.$emit('search', this.param)
-            console.log(this.param)
-            // console.log(this.editedItem)
-            
         },
         
     },  

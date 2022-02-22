@@ -9,6 +9,7 @@ export default {
   mounted () {
     // this.chartData is created in the mixin.
     // If you want to pass options please create a local options object
+<<<<<<< HEAD
     this.renderChart(this.chartData, {
           scales: {
             yAxes: [{
@@ -31,6 +32,9 @@ export default {
         }
       },
     })
+=======
+    this.renderChart(this.chartData, this.options)
+>>>>>>> develop
 
   }
 }

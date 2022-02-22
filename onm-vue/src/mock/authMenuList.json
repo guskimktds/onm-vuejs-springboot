@@ -47,7 +47,8 @@
                     { "name": "사용자 청약 오더 상세", "path": "/order/user/order-detail", "component": "order-detail" },
                     { "name": "사용자 청약 오더 처리 결과", "path": "/order/user-order-result", "component": "user-order-result" },
                     { "name": "사용자 청약 전화번호", "path": "/order/user-order-phone", "component": "user-order-phone" },
-                    { "name": "KTT 청약정보", "path": "/order/ktt-order", "component": "ktt-order" }
+                    { "name": "KTT 청약정보", "path": "/order/ktt-order", "component": "ktt-order" },
+                    { "name": "청약 상품", "path": "/order/prod-info", "component": "prod-info" }
                 ]
             },
             {
@@ -92,9 +93,7 @@
                     { "name": "상품 요약정보", "path": "/store/product-summary", "component": "product-summary" },
                     { "name": "VA 상품 및 카메라 대수 확인", "path": "/store/va-cam-count", "component": "va-cam-count" },
                     { "name": "센서 신청 현황", "path": "/store/sensor-order", "component": "sensor-order" },
-                    { "name": "KTT 정보", "path": "/store/ktt", "component": "store-ktt" },
-                    { "name": "매장 승인 및 조회", "path": "/store/approval-store", "component": "approval-store" },
-                    { "name": "API 승인 및 조회", "path": "/store/approval-api", "component": "approval-api" }
+                    { "name": "KTT 정보", "path": "/store/ktt", "component": "store-ktt" }
                 
                 ]
             },
@@ -198,10 +197,13 @@
                 "component": "customer-transfer",
                 "children": [
                     { "name": "청약 정보조회", "path": "/operation/term-order", "component": "termOrderInfo" },
+                    { "name": "subsinfo 조회", "path": "/operation/subsinfo", "component": "subsInfo" },
                     { "name": "단말오더 NMS 전송", "path": "/operation/term-nms", "component": "termNms" },
                     { "name": "단말 오더 OSS 전송", "path": "/operation/dss-result", "component": "dssResult" },
                     { "name": "청약 오더 OSS 전송", "path": "/operation/bss-result", "component": "bssResult" },
-                    { "name": "단말 인증 정보 수정", "path": "/operation/device-reco", "component": "deviceReco" }
+                    { "name": "단말 인증 정보 수정", "path": "/operation/device-reco", "component": "deviceReco" },
+                    { "name": "카메라 모델 정보 조회", "path": "/operation/camera-model", "component": "cameraModel" },
+                    { "name": "카메라 제품정보", "path": "/operation/cam-prod", "component": "camProd" }
                 ]
             },
             {
@@ -210,7 +212,8 @@
                 "icon":"mdi-desktop-mac",
                 "component": "customer-transfer",
                 "children": [
-                    { "name": "고객 api", "path": "/operation/customer-api", "component": "customerApi" },
+                    { "name": "매장 승인 및 조회", "path": "/operation/approval-store", "component": "approval-store" },
+                    { "name": "API 승인 및 조회", "path": "/operation/approval-api", "component": "approval-api" },
                     { "name": "api 리포트", "path": "/operation/api-report", "component": "apiReport`" }
                 ]
             },

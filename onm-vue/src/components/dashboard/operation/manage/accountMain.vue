@@ -15,7 +15,7 @@
         <auth-menu-list v-if=isAuthMenu v-bind:authGroupList=authGroupList></auth-menu-list>
        </v-card>
     </v-container>
-
+ 
 </template>
 
 <script>
@@ -81,7 +81,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+          
           if(resCode == 200){
             // this.authGroupList = response.data.data.auth_group_list
             // this.isAuthMenu = true
@@ -93,7 +93,7 @@ export default {
             // this.isAuthMenu = false
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -118,7 +118,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+           
           if(resCode == 200){
             // this.authGroupList = response.data.data.auth_group_list
             // this.isAuthMenu = true
@@ -128,7 +128,7 @@ export default {
           }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
-            alert('계정 정보 데이터가 없습니다.');
+            console.log('계정 정보 데이터가 없습니다.');
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
             EventBus.$emit('top-path-logout');
@@ -142,7 +142,7 @@ export default {
             // this.isAuthMenu = false
             this.pList = [];
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {
@@ -167,7 +167,7 @@ export default {
         .then((response) => {
           console.log(response)
           var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
+         
           if(resCode == 200){
             this.authGroupList = response.data.data.auth_group_list
             this.isAuthMenu = true
@@ -178,7 +178,7 @@ export default {
             this.authGroupList = [];
             this.isAuthMenu = false
             this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
+            alert("Error");
           }
         })
         .catch((ex) => {

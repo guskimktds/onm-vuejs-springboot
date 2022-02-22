@@ -62,7 +62,7 @@ export default {
       .then((response) => {
         console.log(response)
         var resCode = response.data.res_code;
-        var resMsg = response.data.res_msg;
+ 
         if(resCode == 200){
           this.soList = response.data.data.sensor_list;
           this.soPagingInfo = response.data.data.paging_info
@@ -82,7 +82,7 @@ export default {
         }else{
           this.soList = [];
           this.soPagingInfo = {};
-          alert(resCode + " / " + resMsg);
+          alert("Error");
         }
       })
       .catch((ex) => {
