@@ -4,11 +4,11 @@
         <div class="col">
                 <base-material-card class="grid-board " dark>
                     
-<<<<<<< HEAD
+
                     <div style="font-size:20px; font-weight:bold; text-align:left;">API별 호출 수</div>
-=======
+
                     <div style="font-size:20px; font-weight:bold; text-align:left;">{{formTitle}}</div>
->>>>>>> develop
+
                             <v-row>
         <v-col>
 

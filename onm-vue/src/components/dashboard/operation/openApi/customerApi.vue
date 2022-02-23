@@ -33,7 +33,7 @@
           ></store-api-list>
         </v-col>
       </v-row>
-<<<<<<< HEAD
+
       <h1>나타나기</h1>
       <v-card>
         <ul v-for="site_id in rowList" v-bind:key="site_id">
@@ -42,7 +42,7 @@
         </ul>
       </v-card>
 
-=======
+
         <v-dialog v-model="showModal" max-width="500px">
             <v-card>
             <v-card-title class="headline"> 매장별 API 호출 수</v-card-title>
