@@ -46,11 +46,7 @@ export default () => {
     one_dm.setMonth(onemonthOfYear + 1)
     var oneMonthDashFormat = one_dm.getFullYear() + "-" + ("00" + (one_dm.getMonth() + 1)).slice(-2) + "-" + ("00" + one_dm.getDate()).slice(-2) 
   
-<<<<<<< HEAD
-=======
 
-    
->>>>>>> develop
     const dateInfo = {
         current,
         currentDate,
