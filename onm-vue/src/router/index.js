@@ -120,7 +120,8 @@ import apiReport from '../components/dashboard/operation/openApi/apiReport/apiRe
 
 //공지사항
 import notice from '../components/dashboard/operation/notice/notice.vue'
-
+import camTamering from '../components/dashboard/operation/camera/camTampering.vue'
+import failover from '../components/dashboard/operation/camera/failover.vue'
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -606,7 +607,17 @@ export default new Router({
                     path: "api-info-detail",
                     name: "api-info-detail",
                     component:apiInfoDetail
-                }
+                },
+                {
+                    path: "cam-tampering",
+                    name: "cam-tampering",
+                    component: camTamering
+                },
+                {
+                    path: "failover",
+                    name: "failover",
+                    component: failover
+                },
                
             ]
         },
