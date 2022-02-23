@@ -226,6 +226,16 @@
                     { "name": "광고 배너", "path": "/operation/vanner-management", "component": "vannerManagement" },
                     { "name": "공지사항", "path": "/operation/notice", "component": "notice" }
                 ]
+            },
+            {
+                "name": "Tampering/Failover",
+                "path": "/operation/cam-tampering",
+                "icon": "mdi-image-filter-center-focus",
+                "component": "camTampering",
+                "children": [
+                    { "name": "카메라 Tampering", "path": "/operation/cam-tampering", "component": "camTampering" },
+                    { "name": "Failover", "path": "/operation/failover", "component": "failover" }
+                ]
             }
         ]
     }
