@@ -58,11 +58,7 @@ export default () => {
         lastWeekDashFormat,
         lastMonthDashFormat,
         threeMonthDashFormat,
-<<<<<<< HEAD
-        oneMonthDashFormat,
-=======
         oneMonthDashFormat
->>>>>>> develop
     }
 // //   const dateInfo = year
 //   var d = new Date(); 

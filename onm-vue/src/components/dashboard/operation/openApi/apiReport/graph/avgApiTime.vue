@@ -28,12 +28,8 @@ export default {
             datacollection: {},
             title: '시간대별 평균 호출 수',
             labels: [], 
-<<<<<<< HEAD
-            loaded: false,         
-=======
             loaded: false,
             options: {},    
->>>>>>> develop
         }
     },
     mounted(){
@@ -87,14 +83,6 @@ export default {
 
               console.log('avgApiTime response' + JSON.stringify(response.data.data.access_hourly));
               
-<<<<<<< HEAD
-              this.labels = this.getLabels(response.data.data.access_hourly)
-              
-              this.datacollection = {
-                labels: this.labels,
-                datasets: [
-                  {
-=======
               var resData = response.data.data.access_hourly.[0]
               var resArr = Object.values(resData);
               //var sortesArr = arr.sort(resArr)
@@ -104,7 +92,6 @@ export default {
               this.datacollection = {
                 labels: this.labels,
                 datasets: [{
->>>>>>> develop
                     label:'시간대별 평균 호출 수', 
                     // backgroundColor: '#f87979',
                     borderColor:'#f87979',
@@ -160,8 +147,6 @@ export default {
         }
         console.log('avgApiTime keys',new_arr)
         return new_arr
-<<<<<<< HEAD
-=======
       },
       getMaxValue: function(arr){
         var maxValue
@@ -171,7 +156,6 @@ export default {
         maxValue = maxValue + (maxValue * 1.1)
         return maxValue
         
->>>>>>> develop
       },
 
       getNewCnt: function(arr){

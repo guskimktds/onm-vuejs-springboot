@@ -1,14 +1,9 @@
 <template>
 <v-container fluid
 
-<<<<<<< HEAD
-                    <div class="grid-board">
-                        <div style="font-size:20px; font-weight:bold; text-align:left;">서비스 업체별 호출 수</div>
-=======
 >
                     <base-material-card  dark>
                         <div style="font-size:20px; font-weight:bold; text-align:left;">{{ formTitle }}</div>
->>>>>>> develop
                                  <v-row>
         <v-col>
 
@@ -89,11 +84,7 @@ export default {
                     var resMsg = response.data.res_msg;
                     if(resCode == 200){
                     this.cList = response.data.data.access_user_list;
-<<<<<<< HEAD
-                    
-=======
                     this.resPagingInfo=response.data.data.paging_info;
->>>>>>> develop
                     }else if(resCode==204){
                     console.log(resCode + " / " + resMsg);
                     this.cList =[];
