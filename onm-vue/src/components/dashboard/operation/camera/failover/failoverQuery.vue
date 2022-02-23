@@ -103,7 +103,7 @@
                                     v-model="editedItem.thread_count"
                                     label="쓰레드 개수"
                                     counter
-                                    maxlength="20"
+                                    maxlength="50"
                                 ></v-text-field>
                                 </v-col>
                                 <v-col
