@@ -93,7 +93,7 @@
                       text
                       @click="save"
                     >
-                      저장
+                      실행
                     </v-btn>
                     <v-btn
                       color="blue darken-1"

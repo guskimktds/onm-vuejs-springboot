@@ -66,7 +66,7 @@
                           md="6"
                         >
                           <v-text-field
-                            v-model="editedItem.subscribe_start_idx"
+                            v-model="editedItem.streamer_idx"
                             label="스트리머 인덱스"
                             readonly
                           ></v-text-field>
@@ -222,19 +222,21 @@ methods: {
         this.close()
       } ,
       deleteItem (item) {
-        console.log(this.gw_id)
+        console.log("++++++++++++++")
+        console.log("삭제 로컬" +this.gw_id)
         // console.log('deleteItem method call : ',item)
         this.editedIndex = this.pList.indexOf(item)
         console.log('Delte Item Index : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
         // 삭제
         this.editedItem.cmd_type = 'D'
+        this.editedItem.local_gw_id = this.pList[this.editedIndex].local_gw_id;
 
-        if(this.gw_id==''){
-          delete this.editedItem.local_gw_id
-        }else{
-        this.editedItem.local_gw_id = this.gw_id    
-        }
+        // if(this.local_gw_id==''){
+        //   delete this.editedItem.local_gw_id
+        // }else{
+        // this.editedItem.local_gw_id = this.local_gw_id    
+        // }
 
         this.dialogDelete = true
       },
@@ -243,6 +245,7 @@ methods: {
         if (this.editedIndex > -1) {
           var params = this.editedItem
           var deleteIndex = this.editedIndex
+
           this.$fire({
             title: "비밀번호를 입력해주세요.",
             input: 'password',

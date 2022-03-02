@@ -88,7 +88,7 @@ export default {
          
         if(resCode == 200){
           
-          this.pList = response.data.data.cam_info;
+          this.pList = response.data.data.failover_info;
           this.resPagingInfo = response.data.data.paging_info
         }else if(resCode==204){
             this.pList = [];
