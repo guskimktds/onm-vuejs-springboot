@@ -160,8 +160,8 @@ export default {
           },
           { text: '프로세스 명', value: 'proc_name' },
           { text: 'Thread  개수', value: 'thread_count' },
-          { text: '카메라 이름', value: 'reg_datetime' },
-          { text: '등록일자', value: 'mod_datetime' },
+          { text: '등록일자', value: 'reg_datetime' },
+          { text: '수정일자', value: 'mod_datetime' },
           { text: '변경', value: 'actions', sortable: false}
         ],
         editedItem: {
