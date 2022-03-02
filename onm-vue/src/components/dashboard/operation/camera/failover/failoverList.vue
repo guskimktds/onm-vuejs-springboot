@@ -144,7 +144,7 @@
 <script>
 import axios from "axios"
 export default {
-    props: ['pList', 'resPagingInfo'],
+    props: ['pList', 'resPagingInfo', 'gwNow'],
     data() {
       return {
         last:0,
@@ -187,10 +187,12 @@ methods: {
         console.log('update Item Index : ',this.editedIndex)
         // this.editedItem = Object.assign({}, item)
         this.editedItem.proc_name = this.pList[this.editedIndex].proc_name;
-        this.editedItem.local_gw_id = this.pList[this.editedIndex].local_gw_id;
+        this.editedItem.local_gw_id = this.gwNow;
         this.editedItem.thread_count = this.pList[this.editedIndex].thread_count;
         this.editedItem.streamer_idx = this.pList[this.editedIndex].streamer_idx;
         this.editedItem.cmd_type = 'U';
+        console.log("gwid")
+        console.log(this.gwNow)
         // 수정
   
         console.log('update Item value : ',this.editedItem)
@@ -230,7 +232,7 @@ methods: {
         this.editedItem = Object.assign({}, item)
         // 삭제
         this.editedItem.cmd_type = 'D'
-        this.editedItem.local_gw_id = this.pList[this.editedIndex].local_gw_id;
+        this.editedItem.local_gw_id = this.gwNow;
 
         // if(this.local_gw_id==''){
         //   delete this.editedItem.local_gw_id
@@ -262,6 +264,8 @@ methods: {
               }
             }).then(result => {
                if(result.value){
+                 console.log('보내는 파라미터')
+                 console.log(params)
                   var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
                   var login = {
                     login_id: this.$store.state.onmUserId,

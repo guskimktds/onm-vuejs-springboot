@@ -8,8 +8,9 @@
             @Items="saveItem"
         ></failover-query>
         <failover-list 
-          v-bind:pList=pList 
-          v-bind:resPagingInfo=resPagingInfo 
+          v-bind:pList=pList
+          v-bind:resPagingInfo=resPagingInfo
+          v-bind:gwNow=gwNow
           @child="clickToSearchDetailObject" 
           @pagination="setToSearchParams"
         >
@@ -53,7 +54,8 @@ export default {
         local_gw_id: '1',
         streamer_idx: '',
         proc_name:''
-      }
+      },
+      gwNow:''
     }
   },
 
@@ -90,6 +92,8 @@ export default {
           
           this.pList = response.data.data.failover_info;
           this.resPagingInfo = response.data.data.paging_info
+          this.gwNow=reqParams.local_gw_id
+          console.log(this.gwNow)
         }else if(resCode==204){
             this.pList = [];
             this.resPagingInfo = {};
