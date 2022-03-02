@@ -2,7 +2,7 @@
     <v-container fluid>
       <v-card>
       <failover-query
-          v-on:search="searchToTamperingInfo"
+          v-on:search="searchToFailoverInfo"
           v-bind:param=searchParam
           v-bind:localGwOptions="localGwOptions"
             @Items="saveItem"
@@ -73,7 +73,7 @@ export default {
         });
    },
   methods: {
-    searchToTamperingInfo: function(params){
+    searchToFailoverInfo: function(params){
       let url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15151/get_failover`
       // url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15141/get_cam_tamper`
       //params : 페이징 + 검색조건
@@ -162,7 +162,7 @@ export default {
 
       console.log(params)
 
-      this.searchToTamperingInfo(params)
+      this.searchToFailoverInfo(params)
     },
     // handleDate(params){
 
