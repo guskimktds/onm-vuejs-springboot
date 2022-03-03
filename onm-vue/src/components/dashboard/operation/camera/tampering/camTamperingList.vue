@@ -187,8 +187,8 @@ methods: {
                                
                               if(resCode == 200){
                                 //현재 목록에서 선택한 item 을 변경해준다.
-                                alert('설정되었습니다')
                                 this.$emit('reset')
+                                alert('설정되었습니다')
                               }else{
                                 alert("Error");
                               }
