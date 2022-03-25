@@ -270,8 +270,8 @@ methods: {
       },
       handleDate(params){
         params
-        // params.start_date == null ? this.editedItem.start_date = '' : this.editedItem.start_date = params.start_date.replace(/-/g,"");
-        //  params.end_date == null ? this.editedItem.end_date = '' : this.editedItem.end_date = params.end_date.replace(/-/g,"");
+        params.start_date == null ? this.editedItem.start_date = '' : this.editedItem.start_date = params.start_date.replace(/-/g,"");
+         params.end_date == null ? this.editedItem.end_date = '' : this.editedItem.end_date = params.end_date.replace(/-/g,"");
       },
       deletedItem(item){
         this.editedIndex = this.pList.indexOf(item)
@@ -280,7 +280,7 @@ methods: {
         this.editedItem.srs_seq = this.pList[this.editedIndex].srs_seq;
         this.editedItem.cam_id = this.pList[this.editedIndex].cam_id;
       },
-      save (s) {
+      save () {
         if (this.editedIndex > -1) {
           let params = this.editedItem;
           this.handleDate(params);
@@ -300,6 +300,7 @@ methods: {
               })
               .catch((ex) => {
                 console.log('변경 실패',ex)
+                this.$emit('reset')
               })
         }else{
           alert('서버와 통신이 안되었거나 비밀번호가 맞지 않습니다.');

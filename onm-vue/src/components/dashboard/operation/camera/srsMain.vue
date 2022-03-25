@@ -4,8 +4,7 @@
       <srs-main-query
           v-on:search="searchToSrsMainInfo"
           v-bind:param=searchParam
-          v-bind:localGwOptions="localGwOptions"
-            @Items="saveItem"
+          @Items="saveItem"
         ></srs-main-query>
         <srs-main-list 
           v-bind:pList=pList
@@ -66,6 +65,7 @@ export default {
       console.log(this.searchParam)
        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15153/get_srs_main_info`
              url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15141/get_cam_tamper`
+             alert('리셋 왜 안돼?')
        var reqParams = this.handleParams(this.searchParam)
       axios
         .post(url, reqParams, this.$store.state.headers)
