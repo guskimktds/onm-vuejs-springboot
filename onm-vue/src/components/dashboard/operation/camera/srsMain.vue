@@ -10,7 +10,6 @@
         <srs-main-list 
           v-bind:pList=pList
           v-bind:resPagingInfo=resPagingInfo
-          v-bind:gwNow=gwNow
           @pagination="setToSearchParams"
           @reset="reset"
         >
@@ -58,7 +57,7 @@ export default {
        end_date : '',
        status_code : '',
        paging : true
-      }
+      },
     }
   },
 
@@ -66,6 +65,7 @@ export default {
       reset: function(){
       console.log(this.searchParam)
        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15153/get_srs_main_info`
+             url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15141/get_cam_tamper`
        var reqParams = this.handleParams(this.searchParam)
       axios
         .post(url, reqParams, this.$store.state.headers)
@@ -76,7 +76,7 @@ export default {
           if(resCode == 200){
             // this.authGroupList = response.data.data.auth_group_list
             // this.isAuthMenu = true
-            this.pList = response.data.data.srs_cam_info;
+            this.pList = response.data.data.cam_info;
             this.resPagingInfo = response.data.data.paging_info
             console.log(this.resPagingInfo)
           }else{

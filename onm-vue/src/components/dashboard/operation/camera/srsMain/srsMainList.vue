@@ -17,7 +17,6 @@
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
-        @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       > 
@@ -25,7 +24,7 @@
             
               <v-dialog
                 v-model="dialog"
-                max-width="500px"
+                max-width="40%"
               >
 
                 <v-card>
@@ -62,34 +61,40 @@
                         <v-row>
                          <v-col
                           cols="12"
-                          sm="6"
-                          md="6"
+                          sm="12"
+                          md="12"
                         >
                           <v-text-field
                             v-model="editedItem.target_stream_key"
                             label="스트림 키"
+                            counter
+                            maxlength="512"
                           ></v-text-field>
                         </v-col>
                          <v-col
                           cols="12"
-                          sm="6"
-                          md="6"
+                          sm="12"
+                          md="12"
                         >
                           <v-text-field
                             v-model="editedItem.target_stream_url"
                             label="스트림 url"
+                            counter
+                            maxlength="512"
                           ></v-text-field>
                         </v-col>
                         </v-row>
                          <v-row>
                          <v-col
                           cols="12"
-                          sm="6"
-                          md="6"
+                          sm="12"
+                          md="12"
                         >
                           <v-text-field
                             v-model="editedItem.srs_title"
                             label="송출제목"
+                            counter
+                            maxlength="512"
                           ></v-text-field>
                         </v-col>
                     <v-col cols="6">
@@ -231,13 +236,19 @@ export default {
           end_date : '',
           paging : false 
         },
+        updatedItem : {
+          srs_seq : '',
+          cam_id : '',
+          target_stream_key : '',
+          target_stream_url : '',
+          srs_title : '',
+          start_date : '',
+          end_date : ''
+         }
       }
     },
 
 methods: {
-    handleClick: function(value){
-      this.$emit("child", value);
-    },
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
@@ -245,17 +256,22 @@ methods: {
     editItem (item) { 
         this.editedIndex = this.pList.indexOf(item)
         console.log('update Item Index : ',this.editedIndex)
-        // this.editedItem = Object.assign({}, item)
-        this.editedItem.srs_seq = this.pList[this.editedIndex].srs_seq;
-        this.editedItem.cam_id = this.pList[this.editedIndex].cam_id;
-        this.editedItem.target_stream_key = this.pList[this.editedIndex].target_stream_key;
-        this.editedItem.target_stream_url = this.pList[this.editedIndex].target_stream_url;
-        this.editedItem.srs_title = this.pList[this.editedIndex].srs_title;
-        this.editedItem.start_date = this.pList[this.editedIndex].start_date;
-        this.editedItem.end_date = this.pList[this.editedIndex].end_date;
+        this.editedItem = Object.assign({}, item)
+        // this.editedItem.srs_seq = this.pList[this.editedIndex].srs_seq;
+        // this.editedItem.cam_id = this.pList[this.editedIndex].cam_id;
+        // this.editedItem.target_stream_key = this.pList[this.editedIndex].target_stream_key;
+        // this.editedItem.target_stream_url = this.pList[this.editedIndex].target_stream_url;
+        // this.editedItem.srs_title = this.pList[this.editedIndex].srs_title;
+        // this.editedItem.start_date = this.pList[this.editedIndex].start_date;
+        // this.editedItem.end_date = this.pList[this.editedIndex].end_date;
         // 수정
         console.log('update Item value : ',this.editedItem)
         this.dialog = true
+      },
+      handleDate(params){
+        params
+        // params.start_date == null ? this.editedItem.start_date = '' : this.editedItem.start_date = params.start_date.replace(/-/g,"");
+        //  params.end_date == null ? this.editedItem.end_date = '' : this.editedItem.end_date = params.end_date.replace(/-/g,"");
       },
       deletedItem(item){
         this.editedIndex = this.pList.indexOf(item)
@@ -264,9 +280,10 @@ methods: {
         this.editedItem.srs_seq = this.pList[this.editedIndex].srs_seq;
         this.editedItem.cam_id = this.pList[this.editedIndex].cam_id;
       },
-      save () {
+      save (s) {
         if (this.editedIndex > -1) {
-          var params = this.editedItem;
+          let params = this.editedItem;
+          this.handleDate(params);
           var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15155/update_srs_main_info`
 
             axios.post(url, params, this.$store.state.headers)

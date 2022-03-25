@@ -50,7 +50,7 @@
                 <v-col cols="3">
                      <v-select 
                         item-text="status_name" 
-                        item-value="statusCode" 
+                        item-value="status_code" 
                         :items="statusData"
                         label="상태코드" 
                         v-model="param.status_code"
@@ -107,7 +107,7 @@
                   <v-col cols="12" sm="6" md="2">
                     <v-dialog
                         v-model="dialog"
-                        max-width="500px"
+                        max-width="40%"
                         v-show="showAuth()"
                     >
                         <template v-slot:activator="{ on, attrs }">
@@ -173,7 +173,8 @@
                                 <v-text-field
                                     v-model="editedItem.srs_title"
                                     label="송출제목"
-                                    maxlength="512"
+                                    counter
+                                    maxlength="200"
                                 ></v-text-field>
                                 </v-col>
                                 <v-col cols="6">
@@ -272,7 +273,13 @@ export default {
                 end_date : '',
                 paging : false
             },
+            statusData: [
+                {status_name :'등록' , status_code : 'A'},
+                {status_name :'송출 준비' , status_code : 'P'},
+                {status_name :'송출중' , status_code : 'S'},
+            ]
         }
+            
     },
     computed: {
       formTitle () {
@@ -335,7 +342,14 @@ export default {
                        title: "등록이 취소되었습니다.",
                        type : "error",     
                    })
-        }  
+        },
+        closeDelete () {
+            this.dialogDelete = false
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+            //   this.editedIndex = -1
+            })
+        },  
   },
 };
 </script>
