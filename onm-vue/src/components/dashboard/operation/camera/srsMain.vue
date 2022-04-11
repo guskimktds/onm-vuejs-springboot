@@ -48,14 +48,13 @@ export default {
       oldValue:'',
        localGwOptions:[],
       searchParam: {
-       srs_seq : '',
        cam_id : '',
        srs_title : '',
        user_id : '',
        start_date : '',
        end_date : '',
        status_code : '',
-       paging : true
+      //  paging : true
       },
     }
   },
@@ -64,8 +63,7 @@ export default {
       reset: function(){
       console.log(this.searchParam)
        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15153/get_srs_main_info`
-             url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15141/get_cam_tamper`
-             alert('리셋 왜 안돼?')
+        // url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15141/get_cam_tamper`
        var reqParams = this.handleParams(this.searchParam)
       axios
         .post(url, reqParams, this.$store.state.headers)
@@ -76,7 +74,7 @@ export default {
           if(resCode == 200){
             // this.authGroupList = response.data.data.auth_group_list
             // this.isAuthMenu = true
-            this.pList = response.data.data.cam_info;
+            this.pList = response.data.data.list;
             this.resPagingInfo = response.data.data.paging_info
             console.log(this.resPagingInfo)
           }else{
@@ -93,7 +91,7 @@ export default {
     },
     searchToSrsMainInfo: function(params){
       let url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15153/get_srs_main_info`
-      url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15141/get_cam_tamper`
+      // url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15141/get_cam_tamper`
       //params : 페이징 + 검색조건
       console.log(params)
       var reqParams = this.handleParams(params)      
@@ -106,7 +104,7 @@ export default {
          
         if(resCode == 200){
           
-          this.pList = response.data.data.cam_info;
+          this.pList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info
           console.log(this.gwNow)
         }else if(resCode==204){
@@ -187,7 +185,7 @@ export default {
 
     handleParams: function(params){
       let newParams = {}
-      if(params.paging == true){
+      // if(params.paging == true){
           if(params.page_no === undefined || params.page_no === ''){
               newParams.page_no = this.reqPagingInfo.page_no
           }else{
@@ -199,14 +197,15 @@ export default {
           }else{
             newParams.view_cnt = params.view_cnt
           }
-      }
-      if(params.srs_seq !== undefined && params.srs_seq !== ''){
-        newParams.srs_seq = params.srs_seq
+      // }
+
+         if(params.user_id !== undefined && params.user_id !== ''){
+        newParams.user_id = params.user_id
       }else if(
-        this.searchParam.srs_seq!==undefined&&
-        this.searchParam.srs_seq!==""
+        this.searchParam.user_id!==undefined&&
+        this.searchParam.user_id!==""
       ){
-        newParams.srs_seq=this.searchParam.srs_seq
+        newParams.user_id=this.searchParam.user_id
       }
 
       if(params.cam_id !== undefined && params.cam_id !== ''){

@@ -16,14 +16,6 @@
             <v-row>
                 <v-col cols="3">
                     <v-text-field 
-                        label="영상송출 일련번호" 
-                        v-model="param.srs_seq"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
-                </v-col>
-                <v-col cols="3">
-                    <v-text-field 
                         label="카메라ID" 
                         v-model="param.cam_id"
                         placeholder=" " 
@@ -129,6 +121,18 @@
                         <v-card-text>
                             <v-container>
                             <v-row>
+                                    <v-col
+                                cols="12"
+                                sm="6"
+                                md="6"
+                                >
+                               <v-text-field
+                                    v-model="editedItem.user_id"
+                                    label="사용자 ID"
+                                    counter
+                                    maxlength="10"
+                                ></v-text-field>
+                                </v-col>
                                 <v-col
                                 cols="12"
                                 sm="6"
@@ -265,6 +269,7 @@ export default {
         return {
             dialog: false,    
             editedItem: {
+                user_id: '',
                 cam_id: '',
                 target_stream_key: '',
                 target_stream_url : '',
@@ -316,7 +321,7 @@ export default {
             cancelButtonColor: '#d33',
             confirmButtonText: '예',
             cancelButtonText: '아니오',
-            html: "카메라ID : "+this.editedItem.cam_id+"<br/>스트림 키 :"+this.editedItem.target_stream_key+"<br>스트림 url : "+this.editedItem.target_stream_url+
+            html: "사용자 ID : "+this.editedItem.user_id+"카메라ID : "+this.editedItem.cam_id+"<br/>스트림 키 :"+this.editedItem.target_stream_key+"<br>스트림 url : "+this.editedItem.target_stream_url+
             "<br>송출제목: "+this.editedItem.srs_title+"<br/>송출 시작일시 :"+this.editedItem.start_date+"<br>송출 종료일시 : "+this.editedItem.end_date
             }).then(result => {
                if(result.value){

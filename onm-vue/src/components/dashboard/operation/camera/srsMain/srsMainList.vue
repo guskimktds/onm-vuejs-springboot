@@ -197,7 +197,7 @@
 <script>
 import axios from "axios"
 export default {
-    props: ['pList', 'resPagingInfo', 'gwNow'],
+    props: ['pList', 'resPagingInfo'],
     data() {
       return {
         last:0,
@@ -207,10 +207,7 @@ export default {
         options: {},
         loading: true,
         headers: [
-          {
-            text: '영상송출 일련번호',
-            sortable: false, value: 'srs_seq',
-          },
+
           { text: '카메라 ID', value: 'cam_id' },
           { text: '사용자 ID', value: 'user_id' },
           { text: '송출지 스트림 키', value: 'target_stream_key' },
@@ -234,7 +231,7 @@ export default {
           srs_title : '',
           start_date : '',
           end_date : '',
-          paging : false 
+          // paging : false 
         },
         updatedItem : {
           srs_seq : '',
@@ -257,21 +254,20 @@ methods: {
         this.editedIndex = this.pList.indexOf(item)
         console.log('update Item Index : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
-        // this.editedItem.srs_seq = this.pList[this.editedIndex].srs_seq;
-        // this.editedItem.cam_id = this.pList[this.editedIndex].cam_id;
-        // this.editedItem.target_stream_key = this.pList[this.editedIndex].target_stream_key;
-        // this.editedItem.target_stream_url = this.pList[this.editedIndex].target_stream_url;
-        // this.editedItem.srs_title = this.pList[this.editedIndex].srs_title;
-        // this.editedItem.start_date = this.pList[this.editedIndex].start_date;
-        // this.editedItem.end_date = this.pList[this.editedIndex].end_date;
+        this.editDate();
         // 수정
         console.log('update Item value : ',this.editedItem)
         this.dialog = true
       },
+      editDate(){
+        const a = this.editedItem.start_date; 
+        const b = this.editedItem.end_date;
+        this.editedItem.start_date = [a.slice(0, 4), "-", a.slice(4, 6), "-", a.slice(6, 8)].join('');
+        this.editedItem.end_date = [b.slice(0, 4), "-", b.slice(4, 6), "-", b.slice(6, 8)].join('');
+      },
       handleDate(params){
-        params
-        params.start_date == null ? this.editedItem.start_date = '' : this.editedItem.start_date = params.start_date.replace(/-/g,"");
-         params.end_date == null ? this.editedItem.end_date = '' : this.editedItem.end_date = params.end_date.replace(/-/g,"");
+        params.start_date == null ? this.editedItem.start_date = '' : this.editedItem.start_date = params.start_date.replace(/-/g,"").substr(0,8);
+         params.end_date == null ? this.editedItem.end_date = '' : this.editedItem.end_date = params.end_date.replace(/-/g,"").substr(0,8);
       },
       deletedItem(item){
         this.editedIndex = this.pList.indexOf(item)
@@ -312,7 +308,7 @@ methods: {
         // console.log('deleteItem method call : ',item)
         this.editedIndex = this.pList.indexOf(item)
         console.log('Delte Item Index : ',this.editedIndex)
-        // this.editedItem = Object.assign({}, item)
+        this.editedItem = Object.assign({}, item)
         // 삭제
 
         // if(this.local_gw_id==''){
@@ -326,8 +322,9 @@ methods: {
       deleteItemConfirm () {
 
         if (this.editedIndex > -1) {
-          var params = this.deleteItem(this.editedItem)
-          var deleteIndex = this.editedIndex
+          var params = {
+           srs_seq : this.editedItem.srs_seq
+          }
 
           this.$fire({
             title: "비밀번호를 입력해주세요.",
@@ -345,8 +342,6 @@ methods: {
               }
             }).then(result => {
                if(result.value){
-                 console.log('보내는 파라미터')
-                 console.log(params)
                   var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
                   var login = {
                     login_id: this.$store.state.onmUserId,
@@ -366,7 +361,7 @@ methods: {
                                 
                                 if(resCode == 200){
                                   //현재 목록에서 선택한 Item을 삭제한다.
-                                  this.pList.splice(deleteIndex, 1)
+                                    alert('삭제처리 되었습니다');
                                 }else{
                                   alert("Error");
                                 }
