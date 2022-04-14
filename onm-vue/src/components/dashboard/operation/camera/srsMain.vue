@@ -63,7 +63,7 @@ export default {
       reset: function(){
       console.log(this.searchParam)
        var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15153/get_srs_main_info`
-        // url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15141/get_cam_tamper`
+        // url =`$/{process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15141/get_cam_tamper`
        var reqParams = this.handleParams(this.searchParam)
       axios
         .post(url, reqParams, this.$store.state.headers)
@@ -75,6 +75,7 @@ export default {
             // this.authGroupList = response.data.data.auth_group_list
             // this.isAuthMenu = true
             this.pList = response.data.data.list;
+            // this.pList = response.data.data.cam_info;
             this.resPagingInfo = response.data.data.paging_info
             console.log(this.resPagingInfo)
           }else{
@@ -105,6 +106,7 @@ export default {
         if(resCode == 200){
           
           this.pList = response.data.data.list;
+          // this.pList = response.data.data.cam_info;
           this.resPagingInfo = response.data.data.paging_info
           console.log(this.gwNow)
         }else if(resCode==204){

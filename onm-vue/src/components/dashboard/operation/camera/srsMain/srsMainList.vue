@@ -182,6 +182,13 @@
               mdi-pencil
             </v-icon>
             <v-icon
+            small
+            class="mr-2"
+            @click="sendItem(item)"
+              >
+            mdi-send
+            </v-icon>
+            <v-icon
               small
               @click="deleteItem(item)"
             >
@@ -241,6 +248,11 @@ export default {
           srs_title : '',
           start_date : '',
           end_date : ''
+         },
+
+         sendedItem : {
+           srs_seq : '',
+           cam_id : ''
          }
       }
     },
@@ -275,6 +287,30 @@ methods: {
         // this.editedItem = Object.assign({}, item)
         this.editedItem.srs_seq = this.pList[this.editedIndex].srs_seq;
         this.editedItem.cam_id = this.pList[this.editedIndex].cam_id;
+      },
+      sendItem(item){
+        this.sendIndex = this.pList.indexOf(item);
+        this.sendedItem.srs_seq = this.pList[this.sendIndex].srs_seq;
+        this.sendedItem.cam_id = this.pList[this.sendIndex].cam_id;
+        this.send();
+      },
+      send(){
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15155/update_srs_main_info`
+            var params = this.sendedItem;
+            axios.post(url, params, this.$store.state.headers)
+              .then((response) => {
+                console.log(response)
+                var resCode = response.data.res_code;
+                  
+                if(resCode == 200){
+                    alert('전송되었습니다');
+                }else{
+                  alert("Error");
+                }
+              })
+              .catch((ex) => {
+                console.log('전송 실패',ex)
+              })
       },
       save () {
         if (this.editedIndex > -1) {
