@@ -21,18 +21,20 @@
                     </v-text-field>
                 </v-col>
                 <v-col cols="3">
-                    <v-text-field 
-                        label="처리구분" 
+               <v-select 
+                        item-text="proc_name" 
+                        item-value="proc_code" 
+                        :items="procData"
+                        label="요청구분" 
                         v-model="param.proc_type"
                         placeholder=" " 
-                    >                        
-                    </v-text-field>
+                ></v-select>   
                 </v-col>    
                 <v-col cols="3">
                      <v-select 
-                        item-text="status_name" 
-                        item-value="status_code" 
-                        :items="statusData"
+                        item-text="request_name" 
+                        item-value="request_code" 
+                        :items="requestData"
                         label="요청구분" 
                         v-model="param.request_from"
                         placeholder=" " 
@@ -102,11 +104,16 @@ export default {
     data() {
         return {
             dialog: false,    
-            statusData: [
-                {status_name :'등록' , status_code : 'A'},
-                {status_name :'송출 준비' , status_code : 'P'},
-                {status_name :'송출중' , status_code : 'S'},
-            ]
+            requestData: [
+                {request_name :'등록' , request_code : 'A'},
+                {request_name :'송출 준비' , request_code : 'P'},
+                {request_name :'송출중' , request_code : 'S'},
+            ],
+            procData: [
+                {proc_name :'등록' , proc_code : 'A'},
+                {proc_name :'송출 준비' , proc_code : 'P'},
+                {proc_name :'송출중' , proc_code : 'S'},
+            ],
         }
             
     },

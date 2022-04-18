@@ -263,6 +263,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
  props:['param'],
     data() {
@@ -282,7 +283,8 @@ export default {
                 {status_name :'등록' , status_code : 'A'},
                 {status_name :'송출 준비' , status_code : 'P'},
                 {status_name :'송출중' , status_code : 'S'},
-            ]
+            ],
+            localGwOptions: '',
         }
             
     },
@@ -291,7 +293,28 @@ export default {
         // return this.editedIndex === -1 ? '등록' : '수정'
         return '등록'
       },
+    localCode(){
+        let str = [];
+        for(let i =0; i<this.localGwOptions.length; i++){
+            str[i] = this.localGwOptions[i].local_gw_id;
+        }
+        return str
+  },
     },
+     beforeCreate() {  
+      axios
+      .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
+      .then((response) => {
+        this.localGwOptions = response.data.data.local_gw_list;
+      })
+      .catch(function (error) {
+          console.log(error);
+          // alert("국사정보 조회실패")
+        })
+        .finally(function () {
+          // always executed
+        });
+   },
   methods: {
     showAuth(){
         var auth=this.$store.state.authGroupId

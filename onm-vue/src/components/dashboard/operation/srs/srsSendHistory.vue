@@ -4,7 +4,6 @@
       <srs-send-history-query
           v-on:search="searchToSrsSendHistory"
           v-bind:param=searchParam
-          @Items="saveItem"
         ></srs-send-history-query>
         <srs-send-history-list 
           v-bind:pList=pList
