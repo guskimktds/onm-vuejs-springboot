@@ -285,21 +285,22 @@ export default {
                 {status_name :'송출중' , status_code : 'S'},
             ],
             localGwOptions: '',
+            str : '',
         }
             
     },
     computed: {
-      formTitle () {
-        // return this.editedIndex === -1 ? '등록' : '수정'
-        return '등록'
-      },
-    localCode(){
-        let str = [];
-        for(let i =0; i<this.localGwOptions.length; i++){
-            str[i] = this.localGwOptions[i].local_gw_id;
+        formTitle () {
+            // return this.editedIndex === -1 ? '등록' : '수정'
+            return '등록'
+        },
+
+        localCode(){
+            for(let i =0; i<this.localGwOptions.length; i++){
+                this.str += this.localGwOptions[i].local_gw_id;
+            }
+            return this.str
         }
-        return str
-  },
     },
      beforeCreate() {  
       axios
@@ -314,16 +315,16 @@ export default {
         .finally(function () {
           // always executed
         });
-   },
-  methods: {
-    showAuth(){
-        var auth=this.$store.state.authGroupId
-        if(auth=='G100'){
-        return true;
-        }else{
-        alert('접근권한이 없습니다.')
-        return false;
-        }
+    },
+    methods: {
+        showAuth(){
+            var auth=this.$store.state.authGroupId
+            if(auth=='G100'){
+            return true;
+            }else{
+            alert('접근권한이 없습니다.')
+            return false;
+            }
     },
     searchMethod: function () {
       this.$emit("search", this.param);
@@ -377,7 +378,12 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem)
             //   this.editedIndex = -1
             })
-        },  
+        }, 
+        regTest(){
+            // this.editedItem.cam_id.test(str);
+            var regex = new RegExp(this.str);
+            this.editedItem.cam_id.match(regex, "cam_id, user_id 값을 확인하세요");
+        } 
   },
 };
 </script>
