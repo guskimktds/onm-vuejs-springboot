@@ -120,10 +120,14 @@ import apiReport from '../components/dashboard/operation/openApi/apiReport/apiRe
 
 //공지사항
 import notice from '../components/dashboard/operation/notice/notice.vue'
+
+//템퍼링 & 페일오버 기능
 import camTamering from '../components/dashboard/operation/camera/camTampering.vue'
 import failover from '../components/dashboard/operation/camera/failover.vue'
-import srsMain from '../components/dashboard/operation/camera/srsMain.vue'
 
+// srs 기능
+import srsMain from '../components/dashboard/operation/srs/srsMain.vue'
+import  srsSendHistory from '../components/dashboard/operation/srs/srsSendHistory.vue'
 // store 에 로그인 여부 체크
 import store from '../store'
 
@@ -623,6 +627,11 @@ export default new Router({
                     path: "srs-main",
                     name: "srs-main",
                     component: srsMain
+                },
+                {
+                    path: "srs-send-history",
+                    name: "srs-send-history",
+                    component: srsSendHistory
                 },
                
             ]
