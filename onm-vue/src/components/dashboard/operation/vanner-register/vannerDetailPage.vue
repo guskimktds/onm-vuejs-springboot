@@ -404,7 +404,13 @@ export default {
                 this.toolMsg = '필수값 확인'
                 this.dialogMsg = '배너 파일을 확인 해주세요'
                 return
-            }else{
+            }else if(this.editedItem.img_url.match('loginForm')){
+                this.dialogNum2 = true
+                this.toolMsg = '필수값 확인'
+                this.dialogMsg = 'Link URL에 \'loginForm\'을 입력할 수 없습니다'
+                return
+            }
+            else{
             this.saveItems()
             }
         },
