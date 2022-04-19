@@ -285,7 +285,6 @@ export default {
                 {status_name :'송출중' , status_code : 'S'},
             ],
             localGwOptions: '',
-            str : '',
         }
             
     },
@@ -296,12 +295,14 @@ export default {
         },
 
         localCode(){
+            let str = [];
             for(let i =0; i<this.localGwOptions.length; i++){
-                this.str += this.localGwOptions[i].local_gw_id;
+                str[i] += this.localGwOptions[i].local_gw_id;
             }
-            return this.str
+            return str;
         }
     },
+
      beforeCreate() {  
       axios
       .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
@@ -317,6 +318,19 @@ export default {
         });
     },
     methods: {
+    regexMethod(){
+         const code = this.editedItem.cam_id.substr(0,1);
+        for(let i = 0; i<this.localCode().length; i++){
+                 code == this.localCode().str[i];
+                 alert();
+        }
+         if(!(this.editedItem.user_id == this.editedItem.cam_id.substr(1,10))){
+             alert("userid 와 camid 값이 일치하지 않습니다");
+         }
+         var test = new RegExp(`${this.str}`);
+         alert(code.match(test));
+         
+     },
         showAuth(){
             var auth=this.$store.state.authGroupId
             if(auth=='G100'){
@@ -337,6 +351,7 @@ export default {
         },
 
         saveSure(){
+            this.regexMethod();
             this.$fire({
             title: "정말 등록 하시겠습니까?",
             type: "question",
