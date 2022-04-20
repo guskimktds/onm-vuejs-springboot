@@ -6,7 +6,7 @@
           v-bind:param=searchParam
         ></srs-history-query>
         <srs-history-list
-          v-bind:pList=srsList 
+          v-bind:srsList=srsList 
           v-bind:resPagingInfo=resPagingInfo 
           @pagination="setToSearchParams"
         >
@@ -37,7 +37,7 @@ export default {
   data () {
     return {
 
-      pList: [],
+      srsList: [],
       pObject: {        
       },
       reqPagingInfo: {
@@ -58,21 +58,21 @@ export default {
 
   methods: {
     searchToParams: function(params){
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15157/get_srs_hist_info`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15158/get_srs_hist_info`
 
       var reqParams = this.handleParams(params)      
   
       axios.post(url, reqParams, headers)
       .then((response) => {
         var resCode = response.data.res_code;
-         
+         console.log(response)
         if(resCode == 200){
-          this.pList = response.data.data.list;
+          this.srsList = response.data.data.list;
           this.resPagingInfo = response.data.data.paging_info
         }else if(resCode==204){
-            this.pList = [];
+            this.srsList = [];
             this.resPagingInfo = {};
-            console.log("사용자 청약 오더 정보 데이터가 없습니다.");
+            console.log("srs History 정보가 없습니다.");
         }else if(resCode==410){
           console.log("로그인 세션이 만료되었습니다.");
           EventBus.$emit('top-path-logout');
@@ -82,7 +82,7 @@ export default {
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
             this.$router.replace('/signin')
         }else{
-          this.pList = [];
+          this.srsList = [];
           this.resPagingInfo = {};
           //console.log(resCode + " / " + resMsg);
         }
@@ -98,7 +98,7 @@ export default {
         page_no: values.page,
         view_cnt: values.itemsPerPage,
       }
-      this.searchToTamperingInfo(params)
+      this.searchToParams(params)
     },
 
     handleParams: function(params){

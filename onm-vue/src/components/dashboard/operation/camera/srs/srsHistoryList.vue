@@ -8,7 +8,7 @@
       color="orange"
       dark
       icon="mdi-keyboard"
-      title="고객이전 정보 LIST"
+      title="SRS 히스토리 LIST"
       class="px-5 py-3"
     >
         <v-data-table
@@ -36,7 +36,7 @@
 <script>
 
 export default {
-    props: ['pList','resPagingInfo'],
+    props: ['srsList','resPagingInfo'],
     data() {
       return {
         last: 0,
@@ -53,7 +53,7 @@ export default {
             sortable: false,
             value: 'cam_stat_hist_seq',
           },
-          { text: '카메라ID', value: 'user_id' },
+          { text: '카메라ID', value: 'cam_id' },
           { text: '상태코드', value: 'status_code' },
           { text: '처리캠대수', value: 'cam_cnt' },
           { text: '처리상태', value: 'use_yn' },
