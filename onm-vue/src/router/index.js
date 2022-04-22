@@ -122,6 +122,7 @@ import apiReport from '../components/dashboard/operation/openApi/apiReport/apiRe
 import notice from '../components/dashboard/operation/notice/notice.vue'
 import camTamering from '../components/dashboard/operation/camera/camTampering.vue'
 import failover from '../components/dashboard/operation/camera/failover.vue'
+import srsManagement from '../components/dashboard/operation/srs/srsManagement.vue'
 
 // store 에 로그인 여부 체크
 import store from '../store'
@@ -618,7 +619,11 @@ export default new Router({
                     name: "failover",
                     component: failover
                 },
-               
+                {
+                    path: "srs-management",
+                    name: "srs-management",
+                    component: srsManagement
+                }
             ]
         },
 

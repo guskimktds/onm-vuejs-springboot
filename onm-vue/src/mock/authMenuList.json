@@ -236,6 +236,15 @@
                     { "name": "카메라 Tampering", "path": "/operation/cam-tampering", "component": "camTampering" },
                     { "name": "Failover", "path": "/operation/failover", "component": "failover" }
                 ]
+            },
+            {
+                "name": "srs/srs-management",
+                "path": "/operation/srs-management",
+                "icon": "mdi-desktop-mac",
+                "component": "srsManagement",
+                "children": [
+                    { "name": "srs 프로세스", "path": "/operation/srs-management", "component": "srsManagement" }
+                ]
             }
         ]
     }
