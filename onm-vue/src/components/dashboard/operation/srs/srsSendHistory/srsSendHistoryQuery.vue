@@ -25,7 +25,7 @@
                         item-text="proc_name" 
                         item-value="proc_code" 
                         :items="procData"
-                        label="요청구분" 
+                        label="처리구분" 
                         v-model="param.proc_type"
                         placeholder=" " 
                 ></v-select>   
@@ -105,14 +105,12 @@ export default {
         return {
             dialog: false,    
             requestData: [
-                {request_name :'등록' , request_code : 'A'},
-                {request_name :'송출 준비' , request_code : 'P'},
-                {request_name :'송출중' , request_code : 'S'},
+                {request_name :'등록' , request_code : 'N'},
+                {request_name :'송출 준비' , request_code : 'C'}
             ],
             procData: [
-                {proc_name :'등록' , proc_code : 'A'},
-                {proc_name :'송출 준비' , proc_code : 'P'},
-                {proc_name :'송출중' , proc_code : 'S'},
+                {proc_name :'송출처리' , proc_code : 'S'},
+                {proc_name :'송출삭제처리' , proc_code : 'X'}
             ],
         }
             

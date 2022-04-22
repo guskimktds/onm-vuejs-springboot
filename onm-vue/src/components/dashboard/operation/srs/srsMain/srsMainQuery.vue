@@ -284,7 +284,7 @@ export default {
                 {status_name :'송출 준비' , status_code : 'P'},
                 {status_name :'송출중' , status_code : 'S'},
             ],
-            localGwOptions: '',
+            localGwOptions: ''
         }
             
     },
@@ -295,7 +295,8 @@ export default {
         },
 
         localCode(){
-            let str = [];
+            let str = new Array();
+    
             for(let i =0; i<this.localGwOptions.length; i++){
                 str[i] += this.localGwOptions[i].local_gw_id;
             }
@@ -319,16 +320,25 @@ export default {
     },
     methods: {
     regexMethod(){
-         const code = this.editedItem.cam_id.substr(0,1);
-        for(let i = 0; i<this.localCode().length; i++){
-                 code == this.localCode().str[i];
-                 alert();
-        }
-         if(!(this.editedItem.user_id == this.editedItem.cam_id.substr(1,10))){
-             alert("userid 와 camid 값이 일치하지 않습니다");
+        const regex = /^1(\d{3})/;
+        const userId = this.editedItem.cam_id.substr(1,10);
+        const camIdNum =  this.editedItem.cam_id.substr(11,4);
+        // const code = this.editedItem.cam_id.substr(0,1);
+        // for(let i = 0; i<this.localCode().length; i++){
+        //          code == this.localCode().str[i];
+        //          alert('확인');
+        // }
+         if(!(this.editedItem.user_id == userId)){
+             alert("사용자ID 와 카메라ID 값이 일치하지 않습니다.");
+             this.dialog = false;
+         }else if(!regex.test(camIdNum)){
+            alert('카메라 ID 장치 식별 4자리가 맞지 않습니다.');
+             this.dialog = false;
+         }else if(this.editedItem.cam_id.match(/\s/g)){
+             alert('카메라 ID 공백을 제거해주세요.');
+             this.dialog = false;
          }
-         var test = new RegExp(`${this.str}`);
-         alert(code.match(test));
+
          
      },
         showAuth(){
@@ -352,23 +362,26 @@ export default {
 
         saveSure(){
             this.regexMethod();
-            this.$fire({
-            title: "정말 등록 하시겠습니까?",
-            type: "question",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '예',
-            cancelButtonText: '아니오',
-            html: "사용자 ID : "+this.editedItem.user_id+"카메라ID : "+this.editedItem.cam_id+"<br/>스트림 키 :"+this.editedItem.target_stream_key+"<br>스트림 url : "+this.editedItem.target_stream_url+
-            "<br>송출제목: "+this.editedItem.srs_title+"<br/>송출 시작일시 :"+this.editedItem.start_date+"<br>송출 종료일시 : "+this.editedItem.end_date
-            }).then(result => {
-               if(result.value){
-                   this.save()
-               }else{
-                   this.closeSure()
-               }
-            });
+            if(this.dialog == true){
+
+                this.$fire({
+                    title: "정말 등록 하시겠습니까?",
+                    type: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '예',
+                    cancelButtonText: '아니오',
+                    html: "사용자 ID : "+this.editedItem.user_id+"<br/>카메라ID : "+this.editedItem.cam_id+"<br/>스트림 키 :"+this.editedItem.target_stream_key+"<br>스트림 url : "+this.editedItem.target_stream_url+
+                    "<br>송출제목: "+this.editedItem.srs_title+"<br/>송출 시작일시 :"+this.editedItem.start_date+"<br>송출 종료일시 : "+this.editedItem.end_date
+                    }).then(result => {
+                        if(result.value){
+                            this.save()
+                    }else{
+                        this.closeSure()
+                    }
+                    });
+            }
         },
 
         close () {
