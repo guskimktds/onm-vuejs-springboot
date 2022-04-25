@@ -38,15 +38,12 @@ export default {
   data () {
     return {
       pList: [],
-      pObject: {        
-      },
+
       reqPagingInfo: {
         page_no: 1,
         view_cnt: 10
       },
       resPagingInfo: {},
-      oldValue:'',
-       localGwOptions:[],
       searchParam: {
        cam_id : '',
        srs_title : '',
@@ -162,13 +159,6 @@ export default {
                        type : "error"})
             })
 
-    },
-    changeColor(values){
-      if(values===true){
-        return 'green';
-      }else{
-        return "indigo";
-      }
     },
 
 

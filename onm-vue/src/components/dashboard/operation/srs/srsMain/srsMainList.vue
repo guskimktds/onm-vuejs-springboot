@@ -182,17 +182,19 @@
               mdi-pencil
             </v-icon>
             <v-icon
+              small
+              @click="deleteItem(item)"
+            >
+              mdi-delete
+            </v-icon>
+       </template>  
+          <template v-slot:item.sendaction="{ item }">
+            <v-icon
             small
             class="mr-2"
             @click="sendItem(item)"
               >
             mdi-send
-            </v-icon>
-            <v-icon
-              small
-              @click="deleteItem(item)"
-            >
-              mdi-delete
             </v-icon>
        </template>                
       </v-data-table>
@@ -228,7 +230,8 @@ export default {
           { text: '송출 시작일시', value: 'start_date' },
           { text: '송출 종료일시', value: 'end_date' },
           { text: '수정일시', value: 'mod_date' },
-          { text: '변경', value: 'actions', sortable: false}
+          { text: '변경', value: 'actions', sortable: false},
+          { text: '재송출', value: 'sendaction', sortable: false} 
         ],
         editedItem: {
           srs_seq : '',
