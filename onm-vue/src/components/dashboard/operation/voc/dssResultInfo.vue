@@ -9,7 +9,7 @@
         v-bind:dssList=dssList
         v-bind:resPagingInfo="resPagingInfo"
         @pagination="setToSearchParams"></dss-result-list>
-      </v-card>
+      </v-card>  
 
     </v-container>
 </template>

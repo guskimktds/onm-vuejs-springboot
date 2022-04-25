@@ -234,8 +234,7 @@
                 "component": "camTampering",
                 "children": [
                     { "name": "카메라 Tampering", "path": "/operation/cam-tampering", "component": "camTampering" },
-                    { "name": "Failover", "path": "/operation/failover", "component": "failover" },
-                    { "name": "영상송출 메인정보", "path": "/operation/srs-main", "component": "srsMain" }
+                    { "name": "Failover", "path": "/operation/failover", "component": "failover" }
                 ]
             },
             {
@@ -244,7 +243,9 @@
                 "icon": "mdi-desktop-mac",
                 "component": "srsManagement",
                 "children": [
-                    { "name": "srs 프로세스", "path": "/operation/srs-management", "component": "srsManagement" }
+                    { "name": "영상송출 메인정보", "path": "/operation/srs-main", "component": "srsMain" },
+                    { "name": "영상송출 프로세스조회", "path": "/operation/srs-management", "component": "srsManagement" },
+                    { "name": "영상송출 이력조회", "path": "/operation/srs-send-history", "component": "srsSendHistory" }
                 ]
             }
         ]
