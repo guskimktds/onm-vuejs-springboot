@@ -10,6 +10,40 @@
         class="px-5 py-3"
         >
             <v-row>
+                <v-col cols="3">
+                    <v-text-field 
+                        label="카메라ID" 
+                        v-model="param.cam_id"
+                        placeholder=" " 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                <v-col cols="3">
+                    <v-text-field  
+                        label="송출제목" 
+                        v-model="param.srs_title"
+                        placeholder=" " 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                <v-col cols="3">
+                    <v-text-field  
+                        label="송출지명" 
+                        v-model="param.target_name"
+                        placeholder=" " 
+                    >                        
+                    </v-text-field>
+                </v-col>
+                <v-col cols="3">
+                    <v-text-field 
+                        label="관리상태" 
+                        v-model="param.status_code"
+                        placeholder=" " 
+                    >                        
+                    </v-text-field>
+                </v-col> 
+                </v-row>             
+            <v-row>
                 <v-col cols="4">
                             <v-menu
                             offset-y
@@ -49,50 +83,13 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
-            </v-row>
-
-            <v-row>
-                <v-col cols="3">
-                    <v-text-field 
-                        label="카메라ID" 
-                        v-model="param.cam_id"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
-                </v-col> 
-                <v-col cols="3">
-                    <v-text-field  
-                        label="송출제목" 
-                        v-model="param.srs_title"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
-                </v-col>
-                <v-col cols="3">
-                    <v-text-field  
-                        label="송출지명" 
-                        v-model="param.target_name"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
-                </v-col>
-                </v-row> 
-                <v-row>
-                <v-col cols="3">
-                    <v-text-field 
-                        label="관리상태" 
-                        v-model="param.status_code"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
-                </v-col> 
                 <v-col cols="2">
                     <v-btn elevation="2" medium
                     v-on:click="searchMethod"
                     >
                         검색
                     </v-btn>
-                </v-col>             
+                </v-col> 
             </v-row>
         </base-material-card>       
     </v-container>
