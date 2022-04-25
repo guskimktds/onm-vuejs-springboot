@@ -266,7 +266,7 @@ methods: {
       this.$emit("pagination", this.options);
     },
     editItem (item) { 
-        this.editedIndex = this.pList.indexOf(item)
+      this.editedIndex = this.pList.indexOf(item)
         console.log('update Item Index : ',this.editedIndex)
         this.editedItem = Object.assign({}, item)
         this.editDate();
@@ -277,9 +277,9 @@ methods: {
       editDate(){
         const a = this.editedItem.start_date; 
         const b = this.editedItem.end_date;
-        this.editedItem.start_date = [a.slice(0, 4), "-", a.slice(4, 6), "-", a.slice(6, 8)].join('');
-        this.editedItem.end_date = [b.slice(0, 4), "-", b.slice(4, 6), "-", b.slice(6, 8)].join('');
-      },
+        ( !a ) ? this.editedItem.start_date = '' : this.editedItem.start_date = a.substr(0,10);
+        ( !b ) ? this.editedItem.start_date = '' : this.editedItem.end_date = b.substr(0,10);
+     },
       handleDate(params){
         params.start_date == null ? this.editedItem.start_date = '' : this.editedItem.start_date = params.start_date.replace(/-/g,"").substr(0,8);
          params.end_date == null ? this.editedItem.end_date = '' : this.editedItem.end_date = params.end_date.replace(/-/g,"").substr(0,8);
@@ -298,7 +298,7 @@ methods: {
         this.send();
       },
       send(){
-          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15155/update_srs_main_info`
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15157/send_srs_process`
             var params = this.sendedItem;
             axios.post(url, params, this.$store.state.headers)
               .then((response) => {
