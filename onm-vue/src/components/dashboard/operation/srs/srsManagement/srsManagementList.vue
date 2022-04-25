@@ -48,7 +48,7 @@ export default {
           { text: '관리상태', value: 'status_code' },
           { text: '시작일시', value: 'start_date' },
           { text: '종료일시', value: 'end_date' },
-          { text: '설정test', value: 'actions', sortable: false}
+          { text: '설정', value: 'actions', sortable: false}
         ],
       }
     },
