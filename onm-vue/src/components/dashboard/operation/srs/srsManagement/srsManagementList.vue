@@ -17,11 +17,9 @@
         :options.sync="options"
         :server-items-length="resPagingInfo.total_cnt"
         class="elevation-1"
-        @click:row="handleClick"
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       > 
-            
       </v-data-table>
     </base-material-card>
   </v-container>
@@ -35,54 +33,35 @@ export default {
       return {
         last:0,
         dialog: false,
+        dialogDelete: false,
         editedIndex: -1,
         options: {},
         loading: true,
         headers: [
-          {
-            text: '카메라 ID',
-            sortable: false, value: 'cam_id',
-          },
+          {text: '카메라 ID', value: 'cam_id'},
           { text: '송출제목', value: 'srs_title' },
           { text: '송출지명', value: 'target_name' },
           { text: '관리상태', value: 'status_code' },
           { text: '시작일시', value: 'start_date' },
-          { text: '종료일시', value: 'end_date' },
-          { text: '설정', value: 'actions', sortable: false}
+          { text: '종료일시', value: 'end_date' }
         ],
       }
     },
 
-// methods: {
-//     handleClick: function(value){
-//       this.$emit("child", value);
-//     },
-//     getDataFromApi() {
-//       this.loading = true;
-//       this.$emit("pagination", this.options);
-//     },
-//     editItem (item) { 
-//         this.editedIndex = this.pList.indexOf(item)
-//         console.log('update Item Index : ',this.editedIndex)
-//         // this.editedItem = Object.assign({}, item)
-//         this.editedItem.cam_id = this.pList[this.editedIndex].cam_id;
-//         this.editedItem.user_id = this.pList[this.editedIndex].user_id;
-//         // 수정
-  
-//         console.log('update Item value : ',this.editedItem)
-
-//         this.dialog = true
-//       }
-//   },
-
-//   watch: {
-//     options: {
-//       handler() {
-//         this.getDataFromApi();
-//       },
-//       deep: true,
-//     },
-//   },
+methods: {
+    getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
+    }
+  },
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
   updated() {
       if(this.last!==this.resPagingInfo.total_cnt){
         this.options.page=1
