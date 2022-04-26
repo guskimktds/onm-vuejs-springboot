@@ -19,7 +19,6 @@
 <script>
 import srsManagementQuery from './srsManagement/srsManagementQuery'
 import srsManagementList from './srsManagement/srsManagementList'
-import dateInfo from '../../../utils/common'
 import EventBus from '../../../../EventBus'
 import axios from "axios"
 
@@ -122,6 +121,7 @@ export default {
       this.searchTosrsManagementInfo(params)
     },
     handleParams: function(params){
+      let newParams = {} 
       if(params.page_no === undefined || params.page_no === ''){
         newParams.page_no = this.reqPagingInfo.page_no
       }else{
