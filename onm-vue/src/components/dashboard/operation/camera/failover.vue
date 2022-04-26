@@ -51,7 +51,7 @@ export default {
       oldValue:'',
        localGwOptions:[],
       searchParam: {
-        local_gw_id: '1',
+        local_gw_id: 'D',
         streamer_idx: '',
         proc_name:''
       },

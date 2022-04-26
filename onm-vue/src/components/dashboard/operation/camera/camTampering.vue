@@ -54,7 +54,7 @@ export default {
         start_date: dateInfo().lastWeekDashFormat,
         end_date: dateInfo().currentDateDashFormat,
         date_yn: true,
-        local_gw_id: '1',
+        local_gw_id: 'D',
         user_id: '',
         cam_id:''
       }
