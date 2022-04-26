@@ -57,7 +57,7 @@ export default {
           var resCode = response.data.res_code;
           var resMsg = response.data.res_msg;
           if(resCode == 200){
-            this.pList = response.data.data.srsManagement_info;
+            this.pList = response.data.data.srs_main_proc_info_list;
             this.resPagingInfo = response.data.data.paging_info
             console.log(this.resPagingInfo)
           }else{
@@ -82,8 +82,7 @@ export default {
         var resCode = response.data.res_code;
          
         if(resCode == 200){
-          
-          this.pList = response.data.data.srsManagement_info;
+          this.pList = response.data.data.srs_main_proc_info_list;
           this.resPagingInfo = response.data.data.paging_info;
         }else if(resCode==204){
             this.pList = [];

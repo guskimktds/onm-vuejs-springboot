@@ -27,12 +27,13 @@
                     </v-text-field>
                 </v-col>
                 <v-col cols="3">
-                    <v-text-field  
+                    <v-select 
+                        item-text="state" 
+                        item-value="abbr" 
+                        :items="targetData"  
                         label="송출지명" 
                         v-model="param.target_name"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
+                     ></v-select>
                 </v-col>
                 <v-col cols="3">
                    <v-select 
@@ -101,28 +102,19 @@ export default {
     data() {
         return {
              dialog: false,    
-            editedItem: {
-                user_id: '',
-                cam_id: '',
-                target_stream_key: '',
-                target_stream_url : '',
-                srs_title : '',
-                start_date: '',
-                end_date : '',
-                paging : false
-            },
             statusData: [
                 {status_name :'등록' , status_code : 'A'},
                 {status_name :'전송중' , status_code : 'S'},
                 {status_name :'전송 실패' , status_code : 'F'},
-                {status_name :'전송 중지' , status_code : 'Z'}
-            ],
+                {status_name :'전송 중지' , status_code : 'Z'}],
+            targetData: [
+                {state :'YOUTUBE' , abbr : 'YOUTUBE'}]
         }
     },
   methods: {
     searchMethod: function () {
       this.$emit("search", this.param);
-    },
+    }
   },
 };
 </script>
