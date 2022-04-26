@@ -35,12 +35,13 @@
                     </v-text-field>
                 </v-col>
                 <v-col cols="3">
-                    <v-text-field 
+                   <v-select 
+                        item-text="status_name" 
+                        item-value="status_code" 
+                        :items="statusData"
                         label="관리상태" 
                         v-model="param.status_code"
-                        placeholder=" " 
-                    >                        
-                    </v-text-field>
+                        ></v-select>
                 </v-col> 
                 </v-row>             
             <v-row>
@@ -99,6 +100,23 @@ export default {
  props:['param'],
     data() {
         return {
+             dialog: false,    
+            editedItem: {
+                user_id: '',
+                cam_id: '',
+                target_stream_key: '',
+                target_stream_url : '',
+                srs_title : '',
+                start_date: '',
+                end_date : '',
+                paging : false
+            },
+            statusData: [
+                {status_name :'등록' , status_code : 'A'},
+                {status_name :'전송중' , status_code : 'S'},
+                {status_name :'전송 실패' , status_code : 'F'},
+                {status_name :'전송 중지' , status_code : 'Z'}
+            ],
         }
     },
   methods: {

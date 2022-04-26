@@ -128,7 +128,8 @@ import failover from '../components/dashboard/operation/camera/failover.vue'
 // srs 기능
 import srsMain from '../components/dashboard/operation/srs/srsMain.vue'
 import srsManagement from '../components/dashboard/operation/srs/srsManagement.vue'
-import  srsSendHistory from '../components/dashboard/operation/srs/srsSendHistory.vue'
+import srsSendHistory from '../components/dashboard/operation/srs/srsSendHistory.vue'
+import srsHistory from '../components/dashboard/operation/srs/srsHistory.vue'
 // store 에 로그인 여부 체크
 import store from '../store'
 
@@ -639,7 +640,11 @@ export default new Router({
                     name: "srs-send-history",
                     component: srsSendHistory
                 },
-               
+                {
+                    path: "srs-history",
+                    name: "srs-history",
+                    component: srsHistory
+                }
             ]
         },
 
