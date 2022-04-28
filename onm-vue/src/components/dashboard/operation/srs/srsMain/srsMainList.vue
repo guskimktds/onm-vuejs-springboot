@@ -218,15 +218,12 @@ export default {
         headers: [
 
           { text: '카메라 ID', value: 'cam_id' },
-          { text: '사용자 ID', value: 'user_id' },
-          { text: '송출지 스트림 키', value: 'target_stream_key' },
           { text: '송출지 스트림 url', value: 'target_stream_url' },
           { text: '입력영상 URL', value: 'input_stream_url' },
           { text: '관리코드', value: 'status_code' },
           { text: '카메라 상태코드', value: 'mgt_status' },
           { text: '송출지명', value: 'target_name' },
           { text: '송출제목', value: 'srs_title' },
-          { text: '등록일시', value: 'reg_date' },
           { text: '송출 시작일시', value: 'start_date' },
           { text: '송출 종료일시', value: 'end_date' },
           { text: '수정일시', value: 'mod_date' },
