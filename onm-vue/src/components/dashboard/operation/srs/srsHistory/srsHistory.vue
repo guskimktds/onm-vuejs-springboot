@@ -17,10 +17,9 @@
 </template>
 
 <script>
-import srsHistoryList from '../srs/srsHistoryList.vue'
-import srsHistoryQuery from '../srs/srsHistoryQuery.vue'
+import srsHistoryList from '../srsHistory/srsHistoryList.vue'
+import srsHistoryQuery from '../srsHistory/srsHistoryQuery.vue'
 import dateInfo from '../../../../utils/common'
-
 import EventBus from '../../../../../EventBus'
 import axios from "axios"
 
