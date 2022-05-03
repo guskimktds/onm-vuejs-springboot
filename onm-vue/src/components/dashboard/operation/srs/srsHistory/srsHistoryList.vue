@@ -8,7 +8,7 @@
       color="orange"
       dark
       icon="mdi-keyboard"
-      title="SRS 히스토리 LIST"
+      title="SRS 카메라 히스토리 LIST"
       class="px-5 py-3"
     >
         <v-data-table
