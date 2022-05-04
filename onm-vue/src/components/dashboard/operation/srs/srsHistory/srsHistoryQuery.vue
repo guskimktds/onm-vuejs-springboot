@@ -117,9 +117,9 @@ export default {
                     {state:'처리실패', abbr:'F'}],
             items:[
                     {state:'전체', abbr:'All'},
-                    {state:'등록', abbr: 'A'},
-                    {state:'송출준비', abbr:'P'},
-                    {state:'송출중', abbr:'S'}], 
+                    {state:'연결실패', abbr: 'F'},
+                    {state:'끊킴', abbr:'Z'},
+                    {state:'정상', abbr:'S'}], 
         useSelect:'All',       
         statSelect:'All'
         }
