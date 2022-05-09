@@ -238,7 +238,7 @@
                 ]
             },
             {
-                "name": "srs/srs-management",
+                "name": "영상송출 관리",
                 "path": "/operation/srs-management",
                 "icon": "mdi-desktop-mac",
                 "component": "srsManagement",

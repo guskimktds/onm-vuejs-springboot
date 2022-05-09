@@ -20,6 +20,14 @@
         :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
         :header-props="{ sortIcon: null }"
       > 
+      
+      <template v-slot:item.status_code="{item}">
+              <span>{{ switchString(item.status_code) }}</span>
+      </template>
+      <template v-slot:item.mgt_status="{item}">
+              <span>{{ switchString2(item.mgt_status) }}</span>
+      </template>
+
        <template v-slot:top>
             
               <v-dialog
@@ -220,8 +228,8 @@ export default {
           { text: '카메라 ID', value: 'cam_id' },
           { text: '송출지 스트림 url', value: 'target_stream_url' },
           { text: '입력영상 URL', value: 'input_stream_url' },
-          { text: '관리코드', value: 'status_code' },
-          { text: '카메라 상태코드', value: 'mgt_status' },
+          { text: '관리코드', value: 'mgt_status' },
+          { text: '카메라 상태코드', value: 'status_code' },
           { text: '송출지명', value: 'target_name' },
           { text: '송출제목', value: 'srs_title' },
           { text: '송출 시작일시', value: 'start_date' },
@@ -261,6 +269,32 @@ methods: {
     getDataFromApi() {
       this.loading = true;
       this.$emit("pagination", this.options);
+    },
+    switchString(values){
+      if(values==='A'){
+        return '접수'
+      }else if(values==='D'){
+        return '삭제'
+      }else if(values==='F'){
+        return '실패'
+      }else if(values==='P'){
+        return '진행중'
+      }else if(values==='S'){
+        return '성공'
+      }else if(values==='Z'){
+        return '카메라 장애'
+      }
+    },
+    switchString2(values){
+      if(values==='S'){
+        return '정상'
+      }else if(values==='D'){
+        return '삭제'
+      }else if(values==='X'){
+        return '삭제대기'
+      }else if(values==='A'){
+        return '등록'
+      }
     },
     editItem (item) { 
       this.editedIndex = this.pList.indexOf(item)

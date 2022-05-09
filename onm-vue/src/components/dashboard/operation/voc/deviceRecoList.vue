@@ -28,6 +28,118 @@
       </template>
 
       <template v-slot:top>
+        <v-dialog v-model="dialogSend" max-width="500px">
+          <v-card>
+            <v-card-title>유튜브 영상 송출 정보 등록</v-card-title>
+                <v-card-text>
+                    <v-container>
+                      <v-row>
+                         <v-col cols="6">
+                          <v-text-field
+                            v-model="selectItems.user_id"
+                            label="사용자 ID"
+                            readonly
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="6">
+                          <v-text-field
+                            v-model="selectItems.cam_id"
+                            label="카메라 ID"
+                            readonly
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="6">
+                          <v-text-field
+                            v-model="editedItem.target_stream_key"
+                            label="스트림 키"
+                            counter
+                            maxlength="512"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="6">
+                          <v-text-field
+                            v-model="editedItem.target_stream_url"
+                            label="스트림 URL"
+                            counter
+                            maxlength="512"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="srs_title"
+                            label="송출제목"
+                            counter
+                            maxlength="200"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="6">
+                          <v-menu
+                            offset-y
+                            min-width="290px"
+                            >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                v-model="editedItem.start_date"
+                                label="시작일"
+                                prepend-icon="mdi-calendar"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker v-model="editedItem.start_date" no-title scrollable>
+                            </v-date-picker>
+                            </v-menu>
+                                </v-col>
+                                <v-col cols="6">
+                                 <v-menu
+                                  offset-y
+                                  min-width="290px"
+                                  >
+                                  <template v-slot:activator="{ on, attrs }">
+                                      <v-text-field
+                                      v-model="editedItem.end_date"
+                                      label="종료일"
+                                      prepend-icon="mdi-calendar"
+                                      readonly
+                                      v-bind="attrs"
+                                      v-on="on"
+                                      ></v-text-field>
+                                  </template>
+                                  <v-date-picker v-model="editedItem.end_date" no-title scrollable>
+                                  </v-date-picker>
+                                  </v-menu>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="save"
+                    >
+                      저장
+                    </v-btn>
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="close"
+                    >
+                      취소
+                    </v-btn>
+                  </v-card-actions>
+          </v-card>
+        </v-dialog>
                 <v-dialog v-model="dialogDelete" max-width="500px">
                   <v-card>
                     <v-card-title class="headline">삭제 하시겠습니까?</v-card-title>
@@ -42,7 +154,16 @@
               
       </template>
 
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:item.send="{ item }">
+              <v-icon
+                small
+                @click="sendItem(item)"
+              >
+                mdi-send
+              </v-icon>
+      </template>
+
+      <template v-slot:item.delete="{ item }">
               <v-icon
                 small
                 @click="deleteItem(item)"
@@ -65,19 +186,23 @@ export default {
     return {
       last: 0,
       dialog: false,
+      editedItem: {
+        user_id: '',
+        cam_id: '',
+        target_stream_key: '',
+        target_stream_url : '',
+        srs_title : '',
+        start_date: '',
+        end_date : '',
+        paging : false },
       dialogDelete: false,
+      dialogSend:false,
       deleteIndex: -1,
       options: {},
       totalList: 0,
       loading: true,
       headers: [
-        {
-          text: "매장 ID",
-          align: "start",
-          sortable: false,
-          value: "user_id",
-        },
-        { text: "카메라 ID", value: "cam_id" },
+        { text: "카메라 ID", value: "cam_id", align: "start", sortable: false,},
         { text: "카메라 IP", value: "cam_ip" },
         { text: "카메라명", value: "cam_name" },
         { text: "MAC ID", value: "mac_id" },
@@ -89,9 +214,9 @@ export default {
         { text: "해상도", value: "resolution" },
         { text: "카메라 수정일자", value: "mod_date" },
         { text: "개통일", value: "open_date" },
-        { text: "해지일", value: "close_date" },
         { text: "영상저장방식", value: "save_method" },
-        { text: '  ', value: 'actions', sortable: false }
+        { text: '삭제', value: 'delete', sortable: false },
+        { text: '유튜브 송출', value: 'send', sortable: false }
       ],
       saidItem:{
         said: ''
@@ -189,7 +314,17 @@ export default {
                  console.log(resCode+resMsg);
                   }
                 })
-    }, 
+    },
+    
+    sendItem(item){
+        this.deleteIndex = this.dcList.indexOf(item)
+        console.log('Delte Item Index : ',this.editedIndex)
+        this.tempItems = Object.assign({},item)
+        this.selectItems.user_id=this.tempItems.user_id
+        this.selectItems.cam_id=this.tempItems.cam_id
+
+        this.dialogSend = true
+    },
 
     deleteItem (item) {
         this.deleteIndex = this.dcList.indexOf(item)
