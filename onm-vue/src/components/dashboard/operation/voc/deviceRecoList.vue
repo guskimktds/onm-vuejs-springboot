@@ -70,7 +70,7 @@
                       <v-row>
                         <v-col cols="12">
                           <v-text-field
-                            v-model="srs_title"
+                            v-model="editedItem.srs_title"
                             label="송출제목"
                             counter
                             maxlength="200"
@@ -198,6 +198,7 @@ export default {
       dialogDelete: false,
       dialogSend:false,
       deleteIndex: -1,
+      sendIndex:-1,
       options: {},
       totalList: 0,
       loading: true,
@@ -216,7 +217,7 @@ export default {
         { text: "개통일", value: "open_date" },
         { text: "영상저장방식", value: "save_method" },
         { text: '삭제', value: 'delete', sortable: false },
-        { text: '유튜브 송출', value: 'send', sortable: false }
+        { text: '유튜브 송출 등록', value: 'send', sortable: false }
       ],
       saidItem:{
         said: ''
@@ -317,18 +318,18 @@ export default {
     },
     
     sendItem(item){
-        this.deleteIndex = this.dcList.indexOf(item)
-        console.log('Delte Item Index : ',this.editedIndex)
-        this.tempItems = Object.assign({},item)
-        this.selectItems.user_id=this.tempItems.user_id
-        this.selectItems.cam_id=this.tempItems.cam_id
+        this.sendIndex = this.dcList.indexOf(item)
+        console.log('Send Item Index : ',this.sendIndex)
+        this.editedItem = Object.assign({},item)
+        this.selectItems.user_id=this.editedItem.user_id
+        this.selectItems.cam_id=this.editedItem.cam_id
 
         this.dialogSend = true
     },
 
     deleteItem (item) {
         this.deleteIndex = this.dcList.indexOf(item)
-        console.log('Delte Item Index : ',this.editedIndex)
+        console.log('Delte Item Index : ',this.deleteIndex)
         this.tempItems = Object.assign({},item)
         this.selectItems.user_id=this.tempItems.user_id
         this.selectItems.cam_id=this.tempItems.cam_id
@@ -343,6 +344,36 @@ export default {
           this.deleteIndex = -1
         })
     },
+
+    save(){
+       console.log(this.editedItem)
+      if (this.sendIndex > -1) {
+          let params = this.editedItem;
+          this.handleDate(params);
+          const url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15154/set_srs_main_info`
+            axios.post(url, params, this.$store.state.headers)
+              .then((response) => {
+                console.log(response)
+                var resCode = response.data.res_code;
+                  
+                if(resCode == 200){
+                  console.log('성공!')
+                  this.$router.push('srs-main')
+                }else{
+                  alert("Error");
+                }
+              })
+              .catch((ex) => {
+                console.log('변경 실패',ex)
+              })
+            }
+        this.close()
+    },
+
+    handleDate(params){
+        params.start_date == null ? this.editedItem.start_date = '' : this.editedItem.start_date = params.start_date.replace(/-/g,"").substr(0,8);
+         params.end_date == null ? this.editedItem.end_date = '' : this.editedItem.end_date = params.end_date.replace(/-/g,"").substr(0,8);
+      },
 
     deleteItemConfirm () {
         if (this.deleteIndex > -1) {
@@ -410,6 +441,13 @@ export default {
         
         }
         this.closeDelete() //다이얼로그를 닫는다.
+      },
+      close () {
+        this.dialogSend= false
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        })
       },
   },
 
