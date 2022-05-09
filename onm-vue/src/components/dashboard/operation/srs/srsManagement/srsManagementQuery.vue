@@ -46,7 +46,14 @@
                 </v-col> 
                 </v-row>             
             <v-row>
-                <v-col cols="4">
+                <v-col cols="3">
+                   <v-text-field  
+                        label="프로세스 ID" 
+                        v-model="param.send_pid"
+                        placeholder=" "
+                        ></v-text-field>
+                </v-col>  
+                <v-col cols="3">
                             <v-menu
                             offset-y
                             min-width="290px"
@@ -66,7 +73,7 @@
                             </v-menu>
 
                 </v-col>
-                <v-col cols="4">
+                <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"

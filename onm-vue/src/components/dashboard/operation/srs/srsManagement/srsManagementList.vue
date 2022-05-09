@@ -37,7 +37,8 @@ export default {
         options: {},
         loading: true,
         headers: [
-          {text: '카메라 ID', value: 'cam_id'},
+          { text: '카메라 ID', value: 'cam_id'},
+          { text: '프로세스 ID' , value: 'send_pid'},
           { text: '송출제목', value: 'srs_title' },
           { text: '송출지명', value: 'target_name' },
           { text: '관리상태', value: 'status_code' },

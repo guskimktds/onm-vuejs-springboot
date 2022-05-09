@@ -167,6 +167,14 @@ export default {
       ){
         newParams.status_code=this.searchParam.status_code
       }
+      if(params.send_pid !== undefined && params.send_pid !== ''){
+        newParams.send_pid = params.send_pid
+      }else if(
+        this.searchParam.send_pid!==undefined&&
+        this.searchParam.send_pid!==""
+      ){
+        newParams.status_code=this.searchParam.status_code
+      }
 
       if(params.start_date !== undefined && params.start_date !== ''){
         newParams.start_date = params.start_date.replace(/-/g,"")

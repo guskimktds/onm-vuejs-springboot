@@ -105,8 +105,11 @@ export default {
         return {
             dialog: false,    
             requestData: [
-                {request_name :'등록' , request_code : 'N'},
-                {request_name :'송출 준비' , request_code : 'C'}
+                {request_name :'신규' , request_code : 'N'},
+                {request_name :'캠상태변경' , request_code : 'C'},
+                {request_name :'프로세스 상태관리' , request_code : 'P'},
+                {request_name :'재송출 요청' , request_code : 'R'},
+                {request_name :'송출쉘 재호출' , request_code : 'S'}
             ],
             procData: [
                 {proc_name :'송출처리' , proc_code : 'S'},
