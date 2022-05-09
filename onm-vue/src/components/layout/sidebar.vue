@@ -1,149 +1,281 @@
 <template>
-  <div id='sidebar'>
-    <header>
-      <span></span>
-        {{ menu }}
-      <a></a>
-    </header>
-    <ul>
-      <li><span>Navigation</span></li>
-      <li v-for="subMenu in newMenus" :key="subMenu.name">
-        <router-link v-bind:to="subMenu.path">{{ subMenu.name }}</router-link>
-      </li>
-    </ul>
+  <v-navigation-drawer
+    id="core-navigation-drawer"
+    v-model="drawer"
+    :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
+    :expand-on-hover="expandOnHover"
+    :right="$vuetify.rtl"
+    :src="barImage"
+    mobile-breakpoint="960"
+    app
+    width="260"
+    v-bind="$attrs"
+  >
+  <template v-slot:img="props">
+    <v-img
+      :gradient="`to bottom, ${barColor}`"
+      v-bind="props"
+    />
+  </template>
+
+  <v-divider class="mb-1" />
+    <v-list dense>
+      <v-list-item v-on:click="linkToHome()">
+        <v-list-item-avatar
+          class="align-self-center"
+          color="white"
+        >
+          <v-img src="@/assets/images/kt_ci.png" />
+        </v-list-item-avatar>
+        <v-list-item-title class="display-1">
+          {{title}}
+        </v-list-item-title>
+      </v-list-item>
+    </v-list>
+
+<!--
+  <v-divider class="mb-2" /> 
+    <v-list nav>
+      <div />
+        <template v-for="(item, i) in computedItems">
+          <base-item-group          
+            :key="`group-${i}`"
+            :item="item"
+          >
+          </base-item-group>
+        </template>
+      <div />
+    </v-list>
+-->
+  
+  <v-divider class="mb-2" /> 
+  <div>   
+    <v-list ref="vList">
+      <v-list-group
+        v-for="(item, i) in computedItems"
+        :key="i"
+        v-model="item.active"
+        :prepend-icon="item.icon"
+        v-on:click="saveSubMenu(i)"
+        v-show="tabAuthShow(item.name)"
+        no-action
+      >
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.name"></v-list-item-title>
+          </v-list-item-content>
+        </template>
+
+        <v-list-item
+          v-for="subItem in item.children"
+          :key="subItem.component"
+          :to="subItem.path"
+          v-show="authShow(subItem.name)"
+        >
+          <v-list-item-content>
+            <v-list-item-title 
+            v-text="subItem.name"
+            ></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
+    </v-list>
   </div>
+  
+  </v-navigation-drawer>
+
+
+  
+
 </template>
 
 <script>
 
-import EventBus from '../../EventBus';
+import { mapState } from 'vuex'
+import EventBus from '../../EventBus'
 
 export default {
-  props:['subMenus'],
+  props: {
+    expandOnHover: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  components: {
+  },
   data () {
     return {
-      menu: 'GiGAeyes O&M',
-      //topPath: '' ,
-      newMenus: [] //this.props.keys(this.topPath)
+      title: 'GiGAeyes O&M',
+      newMenus: []
     }
   },
   created(){
-      EventBus.$on('top-path', (payload)=>{          
-        //console.log(payload)
-        this.newMenus = payload
-        //console.log(this.newMenus)
-      });
+    EventBus.$on('top-path-login', (payload)=>{          
+      // console.log(payload)
+      this.newMenus = payload;
+      this.openSideMenu(0);
+    });
+
+    EventBus.$on('top-path-logout', ()=>{          
+      console.log('top-path-logout')
+      this.newMenus = []
+      console.log(this.newMenus)
+    });
+
+  },  
+  mounted() {
+    this.newMenus=this.$store.getters.getMenus[this.$store.state.menuIndex].children
+    setTimeout(() => this.openSideMenu(this.$store.state.subMenuIndex), 100);  
+  },
+  computed: {
+    ...mapState(['barColor', 'barImage']),
+    drawer: {
+      get () {
+        return this.$store.state.drawer
+      },
+      set (val) {
+        this.$store.commit('SET_DRAWER', val)
+      },
+    },
+    computedItems () {
+      return this.newMenus.map(this.mapItem)
+    },
+    profile () {
+      return {
+        avatar: true,
+        // title: this.$t('avatar'),
+      }
+    },
+    ...mapState({ 
+      topMenu: 'topMenu',
+      subMenu: 'menu',
+      authGroup: 'authGroupId',
+    }),
+  },
+  methods: {
+    tabAuthShow(values){
+      var auth=this.$store.state.authGroupId
+      if(values=='고객이전'&&auth!=='G100'){
+        return false;
+      }else{
+        return true;
+      }
+    },
+    authShow(values){
+      var auth=this.$store.state.authGroupId
+      if(values=='코드 관리'&&auth!=='G100'){
+        return false;
+      }else if(values=='코드 마스터 관리'&&auth!=='G100'){
+        return false;
+      }else{
+        return true;
+      }
+    },
+    mapItem (item) {
+        return {
+          ...item,
+          children: item.children ? item.children.map(this.mapItem) : undefined,
+          // name: this.$t(item.name),
+          name: item.name
+        }
+      },
+
+    linkToHome(){
+
+      var path = '';
+
+      switch(this.authGroup){
+        case "G100": //최상위 관리자
+        case "G200": //운영자
+          path='/platform/dashboard';
+          break;
+        case "G300": //일반사용자
+          path='/platform/camreg-stat';
+          break;
+        default:
+          break;
+      }
+
+      this.changeTap('M100', path)
+    },
+
+    changeTap(id, path){
+      var selectMenu = this.subMenu.filter(obj => { return obj['menu_id'] === id})
+      this.$router.push(path);
+      EventBus.$emit('top-path-login', selectMenu[0].children);
+    },
+
+    saveSubMenu(i){
+      this.$store.commit('SUB_MENU', i)
+    },
+
+    openSideMenu(menuIdx){
+      try{
+        var uid = this.$refs.vList.$children[menuIdx]._uid;
+        this.$refs.vList.listClick(uid);
+      }catch(e){
+        console.log("");
+      }
+    },
   }
 }
 </script>
 
-<style scoped>
+<style lang="sass">
+  @import '~vuetify/src/styles/tools/_rtl.sass'
 
-#sidebar {
-  background: #222;
-  padding: 6px;
-}
+  #core-navigation-drawer
+    .v-list-group__header.v-list-item--active:before
+      opacity: .24
 
+    .v-list-item
+      &__icon--text,
+      &__icon:first-child
+        justify-content: center
+        text-align: center
+        width: 20px
 
-*, *:before, *:after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+        +ltr()
+          margin-right: 24px
+          margin-left: 12px !important
 
-*:before, *:after {
-  content: '';
-  display: block;
-  position: absolute;
-}
+        +rtl()
+          margin-left: 24px
+          margin-right: 12px !important
 
-html, body {
-  height: 100%;
-}
+    .v-list--dense
+      .v-list-item
+        &__icon--text,
+        &__icon:first-child
+          margin-top: 10px
 
-body {
-  font: 15px/1 'Open Sans', sans-serif;
-  color: #777;
-}
+    .v-list-group--sub-group
+      .v-list-item
+        +ltr()
+          padding-left: 8px
 
-a {
-  cursor: pointer;
-}
+        +rtl()
+          padding-right: 8px
 
-ul {
-  list-style: none;
-}
+      .v-list-group__header
+        +ltr()
+          padding-right: 0
 
+        +rtl()
+          padding-right: 0
 
-header {
-  position: relative;
-  height: 80px;
-  padding: 20px 0 0 15px;
-  font-size: 16px;
-  color: #fff;
-  background: darken(#404040, 5%);
-}
-header span {
-  position: relative;
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  margin: 0 10px 0 0;
-  vertical-align: middle;
-  border: 1px solid #fff;
-}
+        .v-list-item__icon--text
+          margin-top: 19px
+          order: 0
 
-header span:before {
-  content: '\f007';
-  font: normal 20px fontawesome;
-  top: 7px;
-  left: 9px;
-}
+        .v-list-group__header__prepend-icon
+          order: 2
 
-header a:before {
-  content: '\f08b';
-  font: normal 20px fontawesome;
-  top: 28px;
-  right: 15px;
-}
+          +ltr()
+            margin-right: 8px
 
-ul span {
-  display: block;
-  padding: 15px;
-  color: rgba(255,255,255,.5);
-  text-transform: uppercase;
-  border-bottom: 1px solid darken(#404040, 5%);;
-}
-
-ul a {
-  position: relative;
-  display: block;
-  padding: 15px 15px 17px 50px;
-  color: #fff;
-  border-bottom: 1px solid darken(#404040, 5%);;
-}
-
-ul a:hover,
-ul a.active {
-  background: lighten(#404040, 7.5%);
-}
-
-ul a:before {
-  font: normal 16px fontawesome;
-  top: 15px;
-  left: 18px;
-}
-
-ul li:nth-child(2) a:before { content: '\f00a'; }
-ul li:nth-child(3) a:before { content: '\f012'; }
-ul li:nth-child(4) a:before { content: '\f018'; }
-ul li:nth-child(5) a:before { content: '\f024'; }
-ul li:nth-child(6) a:before { content: '\f0c3'; }
-ul li:nth-child(7) a:before { content: '\f09b'; }
-ul li:nth-child(8) a:before { content: '\f0fa'; }
-ul li:nth-child(10) a:before { content: '\f002'; }
-ul li:nth-child(11) a:before { content: '\f085'; }
-ul li:nth-child(12) a:before { content: '\f08b'; }
+          +rtl()
+            margin-left: 8px
 
 
 </style>

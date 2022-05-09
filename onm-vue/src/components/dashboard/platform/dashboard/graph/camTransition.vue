@@ -1,0 +1,132 @@
+<template>
+
+        <div class="chart-board">
+          <div class="text-area">{{ formTitle }}</div>
+            <div><br></div>
+            <div class="chart-area">
+                <!-- <line-chart :chart-data="chartData" :options="labels" :styles="myStyles"
+                ></line-chart> -->
+                <line-chart v-if="loaded"
+                    :chart-data="datacollection" :options="labels"
+                ></line-chart>
+            </div>
+            
+            <!-- <div class="board-footer">updated 10 minutes ago</div> -->
+        </div>
+</template>
+<script>
+
+import LineChart from '@/components/common/LineChart'
+
+import axios from "axios"
+export default {
+    components: { LineChart },
+    props:['param'],
+    data () {
+        return {
+            datacollection: null,
+            title: '카메라 개통/해지 추이',
+            labels: [], 
+            loaded: false           
+        }
+    },
+   
+    computed: {
+      formTitle () {
+        this.fillData()
+        return this.param.search_type === "D" ? `${this.title}(일간)` : `${this.title}(월간)`
+      },
+
+      myStyles () {
+            return {
+                height: `${this.height}px`,
+            }
+        }
+    },
+    methods: {
+        fillData: function() {
+          this.loaded = false
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_11011/get_cam_transition`
+          // 초기 렌더링 시 요청 파라미터 : page_no, view_cnt
+          // var params = this.param
+          // console.log(this.param)
+          
+          var newParam = this.handleParam()
+          
+
+          axios.post(url, newParam, this.$store.state.headers)
+          .then((response) => {
+            console.log(response.data)
+            var resCode = response.data.res_code;
+            
+            if(resCode == 200){
+              this.labels = this.getLabels(response.data.data.date_list)
+              this.datacollection = {
+                labels: this.labels,
+                datasets: [
+                  {
+                    label:"신규", 
+                    // backgroundColor: 'white',
+                    borderColor:'#D6852F',
+                    data: this.getNewCnt(response.data.data.date_list)
+                  },
+                  {
+                    label:'해지', 
+                    // backgroundColor: '#f87979',
+                    borderColor:'#152FD6',
+                    data: this.getCloseCnt(response.data.data.date_list)
+                  }
+                ]
+              }
+              // console.log(this.datacollection)
+              this.loaded = true
+
+            } else {
+              this.datacollection = null;
+            }
+          })
+          .catch((ex) => {
+            console.log('조회 실패',ex)
+          })
+      },
+
+      getLabels: function(arr){
+        var new_arr = []
+        arr.forEach(function(element){
+            new_arr.push(element.date) 
+        })
+        return new_arr
+      },
+
+      getCloseCnt: function(arr){
+         var new_arr = []
+        arr.forEach(function(element){
+            new_arr.push(element.close_cnt) 
+        })
+        return new_arr
+      },
+
+      getNewCnt: function(arr){
+         var new_arr = []
+        arr.forEach(function(element){
+            new_arr.push(element.open_cnt) 
+        })
+        return new_arr
+      },
+
+      handleParam: function() {
+        var result = {
+          search_type : this.param.search_type,
+          start_date : this.param.start_date.replace(/-/g,""),
+          end_date : this.param.end_date.replace(/-/g,"")
+        }
+        return result
+      }
+      
+
+    }
+}
+</script>
+<style scoped>
+  
+</style>

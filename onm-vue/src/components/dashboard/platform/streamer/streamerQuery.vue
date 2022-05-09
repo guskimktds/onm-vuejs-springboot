@@ -1,44 +1,56 @@
 <template>
-    <div>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+        <base-material-card
+            icon="mdi-magnify"
+            title="스트리머 설정현황 조회"
+            class="px-5 py-3"
+        >
 
-    <!-- search -->
-    <table style="width:100%; right:10px">
-      <tr>
-        <td class="buttons" style="text-align:right;">
-          <router-link to="/platform/streamerPopup" style="color:black;"><button>추가</button></router-link>
-          <router-link to="/platform/streamerPopup" style="color:black;"><button>수정</button></router-link>
-          <button>삭제</button>
-        </td>
-      </tr>
-    </table>
+            <v-row>
+                <v-col cols=auto>
+                    <v-select 
+                        v-if="param"
+                        item-text="server_name" 
+                        item-value="local_gw_id" 
+                        :items="filteredData" 
+                        v-model="param.local_gw_id" 
+                        v-on:change="searchMethod"
+                        label="국사코드"
+                        ></v-select>
+                </v-col>
+            </v-row>
 
-
-    </div>
+        </base-material-card>
+    </v-container>
 </template>
+
 <script>
-// import Popup from '../streamerStatusPopup;'
 
 export default {
-    // methods: {
-    //     search: function() {
-    //         this.$emit('search')
-    //     }
-    // },  
+    props : ['param', 'localGwOptions'],
+    data() {
+        return{
+        }
+    },
+    methods: {
+        searchMethod: function() {
+            this.$emit('search', this.param)
+        }
+    },
+    // select box => version_code가 1302 이상인 국사정보만 노출하도록 추가(21.06.03)
+    computed: {
+        filteredData(){
+            return this.localGwOptions.filter(function(param){
+                return Number(param.version_code) > 1301;
+            });
+        }
+    }
+
 }
-
-// export default new Router({
-//     mode: 'history',
-//     base: process.env.BASE_URL,
-//     routes: [
-//       { 
-//         path: "/popup", 
-//         name: 'popup',
-//         component: Popup
-//       }
-
-//     ]
-// })
-
 </script>
 <style>
     

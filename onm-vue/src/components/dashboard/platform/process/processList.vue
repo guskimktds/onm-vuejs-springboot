@@ -1,44 +1,101 @@
 <template>
-    <div>
-        <table class="contents">
-            <thead>
-                <tr>
-                    <th>국사코드</th><th>프로세스타입</th><th>프로세스명</th><th>상태</th><th>보고일시(Last)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="process in pList" :key="process.code">
-                    <td>{{process.code}}</td>
-                    <td>{{process.type}}</td>
-                    <td>{{process.name}}</td>
-                    <td>{{process.status}}</td>
-                    <td>{{process.lastDate}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+    >
+
+    <base-material-card
+        color="orange"
+        dark
+        icon="mdi-keyboard"
+        title="프로세스 현황 LIST"
+        class="px-5 py-3"
+      >
+
+      <v-data-table
+        :headers="headers"
+        :items="pList"
+        :options.sync="options"
+        :server-items-length="resPagingInfo.total_cnt"
+        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+        :header-props="{ sortIcon: null }"
+        class="elevation-1"
+      >
+      <template v-slot:item.proc_status="{item}">
+            <span>{{ switchString(item.proc_status) }}</span>
+      </template>
+
+      </v-data-table>
+
+    </base-material-card>
+  </v-container>
 </template>
+
+
 <script>
 export default {
-    props: ['pList'],
-    // data() {
-    //     return {
-    //         processList: [
-    //             { code: '1', type: 'STM01', name: "STREAMER", status: 'U', lastDate:'2020-12-14 10:20:11'},
-    //             { code: '2', type: 'INT', name: "LV_SAAS_INT", status: 'U', lastDate:'2019-12-14 10:20:11'},
-    //             { code: '3', type: 'CTRL', name: "LV_SAAS_CTRL", status: 'U', lastDate:'2020-12-14 10:20:11'},
-    //             { code: '4', type: 'VA', name: "VMS", status: 'U', lastDate:'2020-11-14 10:20:11'},
-    //             { code: '5', type: 'STM02', name: "STREAMER", status: 'U', lastDate:'2018-12-14 10:20:11'},
-    //             { code: '6', type: 'STM03', name: "STREAMER", status: 'U', lastDate:'2019-09-14 10:20:11'},
-    //             { code: '7', type: 'STM04', name: "STREAMER", status: 'U', lastDate:'2020-10-14 10:20:11'},
-    //         ]
-    //     }
-    // }
-    created() {
-        console.log(this.props)
+  props: ["pList", "resPagingInfo"],
+  data() {
+    return {
+      last:0,
+      listSize : [
+        10, 100, 200
+      ],
+      headers: [
+        { text: '국사코드', value: 'local_gw_id' },
+        { text: '서버명', value: 'hostname'},
+        { text: '프로세스타입', value: 'proc_type' },
+        { text: '프로세스명', value: 'proc_name' },
+        { text: '상태', value: 'proc_status' },
+        { text: '보고일시(Last)', value: 'last_upd_date' },
+      ],
+        dialog: false,
+        dialogDelete: false,
+        editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
+
     }
+  },
+
+  methods: {
+    getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
+    },
+    
+    switchString(values){
+      if(values=='D'){
+        return '미가동'
+      }else if(values=='U'){
+        return '정상'
+      }
+    }
+    
+  },
+
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+  updated() {
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
+      }
+  },
+    
 }
 </script>
+
 <style>
     
 </style>

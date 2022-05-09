@@ -1,19 +1,224 @@
 <template>
-  <div>
-      <p>{{ title }}</p>
-  </div>
+  <!-- <div class="container">
+        <div class="row justify-content-center">
+            <div class="register-form">
+                <form>
+                    
+                    <div class="form-group">
+                            
+                            <input type="text" class="form-control form-control-lg" 
+                            v-model="id" placeholder="사번을 입력하세요">
+                    </div>
+                    <div class="form-group">
+                            
+                            <input type="password" class="form-control form-control-lg"
+                            v-model="password" placeholder="비밀번호를 입력하세요"> 
+                    </div>
+                    <button type="submit" class="btn btn-dark btn-lg btn-block" 
+                    v-on:click="onSubmit(id, password)">Sign In</button>
+                </form>     
+            </div>            
+        </div>
+        <footer class="footer">
+            <span class="copyright"></span>
+            <ul class="footer-link list-inline float-right"></ul>
+        </footer>
+    </div> -->
+    <v-container
+      id="user-profile"
+      fluid
+      tag="section"
+    >
+      <v-card>
+        <v-form justify="center" @keyup.enter="onSubmit(id,password)">
+          <v-container class="py-0">
+            <v-row>
+              <v-col>
+                <v-text-field
+                  v-model="id" 
+                  placeholder="사번을 입력하세요"
+                >
+                </v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  v-model="password" 
+                  type="password"
+                  placeholder="비밀번호를 입력하세요"
+                >                
+                </v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col>
+                <v-btn                 
+                  type="submit"
+                  @click="onSubmit(id, password)"                  
+                >
+                  Login
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        
+      </v-card>
+      <v-card>
+        <v-form justify="center">
+          <v-container class="py-0">
+            <v-row><v-col></v-col></v-row>
+            <v-row>
+              <v-col id="information">
+                <p>
+                  <b>주의</b><br>
+                  로그인 5회 이상 실패시 30분간 로그인 하실 수 없으며, <br>
+                  사번과 비밀번호를 잊으신 경우 포탈 (IDMS)에서 확인하시길 바랍니다.
+                </p>
+                <img src="@/img/exclamationMark.png" id="warn-icon"/>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-card>
+
+    </v-container>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+// import Capcha from '../../utils/capcah'
+// import axios from "axios"
+// const resourceHost = "http://localhost:3000"
+
+// const AppWidth = window.innerWidth
+// const AppHeight = window.innerHeight
+
 export default {
+    components: {
+        // "app-capcha":Capcha
+    },
     data(){        
-        return {
-            title: '로그인(signIn) page'
-        }
+      return {
+        id: '',
+        password: '',
+        msg: {},
+      }
+    },
+    computed: {
+    ...mapState({ 
+      authGroup: 'authGroupId',
+    }),
+  },
+    methods:{
+      onSubmit(id, password) {     
+        //alert("onSubmit"+id+password);
+        //this.$router.push({name:'AccountView'})
+        // return axios.post(`${resourceHost}/login`, { id, password })
+        // //.then(res => {alert(res)})
+        // // .then(() => {
+        // //   // alert('push sign up')
+        // //   // this.$router.push({name:'AccountView'})
+        // // })
+        // .then(this.$router.replace('/account'))
+        // //.then(() => this.redirect())
+        // .catch(({ data }) => (this.msg = data))
+        id=id.replace(/ /gi,"")
+        this.$store
+          .dispatch("LOGIN", { id, password })
+
+          this.$router.replace({name:'GoHome'})
+          
+      },
+      // redirect() {
+        // this.$router.replace('/account')
+        // const { search } = window.location
+  
+        // const tokens = search.replace(/^\?/, "").split("&")
+        // console.log(tokens)
+        // const { returnPath } = tokens.reduce((qs, tkn) => {
+        //   const pair = tkn.split("=")
+        //   qs[pair[0]] = decodeURIComponent(pair[1])
+        //   return qs
+        // }, {})
+        // console.log("redirect")
+
+        // 리다이렉트 처리
+        //alert('returnPath : '+returnPath)
+        //this.$router.push('/signup')
+
+        //this.$router.push({path: "/platform/process", addToHistory: true});
+      // }
     }
 }
 </script>
 
-<style>
 
+<style lang="scss" scoped>
+/* .container { max-width: 900px;}
+.register-form { margin-top: 50px; max-width: 320px;}
+.logo-wrapper { margin-bottom:  40px;}
+.footer { width: 100%; line-height:  40px; margin-top: 50px;} */
+
+.container {
+  max-width: 100vw;
+  max-height: 100vh;
+}
+.register-form {
+  margin-top: 250px;
+  max-width: 320px;
+  max-height: 100vh;
+  margin-bottom: 250px;
+}
+.logo-wrapper {
+  text-align: center;
+  margin-bottom: 1px;
+  .tagline {
+    line-height: 10%;
+    color: #666;
+  }
+ .logo {
+    max-width: 150px;
+    margin: 0 auto;
+  }
+}
+.register-form {
+  .form-group label {
+    font-weight: bold;
+    color: #555;
+  }
+  .accept-terms {
+    margin: 20px 0 40px 0;
+  }
+}
+.footer {
+  width: 100%;
+  font-size: 13px;
+  color: #666;
+  line-height: 140px;
+  border-top: 1px solid #ddd;
+  margin-top: 150px;
+  .list-inline-item {
+    margin-right: 10px;
+  }
+  a {
+    color: #666;
+  }
+}
+
+#warn-icon {
+  width: 50px;
+  height: 50px;
+  transform: rotate(180deg); 
+  transform-origin: left top;
+  position: relative; top:-25px; left:-20px;
+}
+
+#information{
+  margin-left:80px;
+  margin-top:20px;
+  height:120px;
+}
 </style>

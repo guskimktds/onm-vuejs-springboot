@@ -1,25 +1,27 @@
 <template>
-  <content>
-    <p>{{ contents }}</p>
-  </content>
+  <v-content>
+    <!-- <p>{{ contents }}</p> -->
+     <router-view></router-view>     
+  </v-content>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      contents: 'ONM contents'
-    }
-  }
+  // data () {
+  //   return {
+  //     contents: 'ONM contents'
+  //   }
+  // }
 }
 </script>
 
 <style scoped>
-/* content {
-  background: #222;
+content {
+  /* background: #222; */
   padding: 6px;
+  /* margin-left: 10px; */
 }
-p{
+/* p{
   color: lightgreen;
   text-align: center;
 } */

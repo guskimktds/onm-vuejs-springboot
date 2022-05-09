@@ -1,27 +1,77 @@
 <template>
-    <div>
-        <p>검색 화면</p>
-        <div>
-            <input type="text" v-model="param.vscode" placeholder="국사코드">
-            <input type="text" v-model="param.processType" placeholder="프로세스타입">
-            <input type="text" v-model="param.processName" placeholder="프로세스명">
-            <button v-on:click="searchMethod">검색</button>
-        </div>
-    </div>
+    <v-container
+        id="regular-tables"
+        fluid
+        tag="section"
+    >
+        <base-material-card
+            icon="mdi-magnify"
+            title="Process 현황 조회"
+            class="px-5 py-3"
+        >
+
+            <v-row>
+                  <v-radio-group
+                    v-model="status"
+                    row>
+                <v-radio
+                    label="전체"
+                    value="All"
+                ></v-radio>
+                <v-radio
+                    label="정상"
+                    value="U"
+                    ></v-radio>
+                <v-radio
+                    label="미가동"
+                    value="D">
+                </v-radio>
+                </v-radio-group>
+            </v-row>
+
+            <v-row>
+                <v-col cols="3">
+                 <v-select 
+                  item-text="server_name" 
+                  item-value="local_gw_id" 
+                  :items="localGwOptions"
+                  label="국사코드" 
+                  v-model="param.local_gw_id" 
+                  v-on:change="searchMethod"
+                  ></v-select>
+                </v-col>
+                
+                <v-col cols="3">
+                    <v-text-field label="프로세스 타입" placeholder=" " v-model="param.process_type">                        
+                    </v-text-field>
+                </v-col> 
+
+                <v-col cols="3">
+                    <v-btn elevation="2" medium v-on:click="searchMethod">
+                        검색
+                    </v-btn>
+                </v-col>                
+            </v-row>
+   
+        </base-material-card>
+    </v-container>
+
 </template>
 <script>
 export default {
+    props: ['param','localGwOptions'],
     data() {
-        return{
-            param: {
-                vscode: '',
-                processType: '',
-                processName: ''
-            }
+        return {
+            status: 'All'
         }
     },
     methods: {
         searchMethod: function() {
+            if(this.status=="All"){
+                this.param.process_status=''
+            }else{
+                this.param.process_status=this.status
+            }
             this.$emit('search', this.param)
         }
     },  

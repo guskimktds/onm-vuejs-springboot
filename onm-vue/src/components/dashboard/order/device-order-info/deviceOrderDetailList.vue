@@ -1,0 +1,79 @@
+<template>
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+    >
+    <base-material-card
+        color="orange"
+        dark
+        icon="mdi-keyboard"
+        title="단말 오더 상세내역 LIST"
+        class="px-5 py-3"
+      >
+      <v-data-table
+        :headers="headers"
+        :items="dodList"
+        
+        class="elevation-1"
+        :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+        :header-props="{ sortIcon: null }"
+      >
+      </v-data-table>
+    </base-material-card>
+
+  </v-container>  
+</template>
+
+<script>
+export default {
+    props: ['dodList'],
+    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
+    data() {
+    return {
+        dialog: false,
+        dialogDelete: false,
+        editedIndex: -1,
+        options: {},
+        totalList: 0,
+        loading: true,
+        headers: [
+        {
+          text: "거래고유번호", align: "start",
+          sortable: false, value: "guid",
+        },
+        { text: "단말변경 유형코드", value: "termchangecd" },
+        { text: "mac_id", value: "mac_id" },
+        { text: "단말타입", value: "termtype" },
+        { text: "제조사명", value: "mfcname" },
+        { text: "서비스번호", value: "service_no"},
+        { text: "제품코드", value: "productcode" },
+        { text: "모델명", value: "modelname" }
+      ],
+    };
+  },
+
+ methods: {
+      getDataFromApi () {
+        this.loading = true
+        this.$emit("pagination", this.options)
+      }
+    },
+    watch: {
+      options: {
+        handler () {
+          this.getDataFromApi()
+        },
+        deep: true,
+      },
+    },
+    mounted () {
+      this.getDataFromApi()
+    }
+
+}
+
+</script>
+<style>
+
+</style>

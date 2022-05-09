@@ -1,69 +1,192 @@
 <template>
-  <nav>
-      <ul>
-        <li v-on:click="changeTap('platform')"><router-link to="/platform" >VSaaS플랫폼현황</router-link></li>
-        <li v-on:click="changeTap('service')"><router-link to="/service">서비스관리</router-link></li>
-        <li v-on:click="changeTap('voc')"><router-link to="/voc">VOC 관리</router-link></li>
-        <li v-on:click="changeTap('biz')"><router-link to="/biz">사업부서SR처리</router-link></li>
-      </ul>
-  </nav>
+  <!-- <div>
+    <v-toolbar dense>
+      <v-toolbar-items>
+        <v-btn text v-for="menu in menuArray" :key="menu.name" v-on:click="changeTap(menu.children)" :to="menu.path">
+          {{ menu.name }}
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+  </div> -->
+  <v-app-bar
+    id="app-bar"
+    absolute
+    app
+    color="transparent"
+    flat
+    height="75"
+  >
+    <v-toolbar dense>
+      <v-toolbar-items>
+        <!-- <v-btn text v-for="menu in topMenu" :key="menu.menu_name" v-on:click="changeTap(menu.children)" :to="menu.path"> -->
+        <v-btn text v-for="menu in topMenu" 
+          :key="menu.menu_name" 
+          v-on:click="changeTap(menu.menu_id)"
+        >
+          {{ menu.menu_name }}
+        </v-btn>
+      </v-toolbar-items>
+
+      <v-app-bar-nav-icon @click="nav_drawer = !nav_drawer" v-if="$vuetify.breakpoint.xsOnly"></v-app-bar-nav-icon>
+      <!-- <v-toolbar-title>
+        <span class="font-weight-light">{{title}}</span>
+      </v-toolbar-title> -->
+      <v-spacer></v-spacer>
+      <v-toolbar-items v-if="$vuetify.breakpoint.smAndUp">
+        <!-- <v-btn text v-for="link in links" :key="link.icon" :to="link.route">
+          <v-icon>
+            {{ link.icon }}
+          </v-icon>
+          {{ link.text }}
+        </v-btn> -->
+        
+        <!-- <v-btn text 
+          v-if="this.$store.state.isAuthenticated" 
+          :to="'/notice'"
+        >
+        <v-icon>mdi-antenna</v-icon>
+          Notice
+        </v-btn> -->
+
+        <v-btn text 
+          v-if="this.$store.state.isAuthenticated" 
+          :to="'/account'"
+        >
+          <v-icon>mdi-account</v-icon>
+          My Page
+        </v-btn>
+        
+        <v-btn text 
+          v-if="!this.$store.state.isAuthenticated" 
+          :to="'/signin'"
+        >
+          <v-icon>mdi-login</v-icon>
+          login
+        </v-btn>
+        <v-btn text 
+          v-if="this.$store.state.isAuthenticated" 
+          @click.native="signOutClicked" 
+          :to="'/signout'"
+        >
+          <v-icon>mdi-logout</v-icon>
+          logout
+        </v-btn>
+      </v-toolbar-items>
+
+    </v-toolbar>
+
+  </v-app-bar>
 </template>
 
 <script>
+
+
 import EventBus from '../../EventBus';
+
+//로그인 시 서버에서 불러오면 수정해야함
+//import menuArray from '../../mock/menuMock.json';
+import {mapState} from 'vuex'
 
 export default {
   data () {
     return {
-      platform: [
-        {name: 'process 현황', path: '/platform/process'},
-        {name: '카메라상태 현황', path: '/platform/camera'},
-        {name: 'IoT GW 상태현황', path: '/platform/iotgw'},
-        {name: 'va 설정 현황', path: '/platform/va'},
-        {name: '스트리머 관리 현황', path: '/platform/streamer'},
-      ],
-      service: [
-        {name: '계정조회', path: '/service/account-inquiry'},
-        {name: '처리이력관리', path: 'processinglog'},
-        {name: '관리자등록이력', path: 'admin-registlog'},
-        {name: '관리자접속이력', path: 'admin-accesslog'},
-      ],
-      voc: [
-        {name: '사용자정보', path: 'userinfo'},
-        {name: '사용자 상품정보', path: 'user-productinfo'},
-        {name: '사용자 요약정보', path: 'user-summary'},
-        {name: 'VA 상품 및 카메라 대수 확인', path: 'va-product-camera-count'},
-      ],
-      biz: [
-        {name: '고객이전 실행관리', path: 'transfer-execution'},
-        {name: '고객이전 단말상태', path: 'transfer-device-status'},
+      //menuArray: menuArray   
+      //menuArray: []
+      title: 'GiGAeyes O&M',
+      links: [
+        {icon: 'mdi-account', text:'My Page', name:'mypage', route: '/account'},
+        {icon: 'mdi-login', text:'logIn', name:'signin', route: '/signin'},
+        // {icon: 'account_circle2', text:'로그아웃', name:'signout', route: '/signout'},
       ]
     }
   },
   methods: {
-    changeTap(path){
-      console.log(path);
-      if(path === 'platform'){
-        console.log(this.platform)
-        EventBus.$emit('top-path', this.platform);
-      }else if(path === 'service'){
-        console.log(this.service)
-        EventBus.$emit('top-path', this.service);
+    changeTap(param){
+      // console.log(param);
+      var selectMenu = this.subMenu.filter(obj => { return obj['menu_id'] === param})
+      // console.log(selectMenu);
+      var path = selectMenu[0].children[0].children[0].path;
+      this.$router.push(path);
+      EventBus.$emit('top-path-login', selectMenu[0].children);
+
+      var menuName=selectMenu[0].path.replace('/','')
+      console.log(menuName)
+      if(menuName=='platform'){
+        this.$store.commit('MENU', 0)
+        // this.$store.state.menuIndex=0
+      }else if(menuName=='order'){
+        this.$store.commit('MENU', 1)
+        // this.$store.state.menuIndex=1
+      }else if(menuName=='store'){
+        this.$store.commit('MENU', 2)
+        // this.$store.state.menuIndex=2
+      }else if(menuName=='customer'){
+        this.$store.commit('MENU', 3)
+        // this.$store.state.menuIndex=3
+      }else if(menuName=='operation'){
+        this.$store.commit('MENU', 4)
+        // this.$store.state.menuIndex=4
       }
-      else if(path === 'voc'){
-        console.log(this.voc)
-        EventBus.$emit('top-path', this.voc);
-      }
-      else if(path === 'biz'){
-        console.log(this.biz)
-        EventBus.$emit('top-path', this.biz);
-      }
+      console.log(this.$store.state.menuIndex)
+      
+    },
+    signOutClicked: function() {
+      // console.log("signOutClicked :"+this.$store.state.id)
+      console.log(this.$store.state)
+      EventBus.$emit('top-path-logout');
+      this.$store
+          .dispatch("LOGOUT")
+          .then( res => { 
+            console.log(res.status)
+            //
+            // EventBus.$emit('top-path-logout');
+            })
+          //.then(this.$router.replace('/signout'))
+          .catch(({ message }) => (this.msg = message))
     }
+  },
+  computed: {
+    ...mapState({ 
+        // menuArray: 'menu', 
+        topMenu: 'topMenu',
+        subMenu: 'menu',
+      }),
+  },
+  created(){
+    console.log("header.vue created load");
+    console.log(this.$store.getters.getMenus);
+    console.log("env : ",process.env);
+    console.log(process.env);
+    //this.menuArray = this.$store.state.menu;
+    //this.menuArray = this.$store.getters.getMenus;
   }
+  // beforeRouteEnter(to,from,next){
+  //   console.log('beforeRouteEnter : '+'to : ',to,'from: ', from );
+  //   next();
+  // }
+  ,
+  updated() {
+    console.log('header.vue updated')
+  },
+  mounted() {
+    //let res = this.menuArray.filters(it => it.name.includes('/platform'))
+    console.log('header.vue mounted : ')
+  },
 }
 </script>
 
-<style>
+<style scoped>
+/* nav {
+  background: #666;
+  padding: 14px 0;
+}
+a {
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 0;
+  margin-bottom: 40px;
+  cursor: pointer;
+}
 ul {
   list-style-type: none;
   text-align: center;
@@ -71,17 +194,18 @@ ul {
 }
 li {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 15px;
 }
-nav {
-  background: #444;
-  padding: 14px 0;
-  margin-bottom: 40px;
+
+ul a:hover,
+ul a.active {
+  background: lighten(#404040, 7.5%);
 }
-a {
-  color: #fff;
-  text-decoration: none;
-  padding: 14px 0;
-  margin-bottom: 40px;
-}
+
+ul a:before {
+  font: normal 14px fontawesome;
+  top: 15px;
+  left: 18px;
+} */
+
 </style>

@@ -45,6 +45,9 @@ export default {
         errorMessage: ''
         }
     },
+    created() {
+      alert('signup vue created')
+    },
 }
 </script>
 <style lang="scss" scoped>

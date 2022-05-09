@@ -1,0 +1,170 @@
+[{
+        "name": "플랫폼현황",
+        "path": "/platform",
+        "component": "platform",
+        "children": [{
+            "name": "플랫폼현황",
+            "path": "/platform",
+            "component": "platform",
+            "children": [
+                { "name": "대시보드", "path": "/platform/dashboard", "component": "platfrom-dashboard" },
+                { "name": "process 현황", "path": "/platform/process", "component": "process" },
+                { "name": "카메라상태 현황", "path": "/platform/camera", "component": "camera" },
+                { "name": "IoT GW 상태현황", "path": "/platform/iotgw", "component": "iotgw" },
+                { "name": "va 설정 현황", "path": "/platform/va", "component": "va" },
+                { "name": "스트리머 관리 현황", "path": "/platform/streamer", "component": "streamer" },
+                { "name": "개통해지 추이", "path": "/platform/camreg-stat", "component": "camreg-stat" }
+            ]
+        },
+        {
+            "name": "통계",
+            "path": "/platform/stats",
+            "component": "stats",
+            "children": [
+                { "name": "청약 통계", "path": "/platform/order-stats", "component": "order-stats" },
+                { "name": "고객이전 통계", "path": "/platform/customer-transfer-stats", "component": "customer-transfer-stats" },
+                { "name": "상품 통계", "path": "/platform/product-stats", "component": "product-stats" },
+                { "name": "단말 통계", "path": "/platform/device-stats", "component": "device-stats" }
+            ]
+        }]
+    },
+    {
+        "name": "청약정보 관리",
+        "path": "/order",
+        "component": "order",
+        "children": [{
+                "name": "사용자 청약",
+                "path": "/order/user/order-info",
+                "component": "order-user",
+                "children": [
+                    { "name": "사용자 청약 오더 정보", "path": "/order/user/order-info", "component": "order-info" },
+                    { "name": "사용자 청약 오더 상세", "path": "/order/user/order-detail", "component": "order-detail" },
+                    { "name": "사용자 청약 오더 처리 결과", "path": "/order/user-order-result", "component": "user-order-result" },
+                    { "name": "사용자 청약 전화번호", "path": "/order/user-order-phone", "component": "user-order-phone" },
+                    { "name": "KTT 청약정보", "path": "/order/ktt-order", "component": "ktt-order" }
+                ]
+            },
+            {
+                "name": "단말 오더",
+                "path": "/order/device-order-info",
+                "component": "order-device",
+                "children": [
+                    { "name": "단말 청약 오더 정보", "path": "/order/device-order-info", "component": "device-order-info" },
+                    { "name": "단말 청약 오더 처리 결과", "path": "/order/device-order-result", "component": "device-order-result" },
+                    { "name": "인증 대상 단말 정보", "path": "/order/auth-target-device", "component": "auth-target-device" }
+                ]
+            },
+            {
+                "name": "현장 작업자",
+                "path": "/order/worker",
+                "component": "order-worker",
+                "children": [
+                    { "name": "TEMP ID 정보조회", "path": "/order/tempid-info", "component": "tempid-info" },
+                    { "name": "현장작업자 리스트", "path": "/order/workers-info", "component": "workers-info" },
+                    { "name": "현장작업자 로그인이력", "path": "/order/worker-login-history", "component": "worker-login-history" }
+                ]
+            }
+
+        ]
+    },
+    {
+        "name": "매장정보 관리",
+        "path": "/store",
+        "component": "store",
+        "children": [{
+                "name": "매장정보",
+                "path": "/store",
+                "component": "store",
+                "children": [
+                    { "name": "매장정보 조회", "path": "/store/info", "component": "store-info" },
+                    { "name": "매장정보 상세 조회", "path": "/store/store-detail", "component": "store-detail" },
+                    { "name": "매장상품정보 조회", "path": "/store/store-product", "component": "store-product" },
+                    { "name": "상품 요약정보", "path": "/store/product-summary", "component": "product-summary" },
+                    { "name": "VA 상품 및 카메라 대수 확인", "path": "/store/va-cam-count", "component": "va-cam-count" },
+                    { "name": "센서 신청 현황", "path": "/store/sensor-order", "component": "sensor-order" },
+                    { "name": "KTT 정보", "path": "/store/ktt", "component": "store-ktt" }
+                ]
+            },
+            {
+                "name": "단말정보",
+                "path": "/store/device",
+                "component": "device",
+                "children": [
+                    { "name": "카메라 정보 조회", "path": "/store/device-camera", "component": "device-camera" },
+                    { "name": "IoT GW 정보 조회", "path": "/store/device-iotgw", "component": "device-iotgw" },
+                    { "name": "센서 정보 조회", "path": "/store/device-sensor", "component": "device-sensor" }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "사용자정보 관리",
+        "path": "/customer",
+        "component": "customer",
+        "children": [ {
+            "name": "사용자 정보",
+            "path": "/customer",
+            "component": "customer",
+            "children": [
+                { "name": "사용자 전화번호", "path": "/customer/phone", "component": "phone" }
+            ]
+        },
+            {
+                "name": "사용자 활동 정보 관리",
+                "path": "/customer/activity",
+                "component": "activity",
+                "children": [
+                    { "name": "실시간 접속 세션 조회", "path": "/customer/rtime-access-session", "component": "rtime-access-session" },
+                    { "name": "로그인 이력 조회", "path": "/customer/signin-history", "component": "signin-history" },
+                    { "name": "SMS 발송 이력 조회", "path": "/customer/sms-history", "component": "sms-history" },
+                    { "name": "모바일 단말 목록", "path": "/customer/mobile-list", "component": "mobile-list" },
+                    { "name": "푸시발송 이력", "path": "/customer/push-history", "component": "push-history" }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "운영 관리",
+        "path": "/operation",
+        "component": "operation",
+        "children": [{
+                "name": "서비스 기본",
+                "path": "/operation",
+                "component": "operation",
+                "children": [
+                    { "name": "계정/권한 관리", "path": "/operation/account", "component": "account" },
+                    { "name": "[O&M]처리 이력 조회", "path": "/operation/process-history", "component": "process-history" }
+                ]
+            },
+            {
+                "name": "관리자 이력",
+                "path": "/operation/admin-history",
+                "component": "admin-history",
+                "children": [
+                    { "name": "[매장]관리자 접속 이력", "path": "/operation/admin-history", "component": "admin-history" },
+                    { "name": "[매장]관리자 변경 이력", "path": "/operation/change-history", "component": "change-history" }
+                ]
+            },
+            {
+                "name": "코드 설정 관리",
+                "path": "/operation/code",
+                "component": "code",
+                "children": [
+                    { "name": "코드 관리", "path": "/operation/code", "component": "code" },
+                    { "name": "로컬 국사 정보 관리", "path": "/operation/lv", "component": "lv" },
+                    { "name": "Client 단말 관리", "path": "/operation/client-device", "component": "client-device" },
+                    { "name": "코드 마스터 관리", "path": "/operation/code-master", "component": "code-master" }
+                ]
+            },
+            {
+                "name": "고객이전",
+                "path": "/operation/customer-transfer",
+                "component": "customer-transfer",
+                "children": [
+                    { "name": "실행관리", "path": "/operation/customer-transfer", "component": "customer-transfer" },
+                    { "name": "단말상태", "path": "/operation/device-status", "component": "device-status" }
+                ]
+            }
+        ]
+    }
+]

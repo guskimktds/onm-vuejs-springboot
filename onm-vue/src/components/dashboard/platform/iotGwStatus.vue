@@ -1,17 +1,31 @@
-<style src="../../../css/body.css"></style>
-
 <template>
-  <div>
-    <p class="title">{{ title }}</p>
-    <process-query v-bind:search="search"></process-query>
-    <process-list v-bind:pList=pList></process-list>
-  </div>
+    <v-container fluid>
+      <v-card>
+        <process-query 
+          v-on:search="searchToProcess"
+          v-bind:param="searchParam"
+          v-bind:localGwOptions="localGwOptions"
+        ></process-query>
 
+        <process-list v-bind:pList=pList></process-list>
+      </v-card>
+    </v-container>
 </template>
+
 
 <script>
 import List from './iotgw/iotgwList'
 import Query from './iotgw/iotgwQuery'
+
+import EventBus from '../../../EventBus'
+import axios from "axios"
+
+const headers = {
+  "User-Agent": "GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)",
+  "Content-Type": "application/json",
+};
+
+const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_11003/get_iotgw_status`;
 
 export default {
   components: {
@@ -20,21 +34,88 @@ export default {
   },
   data () {
     return {
-      title: 'Iot GW 상태 현황',
-      pList: [
-        { code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
-        { code: 2, totalCnt: 54, normalCnt: 98, waitCnt: 223, procCnt:66, failCnt:54, networkFailCnt:76},
-        { code: 3, totalCnt: 66, normalCnt: 235, waitCnt: 35, procCnt:13, failCnt:999, networkFailCnt:67},
-        { code: 4, totalCnt: 55, normalCnt: 3, waitCnt: 24, procCnt:7, failCnt:2, networkFailCnt:32},
-        { code: 5, totalCnt: 87, normalCnt: 54, waitCnt: 63, procCnt:52, failCnt:11, networkFailCnt:56},
-      ]
+      title: 'IoT GW 상태현황',
+      pList: [],
+      searchParam: {
+          local_gw_id: ''
+      },
+      localGwOptions:[],
+      allOptions:{
+        server_name:"전체",
+        local_gw_id: ""
+      }
     }
   },
+  
+  beforeCreate() {  
+    axios
+    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
+    .then((response) => {
+      this.localGwOptions = response.data.data.local_gw_list;
+      this.localGwOptions.unshift(this.allOptions);
+    
+    })
+    .catch(function (error) {
+        console.log(error);
+        console.log("국사정보 조회실패")
+      })
+      .finally(function () {
+        // always executed
+      });
+  },
+
   methods: {
-    search: function(){
-      console.log("부모 메소드 search 호출");
-    }
-  }
+    searchToProcess: function(params){
+
+      var reqParams = this.handleParams(params);
+
+      axios.post(url, reqParams, headers)
+      .then( (response) => {
+        if(response.data.res_code == 200){
+          this.pList = response.data.data.list;
+        }else if(response.data.res_code==410){
+          alert("로그인 세션이 만료되었습니다.");
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+        }else{
+          this.pList = [];
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log("Error")
+      })
+      .finally(function () {
+        // always executed
+      });
+    },
+
+    handleParams: function (params) {
+
+      let newParams = {};
+
+      if (params.local_gw_id !== undefined && params.local_gw_id !== "") {
+        newParams.local_gw_id = params.local_gw_id;
+      } else if (
+        this.searchParam.local_gw_id !== undefined &&
+        this.searchParam.local_gw_id !== ""
+      ) {
+        newParams.local_gw_id = this.searchParam.local_gw_id;
+      }
+
+      return newParams;
+    },
+    
+    
+  },
+
+  created: function() {
+    this.searchToProcess(this.searchParam);
+  }  
 }
 </script>
 

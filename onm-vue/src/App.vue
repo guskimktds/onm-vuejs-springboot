@@ -1,90 +1,88 @@
 <template> 
     
-  <div id='app'>
-    <div id='navContainer'>
-      <app-sidebar v-bind:subMenus="subMenus"></app-sidebar>
+  <!-- <div id='app'>
+    <div v-show="isShowMenu" id='navContainer'>
+      <app-sidebar></app-sidebar>
     </div>  
     <div id='mainContainer'>
-      <app-topHeader></app-topHeader>
-      <app-header></app-header>    
-      <router-view></router-view>     
-      <app-footer></app-footer>
-    </div>
-  </div>
+      <div id='contentBody'>
+        <app-topMenu></app-topMenu>
+        <div v-show="isShowMenu">
+          <app-header></app-header> 
+        </div> 
+        <app-contents></app-contents> 
+        <router-view></router-view> 
+      </div>
+      <div id='contentFooter'>    
+        <div v-show="isShowMenu">
+          <app-footer></app-footer>
+        </div>
+      </div>
+    </div>asd
+  </div> -->
+  <v-app>
+    <!-- <app-topMenu></app-topMenu> -->
+    <app-header></app-header> 
+    <app-sidebar></app-sidebar>
+    <app-contents></app-contents> 
+
+  </v-app>
 </template>
 
 <script>
 
-import TopMenu from './components/layout/topMenu.vue'
-import Header from './components/layout/header.vue'
-//import Contents from './components/layout/contents.vue'
+// import TopMenu from './components/layout/topMenu.vue'
 import Sidebar from './components/layout/sidebar.vue'
-import Footer from './components/layout/footer.vue'
+import Header from './components/layout/header.vue'
+import Contents from './components/layout/contents.vue'
+// import Footer from './components/layout/footer.vue'
 
-// import PlatformMain from './components/dashboard/platformMain.vue'
-// import ServiceMain from './components/dashboard/serviceMain.vue'
-// import VocMain from './components/dashboard/vocMain.vue'
-// import BizMain from './components/dashboard/bizMain.vue'
-//import Header from './components/layout/header.vue'
-
-// const menuObject = {
-//   platfrom: [
-//     {name: 'process 현황', path: 'process'},
-//     {name: '카메라상태 현황', path: 'camera'},
-//     {name: 'va 설정 현황', path: 'va'},
-//     {name: '스트리머 관리 현황', path: 'streamer'},
-//   ],
-//   service: [
-//     {name: '사용자정보', path: 'userinfo'},
-//     {name: '사용자 상품정보', path: 'user-productinfo'},
-//     {name: '사용자 요약정보', path: 'user-summary'},
-//     {name: 'VA 상품 및 카메라 대수 확인', path: 'va-product-camera-count'},
-//   ]
-// }
+//import store from './store'
 
 export default {
   name: 'App',
   components: {
-    // 'platform-main': PlatformMain,
-    // 'service-main': ServiceMain,
-    // 'voc-main': VocMain,
-    // 'biz-main': BizMain,
     'app-sidebar': Sidebar,
-    'app-topHeader': TopMenu,
+    // 'app-topMenu': TopMenu,
     'app-header': Header,
-    'app-footer': Footer
+    'app-contents':Contents
+    // 'app-footer': Footer
   },
   data(){
     return {
-      title : 'Root components',
-      subMenus: {
-        platform: [
-          {name: 'process 현황', path: 'process'},
-          {name: '카메라상태 현황', path: 'camera'},
-          {name: 'va 설정 현황', path: 'va'},
-          {name: '스트리머 관리 현황', path: 'streamer'},
-        ],
-        service: [
-          {name: '사용자정보', path: 'userinfo'},
-          {name: '사용자 상품정보', path: 'user-productinfo'},
-          {name: '사용자 요약정보', path: 'user-summary'},
-          {name: 'VA 상품 및 카메라 대수 확인', path: 'va-product-camera-count'},
-        ]
-      }
+      //title : 'Root components',
+      isShowMenu : true, 
+      expandOnHover: false
     }
-  }
+  },
+  created() {
+    console.log("App.vue store 에서 state 읽기");
+    //console.log(store.state.isAuthenticated);
+    //console.log(store.state.menu);
+    //this.isShowMenu = store.state.isAuthenticated
+    console.log(this.$store.state.menu)
+    console.log(this.$store.state.isAuthenticated)
+  },
+  updated() {
+    console.log('App.vue updated');
+    console.log(this.$store.getters.getMenus);
+  },
+  mounted() {
+    console.log('App.vue mounted')
+  },
 }
 </script>
 
 <style scoped>
-#app {
+/* #app {
   display: flex;
   min-height: 100%;
+  min-width: 100%;
 }
 
 #navContainer {
-  width: 230px;
-  height: 100%;
+  width: 250px;
+  height: 100vh;
   background: #404040;
 }
 
@@ -93,6 +91,14 @@ export default {
   padding: 0 3px;
   background: #f5f5f5;
 }
+
+#contentFooter {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:50px;   
+    background:#ccc;
+} */
 
 /* .flex-grid {
   display: flex;

@@ -1,0 +1,9 @@
+[
+    { "local_gw_id": "1", "proc_type": "STM01", "proc_name": "STREAMER", "proc_status": "U", "last_upd_date":"2020-12-14 10:20:11"},
+    { "local_gw_id": "2", "proc_type": "INT", "proc_name": "LV_SAAS_INT", "proc_status": "U", "last_upd_date":"2019-12-14 10:20:11"},
+    { "local_gw_id": "3", "proc_type": "CTRL", "proc_name": "LV_SAAS_CTRL", "proc_status": "U", "last_upd_date":"2020-12-14 10:20:11"},
+    { "local_gw_id": "4", "proc_type": "VA", "proc_name": "VMS", "proc_status": "U", "last_upd_date":"2020-11-14 10:20:11"},
+    { "local_gw_id": "5", "proc_type": "STM02", "proc_name": "STREAMER", "proc_status": "U", "last_upd_date":"2018-12-14 10:20:11"},
+    { "local_gw_id": "6", "proc_type": "STM03", "proc_name": "STREAMER", "proc_status": "U", "last_upd_date":"2019-09-14 10:20:11"},
+    { "local_gw_id": "7", "proc_type": "STM04", "proc_name": "STREAMER", "proc_status": "U", "last_upd_date":"2020-10-14 10:20:11"}
+]

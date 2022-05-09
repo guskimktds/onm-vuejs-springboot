@@ -1,40 +1,52 @@
 <template>
-    <div>
-        <table class="contents">
-            <thead>
-                <tr>
-                    <th>국사코드</th>
-                    <th>전체</th>
-                    <th>정상</th>
-                    <th>개통대기</th>
-                    <th>개통진행</th>
-                    <th>개통실패</th>
-                    <th>네트워크장애</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in pList" :key="item.code">
-                    <td>{{item.code}}</td>
-                    <td>{{item.totalCnt}}</td>
-                    <td>{{item.normalCnt}}</td>
-                    <td>{{item.waitCnt}}</td>
-                    <td>{{item.procCnt}}</td>
-                    <td>{{item.failCnt}}</td>
-                    <td>{{item.networkFailCnt}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+    >
+
+    <base-material-card
+        color="orange"
+        dark
+        icon="mdi-keyboard"
+        title="IoT GW 현황 LIST"
+        class="px-5 py-3"
+      >
+
+        <v-data-table
+          :headers="headers"
+          :items="pList"
+          item-key="id"
+          class="elevation-1"
+          :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+          :header-props="{ sortIcon: null }"
+        >
+        </v-data-table>
+
+    </base-material-card>
+  </v-container>
 </template>
+
 <script>
 export default {
     props: ['pList'],
-    //{ code: 1, totalCnt: 1000, normalCnt: 103, waitCnt: 123, procCnt:43, failCnt:89, networkFailCnt:33},
-    created() {
-        console.log(this.props)
+    data() {
+      return {
+        headers: [
+          { text: '국사코드', value: 'local_gw_id' },
+          { text: '전체', value: 'total_cnt' },
+          { text: '정상', value: 'normal_cnt' },
+          { text: '개통대기', value: 'waiting_cnt' },
+          { text: '개통진행', value: 'proc_cnt' },
+          { text: '개통실패', value: 'disconn_cnt' },
+          { text: '네트워크장애', value: 'fail_cnt' },
+
+        ]
+      }
     }
 }
 </script>
+
 <style>
     
 </style>

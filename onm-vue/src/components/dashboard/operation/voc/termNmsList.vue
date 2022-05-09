@@ -1,0 +1,127 @@
+<template>
+  <v-container
+      id="regular-tables"
+      fluid
+      tag="section"
+  >
+    <base-material-card
+      color="orange"
+      dark
+      icon="mdi-keyboard"
+      title="단말 오더 nms 전송 LIST"
+      class="px-5 py-3"
+    >
+        <v-data-table
+          :headers="headers"
+          :items="pList"
+          :options.sync="options"
+          :server-items-length="resPagingInfo.total_cnt"
+          class="elevation-1"
+          @click:row="handleClick"
+          :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
+          :header-props="{ sortIcon: null }"
+        >
+        <template v-slot:item.oder_div_code="{item}">
+              <span>{{ switchString(item.oder_div_code) }}</span>
+        </template>
+        <template v-slot:item.change_ared_cd="{item}">
+                <span>{{ switchString2(item.change_ared_cd) }}</span>
+        </template> 
+        </v-data-table>
+         
+
+    </base-material-card>
+  </v-container>
+</template>
+
+<script>
+
+export default {
+    props: ['pList','resPagingInfo'],
+    data() {
+      return {
+      last: 0,
+      dialog: false,
+      dialogDelete: false,
+      editedIndex: -1,
+      options: {},
+      totalList: 0,
+      loading: true,
+        headers: [
+          {
+            text: '분류',
+            align: 'start',
+            sortable: false,
+            value: 'oder_div_code',
+          },
+          { text: '인터넷서비스계약ID', value: 'psaid' },
+          { text: '접수일자', value: 'receipt_date'},
+          { text: '오더번호', value: 'oder_no'},
+          { text: '오더순번', value: 'oder_seq' },
+          { text: '계약ID', value: 'said' },
+          { text: '처리희망일자', value: 'appoint_date' },
+          { text: '수용국사코드', value: 'svc_ofc_code' },
+          { text: '수용국사명칭', value: 'svc_ofc_nm' },
+          { text: '사업장명', value: 'bizp_nm' },
+          { text: '오더유형', value: 'change_code' },
+          { text: '변경유형코드', value: 'update_type' },
+          { text: '지번주소우편번호', value: 'arno_adr_zip_code' },
+          { text: '지번주소기본내용', value: 'arno_adr_bas_sbst'},
+          { text: '지번주소상세내용', value: 'arno_adr_dtl_sbst' },
+          { text: '도로명우편번호', value: 'road_nadr_zip_code' },
+          { text: '도로명주소기본내용', value: 'road_nadr_bas_sbst' },
+          { text: '도로명주소상세내용', value: 'road_nadr_dtls_bst' },
+          { text: '영업대표사번', value: 'sales_manid' },
+          { text: '영업대표명', value: 'sales_mannm' },
+          { text: '영업대표번호', value: 'sales_mantelno' },
+          { text: '연관오더번호', value: 'corr_orderno' },
+          { text: '전입/전출', value: 'change_ared_cd' },
+        ]
+      }
+    },
+    methods:{
+     handleClick: function(value){
+      this.$emit("child", value);
+    },
+      getDataFromApi() {
+      this.loading = true;
+      this.$emit("pagination", this.options);
+    },
+      switchString(values){
+      if(values==='1'){
+        return '오더'
+      }else if(values==='2'){
+        return 'AS'
+      }
+    },
+    switchString2(values){
+      if(values==='I'){
+        return '전입'
+      }else if(values==='O'){
+        return '전출'
+      }
+    }
+  },
+
+  watch: {
+    options: {
+      handler() {
+        this.getDataFromApi();
+      },
+      deep: true,
+    },
+  },
+  updated() {
+      if(this.last!==this.resPagingInfo.total_cnt){
+        this.options.page=1
+      }
+      if(this.resPagingInfo.total_cnt!==undefined){
+      this.last=this.resPagingInfo.total_cnt
+      }
+  },
+    
+}
+</script>
+
+<style scoped>
+</style>>

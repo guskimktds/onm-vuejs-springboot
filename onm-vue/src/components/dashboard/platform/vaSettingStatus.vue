@@ -1,57 +1,111 @@
-<style src="../../../css/body.css"></style>
-
 <template>
-  <div>
-    <p class="title">{{ title }}</p>
-    <process-query v-bind:search="search"></process-query>
-    <process-list v-bind:pList=pList></process-list>
-  </div>
-
+    <v-container fluid>
+      <v-card>
+        <va-query 
+          v-on:search="searchToList"
+          v-bind:param="searchParam"
+          v-bind:localGwOptions="localGwOptions"
+        ></va-query>
+        <va-list v-bind:pList="pList"></va-list>
+      </v-card>
+    </v-container>
 </template>
 
 <script>
+
 import List from './va/vaList'
 import Query from './va/vaQuery'
 
+import EventBus from '../../../EventBus'
+import axios from "axios"
+
+
+const headers = {
+  "User-Agent": "GiGA Eyes (compatible;DeviceType/iPhone;DeviceModel/SCH-M20;DeviceId/3F2A009CDE;OSType/iOS;OSVersion/5.1.1;AppVersion/3.0.0;IpAddr/14.52.161.208)",
+  "Content-Type": "application/json",
+};
+
+const url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_11004/get_va_status`;
+
 export default {
   components: {
-    'process-list': List,
-    'process-query': Query
+    vaList : List,
+    vaQuery : Query
   },
   data () {
     return {
       title: 'VA 설정 현황',
-      pList: [
-        { ip:"192.168.91.131", status:"SL", maxMem:400, reqCam:22, analysisCam:8, stopCam:2, value:6, thirdVaStatus:"active", thirdMaxMem:320, thirdReqCam:320, thirdAnalysisCam:0, summaryProc:0, weight:0},
-        { ip:"192.168.91.132", status:"MA", maxMem:400, reqCam:1207, analysisCam:17, stopCam:1, value:16, thirdVaStatus:"active", thirdMaxMem:320, thirdReqCam:320, thirdAnalysisCam:2, summaryProc:1, weight:0},
-        { ip:"192.168.91.133", status:"N1", maxMem:400, reqCam:0, analysisCam:0, stopCam:0, value:0, thirdVaStatus:"stanby", thirdMaxMem:320, thirdReqCam:320, thirdAnalysisCam:0, summaryProc:0, weight:0},
-
-
-
-        // <td>{{item.ip}}</td>
-        // <td>{{item.status}}</td>
-        // <td>{{item.maxMem}}</td>
-        // <td>{{item.reqCam}}</td>
-        // <td>{{item.analysisCam}}</td>
-        // <td>{{item.stopCam}}</td>
-        // <td>{{item.value}}</td>
-        // <td>{{item.thirdVaStatus}}</td>
-        // <td>{{item.thirdMaxMem}}</td>
-        // <td>{{item.thirdAnalysisCam}}</td>
-        // <td>{{item.summaryProc}}</td>
-        // <td>{{item.weight}}</td>
-
-      ]
+      pList: [],
+      searchParam: {
+          local_gw_id: '',
+      },
+      localGwOptions: [],
     }
   },
+
+  mounted() {
+    
+    axios
+    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
+    .then((response) => {
+        this.localGwOptions = response.data.data.local_gw_list;
+        // version_code가 1302이상인 국사를 조회하도록 파라미터 세팅(21.06.03)
+        for(var idx in this.localGwOptions){
+           if(this.localGwOptions[idx].version_code > 1301){
+             var local_gw_id = this.localGwOptions[idx].local_gw_id;
+           }
+        }
+        this.searchParam.local_gw_id = local_gw_id;
+        //
+        
+        // this.searchParam.local_gw_id=this.localGwOptions[0].local_gw_id;
+        this.searchToList(this.searchParam);
+    })
+    .catch(function (error) {
+      console.log(error);
+      console.log("국사정보 조회실패")
+    })
+    .finally(function () {
+    });    
+
+  },
+  
   methods: {
-    search: function(){
-      console.log("부모 메소드 search 호출");
-    }
-  }
+    searchToList: function(params){
+
+      axios.post(url, params, headers)
+        .then( (response) => {
+          console.log(response)
+          if(response.data.res_code == 200){
+            this.pList = response.data.data.list;
+          }else if(response.data.res_code==410){
+            console.log("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else{
+            this.pList = [];
+            console.log(response.data.res_code + " / " + response.data.res_msg);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          console.log("Error")
+        })
+        .finally(function () {
+          // always executed
+        });
+      
+      },
+
+
+
+  },
+
+  
+
 }
 </script>
-
-<style scoped>
-
-</style>
