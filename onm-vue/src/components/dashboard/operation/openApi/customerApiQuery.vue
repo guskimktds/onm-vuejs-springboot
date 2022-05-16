@@ -10,7 +10,7 @@
             class="px-5 py-3"
         >
             <v-row>
-                <v-col cols="3">
+                <!-- <v-col cols="3">
                     <v-menu
                     offset-y
                     min-width="290px"
@@ -28,7 +28,7 @@
                     <v-date-picker v-model="param.start_date" no-title scrollable>
                     </v-date-picker>
                     </v-menu>
-                </v-col>
+                </v-col> -->
                 <v-col cols="3">
                     <v-menu
                     offset-y
@@ -70,7 +70,7 @@ export default {
   methods: {
     searchMethod: function() {
         this.$emit("search", this.param);
-        console.log("보내는거" + this.param)
+        console.log("보내는거" + this.param);
     }
   }, 
 }

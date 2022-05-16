@@ -110,6 +110,7 @@ export default {
         return {
              dialog: false,    
             statusData: [
+                {status_name :'전체' , status_code : 'All'},
                 {status_name :'등록' , status_code : 'A'},
                 {status_name :'전송중' , status_code : 'S'},
                 {status_name :'전송 실패' , status_code : 'F'},
