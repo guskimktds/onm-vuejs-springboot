@@ -48,7 +48,7 @@
             <v-row>
                 <v-col cols="3">
                    <v-text-field  
-                        label="프로세스 ID test"
+                        label="프로세스 ID"
                         v-model="param.send_pid"
                         placeholder=" "
                         ></v-text-field>
