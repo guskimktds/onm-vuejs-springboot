@@ -346,10 +346,13 @@ export default {
     },
 
     save(){
-       console.log(this.editedItem)
       if (this.sendIndex > -1) {
           let params = this.editedItem;
           this.handleDate(params);
+          if(params.end_date==null||params.end_date==''||params.start_date==null||params.start_date==''){
+            alert('날짜값은 반드시 기입하셔야 합니다.')
+            this.close()
+          }else{
           const url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15154/set_srs_main_info`
             axios.post(url, params, this.$store.state.headers)
               .then((response) => {
@@ -357,17 +360,17 @@ export default {
                 var resCode = response.data.res_code;
                   
                 if(resCode == 200){
-                  console.log('성공!')
                   this.$router.push('srs-main')
                 }else{
                   alert("Error");
                 }
               })
               .catch((ex) => {
-                console.log('변경 실패',ex)
+                alert('등록 실패',ex)
               })
             }
         this.close()
+      }
     },
 
     handleDate(params){

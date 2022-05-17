@@ -355,9 +355,14 @@ export default {
     },
 
          save () {
-             console.log('save method call : ',this.editedItem)     
+             console.log('save method call : ',this.editedItem) 
+            if(this.editedItem.end_date==null||this.editedItem.end_date==''||this.editedItem.start_date==null||this.editedItem.start_date==''){
+                alert('날짜값은 반드시 기입하셔야 합니다.')
+                this.close()
+            }else{    
             this.$emit('Items',this.editedItem)
             this.close()
+            }
         },
 
         saveSure(){
