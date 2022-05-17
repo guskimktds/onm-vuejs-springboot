@@ -8,7 +8,7 @@
 
         <base-material-card
         icon="mdi-magnify"
-        title="SRS 카메라 히스토리 조회"
+        title="영상송출 카메라 상태이력 조회"
         class="px-5 py-3"
         >
             <v-row>

@@ -8,7 +8,7 @@
       color="orange"
       dark
       icon="mdi-keyboard"
-      title="SRS 카메라 히스토리 LIST"
+      title="영상송출 카메라 상태이력 LIST"
       class="px-5 py-3"
     >
         <v-data-table

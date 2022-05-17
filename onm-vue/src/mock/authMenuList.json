@@ -244,7 +244,7 @@
                 "component": "srsManagement",
                 "children": [
                     { "name": "영상송출 메인정보", "path": "/operation/srs-main", "component": "srsMain" },
-                    { "name": "영상송출 카메라 히스토리", "path": "/operation/srs-history", "component": "srsHistory" },
+                    { "name": "영상송출 카메라 상태이력", "path": "/operation/srs-history", "component": "srsHistory" },
                     { "name": "영상송출 프로세스조회", "path": "/operation/srs-management", "component": "srsManagement" },
                     { "name": "영상송출 이력조회", "path": "/operation/srs-send-history", "component": "srsSendHistory" }
                 ]

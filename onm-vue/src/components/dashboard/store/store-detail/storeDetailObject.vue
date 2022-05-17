@@ -50,7 +50,7 @@
           md="3">
             <v-text-field
               v-model="pObject.local_gw_id"
-              label="로컬GW아이디"
+              label="국사코드"
               readonly>
             </v-text-field>
         </v-col>

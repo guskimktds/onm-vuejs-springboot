@@ -52,7 +52,7 @@ export default {
         },
         { text: "매장ID", value: "user_id" , class: 'my-header-style'},
         { text: "매장명", value: "user_name" , class: 'my-header-style'},
-        { text: "로컬 GW 아이디", value: "local_gw_id" , class: 'my-header-style'},
+        { text: "국사코드", value: "local_gw_id" , class: 'my-header-style'},
         { text: "전화번호", value: "tel_no" , class: 'my-header-style'},
         { text: "상태코드", value: "status_code" , class: 'my-header-style'},
         { text: "상품코드", value: "prod_code" , class: 'my-header-style'},
