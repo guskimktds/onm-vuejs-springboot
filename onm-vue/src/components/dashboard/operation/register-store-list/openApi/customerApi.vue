@@ -93,7 +93,7 @@ export default {
       resPagingInfo: {},
       storeResPagingInfo:{},
       searchParam: {
-        start_date: dateInfo().threeMonthDashFormat,
+        start_date: dateInfo().currentDateDashFormat,
         end_date: dateInfo().currentDateDashFormat,
         site_id: this.$route.params.site_id,
         api_no: '',

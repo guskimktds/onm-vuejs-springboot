@@ -67,8 +67,9 @@ export default {
         pHeaders:[
             { text: '사이트ID', value: 'site_id' },
             { text: '인터페이스 번호', value: 'api_no' },
+            { text: '설명', value: 'description' },
             { text: '접속량', value: 'access_cnt' },
-            { text: '날짜', value: 'access_date' },
+            { text: '날짜', value: 'access_date' }
         ],
          reqPagingInfo: {
         page_no: 1,
