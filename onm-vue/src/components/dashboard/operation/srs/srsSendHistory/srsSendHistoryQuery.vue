@@ -105,6 +105,7 @@ export default {
         return {
             dialog: false,    
             requestData: [
+                {request_name :'전체' , request_code : ''},
                 {request_name :'신규' , request_code : 'N'},
                 {request_name :'캠상태변경' , request_code : 'C'},
                 {request_name :'프로세스 상태관리' , request_code : 'P'},
@@ -126,6 +127,7 @@ export default {
     },
   methods: {
     searchMethod: function () {
+        this.param.page_no=1
       this.$emit("search", this.param);
     }
   },

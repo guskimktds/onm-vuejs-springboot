@@ -9,7 +9,6 @@
           v-bind:pList=pList
           v-bind:resPagingInfo=resPagingInfo
           @pagination="setToSearchParams"
-          @reset="reset"
         >
         </srs-management-list>
       </v-card>
@@ -46,30 +45,6 @@ export default {
     }
   },
   methods: {
-    reset: function(){
-      console.log(this.searchParam)
-       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15159/get_srs_main_proc_info`
-       var reqParams = this.handleParams(this.searchParam)
-      axios
-        .post(url, reqParams)
-        .then((response) => {
-          console.log(response)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.srs_main_proc_info_list;
-            this.resPagingInfo = response.data.data.paging_info
-            console.log(this.resPagingInfo)
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-    },
     searchTosrsManagementInfo: function(params){
       let url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15159/get_srs_main_proc_info`
       console.log(params)

@@ -6,7 +6,7 @@
     >
         <base-material-card
         icon="mdi-magnify"
-        title="영상송출 PROCESS 조회"
+        title="영상송출 프로세스 조회"
         class="px-5 py-3"
         >
             <v-row>

@@ -8,7 +8,7 @@
       color="orange"
       dark
       icon="mdi-keyboard"
-      title="영상송출 PROCESS LIST"
+      title="영상송출 프로세스 LIST"
       class="px-5 py-3"
     >
       <v-data-table

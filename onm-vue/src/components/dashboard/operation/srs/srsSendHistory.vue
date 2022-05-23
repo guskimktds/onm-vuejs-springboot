@@ -9,7 +9,6 @@
           v-bind:pList=pList
           v-bind:resPagingInfo=resPagingInfo
           @pagination="setToSearchParams"
-          @reset="reset"
         >
         </srs-send-history-list>
       </v-card>
@@ -48,37 +47,13 @@ export default {
   },
 
   methods: {
-      reset: function(){
-      console.log(this.searchParam)
-       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15160/get_srs_send_history`
-       var reqParams = this.handleParams(this.searchParam)
-      axios
-        .post(url, reqParams)
-        .then((response) => {
-          console.log(response)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.srs_send_history_list;
-            this.resPagingInfo = response.data.data.paging_info
-            console.log(this.resPagingInfo)
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-    },
     searchToSrsSendHistory: function(params){
       let url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15160/get_srs_send_history`
       console.log(params)
       var reqParams = this.handleParams(params)      
       console.log('넣어지는 값')
       console.log(reqParams)
-  
+
       axios.post(url, reqParams)
       .then((response) => {
         var resCode = response.data.res_code;
@@ -126,6 +101,7 @@ export default {
 
     handleParams: function(params){
       let newParams = {} 
+      console.log(params)
       if(params.page_no === undefined || params.page_no === ''){
           newParams.page_no = this.reqPagingInfo.page_no
       }else{
