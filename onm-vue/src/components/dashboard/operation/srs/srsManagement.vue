@@ -19,6 +19,7 @@
 import srsManagementQuery from './srsManagement/srsManagementQuery'
 import srsManagementList from './srsManagement/srsManagementList'
 import EventBus from '../../../../EventBus'
+import dateInfo from '../../../utils/common'
 import axios from "axios"
 
 export default {
@@ -39,8 +40,8 @@ export default {
         srs_title : '',
         target_name : '',
         status_code : '',
-        start_date: '',
-        end_date: ''
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
       }
     }
   },
@@ -167,6 +168,15 @@ export default {
       ){
         newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
+
+      if(Number(newParams.start_date)-Number(newParams.end_date)>0){
+        alert('형식에 맞는 날짜 검색값을 입력해주세요')
+        newParams.start_date=dateInfo().lastWeekDashFormat.replace(/-/g,"")
+        newParams.end_date=dateInfo().currentDateDashFormat.replace(/-/g,"")
+        this.searchParam.start_date=dateInfo().lastWeekDashFormat
+        this.searchParam.end_date=dateInfo().currentDateDashFormat
+      }
+
       return newParams
     }
   }

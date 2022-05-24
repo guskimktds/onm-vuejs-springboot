@@ -20,6 +20,7 @@
 <script>
 import SrsMainQuery from './srsMain/srsMainQuery.vue'
 import SrsMainList from './srsMain/srsMainList.vue'
+import dateInfo from '../../../utils/common'
 
 import EventBus from '../../../../EventBus'
 import axios from "axios"
@@ -48,8 +49,8 @@ export default {
        cam_id : '',
        srs_title : '',
        user_id : '',
-       start_date : '',
-       end_date : '',
+       start_date: dateInfo().lastWeekDashFormat,
+       end_date: dateInfo().currentDateDashFormat,
        status_code : '',
       //  paging : true
       },
@@ -268,6 +269,14 @@ export default {
       ){
         newParams.status_code=this.searchParam.status_code
       } 
+
+      if(Number(newParams.start_date)-Number(newParams.end_date)>0){
+        alert('형식에 맞는 날짜 검색값을 입력해주세요')
+        newParams.start_date=dateInfo().lastWeekDashFormat.replace(/-/g,"")
+        newParams.end_date=dateInfo().currentDateDashFormat.replace(/-/g,"")
+        this.searchParam.start_date=dateInfo().lastWeekDashFormat
+        this.searchParam.end_date=dateInfo().currentDateDashFormat
+      }
       
       return newParams
     }
