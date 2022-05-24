@@ -20,6 +20,9 @@
 import srsManagementQuery from './srsManagement/srsManagementQuery'
 import srsManagementList from './srsManagement/srsManagementList'
 import EventBus from '../../../../EventBus'
+import dateInfo from '../../../utils/common'
+
+
 import axios from "axios"
 
 export default {
@@ -36,12 +39,12 @@ export default {
       },
       resPagingInfo: {},
       searchParam: {
+        start_date : dateInfo().lastWeekDashFormat,
+        end_date : dateInfo().currentDateDashFormat,
         cam_id : '',
         srs_title : '',
         target_name : '',
-        status_code : '',
-        start_date: '',
-        end_date: ''
+        status_code : ''
       }
     }
   },

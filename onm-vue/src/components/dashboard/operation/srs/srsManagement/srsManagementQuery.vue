@@ -27,21 +27,21 @@
                     </v-text-field>
                 </v-col>
                 <v-col cols="3">
-                    <v-select 
+                    <v-text-field 
                         item-text="state" 
                         item-value="abbr" 
                         :items="targetData"  
                         label="송출지명" 
                         v-model="param.target_name"
-                     ></v-select>
+                     ></v-text-field>
                 </v-col>
                 <v-col cols="3">
                    <v-select 
-                        item-text="status_name" 
-                        item-value="status_code" 
-                        :items="statusData"
                         label="관리상태" 
-                        v-model="param.status_code"
+                        v-model="statusSelect"
+                        :items="statusData"
+                        item-text="state" 
+                        item-value="abbr" 
                         ></v-select>
                 </v-col> 
                 </v-row>             
@@ -107,21 +107,24 @@
 export default {
  props:['param'],
     data() {
-        return {
-             dialog: false,    
+        return {  
             statusData: [
-                {status_name :'전체' , status_code : 'All'},
-                {status_name :'등록' , status_code : 'A'},
-                {status_name :'전송중' , status_code : 'S'},
-                {status_name :'전송 실패' , status_code : 'F'},
-                {status_name :'전송 중지' , status_code : 'Z'}],
-            targetData: [
-                {state :'YOUTUBE' , abbr : 'YOUTUBE'}]
+                        {state :'전체' , abbr : 'All'},
+                        {state :'등록' , abbr : 'A'},
+                        {state :'전송중' , abbr : 'S'},
+                        {state :'전송 실패' , abbr : 'F'},
+                        {state :'전송 중지' , abbr : 'Z'}],
+            statusSelect:'All'
         }
     },
   methods: {
     searchMethod: function () {
-      this.$emit("search", this.param);
+        if(this.statusSelect=='All'){
+        this.param.status_code=''
+        }else{
+        this.param.status_code=this.statusSelect
+        }
+        this.$emit("search", this.param);
     }
   },
 };
