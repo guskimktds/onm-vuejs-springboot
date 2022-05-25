@@ -9,7 +9,6 @@
           v-bind:pList=pList
           v-bind:resPagingInfo=resPagingInfo
           @pagination="setToSearchParams"
-          @reset="reset"
         >
         </srs-management-list>
       </v-card>
@@ -21,8 +20,11 @@ import srsManagementQuery from './srsManagement/srsManagementQuery'
 import srsManagementList from './srsManagement/srsManagementList'
 import EventBus from '../../../../EventBus'
 import dateInfo from '../../../utils/common'
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 7c728accbc32f2857eba8fba31855de53636b093
 import axios from "axios"
 
 export default {
@@ -44,35 +46,17 @@ export default {
         cam_id : '',
         srs_title : '',
         target_name : '',
+<<<<<<< HEAD
         status_code : ''
+=======
+        status_code : '',
+        start_date: dateInfo().lastWeekDashFormat,
+        end_date: dateInfo().currentDateDashFormat,
+>>>>>>> 7c728accbc32f2857eba8fba31855de53636b093
       }
     }
   },
   methods: {
-    reset: function(){
-      console.log(this.searchParam)
-       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15159/get_srs_main_proc_info`
-       var reqParams = this.handleParams(this.searchParam)
-      axios
-        .post(url, reqParams)
-        .then((response) => {
-          console.log(response)
-          var resCode = response.data.res_code;
-          var resMsg = response.data.res_msg;
-          if(resCode == 200){
-            this.pList = response.data.data.srs_main_proc_info_list;
-            this.resPagingInfo = response.data.data.paging_info
-            console.log(this.resPagingInfo)
-          }else{
-            this.pList = [];
-            this.resPagingInfo = {};
-            alert(resCode + " / " + resMsg);
-          }
-        })
-        .catch((ex) => {
-          console.log('조회 실패',ex)
-        })
-    },
     searchTosrsManagementInfo: function(params){
       let url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15159/get_srs_main_proc_info`
       console.log(params)
@@ -195,6 +179,15 @@ export default {
       ){
         newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
       }
+
+      if(Number(newParams.start_date)-Number(newParams.end_date)>0){
+        alert('형식에 맞는 날짜 검색값을 입력해주세요')
+        newParams.start_date=dateInfo().lastWeekDashFormat.replace(/-/g,"")
+        newParams.end_date=dateInfo().currentDateDashFormat.replace(/-/g,"")
+        this.searchParam.start_date=dateInfo().lastWeekDashFormat
+        this.searchParam.end_date=dateInfo().currentDateDashFormat
+      }
+
       return newParams
     }
   }

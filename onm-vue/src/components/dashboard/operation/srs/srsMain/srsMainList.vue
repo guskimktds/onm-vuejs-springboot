@@ -272,17 +272,11 @@ methods: {
     },
     switchString(values){
       if(values==='A'){
-        return '접수'
-      }else if(values==='D'){
-        return '삭제'
-      }else if(values==='F'){
-        return '실패'
+        return '등록'
       }else if(values==='P'){
-        return '진행중'
+        return '송출준비'
       }else if(values==='S'){
-        return '성공'
-      }else if(values==='Z'){
-        return '카메라 장애'
+        return '송출중'
       }
     },
     switchString2(values){
@@ -294,7 +288,18 @@ methods: {
         return '삭제대기'
       }else if(values==='A'){
         return '등록'
+      }else if(values=='F400'){
+        return '카메라영상일시적오류'
+      }else if(values=='F410'){
+        return '카메라영상play일시적오류'
+      }else if(values=='F510'){
+        return 'SecureToken failed'
+      }else if(values=='F520'){
+        return 'Cannot open Connection'
+      }else if(values=='F530'){
+        return '로그 파일 사이즈 변경없음(송출중단)'
       }
+
     },
     editItem (item) { 
       this.editedIndex = this.pList.indexOf(item)

@@ -8,7 +8,7 @@
 
         <base-material-card
         icon="mdi-magnify"
-        title="SRS 카메라 히스토리 조회"
+        title="영상송출 카메라 상태이력 조회"
         class="px-5 py-3"
         >
             <v-row>
@@ -50,13 +50,6 @@
                     <v-date-picker v-model="param.end_date" no-title scrollable>
                     </v-date-picker>
                     </v-menu>
-                </v-col>
-                 <v-col cols="2">
-                    <v-switch
-                        v-model="param.date_yn"                    
-                        :label="`날짜검색`"
-                        color="secondary"
-                    ></v-switch>
                 </v-col>
 
             </v-row>

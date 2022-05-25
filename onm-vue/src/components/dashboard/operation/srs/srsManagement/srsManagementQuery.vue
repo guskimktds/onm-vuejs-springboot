@@ -6,7 +6,7 @@
     >
         <base-material-card
         icon="mdi-magnify"
-        title="영상송출 PROCESS 조회"
+        title="영상송출 프로세스 조회"
         class="px-5 py-3"
         >
             <v-row>
@@ -107,6 +107,7 @@
 export default {
  props:['param'],
     data() {
+<<<<<<< HEAD
         return {  
             statusData: [
                         {state :'전체' , abbr : 'All'},
@@ -115,16 +116,33 @@ export default {
                         {state :'전송 실패' , abbr : 'F'},
                         {state :'전송 중지' , abbr : 'Z'}],
             statusSelect:'All'
+=======
+        return {
+            dialog: false,    
+            statusData: [
+                {status_name :'전체' , status_code : ''},
+                {status_name :'등록' , status_code : 'A'},
+                {status_name :'전송중' , status_code : 'S'},
+                {status_name :'전송 실패' , status_code : 'F'},
+                {status_name :'전송 중지' , status_code : 'Z'}],
+            targetData: [
+                {state :'YOUTUBE' , abbr : 'YOUTUBE'}]
+>>>>>>> 7c728accbc32f2857eba8fba31855de53636b093
         }
     },
   methods: {
     searchMethod: function () {
+<<<<<<< HEAD
         if(this.statusSelect=='All'){
         this.param.status_code=''
         }else{
         this.param.status_code=this.statusSelect
         }
         this.$emit("search", this.param);
+=======
+      this.param.page_no=1
+      this.$emit("search", this.param);
+>>>>>>> 7c728accbc32f2857eba8fba31855de53636b093
     }
   },
 };

@@ -52,7 +52,6 @@ export default {
         cam_id:'',
         status_code:'',
         use_yn:'',
-        date_yn: true
       }
     }
   },
@@ -104,9 +103,7 @@ export default {
 
     handleParams: function(params){
       let newParams = {}
-      if(params.date_yn==undefined){
-        params.date_yn=this.searchParam.date_yn
-      }
+
       if(params.page_no === undefined || params.page_no === ''){
         newParams.page_no = this.reqPagingInfo.page_no
       }else{
@@ -118,8 +115,6 @@ export default {
       }else{
         newParams.view_cnt = params.view_cnt
       }
-
-     if(params.date_yn==true){
         if(params.start_date !== undefined && params.start_date !== ''){
           newParams.start_date = params.start_date.replace(/-/g,"")
         }else if(
@@ -137,7 +132,6 @@ export default {
         ){
           newParams.end_date=this.searchParam.end_date.replace(/-/g,"")
         }
-     }
       
       if(params.cam_id !== undefined && params.cam_id !== ''){
         newParams.cam_id = params.cam_id

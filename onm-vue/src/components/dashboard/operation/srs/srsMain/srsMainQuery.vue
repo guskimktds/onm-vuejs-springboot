@@ -280,6 +280,7 @@ export default {
                 paging : false
             },
             statusData: [
+                {status_name :'전체' , status_code : ''},
                 {status_name :'등록' , status_code : 'A'},
                 {status_name :'송출 준비' , status_code : 'P'},
                 {status_name :'송출중' , status_code : 'S'},
@@ -355,9 +356,14 @@ export default {
     },
 
          save () {
-             console.log('save method call : ',this.editedItem)     
+             console.log('save method call : ',this.editedItem) 
+            if(this.editedItem.end_date==null||this.editedItem.end_date==''||this.editedItem.start_date==null||this.editedItem.start_date==''){
+                alert('날짜값은 반드시 기입하셔야 합니다.')
+                this.close()
+            }else{    
             this.$emit('Items',this.editedItem)
             this.close()
+            }
         },
 
         saveSure(){

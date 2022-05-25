@@ -52,7 +52,7 @@ export default {
         { text: "매장명", value: "user_name" },
         { text: "매장 전화번호", value: "tel_no" },
         { text: "상태코드", value: "status_code" },
-        { text: "로컬융합GW아이디", value: "local_gw_id" },
+        { text: "국사코드", value: "local_gw_id" },
         { text: "해상도", value: "resolution" },
         { text: "전체카메라대수", value: "total_cnt" },
         { text: "정상카메라대수", value: "normal_cnt" },
