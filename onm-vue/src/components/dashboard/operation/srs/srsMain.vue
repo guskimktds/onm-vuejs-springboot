@@ -146,10 +146,13 @@ export default {
                 this.$fire({
                        title: "등록 되었습니다.",
                        type : "success"})
+              }else if(resCode == 204){
+                this.$fire({
+                       title: "중복된 요청입니다.",
+                       type : "error"})
               }else{
                 this.$fire({
                        title: "등록 실패하였습니다.",
-                       html: resMsg,
                        type : "error"})
               }
             })

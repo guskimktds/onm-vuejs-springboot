@@ -280,6 +280,7 @@ export default {
                 paging : false
             },
             statusData: [
+                {status_name :'전체' , status_code : ''},
                 {status_name :'등록' , status_code : 'A'},
                 {status_name :'송출 준비' , status_code : 'P'},
                 {status_name :'송출중' , status_code : 'S'},

@@ -361,6 +361,10 @@ export default {
                   
                 if(resCode == 200){
                   this.$router.push('srs-main')
+                }else if(resCode == 204){
+                  this.$fire({
+                       title: "중복된 요청입니다.",
+                       type : "error"})
                 }else{
                   alert("Error");
                 }
