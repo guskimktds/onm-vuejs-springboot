@@ -108,9 +108,9 @@ export default {
  props:['param'],
     data() {
         return {
-             dialog: false,    
+            dialog: false,    
             statusData: [
-                {status_name :'전체' , status_code : 'All'},
+                {status_name :'전체' , status_code : ''},
                 {status_name :'등록' , status_code : 'A'},
                 {status_name :'전송중' , status_code : 'S'},
                 {status_name :'전송 실패' , status_code : 'F'},
@@ -121,6 +121,7 @@ export default {
     },
   methods: {
     searchMethod: function () {
+      this.param.page_no=1
       this.$emit("search", this.param);
     }
   },
