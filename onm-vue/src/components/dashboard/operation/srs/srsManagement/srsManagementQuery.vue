@@ -107,16 +107,6 @@
 export default {
  props:['param'],
     data() {
-<<<<<<< HEAD
-        return {  
-            statusData: [
-                        {state :'전체' , abbr : 'All'},
-                        {state :'등록' , abbr : 'A'},
-                        {state :'전송중' , abbr : 'S'},
-                        {state :'전송 실패' , abbr : 'F'},
-                        {state :'전송 중지' , abbr : 'Z'}],
-            statusSelect:'All'
-=======
         return {
             dialog: false,    
             statusData: [
@@ -127,22 +117,12 @@ export default {
                 {status_name :'전송 중지' , status_code : 'Z'}],
             targetData: [
                 {state :'YOUTUBE' , abbr : 'YOUTUBE'}]
->>>>>>> 7c728accbc32f2857eba8fba31855de53636b093
         }
     },
   methods: {
     searchMethod: function () {
-<<<<<<< HEAD
-        if(this.statusSelect=='All'){
-        this.param.status_code=''
-        }else{
-        this.param.status_code=this.statusSelect
-        }
-        this.$emit("search", this.param);
-=======
       this.param.page_no=1
       this.$emit("search", this.param);
->>>>>>> 7c728accbc32f2857eba8fba31855de53636b093
     }
   },
 };
