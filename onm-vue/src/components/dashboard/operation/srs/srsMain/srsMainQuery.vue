@@ -219,6 +219,24 @@
                     </v-date-picker>
                     </v-menu>
                 </v-col>
+                
+                <v-col cols="6">
+                    <v-menu
+                    offset-y
+                    min-width="290px"
+                    >
+                 <template v-slot:activator="{ on, attrs }">
+                        <v-select
+                        v-model="editedItem.bgm"
+                        label="음원"
+                        prepend-icon="mdi-music"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        ></v-select>
+                    </template>
+                    </v-menu>
+                </v-col>
                             </v-row>
                             </v-container>
                         </v-card-text>
