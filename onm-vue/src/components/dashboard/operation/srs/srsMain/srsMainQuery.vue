@@ -109,6 +109,7 @@
                             class="mb-2"
                             v-bind="attrs"
                             v-on="on"
+                            v-on:click="bgmList"
                         >
                             등록
                         </v-btn>
@@ -221,21 +222,15 @@
                 </v-col>
                 
                 <v-col cols="6">
-                    <v-menu
-                    offset-y
-                    min-width="290px"
-                    >
-                 <template v-slot:activator="{ on, attrs }">
                         <v-select
-                        v-model="editedItem.bgm"
+                        item-text="code_name" 
+                        item-value="code_id" 
+                        :items="bgmList"
                         label="음원"
                         prepend-icon="mdi-music"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
+                        v-model="editedItem.bgm_list"
+
                         ></v-select>
-                    </template>
-                    </v-menu>
                 </v-col>
                             </v-row>
                             </v-container>
@@ -286,7 +281,7 @@ export default {
  props:['param'],
     data() {
         return {
-            dialog: false,    
+        dialog: false,
             editedItem: {
                 user_id: '',
                 cam_id: '',
@@ -295,7 +290,8 @@ export default {
                 srs_title : '',
                 start_date: '',
                 end_date : '',
-                paging : false
+                paging : false,
+                bgm_list : '0'
             },
             statusData: [
                 {status_name :'전체' , status_code : ''},
@@ -372,7 +368,10 @@ export default {
     searchMethod: function () {
       this.$emit("search", this.param);
     },
-
+    bgmList: function () {
+        console.log("확인");
+        this.$emit("bgmList", this.param);
+    },
          save () {
              console.log('save method call : ',this.editedItem) 
             if(this.editedItem.end_date==null||this.editedItem.end_date==''||this.editedItem.start_date==null||this.editedItem.start_date==''){

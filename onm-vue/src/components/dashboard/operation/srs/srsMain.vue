@@ -3,7 +3,9 @@
       <v-card>
       <srs-main-query
           v-on:search="searchToSrsMainInfo"
+          v-on:bgmList="bgmSelecteList"
           v-bind:param=searchParam
+          v-bind:bgmList=bgmList
           @Items="saveItem"
         ></srs-main-query>
         <srs-main-list 
@@ -12,7 +14,7 @@
           @pagination="setToSearchParams"
           @reset="reset"
         >
-        </srs-main-list>+
+        </srs-main-list>
       </v-card>
     </v-container>
 </template>
@@ -52,8 +54,9 @@ export default {
        start_date: dateInfo().lastWeekDashFormat,
        end_date: dateInfo().currentDateDashFormat,
        status_code : '',
+       code_master_id : 'SRS',
       //  paging : true
-      },
+      }
     }
   },
 
@@ -130,7 +133,39 @@ export default {
       })
       
     },
-
+    bgmSelecteList: function(params){
+      let url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15161/get_srs_bgm`
+      console.log(params)
+      var reqParams = this.handleParams(params)      
+      console.log('넣어지는 값')
+      console.log(reqParams)
+  
+      axios.post(url, reqParams, headers)
+      .then((response) => {
+        var resCode = response.data.res_code;
+         
+        if(resCode == 200){
+          this.bgmList = response.data.data.bgm_list;
+        }else if(resCode==204){
+            this.bgmList = [];
+            console.log("BGM Data가 없습니다.");
+        }else if(resCode==410){
+          console.log("로그인 세션이 만료되었습니다.");
+          EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+        }else{
+          this.bgmList = [];
+        }
+      })
+      .catch((ex) => {
+        console.log('조회 실패',ex)
+      })
+      
+    },
     saveItem(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15154/set_srs_main_info`
         const reqParams = this.handleParams(params)
@@ -178,7 +213,6 @@ export default {
 
       this.searchToSrsMainInfo(params)
     },
-
     handleParams: function(params){
       let newParams = {}
       // if(params.paging == true){
@@ -271,7 +305,12 @@ export default {
         this.searchParam.status_code!==""
       ){
         newParams.status_code=this.searchParam.status_code
-      } 
+      }
+      if(params.code_master_id === undefined || params.code_master_id === ''){
+        newParams.code_master_id = this.params.code_master_id
+      }else{
+        newParams.code_master_id = params.code_master_id
+      }
 
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){
         alert('형식에 맞는 날짜 검색값을 입력해주세요')

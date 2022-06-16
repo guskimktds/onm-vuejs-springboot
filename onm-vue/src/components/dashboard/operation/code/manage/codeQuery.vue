@@ -262,7 +262,7 @@ export default {
     computed: {
       formTitle () {
         // return this.editedIndex === -1 ? '등록' : '수정'
-        return '등록1'
+        return '등록'
       },
       // select box => center 국사정보와 version_code가 1302이상인 
       // 국사정보만 노출하도록 추가(21.06.03)
