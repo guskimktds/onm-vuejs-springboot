@@ -63,9 +63,9 @@ export default new Vuex.Store({
         LOGIN(state, param) {
             state.accessToken = param
             state.isAuthenticated = true
-            state.topMenu = param.data.auth_group_list[0].auth_group_list
-            state.authGroupId = param.data.auth_group_list[0].auth_group_id
-            state.menu = menuMock
+            state.topMenu = param.data.menu_list
+            state.authGroupId = param.data.auth_group_id
+            state.menu = param.data.menu_list
             state.onmUserId = param.id
         },
         LOGOUT(state) {
@@ -95,13 +95,16 @@ export default new Vuex.Store({
         LOGIN({ commit }, { id, password }) {
             // commit("LOGIN", { menuMock, id, password })
             var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
+            // var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10010/user_login`
             // var url = `/${process.env.VUE_APP_API_VERSION}/ONM_10001/user_login`
             var params = {
                 login_id: id,
                 login_pwd: password
             }
+            // res.header("Access-Control-Allow-Origin", "*");
             //console.log(params)
             return axios.post(url, params, this.headers)
+            // return axios.get(url)
                 .then((response) => {
                     console.log("####  Cookie 1####");
                     // var cookie = response.headers.get('Set-Cookie');
@@ -111,6 +114,10 @@ export default new Vuex.Store({
                     var resCode = response.data.res_code
                     var resMsg = response.data.res_msg
                     var data = response.data.data
+
+                    console.log("================== menus");
+                    console.log(data.menus);
+                    console.log(menuMock);
 
                     if(resCode == 200){
                         commit("LOGIN", { data, id })
