@@ -52,7 +52,7 @@
                       <v-row>
                         <v-col cols="6">
                           <v-text-field
-                            v-model="editedItem.target_stream_key"
+                            v-model.trim="editedItem.target_stream_key"
                             label="스트림 키"
                             counter
                             maxlength="512"
@@ -60,7 +60,7 @@
                         </v-col>
                         <v-col cols="6">
                           <v-text-field
-                            v-model="editedItem.target_stream_url"
+                            v-model.trim="editedItem.target_stream_url"
                             label="스트림 URL"
                             counter
                             maxlength="512"

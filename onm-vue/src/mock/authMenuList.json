@@ -154,7 +154,8 @@
                 "icon":"mdi-desktop-mac",
                 "component": "operation",
                 "children": [
-                    { "name": "계정/권한 관리", "path": "/operation/account", "component": "account" }
+                    { "name": "계정/권한 관리", "path": "/operation/account", "component": "account" },
+                    { "name": "권한메뉴그룹 관리", "path": "/operation/role", "component": "role" }
                 ]
             },
             {
