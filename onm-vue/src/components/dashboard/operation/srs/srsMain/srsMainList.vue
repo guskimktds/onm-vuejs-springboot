@@ -179,18 +179,6 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog>
-
-              <v-dialog v-model="dialogResend" max-width="500px">
-                <v-card>
-                  <v-card-title class="headline">재송출 하시겠습니까?</v-card-title>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="closeResend">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="send">OK</v-btn>
-                    <v-spacer></v-spacer>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
           </template>
 
        <template v-slot:item.actions="{ item }">
@@ -232,7 +220,6 @@ export default {
         last:0,
         dialog: false,
         dialogDelete: false,
-        dialogResend:false,
         editedIndex: -1,
         options: {},
         loading: true,
@@ -242,7 +229,7 @@ export default {
           { text: '송출지 스트림 url', value: 'target_stream_url' },
           { text: '입력영상 URL', value: 'input_stream_url' },
           { text: '관리코드', value: 'mgt_status' },
-          { text: '송출 상태코드', value: 'status_code' },
+          { text: '카메라 상태코드', value: 'status_code' },
           { text: '송출지명', value: 'target_name' },
           { text: '송출제목', value: 'srs_title' },
           { text: '송출 시작일시', value: 'start_date' },
@@ -344,11 +331,9 @@ methods: {
         this.sendIndex = this.pList.indexOf(item);
         this.sendedItem.srs_seq = this.pList[this.sendIndex].srs_seq;
         this.sendedItem.cam_id = this.pList[this.sendIndex].cam_id;
-        this.sendedItem.status_code = this.pList[this.sendIndex].status_code;
-        this.dialogResend=true;
+        this.send();
       },
       send(){
-        if(this.sendedItem.status_code!='P'){
           var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15157/send_srs_process`
             var params = this.sendedItem;
             axios.post(url, params, this.$store.state.headers)
@@ -358,18 +343,13 @@ methods: {
                   
                 if(resCode == 200){
                     alert('전송되었습니다');
-                    this.dialogResend = false
                 }else{
                   alert("Error");
-                  this.dialogResend = false
                 }
               })
               .catch((ex) => {
                 console.log('전송 실패',ex)
               })
-        } else {
-          alert("이미 송출 중인 상태 입니다.");
-        }
       },
       save () {
         if (this.editedIndex > -1) {
@@ -487,14 +467,6 @@ methods: {
       
       closeDelete () {
         this.dialogDelete = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-
-      closeResend () {
-        this.dialogResend = false
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1

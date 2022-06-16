@@ -127,7 +127,7 @@
                                 md="6"
                                 >
                                <v-text-field
-                                    v-model.trim="editedItem.user_id"
+                                    v-model="editedItem.user_id"
                                     label="사용자 ID"
                                     counter
                                     maxlength="10"
@@ -139,7 +139,7 @@
                                 md="6"
                                 >
                                <v-text-field
-                                    v-model.trim="editedItem.cam_id"
+                                    v-model="editedItem.cam_id"
                                     label="카메라 ID"
                                     counter
                                     maxlength="20"
@@ -151,7 +151,7 @@
                                 md="6"
                                 >
                                <v-text-field
-                                    v-model.trim="editedItem.target_stream_key"
+                                    v-model="editedItem.target_stream_key"
                                     label="스트림 키"
                                     counter
                                     maxlength="512"
@@ -163,7 +163,7 @@
                                 md="6"
                                 >
                                 <v-text-field
-                                    v-model.trim="editedItem.target_stream_url"
+                                    v-model="editedItem.target_stream_url"
                                     label="스트림 URL"
                                     counter
                                     maxlength="512"

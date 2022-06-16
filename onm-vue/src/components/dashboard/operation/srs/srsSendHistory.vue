@@ -58,7 +58,7 @@ export default {
       axios.post(url, reqParams)
       .then((response) => {
         var resCode = response.data.res_code;
-        
+         
         if(resCode == 200){
           this.pList = response.data.data.srs_send_history_list;
           this.resPagingInfo = response.data.data.paging_info
