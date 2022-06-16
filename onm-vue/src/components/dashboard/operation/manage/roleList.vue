@@ -129,6 +129,7 @@ export default {
     check(arr){
       console.log(arr)
       this.selection = arr
+      
     },
     checkAll(){
       this.selection = [1];
