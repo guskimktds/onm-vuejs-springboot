@@ -20,10 +20,10 @@
       <v-toolbar-items>
         <!-- <v-btn text v-for="menu in topMenu" :key="menu.menu_name" v-on:click="changeTap(menu.children)" :to="menu.path"> -->
         <v-btn text v-for="menu in topMenu" 
-          :key="menu.name"
+          :key="menu.menu_name"
           v-on:click="changeTap(menu.menu_id)"
         >
-          {{ menu.name }}
+          {{ menu.menu_name }}
         </v-btn>
       </v-toolbar-items>
 

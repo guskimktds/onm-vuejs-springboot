@@ -1,9 +1,9 @@
 <template>
   <div>
       <ul>
-        <li v-for="menu in menus" :key="menu.name">
+        <li v-for="menu in menus" :key="menu.menu_name">
             <router-link v-bind:to="menu.path">
-            {{ menu.name }}            
+            {{ menu.menu_name }}
             </router-link>
         </li>
     </ul>
