@@ -80,7 +80,6 @@ import WorkerLoginHistory from '@/components/dashboard/order/worker/worker-login
 
 //운영관리
 import AccountMain from '../components/dashboard/operation/manage/accountMain'
-import RoleMain from '../components/dashboard/operation/manage/roleMain'
 import OperationMain from '../components/dashboard/operationMain'
 //import OperationHistory from '../components/dashboard/operation/history/operationHistory'
 import AdminHistory from '../components/dashboard/operation/admin/adminHistory'
@@ -470,11 +469,6 @@ export default new Router({
                     path: "account",
                     name: 'AccountMain',
                     component: AccountMain
-                },
-                {
-                    path: "role",
-                    name: 'RoleMain',
-                    component: RoleMain
                 },
                 {
                     path: "admin-history",
