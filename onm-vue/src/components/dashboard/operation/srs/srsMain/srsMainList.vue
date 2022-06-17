@@ -204,6 +204,13 @@
               >
             mdi-send
             </v-icon>
+            <v-icon
+            small
+            class="mr-2"
+            @click="stopItem(item)"
+              >
+            mdi-square
+            </v-icon>
        </template>                
       </v-data-table>
   </base-material-card>
@@ -236,7 +243,7 @@ export default {
           { text: '송출 종료일시', value: 'end_date' },
           { text: '수정일시', value: 'mod_date' },
           { text: '변경', value: 'actions', sortable: false},
-          { text: '재송출', value: 'sendaction', sortable: false} 
+          { text: '재송출/정지', value: 'sendaction', sortable: false} 
         ],
         editedItem: {
           srs_seq : '',
@@ -261,7 +268,11 @@ export default {
          sendedItem : {
            srs_seq : '',
            cam_id : ''
-         }
+         },
+         stopedItem : {
+           srs_seq : '',
+           cam_id : ''
+         },
       }
     },
 
@@ -332,6 +343,30 @@ methods: {
         this.sendedItem.srs_seq = this.pList[this.sendIndex].srs_seq;
         this.sendedItem.cam_id = this.pList[this.sendIndex].cam_id;
         this.send();
+      },
+      stopItem(item){
+        this.stopIndex = this.pList.indexOf(item);
+        this.stopedItem.srs_seq = this.pList[this.stopIndex].srs_seq;
+        this.stopedItem.cam_id = this.pList[this.stopIndex].cam_id;
+        this.stop();
+      },
+      stop(){
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15162/stop_srs_process`
+            var params = this.stopedItem;
+            axios.post(url, params, this.$store.state.headers)
+              .then((response) => {
+                console.log(response)
+                var resCode = response.data.res_code;
+                  
+                if(resCode == 200){
+                    alert('중지되었습니다');
+                }else{
+                  alert("Error");
+                }
+              })
+              .catch((ex) => {
+                console.log('중지 실패',ex)
+              })
       },
       send(){
           var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15157/send_srs_process`

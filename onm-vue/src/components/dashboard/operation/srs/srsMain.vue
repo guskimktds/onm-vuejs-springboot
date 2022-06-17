@@ -4,6 +4,7 @@
       <srs-main-query
           v-on:search="searchToSrsMainInfo"
           v-bind:param=searchParam
+          v-bind:bgmList=bgmList
           @Items="saveItem"
         ></srs-main-query>
         <srs-main-list 
@@ -12,7 +13,7 @@
           @pagination="setToSearchParams"
           @reset="reset"
         >
-        </srs-main-list>+
+        </srs-main-list>
       </v-card>
     </v-container>
 </template>
@@ -52,10 +53,35 @@ export default {
        start_date: dateInfo().lastWeekDashFormat,
        end_date: dateInfo().currentDateDashFormat,
        status_code : '',
+       code_id:''
       //  paging : true
       },
+      bgmList:[],
+      bgmOptions:{
+        code_name:'',
+        code_id:'',
+        orderby_no:''
+      },
+      localGwOptions:[],
     }
   },
+    beforeCreate() { 
+      var params = {code_master_id : 'SRS'}
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15161/get_srs_bgm` 
+      axios
+      .post(url, params)
+      .then((response) => {
+        this.bgmList = response.data.data.bgm_list;
+        this.bgmList.unshift(this.bgmOptions);
+      })
+      .catch(function (error) {
+          console.log(error);
+          // alert("국사정보 조회실패")
+        })
+        .finally(function () {
+          // always executed
+        });
+    },
 
   methods: {
       reset: function(){
@@ -130,7 +156,6 @@ export default {
       })
       
     },
-
     saveItem(params){
       var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15154/set_srs_main_info`
         const reqParams = this.handleParams(params)
@@ -178,7 +203,6 @@ export default {
 
       this.searchToSrsMainInfo(params)
     },
-
     handleParams: function(params){
       let newParams = {}
       // if(params.paging == true){
@@ -271,7 +295,15 @@ export default {
         this.searchParam.status_code!==""
       ){
         newParams.status_code=this.searchParam.status_code
-      } 
+      }
+       if(params.code_id !== undefined && params.code_id !== ''){
+        newParams.code_id = params.code_id
+      }else if(
+        this.searchParam.code_id!==undefined&&
+        this.searchParam.code_id!==""
+      ){
+        newParams.code_id=this.searchParam.code_id
+      }
 
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){
         alert('형식에 맞는 날짜 검색값을 입력해주세요')
