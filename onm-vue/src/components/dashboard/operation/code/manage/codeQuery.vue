@@ -375,7 +375,7 @@ export default {
 
         closeDelete () {
             this.dialogDelete = false
-            this.$nextTick(() => {
+            this.$nextick(() => {
             this.editedItem = Object.assign({}, this.defaultItem)
             //   this.editedIndex = -1
             })

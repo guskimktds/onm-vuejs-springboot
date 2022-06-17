@@ -3,7 +3,6 @@
       <v-card>
       <srs-main-query
           v-on:search="searchToSrsMainInfo"
-          v-on:bgmList="bgmSelecteList"
           v-bind:param=searchParam
           v-bind:bgmList=bgmList
           @Items="saveItem"
@@ -54,11 +53,35 @@ export default {
        start_date: dateInfo().lastWeekDashFormat,
        end_date: dateInfo().currentDateDashFormat,
        status_code : '',
-       code_master_id : 'SRS',
+       code_id:''
       //  paging : true
-      }
+      },
+      bgmList:[],
+      bgmOptions:{
+        code_name:'',
+        code_id:'',
+        orderby_no:''
+      },
+      localGwOptions:[],
     }
   },
+    beforeCreate() { 
+      var params = {code_master_id : 'SRS'}
+      var url = `${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15161/get_srs_bgm` 
+      axios
+      .post(url, params)
+      .then((response) => {
+        this.bgmList = response.data.data.bgm_list;
+        this.bgmList.unshift(this.bgmOptions);
+      })
+      .catch(function (error) {
+          console.log(error);
+          // alert("국사정보 조회실패")
+        })
+        .finally(function () {
+          // always executed
+        });
+    },
 
   methods: {
       reset: function(){
@@ -126,39 +149,6 @@ export default {
           this.pList = [];
           this.resPagingInfo = {};
           //console.log(resCode + " / " + resMsg);
-        }
-      })
-      .catch((ex) => {
-        console.log('조회 실패',ex)
-      })
-      
-    },
-    bgmSelecteList: function(params){
-      let url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15161/get_srs_bgm`
-      console.log(params)
-      var reqParams = this.handleParams(params)      
-      console.log('넣어지는 값')
-      console.log(reqParams)
-  
-      axios.post(url, reqParams, headers)
-      .then((response) => {
-        var resCode = response.data.res_code;
-         
-        if(resCode == 200){
-          this.bgmList = response.data.data.bgm_list;
-        }else if(resCode==204){
-            this.bgmList = [];
-            console.log("BGM Data가 없습니다.");
-        }else if(resCode==410){
-          console.log("로그인 세션이 만료되었습니다.");
-          EventBus.$emit('top-path-logout');
-            this.$store
-            .dispatch("LOGOUT")
-            .then( res => { 
-            console.log(res.status)}).catch(({ message }) => (this.msg = message))
-            this.$router.replace('/signin')
-        }else{
-          this.bgmList = [];
         }
       })
       .catch((ex) => {
@@ -306,10 +296,13 @@ export default {
       ){
         newParams.status_code=this.searchParam.status_code
       }
-      if(params.code_master_id === undefined || params.code_master_id === ''){
-        newParams.code_master_id = this.params.code_master_id
-      }else{
-        newParams.code_master_id = params.code_master_id
+       if(params.code_id !== undefined && params.code_id !== ''){
+        newParams.code_id = params.code_id
+      }else if(
+        this.searchParam.code_id!==undefined&&
+        this.searchParam.code_id!==""
+      ){
+        newParams.code_id=this.searchParam.code_id
       }
 
       if(Number(newParams.start_date)-Number(newParams.end_date)>0){

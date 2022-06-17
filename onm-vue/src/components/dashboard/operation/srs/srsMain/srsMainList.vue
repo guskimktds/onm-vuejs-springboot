@@ -207,7 +207,7 @@
             <v-icon
             small
             class="mr-2"
-            @click="stopedItem(item)"
+            @click="stopItem(item)"
               >
             mdi-square
             </v-icon>
@@ -351,7 +351,7 @@ methods: {
         this.stop();
       },
       stop(){
-          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15161/stop_srs_process`
+          var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15162/stop_srs_process`
             var params = this.stopedItem;
             axios.post(url, params, this.$store.state.headers)
               .then((response) => {

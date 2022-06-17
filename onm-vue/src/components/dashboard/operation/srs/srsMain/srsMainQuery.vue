@@ -109,7 +109,6 @@
                             class="mb-2"
                             v-bind="attrs"
                             v-on="on"
-                            v-on:click="bgmList"
                         >
                             등록
                         </v-btn>
@@ -228,7 +227,7 @@
                         :items="bgmList"
                         label="음원"
                         prepend-icon="mdi-music"
-                        v-model="editedItem.bgm_list"
+                        v-model="editedItem.code_id"
 
                         ></v-select>
                 </v-col>
@@ -278,7 +277,7 @@
 <script>
 import axios from "axios";
 export default {
- props:['param'],
+ props:['param','bgmList'],
     data() {
         return {
         dialog: false,
@@ -290,8 +289,8 @@ export default {
                 srs_title : '',
                 start_date: '',
                 end_date : '',
-                paging : false,
-                bgm_list : '0'
+                code_id : '',
+                paging : false
             },
             statusData: [
                 {status_name :'전체' , status_code : ''},
@@ -317,21 +316,6 @@ export default {
             }
             return str;
         }
-    },
-
-     beforeCreate() {  
-      axios
-      .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
-      .then((response) => {
-        this.localGwOptions = response.data.data.local_gw_list;
-      })
-      .catch(function (error) {
-          console.log(error);
-          // alert("국사정보 조회실패")
-        })
-        .finally(function () {
-          // always executed
-        });
     },
     methods: {
     regexMethod(){
@@ -368,10 +352,6 @@ export default {
     searchMethod: function () {
       this.$emit("search", this.param);
     },
-    bgmList: function () {
-        console.log("확인");
-        this.$emit("bgmList", this.param);
-    },
          save () {
              console.log('save method call : ',this.editedItem) 
             if(this.editedItem.end_date==null||this.editedItem.end_date==''||this.editedItem.start_date==null||this.editedItem.start_date==''){
@@ -396,7 +376,8 @@ export default {
                     confirmButtonText: '예',
                     cancelButtonText: '아니오',
                     html: "사용자 ID : "+this.editedItem.user_id+"<br/>카메라ID : "+this.editedItem.cam_id+"<br/>스트림 키 :"+this.editedItem.target_stream_key+"<br>스트림 url : "+this.editedItem.target_stream_url+
-                    "<br>송출제목: "+this.editedItem.srs_title+"<br/>송출 시작일시 :"+this.editedItem.start_date+"<br>송출 종료일시 : "+this.editedItem.end_date
+                    "<br>송출제목: "+this.editedItem.srs_title+"<br/>송출 시작일시 :"+this.editedItem.start_date+"<br>송출 종료일시 : "+this.editedItem.end_date+
+                    "<br>선택음원 : "+this.editedItem.code_id
                     }).then(result => {
                         if(result.value){
                             this.save()
