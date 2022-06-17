@@ -23,8 +23,9 @@
           :footer-props="{itemsPerPageOptions:[5,10,15,20]}"
           :header-props="{ sortIcon: null }"
           @click:row="passPage"
-          v-show="showAuth()"
+          
         >
+        <!-- v-show="showAuth()" -->
         </v-data-table>
 
     
@@ -65,15 +66,15 @@ export default {
       }
     },
     methods: {
-      showAuth(){
-        var auth=this.$store.state.authGroupId
-        if(auth=='G100'){
-          return true;
-        }else{
-          alert('접근권한이 없습니다.')
-          return false;
-        }
-      },
+      // showAuth(){
+      //   var auth=this.$store.state.authGroupId
+      //   if(auth=='G100'){
+      //     return true;
+      //   }else{
+      //     alert('접근권한이 없습니다.')
+      //     return false;
+      //   }
+      // },
       getDataFromApi(){
         this.$emit("pagination",this.options)
       },
