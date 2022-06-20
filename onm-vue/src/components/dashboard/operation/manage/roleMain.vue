@@ -4,6 +4,7 @@
         <role-query 
           v-on:search="searchToRoleMain"
           v-bind:param=searchParam
+          v-bind:localGwOptions="authGroupList"
         ></role-query>
         <role-list 
         v-bind:rList=rList
@@ -39,8 +40,12 @@ export default {
       searchParam: {
         auth_group_id: ''
       },
+      authGroupList:[]
 
     }
+  },
+  created: function() {
+    this.searchToRoleMain(this.searchParam);
   },
 
   methods: {

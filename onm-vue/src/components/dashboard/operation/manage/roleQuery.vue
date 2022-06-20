@@ -11,21 +11,17 @@
             class="px-5 py-3"
         >
         <v-row>
-            <v-col cols="3">
-                <v-text-field
-                    label="권한그룹ID" 
-                    v-model="param.auth_group_id" 
-                    placeholder=" " >                        
-                </v-text-field>
-            </v-col>
-            <v-col cols="2" >
-                <v-btn 
-                    elevation="2" 
-                    medium
-                    v-on:click="searchMethod"
-                    >
-                    검색</v-btn>
-            </v-col>     
+            <v-col cols="12" sm="6" md="3">
+                 <v-select 
+                  item-text="auth_group_name" 
+                  item-value="auth_group_id" 
+                  :items="authGroupList"
+                  label="권한메뉴리스트" 
+                  v-model="param.auth_group_id" 
+                  v-on:change="searchMethod"
+                  ></v-select>
+            </v-col> 
+
                     <v-col cols="2">
                         <v-dialog
                             v-model="dialog"

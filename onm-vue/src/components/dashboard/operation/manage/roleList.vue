@@ -46,16 +46,16 @@
 // import axios from "axios"
 export default {
     data: () => ({
-      selection:[],
+      selection:[{id: 'M100'},
+      {id: 3}],
       items: [
         {
           id: 1,
           name: 'Applications :',
-          locked: true,
           children: [
-            { id: 2, name: 'Calendar : app' },
+            { id: 'M1', name: 'Calendar : app' },
             { id: 3, name: 'Chrome : app' },
-            { id: 4, name: 'Webstorm : app' },
+            { id: 'M100', name: 'Webstorm : app' },
           ],
         },
         {
@@ -69,7 +69,6 @@ export default {
                 {
                   id: 7,
                   name: 'src :',
-                  locked: true,
                   children: [
                     { id: 8, name: 'index : ts' },
                     { id: 9, name: 'bootstrap : ts' },
@@ -94,32 +93,6 @@ export default {
             },
           ],
         },
-        {
-          id: 15,
-          name: 'Downloads :',
-          children: [
-            { id: 16, name: 'October : pdf', locked: true },
-            { id: 17, name: 'November : pdf', locked: true },
-            { id: 18, name: 'Tutorial : html', locked: true },
-          ],
-        },
-        {
-          id: 19,
-          name: 'Videos :',
-          children: [
-            {
-              id: 20,
-              name: 'Tutorials :',
-              children: [
-                { id: 21, name: 'Basic layouts : mp4' },
-                { id: 22, name: 'Advanced techniques : mp4' },
-                { id: 23, name: 'All about app : dir' },
-              ],
-            },
-            { id: 24, name: 'Intro : mov' },
-            { id: 25, name: 'Conference introduction : avi' },
-          ],
-        },
       ],
     }),
   methods: {
@@ -129,6 +102,7 @@ export default {
     check(arr){
       console.log(arr)
       this.selection = arr
+      this.selection.selected=true
       
     },
     checkAll(){
