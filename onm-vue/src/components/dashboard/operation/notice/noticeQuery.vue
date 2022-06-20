@@ -19,6 +19,7 @@
                     :items="items"
                     item-text="state"
                     item-value="abbr"
+                    @change="changeFAQ"
                   ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6" md="5">
@@ -154,14 +155,19 @@
 
                         <v-card-text>
                             <v-container>
-                 <v-col cols="12" sm="6" md="3">
+                <v-row>      
+                    <v-col cols="12" sm="6" md="3">
                  <v-select 
                   item-text="state" 
                   item-value="abbr" 
                   :items="modalItems"
                   label="분류" 
+                  @change="changeType"
                   v-model="editedItem.board_cate_cd"
                   ></v-select>
+                    </v-col>
+                </v-row>
+                 <v-col cols="12" sm="6" md="3">
                   <v-select 
                   item-text="state" 
                   item-value="abbr" 
@@ -230,6 +236,7 @@
                                     </v-row>
                                 <v-row>
                                     <v-col cols="6"
+                                    v-if="hideType"
                                     >
                                 <vue-editor
                                 
@@ -319,17 +326,20 @@ export default {
           
             dialog: false,
             dialogDelete: false,
+            hideType: true,
             items:[
               {state: '전체'     , abbr: ''},
               {state: '왼쪽공지'     , abbr: 'CATE01'},
-              {state: '오른쪽공지'     , abbr: 'CATE02'}],
+              {state: '오른쪽공지'     , abbr: 'CATE02'},
+              {state: 'FAQ'     , abbr: 'FAQ'}],
             dispItems:[
               {state: '전체'     , abbr: ''},
               {state: '노출'     , abbr: 'Y'},
               {state: '미노출'     , abbr: 'N'}],
             modalItems:[
               {state: '왼쪽공지'     , abbr: 'CATE01'},
-              {state: '오른쪽공지'     , abbr: 'CATE02'}],
+              {state: '오른쪽공지'     , abbr: 'CATE02'},
+              {state: 'FAQ'     , abbr: 'FAQ'}],
             modalDispItems:[
               {state: '노출'     , abbr: 'Y'},
               {state: '미노출'     , abbr: 'N'}],
@@ -379,6 +389,11 @@ export default {
     methods: {
         showAuth(){
             var auth=this.$store.state.authGroupId
+            if(this.editedItem.board_cate_cd == 'FAQ'){
+              this.hideType = false
+          } else{
+              this.hideType = true
+          }
             if(auth=='G100'){
             return true;
             }else{
@@ -404,7 +419,15 @@ export default {
             console.log(this.editedItem.content_html)
              console.log("체크워드 실행전")
              this.checkWord()
-            
+            if(this.editedItem.board_cate_cd == 'FAQ'){
+                this.editedItem.board_type = 'FAQ'
+                this.hideType = false
+            }else{
+                this.editedItem.board_type = 'NOTICE'
+                this.hideType = true
+            }
+            console.log(this.editedItem.board_cate_cd)
+            console.log(this.editedItem.board_type)
             if(this.editedItem.title == '' || this.editedItem.content == ''){
             alert('제목과 내용을 모두 입력하세요')
             this.dialog =false
@@ -470,6 +493,29 @@ export default {
          this.editedItem.content_html = ''
        }
       },
+      changeType(){
+          if(this.editedItem.board_cate_cd == 'FAQ'){
+              this.hideType = false
+              this.param.board_type = 'FAQ'
+              this.param.board_cate_cd = ''
+          } else{
+              this.hideType = true
+              this.param.board_type = ''
+          }
+      },
+      changeFAQ(){
+          if(this.param.board_cate_cd == 'FAQ'){
+              this.param.board_type = 'FAQ'
+              this.param.board_cate_cd = ''
+          }else if(this.param.board_cate_cd == 'CATE01'){
+              this.param.board_type = ''
+          }else if(this.param.board_cate_cd == 'CATE02'){
+              this.param.board_type = ''
+          }else{
+              this.param.board_cate_cd = ''
+              this.param.board_type = ''
+          }
+      }
     },  
 }
 </script>

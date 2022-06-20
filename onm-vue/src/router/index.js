@@ -123,6 +123,10 @@ import notice from '../components/dashboard/operation/notice/notice.vue'
 import camTamering from '../components/dashboard/operation/camera/camTampering.vue'
 import failover from '../components/dashboard/operation/camera/failover.vue'
 
+//단말인증
+import deviceAuthMain from '../components/dashboard/deviceAuthMain'
+import deviceAuthResult from '../components/dashboard/deviceauth/deviceauth-result/deviceAuthResult'
+import deviceModelManagement from '../components/dashboard/deviceauth/devicemodel-management/deviceModelManagement'
 // store 에 로그인 여부 체크
 import store from '../store'
 
@@ -619,6 +623,23 @@ export default new Router({
                     component: failover
                 },
                
+            ]
+        },
+        {
+            path: "/deviceauth",
+            name: 'deviceAuthMain',
+            component: deviceAuthMain,
+            children: [
+                {
+                    path: "deviceauth-result",
+                    name: 'deviceauth-result',
+                    component: deviceAuthResult
+                },
+                {
+                    path: "devicemodel-management",
+                    name: 'devicemodel-management',
+                    component: deviceModelManagement
+                },
             ]
         },
 

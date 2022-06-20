@@ -42,6 +42,7 @@
 
                   <v-card-text>
                     <v-container>
+                        <v-row>
                         <v-col
                           cols="12"
                           sm="6"
@@ -52,6 +53,7 @@
                             label="게시판"
                           ></v-text-field>
                         </v-col>
+                  </v-row>
                             <v-row>
                                                 <v-col
                           cols="12"
@@ -145,11 +147,13 @@
                   :items="modalItems"
                   label="분류" 
                   v-model="editedItem.board_cate_cd"
+                  @change="changeType()"
                   ></v-select>
                     </v-col>
                       <v-row>
                         <v-col
-                          cols="6">
+                          cols="6"
+                          v-if="hideType">
                           <vue-editor
                             v-model="editedItem.content_html"
                             :editorToolbar="customToolbar"
@@ -265,6 +269,7 @@ export default {
         options: {},
         totalList: 0,
         loading: true,
+        hideType: true,
         headers: [
            { text: '게시판 id', value: 'board_id' },
           { text: '공지사항 타입', value: 'board_cate_cd' },
@@ -285,6 +290,7 @@ export default {
           content_html: '',
           os_type:'',
           board_cate_cd: '',
+          board_type: ''
         },
         defaultItem: {
           board_id: '',
@@ -296,6 +302,7 @@ export default {
           content_html: '',
            os_type:'',
            board_cate_cd: '',
+           board_type: ''
         },
         newPlist: [],
         osType:[
@@ -307,7 +314,8 @@ export default {
             ],
         modalItems:[
               {state: '왼쪽공지'     , abbr: 'CATE01'},
-              {state: '오른쪽공지'     , abbr: 'CATE02'}],
+              {state: '오른쪽공지'     , abbr: 'CATE02'},
+              {state: 'FAQ'     , abbr: 'FAQ'}]
       }
     },
     computed: {
@@ -316,6 +324,15 @@ export default {
       },
     },
     methods: {
+      changeType(){
+          if(this.editedItem.board_cate_cd == 'FAQ'){
+              this.hideType = false
+              this.editedItem.board_type = 'FAQ'
+          } else{
+              this.hideType = true
+              this.editedItem.board_type = 'NOTICE'
+          }
+      },
       getDataFromApi(){
         this.$emit("pagination",this.options)
       },
@@ -333,6 +350,8 @@ export default {
           return '왼쪽공지'
         }else if(values==='CATE02'){
           return '오른쪽공지'
+        }else if(values==='FAQ'){
+          return 'FAQ'
         }else{
           return ''
         }
@@ -357,6 +376,13 @@ export default {
         // }else{
           // this.editedItem.local_gw_id = this.gw_id    
         // }
+      if(this.editedItem.board_cate_cd == 'FAQ'){
+          this.hideType = false
+          // this.editedItem.board_type = 'FAQ'
+      } else{
+          this.hideType = true
+          // this.editedItem.board_type = 'NOTICE'
+      }
       if(this.editedItem.disp_start_date==null){
           this.editedItem.disp_start_date =""
       }
@@ -418,7 +444,8 @@ export default {
             content : this.editedItem.content,
             content_html : this.editedItem.content_html,
              os_type : this.editedItem.os_type,
-              board_cate_cd : this.editedItem.board_cate_cd
+              board_cate_cd : this.editedItem.board_cate_cd,
+              board_type : this.editedItem.board_type
           }
           console.log("체크워드 실행전")
              this.checkWord()
@@ -455,6 +482,7 @@ export default {
                           var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15133/update_notice`
                           axios.post(url, params, headers)
                             .then((response) => {
+                              console.log(params)
                               console.log(response)
                               var resCode = response.data.res_code;
                               var resMsg = response.data.res_msg;

@@ -238,5 +238,30 @@
                 ]
             }
         ]
-    }
+    },
+    {
+        "name": "단말인증",
+        "menu_id": "M600",
+        "path": "/deviceauth",
+        "component": "deviceauth",
+        "children": [{
+                "name": "단말인증결과",
+                "path": "/deviceauth/",
+                "active": true,
+                "icon":"mdi-desktop-mac",
+                "component": "deviceauth",
+                "children": [
+                    { "name": "단말인증결과 조회", "path": "/deviceauth/deviceauth-result", "component": "deviceAuthResult" }
+                ]
+            },
+            {
+                "name": "단말모델관리",
+                "path": "/deviceauth/devicemodel-management",
+                "icon":"mdi-desktop-mac",
+                "component": "deviceModelManagement",
+                "children": [
+                    { "name": "단말모델관리", "path": "/deviceauth/devicemodel-management", "component": "deviceModelManagement" }
+                ]
+            }
+        ]}
 ]
