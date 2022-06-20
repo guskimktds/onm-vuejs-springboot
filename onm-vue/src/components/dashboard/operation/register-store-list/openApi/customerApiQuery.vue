@@ -15,7 +15,7 @@
                     offset-y
                     min-width="290px"
                     >
-                    <template v-slot:activator="{ on, attrs }">
+                    <template v-slot:activator="{ on , attrs}">
                         <v-text-field
                         v-model="param.start_date"
                         label="시작일"
@@ -71,6 +71,7 @@ export default {
     searchMethod: function() {
         this.$emit("search", this.param);
         console.log("보내는거" + this.param)
+        console.log("보내는거" + this.param.start_date)
     }
   }, 
 }

@@ -50,7 +50,7 @@ export default {
         },
         { text: "매장ID", value: "user_id" },
         { text: "매장명", value: "user_name" },
-        { text: "로컬 GW 아이디", value: "local_gw_id" },
+        { text: "국사코드", value: "local_gw_id" },
         { text: "전화번호", value: "tel_no" },
         { text: "상태코드", value: "status_code" },
         { text: "상품코드", value: "prod_code" },

@@ -57,12 +57,12 @@
         v-model="item.active"
         :prepend-icon="item.icon"
         v-on:click="saveSubMenu(i)"
-        v-show="tabAuthShow(item.name)"
+        v-show="tabAuthShow(item.menu_name)"
         no-action
       >
         <template v-slot:activator>
           <v-list-item-content>
-            <v-list-item-title v-text="item.name"></v-list-item-title>
+            <v-list-item-title v-text="item.menu_name"></v-list-item-title>
           </v-list-item-content>
         </template>
 
@@ -70,11 +70,11 @@
           v-for="subItem in item.children"
           :key="subItem.component"
           :to="subItem.path"
-          v-show="authShow(subItem.name)"
+          v-show="authShow(subItem.menu_name)"
         >
           <v-list-item-content>
             <v-list-item-title 
-            v-text="subItem.name"
+            v-text="subItem.menu_name"
             ></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -176,7 +176,7 @@ export default {
           ...item,
           children: item.children ? item.children.map(this.mapItem) : undefined,
           // name: this.$t(item.name),
-          name: item.name
+          name: item.menu_name
         }
       },
 

@@ -132,8 +132,8 @@
                     <v-dialog
                         v-model="dialog"
                         width="70%"
-                        v-show="showAuth()"
                     >
+                    <!-- v-show="showAuth()" -->
                         <template v-slot:activator="{ on, attrs }">
                         <v-btn
                             color="indigo"
@@ -401,6 +401,15 @@ export default {
             return false;
             }
         },
+        // showAuth(){
+        //     var auth=this.$store.state.authGroupId
+        //     if(auth=='G100'){
+        //     return true;
+        //     }else{
+        //     alert('접근권한이 없습니다.')
+        //     return false;
+        //     }
+        // },
         searchMethod: function() {
             console.log("DFFFFFFFFFFFFF"+JSON.stringify(this.param))
             this.$emit('search', this.param)

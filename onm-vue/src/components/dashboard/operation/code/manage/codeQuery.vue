@@ -70,8 +70,8 @@
                     <v-dialog
                         v-model="dialog"
                         max-width="500px"
-                        v-show="showAuth()"
                     >
+                    <!-- v-show="showAuth()" -->
                         <template v-slot:activator="{ on, attrs }">
                         <v-btn
                             color="indigo"
@@ -262,7 +262,7 @@ export default {
     computed: {
       formTitle () {
         // return this.editedIndex === -1 ? '등록' : '수정'
-        return '등록1'
+        return '등록'
       },
       // select box => center 국사정보와 version_code가 1302이상인 
       // 국사정보만 노출하도록 추가(21.06.03)
@@ -274,15 +274,15 @@ export default {
       //
     },
     methods: {
-        showAuth(){
-            var auth=this.$store.state.authGroupId
-            if(auth=='G100'){
-            return true;
-            }else{
-            alert('접근권한이 없습니다.')
-            return false;
-            }
-        },
+        // showAuth(){
+        //     var auth=this.$store.state.authGroupId
+        //     if(auth=='G100'){
+        //     return true;
+        //     }else{
+        //     alert('접근권한이 없습니다.')
+        //     return false;
+        //     }
+        // },
         searchMethod: function() {
             if(this.status=="센터"){
                 this.param.process_status=''
@@ -375,7 +375,7 @@ export default {
 
         closeDelete () {
             this.dialogDelete = false
-            this.$nextTick(() => {
+            this.$nextick(() => {
             this.editedItem = Object.assign({}, this.defaultItem)
             //   this.editedIndex = -1
             })

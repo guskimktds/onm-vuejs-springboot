@@ -120,6 +120,8 @@ import apiReport from '../components/dashboard/operation/openApi/apiReport/apiRe
 
 //공지사항
 import notice from '../components/dashboard/operation/notice/notice.vue'
+
+//템퍼링 & 페일오버 기능
 import camTamering from '../components/dashboard/operation/camera/camTampering.vue'
 import failover from '../components/dashboard/operation/camera/failover.vue'
 
@@ -127,6 +129,12 @@ import failover from '../components/dashboard/operation/camera/failover.vue'
 import deviceAuthMain from '../components/dashboard/deviceAuthMain'
 import deviceAuthResult from '../components/dashboard/deviceauth/deviceauth-result/deviceAuthResult'
 import deviceModelManagement from '../components/dashboard/deviceauth/devicemodel-management/deviceModelManagement'
+// srs 기능
+import srsMain from '../components/dashboard/operation/srs/srsMain.vue'
+import srsHistory from '../components/dashboard/operation/srs/srsHistory/srsHistory.vue'
+import srsManagement from '../components/dashboard/operation/srs/srsManagement.vue'
+import srsSendHistory from '../components/dashboard/operation/srs/srsSendHistory.vue'
+
 // store 에 로그인 여부 체크
 import store from '../store'
 
@@ -622,7 +630,26 @@ export default new Router({
                     name: "failover",
                     component: failover
                 },
-               
+                {
+                    path: "srs-main",
+                    name: "srs-main",
+                    component: srsMain
+                },
+                {
+                    path: "srs-management",
+                    name: "srs-management",
+                    component: srsManagement
+                },
+                {
+                    path: "srs-send-history",
+                    name: "srs-send-history",
+                    component: srsSendHistory
+                },
+                {
+                    path: "srs-history",
+                    name: "srs-history",
+                    component: srsHistory
+                }
             ]
         },
         {

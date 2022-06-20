@@ -28,6 +28,118 @@
       </template>
 
       <template v-slot:top>
+        <v-dialog v-model="dialogSend" max-width="500px">
+          <v-card>
+            <v-card-title>유튜브 영상 송출 정보 등록</v-card-title>
+                <v-card-text>
+                    <v-container>
+                      <v-row>
+                         <v-col cols="6">
+                          <v-text-field
+                            v-model="selectItems.user_id"
+                            label="사용자 ID"
+                            readonly
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="6">
+                          <v-text-field
+                            v-model="selectItems.cam_id"
+                            label="카메라 ID"
+                            readonly
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="6">
+                          <v-text-field
+                            v-model="editedItem.target_stream_key"
+                            label="스트림 키"
+                            counter
+                            maxlength="512"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="6">
+                          <v-text-field
+                            v-model="editedItem.target_stream_url"
+                            label="스트림 URL"
+                            counter
+                            maxlength="512"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="editedItem.srs_title"
+                            label="송출제목"
+                            counter
+                            maxlength="200"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="6">
+                          <v-menu
+                            offset-y
+                            min-width="290px"
+                            >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                v-model="editedItem.start_date"
+                                label="시작일"
+                                prepend-icon="mdi-calendar"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker v-model="editedItem.start_date" no-title scrollable>
+                            </v-date-picker>
+                            </v-menu>
+                                </v-col>
+                                <v-col cols="6">
+                                 <v-menu
+                                  offset-y
+                                  min-width="290px"
+                                  >
+                                  <template v-slot:activator="{ on, attrs }">
+                                      <v-text-field
+                                      v-model="editedItem.end_date"
+                                      label="종료일"
+                                      prepend-icon="mdi-calendar"
+                                      readonly
+                                      v-bind="attrs"
+                                      v-on="on"
+                                      ></v-text-field>
+                                  </template>
+                                  <v-date-picker v-model="editedItem.end_date" no-title scrollable>
+                                  </v-date-picker>
+                                  </v-menu>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="save"
+                    >
+                      저장
+                    </v-btn>
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="close"
+                    >
+                      취소
+                    </v-btn>
+                  </v-card-actions>
+          </v-card>
+        </v-dialog>
                 <v-dialog v-model="dialogDelete" max-width="500px">
                   <v-card>
                     <v-card-title class="headline">삭제 하시겠습니까?</v-card-title>
@@ -42,7 +154,16 @@
               
       </template>
 
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:item.send="{ item }">
+              <v-icon
+                small
+                @click="sendItem(item)"
+              >
+                mdi-send
+              </v-icon>
+      </template>
+
+      <template v-slot:item.delete="{ item }">
               <v-icon
                 small
                 @click="deleteItem(item)"
@@ -65,19 +186,24 @@ export default {
     return {
       last: 0,
       dialog: false,
+      editedItem: {
+        user_id: '',
+        cam_id: '',
+        target_stream_key: '',
+        target_stream_url : '',
+        srs_title : '',
+        start_date: '',
+        end_date : '',
+        paging : false },
       dialogDelete: false,
+      dialogSend:false,
       deleteIndex: -1,
+      sendIndex:-1,
       options: {},
       totalList: 0,
       loading: true,
       headers: [
-        {
-          text: "매장 ID",
-          align: "start",
-          sortable: false,
-          value: "user_id",
-        },
-        { text: "카메라 ID", value: "cam_id" },
+        { text: "카메라 ID", value: "cam_id", align: "start", sortable: false,},
         { text: "카메라 IP", value: "cam_ip" },
         { text: "카메라명", value: "cam_name" },
         { text: "MAC ID", value: "mac_id" },
@@ -89,9 +215,9 @@ export default {
         { text: "해상도", value: "resolution" },
         { text: "카메라 수정일자", value: "mod_date" },
         { text: "개통일", value: "open_date" },
-        { text: "해지일", value: "close_date" },
         { text: "영상저장방식", value: "save_method" },
-        { text: '  ', value: 'actions', sortable: false }
+        { text: '삭제', value: 'delete', sortable: false },
+        { text: '유튜브 송출 등록', value: 'send', sortable: false }
       ],
       saidItem:{
         said: ''
@@ -189,11 +315,21 @@ export default {
                  console.log(resCode+resMsg);
                   }
                 })
-    }, 
+    },
+    
+    sendItem(item){
+        this.sendIndex = this.dcList.indexOf(item)
+        console.log('Send Item Index : ',this.sendIndex)
+        this.editedItem = Object.assign({},item)
+        this.selectItems.user_id=this.editedItem.user_id
+        this.selectItems.cam_id=this.editedItem.cam_id
+
+        this.dialogSend = true
+    },
 
     deleteItem (item) {
         this.deleteIndex = this.dcList.indexOf(item)
-        console.log('Delte Item Index : ',this.editedIndex)
+        console.log('Delte Item Index : ',this.deleteIndex)
         this.tempItems = Object.assign({},item)
         this.selectItems.user_id=this.tempItems.user_id
         this.selectItems.cam_id=this.tempItems.cam_id
@@ -208,6 +344,43 @@ export default {
           this.deleteIndex = -1
         })
     },
+
+    save(){
+      if (this.sendIndex > -1) {
+          let params = this.editedItem;
+          this.handleDate(params);
+          if(params.end_date==null||params.end_date==''||params.start_date==null||params.start_date==''){
+            alert('날짜값은 반드시 기입하셔야 합니다.')
+            this.close()
+          }else{
+          const url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15154/set_srs_main_info`
+            axios.post(url, params, this.$store.state.headers)
+              .then((response) => {
+                console.log(response)
+                var resCode = response.data.res_code;
+                  
+                if(resCode == 200){
+                  this.$router.push('srs-main')
+                }else if(resCode == 204){
+                  this.$fire({
+                       title: "중복된 요청입니다.",
+                       type : "error"})
+                }else{
+                  alert("Error");
+                }
+              })
+              .catch((ex) => {
+                alert('등록 실패',ex)
+              })
+            }
+        this.close()
+      }
+    },
+
+    handleDate(params){
+        params.start_date == null ? this.editedItem.start_date = '' : this.editedItem.start_date = params.start_date.replace(/-/g,"").substr(0,8);
+         params.end_date == null ? this.editedItem.end_date = '' : this.editedItem.end_date = params.end_date.replace(/-/g,"").substr(0,8);
+      },
 
     deleteItemConfirm () {
         if (this.deleteIndex > -1) {
@@ -275,6 +448,13 @@ export default {
         
         }
         this.closeDelete() //다이얼로그를 닫는다.
+      },
+      close () {
+        this.dialogSend= false
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        })
       },
   },
 

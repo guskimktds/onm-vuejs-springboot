@@ -21,8 +21,9 @@
         class="elevation-1"
         :footer-props="{itemsPerPageOptions:[10,20,50,100]}"
         :header-props="{ sortIcon: null }"
-        v-show="showAuth()"
+        
       >
+      <!-- v-show="showAuth()" -->
 
         <template v-slot:top>
             
@@ -174,15 +175,15 @@ export default {
         this.$emit("pagination",this.options)
     },
 
-    showAuth(){
-      var auth=this.$store.state.authGroupId
-      if(auth=='G100'){
-        return true;
-      }else{
-        alert('접근권한이 없습니다.')
-        return false;
-      }
-    },
+    // showAuth(){
+    //   var auth=this.$store.state.authGroupId
+    //   if(auth=='G100'){
+    //     return true;
+    //   }else{
+    //     alert('접근권한이 없습니다.')
+    //     return false;
+    //   }
+    // },
 
     editItem (item) { 
       this.editedIndex = this.pList.indexOf(item)
