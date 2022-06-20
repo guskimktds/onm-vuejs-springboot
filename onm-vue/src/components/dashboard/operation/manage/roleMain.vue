@@ -37,6 +37,9 @@ export default {
       searchParam: {
         auth_group_id: ''
       },
+      defaultParam: {
+        auth_group_id: ''
+      },
       authMenuOptions:[],
       updateParam:{
         auth_group_id:'',
@@ -59,8 +62,8 @@ export default {
       });
   },
   created: function() {
-    this.searchParam.auth_group_id='G100'
-    this.searchAllRoleMain(this.searchParam);
+    this.defaultParam.auth_group_id='G100'
+    this.searchAllRoleMain(this.defaultParam);
   },
 
   methods: {
