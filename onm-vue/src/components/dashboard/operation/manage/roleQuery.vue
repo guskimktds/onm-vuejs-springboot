@@ -15,7 +15,7 @@
                  <v-select 
                   item-text="auth_group_name" 
                   item-value="auth_group_id" 
-                  :items="authGroupList"
+                  :items="authMenuOptions"
                   label="권한메뉴리스트" 
                   v-model="param.auth_group_id" 
                   v-on:change="searchMethod"
@@ -35,7 +35,7 @@
                                 v-bind="attrs"
                                 v-on="on"
                             >
-                                등록
+                            등록
                             </v-btn>
                             </template>
                             <v-card>
@@ -48,45 +48,23 @@
                                     <v-row>
                                         <v-col cols="6">
                                         <v-text-field
-                                            v-model="editedItem.menu_id"
+                                            v-model="editedItem.auth_group_id"
                                             counter
-                                            maxlength="10"
+                                            maxlength="4"
                                             label="권한그룹ID"
                                         ></v-text-field>
                                         </v-col>
                                     </v-row>
                                     <v-row>
                                         <v-col cols="12">
-                                            상위메뉴ID<br>
-                                            <input type="checkbox" value="M100" v-model="menuList">
-                                            <label for="M100">M100</label>
-                                            <input type="checkbox" value="M200" v-model="menuList">
-                                            <label for="M100">M200</label>
-                                            <input type="checkbox" value="M300" v-model="menuList">
-                                            <label for="M100">M300</label>
-                                            <input type="checkbox" value="M400" v-model="menuList">
-                                            <label for="M100">M400</label>
-                                            <input type="checkbox" value="M500" v-model="menuList">
-                                            <label for="M100">M500</label>
+                                        <v-text-field
+                                            v-model="editedItem.auth_group_name"
+                                            counter
+                                            maxlength="10"
+                                            label="권한그룹이름"
+                                        ></v-text-field>
                                         </v-col>
-                                    </v-row>
-                                    <v-row>
-                                        <v-col cols="12">
-                                            하위메뉴ID<br>
-                                            <input type="checkbox" value="M100" v-model="subList">
-                                            <label for="M100">M100</label>
-                                            <input type="checkbox" value="M200" v-model="subList">
-                                            <label for="M100">M200</label>
-                                            <input type="checkbox" value="M300" v-model="subList">
-                                            <label for="M100">M300</label>
-                                            <input type="checkbox" value="M400" v-model="subList">
-                                            <label for="M100">M400</label>
-                                            <input type="checkbox" value="M500" v-model="subList">
-                                            <label for="M100">M500</label>
-                                        </v-col>
-                                    </v-row>
-                        
-                                    
+                                    </v-row>                        
                                 </v-container>
                             </v-card-text>
 
@@ -116,26 +94,23 @@
     </v-container>
 </template>
 <script>
-
+import axios from "axios"
 
 export default {
-    props:['param'],
+    props:['param','authMenuOptions'],
     data() {
         return{
             dialog: false,
             menuList:[],
             subList:[],
             editedItem: {
-                menu_id: '',     
-                upper_menu_id:''
+                auth_group_id:'',
+                auth_group_name:''
             },
-            defaultItem: {
-                onm_user_id: '',     
-                accept_ip: '',
+            reqParam: {
                 auth_group_id: '',
-                cmd_type: '' 
-            }
-
+                auth_group_name:''
+            },
         }
     },
     computed: {
@@ -149,7 +124,51 @@ export default {
         },
         save: function(){
             console.log(this.editedItem)
-            console.log(this.menuList)
+            this.$fire({
+            title: "정말 등록 하시겠습니까?",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText: '아니오',
+            html: "권한메뉴그룹ID : "+this.editedItem.auth_group_id +"<br>권한메뉴그룹이름 : "+this.editedItem.auth_group_name
+            }).then(result => {
+               if(result.value){
+                var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15050/set_onm_group_list`
+                this.reqParam.auth_group_id=this.editedItem.auth_group_id
+                this.reqParam.auth_group_name=this.editedItem.auth_group_name
+
+                axios
+                .post(url, this.reqParam, this.$store.state.headers)
+                .then((response) => {
+                var resCode = response.data.res_code;
+                
+                if(resCode == 200){
+                    this.$fire({
+                       title: "등록 되었습니다.",
+                       type : "success"})
+                       this.dialog=false
+                }else if(resCode==204){
+                    this.$fire({
+                       title: "등록 실패하였습니다.",
+                       type : "error"})
+                    this.dialog=false
+                }else{
+                    this.$fire({
+                       title: "등록 실패하였습니다.",
+                       type : "error"})
+                    this.dialog=false
+                }
+                    })
+                    .catch((ex) => {
+                    console.log('조회 실패',ex)
+                    })
+               }else{
+                   this.close()
+               }
+            });
+
         },
         close: function(){
             this.dialog=false

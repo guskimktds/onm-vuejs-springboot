@@ -129,7 +129,7 @@ export default {
       return newParams;
     },
   },
-    created: function() {
+  created: function() {
     this.searchToProcess(this.searchParam);
   }  
 }

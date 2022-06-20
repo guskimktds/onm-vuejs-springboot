@@ -4,10 +4,12 @@
         <role-query 
           v-on:search="searchToRoleMain"
           v-bind:param=searchParam
-          v-bind:localGwOptions="authGroupList"
+          v-bind:authMenuOptions="authMenuOptions"
         ></role-query>
         <role-list 
         v-bind:rList=rList
+        v-bind:sList=sList
+        @updateMenu="updateMenu"
         v-bind:resPagingInfo="resPagingInfo"
         @pagination="setToSearchParams"></role-list>
        </v-card>
@@ -31,26 +33,39 @@ export default {
     return {
       title: '메뉴그룹 조회',
       rList: [],
-      reqPagingInfo: {
-        page_no: 1,
-        view_cnt: 10,
-        auth_group_id: ''
-      },
-      resPagingInfo: {},
+      sList: [],
       searchParam: {
         auth_group_id: ''
       },
-      authGroupList:[]
-
+      authMenuOptions:[],
+      updateParam:{
+        auth_group_id:'',
+        list:[]
+      }
     }
   },
+  beforeCreate: function(){
+    axios
+    .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15048/get_all_auth_list`)
+    .then((response) => {
+      this.authMenuOptions = response.data.data.list; 
+    })
+    .catch(function (error) {
+        console.log(error);
+        console.log("권한메뉴 정보 조회 실패")
+      })
+      .finally(function () {
+        // always executed
+      });
+  },
   created: function() {
-    this.searchToRoleMain(this.searchParam);
+    this.searchParam.auth_group_id='G100'
+    this.searchAllRoleMain(this.searchParam);
   },
 
   methods: {
-    searchToRoleMain: function(params){
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_10003/get_auth_menu_list`
+    searchAllRoleMain: function(params){
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15049/get_onm_menu_list`
 
       var reqParams = this.handleParams(params)
 
@@ -62,12 +77,12 @@ export default {
           var resCode = response.data.res_code;
            
           if(resCode == 200){
-            this.rList = response.data.data.auth_group_list;
+            this.rList = response.data.data.menu_list;
+            this.sList = response.data.data.menu_list;
             this.resPagingInfo = response.data.data.paging_info
-            console.log(this.resPagingInfo)
           }else if(resCode==204){
             this.rList = [];
-            this.resPagingInfo = {};
+            this.sList = [];
             console.log('계정 정보 데이터가 없습니다.');
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
@@ -79,8 +94,80 @@ export default {
             this.$router.replace('/signin')
           }else{
             this.rList = [];
-            this.resPagingInfo = {};
+            this.sList = [];
             alert("Error");
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패',ex)
+        })
+    },
+    searchToRoleMain: function(params){
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15049/get_onm_menu_list`
+
+      var reqParams = this.handleParams(params)
+      console.log(reqParams)
+
+      axios
+        .post(url, reqParams, this.$store.state.headers)
+        .then((response) => {
+        console.log('응답값')
+          console.log(response)
+          var resCode = response.data.res_code;
+           
+          if(resCode == 200){
+            this.sList = response.data.data.menu_list;
+            this.resPagingInfo = response.data.data.paging_info
+          }else if(resCode==204){
+            this.sList = [];
+            console.log('계정 정보 데이터가 없습니다.');
+          }else if(resCode==410){
+            alert("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else{
+            this.sList = [];
+            alert("Error");
+          }
+        })
+        .catch((ex) => {
+          console.log('조회 실패',ex)
+        })
+    },
+    
+    updateMenu: function(params){
+      console.log(params)
+      this.updateParam.list=params
+      this.updateParam.auth_group_id=this.searchParam.auth_group_id
+      console.log(this.updateParam)
+      
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15051/set_onm_menu_list`
+      axios
+        .post(url, this.updateParam, this.$store.state.headers)
+        .then((response) => {
+          console.log('응답값')
+          console.log(response)
+          var resCode = response.data.res_code;
+           
+          if(resCode == 200){
+            console.log('성공')
+          }else if(resCode==204){
+            alert('실패')
+            console.log('실패.');
+          }else if(resCode==410){
+            alert("로그인 세션이 만료되었습니다.");
+            EventBus.$emit('top-path-logout');
+            this.$store
+            .dispatch("LOGOUT")
+            .then( res => { 
+            console.log(res.status)}).catch(({ message }) => (this.msg = message))
+            this.$router.replace('/signin')
+          }else{
+            alert('실패')
           }
         })
         .catch((ex) => {
@@ -100,18 +187,6 @@ export default {
         
     handleParams: function(params){
       let newParams = {}
-
-      if(params.page_no === undefined || params.page_no === ''){
-        newParams.page_no = this.reqPagingInfo.page_no
-      }else{
-        newParams.page_no = params.page_no
-      }
-
-      if(params.view_cnt === undefined || params.view_cnt === ''){
-        newParams.view_cnt = this.reqPagingInfo.view_cnt
-      }else{
-        newParams.view_cnt = params.view_cnt
-      }
 
       if(params.auth_group_id !== undefined && params.auth_group_id !== ''){
         newParams.auth_group_id = params.auth_group_id
