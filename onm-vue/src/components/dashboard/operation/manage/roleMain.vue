@@ -10,7 +10,6 @@
         v-bind:menuList=menuList
         v-bind:authList=authList
         @updateMenu="updateMenu"
-
         @pagination="setToSearchParams"></role-list>
        </v-card>
     </v-container>
@@ -81,8 +80,6 @@ export default {
            
           if(resCode == 200){
             this.menuList = response.data.data.menu_list;
-            // this.authList = response.data.data.menu_list;
-            // this.resPagingInfo = response.data.data.paging_info
           }else if(resCode==204){
             this.menuList = [];
             this.authList = [];
@@ -156,7 +153,7 @@ export default {
           var resCode = response.data.res_code;
            
           if(resCode == 200){
-            console.log('성공')
+            alert('수정 완료')
           }else if(resCode==204){
             alert('실패')
             console.log('실패.');
@@ -173,7 +170,7 @@ export default {
           }
         })
         .catch((ex) => {
-          console.log('조회 실패',ex)
+          console.log('실패',ex)
         })
     },
 

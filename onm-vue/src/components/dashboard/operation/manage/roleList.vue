@@ -22,12 +22,6 @@
               <v-btn
                 color="white"
                 text
-                @click="selected">
-                권한메뉴확인
-              </v-btn>
-              <v-btn
-                color="white"
-                text
                 @click="updateMenu">
                 권한메뉴수정
               </v-btn>
@@ -43,20 +37,12 @@ export default {
    props: ['menuList', 'authList'],
     data: () => ({
       selection: [],
-      authList: [],
       updateList: []
     }),
-
-  created() {
-    console.log("////////////roleList.vue created");
-  },
   methods: {
-    selected(){
-      this.selection=this.authList
-    },
     updateMenu(){
-      console.log(this.selection)
-      this.$emit("updateMenu",this.selection)
+      console.log(this.authList)
+      this.$emit("updateMenu",this.authList)
     }
   },
 }
