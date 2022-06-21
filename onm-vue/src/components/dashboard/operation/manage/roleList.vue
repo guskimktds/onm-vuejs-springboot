@@ -13,9 +13,9 @@
             >
     
            <v-treeview
-            v-model="selection"
+            v-model="authList"
             selectable
-            :items="rList"
+            :items="menuList"
             return-object
             >
             </v-treeview>
@@ -40,15 +40,19 @@
 // import dateInfo from '../../../utils/common'
 // import axios from "axios"
 export default {
-  props: ['rList','sList'],
+   props: ['menuList', 'authList'],
     data: () => ({
-      selection:[],
-      updateList:[]
+      selection: [],
+      authList: [],
+      updateList: []
     }),
 
+  created() {
+    console.log("////////////roleList.vue created");
+  },
   methods: {
     selected(){
-      this.selection=this.sList
+      this.selection=this.authList
     },
     updateMenu(){
       console.log(this.selection)
