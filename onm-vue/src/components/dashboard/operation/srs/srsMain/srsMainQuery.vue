@@ -100,8 +100,9 @@
                     <v-dialog
                         v-model="dialog"
                         max-width="40%"
-                        v-show="showAuth()"
+                       
                     >
+                     <!-- v-show="showAuth()" -->
                         <template v-slot:activator="{ on, attrs }">
                         <v-btn
                             color="indigo"
@@ -221,21 +222,15 @@
                 </v-col>
                 
                 <v-col cols="6">
-                    <v-menu
-                    offset-y
-                    min-width="290px"
-                    >
-                 <template v-slot:activator="{ on, attrs }">
                         <v-select
-                        v-model="editedItem.bgm"
+                        item-text="code_name" 
+                        item-value="code_id" 
+                        :items="bgmList"
                         label="음원"
                         prepend-icon="mdi-music"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
+                        v-model="editedItem.code_id"
+
                         ></v-select>
-                    </template>
-                    </v-menu>
                 </v-col>
                             </v-row>
                             </v-container>
@@ -283,10 +278,10 @@
 <script>
 import axios from "axios";
 export default {
- props:['param'],
+ props:['param','bgmList'],
     data() {
         return {
-            dialog: false,    
+        dialog: false,
             editedItem: {
                 user_id: '',
                 cam_id: '',
@@ -295,6 +290,7 @@ export default {
                 srs_title : '',
                 start_date: '',
                 end_date : '',
+                code_id : '',
                 paging : false
             },
             statusData: [
@@ -322,21 +318,6 @@ export default {
             return str;
         }
     },
-
-     beforeCreate() {  
-      axios
-      .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15008/get_local_gw`)
-      .then((response) => {
-        this.localGwOptions = response.data.data.local_gw_list;
-      })
-      .catch(function (error) {
-          console.log(error);
-          // alert("국사정보 조회실패")
-        })
-        .finally(function () {
-          // always executed
-        });
-    },
     methods: {
     regexMethod(){
         const regex = /^1(\d{3})/;
@@ -360,19 +341,18 @@ export default {
 
          
      },
-        showAuth(){
-            var auth=this.$store.state.authGroupId
-            if(auth=='G100'){
-            return true;
-            }else{
-            alert('접근권한이 없습니다.')
-            return false;
-            }
-    },
+    //     showAuth(){
+    //         var auth=this.$store.state.authGroupId
+    //         if(auth=='G100'){
+    //         return true;
+    //         }else{
+    //         alert('접근권한이 없습니다.')
+    //         return false;
+    //         }
+    // },
     searchMethod: function () {
       this.$emit("search", this.param);
     },
-
          save () {
              console.log('save method call : ',this.editedItem) 
             if(this.editedItem.end_date==null||this.editedItem.end_date==''||this.editedItem.start_date==null||this.editedItem.start_date==''){
@@ -397,7 +377,8 @@ export default {
                     confirmButtonText: '예',
                     cancelButtonText: '아니오',
                     html: "사용자 ID : "+this.editedItem.user_id+"<br/>카메라ID : "+this.editedItem.cam_id+"<br/>스트림 키 :"+this.editedItem.target_stream_key+"<br>스트림 url : "+this.editedItem.target_stream_url+
-                    "<br>송출제목: "+this.editedItem.srs_title+"<br/>송출 시작일시 :"+this.editedItem.start_date+"<br>송출 종료일시 : "+this.editedItem.end_date
+                    "<br>송출제목: "+this.editedItem.srs_title+"<br/>송출 시작일시 :"+this.editedItem.start_date+"<br>송출 종료일시 : "+this.editedItem.end_date+
+                    "<br>선택음원 : "+this.editedItem.code_id
                     }).then(result => {
                         if(result.value){
                             this.save()

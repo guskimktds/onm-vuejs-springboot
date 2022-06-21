@@ -101,7 +101,7 @@ const headers = {
 export default{
 
     created(){
-      this.showAuth();
+      //this.showAuth();
       
     },
     data(){
@@ -180,16 +180,17 @@ export default{
         },
         backPage(){
           this.$router.push({name: "approval-store"});
-        },
-         showAuth(){
-        var auth=this.$store.state.authGroupId
-        if(auth=='G100'){
-          return true;
-        }else{
-          alert('접근권한이 없습니다.')
-          return false;
         }
-      }
+      //   ,
+      //    showAuth(){
+      //   var auth=this.$store.state.authGroupId
+      //   if(auth=='G100'){
+      //     return true;
+      //   }else{
+      //     alert('접근권한이 없습니다.')
+      //     return false;
+      //   }
+      // }
        
     }
     
