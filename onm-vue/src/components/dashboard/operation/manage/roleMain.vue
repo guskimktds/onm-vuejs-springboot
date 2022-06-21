@@ -7,10 +7,10 @@
           v-bind:authMenuOptions="authMenuOptions"
         ></role-query>
         <role-list 
-        v-bind:rList=rList
-        v-bind:sList=sList
+        v-bind:menuList=menuList
+        v-bind:authList=authList
         @updateMenu="updateMenu"
-        v-bind:resPagingInfo="resPagingInfo"
+
         @pagination="setToSearchParams"></role-list>
        </v-card>
     </v-container>
@@ -32,8 +32,8 @@ export default {
   data () {
     return {
       title: '메뉴그룹 조회',
-      rList: [],
-      sList: [],
+      menuList: [],
+      authList: [],
       searchParam: {
         auth_group_id: ''
       },
@@ -80,12 +80,12 @@ export default {
           var resCode = response.data.res_code;
            
           if(resCode == 200){
-            this.rList = response.data.data.menu_list;
-            this.sList = response.data.data.menu_list;
-            this.resPagingInfo = response.data.data.paging_info
+            this.menuList = response.data.data.menu_list;
+            // this.authList = response.data.data.menu_list;
+            // this.resPagingInfo = response.data.data.paging_info
           }else if(resCode==204){
-            this.rList = [];
-            this.sList = [];
+            this.menuList = [];
+            this.authList = [];
             console.log('계정 정보 데이터가 없습니다.');
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
@@ -96,8 +96,8 @@ export default {
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
             this.$router.replace('/signin')
           }else{
-            this.rList = [];
-            this.sList = [];
+            this.menuList = [];
+            this.authList = [];
             alert("Error");
           }
         })
@@ -119,10 +119,9 @@ export default {
           var resCode = response.data.res_code;
            
           if(resCode == 200){
-            this.sList = response.data.data.menu_list;
-            this.resPagingInfo = response.data.data.paging_info
+            this.authList = response.data.data.menu_list;
           }else if(resCode==204){
-            this.sList = [];
+            this.authList = [];
             console.log('계정 정보 데이터가 없습니다.');
           }else if(resCode==410){
             alert("로그인 세션이 만료되었습니다.");
@@ -133,7 +132,7 @@ export default {
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
             this.$router.replace('/signin')
           }else{
-            this.sList = [];
+            this.authList = [];
             alert("Error");
           }
         })
