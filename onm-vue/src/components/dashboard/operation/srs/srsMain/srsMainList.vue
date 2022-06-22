@@ -191,6 +191,17 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog>
+              <v-dialog v-model="dialogStop" max-width="500px">
+                <v-card>
+                  <v-card-title class="headline">송출정지 하시겠습니까?</v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="closeStop">Cancel</v-btn>
+                    <v-btn color="blue darken-1" text @click="stop">OK</v-btn>
+                    <v-spacer></v-spacer>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
           </template>
 
        <template v-slot:item.actions="{ item }">
@@ -240,6 +251,7 @@ export default {
         dialog: false,
         dialogDelete: false,
         dialogResend:false,
+        dialogStop:false,
         editedIndex: -1,
         options: {},
         loading: true,
@@ -362,7 +374,7 @@ methods: {
         this.stopIndex = this.pList.indexOf(item);
         this.stopedItem.srs_seq = this.pList[this.stopIndex].srs_seq;
         this.stopedItem.cam_id = this.pList[this.stopIndex].cam_id;
-        this.stop();
+        this.dialogStop=true;
       },
       stop(){
           var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15162/stop_srs_process`
@@ -522,6 +534,14 @@ methods: {
       
       closeDelete () {
         this.dialogDelete = false
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        })
+      },
+
+      closeStop ()  {
+        this.dialogStop = false
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
