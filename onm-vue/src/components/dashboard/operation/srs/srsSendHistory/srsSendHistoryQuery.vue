@@ -112,11 +112,13 @@ export default {
                 {request_name :'재송출 요청' , request_code : 'R'},
                 {request_name :'송출쉘 재호출' , request_code : 'S'},
                 {request_name :'삭제요청' , request_code : 'D'},
-                {request_name :'송출정보 관리배치' , request_code : 'M'}
+                {request_name :'송출정보 관리배치' , request_code : 'M'},
+                {request_name :'송출중지요청' , request_code : 'T'}
             ],
             procData: [
                 {proc_name :'송출처리' , proc_code : 'S'},
-                {proc_name :'송출삭제처리' , proc_code : 'X'}
+                {proc_name :'송출삭제처리' , proc_code : 'X'},
+                {proc_name :'송출중지처리' , proc_code : 'T'}
             ],
         }
             
