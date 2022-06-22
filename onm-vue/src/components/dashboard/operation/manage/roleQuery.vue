@@ -149,6 +149,7 @@ export default {
                        title: "등록 되었습니다.",
                        type : "success"})
                        this.dialog=false
+                       this.$router.go();
                 }else if(resCode==204){
                     this.$fire({
                        title: "등록 실패하였습니다.",
