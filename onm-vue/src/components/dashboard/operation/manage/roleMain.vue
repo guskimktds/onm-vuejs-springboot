@@ -50,6 +50,7 @@ export default {
     axios
     .post(`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15048/get_all_auth_list`)
     .then((response) => {
+      console.log(response)
       this.authMenuOptions = response.data.data.list; 
     })
     .catch(function (error) {
@@ -154,6 +155,7 @@ export default {
            
           if(resCode == 200){
             alert('수정 완료')
+            this.$router.push('/operation/role')
           }else if(resCode==204){
             alert('실패')
             console.log('실패.');
@@ -164,7 +166,7 @@ export default {
             .dispatch("LOGOUT")
             .then( res => { 
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
-            this.$router.replace('/signin')
+            this.$router.go();
           }else{
             alert('실패')
           }
