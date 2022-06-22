@@ -53,7 +53,7 @@ export default {
        start_date: dateInfo().lastWeekDashFormat,
        end_date: dateInfo().currentDateDashFormat,
        status_code : '',
-       code_id:''
+       code_id:'',
       //  paging : true
       },
       bgmList:[],
@@ -62,7 +62,6 @@ export default {
         code_id:'',
         orderby_no:''
       },
-      localGwOptions:[],
     }
   },
     beforeCreate() { 
@@ -71,12 +70,13 @@ export default {
       axios
       .post(url, params)
       .then((response) => {
+        console.log("결과" + response);
         this.bgmList = response.data.data.bgm_list;
         this.bgmList.unshift(this.bgmOptions);
       })
       .catch(function (error) {
           console.log(error);
-          // alert("국사정보 조회실패")
+          // alert("BGM 조회실패")
         })
         .finally(function () {
           // always executed
