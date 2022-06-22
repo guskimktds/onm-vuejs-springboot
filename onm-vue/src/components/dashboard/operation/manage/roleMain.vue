@@ -104,7 +104,7 @@ export default {
         })
     },
     searchToRoleMain: function(params){
-      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15049/get_onm_menu_list`
+      var url =`${process.env.VUE_APP_BACKEND_SERVER_URL}/${process.env.VUE_APP_API_VERSION}/ONM_15052/search_onm_menu_list`
 
       var reqParams = this.handleParams(params)
       console.log(reqParams)
@@ -117,7 +117,7 @@ export default {
           var resCode = response.data.res_code;
            
           if(resCode == 200){
-            this.authList = response.data.data.menu_list;
+            this.authList = response.data.data.list;
           }else if(resCode==204){
             this.authList = [];
             console.log('계정 정보 데이터가 없습니다.');
@@ -155,7 +155,6 @@ export default {
            
           if(resCode == 200){
             alert('수정 완료')
-            this.$router.push('/operation/role')
           }else if(resCode==204){
             alert('실패')
             console.log('실패.');
@@ -166,7 +165,7 @@ export default {
             .dispatch("LOGOUT")
             .then( res => { 
             console.log(res.status)}).catch(({ message }) => (this.msg = message))
-            this.$router.go();
+            this.$router.replace('/signin')
           }else{
             alert('실패')
           }
