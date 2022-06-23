@@ -15,7 +15,6 @@
            <v-treeview
             v-model="authList"
             selectable
-            selection-type="independent"
             :items="menuList"
             return-object
             >
@@ -25,6 +24,12 @@
                 text
                 @click="updateMenu">
                 권한메뉴수정
+              </v-btn>
+              <v-btn
+                color="white"
+                text
+                @click="reset">
+                초기화
               </v-btn>
         </base-material-card>
     </v-container>
@@ -44,6 +49,9 @@ export default {
     updateMenu(){
       console.log(this.authList)
       this.$emit("updateMenu",this.authList)
+    },
+    reset(){
+      this.authList=[]
     }
   },
 }
