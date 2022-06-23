@@ -386,8 +386,10 @@ methods: {
                   
                 if(resCode == 200){
                     alert('중지되었습니다');
+                    this.dialogStop = false
                 }else{
                   alert("Error");
+                  this.dialogStop = false
                 }
               })
               .catch((ex) => {
