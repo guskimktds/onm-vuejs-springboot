@@ -15,6 +15,7 @@
            <v-treeview
             v-model="authList"
             selectable
+            selection-type="independent"
             :items="menuList"
             return-object
             >
